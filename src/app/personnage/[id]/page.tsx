@@ -37,8 +37,9 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
       {/* ── EN-TÊTE ── */}
       <header className="bg-gradient-to-b from-stone-900 to-stone-950 border-b border-amber-900/40 py-8 px-6">
         <div className="max-w-5xl mx-auto">
-          <div className="flex items-start justify-between flex-wrap gap-4">
-            <div>
+          <div className="flex items-start justify-between flex-wrap gap-6">
+            {/* Nom et identité */}
+            <div className="flex-1 min-w-0">
               <h1 className="text-5xl font-bold text-amber-300 tracking-wide">{character.nom}</h1>
               {character.surnom && (
                 <p className="text-amber-600 text-lg italic mt-1">« {character.surnom} »</p>
@@ -50,14 +51,37 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                 <p className="text-stone-400 text-sm mt-1">Clan : {clan.nom}</p>
               )}
             </div>
-            <div className="text-right">
-              <div className="text-amber-400 text-2xl font-bold">{character.xp?.toLocaleString('fr-FR')} XP</div>
-              <div className="text-stone-500 text-sm">Prochain niveau : {xpProchain.toLocaleString('fr-FR')} XP</div>
-              <div className="mt-2 w-48 bg-stone-800 rounded-full h-2">
-                <div
-                  className="bg-amber-500 h-2 rounded-full"
-                  style={{ width: `${Math.min(100, ((character.xp ?? 0) / xpProchain) * 100)}%` }}
-                />
+
+            {/* XP + Photo */}
+            <div className="flex items-start gap-5 shrink-0">
+              {/* XP */}
+              <div className="text-right">
+                <div className="text-amber-400 text-2xl font-bold">{character.xp?.toLocaleString('fr-FR')} XP</div>
+                <div className="text-stone-500 text-sm">Prochain niveau : {xpProchain.toLocaleString('fr-FR')} XP</div>
+                <div className="mt-2 w-48 bg-stone-800 rounded-full h-2">
+                  <div
+                    className="bg-amber-500 h-2 rounded-full"
+                    style={{ width: `${Math.min(100, ((character.xp ?? 0) / xpProchain) * 100)}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Portrait */}
+              <div className="relative w-32 h-32 rounded-xl border-2 border-amber-700/60 overflow-hidden bg-stone-800 shrink-0 flex items-center justify-center group">
+                {character.photoUrl ? (
+                  <img
+                    src={character.photoUrl}
+                    alt={`Portrait de ${character.nom}`}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center w-full h-full text-stone-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-14 h-14" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                    </svg>
+                    <span className="text-xs mt-1 text-stone-500">Portrait</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -6,6 +6,7 @@ export const characters = pgTable('characters', {
   id: serial('id').primaryKey(),
   nom: varchar('nom', { length: 200 }).notNull(),
   surnom: varchar('surnom', { length: 200 }),
+  photoUrl: varchar('photo_url', { length: 500 }),
   raceId: integer('race_id').references(() => races.id),
   sexe: varchar('sexe', { length: 20 }),
   taille: varchar('taille', { length: 20 }),
