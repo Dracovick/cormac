@@ -37,6 +37,14 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
     <div className="min-h-screen bg-stone-950 text-stone-100">
       {/* ── EN-TÊTE ── */}
       <header className="bg-gradient-to-b from-stone-900 to-stone-950 border-b border-amber-900/40 py-8 px-6">
+        <div className="max-w-5xl mx-auto mb-4">
+          <Link href="/" className="inline-flex items-center gap-2 text-stone-400 hover:text-amber-300 text-sm transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M19 12H5M12 5l-7 7 7 7"/>
+            </svg>
+            Grimoire D&D 3e édition
+          </Link>
+        </div>
         <div className="max-w-5xl mx-auto">
           <div className="flex items-start justify-between flex-wrap gap-6">
             {/* Nom et identité */}

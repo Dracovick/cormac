@@ -9,7 +9,7 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-stone-950 text-stone-100 flex flex-col items-center justify-center p-8">
       <div className="max-w-2xl w-full">
-        <h1 className="text-4xl font-bold text-amber-300 text-center mb-2">Grimoire de Cormac</h1>
+        <h1 className="text-4xl font-bold text-amber-300 text-center mb-2">Grimoire D&D 3e édition</h1>
         <p className="text-stone-500 text-center mb-10 text-sm">D&D 3e édition (3.5) — Fiches de personnages</p>
 
         <div className="space-y-3">
