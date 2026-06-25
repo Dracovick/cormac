@@ -20,10 +20,10 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
 
   const { character, race, clan, classes, abilityScores, combatStats, savingThrows, skills, feats, weapons, armor, magicItems, potions, currency, languages, creatures, companions } = data
 
-  const dex = abilityScores ? (abilityScores.dexBase + abilityScores.dexMagique) : 10
+  const dex = abilityScores ? ((abilityScores.dexBase ?? 10) + (abilityScores.dexMagique ?? 0)) : 10
   const dexMod = Math.floor((dex - 10) / 2)
   const caTotal = combatStats
-    ? combatStats.caBase + combatStats.caArme + combatStats.caBouclier + combatStats.caNaturelle + combatStats.caDeflexion + combatStats.caDivers + dexMod
+    ? (combatStats.caBase ?? 10) + (combatStats.caArme ?? 0) + (combatStats.caBouclier ?? 0) + (combatStats.caNaturelle ?? 0) + (combatStats.caDeflexion ?? 0) + (combatStats.caDivers ?? 0) + dexMod
     : 10
   const initiativeTotal = combatStats ? dexMod + (combatStats.initiativeBonus ?? 0) + 4 : 0
 
@@ -94,12 +94,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           <Section titre="Caractéristiques">
             {abilityScores && (
               <div className="grid grid-cols-3 gap-2">
-                <CaracteristiqueBadge label="FOR" base={abilityScores.forBase} magic={abilityScores.forMagique ?? 0} />
-                <CaracteristiqueBadge label="DEX" base={abilityScores.dexBase} magic={abilityScores.dexMagique ?? 0} />
-                <CaracteristiqueBadge label="CON" base={abilityScores.conBase} magic={abilityScores.conMagique ?? 0} />
-                <CaracteristiqueBadge label="INT" base={abilityScores.intBase} magic={abilityScores.intMagique ?? 0} />
-                <CaracteristiqueBadge label="SAG" base={abilityScores.sagBase} magic={abilityScores.sagMagique ?? 0} />
-                <CaracteristiqueBadge label="CHA" base={abilityScores.chaBase} magic={abilityScores.chaMagique ?? 0} />
+                <CaracteristiqueBadge label="FOR" base={abilityScores.forBase ?? 10} magic={abilityScores.forMagique ?? 0} />
+                <CaracteristiqueBadge label="DEX" base={abilityScores.dexBase ?? 10} magic={abilityScores.dexMagique ?? 0} />
+                <CaracteristiqueBadge label="CON" base={abilityScores.conBase ?? 10} magic={abilityScores.conMagique ?? 0} />
+                <CaracteristiqueBadge label="INT" base={abilityScores.intBase ?? 10} magic={abilityScores.intMagique ?? 0} />
+                <CaracteristiqueBadge label="SAG" base={abilityScores.sagBase ?? 10} magic={abilityScores.sagMagique ?? 0} />
+                <CaracteristiqueBadge label="CHA" base={abilityScores.chaBase ?? 10} magic={abilityScores.chaMagique ?? 0} />
               </div>
             )}
           </Section>
@@ -185,12 +185,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
               <div className="space-y-1">
                 {skills.map(({ skill, charSkill }) => {
                   const carac = abilityScores
-                    ? { FOR: Math.floor(((abilityScores.forBase + (abilityScores.forMagique ?? 0)) - 10) / 2),
-                        DEX: Math.floor(((abilityScores.dexBase + (abilityScores.dexMagique ?? 0)) - 10) / 2),
-                        CON: Math.floor(((abilityScores.conBase + (abilityScores.conMagique ?? 0)) - 10) / 2),
-                        INT: Math.floor(((abilityScores.intBase + (abilityScores.intMagique ?? 0)) - 10) / 2),
-                        SAG: Math.floor(((abilityScores.sagBase + (abilityScores.sagMagique ?? 0)) - 10) / 2),
-                        CHA: Math.floor(((abilityScores.chaBase + (abilityScores.chaMagique ?? 0)) - 10) / 2) }
+                    ? { FOR: Math.floor((((abilityScores.forBase ?? 10) + (abilityScores.forMagique ?? 0)) - 10) / 2),
+                        DEX: Math.floor((((abilityScores.dexBase ?? 10) + (abilityScores.dexMagique ?? 0)) - 10) / 2),
+                        CON: Math.floor((((abilityScores.conBase ?? 10) + (abilityScores.conMagique ?? 0)) - 10) / 2),
+                        INT: Math.floor((((abilityScores.intBase ?? 10) + (abilityScores.intMagique ?? 0)) - 10) / 2),
+                        SAG: Math.floor((((abilityScores.sagBase ?? 10) + (abilityScores.sagMagique ?? 0)) - 10) / 2),
+                        CHA: Math.floor((((abilityScores.chaBase ?? 10) + (abilityScores.chaMagique ?? 0)) - 10) / 2) }
                     : { FOR: 0, DEX: 0, CON: 0, INT: 0, SAG: 0, CHA: 0 }
                   const caracMod = carac[skill.caracteristique as keyof typeof carac] ?? 0
                   const total = (charSkill.rangsInvestis ?? 0) + caracMod + (charSkill.modifDivers ?? 0)
