@@ -88,14 +88,23 @@ export async function getCharacter(id: number) {
 export type CharacterData = NonNullable<Awaited<ReturnType<typeof getCharacter>>>
 
 export async function listCharacters() {
-  return getDb()
+  const rows = await getDb()
     .select({
       id: schema.characters.id,
       nom: schema.characters.nom,
       surnom: schema.characters.surnom,
+      alignement: schema.characters.alignement,
       race: schema.races.nom,
       xp: schema.characters.xp,
+      classe: schema.classes.nom,
+      niveau: schema.characterClasses.niveau,
     })
     .from(schema.characters)
     .leftJoin(schema.races, eq(schema.characters.raceId, schema.races.id))
+    .leftJoin(schema.characterClasses, eq(schema.characterClasses.personnageId, schema.characters.id))
+    .leftJoin(schema.classes, eq(schema.characterClasses.classeId, schema.classes.id))
+
+  // Un seul résultat par personnage (classe principale = première entrée)
+  const seen = new Set<number>()
+  return rows.filter(r => { if (seen.has(r.id)) return false; seen.add(r.id); return true })
 }

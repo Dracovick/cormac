@@ -82,7 +82,9 @@ export default async function Home() {
                 <div>
                   <div className="text-white text-xl font-bold group-hover:text-amber-300 transition-colors">{c.nom}</div>
                   {c.surnom && <div className="text-stone-500 text-sm italic">{c.surnom}</div>}
-                  <div className="text-stone-400 text-sm mt-1">{c.race ?? '—'}</div>
+                  <div className="text-stone-400 text-sm mt-1">
+                    {[c.race, c.classe ? (c.niveau ? `${c.classe} ${c.niveau}` : c.classe) : null, c.alignement].filter(Boolean).join(' · ')}
+                  </div>
                 </div>
                 <div className="text-right">
                   <div className="text-amber-400 font-semibold">{c.xp?.toLocaleString('fr-FR')} XP</div>
