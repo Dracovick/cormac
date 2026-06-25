@@ -4,6 +4,7 @@ import { getDb } from '@/db'
 import * as schema from '@/db/schema'
 import { eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 import { CLASSES_DND35, getClasseInfo } from '@/lib/dnd35/classes'
 import { RACES_DND35, getRaceInfo } from '@/lib/dnd35/races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
@@ -380,4 +381,30 @@ export async function saveCharacter(
   revalidatePath('/')
   revalidatePath(`/personnage/${charId}`)
   return { id: charId }
+}
+
+// ─── Delete character ─────────────────────────────────────────────────────────
+export async function deleteCharacter(personnageId: number): Promise<void> {
+  const db = getDb()
+  await Promise.all([
+    db.delete(schema.characterAbilityScores).where(eq(schema.characterAbilityScores.personnageId, personnageId)),
+    db.delete(schema.characterCombatStats).where(eq(schema.characterCombatStats.personnageId, personnageId)),
+    db.delete(schema.characterSavingThrows).where(eq(schema.characterSavingThrows.personnageId, personnageId)),
+    db.delete(schema.characterClasses).where(eq(schema.characterClasses.personnageId, personnageId)),
+    db.delete(schema.characterSkills).where(eq(schema.characterSkills.personnageId, personnageId)),
+    db.delete(schema.characterFeats).where(eq(schema.characterFeats.personnageId, personnageId)),
+    db.delete(schema.characterWeapons).where(eq(schema.characterWeapons.personnageId, personnageId)),
+    db.delete(schema.characterArmor).where(eq(schema.characterArmor.personnageId, personnageId)),
+    db.delete(schema.characterMagicItems).where(eq(schema.characterMagicItems.personnageId, personnageId)),
+    db.delete(schema.characterPotions).where(eq(schema.characterPotions.personnageId, personnageId)),
+    db.delete(schema.characterCurrency).where(eq(schema.characterCurrency.personnageId, personnageId)),
+    db.delete(schema.characterLanguages).where(eq(schema.characterLanguages.personnageId, personnageId)),
+    db.delete(schema.characterSpells).where(eq(schema.characterSpells.personnageId, personnageId)),
+    db.delete(schema.characterCreatures).where(eq(schema.characterCreatures.personnageId, personnageId)),
+    db.delete(schema.characterCompanions).where(eq(schema.characterCompanions.personnageId, personnageId)),
+    db.delete(schema.characterNotes).where(eq(schema.characterNotes.personnageId, personnageId)),
+  ])
+  await db.delete(schema.characters).where(eq(schema.characters.id, personnageId))
+  revalidatePath('/')
+  redirect('/')
 }
