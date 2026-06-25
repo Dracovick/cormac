@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { listCharacters } from '@/lib/queries/character'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Home() {
   const characters = await listCharacters()
 

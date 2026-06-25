@@ -1,5 +1,7 @@
 import { notFound } from 'next/navigation'
 import { getCharacter } from '@/lib/queries/character'
+
+export const dynamic = 'force-dynamic'
 import { Section } from '@/components/fiche/Section'
 import { CaracteristiqueBadge } from '@/components/fiche/CaracteristiqueBadge'
 import { StatBlock } from '@/components/fiche/StatBlock'
