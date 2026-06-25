@@ -5,6 +5,7 @@ export const dynamic = 'force-dynamic'
 import { Section } from '@/components/fiche/Section'
 import { CaracteristiqueBadge } from '@/components/fiche/CaracteristiqueBadge'
 import { StatBlock } from '@/components/fiche/StatBlock'
+import { PhotoPortrait } from '@/components/fiche/PhotoPortrait'
 
 function modif(score: number) {
   const m = Math.floor((score - 10) / 2)
@@ -67,22 +68,11 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
               </div>
 
               {/* Portrait */}
-              <div className="relative w-32 h-32 rounded-xl border-2 border-amber-700/60 overflow-hidden bg-stone-800 shrink-0 flex items-center justify-center group">
-                {character.photoUrl ? (
-                  <img
-                    src={character.photoUrl}
-                    alt={`Portrait de ${character.nom}`}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="flex flex-col items-center justify-center w-full h-full text-stone-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-14 h-14" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-                    </svg>
-                    <span className="text-xs mt-1 text-stone-500">Portrait</span>
-                  </div>
-                )}
-              </div>
+              <PhotoPortrait
+                personnageId={character.id}
+                photoUrl={character.photoUrl ?? null}
+                nom={character.nom}
+              />
             </div>
           </div>
         </div>
