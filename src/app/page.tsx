@@ -97,6 +97,15 @@ export default async function Home() {
               <p className="text-lg">Aucun personnage trouvé.</p>
             </div>
           )}
+
+          <Link
+            href="/personnage/nouveau"
+            className="mt-4 flex items-center justify-center gap-3 w-full bg-amber-900/30 hover:bg-amber-800/50 border border-amber-700/50 hover:border-amber-500 rounded-lg p-5 transition-all group"
+          >
+            <span className="text-amber-500 text-3xl group-hover:scale-110 transition-transform">⚔️</span>
+            <span className="text-amber-300 font-semibold text-lg">Créer un nouveau personnage</span>
+            <span className="text-amber-600 text-xl ml-auto group-hover:translate-x-1 transition-transform">→</span>
+          </Link>
         </div>
       </div>
     </div>
