@@ -2,12 +2,21 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getCharacter } from '@/lib/queries/character'
 import { DeleteButton } from '@/components/fiche/DeleteButton'
+import { getClasseInfo } from '@/lib/dnd35/classes'
+import { getMultiClassBab, XP_PAR_NIVEAU } from '@/lib/dnd35/rules'
+import { getFeatWeaponBonuses, getFeatDescription } from '@/lib/dnd35/feat-bonuses'
 
 export const dynamic = 'force-dynamic'
 import { Section } from '@/components/fiche/Section'
 import { CaracteristiqueBadge } from '@/components/fiche/CaracteristiqueBadge'
 import { StatBlock } from '@/components/fiche/StatBlock'
 import { PhotoPortrait } from '@/components/fiche/PhotoPortrait'
+import { LiveHP } from '@/components/fiche/LiveHP'
+import { LiveSort } from '@/components/fiche/LiveSort'
+import { LivePotion } from '@/components/fiche/LivePotion'
+import { LiveCharge } from '@/components/fiche/LiveCharge'
+import { LiveNotes } from '@/components/fiche/LiveNotes'
+import { PreparerSorts } from '@/components/fiche/PreparerSorts'
 
 function modif(score: number) {
   const m = Math.floor((score - 10) / 2)
@@ -23,17 +32,43 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const data = await getCharacter(Number(id))
   if (!data) notFound()
 
-  const { character, race, clan, classes, abilityScores, combatStats, savingThrows, skills, feats, weapons, armor, magicItems, potions, currency, languages, creatures, companions } = data
+  const { character, race, clan, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, currency, languages, creatures, companions } = data
 
-  const dex = abilityScores ? ((abilityScores.dexBase ?? 10) + (abilityScores.dexMagique ?? 0)) : 10
-  const dexMod = Math.floor((dex - 10) / 2)
+  const forT = (abilityScores?.forBase ?? 10) + (abilityScores?.forMagique ?? 0) + (race?.bonusFor ?? 0)
+  const dexT = (abilityScores?.dexBase ?? 10) + (abilityScores?.dexMagique ?? 0) + (race?.bonusDex ?? 0)
+  const forMod = Math.floor((forT - 10) / 2)
+  const dexMod = Math.floor((dexT - 10) / 2)
   const caTotal = combatStats
     ? (combatStats.caBase ?? 10) + (combatStats.caArme ?? 0) + (combatStats.caBouclier ?? 0) + (combatStats.caNaturelle ?? 0) + (combatStats.caDeflexion ?? 0) + (combatStats.caDivers ?? 0) + dexMod
     : 10
-  const initiativeTotal = combatStats ? dexMod + (combatStats.initiativeBonus ?? 0) + 4 : 0
+  const initiativeTotal = combatStats ? dexMod + (combatStats.initiativeBonus ?? 0) : 0
+
+  // BAB multi-classes : somme de chaque contribution
+  const firstClass  = classes[0]
+  const bbaBase     = classes.length > 0
+    ? getMultiClassBab(classes.map(c => {
+        const info = getClasseInfo(c.classe.nom)
+        return { bab: info?.bab ?? 'faible', niveau: c.characterClass.niveau }
+      }))
+    : 0
+
+  // Priorité : valeur stockée si > 0, sinon calcul automatique D&D 3.5
+  const rawBabCorps = combatStats?.bbaCorpsACorps || bbaBase
+  const rawBabProj  = combatStats?.bbaProjectiles || rawBabCorps
+  const bbaCorpsTotal = rawBabCorps + forMod
+  const bbaProjTotal  = rawBabProj  + dexMod
+  function attackSeq(total: number, rawBab: number, weaponBonus = 0): string {
+    const first = total + weaponBonus
+    const seq = [first]
+    if (rawBab >= 6)  seq.push(first - 5)
+    if (rawBab >= 11) seq.push(first - 10)
+    if (rawBab >= 16) seq.push(first - 15)
+    return seq.map(signedNum).join(' / ')
+  }
 
   const classeLabel = classes.map(c => `${c.classe.nom} ${c.characterClass.niveau}`).join(' / ')
-  const xpProchain = 21000
+  const niveauTotal = classes.reduce((sum, c) => sum + c.characterClass.niveau, 0)
+  const xpProchain = XP_PAR_NIVEAU[niveauTotal + 1] ?? null
 
   return (
     <div className="min-h-screen bg-stone-950 text-stone-100">
@@ -67,6 +102,16 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
               Modifier
             </Link>
             <DeleteButton personnageId={Number(id)} nom={character.nom} />
+            <Link
+              href={`/aide/joueur?from=/personnage/${id}`}
+              className="inline-flex items-center gap-1.5 bg-stone-800/50 hover:bg-stone-700/60 border border-stone-700/50 hover:border-stone-500 text-stone-400 hover:text-stone-200 text-sm px-3 py-2 rounded-lg transition-all"
+              title="Aide — Guide du joueur"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              Aide
+            </Link>
           </div>
         </div>
         <div className="max-w-5xl mx-auto">
@@ -83,6 +128,11 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
               {clan && (
                 <p className="text-stone-400 text-sm mt-1">Clan : {clan.nom}</p>
               )}
+              {(character.joueurPrenom || character.joueurNom) && (
+                <p className="text-stone-500 text-sm mt-1">
+                  Joueur : {[character.joueurPrenom, character.joueurNom].filter(Boolean).join(' ')}
+                </p>
+              )}
             </div>
 
             {/* XP + Photo */}
@@ -90,11 +140,13 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
               {/* XP */}
               <div className="text-right">
                 <div className="text-amber-400 text-2xl font-bold">{character.xp?.toLocaleString('fr-FR')} XP</div>
-                <div className="text-stone-500 text-sm">Prochain niveau : {xpProchain.toLocaleString('fr-FR')} XP</div>
+                <div className="text-stone-500 text-sm">
+                  {xpProchain != null ? `Prochain niveau : ${xpProchain.toLocaleString('fr-FR')} XP` : 'Niveau maximum atteint'}
+                </div>
                 <div className="mt-2 w-48 bg-stone-800 rounded-full h-2">
                   <div
                     className="bg-amber-500 h-2 rounded-full"
-                    style={{ width: `${Math.min(100, ((character.xp ?? 0) / xpProchain) * 100)}%` }}
+                    style={{ width: xpProchain != null ? `${Math.min(100, ((character.xp ?? 0) / xpProchain) * 100)}%` : '100%' }}
                   />
                 </div>
               </div>
@@ -156,7 +208,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
         {/* ── COMBAT ── */}
         <Section titre="Combat">
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-4">
-            <StatBlock label="PV" value={`${combatStats?.pvActuels ?? 0} / ${combatStats?.pvMax ?? 0}`} />
+            <LiveHP personnageId={character.id} pvActuels={combatStats?.pvActuels ?? 0} pvMax={combatStats?.pvMax ?? 0} />
             <StatBlock label="CA" value={caTotal} sub={`(armure +${combatStats?.caArme ?? 0})`} />
             <StatBlock label="Initiative" value={signedNum(initiativeTotal)} sub="DEX + divers + Science" />
             <StatBlock label="Déplacement" value={`${combatStats?.deplacement ?? 9}m`} />
@@ -185,15 +237,13 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-stone-800/60 rounded p-3">
               <div className="text-amber-500 text-xs uppercase tracking-wide mb-1">Corps à corps</div>
-              <div className="text-white font-medium">
-                BBA {signedNum(combatStats?.bbaCorpsACorps ?? 0)} / {signedNum((combatStats?.bbaCorpsACorps ?? 0) - 5)}
-              </div>
+              <div className="text-white font-semibold">{attackSeq(bbaCorpsTotal, rawBabCorps)}</div>
+              <div className="text-stone-500 text-xs mt-0.5">BAB {rawBabCorps} + FOR {signedNum(forMod)}</div>
             </div>
             <div className="bg-stone-800/60 rounded p-3">
               <div className="text-amber-500 text-xs uppercase tracking-wide mb-1">Projectiles</div>
-              <div className="text-white font-medium">
-                BBA {signedNum(combatStats?.bbaProjectiles ?? 0)} / {signedNum((combatStats?.bbaProjectiles ?? 0) - 5)}
-              </div>
+              <div className="text-white font-semibold">{attackSeq(bbaProjTotal, rawBabProj)}</div>
+              <div className="text-stone-500 text-xs mt-0.5">BAB {rawBabProj} + DEX {signedNum(dexMod)}</div>
             </div>
           </div>
         </Section>
@@ -202,29 +252,157 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
         {weapons.length > 0 && (
           <Section titre="Armes">
             <div className="space-y-3">
-              {weapons.map(({ weapon, charWeapon }) => (
-                <div key={charWeapon.id} className="bg-stone-800/60 rounded p-3">
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <span className="text-white font-semibold">
-                        {weapon.nom}{charWeapon.bonusMagique ? ` +${charWeapon.bonusMagique}` : ''}
-                      </span>
-                      <div className="text-stone-400 text-xs mt-1 space-x-3">
-                        <span>Dégâts : <span className="text-amber-300">{weapon.degats}</span></span>
-                        <span>Critique : <span className="text-amber-300">{weapon.critiqueMin}-20 ×{weapon.critiqueMult}</span></span>
-                        {weapon.portee && <span>Portée : <span className="text-amber-300">{weapon.portee}m</span></span>}
-                        <span>Type : {weapon.typeDegats}</span>
+              {weapons.map(({ weapon, charWeapon }) => {
+                const isRanged   = weapon.portee != null
+                const rawBab     = isRanged ? rawBabProj : rawBabCorps
+                const bbaTotal   = isRanged ? bbaProjTotal : bbaCorpsTotal
+                const wpnBonus   = charWeapon.bonusMagique ?? 0
+
+                const { attackItems, damageItems } = getFeatWeaponBonuses(
+                  feats.map(f => f.feat.nom),
+                  weapon.nom,
+                  isRanged
+                )
+                const featAtkBonus    = attackItems.reduce((s, b) => s + b.value, 0)
+                const featDmgBonus   = damageItems.reduce((s, b) => s + b.value, 0)
+                const munitionsBonus = isRanged ? (charWeapon.bonusMunitions ?? 0) : 0
+
+                const coteDeForce   = charWeapon.coteDeForce ?? null
+                const isComposite   = coteDeForce !== null || weapon.nom.toLowerCase().includes('composite')
+                // Arc composite : FOR plafonné à la côte de Force ; autres distances : pas de FOR aux dégâts
+                const abilityDmgMod = !isRanged
+                  ? forMod
+                  : coteDeForce !== null
+                    ? Math.min(forMod, coteDeForce)
+                    : isComposite ? forMod : 0
+                const totalDmgMod   = wpnBonus + munitionsBonus + abilityDmgMod + featDmgBonus
+                const dmgStr        = totalDmgMod === 0
+                  ? weapon.degats
+                  : `${weapon.degats}${totalDmgMod > 0 ? '+' : ''}${totalDmgMod}`
+
+                // Nom affiché : (Force +N) pour la côte, +N pour la magie
+                const nomDisplay = weapon.nom
+                  + (coteDeForce !== null ? ` (Force +${coteDeForce})` : '')
+                  + (wpnBonus > 0 ? ` +${wpnBonus}` : '')
+
+                const atkBreakdown = [
+                  { label: 'BAB',                    value: rawBab },
+                  { label: isRanged ? 'DEX' : 'FOR', value: isRanged ? dexMod : forMod },
+                  ...(wpnBonus > 0       ? [{ label: 'mag.',  value: wpnBonus }]       : []),
+                  ...(munitionsBonus > 0 ? [{ label: 'fl.',   value: munitionsBonus }] : []),
+                  ...attackItems,
+                ].filter(b => b.value !== 0)
+
+                const dmgBreakdown = [
+                  ...(wpnBonus > 0        ? [{ label: 'mag.',                          value: wpnBonus }]       : []),
+                  ...(munitionsBonus > 0  ? [{ label: 'fl.',                           value: munitionsBonus }] : []),
+                  ...(abilityDmgMod !== 0 ? [{ label: isRanged ? 'FOR(arc)' : 'FOR',   value: abilityDmgMod }] : []),
+                  ...damageItems,
+                ].filter(b => b.value !== 0)
+
+                const hasConditional = [...attackItems, ...damageItems].some(b => b.conditional)
+                const fmtItem = (b: { label: string; value: number; conditional?: string }) =>
+                  `${b.label} ${b.value >= 0 ? '+' : ''}${b.value}${b.conditional ? '*' : ''}`
+                const showBreakdown = atkBreakdown.length > 0 || dmgBreakdown.length > 0
+
+                return (
+                  <div key={charWeapon.id} className="bg-stone-800/60 rounded p-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1">
+                        <div className="flex items-baseline gap-3">
+                          <span className="text-white font-semibold">
+                            {nomDisplay}
+                          </span>
+                          <span className="text-stone-500 text-xs">Att.</span>
+                          <span className="text-amber-300 font-bold text-sm">
+                            {attackSeq(bbaTotal + featAtkBonus + munitionsBonus, rawBab, wpnBonus)}
+                          </span>
+                        </div>
+                        <div className="text-stone-400 text-xs mt-1 space-x-3">
+                          <span>Dégâts : <span className="text-amber-300">{dmgStr}</span></span>
+                          <span>Critique : <span className="text-amber-300">{weapon.critiqueMin}-20 ×{weapon.critiqueMult}</span></span>
+                          {weapon.portee && <span>Portée : <span className="text-amber-300">{weapon.portee}m</span></span>}
+                          <span>Type : {weapon.typeDegats}</span>
+                        </div>
+                        {showBreakdown && (
+                          <div className="text-stone-500 text-xs mt-1.5 leading-relaxed">
+                            {atkBreakdown.length > 0 && (
+                              <><span className="text-stone-600">att. :</span> {atkBreakdown.map(fmtItem).join(', ')}</>
+                            )}
+                            {dmgBreakdown.length > 0 && (
+                              <> · <span className="text-stone-600">dég. :</span> {dmgBreakdown.map(fmtItem).join(', ')}</>
+                            )}
+                            {hasConditional && <span className="text-stone-600"> — *≤9m</span>}
+                          </div>
+                        )}
                       </div>
                     </div>
+                    {charWeapon.proprietesSpeciales && (
+                      <p className="text-purple-300 text-xs mt-2 italic">{charWeapon.proprietesSpeciales}</p>
+                    )}
                   </div>
-                  {charWeapon.proprietesSpeciales && (
-                    <p className="text-purple-300 text-xs mt-2 italic">{charWeapon.proprietesSpeciales}</p>
-                  )}
-                </div>
-              ))}
+                )
+              })}
             </div>
           </Section>
         )}
+
+        {/* ── SORTS ── */}
+        {spells.length > 0 && (() => {
+          const byNiveau = spells.reduce<Record<number, typeof spells>>((acc, s) => {
+            const n = s.charSpell.niveau ?? 0
+            acc[n] = acc[n] ?? []
+            acc[n].push(s)
+            return acc
+          }, {})
+          const niveaux = Object.keys(byNiveau).map(Number).sort((a, b) => a - b)
+          const niveauLabel = (n: number) => n === 0 ? 'Oraisons (niv. 0)' : `Niveau ${n}`
+          const ARCANE_CLASSES = ['Magicien', 'Ensorceleur', 'Barde']
+          const DIVIN_CLASSES  = ['Prêtre', 'Druide', 'Paladin', 'Rôdeur']
+          const classeSort = classes.find(c =>
+            ARCANE_CLASSES.includes(c.classe.nom) || DIVIN_CLASSES.includes(c.classe.nom)
+          )
+          const spellsMapped = spells.map(s => ({
+            charSpellId: s.charSpell.id,
+            nom: s.spell.nom,
+            niveau: s.charSpell.niveau ?? 0,
+            ecole: s.spell.ecole ?? '',
+            estPrepare: s.charSpell.estPrepare ?? 0,
+          }))
+          return (
+            <Section
+              titre="Sorts"
+              action={classeSort ? (
+                <PreparerSorts
+                  personnageId={character.id}
+                  classe={classeSort.classe.nom}
+                  niveau={classeSort.characterClass.niveau}
+                  spells={spellsMapped}
+                />
+              ) : undefined}
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {niveaux.map(n => (
+                  <div key={n}>
+                    <div className="text-amber-500 text-xs uppercase tracking-widest font-bold mb-2">{niveauLabel(n)}</div>
+                    <div className="space-y-1">
+                      {byNiveau[n].map(({ spell, charSpell }) => (
+                        <div key={charSpell.id} className="flex items-center justify-between py-1 border-b border-stone-800/60 last:border-0">
+                          <div>
+                            <span className={`text-sm font-medium ${(charSpell.estPrepare ?? 0) > 0 ? 'text-amber-200' : 'text-stone-400'}`}>{spell.nom}</span>
+                            {spell.ecole && <span className="text-stone-600 text-xs ml-2">· {spell.ecole}</span>}
+                            <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(spell.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="ml-1.5 text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
+                          </div>
+                          <LiveSort charSpellId={charSpell.id} personnageId={character.id} estPrepare={charSpell.estPrepare ?? 0} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Section>
+          )
+        })()}
 
         {/* ── COMPÉTENCES + DONS ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -246,6 +424,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                     <div key={skill.id} className="flex items-center justify-between py-1 border-b border-stone-800 last:border-0">
                       <div>
                         <span className="text-stone-200 text-sm">{skill.nom}</span>
+                        <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(skill.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="ml-1.5 text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
                         <span className="text-stone-500 text-xs ml-2">({skill.caracteristique})</span>
                       </div>
                       <div className="flex items-center gap-2">
@@ -264,9 +443,14 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
               <div className="space-y-2">
                 {feats.map(({ feat }) => (
                   <div key={feat.id} className="bg-stone-800/40 rounded p-2">
-                    <div className="text-stone-200 text-sm font-medium">{feat.nom}</div>
-                    {feat.effetMecanique && (
-                      <div className="text-amber-400 text-xs mt-0.5">{feat.effetMecanique}</div>
+                    <div className="text-stone-200 text-sm font-medium">
+                    {feat.nom}
+                    <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(feat.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="ml-1.5 text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
+                  </div>
+                    {(feat.effetMecanique || getFeatDescription(feat.nom)) && (
+                      <div className="text-amber-400 text-xs mt-0.5">
+                        {feat.effetMecanique ?? getFeatDescription(feat.nom)}
+                      </div>
                     )}
                   </div>
                 ))}
@@ -298,14 +482,23 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             <Section titre="Équipement magique">
               <div className="space-y-1.5">
                 {magicItems.map(({ item, charItem }) => (
-                  <div key={charItem.id} className="flex items-start gap-2 py-1 border-b border-stone-800 last:border-0">
-                    <div className="flex-1">
+                  <div key={charItem.id} className="flex items-center gap-2 py-1 border-b border-stone-800 last:border-0">
+                    <div className="flex-1 min-w-0">
                       <span className="text-purple-300 text-sm font-medium">{item.nom}</span>
+                      <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(item.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="ml-1.5 text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
+                      {charItem.emplacement && <span className="text-stone-600 text-xs ml-2">{charItem.emplacement}</span>}
                       {item.description && (
-                        <p className="text-stone-500 text-xs mt-0.5">{item.description}</p>
+                        <p className="text-stone-500 text-xs mt-0.5 truncate">{item.description}</p>
                       )}
                     </div>
-                    <span className="text-stone-500 text-xs shrink-0">{charItem.emplacement}</span>
+                    {(charItem.chargesRestantes != null || item.chargesMax != null) && (
+                      <LiveCharge
+                        charItemId={charItem.id}
+                        personnageId={character.id}
+                        chargesRestantes={charItem.chargesRestantes ?? item.chargesMax ?? 0}
+                        chargesMax={item.chargesMax ?? charItem.chargesRestantes ?? 0}
+                      />
+                    )}
                   </div>
                 ))}
               </div>
@@ -329,10 +522,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                         <p className="text-amber-600 text-xs italic mt-0.5">{charPotion.notes}</p>
                       )}
                     </div>
-                    <div className="text-center ml-3 shrink-0">
-                      <div className="text-white font-bold text-lg">{charPotion.chargesRestantes}</div>
-                      <div className="text-stone-500 text-xs">gorgée{(charPotion.chargesRestantes ?? 1) > 1 ? 's' : ''}</div>
-                    </div>
+                    <LivePotion charPotionId={charPotion.id} personnageId={character.id} chargesRestantes={charPotion.chargesRestantes ?? 1} />
                   </div>
                 ))}
               </div>
@@ -345,15 +535,17 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                 <div className="text-amber-500 text-xs uppercase tracking-wide mb-2">Monnaie</div>
                 <div className="flex gap-3 flex-wrap">
                   {[
-                    { label: 'PO', val: currency.po },
-                    { label: 'PA', val: currency.pa },
-                    { label: 'PC', val: currency.pc },
-                    { label: 'PE', val: currency.pe },
-                    { label: 'PM', val: currency.pm },
-                  ].filter(c => Number(c.val) > 0).map(({ label, val }) => (
+                    { label: 'PP', nom: 'Platine',  val: currency.pp },
+                    { label: 'PO', nom: 'Or',       val: currency.po },
+                    { label: 'PE', nom: 'Électrum',  val: currency.pe },
+                    { label: 'PA', nom: 'Argent',   val: currency.pa },
+                    { label: 'PC', nom: 'Cuivre',   val: currency.pc },
+                    { label: 'PM', nom: 'Mithral',  val: currency.pm },
+                  ].filter(c => Number(c.val) > 0).map(({ label, nom, val }) => (
                     <div key={label} className="bg-stone-800/60 rounded px-3 py-2 text-center">
                       <div className="text-amber-300 text-sm font-bold">{Number(val).toLocaleString('fr-FR')}</div>
-                      <div className="text-stone-500 text-xs">{label}</div>
+                      <div className="text-stone-500 text-xs font-semibold">{label}</div>
+                      <div className="text-stone-600 text-xs">{nom}</div>
                     </div>
                   ))}
                 </div>
@@ -390,12 +582,24 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           </Section>
         </div>
 
-        {/* ── NOTES ── */}
-        {character.notes && (
-          <Section titre="Notes du joueur">
-            <p className="text-stone-400 text-sm italic">{character.notes}</p>
+        {/* ── TRAITS RACIAUX ── */}
+        {racialFeatures.length > 0 && (
+          <Section titre={`Traits raciaux — ${race?.nom ?? 'Race'}`}>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {racialFeatures.map(f => (
+                <div key={f.id} className="bg-stone-800/40 rounded-lg px-3 py-2">
+                  <div className="text-amber-200 text-sm font-semibold">{f.nom}</div>
+                  {f.description && <div className="text-stone-400 text-xs mt-0.5 leading-relaxed">{f.description}</div>}
+                </div>
+              ))}
+            </div>
           </Section>
         )}
+
+        {/* ── NOTES ── */}
+        <Section titre="Notes du joueur">
+          <LiveNotes personnageId={character.id} notes={character.notes ?? ''} />
+        </Section>
       </main>
     </div>
   )
