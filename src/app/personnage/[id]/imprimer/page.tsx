@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { getCharacter } from '@/lib/queries/character'
 import { getClasseInfo } from '@/lib/dnd35/classes'
 import { getRaceInfo } from '@/lib/dnd35/races'
-import { getModifier, getBab } from '@/lib/dnd35/rules'
+import { getModifier, getBab, XP_PAR_NIVEAU } from '@/lib/dnd35/rules'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { PrintButton } from '@/components/fiche/PrintButton'
 
@@ -37,12 +37,17 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   if (!data) notFound()
 
   const { character, race, clan, classes, abilityScores, combatStats, savingThrows,
-    skills, feats, weapons, armor, magicItems, potions, currency, languages, companions } = data
+    skills, feats, spells, weapons, armor, magicItems, potions, currency, languages, companions } = data
 
   const firstClass = classes[0]
   const classeInfo = firstClass ? getClasseInfo(firstClass.classe.nom) : null
+  const niveauTotal = classes.reduce((sum, c) => sum + c.characterClass.niveau, 0) || 1
   const niveau = firstClass?.characterClass.niveau ?? 1
   const raceInfo = getRaceInfo(race?.nom ?? '')
+  const allClassNoms = classes.map(c => c.classe.nom)
+  // Classe lanceuse de sorts : n'importe laquelle des classes
+  const casterClasses = classes.filter(c => getClasseInfo(c.classe.nom)?.lanceurSorts)
+  const isSpellcaster = casterClasses.length > 0
 
   // Totaux caractéristiques
   const forT = (abilityScores?.forBase ?? 10) + (abilityScores?.forMagique ?? 0) + (raceInfo?.bonusFor ?? 0)
@@ -55,14 +60,30 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   const forMod = getModifier(forT); const dexMod = getModifier(dexT); const conMod = getModifier(conT)
   const intMod = getModifier(intT); const sagMod = getModifier(sagT); const chaMod = getModifier(chaT)
 
-  const bbaBase = classeInfo ? getBab(classeInfo.bab, niveau) : 0
-  const bbaCorps = combatStats?.bbaCorpsACorps ?? (bbaBase + forMod)
-  const bbaProj = combatStats?.bbaProjectiles ?? (bbaBase + dexMod)
+  // BBA multi-classe : somme de chaque classe
+  const bbaBase = classes.reduce((sum, c) => {
+    const info = getClasseInfo(c.classe.nom)
+    return sum + (info ? getBab(info.bab, c.characterClass.niveau) : 0)
+  }, 0)
+  const rawBabCorps = combatStats?.bbaCorpsACorps ?? bbaBase
+  const rawBabProj  = combatStats?.bbaProjectiles  ?? rawBabCorps
+  const bbaCorps = rawBabCorps + forMod
+  const bbaProj  = rawBabProj  + dexMod
 
+  function atkSeq(total: number, rawBab: number, wpnBonus = 0): string {
+    const first = total + wpnBonus
+    const seq = [first]
+    if (rawBab >= 6)  seq.push(first - 5)
+    if (rawBab >= 11) seq.push(first - 10)
+    if (rawBab >= 16) seq.push(first - 15)
+    return seq.map(fm).join(' / ')
+  }
+
+  // Jets de sauvegarde : valeurs stockées en DB (calculées multi-classe à la sauvegarde)
   const saveBonnes = classeInfo?.bonsSauvegardes ?? []
-  const vigBase = saveBonnes.includes('vigueur') ? 2 + Math.floor(niveau / 2) : Math.floor(niveau / 3)
-  const refBase = saveBonnes.includes('reflexes') ? 2 + Math.floor(niveau / 2) : Math.floor(niveau / 3)
-  const volBase = saveBonnes.includes('volonte') ? 2 + Math.floor(niveau / 2) : Math.floor(niveau / 3)
+  const vigBase = savingThrows?.vigueurBase ?? (saveBonnes.includes('vigueur') ? 2 + Math.floor(niveau / 2) : Math.floor(niveau / 3))
+  const refBase = savingThrows?.reflexesBase ?? (saveBonnes.includes('reflexes') ? 2 + Math.floor(niveau / 2) : Math.floor(niveau / 3))
+  const volBase = savingThrows?.volonteBase ?? (saveBonnes.includes('volonte') ? 2 + Math.floor(niveau / 2) : Math.floor(niveau / 3))
   const vigT = vigBase + conMod + (savingThrows?.vigueurMagique ?? 0)
   const refT = refBase + dexMod + (savingThrows?.reflexesMagique ?? 0)
   const volT = volBase + sagMod + (savingThrows?.volonteMagique ?? 0)
@@ -78,12 +99,11 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
     const divers = saved?.charSkill.modifDivers ?? 0
     const abilMod = abilMods[ref.caracteristique] ?? 0
     const total = abilMod + rangs + divers
-    const isClasse = ref.classesCompetence.includes(firstClass?.classe.nom ?? '')
+    const isClasse = ref.classesCompetence.some(cc => allClassNoms.includes(cc))
     return { ...ref, rangs, divers, abilMod, total, isClasse }
   }).filter(s => s.rangs > 0 || s.divers !== 0)
 
   const totalRangs = skillsData.reduce((acc, s) => acc + s.rangs, 0)
-  const isSpellcaster = classeInfo?.lanceurSorts ?? false
 
   const armurePortee = armor[0]
   const armureName = armurePortee
@@ -132,12 +152,12 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   const PAGE = { pageBreakAfter: 'always' as const, padding: '0', marginBottom: '0' }
 
   return (
-    <div style={{ fontFamily: 'Arial, sans-serif', color: '#000', background: '#fff', maxWidth: '210mm', margin: '0 auto', padding: '0 10px' }}>
+    <div style={{ fontFamily: 'Arial, sans-serif', color: '#000', background: '#fff', maxWidth: '216mm', margin: '0 auto', padding: '0 10px' }}>
       <style>{`
         @media print {
           .no-print { display: none !important; }
           body { margin: 0; padding: 0; }
-          @page { size: A4; margin: 1cm; }
+          @page { size: letter; margin: 0.75in; }
         }
         @media screen {
           body { background: #888; }
@@ -160,7 +180,8 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
       <div style={PAGE}>
 
         {/* En-tête */}
-        <table style={{ ...TABLE, marginBottom: '0' }}>
+        <div style={{ display: 'flex', alignItems: 'stretch', gap: '4px', marginBottom: '0' }}>
+        <table style={{ ...TABLE, marginBottom: '0', flex: 1 }}>
           <tbody>
             <tr>
               <td style={{ border: '1px solid #000', padding: '3px 6px', fontSize: '14pt', fontWeight: 'bold', width: '30%' }}>{character.nom}</td>
@@ -200,8 +221,36 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
               {tdh('Cheveux')}
               {tdh('Âge')}
             </tr>
+            <tr>
+              <td colSpan={3} style={{ border: '1px solid #000', padding: '2px 4px', fontSize: '8pt', fontWeight: 'bold' }}>
+                {[character.joueurPrenom, character.joueurNom].filter(Boolean).join(' ') || '—'}
+              </td>
+              <td colSpan={2} style={{ border: '1px solid #000', padding: '2px 4px', fontSize: '8pt' }}>
+                {character.xp?.toLocaleString('fr-FR') ?? '0'}
+              </td>
+              <td colSpan={3} style={{ border: '1px solid #000', padding: '2px 4px', fontSize: '8pt' }} />
+            </tr>
+            <tr>
+              <td colSpan={3} style={{ border: '1px solid #000', padding: '2px 4px', fontSize: '7pt', fontWeight: 'bold', textTransform: 'uppercase', background: '#eee' }}>Joueur</td>
+              <td colSpan={2} style={{ border: '1px solid #000', padding: '2px 4px', fontSize: '7pt', fontWeight: 'bold', textTransform: 'uppercase', background: '#eee' }}>Points d&apos;expérience</td>
+              <td colSpan={3} style={{ border: '1px solid #000', padding: '2px 4px', fontSize: '8pt' }} />
+            </tr>
           </tbody>
         </table>
+        {/* Portrait — affiché seulement si une photo est définie */}
+        {character.photoUrl && (
+          <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', border: '1px solid #000' }}>
+            <img
+              src={character.photoUrl}
+              alt={`Portrait de ${character.nom}`}
+              style={{ width: '95px', height: '130px', objectFit: 'cover', objectPosition: 'top', display: 'block' }}
+            />
+            <div style={{ fontSize: '6pt', textAlign: 'center', background: '#eee', padding: '1px 2px', fontWeight: 'bold', textTransform: 'uppercase', borderTop: '1px solid #000', lineHeight: 1.4 }}>
+              Portrait
+            </div>
+          </div>
+        )}
+        </div>
 
         {/* Caractéristiques + Classe/PV/CA */}
         <table style={{ ...TABLE, marginBottom: '0' }}>
@@ -254,19 +303,24 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      {td('Principale')}
-                      {td(firstClass?.classe.nom ?? '—', { fontWeight: 'bold' })}
-                      {td(niveau, { textAlign: 'center', fontWeight: 'bold', fontSize: '11pt' })}
-                      {td(classeInfo ? `d${classeInfo.de}` : '—', { textAlign: 'center' })}
-                      {td(fm(bbaBase), { textAlign: 'center' })}
-                      {td(character.xp?.toLocaleString('fr-FR') ?? 0, { textAlign: 'center' })}
-                      {td(((character.xp ?? 0) < 1000 ? 1000 : Math.ceil((character.xp ?? 0) / 1000) * 1000 + 1000).toLocaleString('fr-FR'), { textAlign: 'center' })}
-                    </tr>
-                    <tr>
-                      {td('Prestige / multi')}
-                      {td('')}{td('')}{td('')}{td('')}{td('')}{td('')}
-                    </tr>
+                    {classes.map((c, i) => {
+                      const ci = getClasseInfo(c.classe.nom)
+                      const xpProchain = Object.entries(XP_PAR_NIVEAU).find(([, v]) => v > (character.xp ?? 0))?.[1]
+                      return (
+                        <tr key={c.classe.id}>
+                          {td(i === 0 ? 'Principale' : `Multi (${i + 1})`, { fontSize: '7pt' })}
+                          {td(c.classe.nom, { fontWeight: 'bold' })}
+                          {td(c.characterClass.niveau, { textAlign: 'center', fontWeight: 'bold', fontSize: '11pt' })}
+                          {td(ci ? `d${ci.de}` : '—', { textAlign: 'center' })}
+                          {i === 0 ? td(fm(bbaBase), { textAlign: 'center' }) : td('', {})}
+                          {i === 0 ? td(character.xp?.toLocaleString('fr-FR') ?? 0, { textAlign: 'center' }) : td('', {})}
+                          {i === 0 ? td(xpProchain?.toLocaleString('fr-FR') ?? '—', { textAlign: 'center' }) : td(`Niv. total : ${niveauTotal}`, { textAlign: 'center', fontSize: '7pt', color: '#555' })}
+                        </tr>
+                      )
+                    })}
+                    {classes.length < 2 && (
+                      <tr>{td('Prestige / multi', { fontSize: '7pt' })}{td('')}{td('')}{td('')}{td('')}{td('')}{td('')}</tr>
+                    )}
                   </tbody>
                 </table>
 
@@ -422,12 +476,15 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
           </thead>
           <tbody>
             {weapons.length > 0 ? weapons.map((w, i) => {
-              const bonus = (w.charWeapon.bonusMagique ?? 0)
-              const bbaStr = bonus > 0 ? `${fm(bbaCorps + bonus)} / ${fm(bbaCorps - 5 + bonus)}` : `${fm(bbaCorps)} / ${fm(bbaCorps - 5)}`
+              const wpnBonus = w.charWeapon.bonusMagique ?? 0
+              const isRanged = w.weapon.portee != null
+              const rawBab   = isRanged ? rawBabProj : rawBabCorps
+              const bbaTotal = isRanged ? bbaProj    : bbaCorps
+              const bbaStr   = atkSeq(bbaTotal, rawBab, wpnBonus)
               return (
                 <tr key={i} style={{ background: i % 2 === 0 ? '#fff' : '#f9f9f9' }}>
                   <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', fontWeight: 'bold' }}>
-                    {w.weapon.nom}{bonus > 0 ? ` +${bonus}` : ''}
+                    {w.weapon.nom}{wpnBonus > 0 ? ` +${wpnBonus}` : ''}
                   </td>
                   <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', textAlign: 'center' }}>{bbaStr}</td>
                   <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', textAlign: 'center' }}>{w.weapon.degats ?? '—'}</td>
@@ -492,8 +549,9 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                   <tfoot>
                     <tr>
                       <td colSpan={7} style={{ border: '1px solid #000', padding: '2px 6px', fontSize: '8pt', background: '#eee' }}>
-                        <b>Classe principale</b> {firstClass?.classe.nom ?? '—'} &nbsp;&nbsp;
-                        <b>Total investis</b> {totalRangs}
+                        <b>Classes</b> {classes.map(c => `${c.classe.nom} ${c.characterClass.niveau}`).join(' / ')} &nbsp;&nbsp;
+                        <b>Niv. total</b> {niveauTotal} &nbsp;&nbsp;
+                        <b>Rangs investis</b> {totalRangs}
                       </td>
                     </tr>
                   </tfoot>
@@ -641,15 +699,17 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
             <thead>
               <tr style={{ background: '#000', color: '#fff' }}>
                 <td colSpan={4} style={{ padding: '4px 8px', fontWeight: 'bold', fontSize: '11pt', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                  ✦ Sorts — {firstClass?.classe.nom ?? ''} (niveau {niveau})
+                  ✦ Sorts — {casterClasses.map(c => `${c.classe.nom} ${c.characterClass.niveau}`).join(' / ')}
                 </td>
               </tr>
               <tr>
                 <td colSpan={4} style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '8pt', background: '#f5f5f5', fontStyle: 'italic' }}>
-                  Caractéristique de lancement : <b>{classeInfo?.caracteristiqueSorts?.toUpperCase() ?? '—'}</b>
-                  {classeInfo?.caracteristiqueSorts === 'intelligence' && `  ·  Mod. INT : ${fm(intMod)}  ·  DD de base : ${10 + intMod}`}
-                  {classeInfo?.caracteristiqueSorts === 'sagesse' && `  ·  Mod. SAG : ${fm(sagMod)}  ·  DD de base : ${10 + sagMod}`}
-                  {classeInfo?.caracteristiqueSorts === 'charisme' && `  ·  Mod. CHA : ${fm(chaMod)}  ·  DD de base : ${10 + chaMod}`}
+                  {casterClasses.map(c => {
+                    const ci = getClasseInfo(c.classe.nom)
+                    const car = ci?.caracteristiqueSorts ?? '—'
+                    const mod = car === 'intelligence' ? intMod : car === 'sagesse' ? sagMod : car === 'charisme' ? chaMod : 0
+                    return `${c.classe.nom} : ${car.toUpperCase()} (${fm(mod)}) · DD ${10 + mod}`
+                  }).join('   —   ')}
                 </td>
               </tr>
               <tr>
@@ -660,10 +720,25 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
               </tr>
             </thead>
             <tbody>
-              {/* TODO: sorts from DB — for now show empty rows for player to fill */}
-              {Array.from({ length: 30 }).map((_, i) => (
+              {spells.length > 0 ? spells.map(({ spell, charSpell }, i) => (
+                <tr key={charSpell.id} style={{ background: i % 2 === 0 ? '#fff' : '#f9f9f9' }}>
+                  <td style={{ border: '1px solid #ddd', height: '20px', textAlign: 'center', fontSize: '9pt', fontWeight: 'bold' }}>
+                    {charSpell.niveau ?? '—'}
+                  </td>
+                  <td style={{ border: '1px solid #ddd', padding: '2px 4px', fontSize: '9pt', fontWeight: (charSpell.estPrepare ?? 0) > 0 ? 'bold' : 'normal' }}>
+                    {charSpell.estConnu === 2 ? '★ ' : ''}{(charSpell.estPrepare ?? 0) > 0 ? `×${charSpell.estPrepare} ` : ''}{spell.nom}
+                    {charSpell.estConnu === 2 && <span style={{ fontSize: '7pt', color: '#888', marginLeft: '4px' }}>(perso.)</span>}
+                  </td>
+                  <td style={{ border: '1px solid #ddd', padding: '2px 4px', fontSize: '8pt', color: '#555' }}>
+                    {spell.ecole ?? ''}
+                  </td>
+                  <td style={{ border: '1px solid #ddd', padding: '2px 4px', fontSize: '8pt', color: '#333' }}>
+                    {spell.description ?? '—'}
+                  </td>
+                </tr>
+              )) : Array.from({ length: 30 }).map((_, i) => (
                 <tr key={i} style={{ background: i % 2 === 0 ? '#fff' : '#f9f9f9' }}>
-                  <td style={{ border: '1px solid #eee', height: '20px', textAlign: 'center', fontSize: '9pt' }}></td>
+                  <td style={{ border: '1px solid #eee', height: '20px' }}></td>
                   <td style={{ border: '1px solid #eee' }}></td>
                   <td style={{ border: '1px solid #eee' }}></td>
                   <td style={{ border: '1px solid #eee' }}></td>
