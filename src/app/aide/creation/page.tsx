@@ -179,17 +179,30 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           <p>Un personnage peut appartenir à plusieurs classes simultanément. Dans la section <strong className="text-amber-200">Classes &amp; Niveaux</strong> :</p>
           <ul className="list-disc list-inside space-y-1 pl-2">
             <li>Chaque ligne représente une classe avec son niveau.</li>
-            <li>Le bouton <strong>+ Ajouter une classe</strong> ajoute une nouvelle entrée (commence à Guerrier niv. 1).</li>
+            <li>Le bouton <strong>+ Ajouter une classe</strong> ajoute une nouvelle entrée.</li>
             <li>Le bouton <strong>✕</strong> (rouge) retire une classe — disponible uniquement si ≥ 2 classes.</li>
-            <li>Le <strong>niveau total</strong> affiché est la somme de tous les niveaux.</li>
+            <li>Le <strong>niveau total</strong> affiché est la somme de tous les niveaux de classe.</li>
           </ul>
           <Row label="BBA automatique">Le BBA est recalculé en additionnant la contribution de chaque classe selon sa progression (élevée / moyenne / faible).</Row>
-          <Row label="Sauvegardes automatiques">Chaque classe contribue séparément à Vigueur, Réflexes et Volonté.</Row>
-          <Row label="Sorts multi-classes">L'onglet Sorts ✨ apparaît dès qu'au moins une classe est lanceuse de sorts. Si plusieurs classes peuvent lancer des sorts, des onglets de sélection permettent de naviguer entre les grimoires.</Row>
+          <Row label="Sauvegardes automatiques">Chaque classe contribue séparément à Vigueur, Réflexes et Volonté selon ses bons jets.</Row>
+          <Row label="Sorts multi-classes">L'onglet Sorts ✨ apparaît dès qu'au moins une classe est lanceuse de sorts.</Row>
 
-          <p className="font-semibold text-stone-400 mt-3">Pénalité d'XP</p>
-          <p>Si la règle de pénalité d'XP s'applique (classes avec écart de niveau ≥ 2), un avertissement rouge s'affiche automatiquement dans l'onglet Identité avec le pourcentage de pénalité calculé.</p>
-          <Tip>La classe préférée de la race est automatiquement exclue du calcul de pénalité (ex. Guerrier pour un Nain).</Tip>
+          <p className="font-semibold text-stone-400 mt-4">Progression des XP en D&D 3.5</p>
+          <p>Un personnage multi-classé n'a <strong>qu'un seul total d'XP</strong>, partagé entre toutes ses classes. Les seuils de niveau sont basés sur le <em>niveau total</em> du personnage (somme de tous ses niveaux). Quand le seuil est atteint, le joueur choisit dans quelle classe placer le nouveau niveau.</p>
+          <p className="mt-1">Lors de chaque session de jeu, mettez à jour l'<strong>XP total</strong> dans ce formulaire. La fiche affiche automatiquement les options de prochain niveau, par exemple :</p>
+          <div className="bg-stone-800/50 rounded p-2 mt-1 font-mono text-xs text-stone-400">
+            → Fighter 4 ou Wizard 3
+          </div>
+
+          <p className="font-semibold text-stone-400 mt-4">Pénalité d'XP multi-classes</p>
+          <p>Si l'écart entre vos niveaux de classe dépasse 1 (en ignorant la classe préférée raciale), vous perdez <strong>20 % des XP gagnés par classe en retard</strong>. Ce calcul s'effectue automatiquement dans cet onglet.</p>
+          <ul className="list-disc list-inside space-y-1 pl-2 text-xs mt-1">
+            <li>Écart de 0 ou 1 niveau entre les classes → <strong>aucune pénalité</strong>.</li>
+            <li>Écart ≥ 2 niveaux → <strong>−20 %</strong> par classe concernée (max −40 %).</li>
+            <li>La classe préférée raciale est <strong>entièrement ignorée</strong> dans ce calcul.</li>
+          </ul>
+          <p className="text-xs mt-2 text-stone-500">Exemple : Fighter 4 / Wizard 2 pour un Humain. Pas de classe préférée fixe. Écart Fighter–Wizard = 2 → pénalité −20 % sur tous les XP gagnés.</p>
+          <Tip>Un avertissement rouge s'affiche automatiquement dans cet onglet si la pénalité s'applique, avec le pourcentage exact. Pour y remédier, avancez la classe en retard au prochain niveau.</Tip>
         </Section>
 
         <Section titre="🖼️ Photo de portrait">
