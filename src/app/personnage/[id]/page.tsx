@@ -75,6 +75,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const niveauTotal = classes.reduce((sum, c) => sum + c.characterClass.niveau, 0)
   const xpProchain = XP_PAR_NIVEAU[niveauTotal + 1] ?? null
 
+  // Pour les multi-classés : afficher les options de prochain niveau
+  const optsNiveauSuivant = classes.map(c => `${c.classe.nom} ${c.characterClass.niveau + 1}`)
+  const prochainesOptions = classes.length > 1 && xpProchain != null
+    ? optsNiveauSuivant.slice(0, -1).join(', ') + ' ou ' + optsNiveauSuivant[optsNiveauSuivant.length - 1]
+    : null
+
   // Sorts : calcul de la liste disponible pour les lanceurs divins
   const ARCANE_CLASSES = ['Magicien', 'Ensorceleur', 'Barde']
   const DIVIN_CLASSES  = ['Prêtre', 'Druide', 'Paladin', 'Rôdeur']
@@ -186,6 +192,9 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                 <div className="text-stone-500 text-sm">
                   {xpProchain != null ? `Prochain niveau : ${xpProchain.toLocaleString('fr-FR')} XP` : 'Niveau maximum atteint'}
                 </div>
+                {prochainesOptions && (
+                  <div className="text-stone-600 text-xs mt-0.5">→ {prochainesOptions}</div>
+                )}
                 <div className="mt-2 w-48 bg-stone-800 rounded-full h-2">
                   <div
                     className="bg-amber-500 h-2 rounded-full"
