@@ -120,7 +120,12 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
             <li>Pour les <strong>lanceurs divins</strong>, le sort personnalisé est automatiquement intégré dans le panneau de prière — il survit à la prière quotidienne et reste toujours disponible.</li>
             <li>Pour les <strong>Magiciens et lanceurs spontanés</strong>, le sort est ajouté directement au grimoire ou à la liste des sorts connus.</li>
             <li>Un bouton <span className="text-stone-400 font-mono text-xs">✕</span> permet de retirer un sort personnalisé à tout moment.</li>
+            <li>À la place de la loupe 🔍, chaque sort custom affiche sa propre <strong>description éditable</strong> directement sur la fiche.</li>
           </ul>
+          <Row label="Ajouter une description">Cliquez sur le texte gris <em>«&nbsp;+ Ajouter une description…&nbsp;»</em> sous le nom du sort. Un champ de texte s'ouvre pour décrire les effets, la portée, la durée, etc.</Row>
+          <Row label="Modifier la description">Cliquez directement sur le texte de la description existante — elle passe en mode édition.</Row>
+          <Row label="Sauvegarder">Cliquez <strong>Enregistrer</strong> ou appuyez sur <kbd className="bg-stone-700 px-1 rounded">Ctrl+Entrée</kbd>. La description est sauvegardée immédiatement.</Row>
+          <Row label="Annuler">Appuyez sur <kbd className="bg-stone-700 px-1 rounded">Échap</kbd> ou cliquez <strong>Annuler</strong> pour revenir sans modification.</Row>
           <Tip>Le sort personnalisé d'un Prêtre apparaît dans la modale de prière à côté des sorts officiels — vous pouvez décider de le préparer ou non chaque jour, comme n'importe quel autre sort.</Tip>
 
           <p className="font-semibold text-stone-400 mt-3">Lancer un sort pendant la partie</p>

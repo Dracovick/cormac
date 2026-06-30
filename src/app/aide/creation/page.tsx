@@ -115,6 +115,7 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
             <li>Les sorts personnalisés sont marqués d'une étoile <span className="text-amber-700 font-bold">★</span> dans la liste et dans la modale de prière.</li>
             <li>Pour les <strong>divins</strong>, ils persistent entre les prières et s'intègrent automatiquement au panneau de prière chaque jour.</li>
             <li>Un bouton <span className="text-stone-400 font-mono text-xs">✕</span> permet de les supprimer depuis la fiche joueur.</li>
+            <li>Chaque sort personnalisé peut avoir une <strong>description libre</strong> (effets, portée, durée, composantes…), saisie lors de la création ou ajoutée/modifiée directement sur la fiche à tout moment. La loupe 🔍 est remplacée par cette description éditable.</li>
           </ul>
           <Tip>La gestion des préparations quotidiennes (qui lance quoi aujourd'hui) se fait directement sur la fiche joueur via les boutons 🙏 Prier ou 📖 Étudier — pas dans ce formulaire.</Tip>
         </Section>
