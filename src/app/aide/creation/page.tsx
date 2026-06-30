@@ -108,6 +108,14 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           <p>Ces lanceurs spontanés ne préparent pas de sorts mais connaissent un nombre limité de sorts permanents. Ajoutez ici les sorts connus du personnage — ils seront disponibles sur la fiche sans nécessiter de préparation quotidienne.</p>
 
           <Row label="Emplacements par jour">Le tableau en haut de l'onglet affiche les emplacements disponibles par niveau de sort selon le niveau de classe.</Row>
+
+          <p className="font-semibold text-stone-400 mt-3">Sorts personnalisés — homebrew et magie de campagne</p>
+          <p>Pour tous les lanceurs de sorts, un bouton <span className="bg-stone-800 border border-stone-700 text-amber-400/80 px-1.5 py-0.5 rounded text-xs font-mono">+ Ajouter un sort personnalisé</span> est disponible directement sur la <strong>fiche joueur</strong> (pas dans ce formulaire). Il permet d'ajouter n'importe quel sort inventé, issu d'un supplément ou béni par une divinité de campagne.</p>
+          <ul className="list-disc list-inside space-y-1 pl-2 mt-1">
+            <li>Les sorts personnalisés sont marqués d'une étoile <span className="text-amber-700 font-bold">★</span> dans la liste et dans la modale de prière.</li>
+            <li>Pour les <strong>divins</strong>, ils persistent entre les prières et s'intègrent automatiquement au panneau de prière chaque jour.</li>
+            <li>Un bouton <span className="text-stone-400 font-mono text-xs">✕</span> permet de les supprimer depuis la fiche joueur.</li>
+          </ul>
           <Tip>La gestion des préparations quotidiennes (qui lance quoi aujourd'hui) se fait directement sur la fiche joueur via les boutons 🙏 Prier ou 📖 Étudier — pas dans ce formulaire.</Tip>
         </Section>
 

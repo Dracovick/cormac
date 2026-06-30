@@ -112,6 +112,17 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
           <p className="font-semibold text-stone-400 mt-3">Lanceurs spontanés — Ensorceleur, Barde</p>
           <p>L'Ensorceleur et le Barde connaissent un nombre limité de sorts (ajoutés dans le formulaire) et les lancent spontanément, sans préparation quotidienne. Utilisez le bouton <span className="bg-stone-800 border border-stone-700 text-amber-300 px-1.5 py-0.5 rounded text-xs font-mono">📖 Étudier</span> pour marquer combien d'emplacements vous avez utilisés dans la journée.</p>
 
+          <p className="font-semibold text-stone-400 mt-3">Sorts personnalisés — homebrew et magie de campagne</p>
+          <p>Chaque lanceur peut posséder des sorts inventés, bénis par sa divinité ou issus d'un supplément non inclus dans la liste officielle. Cliquez sur <span className="bg-stone-800 border border-stone-700 text-amber-400/80 px-1.5 py-0.5 rounded text-xs font-mono">+ Ajouter un sort personnalisé</span> en bas de la section Sorts.</p>
+          <ul className="list-disc list-inside space-y-1 pl-2 mt-1">
+            <li>Entrez le <strong>nom</strong> du sort, son <strong>école</strong> et son <strong>niveau</strong>.</li>
+            <li>Le sort apparaît sur la fiche avec une étoile dorée <span className="text-amber-700 font-bold">★</span> pour le distinguer des sorts officiels.</li>
+            <li>Pour les <strong>lanceurs divins</strong>, le sort personnalisé est automatiquement intégré dans le panneau de prière — il survit à la prière quotidienne et reste toujours disponible.</li>
+            <li>Pour les <strong>Magiciens et lanceurs spontanés</strong>, le sort est ajouté directement au grimoire ou à la liste des sorts connus.</li>
+            <li>Un bouton <span className="text-stone-400 font-mono text-xs">✕</span> permet de retirer un sort personnalisé à tout moment.</li>
+          </ul>
+          <Tip>Le sort personnalisé d'un Prêtre apparaît dans la modale de prière à côté des sorts officiels — vous pouvez décider de le préparer ou non chaque jour, comme n'importe quel autre sort.</Tip>
+
           <p className="font-semibold text-stone-400 mt-3">Lancer un sort pendant la partie</p>
           <ul className="list-disc list-inside space-y-1 pl-2">
             <li><span className="bg-amber-900/40 text-amber-400 px-1.5 py-0.5 rounded text-xs font-mono">préparé ▶</span> — sort préparé une fois</li>
