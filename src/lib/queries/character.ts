@@ -10,8 +10,9 @@ export async function getCharacter(id: number) {
 
   if (!character) return null
 
-  const [race, clan, classes, abilityScores, combatStats, savingThrows, skills, feats] = await Promise.all([
+  const [race, clan, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures] = await Promise.all([
     character.raceId ? getDb().select().from(schema.races).where(eq(schema.races.id, character.raceId)).then(r => r[0]) : null,
+
     character.clanId ? getDb().select().from(schema.clans).where(eq(schema.clans.id, character.clanId)).then(r => r[0]) : null,
 
     getDb().select({ characterClass: schema.characterClasses, classe: schema.classes })
@@ -41,9 +42,20 @@ export async function getCharacter(id: number) {
       .from(schema.characterFeats)
       .innerJoin(schema.feats, eq(schema.characterFeats.featId, schema.feats.id))
       .where(eq(schema.characterFeats.personnageId, id)),
+
+    character.raceId
+      ? getDb().select().from(schema.racialFeatures).where(eq(schema.racialFeatures.raceId, character.raceId))
+      : Promise.resolve([]),
   ])
 
-  const [weapons, armor, magicItems, potions, currency, languages, creatures, companions] = await Promise.all([
+  const [spells, weapons, armor, magicItems, potions, currency, languages, creatures, companions] = await Promise.all([
+    getDb().select({ charSpell: schema.characterSpells, spell: schema.spells })
+      .from(schema.characterSpells)
+      .innerJoin(schema.spells, eq(schema.characterSpells.sortId, schema.spells.id))
+      .where(eq(schema.characterSpells.personnageId, id))
+      .orderBy(schema.characterSpells.niveau, schema.spells.nom),
+
+
     getDb().select({ charWeapon: schema.characterWeapons, weapon: schema.weapons })
       .from(schema.characterWeapons)
       .innerJoin(schema.weapons, eq(schema.characterWeapons.armeId, schema.weapons.id))
@@ -82,7 +94,7 @@ export async function getCharacter(id: number) {
       .where(eq(schema.characterCompanions.personnageId, id)),
   ])
 
-  return { character, race, clan, classes, abilityScores, combatStats, savingThrows, skills, feats, weapons, armor, magicItems, potions, currency, languages, creatures, companions }
+  return { character, race, clan, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, currency, languages, creatures, companions }
 }
 
 export type CharacterData = NonNullable<Awaited<ReturnType<typeof getCharacter>>>
@@ -96,15 +108,37 @@ export async function listCharacters() {
       alignement: schema.characters.alignement,
       race: schema.races.nom,
       xp: schema.characters.xp,
-      classe: schema.classes.nom,
-      niveau: schema.characterClasses.niveau,
+      classeNom: schema.classes.nom,
+      classeNiveau: schema.characterClasses.niveau,
+      joueurPrenom: schema.characters.joueurPrenom,
+      joueurNom: schema.characters.joueurNom,
+      clan: schema.clans.nom,
     })
     .from(schema.characters)
     .leftJoin(schema.races, eq(schema.characters.raceId, schema.races.id))
     .leftJoin(schema.characterClasses, eq(schema.characterClasses.personnageId, schema.characters.id))
     .leftJoin(schema.classes, eq(schema.characterClasses.classeId, schema.classes.id))
+    .leftJoin(schema.clans, eq(schema.characters.clanId, schema.clans.id))
+    .orderBy(schema.characters.nom)
 
-  // Un seul résultat par personnage (classe principale = première entrée)
-  const seen = new Set<number>()
-  return rows.filter(r => { if (seen.has(r.id)) return false; seen.add(r.id); return true })
+  const map = new Map<number, {
+    id: number; nom: string; surnom: string | null; alignement: string | null
+    race: string | null; xp: number | null; classes: { nom: string; niveau: number }[]
+    joueurPrenom: string | null; joueurNom: string | null; clan: string | null
+  }>()
+
+  for (const r of rows) {
+    if (!map.has(r.id)) {
+      map.set(r.id, {
+        id: r.id, nom: r.nom, surnom: r.surnom, alignement: r.alignement,
+        race: r.race, xp: r.xp, classes: [],
+        joueurPrenom: r.joueurPrenom, joueurNom: r.joueurNom, clan: r.clan,
+      })
+    }
+    if (r.classeNom && r.classeNiveau != null) {
+      map.get(r.id)!.classes.push({ nom: r.classeNom, niveau: r.classeNiveau })
+    }
+  }
+
+  return [...map.values()]
 }
