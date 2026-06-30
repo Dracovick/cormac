@@ -2,7 +2,7 @@
 
 import { getDb } from '@/db'
 import * as schema from '@/db/schema'
-import { eq } from 'drizzle-orm'
+import { eq, and, ne } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { CLASSES_DND35, getClasseInfo } from '@/lib/dnd35/classes'
@@ -489,23 +489,76 @@ export async function preparerSorts(personnageId: number, preparations: { charSp
 
 export async function preparerSortsDivins(
   personnageId: number,
-  preparations: { nom: string; ecole: string; niveau: number; estPrepare: number }[]
+  preparations: { nom: string; ecole: string; niveau: number; estPrepare: number; estPersonnalise?: boolean }[]
 ) {
   const db = getDb()
-  await db.delete(schema.characterSpells).where(eq(schema.characterSpells.personnageId, personnageId))
+  // Supprimer seulement les sorts non-personnalisés (estConnu != 2), garder les custom
+  await db.delete(schema.characterSpells).where(
+    and(eq(schema.characterSpells.personnageId, personnageId), ne(schema.characterSpells.estConnu, 2))
+  )
+  // Remettre estPrepare=0 pour les sorts personnalisés avant de les réappliquer
+  await db.update(schema.characterSpells)
+    .set({ estPrepare: 0 })
+    .where(and(eq(schema.characterSpells.personnageId, personnageId), eq(schema.characterSpells.estConnu, 2)))
+
   for (const sort of preparations) {
     if (sort.estPrepare <= 0) continue
-    const sortId = await findOrCreateByNom(
-      () => db.select({ id: schema.spells.id }).from(schema.spells).where(eq(schema.spells.nom, sort.nom)).limit(1),
-      () => db.insert(schema.spells).values({ nom: sort.nom, ecole: sort.ecole || null }).returning({ id: schema.spells.id })
-    )
+    if (sort.estPersonnalise) {
+      // Mettre à jour l'estPrepare du sort personnalisé déjà en base
+      const [spell] = await db.select({ id: schema.spells.id })
+        .from(schema.spells).where(eq(schema.spells.nom, sort.nom)).limit(1)
+      if (spell) {
+        await db.update(schema.characterSpells)
+          .set({ estPrepare: sort.estPrepare })
+          .where(and(
+            eq(schema.characterSpells.personnageId, personnageId),
+            eq(schema.characterSpells.sortId, spell.id),
+            eq(schema.characterSpells.estConnu, 2)
+          ))
+      }
+    } else {
+      const sortId = await findOrCreateByNom(
+        () => db.select({ id: schema.spells.id }).from(schema.spells).where(eq(schema.spells.nom, sort.nom)).limit(1),
+        () => db.insert(schema.spells).values({ nom: sort.nom, ecole: sort.ecole || null }).returning({ id: schema.spells.id })
+      )
+      await db.insert(schema.characterSpells).values({
+        personnageId, sortId, niveau: sort.niveau, estConnu: 1, estPrepare: sort.estPrepare,
+      })
+    }
+  }
+  revalidatePath(`/personnage/${personnageId}`)
+}
+
+export async function ajouterSortPersonnalise(
+  personnageId: number,
+  sort: { nom: string; ecole: string; niveau: number }
+) {
+  const db = getDb()
+  const sortId = await findOrCreateByNom(
+    () => db.select({ id: schema.spells.id }).from(schema.spells).where(eq(schema.spells.nom, sort.nom.trim())).limit(1),
+    () => db.insert(schema.spells).values({ nom: sort.nom.trim(), ecole: sort.ecole || null }).returning({ id: schema.spells.id })
+  )
+  const existing = await db.select({ id: schema.characterSpells.id })
+    .from(schema.characterSpells)
+    .where(and(eq(schema.characterSpells.personnageId, personnageId), eq(schema.characterSpells.sortId, sortId)))
+    .limit(1)
+  if (existing.length === 0) {
     await db.insert(schema.characterSpells).values({
-      personnageId, sortId,
-      niveau: sort.niveau,
-      estConnu: 1,
-      estPrepare: sort.estPrepare,
+      personnageId, sortId, niveau: sort.niveau, estConnu: 2, estPrepare: 0,
     })
   }
+  revalidatePath(`/personnage/${personnageId}`)
+}
+
+export async function supprimerSortPersonnalise(charSpellId: number, personnageId: number) {
+  const db = getDb()
+  await db.delete(schema.characterSpells).where(
+    and(
+      eq(schema.characterSpells.id, charSpellId),
+      eq(schema.characterSpells.personnageId, personnageId),
+      eq(schema.characterSpells.estConnu, 2)
+    )
+  )
   revalidatePath(`/personnage/${personnageId}`)
 }
 

@@ -8,7 +8,7 @@ const ARCANE = ['Magicien', 'Ensorceleur', 'Barde']
 const DIVIN  = ['Prêtre', 'Druide', 'Paladin', 'Rôdeur']
 
 type Spell = { charSpellId: number; nom: string; niveau: number; ecole: string; estPrepare: number }
-type AvailableSpell = { nom: string; ecole: string; niveau: number }
+type AvailableSpell = { nom: string; ecole: string; niveau: number; estPersonnalise?: boolean }
 
 type Props = {
   personnageId: number
@@ -91,6 +91,7 @@ export function PreparerSorts({ personnageId, classe, niveau, spells, availableS
         const preparations = availableSpells.map(s => ({
           nom: s.nom, ecole: s.ecole, niveau: s.niveau,
           estPrepare: preps.get(s.nom) ?? 0,
+          estPersonnalise: s.estPersonnalise ?? false,
         }))
         await preparerSortsDivins(personnageId, preparations)
       } else {
@@ -167,7 +168,10 @@ export function PreparerSorts({ personnageId, classe, niveau, spells, availableS
                         const full = used >= max && cur === 0
                         return (
                           <div key={key} className="flex items-center gap-2 py-1 border-b border-stone-800/60 last:border-0">
-                            <span className={`text-sm flex-1 ${cur > 0 ? 'text-amber-200' : 'text-stone-400'}`}>{s.nom}</span>
+                            <span className={`text-sm flex-1 ${cur > 0 ? 'text-amber-200' : 'text-stone-400'}`}>
+                              {s.nom}
+                              {s.estPersonnalise && <span className="text-amber-700 text-xs ml-1" title="Sort personnalisé">★</span>}
+                            </span>
                             {s.ecole && <span className="text-stone-700 text-xs shrink-0">{s.ecole}</span>}
                             <div className="flex items-center gap-1 shrink-0">
                               <button

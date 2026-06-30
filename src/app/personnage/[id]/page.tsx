@@ -19,6 +19,8 @@ import { LivePotion } from '@/components/fiche/LivePotion'
 import { LiveCharge } from '@/components/fiche/LiveCharge'
 import { LiveNotes } from '@/components/fiche/LiveNotes'
 import { PreparerSorts } from '@/components/fiche/PreparerSorts'
+import { AjouterSort } from '@/components/fiche/AjouterSort'
+import { SupprimerSort } from '@/components/fiche/SupprimerSort'
 
 function modif(score: number) {
   const m = Math.floor((score - 10) / 2)
@@ -79,18 +81,33 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const arcaneClasseSort = classes.find(c => ARCANE_CLASSES.includes(c.classe.nom))
   const classeSort = divineClasseSort ?? arcaneClasseSort
 
-  let divineAvailableSpells: { nom: string; ecole: string; niveau: number }[] | undefined
+  // Sorts personnalisés (estConnu=2) pour tous les lanceurs
+  const customSpells = spells
+    .filter(s => s.charSpell.estConnu === 2)
+    .map(s => ({
+      charSpellId: s.charSpell.id,
+      nom: s.spell.nom,
+      ecole: s.spell.ecole ?? '',
+      niveau: s.charSpell.niveau ?? 0,
+      estPersonnalise: true as const,
+    }))
+
+  let divineAvailableSpells: { nom: string; ecole: string; niveau: number; estPersonnalise?: boolean }[] | undefined
   if (divineClasseSort) {
     const classeKey = divineClasseSort.classe.nom as ClasseSortKey
     const slots = getSortsSlotsParJour(divineClasseSort.classe.nom, divineClasseSort.characterClass.niveau)
     const maxSpellLevel = slots.reduce((max, count, idx) => count > 0 ? idx : max, -1)
     if (maxSpellLevel >= 0) {
-      divineAvailableSpells = SORTS_DND35
+      const predefined = SORTS_DND35
         .filter(s => {
           const niv = s.niveaux[classeKey]
           return niv !== undefined && niv <= maxSpellLevel
         })
-        .map(s => ({ nom: s.nom, ecole: s.ecole, niveau: s.niveaux[classeKey]! }))
+        .map(s => ({ nom: s.nom, ecole: s.ecole, niveau: s.niveaux[classeKey]!, estPersonnalise: false as const }))
+      // Fusionner avec les sorts personnalisés (en évitant les doublons)
+      const nomsPredefined = new Set(predefined.map(s => s.nom))
+      const customExtra = customSpells.filter(cs => !nomsPredefined.has(cs.nom))
+      divineAvailableSpells = [...predefined, ...customExtra]
         .sort((a, b) => a.niveau - b.niveau || a.nom.localeCompare(b.nom, 'fr'))
     }
   }
@@ -389,6 +406,9 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             ecole: s.spell.ecole ?? '',
             estPrepare: s.charSpell.estPrepare ?? 0,
           }))
+          const maxNiveau = divineAvailableSpells
+            ? Math.max(...divineAvailableSpells.map(s => s.niveau), 0)
+            : 9
           return (
             <Section
               titre="Sorts"
@@ -403,31 +423,43 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
               }
             >
               {spells.length === 0 ? (
-                <p className="text-stone-600 text-sm italic">
-                  {divineClasseSort
-                    ? 'Aucun sort préparé — cliquez sur Prier pour commencer la journée.'
-                    : 'Aucun sort dans le grimoire.'}
-                </p>
+                <>
+                  <p className="text-stone-600 text-sm italic">
+                    {divineClasseSort
+                      ? 'Aucun sort préparé — cliquez sur Prier pour commencer la journée.'
+                      : 'Aucun sort dans le grimoire.'}
+                  </p>
+                  <AjouterSort personnageId={character.id} maxNiveau={maxNiveau} />
+                </>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {niveaux.map(n => (
-                    <div key={n}>
-                      <div className="text-amber-500 text-xs uppercase tracking-widest font-bold mb-2">{niveauLabel(n)}</div>
-                      <div className="space-y-1">
-                        {byNiveau[n].map(({ spell, charSpell }) => (
-                          <div key={charSpell.id} className="flex items-center justify-between py-1 border-b border-stone-800/60 last:border-0">
-                            <div>
-                              <span className={`text-sm font-medium ${(charSpell.estPrepare ?? 0) > 0 ? 'text-amber-200' : 'text-stone-400'}`}>{spell.nom}</span>
-                              {spell.ecole && <span className="text-stone-600 text-xs ml-2">· {spell.ecole}</span>}
-                              <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(spell.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="ml-1.5 text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {niveaux.map(n => (
+                      <div key={n}>
+                        <div className="text-amber-500 text-xs uppercase tracking-widest font-bold mb-2">{niveauLabel(n)}</div>
+                        <div className="space-y-1">
+                          {byNiveau[n].map(({ spell, charSpell }) => (
+                            <div key={charSpell.id} className="flex items-center justify-between py-1 border-b border-stone-800/60 last:border-0">
+                              <div className="flex items-center min-w-0">
+                                <span className={`text-sm font-medium ${(charSpell.estPrepare ?? 0) > 0 ? 'text-amber-200' : 'text-stone-400'}`}>{spell.nom}</span>
+                                {charSpell.estConnu === 2 && (
+                                  <>
+                                    <span className="text-amber-700 text-xs ml-1" title="Sort personnalisé">★</span>
+                                    <SupprimerSort charSpellId={charSpell.id} personnageId={character.id} />
+                                  </>
+                                )}
+                                {spell.ecole && <span className="text-stone-600 text-xs ml-2">· {spell.ecole}</span>}
+                                <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(spell.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="ml-1.5 text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
+                              </div>
+                              <LiveSort charSpellId={charSpell.id} personnageId={character.id} estPrepare={charSpell.estPrepare ?? 0} />
                             </div>
-                            <LiveSort charSpellId={charSpell.id} personnageId={character.id} estPrepare={charSpell.estPrepare ?? 0} />
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                  <AjouterSort personnageId={character.id} maxNiveau={maxNiveau} />
+                </>
               )}
             </Section>
           )
