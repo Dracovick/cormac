@@ -186,6 +186,7 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           <Row label="BBA automatique">Le BBA est recalculé en additionnant la contribution de chaque classe selon sa progression (élevée / moyenne / faible).</Row>
           <Row label="Sauvegardes automatiques">Chaque classe contribue séparément à Vigueur, Réflexes et Volonté selon ses bons jets.</Row>
           <Row label="Sorts multi-classes">L'onglet Sorts ✨ apparaît dès qu'au moins une classe est lanceuse de sorts.</Row>
+          <Row label="Compétences de classe">Dans l'onglet Compétences, une compétence est traitée comme <em>compétence de classe</em> (rang max = niveau total + 3) dès qu'elle l'est pour <strong>au moins une</strong> de vos classes. Exemple : après avoir ajouté Magicien, <em>Connaissance (arcanes)</em> et <em>Concentration</em> deviennent compétences de classe pour tout le personnage.</Row>
 
           <p className="font-semibold text-stone-400 mt-4">Progression des XP en D&D 3.5</p>
           <p>Un personnage multi-classé n'a <strong>qu'un seul total d'XP</strong>, partagé entre toutes ses classes. Les seuils de niveau sont basés sur le <em>niveau total</em> du personnage (somme de tous ses niveaux). Quand le seuil est atteint, le joueur choisit dans quelle classe placer le nouveau niveau.</p>
@@ -201,8 +202,11 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
             <li>Écart ≥ 2 niveaux → <strong>−20 %</strong> par classe concernée (max −40 %).</li>
             <li>La classe préférée raciale est <strong>entièrement ignorée</strong> dans ce calcul.</li>
           </ul>
-          <p className="text-xs mt-2 text-stone-500">Exemple : Fighter 4 / Wizard 2 pour un Humain. Pas de classe préférée fixe. Écart Fighter–Wizard = 2 → pénalité −20 % sur tous les XP gagnés.</p>
-          <Tip>Un avertissement rouge s'affiche automatiquement dans cet onglet si la pénalité s'applique, avec le pourcentage exact. Pour y remédier, avancez la classe en retard au prochain niveau.</Tip>
+
+          <p className="font-semibold text-stone-500 text-xs mt-3">Humains et Demi-Elfes — classe préférée automatique</p>
+          <p className="text-xs">Ces races choisissent librement leur classe préférée. Le système désigne automatiquement la <strong>classe la plus haute comme préférée</strong>, ce qui est le choix optimal. Conséquence importante : un Guerrier 6 qui ajoute Magicien 1 n'a <strong>aucune pénalité</strong> — le Guerrier est exempté du calcul, et le Magicien n'a pas d'autre classe non-préférée à laquelle se comparer.</p>
+          <p className="text-xs mt-1 text-stone-500">La pénalité n'apparaît pour un humain que si deux classes secondaires (toutes deux derrière la classe principale) présentent un écart entre elles — ex. Guerrier 6 / Magicien 3 / Roublard 1 : Magicien et Roublard sont non-préférés, Roublard est 2 niveaux derrière Magicien → −20 %.</p>
+          <Tip>Le message vert <strong>✓ Pas de pénalité XP · Classe préférée : Guerrier (auto — la plus haute)</strong> s'affiche pour confirmer quelle classe est exemptée. S'il devient orange ⚠, avancez la classe en retard au prochain niveau.</Tip>
         </Section>
 
         <Section titre="🖼️ Photo de portrait">

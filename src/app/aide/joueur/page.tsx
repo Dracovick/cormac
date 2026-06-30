@@ -194,6 +194,20 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
         <Section titre="📊 Progression en XP">
           <p>La barre de progression d'XP en haut de la fiche indique votre avancement vers le prochain niveau. Le seuil est calculé automatiquement selon les règles D&D 3.5.</p>
           <Row label="Mettre à jour les XP">Allez dans <strong>Modifier</strong> → onglet <strong>Identité</strong> → champ <strong>XP</strong>.</Row>
+
+          <p className="font-semibold text-stone-400 mt-3">Seuils de niveau en D&D 3.5</p>
+          <div className="grid grid-cols-4 sm:grid-cols-5 gap-1 mt-1 text-xs text-center">
+            {[
+              ['Niv. 2','1 000'],['Niv. 3','3 000'],['Niv. 4','6 000'],['Niv. 5','10 000'],
+              ['Niv. 6','15 000'],['Niv. 7','21 000'],['Niv. 8','28 000'],['Niv. 9','36 000'],
+              ['Niv. 10','45 000'],['Niv. 15','105 000'],['Niv. 20','190 000'],
+            ].map(([niv, xp]) => (
+              <div key={niv} className="bg-stone-800/50 rounded p-1.5">
+                <div className="text-amber-500 font-bold">{niv}</div>
+                <div className="text-stone-400">{xp} XP</div>
+              </div>
+            ))}
+          </div>
         </Section>
 
         <Section titre="⚔️✨ Multi-classes — règles de jeu">
@@ -201,15 +215,50 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
           <Row label="BBA (Base d'Attaque)">Le BBA total est la <strong>somme</strong> des BBA de chaque classe, calculés séparément selon leur progression (élevée / moyenne / faible).</Row>
           <Row label="Jets de sauvegarde">Chaque classe contribue indépendamment selon sa liste de bons jets. Résultat : les jets d'un multi-classe sont toujours ≥ chacune des classes seules.</Row>
           <Row label="Points de vie">Chaque niveau de chaque classe ajoute son propre dé de vie. La fiche cumule le total en créant le personnage.</Row>
-          <Row label="Compétences">Les compétences de classe de <em>chaque</em> classe ont accès rang max au niveau du personnage (rang max = niveau total + 3 pour les compétences de classe).</Row>
+          <Row label="Compétences">Une compétence est traitée comme compétence de classe dès qu'elle l'est pour <em>au moins une</em> de vos classes. Exemple : un Guerrier 6 / Magicien 1 traite <em>Connaissance (arcanes)</em> et <em>Concentration</em> comme compétences de classe — rang max = niveau total + 3.</Row>
 
-          <p className="font-semibold text-stone-400 mt-3">Pénalité d'XP multi-classes (règle optionnelle)</p>
-          <p>Si deux classes ou plus (hors classe préférée raciale) ont un écart de niveau ≥ 2, le personnage subit une pénalité de <strong>−20 % d'XP gagné</strong> par classe concernée.</p>
-          <ul className="list-disc list-inside space-y-1 pl-2 text-xs">
-            <li>Humain / Demi-Elfe : classe préférée = <strong>au choix</strong> (aucune classe n'entre en compte pour la pénalité).</li>
-            <li>Elfe → Magicien · Nain → Guerrier · Halfelin → Roublard · Gnome → Barde · Demi-Orque → Barbare.</li>
+          <p className="font-semibold text-stone-400 mt-4">Progression des XP — un seul total partagé</p>
+          <p>En D&D 3.5, <strong>tous les niveaux de toutes les classes partagent un unique total d'XP</strong>. Il n'y a pas d'XP séparés par classe. Les seuils du tableau ci-dessus s'appliquent au <em>niveau total</em> du personnage (somme de tous ses niveaux de classe).</p>
+          <p className="mt-2">Lorsque votre total d'XP franchit un seuil, vous gagnez <strong>un niveau dans la classe de votre choix</strong>. La fiche affiche vos options directement :</p>
+          <div className="bg-stone-800/50 rounded p-3 mt-2 font-mono text-xs">
+            <span className="text-amber-400">12 000 XP</span>
+            <span className="text-stone-500"> · Prochain niveau : 15 000 XP</span>
+            <br/>
+            <span className="text-stone-600">→ Fighter 4 ou Wizard 3</span>
+          </div>
+          <p className="mt-2 text-xs text-stone-500">Ici, le personnage peut choisir de monter Fighter à 4 <em>ou</em> Wizard à 3 — c'est le même seuil de 15 000 XP dans les deux cas. Le choix est stratégique, pas mécanique.</p>
+          <Tip>La ligne <span className="font-mono text-stone-300">→ Classe X ou Classe Y</span> n'apparaît que pour les multi-classés. Un personnage mono-classe voit uniquement le seuil d'XP.</Tip>
+
+          <p className="font-semibold text-stone-400 mt-4">Pénalité d'XP multi-classes</p>
+          <p>Si l'écart entre vos classes dépasse 1 niveau (en excluant votre classe préférée raciale), vous subissez une pénalité sur chaque XP gagné :</p>
+          <ul className="list-disc list-inside space-y-1 pl-2 mt-1">
+            <li><strong>−20 %</strong> d'XP par classe ayant un écart ≥ 2 niveaux avec la classe la plus haute.</li>
+            <li>Maximum : <strong>−40 %</strong> si deux classes ou plus sont en retard.</li>
+            <li>La <strong>classe préférée raciale</strong> est entièrement ignorée dans ce calcul.</li>
           </ul>
-          <Tip>La fiche calcule et affiche automatiquement la pénalité d'XP dans l'onglet Identité du formulaire de modification.</Tip>
+
+          <p className="font-semibold text-stone-500 text-xs mt-3">Classe préférée des Humains et Demi-Elfes</p>
+          <p className="text-xs">Ces races ont une classe préférée « au choix » — le joueur désigne librement n'importe quelle classe. Le système <strong>désigne automatiquement la classe la plus haute comme préférée</strong>, ce qui est le choix optimal dans presque tous les cas. Résultat : un Guerrier 6 / Magicien 1 humain n'a <strong>aucune pénalité</strong> — le Guerrier est exempté, seul le Magicien compterait, et il n'y a pas d'autre classe non-préférée pour créer un écart.</p>
+
+          <p className="font-semibold text-stone-500 text-xs mt-3">Exemple concret</p>
+          <p className="text-xs">Un Nain Fighter 4 / Wizard 2 / Roublard 1 : Fighter est sa classe préférée (ignorée). Parmi les autres : Wizard 2 et Roublard 1. La classe la plus haute non-préférée est Wizard 2. Roublard est 1 niveau en dessous — <strong>pas de pénalité</strong> (écart = 1).</p>
+
+          <div className="grid grid-cols-2 gap-2 mt-3 text-xs">
+            {[
+              ['Humain · Demi-Elfe','Au choix — auto : classe la plus haute'],
+              ['Elfe','Magicien'],
+              ['Nain','Guerrier'],
+              ['Halfelin','Roublard'],
+              ['Gnome','Barde'],
+              ['Demi-Orque','Barbare'],
+            ].map(([race, classe]) => (
+              <div key={race} className="bg-stone-800/50 rounded px-3 py-1.5">
+                <span className="text-amber-400 font-medium">{race}</span>
+                <span className="text-stone-400"> → {classe}</span>
+              </div>
+            ))}
+          </div>
+          <Tip>Le formulaire de modification affiche automatiquement un message vert ✓ ou orange ⚠ avec la classe préférée effective et le pourcentage de pénalité calculé en temps réel.</Tip>
         </Section>
 
       </main>
