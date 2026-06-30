@@ -1,0 +1,202 @@
+import Link from 'next/link'
+
+function Section({ titre, children }: { titre: string; children: React.ReactNode }) {
+  return (
+    <section className="bg-stone-900/60 border border-stone-800 rounded-xl p-6 mb-4">
+      <h2 className="text-amber-400 font-bold text-lg mb-4 flex items-center gap-2">{titre}</h2>
+      <div className="space-y-3 text-stone-300 text-sm leading-relaxed">{children}</div>
+    </section>
+  )
+}
+
+function Tip({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="bg-amber-900/20 border border-amber-800/40 rounded-lg px-4 py-2 text-amber-200 text-xs">
+      {children}
+    </div>
+  )
+}
+
+function Row({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="flex gap-3">
+      <span className="shrink-0 font-semibold text-stone-400 w-40">{label}</span>
+      <span>{children}</span>
+    </div>
+  )
+}
+
+export default async function AideJoueur({ searchParams }: { searchParams: Promise<{ from?: string }> }) {
+  const { from } = await searchParams
+  const retour = from?.startsWith('/personnage/') ? from : '/'
+  const labelRetour = from?.startsWith('/personnage/') ? '← Retour à la fiche' : '← Grimoire D&D 3e édition'
+  return (
+    <div className="min-h-screen bg-stone-950 text-stone-100">
+      <header className="bg-gradient-to-b from-stone-900 to-stone-950 border-b border-amber-900/40 py-6 px-6">
+        <div className="max-w-3xl mx-auto flex items-center justify-between">
+          <Link href={retour} className="inline-flex items-center gap-2 text-stone-400 hover:text-amber-300 text-sm transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M19 12H5M12 5l-7 7 7 7"/>
+            </svg>
+            {labelRetour}
+          </Link>
+          <Link href="/aide/creation" className="text-stone-500 hover:text-amber-300 text-xs transition-colors">
+            Aide — Création / Modification →
+          </Link>
+        </div>
+        <div className="max-w-3xl mx-auto mt-4">
+          <h1 className="text-3xl font-bold text-amber-300">Guide du joueur</h1>
+          <p className="text-stone-500 text-sm mt-1">Comment utiliser la fiche de personnage pendant une séance de jeu</p>
+        </div>
+      </header>
+
+      <main className="max-w-3xl mx-auto px-4 py-8">
+
+        <Section titre="🗡️ Armes — bonus automatiques d'attaque et de dégâts">
+          <p>La section <strong className="text-amber-200">Armes</strong> calcule automatiquement les totaux d'attaque et de dégâts en tenant compte de vos caractéristiques, de votre magie et de vos dons. Une ligne de détail affiche la décomposition complète.</p>
+          <Row label="Total d'attaque">BAB + modificateur (FOR mêlée / DEX distance) + bonus magique de l'arme + bonus munitions + bonus de dons.</Row>
+          <Row label="Total de dégâts">Dés de base + bonus magique de l'arme + bonus munitions + FOR (mêlée ou arc composite, plafonné à la côte) + bonus de dons.</Row>
+
+          <p className="font-semibold text-stone-400 mt-2">Arc composite — règles spéciales</p>
+          <p>Un arc composite n'est <strong>pas</strong> un arc magique par défaut. Le <span className="text-amber-300 font-mono">+N</span> dans son nom est la <strong>côte de Force</strong> : elle plafonne le bonus FOR ajouté aux dégâts.</p>
+          <ul className="list-disc list-inside space-y-1 pl-2 text-xs">
+            <li>Si votre FOR mod ≤ côte → vous ajoutez votre FOR réel aux dégâts.</li>
+            <li>Si votre FOR mod &gt; côte → le bonus dégâts est plafonné à la côte.</li>
+            <li>La côte n'affecte <strong>pas</strong> le jet d'attaque (qui utilise DEX comme toute arme à distance).</li>
+          </ul>
+          <p className="mt-1 text-xs">Sur la fiche, l'arc s'affiche <span className="font-mono text-stone-300">Arc long composite (Force +3)</span> pour distinguer côte et magie. Un arc à la fois composite ET magique s'afficherait <span className="font-mono text-stone-300">Arc long composite (Force +3) +2</span>.</p>
+
+          <p className="font-semibold text-stone-400 mt-2">Flèches et munitions magiques</p>
+          <p>Les flèches magiques (flèches +1, +2, etc.) s'ajoutent <strong>à la fois à l'attaque et aux dégâts</strong>. Elles apparaissent dans le détail sous l'étiquette <span className="font-mono text-stone-300">fl.</span>. Il n'est pas nécessaire de créer une entrée d'arme séparée pour les flèches — le champ <strong>Munitions +Mag</strong> dans le formulaire suffit.</p>
+
+          <p className="font-semibold text-stone-400 mt-2">Dons reconnus automatiquement</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 mt-1">
+            <div className="bg-stone-800/50 rounded px-3 py-2 text-xs"><span className="text-amber-300 font-medium">Arme de prédilection (arme)</span><br/>+1 à l'attaque avec l'arme indiquée</div>
+            <div className="bg-stone-800/50 rounded px-3 py-2 text-xs"><span className="text-amber-300 font-medium">Maîtrise martiale supérieure (arme)</span><br/>+1 attaque supplémentaire</div>
+            <div className="bg-stone-800/50 rounded px-3 py-2 text-xs"><span className="text-amber-300 font-medium">Spécialisation martiale (arme)</span><br/>+2 aux dégâts avec l'arme indiquée</div>
+            <div className="bg-stone-800/50 rounded px-3 py-2 text-xs"><span className="text-amber-300 font-medium">Spécialisation martiale supérieure (arme)</span><br/>+2 dégâts supplémentaires</div>
+            <div className="bg-stone-800/50 rounded px-3 py-2 text-xs sm:col-span-2"><span className="text-amber-300 font-medium">Tir à bout portant</span><br/>+1 attaque et dégâts pour toutes les armes à distance, à portée ≤9m (affiché avec * dans le détail)</div>
+          </div>
+          <Tip>Pour qu'un don s'applique à une arme précise, son nom dans la liste des dons doit inclure le nom exact de l'arme entre parenthèses — ex. <span className="font-mono">Arme de prédilection (arc long composite)</span>. La casse et les accents sont ignorés.</Tip>
+        </Section>
+
+        <Section titre="⚔️ Points de vie — suivi en temps réel">
+          <p>Le bloc <strong className="text-amber-200">PV</strong> dans la section Combat affiche vos points de vie actuels sur vos points maximum (ex. <span className="font-mono text-green-400">18 / 26</span>) ainsi qu'une barre de couleur :</p>
+          <ul className="list-disc list-inside space-y-1 pl-2">
+            <li><span className="text-green-400 font-semibold">Vert</span> — plus de 50 % des PV</li>
+            <li><span className="text-amber-400 font-semibold">Jaune</span> — entre 25 % et 50 %</li>
+            <li><span className="text-red-400 font-semibold">Rouge</span> — moins de 25 %</li>
+          </ul>
+          <Row label="Recevoir des dégâts">Cliquez <span className="bg-red-900/40 text-red-300 px-1.5 py-0.5 rounded text-xs font-mono">⚔ −</span>, entrez le nombre de points perdus, puis appuyez sur <kbd className="bg-stone-700 px-1 rounded">Entrée</kbd> ou cliquez <strong>OK</strong>.</Row>
+          <Row label="Recevoir des soins">Cliquez <span className="bg-green-900/40 text-green-300 px-1.5 py-0.5 rounded text-xs font-mono">✚ +</span>, entrez le nombre de points récupérés, puis validez.</Row>
+          <Row label="Annuler la saisie">Appuyez sur <kbd className="bg-stone-700 px-1 rounded">Échap</kbd> ou cliquez <span className="font-mono text-stone-500">✕</span>.</Row>
+          <Tip>Les PV sont sauvegardés automatiquement en base de données. Si vous rechargez la page, votre valeur actuelle est conservée.</Tip>
+        </Section>
+
+        <Section titre="✨ Sorts — préparer et dépenser">
+          <p>La section <strong className="text-amber-200">Sorts</strong> est visible dès qu'un personnage est lanceur de sorts, même si aucun sort n'est encore préparé pour la journée.</p>
+
+          <p className="font-semibold text-stone-400 mt-3">Lanceurs divins — Prêtre, Druide, Paladin, Rôdeur</p>
+          <p>Les lanceurs divins ont accès à <strong>toute leur liste de sorts</strong> jusqu'au niveau maximum qu'ils peuvent lancer — pas besoin d'apprendre ou d'acquérir des sorts individuellement. C'est lors de la <strong>prière quotidienne</strong> qu'ils choisissent lesquels préparer pour la journée.</p>
+          <ul className="list-disc list-inside space-y-1 pl-2 mt-1">
+            <li>Cliquez <span className="bg-stone-800 border border-stone-700 text-amber-300 px-1.5 py-0.5 rounded text-xs font-mono">🙏 Prier</span> pour ouvrir le panneau de prière.</li>
+            <li>Tous les sorts accessibles à votre niveau s'affichent, groupés par niveau de sort.</li>
+            <li>Utilisez <strong>+</strong> / <strong>−</strong> pour répartir vos emplacements entre les sorts de votre choix. Le même sort peut occuper plusieurs emplacements (ex. Soins légers ×3).</li>
+            <li>Cliquez <strong>Confirmer</strong> — les sorts de la veille sont remplacés par les préparations du jour.</li>
+          </ul>
+          <Tip>Un Prêtre niveau 5 voit automatiquement tous les sorts de prêtre du niveau 0 au niveau 3, sans aucune configuration préalable. La liste s'étend à mesure qu'il monte de niveau.</Tip>
+
+          <p className="font-semibold text-stone-400 mt-3">Lanceurs profanes — Magicien</p>
+          <p>Le Magicien ne connaît que les sorts de son <strong>grimoire</strong>, ajoutés manuellement dans l'onglet Sorts du formulaire. Chaque matin, il choisit parmi ces sorts ceux qu'il prépare avec <span className="bg-stone-800 border border-stone-700 text-amber-300 px-1.5 py-0.5 rounded text-xs font-mono">📖 Étudier</span>.</p>
+
+          <p className="font-semibold text-stone-400 mt-3">Lanceurs spontanés — Ensorceleur, Barde</p>
+          <p>L'Ensorceleur et le Barde connaissent un nombre limité de sorts (ajoutés dans le formulaire) et les lancent spontanément, sans préparation quotidienne. Utilisez le bouton <span className="bg-stone-800 border border-stone-700 text-amber-300 px-1.5 py-0.5 rounded text-xs font-mono">📖 Étudier</span> pour marquer combien d'emplacements vous avez utilisés dans la journée.</p>
+
+          <p className="font-semibold text-stone-400 mt-3">Lancer un sort pendant la partie</p>
+          <ul className="list-disc list-inside space-y-1 pl-2">
+            <li><span className="bg-amber-900/40 text-amber-400 px-1.5 py-0.5 rounded text-xs font-mono">préparé ▶</span> — sort préparé une fois</li>
+            <li><span className="bg-amber-900/40 text-amber-400 px-1.5 py-0.5 rounded text-xs font-mono">préparé ×2 ▶</span> — sort préparé deux fois (deux emplacements)</li>
+          </ul>
+          <Row label="Lancer un sort">Cliquez le bouton du sort. Le compteur diminue de 1. Quand il atteint 0, le sort passe en <span className="text-stone-600 italic">épuisé</span> (grisé) jusqu'à la prochaine prière ou période de repos.</Row>
+          <Tip>Après un repos, rouvrez le panneau 🙏 Prier / 📖 Étudier pour reconfigurer vos préparations du jour.</Tip>
+        </Section>
+
+        <Section titre="🧪 Potions — consommer une gorgée">
+          <p>Dans la section <strong className="text-amber-200">Potions</strong>, le nombre de gorgées restantes est un bouton vert cliquable.</p>
+          <Row label="Boire une gorgée">Cliquez directement sur le nombre affiché en vert. Il diminue de 1.</Row>
+          <Row label="Potion épuisée">Quand il ne reste plus de gorgées, la case affiche <span className="text-stone-600 italic">épuisée</span>.</Row>
+          <Tip>Pour réapprovisionner une potion (achat ou fabrication), allez dans <strong>Modifier</strong> → onglet <strong>Équipement</strong> et ajustez le nombre de charges.</Tip>
+        </Section>
+
+        <Section titre="🔮 Objets magiques — dépenser des charges">
+          <p>Les bâtons, baguettes et autres objets à charges affichent un bouton violet avec le nombre de charges restantes.</p>
+          <Row label="Activer l'objet">Cliquez le bouton <span className="bg-purple-900/30 text-purple-300 border border-purple-800/40 px-1.5 py-0.5 rounded text-xs font-mono">15/50 ch. ▶</span>. Une charge est déduite.</Row>
+          <Row label="Barre de progression">La barre sous le bouton passe du <span className="text-purple-400">violet</span> à l'<span className="text-amber-400">ambre</span> puis au <span className="text-red-400">rouge</span> à mesure que les charges s'épuisent.</Row>
+          <Row label="Objet épuisé">Quand les charges tombent à 0, le bouton est remplacé par <span className="text-stone-600 italic">épuisé (0/50)</span>.</Row>
+          <Tip>Pour recharger un objet, allez dans <strong>Modifier</strong> → onglet <strong>Équipement</strong> et modifiez le champ <strong>Charges</strong> de l'objet (0 = pas de charges).</Tip>
+        </Section>
+
+        <Section titre="🧬 Traits raciaux">
+          <p>Juste avant les notes, la section <strong className="text-amber-200">Traits raciaux</strong> liste automatiquement les capacités spéciales de la race du personnage (vision nocturne, immunités, bonus raciaux, etc.).</p>
+          <Row label="Contenu automatique">Les traits sont chargés depuis la base de données selon la race — aucune saisie manuelle n'est nécessaire.</Row>
+          <Tip>Si vous modifiez la race dans <strong>Modifier</strong> → onglet <strong>Identité</strong>, les traits raciaux se mettent à jour automatiquement à la prochaine visite de la fiche.</Tip>
+        </Section>
+
+        <Section titre="📝 Notes du joueur — édition directe">
+          <p>La section <strong className="text-amber-200">Notes du joueur</strong> en bas de la fiche est modifiable directement pendant la partie, sans passer par le formulaire de modification.</p>
+          <Row label="Modifier les notes">Cliquez n'importe où dans la zone de notes. Un champ de texte apparaît avec les boutons <strong>Enregistrer</strong> et <strong>Annuler</strong>.</Row>
+          <Row label="Sauvegarder">Cliquez <strong>Enregistrer</strong> ou appuyez sur <kbd className="bg-stone-700 px-1 rounded">Ctrl+Entrée</kbd>. Les notes sont mises à jour immédiatement en base de données.</Row>
+          <Row label="Annuler">Cliquez <strong>Annuler</strong> pour revenir au texte précédent sans sauvegarder.</Row>
+          <Tip>Idéal pour noter des informations pendant la session : PNJ rencontrés, lieux explorés, décisions importantes de l'équipe.</Tip>
+        </Section>
+
+        <Section titre="🖼️ Portrait du personnage">
+          <Row label="Changer la photo">Cliquez sur le portrait (ou la silhouette grise si aucune photo). Une fenêtre s'ouvre pour coller l'URL d'une image.</Row>
+          <Row label="Format conseillé">L'image est affichée en format portrait (2:3) avec le haut de l'image toujours visible — le visage est donc toujours préservé.</Row>
+          <Row label="Dans le PDF">La photo apparaît dans l'en-tête lors de l'impression.</Row>
+        </Section>
+
+        <Section titre="🎯 Dons — descriptions automatiques">
+          <p>Dans la section <strong className="text-amber-200">Dons</strong> de la fiche, chaque don affiche automatiquement une ligne descriptive en <span className="text-amber-400">ambre</span> résumant son effet mécanique.</p>
+          <Row label="Dons système">Les dons enregistrés en base de données (Tir à bout portant, Robustesse, etc.) affichent leur description officielle.</Row>
+          <Row label="Dons d'arme">Les dons ciblant une arme spécifique (ex. <span className="font-mono text-stone-300">Arme de prédilection (Arc long composite)</span>) génèrent automatiquement une phrase complète : <span className="text-amber-400 text-xs">+1 aux jets d'attaque avec Arc Long Composite</span>.</Row>
+          <Row label="Dons non reconnus">Si un don n'a ni description en base ni pattern reconnu, seul le nom s'affiche — utilisez l'icône 🔍 pour trouver sa description en ligne.</Row>
+          <Tip>Les descriptions sont générées à partir du nom exact du don. Le sélecteur de dons dans le formulaire de modification garantit un formatage correct.</Tip>
+        </Section>
+
+        <Section titre="🔍 Référence D&D 3.5">
+          <p>À côté de certains éléments (compétences, dons, sorts, objets magiques), une icône discrète <span className="text-stone-400">🔍</span> est disponible.</p>
+          <Row label="Cliquer dessus">Ouvre une recherche Google ciblée sur <strong>regles-donjons-dragons.com</strong>, le site de référence des règles D&D 3.5 en français. S'ouvre dans un nouvel onglet.</Row>
+        </Section>
+
+        <Section titre="🖨️ Exporter en PDF">
+          <Row label="Bouton PDF">En haut à droite de la fiche, cliquez <strong>PDF</strong> pour ouvrir la page d'impression.</Row>
+          <Row label="Imprimer">Utilisez la fonction d'impression du navigateur (<kbd className="bg-stone-700 px-1 rounded">Ctrl+P</kbd>). Le format est configuré pour du papier <strong>Letter (8,5" × 11")</strong> avec marges ¾".</Row>
+          <Tip>Dans les options d'impression, activez <strong>«&nbsp;Imprimer les arrière-plans&nbsp;»</strong> pour conserver les couleurs et les cadres.</Tip>
+        </Section>
+
+        <Section titre="📊 Progression en XP">
+          <p>La barre de progression d'XP en haut de la fiche indique votre avancement vers le prochain niveau. Le seuil est calculé automatiquement selon les règles D&D 3.5.</p>
+          <Row label="Mettre à jour les XP">Allez dans <strong>Modifier</strong> → onglet <strong>Identité</strong> → champ <strong>XP</strong>.</Row>
+        </Section>
+
+        <Section titre="⚔️✨ Multi-classes — règles de jeu">
+          <p>Un personnage multi-classé possède des niveaux dans plusieurs classes. Voici comment les mécaniques s'appliquent sur la fiche.</p>
+          <Row label="BBA (Base d'Attaque)">Le BBA total est la <strong>somme</strong> des BBA de chaque classe, calculés séparément selon leur progression (élevée / moyenne / faible).</Row>
+          <Row label="Jets de sauvegarde">Chaque classe contribue indépendamment selon sa liste de bons jets. Résultat : les jets d'un multi-classe sont toujours ≥ chacune des classes seules.</Row>
+          <Row label="Points de vie">Chaque niveau de chaque classe ajoute son propre dé de vie. La fiche cumule le total en créant le personnage.</Row>
+          <Row label="Compétences">Les compétences de classe de <em>chaque</em> classe ont accès rang max au niveau du personnage (rang max = niveau total + 3 pour les compétences de classe).</Row>
+
+          <p className="font-semibold text-stone-400 mt-3">Pénalité d'XP multi-classes (règle optionnelle)</p>
+          <p>Si deux classes ou plus (hors classe préférée raciale) ont un écart de niveau ≥ 2, le personnage subit une pénalité de <strong>−20 % d'XP gagné</strong> par classe concernée.</p>
+          <ul className="list-disc list-inside space-y-1 pl-2 text-xs">
+            <li>Humain / Demi-Elfe : classe préférée = <strong>au choix</strong> (aucune classe n'entre en compte pour la pénalité).</li>
+            <li>Elfe → Magicien · Nain → Guerrier · Halfelin → Roublard · Gnome → Barde · Demi-Orque → Barbare.</li>
+          </ul>
+          <Tip>La fiche calcule et affiche automatiquement la pénalité d'XP dans l'onglet Identité du formulaire de modification.</Tip>
+        </Section>
+
+      </main>
+    </div>
+  )
+}
