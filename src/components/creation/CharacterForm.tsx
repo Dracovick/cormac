@@ -5,12 +5,14 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import type { CharacterFormData } from '@/app/actions/character'
 import { saveCharacter } from '@/app/actions/character'
-import { getModifier, formatMod, ALIGNEMENTS } from '@/lib/dnd35/rules'
-import { CLASSES_DND35, getClasseInfo } from '@/lib/dnd35/classes'
+import { getModifier, formatMod, ALIGNEMENTS, calcXpPenalite } from '@/lib/dnd35/rules'
+import { CLASSES_DND35, getClasseInfo, getSortsSlotsParJour } from '@/lib/dnd35/classes'
 import { RACES_DND35, getRaceInfo } from '@/lib/dnd35/races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { sortsByClasseEtNiveau, niveauxMaxForClasse, type ClasseSortKey, type SortDnD } from '@/lib/dnd35/spells'
 import { getBab } from '@/lib/dnd35/rules'
+import { WEAPONS_DND35, WEAPON_CATEGORIES, type WeaponTemplate } from '@/lib/dnd35/weapons'
+import { FEATS_DND35, CATEGORIES_PAR_CLASSE, type FeatCategorie, type FeatDef } from '@/lib/dnd35/feats'
 
 // ─── Styles ──────────────────────────────────────────────────────────────────
 const INP = 'bg-stone-800 border border-stone-700 rounded px-2 py-1.5 text-stone-100 text-sm focus:outline-none focus:border-amber-500 w-full'
@@ -27,6 +29,7 @@ const SEL = 'bg-stone-800 border border-stone-700 rounded px-2 py-1.5 text-stone
 export const DEFAULT_FORM: CharacterFormData = {
   nom: '', surnom: '', sexe: '', age: '', taille: '', poids: '', yeux: '', cheveux: '',
   race: 'Humain', classe: 'Guerrier', niveau: 1,
+  classes: [{ classe: 'Guerrier', niveau: 1 }],
   alignement: 'Neutre', divinite: '', clan: '', xp: 0, photoUrl: '',
   forBase: 10, forMagique: 0, dexBase: 10, dexMagique: 0,
   conBase: 10, conMagique: 0, intBase: 10, intMagique: 0,
@@ -38,9 +41,10 @@ export const DEFAULT_FORM: CharacterFormData = {
   reflexesMagique: 0, vigueurMagique: 0, volonteMagique: 0,
   competences: COMPETENCES_DND35.map(c => ({ skillId: 0, nom: c.nom, caracteristique: c.caracteristique, rangs: 0, divers: 0 })),
   dons: [], armes: [], armures: [], objetsMagiques: [], potions: [],
-  po: 0, pa: 0, pc: 0, pe: 0, pm: 0,
+  pp: 0, po: 0, pe: 0, pa: 0, pc: 0, pm: 0,
   langues: [], sorts: [],
   historique: '', notes: '', compagnons: [],
+  joueurPrenom: '', joueurNom: '',
 }
 
 // ─── Derived stats ────────────────────────────────────────────────────────────
@@ -48,7 +52,9 @@ type Derived = ReturnType<typeof calcDerived>
 
 function calcDerived(data: CharacterFormData) {
   const raceInfo = getRaceInfo(data.race)
-  const classeInfo = getClasseInfo(data.classe)
+  const allClasses = data.classes?.length > 0 ? data.classes : [{ classe: data.classe, niveau: data.niveau }]
+  const primaryClasse = allClasses[0]?.classe ?? data.classe
+  const classeInfo = getClasseInfo(primaryClasse)
   const forT = data.forBase + data.forMagique + (raceInfo?.bonusFor ?? 0)
   const dexT = data.dexBase + data.dexMagique + (raceInfo?.bonusDex ?? 0)
   const conT = data.conBase + data.conMagique + (raceInfo?.bonusCon ?? 0)
@@ -57,11 +63,26 @@ function calcDerived(data: CharacterFormData) {
   const chaT = data.chaBase + data.chaMagique + (raceInfo?.bonusCha ?? 0)
   const forMod = getModifier(forT); const dexMod = getModifier(dexT); const conMod = getModifier(conT)
   const intMod = getModifier(intT); const sagMod = getModifier(sagT); const chaMod = getModifier(chaT)
-  const bbaBase = classeInfo ? getBab(classeInfo.bab, data.niveau) : 0
-  const saves = classeInfo?.bonsSauvegardes ?? []
-  const vigBase = saves.includes('vigueur') ? 2 + Math.floor(data.niveau / 2) : Math.floor(data.niveau / 3)
-  const refBase = saves.includes('reflexes') ? 2 + Math.floor(data.niveau / 2) : Math.floor(data.niveau / 3)
-  const volBase = saves.includes('volonte') ? 2 + Math.floor(data.niveau / 2) : Math.floor(data.niveau / 3)
+  const bbaBase = allClasses.reduce((sum, c) => {
+    const info = getClasseInfo(c.classe)
+    return sum + (info ? getBab(info.bab, c.niveau) : 0)
+  }, 0)
+  const vigBase = allClasses.reduce((sum, c) => {
+    const info = getClasseInfo(c.classe); if (!info) return sum
+    return sum + (info.bonsSauvegardes.includes('vigueur') ? 2 + Math.floor(c.niveau / 2) : Math.floor(c.niveau / 3))
+  }, 0)
+  const refBase = allClasses.reduce((sum, c) => {
+    const info = getClasseInfo(c.classe); if (!info) return sum
+    return sum + (info.bonsSauvegardes.includes('reflexes') ? 2 + Math.floor(c.niveau / 2) : Math.floor(c.niveau / 3))
+  }, 0)
+  const volBase = allClasses.reduce((sum, c) => {
+    const info = getClasseInfo(c.classe); if (!info) return sum
+    return sum + (info.bonsSauvegardes.includes('volonte') ? 2 + Math.floor(c.niveau / 2) : Math.floor(c.niveau / 3))
+  }, 0)
+  const niveauTotal = allClasses.reduce((sum, c) => sum + c.niveau, 0)
+  const lanceurSorts = allClasses.some(c => getClasseInfo(c.classe)?.lanceurSorts ?? false)
+  const casterClasses = allClasses.filter(c => getClasseInfo(c.classe)?.lanceurSorts)
+  const xpPenalite = calcXpPenalite(allClasses, raceInfo?.classePreferee ?? 'any')
   return {
     forT, dexT, conT, intT, sagT, chaT, forMod, dexMod, conMod, intMod, sagMod, chaMod,
     bbaBase,
@@ -74,9 +95,9 @@ function calcDerived(data: CharacterFormData) {
     initiativeTotal: dexMod + data.initiativeBonus,
     deplacement: data.deplacement ?? (raceInfo?.deplacement ?? 9),
     dv: classeInfo ? `d${classeInfo.de}` : '—',
-    lanceurSorts: classeInfo?.lanceurSorts ?? false,
+    lanceurSorts,
     niveauMaxSorts: classeInfo?.niveauMaxSorts ?? 0,
-    classeInfo, raceInfo,
+    classeInfo, raceInfo, niveauTotal, casterClasses, xpPenalite, allClasses,
   }
 }
 
@@ -98,21 +119,78 @@ function SectionIdentite({ data, update }: { data: CharacterFormData; update: Up
             <input className={INP} value={data.surnom} onChange={e => update('surnom', e.target.value)} placeholder="«&nbsp;Le Courageux&nbsp;»" />
           </div>
           <div>
+            <label className={LBL}>Prénom du joueur</label>
+            <input className={INP} value={data.joueurPrenom} onChange={e => update('joueurPrenom', e.target.value)} placeholder="Prénom" />
+          </div>
+          <div>
+            <label className={LBL}>Nom du joueur</label>
+            <input className={INP} value={data.joueurNom} onChange={e => update('joueurNom', e.target.value)} placeholder="Nom de famille" />
+          </div>
+          <div>
             <label className={LBL}>Race</label>
             <select className={SEL} value={data.race} onChange={e => update('race', e.target.value)}>
               {RACES_DND35.map(r => <option key={r.nom} value={r.nom}>{r.nom}</option>)}
               <option value="">— Autre —</option>
             </select>
           </div>
-          <div>
-            <label className={LBL}>Classe</label>
-            <select className={SEL} value={data.classe} onChange={e => update('classe', e.target.value)}>
-              {CLASSES_DND35.map(c => <option key={c.nom} value={c.nom}>{c.nom}</option>)}
-            </select>
-          </div>
-          <div>
-            <label className={LBL}>Niveau</label>
-            <input className={INP_NUM + ' w-full'} type="number" min={1} max={20} value={data.niveau} onChange={e => update('niveau', Math.max(1, parseInt(e.target.value) || 1))} />
+          {/* Gestionnaire multi-classes — occupe toute la largeur */}
+          <div className="sm:col-span-2">
+            <label className={LBL}>Classes &amp; Niveaux</label>
+            <div className="space-y-1.5">
+              {(data.classes ?? [{ classe: data.classe, niveau: data.niveau }]).map((c, i) => {
+                const classes = data.classes ?? [{ classe: data.classe, niveau: data.niveau }]
+                return (
+                  <div key={i} className="flex gap-2 items-center bg-stone-800/40 rounded px-2 py-1.5">
+                    <select className={SEL + ' flex-1'} value={c.classe} onChange={e => {
+                      const next = [...classes]; next[i] = { ...next[i], classe: e.target.value }
+                      update('classes', next)
+                    }}>
+                      {CLASSES_DND35.map(cl => <option key={cl.nom} value={cl.nom}>{cl.nom}</option>)}
+                    </select>
+                    <span className="text-stone-500 text-xs shrink-0">niv.</span>
+                    <input type="number" min={1} max={20} value={c.niveau} onChange={e => {
+                      const next = [...classes]; next[i] = { ...next[i], niveau: Math.max(1, parseInt(e.target.value) || 1) }
+                      update('classes', next)
+                    }} className={INP_NUM + ' w-14'} />
+                    {classes.length > 1 && (
+                      <button onClick={() => update('classes', classes.filter((_, j) => j !== i))} className={BTN_DEL}>✕</button>
+                    )}
+                  </div>
+                )
+              })}
+              <div className="flex items-center gap-4 pt-0.5">
+                <button onClick={() => {
+                  const classes = data.classes ?? [{ classe: data.classe, niveau: data.niveau }]
+                  update('classes', [...classes, { classe: 'Guerrier', niveau: 1 }])
+                }} className={BTN_ADD + ' mt-0'}><span className="text-lg">+</span> Ajouter une classe</button>
+                {(data.classes ?? []).length > 0 && (
+                  <span className="text-stone-500 text-xs">Niveau total : {(data.classes ?? []).reduce((s, c) => s + c.niveau, 0)}</span>
+                )}
+              </div>
+              {/* Avertissement pénalité XP */}
+              {(() => {
+                const classes = data.classes ?? []
+                if (classes.length <= 1) return null
+                const raceInfo = getRaceInfo(data.race)
+                const classePreferee = raceInfo?.classePreferee ?? 'any'
+                const penalty = calcXpPenalite(classes, classePreferee)
+                if (penalty === 0 && classePreferee !== 'any') return null
+                const effectiveFavored = classePreferee === 'any' && classes.length > 0
+                  ? classes.reduce((a, b) => a.niveau >= b.niveau ? a : b).classe
+                  : classePreferee
+                const favLabel = classePreferee === 'any'
+                  ? `${effectiveFavored} (auto — la plus haute)`
+                  : effectiveFavored
+                return (
+                  <div className={`text-xs px-3 py-1.5 rounded border ${penalty > 0 ? 'bg-amber-900/20 border-amber-800/40 text-amber-300' : 'bg-stone-800/30 border-stone-700/40 text-stone-400'}`}>
+                    {penalty > 0
+                      ? `⚠ Pénalité XP : −${penalty}% · Classe préférée : ${favLabel}`
+                      : `✓ Pas de pénalité XP · Classe préférée : ${favLabel}`
+                    }
+                  </div>
+                )
+              })()}
+            </div>
           </div>
           <div>
             <label className={LBL}>Alignement</label>
@@ -304,6 +382,7 @@ function SectionCombat({ data, update, derived }: { data: CharacterFormData; upd
 
 // ─── Section: Compétences ────────────────────────────────────────────────────
 function SectionCompetences({ data, update, derived }: { data: CharacterFormData; update: Upd; derived: Derived }) {
+  const allClassNames = (data.classes ?? [{ classe: data.classe, niveau: data.niveau }]).map(c => c.classe)
   const getAbilMod = (car: string) => {
     const m: Record<string, number> = { FOR: derived.forMod, DEX: derived.dexMod, CON: derived.conMod, INT: derived.intMod, SAG: derived.sagMod, CHA: derived.chaMod }
     return m[car] ?? 0
@@ -326,7 +405,7 @@ function SectionCompetences({ data, update, derived }: { data: CharacterFormData
           <tbody>
             {data.competences.map((comp, idx) => {
               const ref = COMPETENCES_DND35.find(c => c.nom === comp.nom)
-              const isClasse = ref?.classesCompetence.includes(data.classe) ?? false
+              const isClasse = ref?.classesCompetence.some(cc => allClassNames.includes(cc)) ?? false
               const maxRangs = isClasse ? data.niveau + 3 : Math.floor((data.niveau + 3) / 2)
               const abilMod = getAbilMod(comp.caracteristique)
               const total = comp.rangs + abilMod + comp.divers
@@ -359,16 +438,127 @@ function SectionCompetences({ data, update, derived }: { data: CharacterFormData
 
 // ─── Section: Dons ───────────────────────────────────────────────────────────
 function SectionDons({ data, update }: { data: CharacterFormData; update: Upd }) {
-  const [input, setInput] = useState('')
-  const add = () => { if (!input.trim()) return; update('dons', [...data.dons, input.trim()]); setInput('') }
+  const [catFilter, setCatFilter] = useState<FeatCategorie | 'Tous'>('Tous')
+  const [pendingFeat, setPendingFeat] = useState<FeatDef | null>(null)
+  const [selectedWeapon, setSelectedWeapon] = useState('')
+  const [customDon, setCustomDon] = useState('')
+
+  const allClasses = (data.classes ?? [{ classe: data.classe, niveau: data.niveau }]).map(c => c.classe)
+
+  // Catégories pertinentes pour les classes du personnage (union multi-classes)
+  const relevantCats = new Set<FeatCategorie>(['Général'])
+  allClasses.forEach(cls => (CATEGORIES_PAR_CLASSE[cls] ?? []).forEach(cat => relevantCats.add(cat)))
+  const CAT_ORDER: FeatCategorie[] = ['Combat', 'Tir', 'Magie', 'Métamagie', 'Divin', 'Général']
+  const visibleCats = CAT_ORDER.filter(c => relevantCats.has(c))
+
+  // Dons à afficher selon le filtre actif
+  const displayedFeats = FEATS_DND35.filter(f =>
+    relevantCats.has(f.categorie) && (catFilter === 'Tous' || f.categorie === catFilter)
+  )
+
+  // Armes disponibles : SRD + armes personnalisées du personnage
+  const customWeaponNames = data.armes
+    .map(a => a.nom)
+    .filter(n => n && !WEAPONS_DND35.some(w => w.nom === n))
+  const weaponOptions: { groupe: string; noms: string[] }[] = [
+    ...WEAPON_CATEGORIES.map(cat => ({
+      groupe: cat,
+      noms: WEAPONS_DND35.filter(w => w.categorie === cat).map(w => w.nom),
+    })).filter(g => g.noms.length > 0),
+    ...(customWeaponNames.length > 0 ? [{ groupe: 'Personnalisées', noms: customWeaponNames }] : []),
+  ]
+  const allWeaponNames = weaponOptions.flatMap(g => g.noms)
+
+  function selectFeat(feat: FeatDef) {
+    if (feat.needsWeapon) {
+      setPendingFeat(feat)
+      setSelectedWeapon(allWeaponNames[0] ?? '')
+    } else {
+      if (!data.dons.includes(feat.nom)) update('dons', [...data.dons, feat.nom])
+    }
+  }
+
+  function confirmWeapon() {
+    if (!pendingFeat || !selectedWeapon) return
+    update('dons', [...data.dons, `${pendingFeat.nom} (${selectedWeapon})`])
+    setPendingFeat(null)
+  }
+
+  function addCustom() {
+    if (!customDon.trim()) return
+    update('dons', [...data.dons, customDon.trim()])
+    setCustomDon('')
+  }
+
   return (
     <div className={CARD}>
       <div className={SEC_H}>Dons</div>
-      <div className="flex gap-2 mb-4">
-        <input className={INP} value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && add()} placeholder="Nom du don..." />
-        <button onClick={add} className="shrink-0 bg-amber-700 hover:bg-amber-600 text-white text-sm px-4 py-1.5 rounded transition-colors">Ajouter</button>
+
+      {/* Filtre par catégorie */}
+      <div className="flex flex-wrap gap-1 mb-3">
+        <button onClick={() => setCatFilter('Tous')}
+          className={`px-3 py-1 rounded text-xs font-medium transition-colors ${catFilter === 'Tous' ? 'bg-amber-700 text-white' : 'bg-stone-800 text-stone-400 hover:text-stone-200'}`}>
+          Tous
+        </button>
+        {visibleCats.map(cat => (
+          <button key={cat} onClick={() => setCatFilter(cat)}
+            className={`px-3 py-1 rounded text-xs font-medium transition-colors ${catFilter === cat ? 'bg-amber-700 text-white' : 'bg-stone-800 text-stone-400 hover:text-stone-200'}`}>
+            {cat}
+          </button>
+        ))}
       </div>
+
+      {/* Sélecteur d'arme pour les dons ciblant une arme */}
+      {pendingFeat && (
+        <div className="mb-3 p-3 bg-stone-800/60 rounded border border-amber-700/40">
+          <p className="text-amber-300 text-sm font-medium mb-2">{pendingFeat.nom} — choisir l'arme :</p>
+          <div className="flex gap-2">
+            <select className={SEL + ' flex-1'} value={selectedWeapon} onChange={e => setSelectedWeapon(e.target.value)}>
+              {weaponOptions.map(g => (
+                <optgroup key={g.groupe} label={g.groupe}>
+                  {g.noms.map(n => <option key={n} value={n}>{n}</option>)}
+                </optgroup>
+              ))}
+            </select>
+            <button onClick={confirmWeapon} className="shrink-0 bg-amber-700 hover:bg-amber-600 text-white text-sm px-3 py-1.5 rounded transition-colors">Ajouter</button>
+            <button onClick={() => setPendingFeat(null)} className={BTN_DEL}>✕</button>
+          </div>
+        </div>
+      )}
+
+      {/* Liste des dons disponibles */}
+      <div className="grid gap-1 max-h-72 overflow-y-auto pr-1 mb-4">
+        {displayedFeats.length === 0 && <p className="text-stone-600 text-sm italic">Aucun don dans cette catégorie.</p>}
+        {displayedFeats.map(feat => {
+          const alreadyAdded = !feat.needsWeapon && data.dons.includes(feat.nom)
+          return (
+            <button key={feat.nom} disabled={alreadyAdded} onClick={() => selectFeat(feat)}
+              className={`text-left flex items-center justify-between gap-3 px-3 py-2 rounded border transition-colors ${alreadyAdded ? 'opacity-40 cursor-default bg-stone-800/20 border-transparent' : 'bg-stone-800/50 border-transparent hover:bg-amber-900/25 hover:border-amber-700/40'}`}>
+              <div className="min-w-0">
+                <div className="text-stone-100 text-sm font-medium truncate">
+                  {feat.nom}{feat.needsWeapon && <span className="text-stone-500 ml-1 text-xs">(arme…)</span>}
+                </div>
+                <div className="text-amber-500 text-xs mt-0.5 truncate">{feat.description}</div>
+              </div>
+              <span className={`shrink-0 text-xs ${alreadyAdded ? 'text-amber-600' : 'text-stone-600'}`}>
+                {alreadyAdded ? '✓' : '+'}
+              </span>
+            </button>
+          )
+        })}
+      </div>
+
+      {/* Don hors liste (saisie libre) */}
+      <div className="flex gap-2 mb-4 pt-3 border-t border-stone-800">
+        <input className={INP} value={customDon} onChange={e => setCustomDon(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && addCustom()}
+          placeholder="Don hors liste (saisie libre)…" />
+        <button onClick={addCustom} className="shrink-0 bg-stone-700 hover:bg-stone-600 text-white text-sm px-4 py-1.5 rounded transition-colors">+</button>
+      </div>
+
+      {/* Dons sélectionnés */}
       <div className="space-y-1.5">
+        <div className="text-stone-500 text-xs mb-1">Dons du personnage ({data.dons.length})</div>
         {data.dons.map((don, idx) => (
           <div key={idx} className="flex items-center justify-between bg-stone-800/60 rounded px-3 py-2">
             <span className="text-stone-100 text-sm">{don}</span>
@@ -384,13 +574,32 @@ function SectionDons({ data, update }: { data: CharacterFormData; update: Upd })
 // ─── Section: Équipement ─────────────────────────────────────────────────────
 function SectionEquipement({ data, update, derived }: { data: CharacterFormData; update: Upd; derived: Derived }) {
   const [newLang, setNewLang] = useState('')
-  const newArme = () => update('armes', [...data.armes, { nom: '', degats: '1d6', crit: '20/×2', typeDegats: 'T', portee: 'Contact', bonusMagique: 0, quantite: 1 }])
-  const delArme = (i: number) => update('armes', data.armes.filter((_, j) => j !== i))
+  // Track which weapon rows are in custom-name mode (nom doesn't match any template)
+  const [customRows, setCustomRows] = useState<Set<number>>(() => new Set(
+    data.armes.map((a, i) => ({ a, i }))
+      .filter(({ a }) => a.nom !== '' && !WEAPONS_DND35.find(w => w.nom === a.nom))
+      .map(({ i }) => i)
+  ))
+  const newArme = () => update('armes', [...data.armes, { nom: '', degats: '1d6', crit: '20-20/×2', typeDegats: 'T', portee: 'Contact', bonusMagique: 0, coteDeForce: null, bonusMunitions: null, quantite: 1 }])
+  const delArme = (i: number) => {
+    setCustomRows(prev => {
+      const s = new Set<number>()
+      prev.forEach(idx => { if (idx < i) s.add(idx); else if (idx > i) s.add(idx - 1) })
+      return s
+    })
+    update('armes', data.armes.filter((_, j) => j !== i))
+  }
   const setArme = (i: number, k: string, v: any) => { const a = [...data.armes]; (a[i] as any)[k] = v; update('armes', a) }
+  const selectArmeTemplate = (i: number, t: WeaponTemplate) => {
+    setCustomRows(prev => { const s = new Set(prev); s.delete(i); return s })
+    const a = [...data.armes]
+    a[i] = { ...a[i], nom: t.nom, degats: t.degats, crit: t.crit, typeDegats: t.typeDegats, portee: t.portee }
+    update('armes', a)
+  }
   const newArmure = () => update('armures', [...data.armures, { nom: '', type: 'Légère', bonusCA: 0, maxDex: 10, malusComp: 0, bonusMagique: 0 }])
   const delArmure = (i: number) => update('armures', data.armures.filter((_, j) => j !== i))
   const setArmure = (i: number, k: string, v: any) => { const a = [...data.armures]; (a[i] as any)[k] = v; update('armures', a) }
-  const newObj = () => update('objetsMagiques', [...data.objetsMagiques, { nom: '', type: '', emplacement: '', bonus: '', description: '' }])
+  const newObj = () => update('objetsMagiques', [...data.objetsMagiques, { nom: '', type: '', emplacement: '', bonus: '', description: '', charges: 0 }])
   const delObj = (i: number) => update('objetsMagiques', data.objetsMagiques.filter((_, j) => j !== i))
   const setObj = (i: number, k: string, v: any) => { const a = [...data.objetsMagiques]; (a[i] as any)[k] = v; update('objetsMagiques', a) }
   const newPot = () => update('potions', [...data.potions, { nom: '', effet: '', charges: 1 }])
@@ -404,16 +613,85 @@ function SectionEquipement({ data, update, derived }: { data: CharacterFormData;
       <div className={CARD}>
         <div className={SEC_H}>Armes</div>
         {data.armes.map((a, i) => (
-          <div key={i} className="grid grid-cols-2 sm:grid-cols-7 gap-2 mb-2 items-end bg-stone-800/30 rounded p-2">
-            <div className="sm:col-span-2"><label className={LBL}>Nom</label><input className={INP} value={a.nom} onChange={e => setArme(i, 'nom', e.target.value)} placeholder="Épée longue" /></div>
-            <div><label className={LBL}>Dégâts</label><input className={INP} value={a.degats} onChange={e => setArme(i, 'degats', e.target.value)} placeholder="1d8" /></div>
-            <div><label className={LBL}>Crit</label><input className={INP} value={a.crit} onChange={e => setArme(i, 'crit', e.target.value)} placeholder="20/×2" /></div>
-            <div><label className={LBL}>Type</label><select className={SEL} value={a.typeDegats} onChange={e => setArme(i, 'typeDegats', e.target.value)}><option value="T">T (tranchant)</option><option value="C">C (contondant)</option><option value="P">P (perforant)</option></select></div>
-            <div><label className={LBL}>+Mag</label><input className={INP_NUM + ' w-full'} type="number" value={a.bonusMagique} onChange={e => setArme(i, 'bonusMagique', parseInt(e.target.value) || 0)} /></div>
-            <div className="flex items-end gap-1"><div className="flex-1"><label className={LBL}>Qté</label><input className={INP_NUM + ' w-full'} type="number" min={1} value={a.quantite} onChange={e => setArme(i, 'quantite', parseInt(e.target.value) || 1)} /></div><button onClick={() => delArme(i)} className={BTN_DEL + ' mb-2'}>✕</button></div>
+          <div key={i} className="mb-2 bg-stone-800/30 rounded p-2">
+            {/* Rangée principale */}
+            <div className="grid grid-cols-2 sm:grid-cols-7 gap-2 items-end">
+              <div className="sm:col-span-2">
+                <label className={LBL}>Arme</label>
+                {(() => {
+                  const template = WEAPONS_DND35.find(w => w.nom === a.nom)
+                  const isCustom = customRows.has(i) || (a.nom !== '' && !template)
+                  const selectVal = template ? a.nom : (isCustom ? '__custom__' : '')
+                  return (
+                    <>
+                      <select className={SEL} value={selectVal} onChange={e => {
+                        const val = e.target.value
+                        if (val === '__custom__') {
+                          setCustomRows(prev => new Set([...prev, i]))
+                          setArme(i, 'nom', '')
+                        } else if (val === '') {
+                          setCustomRows(prev => { const s = new Set(prev); s.delete(i); return s })
+                          setArme(i, 'nom', '')
+                        } else {
+                          const t = WEAPONS_DND35.find(w => w.nom === val)!
+                          selectArmeTemplate(i, t)
+                        }
+                      }}>
+                        <option value="">— Choisir une arme —</option>
+                        {WEAPON_CATEGORIES.map(cat => (
+                          <optgroup key={cat} label={`Armes ${cat === 'Courante' ? 'courantes' : cat === 'Guerre' ? 'de guerre' : 'exotiques'}`}>
+                            {WEAPONS_DND35.filter(w => w.categorie === cat).map(w => (
+                              <option key={w.nom} value={w.nom}>{w.nom}</option>
+                            ))}
+                          </optgroup>
+                        ))}
+                        <option value="__custom__">— Arme personnalisée —</option>
+                      </select>
+                      {isCustom && (
+                        <input className={INP + ' mt-1'} value={a.nom} onChange={e => setArme(i, 'nom', e.target.value)} placeholder="Nom de l'arme..." />
+                      )}
+                    </>
+                  )
+                })()}
+              </div>
+              <div><label className={LBL}>Dégâts</label><input className={INP} value={a.degats} onChange={e => setArme(i, 'degats', e.target.value)} placeholder="1d8" /></div>
+              <div><label className={LBL}>Crit</label><input className={INP} value={a.crit} onChange={e => setArme(i, 'crit', e.target.value)} placeholder="20/×2" /></div>
+              <div><label className={LBL}>Type</label><select className={SEL} value={a.typeDegats} onChange={e => setArme(i, 'typeDegats', e.target.value)}><option value="T">T (tranchant)</option><option value="C">C (contondant)</option><option value="P">P (perforant)</option></select></div>
+              <div><label className={LBL}>+Mag</label><input className={INP_NUM + ' w-full'} type="number" value={a.bonusMagique} onChange={e => setArme(i, 'bonusMagique', parseInt(e.target.value) || 0)} /></div>
+              <div className="flex items-end gap-1"><div className="flex-1"><label className={LBL}>Qté</label><input className={INP_NUM + ' w-full'} type="number" min={1} value={a.quantite} onChange={e => setArme(i, 'quantite', parseInt(e.target.value) || 1)} /></div><button onClick={() => delArme(i)} className={BTN_DEL + ' mb-2'}>✕</button></div>
+            </div>
+            {/* Sous-rangée conditionnelle : arc composite (côte Force) et arcs/arbalètes (munitions) */}
+            {(() => {
+              const nomL = a.nom.toLowerCase()
+              const isComposite = nomL.includes('composite')
+              const isRanged = isComposite || /arc|arbalète|arbalette/i.test(a.nom) || a.portee !== 'Contact'
+              if (!isComposite && !isRanged) return null
+              return (
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-1.5 pt-1.5 border-t border-stone-700/30 items-end">
+                  {isComposite && (
+                    <div><label className={LBL} title="Bonus de Force maximal ajouté aux dégâts (ne s'applique pas au jet d'attaque)">Côte Force</label><input className={INP_NUM + ' w-full'} type="number" min={0} value={a.coteDeForce ?? ''} placeholder="—" onChange={e => setArme(i, 'coteDeForce', e.target.value === '' ? null : parseInt(e.target.value) || 0)} /></div>
+                  )}
+                  {isRanged && (
+                    <div><label className={LBL} title="Flèches +1, bolts +2, etc. S'ajoute à l'attaque ET aux dégâts.">Munitions +Mag</label><input className={INP_NUM + ' w-full'} type="number" min={0} value={a.bonusMunitions ?? ''} placeholder="—" onChange={e => setArme(i, 'bonusMunitions', e.target.value === '' ? null : parseInt(e.target.value) || 0)} /></div>
+                  )}
+                  <div className={`${isComposite && isRanged ? '' : 'sm:col-span-3'} flex items-end pb-1`}>
+                    <span className="text-stone-600 text-xs italic">
+                      {isComposite ? 'Arc composite : côte Force plafonne le bonus FOR aux dégâts' : 'Munitions magiques : flèches, bolts, etc.'}
+                    </span>
+                  </div>
+                </div>
+              )
+            })()}
           </div>
         ))}
-        <button onClick={newArme} className={BTN_ADD}><span className="text-xl">+</span> Ajouter une arme</button>
+        <div className="flex gap-4 mt-2">
+          <button onClick={newArme} className={BTN_ADD}><span className="text-xl">+</span> Ajouter une arme</button>
+          <button onClick={() => {
+            const idx = data.armes.length
+            update('armes', [...data.armes, { nom: '', degats: '1d6', crit: '20-20/×2', typeDegats: 'T', portee: 'Contact', bonusMagique: 0, coteDeForce: null, bonusMunitions: null, quantite: 1 }])
+            setCustomRows(prev => new Set([...prev, idx]))
+          }} className={BTN_ADD + ' text-purple-400 hover:text-purple-200'}><span className="text-xl">+</span> Arme personnalisée</button>
+        </div>
       </div>
 
       {/* Armure */}
@@ -435,10 +713,11 @@ function SectionEquipement({ data, update, derived }: { data: CharacterFormData;
       <div className={CARD}>
         <div className={SEC_H}>Objets magiques</div>
         {data.objetsMagiques.map((o, i) => (
-          <div key={i} className="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-2 items-end bg-stone-800/30 rounded p-2">
+          <div key={i} className="grid grid-cols-2 sm:grid-cols-6 gap-2 mb-2 items-end bg-stone-800/30 rounded p-2">
             <div className="sm:col-span-2"><label className={LBL}>Nom</label><input className={INP} value={o.nom} onChange={e => setObj(i, 'nom', e.target.value)} placeholder="Cape de protection +1" /></div>
             <div><label className={LBL}>Emplacement</label><input className={INP} value={o.emplacement} onChange={e => setObj(i, 'emplacement', e.target.value)} placeholder="Épaules" /></div>
             <div><label className={LBL}>Bonus</label><input className={INP} value={o.bonus} onChange={e => setObj(i, 'bonus', e.target.value)} placeholder="+1 CA" /></div>
+            <div><label className={LBL}>Charges</label><input className={INP_NUM + ' w-full'} type="number" min={0} value={o.charges} onChange={e => setObj(i, 'charges', parseInt(e.target.value) || 0)} title="0 = pas de charges" /></div>
             <div className="flex items-end"><button onClick={() => delObj(i)} className={BTN_DEL + ' mb-2 ml-auto'}>✕</button></div>
           </div>
         ))}
@@ -461,9 +740,20 @@ function SectionEquipement({ data, update, derived }: { data: CharacterFormData;
       {/* Trésor */}
       <div className={CARD}>
         <div className={SEC_H}>Trésor</div>
-        <div className="grid grid-cols-5 gap-3">
-          {([['po', 'PO'], ['pa', 'PA'], ['pc', 'PC'], ['pe', 'PE'], ['pm', 'PM']] as const).map(([k, lbl]) => (
-            <div key={k}><label className={LBL + ' text-center'}>{lbl}</label><input className={INP_NUM + ' w-full'} type="number" min={0} value={(data as any)[k]} onChange={e => update(k, parseFloat(e.target.value) || 0)} /></div>
+        <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+          {([
+            ['pp', 'PP', 'Platine'],
+            ['po', 'PO', "Or"],
+            ['pe', 'PE', 'Électrum'],
+            ['pa', 'PA', 'Argent'],
+            ['pc', 'PC', 'Cuivre'],
+            ['pm', 'PM', 'Mithral'],
+          ] as const).map(([k, lbl, nom]) => (
+            <div key={k} className="flex flex-col">
+              <label className={LBL + ' text-center'}>{lbl}</label>
+              <input className={INP_NUM + ' w-full text-center'} type="number" min={0} value={(data as any)[k]} onChange={e => update(k, parseFloat(e.target.value) || 0)} />
+              <span className="text-stone-600 text-xs text-center mt-0.5">{nom}</span>
+            </div>
           ))}
         </div>
       </div>
@@ -491,44 +781,118 @@ function SectionEquipement({ data, update, derived }: { data: CharacterFormData;
 // ─── Section: Sorts ──────────────────────────────────────────────────────────
 function SectionSorts({ data, update, derived }: { data: CharacterFormData; update: Upd; derived: Derived }) {
   const [spellLevel, setSpellLevel] = useState(0)
-  const classeKey = data.classe as ClasseSortKey
+
+  // Si plusieurs classes lanceurs de sorts, permettre le choix de la classe active
+  const casterClassNames = derived.casterClasses.map(c => c.classe)
+  const [activeCasterClass, setActiveCasterClass] = useState<string>(casterClassNames[0] ?? data.classe)
+  const effectiveCaster = casterClassNames.includes(activeCasterClass) ? activeCasterClass : (casterClassNames[0] ?? data.classe)
+  // Niveau de la classe lanceur active (pas le niveau total)
+  const activeCasterNiveau = (data.classes ?? [{ classe: data.classe, niveau: data.niveau }])
+    .find(c => c.classe === effectiveCaster)?.niveau ?? data.niveau
+
+  const classeKey = effectiveCaster as ClasseSortKey
   const nMax = niveauxMaxForClasse(classeKey)
   const levels = Array.from({ length: nMax + 1 }, (_, i) => i)
   const sortsLevel = sortsByClasseEtNiveau(classeKey, spellLevel)
+  const slots = getSortsSlotsParJour(effectiveCaster, activeCasterNiveau)
+  const selectedAtLevel = data.sorts.filter(s => s.niveau === spellLevel).reduce((sum, s) => sum + (s.nombrePrepare ?? 0), 0)
+  const slotsAtLevel = slots[spellLevel] ?? 0
 
   function toggle(sort: SortDnD) {
     const exists = data.sorts.some(s => s.nom === sort.nom)
     if (exists) {
       update('sorts', data.sorts.filter(s => s.nom !== sort.nom))
     } else {
-      update('sorts', [...data.sorts, { nom: sort.nom, niveau: sort.niveaux[classeKey] ?? 0, ecole: sort.ecole, estPrepare: false }])
+      update('sorts', [...data.sorts, { nom: sort.nom, niveau: sort.niveaux[classeKey] ?? spellLevel, ecole: sort.ecole, nombrePrepare: 0 }])
     }
   }
 
+  function setPrep(nom: string, delta: number) {
+    update('sorts', data.sorts.map(s => s.nom === nom ? { ...s, nombrePrepare: Math.max(0, (s.nombrePrepare ?? 0) + delta) } : s))
+  }
+
+  const classeLabel = (data.classes ?? [{ classe: data.classe, niveau: data.niveau }]).map(c => `${c.classe} ${c.niveau}`).join(' / ')
+
   return (
     <div className={CARD}>
-      <div className={SEC_H}>Sorts — {data.classe} <span className="text-stone-500 font-normal">({data.sorts.length} sélectionné{data.sorts.length > 1 ? 's' : ''})</span></div>
-      {derived.classeInfo?.caracteristiqueSorts && <p className="text-stone-400 text-xs mb-3">Caractéristique de lancement : <span className="text-amber-400 font-semibold">{derived.classeInfo.caracteristiqueSorts}</span></p>}
+      <div className={SEC_H}>Sorts — {classeLabel} <span className="text-stone-500 font-normal">({data.sorts.length} sort{data.sorts.length > 1 ? 's' : ''} au total)</span></div>
+
+      {/* Sélecteur de classe si multi-lanceur */}
+      {casterClassNames.length > 1 && (
+        <div className="flex gap-2 mb-3 flex-wrap">
+          {casterClassNames.map(cn => {
+            const niv = (data.classes ?? []).find(c => c.classe === cn)?.niveau ?? 1
+            return (
+              <button key={cn} onClick={() => { setActiveCasterClass(cn); setSpellLevel(0) }}
+                className={`px-3 py-1 rounded text-sm font-medium transition-colors ${effectiveCaster === cn ? 'bg-amber-700 text-white' : 'bg-stone-800 text-stone-400 hover:text-stone-200'}`}>
+                {cn} niv.{niv}
+              </button>
+            )
+          })}
+        </div>
+      )}
+
+      {derived.casterClasses.find(c => c.classe === effectiveCaster) && (
+        <p className="text-stone-400 text-xs mb-3">
+          Caractéristique de lancement ({effectiveCaster}) : <span className="text-amber-400 font-semibold">{getClasseInfo(effectiveCaster)?.caracteristiqueSorts}</span>
+        </p>
+      )}
+
+      {/* Résumé des emplacements disponibles */}
+      {slots.length > 0 && (
+        <div className="flex flex-wrap gap-2 mb-4 p-2 bg-stone-900/60 rounded border border-stone-700/40">
+          <span className="text-stone-500 text-xs self-center">Emplacements/jour :</span>
+          {slots.map((n, i) => n > 0 && (
+            <span key={i} className="text-xs px-2 py-0.5 rounded bg-stone-800 border border-stone-700">
+              <span className="text-stone-500">niv.{i} </span>
+              <span className="text-amber-400 font-bold">{n}</span>
+            </span>
+          ))}
+          <span className="text-stone-600 text-xs self-center ml-auto italic">+ bonus hautes carac.</span>
+        </div>
+      )}
 
       {/* Onglets par niveau */}
-      <div className="flex flex-wrap gap-1 mb-4">
-        {levels.map(l => (
-          <button key={l} onClick={() => setSpellLevel(l)} className={`px-3 py-1 rounded text-sm font-medium transition-colors ${spellLevel === l ? 'bg-amber-700 text-white' : 'bg-stone-800 text-stone-400 hover:text-stone-200'}`}>
-            Niv. {l}
-          </button>
-        ))}
+      <div className="flex flex-wrap gap-1 mb-2">
+        {levels.map(l => {
+          const slotCount = slots[l] ?? 0
+          const selCount = data.sorts.filter(s => s.niveau === l).reduce((sum, s) => sum + (s.nombrePrepare ?? 0), 0)
+          const knownCount = data.sorts.filter(s => s.niveau === l).length
+          return (
+            <button key={l} onClick={() => setSpellLevel(l)}
+              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${spellLevel === l ? 'bg-amber-700 text-white' : 'bg-stone-800 text-stone-400 hover:text-stone-200'}`}>
+              Niv.{l}
+              {knownCount > 0 && <span className="text-stone-600 text-xs ml-0.5">({knownCount})</span>}
+              {slotCount > 0 && <span className={`ml-1 text-xs ${selCount >= slotCount ? 'text-amber-400' : 'text-stone-500'}`}>[{selCount}/{slotCount}]</span>}
+            </button>
+          )
+        })}
       </div>
+
+      {/* Info emplacements pour le niveau sélectionné */}
+      {slotsAtLevel > 0 && (
+        <div className={`text-xs mb-3 px-2 py-1 rounded ${selectedAtLevel >= slotsAtLevel ? 'bg-amber-900/30 text-amber-400' : 'bg-stone-800/40 text-stone-500'}`}>
+          Niveau {spellLevel} : <span className="font-bold">{selectedAtLevel}</span> préparation{selectedAtLevel > 1 ? 's' : ''} · {slotsAtLevel} emplacement{slotsAtLevel > 1 ? 's' : ''} de base
+          {selectedAtLevel > slotsAtLevel && <span className="text-amber-500 ml-1">(dépassement — bonus de carac. requis)</span>}
+        </div>
+      )}
+      {slotsAtLevel === 0 && spellLevel > 0 && (
+        <p className="text-stone-600 text-xs mb-3 italic">Niveau {spellLevel} non accessible au niveau {data.niveau}.</p>
+      )}
 
       {/* Liste des sorts pour ce niveau */}
       <div className="grid gap-1.5 max-h-96 overflow-y-auto pr-1">
-        {sortsLevel.length === 0 && <p className="text-stone-600 text-sm italic">Aucun sort de ce niveau.</p>}
+        {sortsLevel.length === 0 && <p className="text-stone-600 text-sm italic">Aucun sort de ce niveau dans la liste.</p>}
         {sortsLevel.map(sort => {
           const selected = data.sorts.some(s => s.nom === sort.nom)
           return (
             <label key={sort.nom} className={`flex items-start gap-3 p-2.5 rounded cursor-pointer transition-colors ${selected ? 'bg-amber-900/30 border border-amber-700/40' : 'bg-stone-800/40 hover:bg-stone-800/70'}`}>
               <input type="checkbox" checked={selected} onChange={() => toggle(sort)} className="mt-0.5 shrink-0 accent-amber-600" />
               <div>
-                <div className="text-stone-100 text-sm font-medium">{sort.nom} <span className="text-stone-500 text-xs">({sort.ecole})</span></div>
+                <div className="text-stone-100 text-sm font-medium">
+                  {sort.nom} <span className="text-stone-500 text-xs">({sort.ecole})</span>
+                  <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(sort.nom)}`} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} title="Voir la description D&D 3.5" className="ml-1.5 text-stone-600 hover:text-amber-400 transition-colors">🔍</a>
+                </div>
                 <div className="text-stone-400 text-xs mt-0.5">{sort.description}</div>
                 <div className="text-stone-600 text-xs mt-0.5">{sort.composantes} · {sort.portee} · {sort.duree}</div>
               </div>
@@ -539,15 +903,47 @@ function SectionSorts({ data, update, derived }: { data: CharacterFormData; upda
 
       {/* Sorts sélectionnés résumé */}
       {data.sorts.length > 0 && (
-        <details className="mt-4">
-          <summary className="text-amber-500 text-xs cursor-pointer hover:text-amber-300">▸ Sorts sélectionnés ({data.sorts.length})</summary>
-          <div className="mt-2 grid grid-cols-2 gap-1">
-            {data.sorts.sort((a, b) => a.niveau - b.niveau || a.nom.localeCompare(b.nom)).map(s => (
-              <div key={s.nom} className="flex items-center justify-between bg-stone-800/50 rounded px-2 py-1 text-xs">
-                <span className="text-stone-300">{s.nom} <span className="text-stone-600">(niv.{s.niveau})</span></span>
-                <button onClick={() => update('sorts', data.sorts.filter(x => x.nom !== s.nom))} className={BTN_DEL}>✕</button>
-              </div>
-            ))}
+        <details className="mt-4" open>
+          <summary className="text-amber-500 text-xs cursor-pointer hover:text-amber-300">
+            ▸ Grimoire ({data.sorts.length} sort{data.sorts.length > 1 ? 's' : ''}) — cliquer +/− pour préparer
+          </summary>
+          <div className="mt-2 grid gap-1">
+            {(() => {
+              const sorted = [...data.sorts].sort((a, b) => a.niveau - b.niveau || a.nom.localeCompare(b.nom))
+              const levels = [...new Set(sorted.map(s => s.niveau))].sort((a, b) => a - b)
+              return levels.map(lvl => {
+                const sortsLvl = sorted.filter(s => s.niveau === lvl)
+                const slotsLvl = slots[lvl] ?? 0
+                const prepLvl = sortsLvl.reduce((sum, s) => sum + (s.nombrePrepare ?? 0), 0)
+                return (
+                  <div key={lvl}>
+                    <div className="flex items-center gap-2 mt-3 mb-1 first:mt-1">
+                      <span className="text-amber-500 text-xs font-bold shrink-0">Niv. {lvl}</span>
+                      {slotsLvl > 0 && (
+                        <span className={`text-xs shrink-0 ${prepLvl >= slotsLvl ? 'text-amber-400 font-semibold' : 'text-stone-500'}`}>
+                          · {prepLvl}/{slotsLvl} empl.
+                        </span>
+                      )}
+                      <div className="flex-1 h-px bg-stone-700/50" />
+                      <span className="text-stone-600 text-xs shrink-0">{sortsLvl.length} sort{sortsLvl.length > 1 ? 's' : ''}</span>
+                    </div>
+                    {sortsLvl.map(s => (
+                      <div key={s.nom} className={`flex items-center justify-between rounded px-2 py-1.5 text-xs mb-0.5 ${(s.nombrePrepare ?? 0) > 0 ? 'bg-amber-900/20 border border-amber-800/40' : 'bg-stone-800/50'}`}>
+                        <span className={(s.nombrePrepare ?? 0) > 0 ? 'text-amber-200 font-medium' : 'text-stone-400'}>{s.nom}</span>
+                        <div className="flex items-center gap-1 shrink-0">
+                          <button onClick={() => setPrep(s.nom, -1)} className="w-5 h-5 rounded bg-stone-700 hover:bg-stone-600 text-stone-300 text-center leading-none transition-colors">−</button>
+                          <span className={`w-6 text-center font-bold ${(s.nombrePrepare ?? 0) > 0 ? 'text-amber-400' : 'text-stone-600'}`}>
+                            {(s.nombrePrepare ?? 0) > 0 ? `×${s.nombrePrepare}` : '○'}
+                          </span>
+                          <button onClick={() => setPrep(s.nom, +1)} className="w-5 h-5 rounded bg-stone-700 hover:bg-amber-700 text-stone-300 text-center leading-none transition-colors">+</button>
+                          <button onClick={() => update('sorts', data.sorts.filter(x => x.nom !== s.nom))} className={BTN_DEL + ' ml-1'}>✕</button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )
+              })
+            })()}
           </div>
         </details>
       )}
@@ -595,7 +991,15 @@ export function CharacterForm({ personnageId, initialData }: { personnageId?: nu
   const router = useRouter()
 
   const update = useCallback(<K extends keyof CharacterFormData>(key: K, value: CharacterFormData[K]) => {
-    setData(d => ({ ...d, [key]: value }))
+    setData(d => {
+      const next = { ...d, [key]: value }
+      if (key === 'classes') {
+        const cls = value as { classe: string; niveau: number }[]
+        next.classe = cls[0]?.classe ?? d.classe
+        next.niveau = cls.reduce((sum, c) => sum + c.niveau, 0) || 1
+      }
+      return next
+    })
   }, [])
 
   const derived = calcDerived(data)
@@ -633,11 +1037,27 @@ export function CharacterForm({ personnageId, initialData }: { personnageId?: nu
             <Link href="/" className="text-stone-500 hover:text-amber-300 text-sm shrink-0 transition-colors">← Grimoire</Link>
             <span className="text-stone-700">|</span>
             <h1 className="text-amber-300 font-bold truncate">{data.nom || 'Nouveau personnage'}</h1>
-            {data.classe && <span className="text-stone-500 text-sm shrink-0">{data.classe} niv.{data.niveau}</span>}
+            {(data.classes?.length > 0 ? data.classes : data.classe ? [{ classe: data.classe, niveau: data.niveau }] : []).length > 0 && (
+              <span className="text-stone-500 text-sm shrink-0">
+                {(data.classes ?? [{ classe: data.classe, niveau: data.niveau }]).map(c => `${c.classe} ${c.niveau}`).join(' / ')}
+              </span>
+            )}
           </div>
-          <button onClick={handleSubmit} disabled={isPending || !data.nom.trim()} className="shrink-0 bg-amber-700 hover:bg-amber-600 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors">
-            {isPending ? 'Sauvegarde...' : personnageId ? 'Enregistrer' : 'Créer le personnage'}
-          </button>
+          <div className="flex items-center gap-2 shrink-0">
+            <Link
+              href={personnageId ? `/aide/creation?from=/personnage/${personnageId}/modifier` : '/aide/creation'}
+              className="inline-flex items-center gap-1.5 bg-stone-800/50 hover:bg-stone-700/60 border border-stone-700/50 hover:border-stone-500 text-stone-400 hover:text-stone-200 text-sm px-3 py-2 rounded-lg transition-all"
+              title="Aide — Guide de création"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              Aide
+            </Link>
+            <button onClick={handleSubmit} disabled={isPending || !data.nom.trim()} className="bg-amber-700 hover:bg-amber-600 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors">
+              {isPending ? 'Sauvegarde...' : personnageId ? 'Enregistrer' : 'Créer le personnage'}
+            </button>
+          </div>
         </div>
         {error && <div className="bg-red-900/50 border-t border-red-700/50 px-4 py-2 text-red-300 text-sm">{error}</div>}
         {/* Tab bar */}
