@@ -4,6 +4,8 @@ import { getCharacter } from '@/lib/queries/character'
 import { DeleteButton } from '@/components/fiche/DeleteButton'
 import { getClasseInfo } from '@/lib/dnd35/classes'
 import { getMultiClassBab, XP_PAR_NIVEAU } from '@/lib/dnd35/rules'
+import { getSortsSlotsParJour } from '@/lib/dnd35/classes'
+import { SORTS_DND35, type ClasseSortKey } from '@/lib/dnd35/spells'
 import { getFeatWeaponBonuses, getFeatDescription } from '@/lib/dnd35/feat-bonuses'
 
 export const dynamic = 'force-dynamic'
@@ -69,6 +71,29 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const classeLabel = classes.map(c => `${c.classe.nom} ${c.characterClass.niveau}`).join(' / ')
   const niveauTotal = classes.reduce((sum, c) => sum + c.characterClass.niveau, 0)
   const xpProchain = XP_PAR_NIVEAU[niveauTotal + 1] ?? null
+
+  // Sorts : calcul de la liste disponible pour les lanceurs divins
+  const ARCANE_CLASSES = ['Magicien', 'Ensorceleur', 'Barde']
+  const DIVIN_CLASSES  = ['Prêtre', 'Druide', 'Paladin', 'Rôdeur']
+  const divineClasseSort = classes.find(c => DIVIN_CLASSES.includes(c.classe.nom))
+  const arcaneClasseSort = classes.find(c => ARCANE_CLASSES.includes(c.classe.nom))
+  const classeSort = divineClasseSort ?? arcaneClasseSort
+
+  let divineAvailableSpells: { nom: string; ecole: string; niveau: number }[] | undefined
+  if (divineClasseSort) {
+    const classeKey = divineClasseSort.classe.nom as ClasseSortKey
+    const slots = getSortsSlotsParJour(divineClasseSort.classe.nom, divineClasseSort.characterClass.niveau)
+    const maxSpellLevel = slots.reduce((max, count, idx) => count > 0 ? idx : max, -1)
+    if (maxSpellLevel >= 0) {
+      divineAvailableSpells = SORTS_DND35
+        .filter(s => {
+          const niv = s.niveaux[classeKey]
+          return niv !== undefined && niv <= maxSpellLevel
+        })
+        .map(s => ({ nom: s.nom, ecole: s.ecole, niveau: s.niveaux[classeKey]! }))
+        .sort((a, b) => a.niveau - b.niveau || a.nom.localeCompare(b.nom, 'fr'))
+    }
+  }
 
   return (
     <div className="min-h-screen bg-stone-950 text-stone-100">
@@ -348,7 +373,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
         )}
 
         {/* ── SORTS ── */}
-        {spells.length > 0 && (() => {
+        {classeSort != null && (() => {
           const byNiveau = spells.reduce<Record<number, typeof spells>>((acc, s) => {
             const n = s.charSpell.niveau ?? 0
             acc[n] = acc[n] ?? []
@@ -357,11 +382,6 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           }, {})
           const niveaux = Object.keys(byNiveau).map(Number).sort((a, b) => a - b)
           const niveauLabel = (n: number) => n === 0 ? 'Oraisons (niv. 0)' : `Niveau ${n}`
-          const ARCANE_CLASSES = ['Magicien', 'Ensorceleur', 'Barde']
-          const DIVIN_CLASSES  = ['Prêtre', 'Druide', 'Paladin', 'Rôdeur']
-          const classeSort = classes.find(c =>
-            ARCANE_CLASSES.includes(c.classe.nom) || DIVIN_CLASSES.includes(c.classe.nom)
-          )
           const spellsMapped = spells.map(s => ({
             charSpellId: s.charSpell.id,
             nom: s.spell.nom,
@@ -372,34 +392,43 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           return (
             <Section
               titre="Sorts"
-              action={classeSort ? (
+              action={
                 <PreparerSorts
                   personnageId={character.id}
                   classe={classeSort.classe.nom}
                   niveau={classeSort.characterClass.niveau}
                   spells={spellsMapped}
+                  availableSpells={divineAvailableSpells}
                 />
-              ) : undefined}
+              }
             >
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {niveaux.map(n => (
-                  <div key={n}>
-                    <div className="text-amber-500 text-xs uppercase tracking-widest font-bold mb-2">{niveauLabel(n)}</div>
-                    <div className="space-y-1">
-                      {byNiveau[n].map(({ spell, charSpell }) => (
-                        <div key={charSpell.id} className="flex items-center justify-between py-1 border-b border-stone-800/60 last:border-0">
-                          <div>
-                            <span className={`text-sm font-medium ${(charSpell.estPrepare ?? 0) > 0 ? 'text-amber-200' : 'text-stone-400'}`}>{spell.nom}</span>
-                            {spell.ecole && <span className="text-stone-600 text-xs ml-2">· {spell.ecole}</span>}
-                            <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(spell.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="ml-1.5 text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
+              {spells.length === 0 ? (
+                <p className="text-stone-600 text-sm italic">
+                  {divineClasseSort
+                    ? 'Aucun sort préparé — cliquez sur Prier pour commencer la journée.'
+                    : 'Aucun sort dans le grimoire.'}
+                </p>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {niveaux.map(n => (
+                    <div key={n}>
+                      <div className="text-amber-500 text-xs uppercase tracking-widest font-bold mb-2">{niveauLabel(n)}</div>
+                      <div className="space-y-1">
+                        {byNiveau[n].map(({ spell, charSpell }) => (
+                          <div key={charSpell.id} className="flex items-center justify-between py-1 border-b border-stone-800/60 last:border-0">
+                            <div>
+                              <span className={`text-sm font-medium ${(charSpell.estPrepare ?? 0) > 0 ? 'text-amber-200' : 'text-stone-400'}`}>{spell.nom}</span>
+                              {spell.ecole && <span className="text-stone-600 text-xs ml-2">· {spell.ecole}</span>}
+                              <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(spell.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="ml-1.5 text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
+                            </div>
+                            <LiveSort charSpellId={charSpell.id} personnageId={character.id} estPrepare={charSpell.estPrepare ?? 0} />
                           </div>
-                          <LiveSort charSpellId={charSpell.id} personnageId={character.id} estPrepare={charSpell.estPrepare ?? 0} />
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </Section>
           )
         })()}

@@ -8,13 +8,14 @@ import { redirect } from 'next/navigation'
 import { CLASSES_DND35, getClasseInfo } from '@/lib/dnd35/classes'
 import { RACES_DND35, getRaceInfo } from '@/lib/dnd35/races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
-import { getBab, getModifier } from '@/lib/dnd35/rules'
+import { getBab, getModifier, getMultiClassSave } from '@/lib/dnd35/rules'
 
 // ─── Type exported for the form component ───────────────────────────────────
 export interface CharacterFormData {
   nom: string; surnom: string; sexe: string; age: number | string
   taille: string; poids: number | string; yeux: string; cheveux: string
   race: string; classe: string; niveau: number
+  classes: { classe: string; niveau: number }[]
   alignement: string; divinite: string; clan: string; xp: number
   photoUrl: string
 
@@ -36,15 +37,16 @@ export interface CharacterFormData {
 
   competences: { skillId: number; nom: string; caracteristique: string; rangs: number; divers: number }[]
   dons: string[]
-  armes: { nom: string; degats: string; crit: string; typeDegats: string; portee: string; bonusMagique: number; quantite: number }[]
+  armes: { nom: string; degats: string; crit: string; typeDegats: string; portee: string; bonusMagique: number; coteDeForce?: number | null; bonusMunitions?: number | null; quantite: number }[]
   armures: { nom: string; type: string; bonusCA: number; maxDex: number; malusComp: number; bonusMagique: number }[]
-  objetsMagiques: { nom: string; type: string; emplacement: string; bonus: string; description: string }[]
+  objetsMagiques: { nom: string; type: string; emplacement: string; bonus: string; description: string; charges: number }[]
   potions: { nom: string; effet: string; charges: number }[]
-  po: number; pa: number; pc: number; pe: number; pm: number
+  pp: number; po: number; pe: number; pa: number; pc: number; pm: number
   langues: string[]
-  sorts: { nom: string; niveau: number; ecole: string; estPrepare: boolean }[]
+  sorts: { nom: string; niveau: number; ecole: string; nombrePrepare: number }[]
   historique: string; notes: string
   compagnons: { nom: string; race: string; classe: string; joueur: string; notes: string }[]
+  joueurPrenom: string; joueurNom: string
 }
 
 // ─── Existing action ─────────────────────────────────────────────────────────
@@ -76,6 +78,7 @@ export async function saveCharacter(
   const db = getDb()
   const raceInfo = getRaceInfo(data.race)
   const classeInfo = getClasseInfo(data.classe)
+  const allClasses = data.classes?.length > 0 ? data.classes : [{ classe: data.classe, niveau: data.niveau }]
 
   // ── 1. Race ──
   let raceId: number | null = null
@@ -93,7 +96,7 @@ export async function saveCharacter(
     )
   }
 
-  // ── 2. Classe ──
+  // ── 2. Classe principale (pour compatibilité) ──
   let classeId: number | null = null
   if (data.classe) {
     classeId = await findOrCreateByNom(
@@ -134,6 +137,8 @@ export async function saveCharacter(
     alignement: data.alignement || null,
     xp: data.xp,
     notes: data.notes || null,
+    joueurPrenom: data.joueurPrenom?.trim() || null,
+    joueurNom: data.joueurNom?.trim() || null,
   }
 
   let charId: number
@@ -165,7 +170,10 @@ export async function saveCharacter(
   // ── 6. Stats de combat ──
   const forTotal = data.forBase + data.forMagique + (raceInfo?.bonusFor ?? 0)
   const dexTotal = data.dexBase + data.dexMagique + (raceInfo?.bonusDex ?? 0)
-  const bbaBase = classeInfo ? getBab(classeInfo.bab, data.niveau) : 0
+  const bbaBase = allClasses.reduce((sum, c) => {
+    const info = getClasseInfo(c.classe)
+    return sum + (info ? getBab(info.bab, c.niveau) : 0)
+  }, 0)
   const bbaCorps = data.bbaCorpsOverride ?? (bbaBase + getModifier(forTotal))
   const bbaProjectiles = data.bbaProjectilesOverride ?? (bbaBase + getModifier(dexTotal))
   const deplacementFinal = data.deplacement ?? (raceInfo?.deplacement ?? 9)
@@ -187,18 +195,17 @@ export async function saveCharacter(
     await db.insert(schema.characterCombatStats).values({ personnageId: charId, ...combatValues })
   }
 
-  // ── 7. Jets de sauvegarde ──
-  const isGoodVig = (classeInfo?.bonsSauvegardes ?? []).includes('vigueur')
-  const isGoodRef = (classeInfo?.bonsSauvegardes ?? []).includes('reflexes')
-  const isGoodVol = (classeInfo?.bonsSauvegardes ?? []).includes('volonte')
-  const conTotal = data.conBase + data.conMagique + (raceInfo?.bonusCon ?? 0)
-  const sagTotal = data.sagBase + data.sagMagique + (raceInfo?.bonusSag ?? 0)
+  // ── 7. Jets de sauvegarde — multi-classe ──
+  const classesForSaves = allClasses.map(c => ({
+    bonsSauvegardes: getClasseInfo(c.classe)?.bonsSauvegardes ?? [],
+    niveau: c.niveau,
+  }))
   const saveValues = {
-    vigueurBase: isGoodVig ? 2 + Math.floor(data.niveau / 2) : Math.floor(data.niveau / 3),
+    vigueurBase: getMultiClassSave('vigueur', classesForSaves),
     vigueurMagique: data.vigueurMagique,
-    reflexesBase: isGoodRef ? 2 + Math.floor(data.niveau / 2) : Math.floor(data.niveau / 3),
+    reflexesBase: getMultiClassSave('reflexes', classesForSaves),
     reflexesMagique: data.reflexesMagique,
-    volonteBase: isGoodVol ? 2 + Math.floor(data.niveau / 2) : Math.floor(data.niveau / 3),
+    volonteBase: getMultiClassSave('volonte', classesForSaves),
     volonteMagique: data.volonteMagique,
   }
   const existingSaves = await db.select({ id: schema.characterSavingThrows.id })
@@ -209,10 +216,24 @@ export async function saveCharacter(
     await db.insert(schema.characterSavingThrows).values({ personnageId: charId, ...saveValues })
   }
 
-  // ── 8. Classe du personnage ──
+  // ── 8. Classes du personnage (multi-classe) ──
   await db.delete(schema.characterClasses).where(eq(schema.characterClasses.personnageId, charId))
-  if (classeId) {
-    await db.insert(schema.characterClasses).values({ personnageId: charId, classeId, niveau: data.niveau })
+  for (const c of allClasses) {
+    if (!c.classe) continue
+    const cInfo = getClasseInfo(c.classe)
+    const cId = await findOrCreateByNom(
+      () => db.select({ id: schema.classes.id }).from(schema.classes).where(eq(schema.classes.nom, c.classe)).limit(1),
+      () => db.insert(schema.classes).values({
+        nom: c.classe,
+        deVie: `d${cInfo?.de ?? 6}`,
+        bbaProgression: cInfo?.bab ?? 'faible',
+        vigueurProgression: (cInfo?.bonsSauvegardes ?? []).includes('vigueur') ? 'bon' : 'faible',
+        reflexesProgression: (cInfo?.bonsSauvegardes ?? []).includes('reflexes') ? 'bon' : 'faible',
+        volonteProgression: (cInfo?.bonsSauvegardes ?? []).includes('volonte') ? 'bon' : 'faible',
+        competencesParNiveau: cInfo?.competencesParNiveau ?? 2,
+      }).returning({ id: schema.classes.id })
+    )
+    await db.insert(schema.characterClasses).values({ personnageId: charId, classeId: cId, niveau: c.niveau })
   }
 
   // ── 9. Compétences ──
@@ -256,17 +277,21 @@ export async function saveCharacter(
     const critMatch = arme.crit.match(/(\d+)(?:-20)?\/[×x](\d+)/)
     const critiqueMin = critMatch ? parseInt(critMatch[1]) : 20
     const critiqueMult = critMatch ? parseInt(critMatch[2]) : 2
+    const porteeNum = arme.portee && arme.portee !== 'Contact' ? parseInt(arme.portee) || null : null
     const armeId = await findOrCreateByNom(
       () => db.select({ id: schema.weapons.id }).from(schema.weapons).where(eq(schema.weapons.nom, arme.nom.trim())).limit(1),
       () => db.insert(schema.weapons).values({
         nom: arme.nom.trim(), degats: arme.degats || null,
         critiqueMin, critiqueMult,
         typeDegats: arme.typeDegats || null,
+        portee: porteeNum,
       }).returning({ id: schema.weapons.id })
     )
     await db.insert(schema.characterWeapons).values({
       personnageId: charId, armeId,
       bonusMagique: arme.bonusMagique ?? 0,
+      coteDeForce: arme.coteDeForce ?? null,
+      bonusMunitions: arme.bonusMunitions ?? null,
       quantite: arme.quantite ?? 1,
     })
   }
@@ -300,12 +325,14 @@ export async function saveCharacter(
         nom: obj.nom.trim(), type: obj.type || null,
         emplacement: obj.emplacement || null,
         description: obj.description || null,
+        chargesMax: obj.charges > 0 ? obj.charges : null,
       }).returning({ id: schema.magicItems.id })
     )
     await db.insert(schema.characterMagicItems).values({
       personnageId: charId, objetId,
       emplacement: obj.emplacement || null,
       notes: obj.bonus ? `Bonus : ${obj.bonus}` : null,
+      chargesRestantes: obj.charges > 0 ? obj.charges : null,
     })
   }
 
@@ -327,8 +354,8 @@ export async function saveCharacter(
 
   // ── 15. Trésor ──
   const currencyValues = {
-    po: data.po.toString(), pa: data.pa.toString(),
-    pc: data.pc.toString(), pe: data.pe.toString(), pm: data.pm.toString(),
+    pp: data.pp.toString(), po: data.po.toString(), pe: data.pe.toString(),
+    pa: data.pa.toString(), pc: data.pc.toString(), pm: data.pm.toString(),
   }
   const existingCurrency = await db.select({ id: schema.characterCurrency.id })
     .from(schema.characterCurrency).where(eq(schema.characterCurrency.personnageId, charId)).limit(1)
@@ -361,8 +388,9 @@ export async function saveCharacter(
     )
     await db.insert(schema.characterSpells).values({
       personnageId: charId, sortId,
+      niveau: sort.niveau || null,
       estConnu: 1,
-      estPrepare: sort.estPrepare ? 1 : 0,
+      estPrepare: sort.nombrePrepare ?? 0,
     })
   }
 
@@ -407,4 +435,98 @@ export async function deleteCharacter(personnageId: number): Promise<void> {
   await db.delete(schema.characters).where(eq(schema.characters.id, personnageId))
   revalidatePath('/')
   redirect('/')
+}
+
+// ─── Actions de jeu en temps réel ────────────────────────────────────────────
+
+export async function updatePvActuels(personnageId: number, pvActuels: number) {
+  await getDb()
+    .update(schema.characterCombatStats)
+    .set({ pvActuels })
+    .where(eq(schema.characterCombatStats.personnageId, personnageId))
+  revalidatePath(`/personnage/${personnageId}`)
+}
+
+export async function depenseSort(charSpellId: number, personnageId: number) {
+  const [row] = await getDb()
+    .select({ estPrepare: schema.characterSpells.estPrepare })
+    .from(schema.characterSpells)
+    .where(eq(schema.characterSpells.id, charSpellId))
+  if (!row) return
+  const newVal = Math.max(0, (row.estPrepare ?? 0) - 1)
+  await getDb()
+    .update(schema.characterSpells)
+    .set({ estPrepare: newVal })
+    .where(eq(schema.characterSpells.id, charSpellId))
+  revalidatePath(`/personnage/${personnageId}`)
+}
+
+export async function depensePotion(charPotionId: number, personnageId: number) {
+  const [row] = await getDb()
+    .select({ chargesRestantes: schema.characterPotions.chargesRestantes })
+    .from(schema.characterPotions)
+    .where(eq(schema.characterPotions.id, charPotionId))
+  if (!row) return
+  const newVal = Math.max(0, (row.chargesRestantes ?? 1) - 1)
+  await getDb()
+    .update(schema.characterPotions)
+    .set({ chargesRestantes: newVal })
+    .where(eq(schema.characterPotions.id, charPotionId))
+  revalidatePath(`/personnage/${personnageId}`)
+}
+
+export async function preparerSorts(personnageId: number, preparations: { charSpellId: number; estPrepare: number }[]) {
+  const db = getDb()
+  await Promise.all(
+    preparations.map(p =>
+      db.update(schema.characterSpells)
+        .set({ estPrepare: p.estPrepare })
+        .where(eq(schema.characterSpells.id, p.charSpellId))
+    )
+  )
+  revalidatePath(`/personnage/${personnageId}`)
+}
+
+export async function preparerSortsDivins(
+  personnageId: number,
+  preparations: { nom: string; ecole: string; niveau: number; estPrepare: number }[]
+) {
+  const db = getDb()
+  await db.delete(schema.characterSpells).where(eq(schema.characterSpells.personnageId, personnageId))
+  for (const sort of preparations) {
+    if (sort.estPrepare <= 0) continue
+    const sortId = await findOrCreateByNom(
+      () => db.select({ id: schema.spells.id }).from(schema.spells).where(eq(schema.spells.nom, sort.nom)).limit(1),
+      () => db.insert(schema.spells).values({ nom: sort.nom, ecole: sort.ecole || null }).returning({ id: schema.spells.id })
+    )
+    await db.insert(schema.characterSpells).values({
+      personnageId, sortId,
+      niveau: sort.niveau,
+      estConnu: 1,
+      estPrepare: sort.estPrepare,
+    })
+  }
+  revalidatePath(`/personnage/${personnageId}`)
+}
+
+export async function updateNotes(personnageId: number, notes: string) {
+  await getDb()
+    .update(schema.characters)
+    .set({ notes: notes.trim() || null })
+    .where(eq(schema.characters.id, personnageId))
+  revalidatePath(`/personnage/${personnageId}`)
+}
+
+export async function depenseChargeObjet(charItemId: number, personnageId: number) {
+  const [row] = await getDb()
+    .select({ chargesRestantes: schema.characterMagicItems.chargesRestantes })
+    .from(schema.characterMagicItems)
+    .where(eq(schema.characterMagicItems.id, charItemId))
+  if (!row) return
+  const newVal = Math.max(0, (row.chargesRestantes ?? 0) - 1)
+  await getDb()
+    .update(schema.characterMagicItems)
+    .set({ chargesRestantes: newVal })
+    .where(eq(schema.characterMagicItems.id, charItemId))
+  revalidatePath(`/personnage/${personnageId}`)
 }
