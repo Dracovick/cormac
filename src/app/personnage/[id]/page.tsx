@@ -21,6 +21,7 @@ import { LiveNotes } from '@/components/fiche/LiveNotes'
 import { PreparerSorts } from '@/components/fiche/PreparerSorts'
 import { AjouterSort } from '@/components/fiche/AjouterSort'
 import { SupprimerSort } from '@/components/fiche/SupprimerSort'
+import { DescriptionSort } from '@/components/fiche/DescriptionSort'
 
 function modif(score: number) {
   const m = Math.floor((score - 10) / 2)
@@ -438,22 +439,32 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                       <div key={n}>
                         <div className="text-amber-500 text-xs uppercase tracking-widest font-bold mb-2">{niveauLabel(n)}</div>
                         <div className="space-y-1">
-                          {byNiveau[n].map(({ spell, charSpell }) => (
-                            <div key={charSpell.id} className="flex items-center justify-between py-1 border-b border-stone-800/60 last:border-0">
-                              <div className="flex items-center min-w-0">
-                                <span className={`text-sm font-medium ${(charSpell.estPrepare ?? 0) > 0 ? 'text-amber-200' : 'text-stone-400'}`}>{spell.nom}</span>
-                                {charSpell.estConnu === 2 && (
-                                  <>
-                                    <span className="text-amber-700 text-xs ml-1" title="Sort personnalisé">★</span>
-                                    <SupprimerSort charSpellId={charSpell.id} personnageId={character.id} />
-                                  </>
+                          {byNiveau[n].map(({ spell, charSpell }) => {
+                            const isCustom = charSpell.estConnu === 2
+                            return (
+                              <div key={charSpell.id} className="py-1.5 border-b border-stone-800/60 last:border-0">
+                                <div className="flex items-center justify-between">
+                                  <div className="flex items-center min-w-0 flex-wrap gap-x-1">
+                                    <span className={`text-sm font-medium ${(charSpell.estPrepare ?? 0) > 0 ? 'text-amber-200' : 'text-stone-400'}`}>{spell.nom}</span>
+                                    {isCustom && (
+                                      <>
+                                        <span className="text-amber-700 text-xs" title="Sort personnalisé">★</span>
+                                        <SupprimerSort charSpellId={charSpell.id} personnageId={character.id} />
+                                      </>
+                                    )}
+                                    {spell.ecole && <span className="text-stone-600 text-xs">· {spell.ecole}</span>}
+                                    {!isCustom && (
+                                      <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(spell.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
+                                    )}
+                                  </div>
+                                  <LiveSort charSpellId={charSpell.id} personnageId={character.id} estPrepare={charSpell.estPrepare ?? 0} />
+                                </div>
+                                {isCustom && (
+                                  <DescriptionSort sortId={spell.id} description={spell.description ?? null} personnageId={character.id} />
                                 )}
-                                {spell.ecole && <span className="text-stone-600 text-xs ml-2">· {spell.ecole}</span>}
-                                <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(spell.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="ml-1.5 text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
                               </div>
-                              <LiveSort charSpellId={charSpell.id} personnageId={character.id} estPrepare={charSpell.estPrepare ?? 0} />
-                            </div>
-                          ))}
+                            )
+                          })}
                         </div>
                       </div>
                     ))}

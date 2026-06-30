@@ -531,13 +531,19 @@ export async function preparerSortsDivins(
 
 export async function ajouterSortPersonnalise(
   personnageId: number,
-  sort: { nom: string; ecole: string; niveau: number }
+  sort: { nom: string; ecole: string; niveau: number; description?: string }
 ) {
   const db = getDb()
   const sortId = await findOrCreateByNom(
     () => db.select({ id: schema.spells.id }).from(schema.spells).where(eq(schema.spells.nom, sort.nom.trim())).limit(1),
-    () => db.insert(schema.spells).values({ nom: sort.nom.trim(), ecole: sort.ecole || null }).returning({ id: schema.spells.id })
+    () => db.insert(schema.spells).values({
+      nom: sort.nom.trim(), ecole: sort.ecole || null,
+      description: sort.description?.trim() || null,
+    }).returning({ id: schema.spells.id })
   )
+  if (sort.description?.trim()) {
+    await db.update(schema.spells).set({ description: sort.description.trim() }).where(eq(schema.spells.id, sortId))
+  }
   const existing = await db.select({ id: schema.characterSpells.id })
     .from(schema.characterSpells)
     .where(and(eq(schema.characterSpells.personnageId, personnageId), eq(schema.characterSpells.sortId, sortId)))
@@ -547,6 +553,14 @@ export async function ajouterSortPersonnalise(
       personnageId, sortId, niveau: sort.niveau, estConnu: 2, estPrepare: 0,
     })
   }
+  revalidatePath(`/personnage/${personnageId}`)
+}
+
+export async function modifierDescriptionSort(sortId: number, description: string, personnageId: number) {
+  const db = getDb()
+  await db.update(schema.spells)
+    .set({ description: description.trim() || null })
+    .where(eq(schema.spells.id, sortId))
   revalidatePath(`/personnage/${personnageId}`)
 }
 

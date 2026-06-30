@@ -15,13 +15,14 @@ export function AjouterSort({ personnageId, maxNiveau = 9 }: Props) {
   const [nom, setNom] = useState('')
   const [ecole, setEcole] = useState('')
   const [niveau, setNiveau] = useState(1)
+  const [description, setDescription] = useState('')
   const [isPending, startTransition] = useTransition()
 
   function submit() {
     if (!nom.trim()) return
     startTransition(async () => {
-      await ajouterSortPersonnalise(personnageId, { nom: nom.trim(), ecole, niveau })
-      setNom(''); setEcole(''); setNiveau(1)
+      await ajouterSortPersonnalise(personnageId, { nom: nom.trim(), ecole, niveau, description: description.trim() || undefined })
+      setNom(''); setEcole(''); setNiveau(1); setDescription('')
       setOpen(false)
     })
   }
@@ -38,7 +39,8 @@ export function AjouterSort({ personnageId, maxNiveau = 9 }: Props) {
   }
 
   return (
-    <div className="mt-3 flex flex-wrap items-center gap-2 p-3 bg-stone-800/60 rounded-lg border border-stone-700/60">
+    <div className="mt-3 flex flex-col gap-2 p-3 bg-stone-800/60 rounded-lg border border-stone-700/60">
+      <div className="flex flex-wrap items-center gap-2">
       <input
         type="text"
         value={nom}
@@ -65,19 +67,29 @@ export function AjouterSort({ personnageId, maxNiveau = 9 }: Props) {
           <option key={i} value={i}>{i === 0 ? 'Oraison (0)' : `Niveau ${i}`}</option>
         ))}
       </select>
-      <button
-        onClick={submit}
-        disabled={isPending || !nom.trim()}
-        className="bg-amber-700 hover:bg-amber-600 disabled:opacity-50 text-white text-xs font-semibold px-3 py-1.5 rounded transition-colors"
-      >
-        {isPending ? '...' : 'Ajouter'}
-      </button>
-      <button
-        onClick={() => setOpen(false)}
-        className="text-stone-600 hover:text-stone-400 text-xs transition-colors"
-      >
-        Annuler
-      </button>
+      </div>
+      <textarea
+        value={description}
+        onChange={e => setDescription(e.target.value)}
+        placeholder="Description (optionnel) — effets, portée, durée, composantes…"
+        rows={2}
+        className="w-full bg-stone-900 border border-stone-700 rounded px-2 py-1 text-xs text-stone-200 placeholder-stone-600 focus:outline-none focus:border-amber-600 resize-none"
+      />
+      <div className="flex gap-2 w-full">
+        <button
+          onClick={submit}
+          disabled={isPending || !nom.trim()}
+          className="bg-amber-700 hover:bg-amber-600 disabled:opacity-50 text-white text-xs font-semibold px-3 py-1.5 rounded transition-colors"
+        >
+          {isPending ? '...' : 'Ajouter'}
+        </button>
+        <button
+          onClick={() => setOpen(false)}
+          className="text-stone-600 hover:text-stone-400 text-xs transition-colors"
+        >
+          Annuler
+        </button>
+      </div>
     </div>
   )
 }
