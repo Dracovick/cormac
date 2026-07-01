@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { listCharacters } from '@/lib/queries/character'
+import { CharacterList } from '@/components/CharacterList'
 
 export const dynamic = 'force-dynamic'
 
@@ -72,43 +73,30 @@ export default async function Home() {
             <div className="mt-5 h-px bg-gradient-to-r from-transparent via-amber-800/60 to-transparent" />
           </div>
 
-          <div className="space-y-3">
-            {characters.map((c) => (
-              <Link
-                key={c.id}
-                href={`/personnage/${c.id}`}
-                className="flex items-center justify-between bg-stone-900/80 backdrop-blur border border-amber-900/40 rounded-lg p-5 hover:border-amber-500/60 hover:bg-stone-800/80 transition-all group"
-              >
-                <div>
-                  <div className="text-white text-xl font-bold group-hover:text-amber-300 transition-colors">{c.nom}</div>
-                  {c.surnom && <div className="text-stone-500 text-sm italic">{c.surnom}</div>}
-                  <div className="text-stone-400 text-sm mt-1">
-                    {[c.race, c.classe ? (c.niveau ? `${c.classe} ${c.niveau}` : c.classe) : null, c.alignement].filter(Boolean).join(' · ')}
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-amber-400 font-semibold">{c.xp?.toLocaleString('fr-FR')} XP</div>
-                  <div className="text-amber-600 text-2xl group-hover:translate-x-1 transition-transform">→</div>
-                </div>
-              </Link>
-            ))}
+          <div className="flex gap-2 mb-4">
+            <Link
+              href="/personnage/nouveau"
+              className="flex items-center justify-center gap-2 flex-1 bg-amber-900/30 hover:bg-amber-800/50 border border-amber-700/50 hover:border-amber-500 rounded-lg p-3 transition-all group"
+            >
+              <span className="text-amber-500 text-xl group-hover:scale-110 transition-transform">⚔️</span>
+              <span className="text-amber-300 font-semibold text-sm">Créer un personnage</span>
+            </Link>
+
+            <Link
+              href="/personnage/generer"
+              className="flex items-center justify-center gap-2 flex-1 bg-stone-900/50 hover:bg-stone-800/60 border border-stone-700/40 hover:border-amber-700/50 rounded-lg p-3 transition-all group"
+            >
+              <span className="text-amber-600 text-xl group-hover:scale-110 transition-transform">⚡</span>
+              <span className="text-stone-300 font-medium group-hover:text-amber-300 transition-colors text-sm">Générer automatiquement</span>
+            </Link>
           </div>
 
-          {characters.length === 0 && (
-            <div className="text-center text-stone-600 py-12">
-              <p className="text-lg">Aucun personnage trouvé.</p>
-            </div>
-          )}
-
-          <Link
-            href="/personnage/nouveau"
-            className="mt-4 flex items-center justify-center gap-3 w-full bg-amber-900/30 hover:bg-amber-800/50 border border-amber-700/50 hover:border-amber-500 rounded-lg p-5 transition-all group"
-          >
-            <span className="text-amber-500 text-3xl group-hover:scale-110 transition-transform">⚔️</span>
-            <span className="text-amber-300 font-semibold text-lg">Créer un nouveau personnage</span>
-            <span className="text-amber-600 text-xl ml-auto group-hover:translate-x-1 transition-transform">→</span>
-          </Link>
+          <CharacterList characters={characters} />
         </div>
+
+        <p className="mt-8 text-stone-700 text-xs text-center select-none">
+          v1.0 &nbsp;·&nbsp; © 2025-2026 André Arsenault &amp; Claude l'Archimage — Intelligence Artificielle
+        </p>
       </div>
     </div>
   )

@@ -9,6 +9,7 @@ import { CLASSES_DND35, getClasseInfo } from '@/lib/dnd35/classes'
 import { RACES_DND35, getRaceInfo } from '@/lib/dnd35/races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { getBab, getModifier, getMultiClassSave } from '@/lib/dnd35/rules'
+import { SORTS_DND35 } from '@/lib/dnd35/spells'
 
 // ─── Type exported for the form component ───────────────────────────────────
 export interface CharacterFormData {
@@ -122,12 +123,21 @@ export async function saveCharacter(
     )
   }
 
+  // ── 3b. Divinité ──
+  let dieuId: number | null = null
+  if (data.divinite?.trim()) {
+    dieuId = await findOrCreateByNom(
+      () => db.select({ id: schema.gods.id }).from(schema.gods).where(eq(schema.gods.nom, data.divinite.trim())).limit(1),
+      () => db.insert(schema.gods).values({ nom: data.divinite.trim() }).returning({ id: schema.gods.id })
+    )
+  }
+
   // ── 4. Personnage ──
   const charValues = {
     nom: data.nom.trim(),
     surnom: data.surnom || null,
     photoUrl: data.photoUrl || null,
-    raceId, clanId,
+    raceId, clanId, dieuId,
     sexe: data.sexe || null,
     taille: data.taille || null,
     poids: data.poids !== '' ? Number(data.poids) : null,
@@ -136,6 +146,7 @@ export async function saveCharacter(
     age: data.age !== '' ? Number(data.age) : null,
     alignement: data.alignement || null,
     xp: data.xp,
+    historique: data.historique || null,
     notes: data.notes || null,
     joueurPrenom: data.joueurPrenom?.trim() || null,
     joueurNom: data.joueurNom?.trim() || null,
@@ -319,19 +330,21 @@ export async function saveCharacter(
   await db.delete(schema.characterMagicItems).where(eq(schema.characterMagicItems.personnageId, charId))
   for (const obj of data.objetsMagiques) {
     if (!obj.nom.trim()) continue
+    const bonusInt = parseInt(obj.bonus) || null
     const objetId = await findOrCreateByNom(
       () => db.select({ id: schema.magicItems.id }).from(schema.magicItems).where(eq(schema.magicItems.nom, obj.nom.trim())).limit(1),
       () => db.insert(schema.magicItems).values({
         nom: obj.nom.trim(), type: obj.type || null,
         emplacement: obj.emplacement || null,
+        bonus: bonusInt,
         description: obj.description || null,
         chargesMax: obj.charges > 0 ? obj.charges : null,
       }).returning({ id: schema.magicItems.id })
     )
+    await db.update(schema.magicItems).set({ bonus: bonusInt }).where(eq(schema.magicItems.id, objetId))
     await db.insert(schema.characterMagicItems).values({
       personnageId: charId, objetId,
       emplacement: obj.emplacement || null,
-      notes: obj.bonus ? `Bonus : ${obj.bonus}` : null,
       chargesRestantes: obj.charges > 0 ? obj.charges : null,
     })
   }
@@ -380,10 +393,15 @@ export async function saveCharacter(
   await db.delete(schema.characterSpells).where(eq(schema.characterSpells.personnageId, charId))
   for (const sort of data.sorts) {
     if (!sort.nom.trim()) continue
+    const sortRef = SORTS_DND35.find(s => s.nom === sort.nom.trim())
     const sortId = await findOrCreateByNom(
       () => db.select({ id: schema.spells.id }).from(schema.spells).where(eq(schema.spells.nom, sort.nom.trim())).limit(1),
       () => db.insert(schema.spells).values({
         nom: sort.nom.trim(), ecole: sort.ecole || null,
+        description: sortRef?.description ?? null,
+        composantes: sortRef?.composantes ?? null,
+        portee: sortRef?.portee ?? null,
+        duree: sortRef?.duree ?? null,
       }).returning({ id: schema.spells.id })
     )
     await db.insert(schema.characterSpells).values({
@@ -517,9 +535,16 @@ export async function preparerSortsDivins(
           ))
       }
     } else {
+      const ref = SORTS_DND35.find(s => s.nom === sort.nom)
       const sortId = await findOrCreateByNom(
         () => db.select({ id: schema.spells.id }).from(schema.spells).where(eq(schema.spells.nom, sort.nom)).limit(1),
-        () => db.insert(schema.spells).values({ nom: sort.nom, ecole: sort.ecole || null }).returning({ id: schema.spells.id })
+        () => db.insert(schema.spells).values({
+          nom: sort.nom, ecole: sort.ecole || null,
+          description: ref?.description ?? null,
+          composantes: ref?.composantes ?? null,
+          portee: ref?.portee ?? null,
+          duree: ref?.duree ?? null,
+        }).returning({ id: schema.spells.id })
       )
       await db.insert(schema.characterSpells).values({
         personnageId, sortId, niveau: sort.niveau, estConnu: 1, estPrepare: sort.estPrepare,

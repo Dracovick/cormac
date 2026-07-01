@@ -37,14 +37,15 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const data = await getCharacter(Number(id))
   if (!data) notFound()
 
-  const { character, race, clan, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, currency, languages, creatures, companions } = data
+  const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, currency, languages, creatures, companions } = data
 
   const forT = (abilityScores?.forBase ?? 10) + (abilityScores?.forMagique ?? 0) + (race?.bonusFor ?? 0)
   const dexT = (abilityScores?.dexBase ?? 10) + (abilityScores?.dexMagique ?? 0) + (race?.bonusDex ?? 0)
   const forMod = Math.floor((forT - 10) / 2)
   const dexMod = Math.floor((dexT - 10) / 2)
+  const caMagique = magicItems.reduce((sum, { item }) => sum + (item.bonus ?? 0), 0)
   const caTotal = combatStats
-    ? (combatStats.caBase ?? 10) + (combatStats.caArme ?? 0) + (combatStats.caBouclier ?? 0) + (combatStats.caNaturelle ?? 0) + (combatStats.caDeflexion ?? 0) + (combatStats.caDivers ?? 0) + dexMod
+    ? (combatStats.caBase ?? 10) + (combatStats.caArme ?? 0) + (combatStats.caBouclier ?? 0) + (combatStats.caNaturelle ?? 0) + (combatStats.caDeflexion ?? 0) + (combatStats.caDivers ?? 0) + dexMod + caMagique
     : 10
   const initiativeTotal = combatStats ? dexMod + (combatStats.initiativeBonus ?? 0) : 0
 
@@ -118,6 +119,8 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
         .sort((a, b) => a.niveau - b.niveau || a.nom.localeCompare(b.nom, 'fr'))
     }
   }
+
+  const sortsRefMap = new Map(SORTS_DND35.map(s => [s.nom, s]))
 
   return (
     <div className="min-h-screen bg-stone-950 text-stone-100">
@@ -228,7 +231,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                 ['Poids', character.poids ? `${character.poids} lbs` : null],
                 ['Yeux', character.yeux],
                 ['Cheveux', character.cheveux],
-                ['Dieu', '—'],
+                ['Dieu', god?.nom],
               ].map(([label, val]) => val ? (
                 <div key={label as string} className="contents">
                   <dt className="text-stone-400">{label}</dt>
@@ -261,7 +264,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
         <Section titre="Combat">
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-4">
             <LiveHP personnageId={character.id} pvActuels={combatStats?.pvActuels ?? 0} pvMax={combatStats?.pvMax ?? 0} />
-            <StatBlock label="CA" value={caTotal} sub={`(armure +${combatStats?.caArme ?? 0})`} />
+            <StatBlock label="CA" value={caTotal} sub={`(armure +${combatStats?.caArme ?? 0}${caMagique ? ` · mag +${caMagique}` : ''})`} />
             <StatBlock label="Initiative" value={signedNum(initiativeTotal)} sub="DEX + divers + Science" />
             <StatBlock label="Déplacement" value={`${combatStats?.deplacement ?? 9}m`} />
             <StatBlock label="Karma" value={combatStats?.karma ?? 0} />
@@ -450,6 +453,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                         <div className="space-y-1">
                           {byNiveau[n].map(({ spell, charSpell }) => {
                             const isCustom = charSpell.estConnu === 2
+                            const sortRef = !isCustom ? sortsRefMap.get(spell.nom) : undefined
+                            const desc = spell.description || sortRef?.description || null
+                            const comp = spell.composantes || sortRef?.composantes || null
+                            const port = spell.portee || sortRef?.portee || null
+                            const dur = spell.duree || sortRef?.duree || null
+                            const meta = [comp, port, dur].filter(Boolean).join(' · ')
                             return (
                               <div key={charSpell.id} className="py-1.5 border-b border-stone-800/60 last:border-0">
                                 <div className="flex items-center justify-between">
@@ -468,6 +477,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                                   </div>
                                   <LiveSort charSpellId={charSpell.id} personnageId={character.id} estPrepare={charSpell.estPrepare ?? 0} />
                                 </div>
+                                {!isCustom && desc && (
+                                  <div className="mt-0.5 space-y-0.5">
+                                    <p className="text-xs text-stone-400 leading-snug">{desc}</p>
+                                    {meta && <p className="text-xs text-stone-600">{meta}</p>}
+                                  </div>
+                                )}
                                 {isCustom && (
                                   <DescriptionSort sortId={spell.id} description={spell.description ?? null} personnageId={character.id} />
                                 )}
@@ -674,6 +689,13 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                 </div>
               ))}
             </div>
+          </Section>
+        )}
+
+        {/* ── HISTORIQUE ── */}
+        {character.historique && (
+          <Section titre="Historique">
+            <p className="text-stone-300 text-sm whitespace-pre-wrap">{character.historique}</p>
           </Section>
         )}
 

@@ -10,10 +10,12 @@ export async function getCharacter(id: number) {
 
   if (!character) return null
 
-  const [race, clan, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures] = await Promise.all([
+  const [race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures] = await Promise.all([
     character.raceId ? getDb().select().from(schema.races).where(eq(schema.races.id, character.raceId)).then(r => r[0]) : null,
 
     character.clanId ? getDb().select().from(schema.clans).where(eq(schema.clans.id, character.clanId)).then(r => r[0]) : null,
+
+    character.dieuId ? getDb().select().from(schema.gods).where(eq(schema.gods.id, character.dieuId)).then(r => r[0] ?? null) : null,
 
     getDb().select({ characterClass: schema.characterClasses, classe: schema.classes })
       .from(schema.characterClasses)
@@ -94,7 +96,7 @@ export async function getCharacter(id: number) {
       .where(eq(schema.characterCompanions.personnageId, id)),
   ])
 
-  return { character, race, clan, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, currency, languages, creatures, companions }
+  return { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, currency, languages, creatures, companions }
 }
 
 export type CharacterData = NonNullable<Awaited<ReturnType<typeof getCharacter>>>

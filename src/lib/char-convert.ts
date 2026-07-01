@@ -3,8 +3,8 @@ import type { CharacterData } from '@/lib/queries/character'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 
 export function charDataToForm(d: CharacterData): CharacterFormData {
-  const { character, race, clan, classes, abilityScores, combatStats, savingThrows,
-    skills, feats, weapons, armor, magicItems, potions, currency, languages, companions } = d
+  const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows,
+    skills, feats, weapons, armor, magicItems, potions, currency, languages, companions, spells } = d
   const firstClass = classes[0]
 
   const competences = COMPETENCES_DND35.map(c => {
@@ -21,8 +21,14 @@ export function charDataToForm(d: CharacterData): CharacterFormData {
     nom: character.nom, surnom: character.surnom ?? '', sexe: character.sexe ?? '',
     age: character.age ?? '', taille: character.taille ?? '', poids: character.poids ?? '',
     yeux: character.yeux ?? '', cheveux: character.cheveux ?? '',
-    race: race?.nom ?? '', classe: firstClass?.classe.nom ?? '', niveau: firstClass?.characterClass.niveau ?? 1,
-    alignement: character.alignement ?? '', divinite: '', clan: clan?.nom ?? '',
+    joueurPrenom: character.joueurPrenom ?? '', joueurNom: character.joueurNom ?? '',
+    race: race?.nom ?? '',
+    classe: firstClass?.classe.nom ?? '',
+    niveau: classes.reduce((sum, c) => sum + c.characterClass.niveau, 0) || (firstClass?.characterClass.niveau ?? 1),
+    classes: classes.length > 0
+      ? classes.map(c => ({ classe: c.classe.nom, niveau: c.characterClass.niveau }))
+      : [{ classe: firstClass?.classe.nom ?? '', niveau: firstClass?.characterClass.niveau ?? 1 }],
+    alignement: character.alignement ?? '', divinite: god?.nom ?? '', clan: clan?.nom ?? '',
     xp: character.xp ?? 0, photoUrl: character.photoUrl ?? '',
     forBase: abilityScores?.forBase ?? 10, forMagique: abilityScores?.forMagique ?? 0,
     dexBase: abilityScores?.dexBase ?? 10, dexMagique: abilityScores?.dexMagique ?? 0,
@@ -47,7 +53,10 @@ export function charDataToForm(d: CharacterData): CharacterFormData {
       crit: `${w.weapon.critiqueMin ?? 20}-20/×${w.weapon.critiqueMult ?? 2}`,
       typeDegats: w.weapon.typeDegats ?? '',
       portee: w.weapon.portee ? `${w.weapon.portee} m` : 'Contact',
-      bonusMagique: w.charWeapon.bonusMagique ?? 0, quantite: w.charWeapon.quantite ?? 1,
+      bonusMagique: w.charWeapon.bonusMagique ?? 0,
+      coteDeForce: w.charWeapon.coteDeForce ?? null,
+      bonusMunitions: w.charWeapon.bonusMunitions ?? null,
+      quantite: w.charWeapon.quantite ?? 1,
     })),
     armures: armor.map(a => ({
       nom: a.armor.nom, type: a.armor.type ?? '', bonusCA: a.armor.bonusArmure ?? 0,
@@ -57,16 +66,23 @@ export function charDataToForm(d: CharacterData): CharacterFormData {
     objetsMagiques: magicItems.map(m => ({
       nom: m.item.nom, type: m.item.type ?? '', emplacement: m.charItem.emplacement ?? '',
       bonus: m.item.bonus?.toString() ?? '', description: m.item.description ?? '',
+      charges: m.charItem.chargesRestantes ?? 0,
     })),
     potions: potions.map(p => ({
       nom: p.potion.nom, effet: p.potion.sortEffet ?? p.potion.description ?? '',
       charges: p.charPotion.chargesRestantes ?? 1,
     })),
-    po: parseFloat(currency?.po?.toString() ?? '0'), pa: parseFloat(currency?.pa?.toString() ?? '0'),
-    pc: parseFloat(currency?.pc?.toString() ?? '0'), pe: parseFloat(currency?.pe?.toString() ?? '0'),
-    pm: parseFloat(currency?.pm?.toString() ?? '0'),
-    langues: languages.map(l => l.language.nom), sorts: [],
-    historique: '', notes: character.notes ?? '',
+    pp: parseFloat(currency?.pp?.toString() ?? '0'), po: parseFloat(currency?.po?.toString() ?? '0'),
+    pe: parseFloat(currency?.pe?.toString() ?? '0'), pa: parseFloat(currency?.pa?.toString() ?? '0'),
+    pc: parseFloat(currency?.pc?.toString() ?? '0'), pm: parseFloat(currency?.pm?.toString() ?? '0'),
+    langues: languages.map(l => l.language.nom),
+    sorts: spells.map(s => ({
+      nom: s.spell.nom,
+      niveau: s.charSpell.niveau ?? 0,
+      ecole: s.spell.ecole ?? '',
+      nombrePrepare: s.charSpell.estPrepare ?? 0,
+    })),
+    historique: character.historique ?? '', notes: character.notes ?? '',
     compagnons: companions.map(c => ({ nom: c.nom, race: c.race ?? '', classe: c.classe ?? '', joueur: c.joueur ?? '', notes: c.notes ?? '' })),
   }
 }

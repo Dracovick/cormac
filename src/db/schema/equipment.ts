@@ -52,6 +52,7 @@ export const magicItems = pgTable('magic_items', {
   niveauLanceur: integer('niveau_lanceur'),
   prix: numeric('prix', { precision: 10, scale: 2 }),
   description: text('description'),
+  chargesMax: integer('charges_max'),
 })
 
 export const potions = pgTable('potions', {

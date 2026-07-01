@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useRef, useState, useTransition } from 'react'
 import { updatePhotoUrl } from '@/app/actions/character'
 
 type Props = {
@@ -13,6 +13,9 @@ export function PhotoPortrait({ personnageId, photoUrl, nom }: Props) {
   const [editing, setEditing] = useState(false)
   const [url, setUrl] = useState(photoUrl ?? '')
   const [isPending, startTransition] = useTransition()
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   function handleSave() {
     startTransition(async () => {
@@ -23,18 +26,40 @@ export function PhotoPortrait({ personnageId, photoUrl, nom }: Props) {
 
   function handleCancel() {
     setUrl(photoUrl ?? '')
+    setUploadError(null)
     setEditing(false)
+  }
+
+  async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploadError(null)
+    setUploading(true)
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      const res = await fetch('/api/upload-portrait', { method: 'POST', body: formData })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error ?? 'Erreur d\'upload')
+      setUrl(data.url)
+    } catch (err) {
+      setUploadError(err instanceof Error ? err.message : 'Erreur lors de l\'upload')
+    } finally {
+      setUploading(false)
+      // Reset input pour permettre de re-sélectionner le même fichier
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    }
   }
 
   return (
     <div className="flex flex-col items-center gap-2">
       {/* Portrait */}
-      <div className="relative w-32 h-32 rounded-xl border-2 border-amber-700/60 overflow-hidden bg-stone-800 shrink-0 flex items-center justify-center group">
-        {photoUrl ? (
+      <div className="relative w-32 h-48 rounded-xl border-2 border-amber-700/60 overflow-hidden bg-stone-800 shrink-0 flex items-center justify-center group">
+        {url || photoUrl ? (
           <img
-            src={photoUrl}
+            src={url || photoUrl!}
             alt={`Portrait de ${nom}`}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top"
           />
         ) : (
           <div className="flex flex-col items-center justify-center w-full h-full text-stone-600">
@@ -76,7 +101,7 @@ export function PhotoPortrait({ personnageId, photoUrl, nom }: Props) {
         </a>
       )}
 
-      {/* Modal de saisie URL */}
+      {/* Modal */}
       {editing && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
           <div className="bg-stone-900 border border-amber-700/50 rounded-xl p-6 w-full max-w-md shadow-2xl">
@@ -88,26 +113,68 @@ export function PhotoPortrait({ personnageId, photoUrl, nom }: Props) {
                 <img
                   src={url}
                   alt="Prévisualisation"
-                  className="w-32 h-32 rounded-xl object-cover border-2 border-amber-700/60"
+                  className="w-32 h-48 rounded-xl object-cover object-top border-2 border-amber-700/60"
                   onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
                 />
               </div>
             )}
 
-            <label className="block text-stone-400 text-sm mb-2">URL de l'image</label>
+            {/* Upload depuis l'appareil */}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleFileChange}
+            />
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploading || isPending}
+              className="w-full flex items-center justify-center gap-2 bg-amber-700/30 hover:bg-amber-700/50 border border-amber-600/50 hover:border-amber-500 text-amber-300 text-sm font-medium rounded-lg px-4 py-2.5 mb-3 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              {uploading ? (
+                <>
+                  <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
+                  </svg>
+                  Téléversement en cours...
+                </>
+              ) : (
+                <>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                  Choisir une image (max 5 Mo)
+                </>
+              )}
+            </button>
+
+            {uploadError && (
+              <p className="text-red-400 text-xs mb-3 text-center">{uploadError}</p>
+            )}
+
+            {/* Séparateur */}
+            <div className="flex items-center gap-2 mb-3">
+              <div className="flex-1 h-px bg-stone-700"/>
+              <span className="text-stone-500 text-xs">ou coller une URL</span>
+              <div className="flex-1 h-px bg-stone-700"/>
+            </div>
+
             <input
               type="url"
               value={url}
               onChange={e => setUrl(e.target.value)}
               placeholder="https://exemple.com/image.jpg"
               className="w-full bg-stone-800 border border-stone-600 rounded-lg px-3 py-2 text-stone-100 text-sm focus:outline-none focus:border-amber-500 mb-4"
-              autoFocus
             />
 
             <div className="flex gap-3 justify-end">
               <button
                 onClick={handleCancel}
-                disabled={isPending}
+                disabled={isPending || uploading}
                 className="px-4 py-2 text-sm text-stone-400 hover:text-stone-200 transition-colors"
               >
                 Annuler
@@ -115,7 +182,7 @@ export function PhotoPortrait({ personnageId, photoUrl, nom }: Props) {
               {url && (
                 <button
                   onClick={() => { setUrl(''); startTransition(async () => { await updatePhotoUrl(personnageId, ''); setEditing(false) }) }}
-                  disabled={isPending}
+                  disabled={isPending || uploading}
                   className="px-4 py-2 text-sm text-red-400 hover:text-red-300 transition-colors"
                 >
                   Supprimer
@@ -123,7 +190,7 @@ export function PhotoPortrait({ personnageId, photoUrl, nom }: Props) {
               )}
               <button
                 onClick={handleSave}
-                disabled={isPending || !url.trim()}
+                disabled={isPending || uploading || !url.trim()}
                 className="px-5 py-2 bg-amber-600 hover:bg-amber-500 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg transition-colors"
               >
                 {isPending ? 'Sauvegarde...' : 'Enregistrer'}

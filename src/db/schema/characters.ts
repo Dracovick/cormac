@@ -18,7 +18,10 @@ export const characters = pgTable('characters', {
   dieuId: integer('dieu_id').references(() => gods.id),
   clanId: integer('clan_id').references(() => clans.id),
   xp: integer('xp').default(0),
+  historique: text('historique'),
   notes: text('notes'),
+  joueurPrenom: varchar('joueur_prenom', { length: 100 }),
+  joueurNom: varchar('joueur_nom', { length: 100 }),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 })
@@ -96,6 +99,8 @@ export const characterWeapons = pgTable('character_weapons', {
   personnageId: integer('personnage_id').notNull().references(() => characters.id),
   armeId: integer('arme_id').notNull(),
   bonusMagique: integer('bonus_magique').default(0),
+  coteDeForce: integer('cote_de_force'),
+  bonusMunitions: integer('bonus_munitions'),
   proprietesSpeciales: text('proprietes_speciales'),
   quantite: integer('quantite').default(1),
 })
@@ -114,6 +119,7 @@ export const characterMagicItems = pgTable('character_magic_items', {
   objetId: integer('objet_id').notNull(),
   emplacement: varchar('emplacement', { length: 100 }),
   notes: text('notes'),
+  chargesRestantes: integer('charges_restantes'),
 })
 
 export const characterPotions = pgTable('character_potions', {
@@ -127,10 +133,11 @@ export const characterPotions = pgTable('character_potions', {
 export const characterCurrency = pgTable('character_currency', {
   id: serial('id').primaryKey(),
   personnageId: integer('personnage_id').notNull().references(() => characters.id),
+  pp: numeric('pp', { precision: 10, scale: 2 }).default('0'),
   po: numeric('po', { precision: 10, scale: 2 }).default('0'),
+  pe: numeric('pe', { precision: 10, scale: 2 }).default('0'),
   pa: numeric('pa', { precision: 10, scale: 2 }).default('0'),
   pc: numeric('pc', { precision: 10, scale: 2 }).default('0'),
-  pe: numeric('pe', { precision: 10, scale: 2 }).default('0'),
   pm: numeric('pm', { precision: 10, scale: 2 }).default('0'),
 })
 
@@ -144,6 +151,7 @@ export const characterSpells = pgTable('character_spells', {
   id: serial('id').primaryKey(),
   personnageId: integer('personnage_id').notNull().references(() => characters.id),
   sortId: integer('sort_id').notNull(),
+  niveau: integer('niveau'),
   estPrepare: integer('est_prepare').default(0),
   estConnu: integer('est_connu').default(1),
 })
