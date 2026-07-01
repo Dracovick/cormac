@@ -45,8 +45,10 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const dexMod = Math.floor((dexT - 10) / 2)
   const caMagique = magicItems.reduce((sum, { item }) => sum + (item.bonus ?? 0), 0)
   const caArmure = armor.reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
+  const maxDex = armor.length > 0 ? Math.min(...armor.map(({ armor: a }) => a.maxDex ?? 10)) : 10
+  const dexModCA = Math.min(dexMod, maxDex)
   const caTotal = combatStats
-    ? 10 + caArmure + (combatStats.caNaturelle ?? 0) + (combatStats.caDeflexion ?? 0) + (combatStats.caDivers ?? 0) + dexMod + caMagique
+    ? 10 + caArmure + (combatStats.caNaturelle ?? 0) + (combatStats.caDeflexion ?? 0) + (combatStats.caDivers ?? 0) + dexModCA + caMagique
     : 10
   const initiativeTotal = combatStats ? dexMod + (combatStats.initiativeBonus ?? 0) : 0
 
@@ -265,7 +267,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
         <Section titre="Combat">
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-4">
             <LiveHP personnageId={character.id} pvActuels={combatStats?.pvActuels ?? 0} pvMax={combatStats?.pvMax ?? 0} />
-            <StatBlock label="CA" value={caTotal} sub={`(armure +${caArmure}${caMagique ? ` · mag +${caMagique}` : ''})`} />
+            <StatBlock label="CA" value={caTotal} sub={`(armure +${caArmure} · DEX ${dexModCA >= 0 ? '+' : ''}${dexModCA}${caMagique ? ` · mag +${caMagique}` : ''})`} />
             <StatBlock label="Initiative" value={signedNum(initiativeTotal)} sub="DEX + divers + Science" />
             <StatBlock label="Déplacement" value={`${combatStats?.deplacement ?? 9}m`} />
             <StatBlock label="Karma" value={combatStats?.karma ?? 0} />

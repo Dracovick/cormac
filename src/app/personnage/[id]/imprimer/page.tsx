@@ -90,7 +90,9 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
 
   const caArmure = armor.reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
   const caMagique = magicItems.reduce((sum, { item }) => sum + (item.bonus ?? 0), 0)
-  const caTotal = 10 + dexMod + caArmure + (combatStats?.caNaturelle ?? 0) + (combatStats?.caDeflexion ?? 0) + (combatStats?.caDivers ?? 0) + caMagique
+  const maxDex = armor.length > 0 ? Math.min(...armor.map(({ armor: a }) => a.maxDex ?? 10)) : 10
+  const dexModCA = Math.min(dexMod, maxDex)
+  const caTotal = 10 + dexModCA + caArmure + (combatStats?.caNaturelle ?? 0) + (combatStats?.caDeflexion ?? 0) + (combatStats?.caDivers ?? 0) + caMagique
   const initT = dexMod + (combatStats?.initiativeBonus ?? 0)
 
   const abilMods: Record<string, number> = { FOR: forMod, DEX: dexMod, CON: conMod, INT: intMod, SAG: sagMod, CHA: chaMod }

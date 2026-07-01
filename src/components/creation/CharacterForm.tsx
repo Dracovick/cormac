@@ -92,7 +92,11 @@ function calcDerived(data: CharacterFormData) {
     refBase, refTotal: refBase + dexMod + data.reflexesMagique,
     volBase, volTotal: volBase + sagMod + data.volonteMagique,
     caArmure: data.armures.reduce((s, a) => s + (a.bonusCA ?? 0) + (a.bonusMagique ?? 0), 0),
-    caTotal: 10 + dexMod + data.armures.reduce((s, a) => s + (a.bonusCA ?? 0) + (a.bonusMagique ?? 0), 0) + data.caNaturelle + data.caDeflexion + data.caDivers,
+    get caTotal() {
+      const armBonus = data.armures.reduce((s, a) => s + (a.bonusCA ?? 0) + (a.bonusMagique ?? 0), 0)
+      const maxDex = data.armures.length > 0 ? Math.min(...data.armures.map(a => a.maxDex ?? 10)) : 10
+      return 10 + Math.min(dexMod, maxDex) + armBonus + data.caNaturelle + data.caDeflexion + data.caDivers
+    },
     initiativeTotal: dexMod + data.initiativeBonus,
     deplacement: data.deplacement ?? (raceInfo?.deplacement ?? 9),
     dv: classeInfo ? `d${classeInfo.de}` : '—',
