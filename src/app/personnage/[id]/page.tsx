@@ -7,6 +7,9 @@ import { getMultiClassBab, XP_PAR_NIVEAU } from '@/lib/dnd35/rules'
 import { getCapacitesPourPersonnage } from '@/lib/dnd35/class-features'
 import { SORTS_DND35, type ClasseSortKey } from '@/lib/dnd35/spells'
 import { getFeatWeaponBonuses, getFeatDescription } from '@/lib/dnd35/feat-bonuses'
+import { getDomaineInfo } from '@/lib/dnd35/domains'
+import { getChargeCategorie, getChargeLimites } from '@/lib/dnd35/encumbrance'
+import { FEATS_DND35, verifierPrerequisDon } from '@/lib/dnd35/feats'
 
 export const dynamic = 'force-dynamic'
 import { Section } from '@/components/fiche/Section'
@@ -103,6 +106,18 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const primaryDe = classes[0] ? (getClasseInfo(classes[0].classe.nom)?.de ?? 6) : 6
   const pvAttenduMax = niveauTotal > 0 ? niveauTotal * (primaryDe + conMod) : 0
   const pvAttenduMin = niveauTotal > 0 ? Math.max(niveauTotal, niveauTotal * (1 + conMod)) : 0
+
+  // Encombrement simplifié (PHB 3.5, p.162) — armes + armures uniquement
+  const poidsTotal = [
+    ...weapons.map(({ weapon }) => parseFloat(weapon.poids?.toString() ?? '0')),
+    ...armor.map(({ armor: a }) => parseFloat(a.poids?.toString() ?? '0')),
+  ].reduce((sum, w) => sum + w, 0)
+  const chargeCategorie = getChargeCategorie(forT, poidsTotal)
+  const chargeLimites = getChargeLimites(forT)
+
+  // Domaines du prêtre/druide
+  const d1Info = combatStats?.domaine1 ? getDomaineInfo(combatStats.domaine1) : undefined
+  const d2Info = combatStats?.domaine2 ? getDomaineInfo(combatStats.domaine2) : undefined
 
   // Pour les multi-classés : afficher les options de prochain niveau
   const optsNiveauSuivant = classes.map(c => `${c.classe.nom} ${c.characterClass.niveau + 1}`)
@@ -327,6 +342,20 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
               {combatStats?.pvMax != null && combatStats.pvMax > pvAttenduMax && (
                 <span className="text-amber-400 ml-1">★ au-dessus du max théorique</span>
               )}
+            </div>
+          )}
+
+          {/* Encombrement */}
+          {poidsTotal > 0 && (
+            <div className="text-stone-600 text-xs mb-3 flex items-center gap-2 flex-wrap">
+              <span>Charge portée : <span className="text-stone-400">{poidsTotal.toFixed(1)} lbs</span></span>
+              <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${
+                chargeCategorie === 'légère' ? 'bg-green-900/40 text-green-400' :
+                chargeCategorie === 'moyenne' ? 'bg-yellow-900/40 text-yellow-400' :
+                chargeCategorie === 'lourde' ? 'bg-orange-900/40 text-orange-400' :
+                'bg-red-900/40 text-red-400'
+              }`}>{chargeCategorie}</span>
+              <span className="text-stone-700">légère ≤{chargeLimites.legere} · moy. ≤{chargeLimites.moyenne} · lourde ≤{chargeLimites.lourde}</span>
             </div>
           )}
 
@@ -588,19 +617,35 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           {feats.length > 0 && (
             <Section titre="Dons">
               <div className="space-y-2">
-                {feats.map(({ feat }) => (
-                  <div key={feat.id} className="bg-stone-800/40 rounded p-2">
-                    <div className="text-stone-200 text-sm font-medium">
-                    {feat.nom}
-                    <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(feat.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="ml-1.5 text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
-                  </div>
-                    {(feat.effetMecanique || getFeatDescription(feat.nom)) && (
-                      <div className="text-amber-400 text-xs mt-0.5">
-                        {feat.effetMecanique ?? getFeatDescription(feat.nom)}
+                {feats.map(({ feat }) => {
+                  const featDef = FEATS_DND35.find(f => f.nom === feat.nom)
+                  const donsNoms = feats.map(f => f.feat.nom)
+                  const absScores = abilityScores ? {
+                    for: (abilityScores.forBase ?? 10) + (abilityScores.forMagique ?? 0),
+                    dex: (abilityScores.dexBase ?? 10) + (abilityScores.dexMagique ?? 0),
+                    con: (abilityScores.conBase ?? 10) + (abilityScores.conMagique ?? 0),
+                    int: (abilityScores.intBase ?? 10) + (abilityScores.intMagique ?? 0),
+                    sag: (abilityScores.sagBase ?? 10) + (abilityScores.sagMagique ?? 0),
+                    cha: (abilityScores.chaBase ?? 10) + (abilityScores.chaMagique ?? 0),
+                  } : undefined
+                  const manquants = featDef ? verifierPrerequisDon(featDef, donsNoms, bbaBase, absScores) : []
+                  return (
+                    <div key={feat.id} className="bg-stone-800/40 rounded p-2">
+                      <div className="flex items-start gap-1.5">
+                        <span className="text-stone-200 text-sm font-medium">{feat.nom}</span>
+                        <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(feat.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="text-stone-700 hover:text-amber-400 transition-colors text-xs mt-0.5">🔍</a>
+                        {manquants.length > 0 && (
+                          <span className="text-red-400 text-xs ml-auto shrink-0" title={`Prérequis manquants : ${manquants.join(', ')}`}>⚠ {manquants.join(', ')}</span>
+                        )}
                       </div>
-                    )}
-                  </div>
-                ))}
+                      {(feat.effetMecanique || getFeatDescription(feat.nom)) && (
+                        <div className="text-amber-400 text-xs mt-0.5">
+                          {feat.effetMecanique ?? getFeatDescription(feat.nom)}
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
               </div>
             </Section>
           )}
@@ -632,6 +677,29 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             </Section>
           )
         })()}
+
+        {/* ── DOMAINES DIVINS ── */}
+        {(d1Info || d2Info) && (
+          <Section titre="Domaines divins">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[d1Info, d2Info].filter(Boolean).map((d, i) => d && (
+                <div key={i} className="bg-stone-800/40 rounded-lg p-3">
+                  <div className="text-amber-300 font-semibold text-sm mb-1">{d.nom}</div>
+                  <p className="text-stone-400 text-xs mb-2 leading-relaxed">{d.pouvoir}</p>
+                  <div className="text-stone-600 text-xs uppercase tracking-widest mb-1">Sorts de domaine</div>
+                  <div className="space-y-0.5">
+                    {d.sorts.map((s, idx) => (
+                      <div key={idx} className="flex items-baseline gap-1.5">
+                        <span className="text-amber-700 text-xs shrink-0">Niv.{idx + 1}</span>
+                        <span className="text-stone-300 text-xs">{s}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Section>
+        )}
 
         {/* ── ARMURE + OBJETS MAGIQUES ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

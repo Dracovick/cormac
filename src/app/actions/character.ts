@@ -29,6 +29,7 @@ export interface CharacterFormData {
 
   pvMax: number; pvActuels: number
   caNaturelle: number; caDeflexion: number; caDivers: number
+  domaine1: string; domaine2: string
   initiativeBonus: number
   bbaCorpsOverride: number | null
   bbaProjectilesOverride: number | null
@@ -192,6 +193,7 @@ export async function saveCharacter(
   const combatValues = {
     pvMax: data.pvMax, pvActuels: data.pvActuels,
     caNaturelle: data.caNaturelle, caDeflexion: data.caDeflexion, caDivers: data.caDivers,
+    domaine1: data.domaine1 || null, domaine2: data.domaine2 || null,
     deplacement: deplacementFinal, karma: data.karma,
     initiativeBonus: data.initiativeBonus,
     bbaCorpsACorps: bbaCorps,

@@ -301,5 +301,6 @@ export function generateCharacter(params: GenParams): CharacterFormData {
     sorts,
     historique: '', notes: '', compagnons: [],
     joueurPrenom: '', joueurNom: '',
+    domaine1: '', domaine2: '',
   }
 }

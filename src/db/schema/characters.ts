@@ -66,6 +66,8 @@ export const characterCombatStats = pgTable('character_combat_stats', {
   initiativeBonus: integer('initiative_bonus').default(0),
   bbaCorpsACorps: integer('bba_corps_a_corps').default(0),
   bbaProjectiles: integer('bba_projectiles').default(0),
+  domaine1: varchar('domaine1', { length: 100 }),
+  domaine2: varchar('domaine2', { length: 100 }),
 })
 
 export const characterSavingThrows = pgTable('character_saving_throws', {

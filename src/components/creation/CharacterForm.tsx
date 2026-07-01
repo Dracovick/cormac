@@ -12,7 +12,8 @@ import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { sortsByClasseEtNiveau, niveauxMaxForClasse, type ClasseSortKey, type SortDnD } from '@/lib/dnd35/spells'
 import { getBab } from '@/lib/dnd35/rules'
 import { WEAPONS_DND35, WEAPON_CATEGORIES, type WeaponTemplate } from '@/lib/dnd35/weapons'
-import { FEATS_DND35, CATEGORIES_PAR_CLASSE, type FeatCategorie, type FeatDef } from '@/lib/dnd35/feats'
+import { FEATS_DND35, CATEGORIES_PAR_CLASSE, verifierPrerequisDon, type FeatCategorie, type FeatDef } from '@/lib/dnd35/feats'
+import { NOMS_DOMAINES } from '@/lib/dnd35/domains'
 
 // ─── Styles ──────────────────────────────────────────────────────────────────
 const INP = 'bg-stone-800 border border-stone-700 rounded px-2 py-1.5 text-stone-100 text-sm focus:outline-none focus:border-amber-500 w-full'
@@ -36,6 +37,7 @@ export const DEFAULT_FORM: CharacterFormData = {
   sagBase: 10, sagMagique: 0, chaBase: 10, chaMagique: 0,
   pvMax: 10, pvActuels: 10,
   caNaturelle: 0, caDeflexion: 0, caDivers: 0,
+  domaine1: '', domaine2: '',
   initiativeBonus: 0, bbaCorpsOverride: null, bbaProjectilesOverride: null,
   deplacement: null, karma: 0,
   reflexesMagique: 0, vigueurMagique: 0, volonteMagique: 0,
@@ -361,6 +363,34 @@ function SectionCombat({ data, update, derived }: { data: CharacterFormData; upd
           </div>
         </div>
       </div>
+
+      {/* Domaines divins (Prêtre / Druide) */}
+      {derived.allClasses.some(c => c.classe === 'Prêtre' || c.classe === 'Druide') && (
+        <div className={CARD}>
+          <div className={SEC_H}>Domaines divins</div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className={LBL}>Domaine 1</label>
+              <select className={SEL} value={data.domaine1} onChange={e => update('domaine1', e.target.value)}>
+                <option value="">— Choisir —</option>
+                {NOMS_DOMAINES.map(n => <option key={n} value={n}>{n}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className={LBL}>Domaine 2</label>
+              <select className={SEL} value={data.domaine2} onChange={e => update('domaine2', e.target.value)}>
+                <option value="">— Choisir —</option>
+                {NOMS_DOMAINES.map(n => <option key={n} value={n}>{n}</option>)}
+              </select>
+            </div>
+          </div>
+          {(data.domaine1 || data.domaine2) && (
+            <div className="mt-3 text-stone-600 text-xs">
+              Le prêtre obtient un sort de domaine bonus par niveau de sort (en plus du total habituel).
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Jets de sauvegarde */}
       <div className={CARD}>

@@ -4,8 +4,9 @@ import { useState, useTransition } from 'react'
 import { preparerSorts, preparerSortsDivins } from '@/app/actions/character'
 import { getSortsSlotsParJour } from '@/lib/dnd35/classes'
 
-const ARCANE = ['Magicien', 'Ensorceleur', 'Barde']
-const DIVIN  = ['Prêtre', 'Druide', 'Paladin', 'Rôdeur']
+const ARCANE    = ['Magicien', 'Ensorceleur', 'Barde']
+const DIVIN     = ['Prêtre', 'Druide', 'Paladin', 'Rôdeur']
+const SPONTANE  = ['Ensorceleur', 'Barde']  // lanceurs spontanés : pas de préparation
 
 type Spell = { charSpellId: number; nom: string; niveau: number; ecole: string; estPrepare: number }
 type AvailableSpell = { nom: string; ecole: string; niveau: number; estPersonnalise?: boolean }
@@ -24,12 +25,17 @@ export function PreparerSorts({ personnageId, classe, niveau, spells, availableS
   const [preps, setPreps] = useState<Map<string, number>>(new Map())
   const [isPending, startTransition] = useTransition()
 
-  const isArcane = ARCANE.includes(classe)
-  const isDivin  = DIVIN.includes(classe)
+  const isArcane  = ARCANE.includes(classe)
+  const isDivin   = DIVIN.includes(classe)
+  const isSponta  = SPONTANE.includes(classe)
   if (!isArcane && !isDivin) return null
 
-  const label = isDivin ? '🙏 Prier' : '📖 Étudier'
-  const titre = isDivin ? `Prier — Préparer les sorts (${classe})` : `Étudier — Préparer les sorts (${classe})`
+  const label = isDivin ? '🙏 Prier' : isSponta ? '✨ Repos' : '📖 Étudier'
+  const titre = isDivin
+    ? `Prier — Préparer les sorts (${classe})`
+    : isSponta
+      ? `Sorts connus — ${classe} (lanceur spontané)`
+      : `Étudier — Préparer les sorts (${classe})`
   const slots = getSortsSlotsParJour(classe, niveau)
 
   // Source de la liste affichée dans la modale
@@ -126,6 +132,14 @@ export function PreparerSorts({ personnageId, classe, niveau, spells, availableS
               <h3 className="text-amber-300 font-bold text-sm">{titre}</h3>
               <button onClick={() => setOpen(false)} className="text-stone-500 hover:text-stone-300 text-lg leading-none">✕</button>
             </div>
+
+            {/* Note pour les lanceurs spontanés */}
+            {isSponta && (
+              <div className="px-5 pt-3 pb-1 text-xs text-stone-500 bg-stone-800/40 mx-5 mt-3 rounded p-2">
+                Lanceur spontané — peut lancer tout sort connu sans préparation, dans la limite des emplacements du jour.
+                Utilisez les compteurs ci-dessous pour suivre les sorts lancés aujourd'hui, puis "Réinitialiser" au repos.
+              </div>
+            )}
 
             {/* Résumé des emplacements */}
             <div className="px-5 pt-3 pb-2 flex flex-wrap gap-2">

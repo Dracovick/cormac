@@ -39,6 +39,7 @@ export function charDataToForm(d: CharacterData): CharacterFormData {
     pvMax: combatStats?.pvMax ?? 0, pvActuels: combatStats?.pvActuels ?? 0,
     caNaturelle: combatStats?.caNaturelle ?? 0, caDeflexion: combatStats?.caDeflexion ?? 0,
     caDivers: combatStats?.caDivers ?? 0, initiativeBonus: combatStats?.initiativeBonus ?? 0,
+    domaine1: combatStats?.domaine1 || '', domaine2: combatStats?.domaine2 || '',
     bbaCorpsOverride: combatStats?.bbaCorpsACorps ?? null,
     bbaProjectilesOverride: combatStats?.bbaProjectiles ?? null,
     deplacement: combatStats?.deplacement ?? null, karma: combatStats?.karma ?? 0,
