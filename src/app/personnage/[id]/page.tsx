@@ -2,9 +2,9 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getCharacter } from '@/lib/queries/character'
 import { DeleteButton } from '@/components/fiche/DeleteButton'
-import { getClasseInfo } from '@/lib/dnd35/classes'
+import { getClasseInfo, getSortsSlotsParJour } from '@/lib/dnd35/classes'
 import { getMultiClassBab, XP_PAR_NIVEAU } from '@/lib/dnd35/rules'
-import { getSortsSlotsParJour } from '@/lib/dnd35/classes'
+import { getCapacitesPourPersonnage } from '@/lib/dnd35/class-features'
 import { SORTS_DND35, type ClasseSortKey } from '@/lib/dnd35/spells'
 import { getFeatWeaponBonuses, getFeatDescription } from '@/lib/dnd35/feat-bonuses'
 
@@ -47,8 +47,8 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const caArmure = armor.reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
   const maxDex = armor.length > 0 ? Math.min(...armor.map(({ armor: a }) => a.maxDex ?? 10)) : 10
   const dexModCA = Math.min(dexMod, maxDex)
-  // Malus de compétence cumulé de toutes les armures portées
-  const malusArmure = armor.reduce((sum, { armor: a }) => sum + (a.malusCompetence ?? 0), 0)
+  // Malus de compétence cumulé (valeurs stockées en négatif en DB — on prend la valeur absolue)
+  const malusArmure = armor.reduce((sum, { armor: a }) => sum + Math.abs(a.malusCompetence ?? 0), 0)
   // Risque d'échec arcanique cumulé (s'additionnent si plusieurs armures)
   const risqueEchecTotal = armor.reduce((sum, { armor: a }) => sum + (a.risqueEchecMagique ?? 0), 0)
   // Compétences pénalisées par le malus d'armure (PHB 3.5)
@@ -57,6 +57,18 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
     ? 10 + caArmure + (combatStats.caNaturelle ?? 0) + (combatStats.caDeflexion ?? 0) + (combatStats.caDivers ?? 0) + dexModCA + caMagique
     : 10
   const initiativeTotal = combatStats ? dexMod + (combatStats.initiativeBonus ?? 0) : 0
+
+  // Déplacement auto : utilise l'armure.deplacement si renseigné, sinon détecte armure lourde
+  const baseDepl = combatStats?.deplacement ?? 9
+  const deplacement = (() => {
+    const armorDeplValues = armor.map(({ armor: a }) => a.deplacement).filter((d): d is number => d != null)
+    if (armorDeplValues.length > 0) return Math.min(...armorDeplValues)
+    const hasHeavy = armor.some(({ armor: a }) =>
+      (a.type ?? '').toLowerCase().includes('lourde') || (a.type ?? '').toLowerCase().includes('lourd')
+    )
+    if (hasHeavy) return baseDepl >= 9 ? 6 : 4
+    return baseDepl
+  })()
 
   // BAB multi-classes : somme de chaque contribution
   const firstClass  = classes[0]
@@ -84,6 +96,13 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const classeLabel = classes.map(c => `${c.classe.nom} ${c.characterClass.niveau}`).join(' / ')
   const niveauTotal = classes.reduce((sum, c) => sum + c.characterClass.niveau, 0)
   const xpProchain = XP_PAR_NIVEAU[niveauTotal + 1] ?? null
+
+  // PV attendus : plage selon dé de vie et CON (après niveauTotal)
+  const conT = (abilityScores?.conBase ?? 10) + (abilityScores?.conMagique ?? 0) + (race?.bonusCon ?? 0)
+  const conMod = Math.floor((conT - 10) / 2)
+  const primaryDe = classes[0] ? (getClasseInfo(classes[0].classe.nom)?.de ?? 6) : 6
+  const pvAttenduMax = niveauTotal > 0 ? niveauTotal * (primaryDe + conMod) : 0
+  const pvAttenduMin = niveauTotal > 0 ? Math.max(niveauTotal, niveauTotal * (1 + conMod)) : 0
 
   // Pour les multi-classés : afficher les options de prochain niveau
   const optsNiveauSuivant = classes.map(c => `${c.classe.nom} ${c.characterClass.niveau + 1}`)
@@ -275,7 +294,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             <LiveHP personnageId={character.id} pvActuels={combatStats?.pvActuels ?? 0} pvMax={combatStats?.pvMax ?? 0} />
             <StatBlock label="CA" value={caTotal} sub={`(armure +${caArmure} · DEX ${dexModCA >= 0 ? '+' : ''}${dexModCA}${caMagique ? ` · mag +${caMagique}` : ''})`} />
             <StatBlock label="Initiative" value={signedNum(initiativeTotal)} sub="DEX + divers + Science" />
-            <StatBlock label="Déplacement" value={`${combatStats?.deplacement ?? 9}m`} />
+            <StatBlock label="Déplacement" value={`${deplacement}m`} sub={deplacement !== baseDepl ? `base ${baseDepl}m, réduit armure` : undefined} />
             <StatBlock label="Karma" value={combatStats?.karma ?? 0} />
             <StatBlock label="Dé de vie" value={classes[0]?.classe.deVie ?? '—'} />
           </div>
@@ -294,6 +313,20 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   <div className="text-stone-500 text-xs">base {signedNum(base ?? 0)} · car. {signedNum(mod)}{(mag ?? 0) > 0 ? ` · mag. ${signedNum(mag ?? 0)}` : ''}</div>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* PV attendus */}
+          {niveauTotal > 0 && pvAttenduMin > 0 && (
+            <div className="text-stone-600 text-xs mb-3">
+              PV attendus niv.{niveauTotal} (d{primaryDe}{conMod >= 0 ? `+${conMod}` : conMod}/niv.) :
+              <span className="text-stone-500"> {pvAttenduMin}–{pvAttenduMax}</span>
+              {combatStats?.pvMax != null && combatStats.pvMax < pvAttenduMin && (
+                <span className="text-amber-600 ml-1">⚠ sous la normale</span>
+              )}
+              {combatStats?.pvMax != null && combatStats.pvMax > pvAttenduMax && (
+                <span className="text-amber-400 ml-1">★ au-dessus du max théorique</span>
+              )}
             </div>
           )}
 
@@ -573,6 +606,33 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           )}
         </div>
 
+        {/* ── CAPACITÉS DE CLASSE ── */}
+        {(() => {
+          const allCaps = classes.flatMap(c =>
+            getCapacitesPourPersonnage(c.classe.nom, c.characterClass.niveau).map(cap => ({
+              ...cap,
+              classe: c.classe.nom,
+            }))
+          )
+          if (allCaps.length === 0) return null
+          return (
+            <Section titre="Capacités de classe">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {allCaps.map((cap, i) => (
+                  <div key={i} className="bg-stone-800/40 rounded p-2">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-amber-300 text-sm font-medium">{cap.nom}</span>
+                      <span className="text-stone-600 text-xs">niv.{cap.niveau}</span>
+                      {classes.length > 1 && <span className="text-stone-700 text-xs">· {cap.classe}</span>}
+                    </div>
+                    <p className="text-stone-400 text-xs mt-0.5 leading-relaxed">{cap.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </Section>
+          )
+        })()}
+
         {/* ── ARMURE + OBJETS MAGIQUES ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {armor.length > 0 && (
@@ -585,7 +645,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   <div className="text-stone-400 text-xs mt-1 space-x-3">
                     <span>Bonus CA : <span className="text-amber-300">+{(a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0)}</span></span>
                     {a.maxDex != null && <span>Max DEX : <span className="text-amber-300">+{a.maxDex}</span></span>}
-                    {(a.malusCompetence ?? 0) > 0 && <span>Malus compétences : <span className="text-red-400">−{a.malusCompetence}</span></span>}
+                    {(a.malusCompetence ?? 0) !== 0 && <span>Malus compétences : <span className="text-red-400">−{Math.abs(a.malusCompetence ?? 0)}</span></span>}
                     {(a.risqueEchecMagique ?? 0) > 0 && <span>Échec arcanique : <span className="text-red-400">{a.risqueEchecMagique}%</span></span>}
                   </div>
                 </div>

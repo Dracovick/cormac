@@ -410,7 +410,7 @@ function SectionCompetences({ data, update, derived }: { data: CharacterFormData
             {data.competences.map((comp, idx) => {
               const ref = COMPETENCES_DND35.find(c => c.nom === comp.nom)
               const isClasse = ref?.classesCompetence.some(cc => allClassNames.includes(cc)) ?? false
-              const maxRangs = isClasse ? data.niveau + 3 : Math.floor((data.niveau + 3) / 2)
+              const maxRangs = isClasse ? derived.niveauTotal + 3 : Math.floor((derived.niveauTotal + 3) / 2)
               const abilMod = getAbilMod(comp.caracteristique)
               const total = comp.rangs + abilMod + comp.divers
               const hasData = comp.rangs > 0 || comp.divers > 0
@@ -420,9 +420,13 @@ function SectionCompetences({ data, update, derived }: { data: CharacterFormData
                   <td className="text-center text-stone-500 px-1">{comp.caracteristique}</td>
                   <td className="text-center px-1">{isClasse ? <span className="text-amber-600">●</span> : <span className="text-stone-700">○</span>}</td>
                   <td className="px-1">
+                    <div className="flex items-center gap-0.5">
                     <input type="number" min={0} max={maxRangs} value={comp.rangs}
                       onChange={e => { const cs = [...data.competences]; cs[idx] = { ...cs[idx], rangs: Math.min(maxRangs, parseInt(e.target.value) || 0) }; update('competences', cs) }}
+                      title={`Rang maximum : ${maxRangs}`}
                       className="w-full bg-stone-800 border border-stone-700 rounded px-1 py-0.5 text-stone-100 text-center focus:outline-none focus:border-amber-500" />
+                    <span className="text-stone-700 text-xs shrink-0">/{maxRangs}</span>
+                    </div>
                   </td>
                   <td className="px-1">
                     <input type="number" value={comp.divers}

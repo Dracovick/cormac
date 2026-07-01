@@ -185,6 +185,35 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
           <Row label="Cliquer dessus">Ouvre une recherche Google ciblée sur <strong>regles-donjons-dragons.com</strong>, le site de référence des règles D&D 3.5 en français. S'ouvre dans un nouvel onglet.</Row>
         </Section>
 
+        <Section titre="🛡️ Armure — CA, malus et déplacement automatiques">
+          <p>Toutes les règles liées aux armures portées sont calculées automatiquement depuis la liste d'équipement du personnage.</p>
+          <Row label="CA automatique">Le bonus CA de chaque armure s'additionne au modificateur de DEX (plafonné par le Max DEX de l'armure), plus naturelle/déflexion/divers/magique. Retirez une armure de l'équipement et la CA recalcule immédiatement.</Row>
+          <Row label="Malus compétences">Si vous portez une armure avec Malus compétences (ex. Armure de cuir cloutée −1), les compétences concernées s'affichent en <span className="text-red-400">rouge</span> avec un indicateur <span className="text-red-500 font-mono">−N⚔</span>. Le malus est déduit du total automatiquement.</Row>
+          <Row label="Déplacement réduit">En armure lourde, le déplacement passe automatiquement de 9 m à 6 m (ou de 6 m à 4 m). La cellule Déplacement l'indique avec la mention <em>«&nbsp;réduit armure&nbsp;»</em> en sous-titre.</Row>
+          <Row label="Risque d'échec arcanique">Si vous portez de l'armure et avez des sorts arcaniques (Magicien, Ensorceleur ou Barde), une alerte rouge s'affiche en haut de la section Sorts avec le pourcentage d'échec cumulé de toutes les armures portées.</Row>
+        </Section>
+
+        <Section titre="📊 PV attendus — indicateur de santé de niveau">
+          <p>Dans la section Combat, une ligne discrète indique la <strong>plage de PV attendus</strong> pour votre niveau et votre dé de vie, avec votre modificateur de Constitution :</p>
+          <div className="bg-stone-800/50 rounded p-3 font-mono text-xs text-stone-400 mt-1">
+            PV attendus niv.3 (d10+1/niv.) : <span className="text-stone-300">9–33</span>
+          </div>
+          <p className="mt-2">La plage va du <strong>minimum</strong> (toujours tirer 1 sur chaque dé) au <strong>maximum théorique</strong> (toujours tirer le maximum). Si vos PV actuels se trouvent hors de cette plage, un avertissement s'affiche.</p>
+          <Tip>Cette information est indicative — les règles D&D 3.5 permettent de prendre le max au niveau 1 (selon variante) ou la moyenne. La plage aide à repérer une erreur de saisie.</Tip>
+        </Section>
+
+        <Section titre="🎓 Capacités de classe — section dédiée">
+          <p>Une section <strong className="text-amber-200">Capacités de classe</strong> s'affiche automatiquement entre les Dons et les Armures, listant toutes les capacités spéciales acquises jusqu'au niveau actuel du personnage.</p>
+          <p className="mt-2">Chaque capacité est présentée avec :</p>
+          <ul className="list-disc list-inside space-y-1 pl-2 text-xs">
+            <li>Le <strong>nom</strong> de la capacité en ambre</li>
+            <li>Le <strong>niveau d'acquisition</strong> (niv.X)</li>
+            <li>En multi-classes, la <strong>classe d'origine</strong></li>
+            <li>Un <strong>résumé mécanique</strong> de l'effet</li>
+          </ul>
+          <Tip>En montant de niveau (puis en sauvegardant la modification), les nouvelles capacités apparaissent automatiquement sur la fiche.</Tip>
+        </Section>
+
         <Section titre="🖨️ Exporter en PDF">
           <Row label="Bouton PDF">En haut à droite de la fiche, cliquez <strong>PDF</strong> pour ouvrir la page d'impression.</Row>
           <Row label="Imprimer">Utilisez la fonction d'impression du navigateur (<kbd className="bg-stone-700 px-1 rounded">Ctrl+P</kbd>). Le format est configuré pour du papier <strong>Letter (8,5" × 11")</strong> avec marges ¾".</Row>

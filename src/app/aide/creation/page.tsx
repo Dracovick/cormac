@@ -86,9 +86,10 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
 
         <Section titre="⚔️ Onglet Combat — détails">
           <Row label="BBA (Bonus de Base à l'Attaque)">Laissez à <strong>0</strong> pour que le système le calcule automatiquement selon votre classe et niveau D&D 3.5. Saisissez une valeur pour forcer manuellement.</Row>
-          <Row label="CA Armure / Bouclier">Entrez le bonus d'armure et de bouclier séparément. Le modificateur de DEX est ajouté automatiquement.</Row>
+          <Row label="CA — calcul automatique">La Classe d'Armure est calculée automatiquement depuis les armures dans l'onglet Équipement. La formule appliquée : <span className="font-mono text-stone-300">10 + armures (bonus + magique) + mod DEX (plafonné par max DEX) + naturelle + déflexion + divers</span>. Il n'y a plus de champs manuels Armure/Bouclier.</Row>
+          <Row label="Max DEX de l'armure">Si une armure portée limite le bonus de DEX (ex. Chemise de mailles : Max DEX +6), le modificateur de DEX positif est automatiquement plafonné. Un modificateur négatif s'applique toujours en entier.</Row>
           <Row label="PV actuels">Peut différer des PV max si le personnage a subi des dégâts. Utilisez la fiche joueur pour les ajuster en temps réel.</Row>
-          <Row label="Déplacement">En mètres. Laissez vide pour utiliser la valeur raciale par défaut (9 m pour la plupart des races).</Row>
+          <Row label="Déplacement">En mètres. Laissez vide pour utiliser la valeur par défaut (9 m). Si le personnage porte une armure lourde, la fiche réduit automatiquement le déplacement à 6 m.</Row>
           <Row label="Jets de sauvegarde">Les bases sont calculées automatiquement. Entrez un bonus magique si le personnage porte des objets qui les améliorent.</Row>
         </Section>
 
@@ -207,6 +208,56 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           <p className="text-xs">Ces races choisissent librement leur classe préférée. Le système désigne automatiquement la <strong>classe la plus haute comme préférée</strong>, ce qui est le choix optimal. Conséquence importante : un Guerrier 6 qui ajoute Magicien 1 n'a <strong>aucune pénalité</strong> — le Guerrier est exempté du calcul, et le Magicien n'a pas d'autre classe non-préférée à laquelle se comparer.</p>
           <p className="text-xs mt-1 text-stone-500">La pénalité n'apparaît pour un humain que si deux classes secondaires (toutes deux derrière la classe principale) présentent un écart entre elles — ex. Guerrier 6 / Magicien 3 / Roublard 1 : Magicien et Roublard sont non-préférés, Roublard est 2 niveaux derrière Magicien → −20 %.</p>
           <Tip>Le message vert <strong>✓ Pas de pénalité XP · Classe préférée : Guerrier (auto — la plus haute)</strong> s'affiche pour confirmer quelle classe est exemptée. S'il devient orange ⚠, avancez la classe en retard au prochain niveau.</Tip>
+        </Section>
+
+        <Section titre="📐 Rang maximum de compétence">
+          <p>Dans l'onglet Compétences, chaque rang dispose d'un maximum légal selon les règles D&D 3.5 :</p>
+          <div className="grid grid-cols-2 gap-3 mt-2">
+            <div className="bg-stone-800/50 rounded p-3">
+              <div className="text-amber-300 font-semibold text-sm">Compétence de classe <span className="text-amber-600">●</span></div>
+              <div className="font-mono text-stone-300 mt-1">Rang max = niveau total + 3</div>
+              <div className="text-stone-500 text-xs mt-1">Ex. Guerrier niv.3 → max 6 rangs</div>
+            </div>
+            <div className="bg-stone-800/50 rounded p-3">
+              <div className="text-stone-300 font-semibold text-sm">Compétence hors-classe <span className="text-stone-600">○</span></div>
+              <div className="font-mono text-stone-300 mt-1">Rang max = (niveau total + 3) / 2</div>
+              <div className="text-stone-500 text-xs mt-1">Ex. Guerrier niv.3 → max 3 rangs</div>
+            </div>
+          </div>
+          <p className="mt-2">Le champ Rangs affiche <span className="font-mono text-stone-400">/N</span> (ex. /7) pour rappeler visuellement le maximum. L'input refuse silencieusement toute valeur dépassant le plafond.</p>
+          <Tip>Une compétence est considérée <em>de classe</em> dès qu'elle l'est pour <strong>au moins une</strong> de vos classes. En multi-classes, la liste des compétences de classe s'élargit automatiquement.</Tip>
+        </Section>
+
+        <Section titre="⚔️ Malus d'armure sur les compétences">
+          <p>Certaines armures imposent un <strong>malus de compétence</strong> (Armor Check Penalty) qui s'applique automatiquement sur la fiche joueur aux compétences physiques suivantes :</p>
+          <div className="flex flex-wrap gap-1.5 mt-2">
+            {['Acrobaties', 'Discrétion', 'Déplacement silencieux', 'Escalade', 'Évasion', 'Natation', 'Saut', 'Tour de passe-passe'].map(c => (
+              <span key={c} className="bg-stone-800 border border-stone-700 text-stone-300 text-xs px-2 py-0.5 rounded">{c}</span>
+            ))}
+          </div>
+          <p className="mt-2">Sur la fiche, le total de la compétence apparaît en <span className="text-red-400">rouge</span> et un indicateur <span className="text-red-500 font-mono">−N⚔</span> précise le malus appliqué. Les armures se cumulent si plusieurs sont portées.</p>
+          <Tip>La valeur Malus compétences de chaque armure est affichée dans le bloc armure portée sur la fiche. Le risque d'échec arcanique (%) est aussi visible pour les lanceurs de sorts arcaniques (Magicien, Ensorceleur, Barde).</Tip>
+        </Section>
+
+        <Section titre="🎓 Capacités de classe — affichage automatique">
+          <p>La fiche joueur affiche automatiquement les <strong>capacités de classe acquises</strong> jusqu'au niveau actuel du personnage. Ces capacités sont listées dans la section <em>Capacités de classe</em> sous les compétences et dons.</p>
+          <p className="mt-2">Exemples de capacités affichées automatiquement :</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-1">
+            {[
+              ['Barbare', 'Rage, Déplacement accéléré, Résistance au danger…'],
+              ['Roublard', 'Attaque sournoise, Chercher les pièges, Esquive totale…'],
+              ['Paladin', 'Imposition des mains, Détection du mal, Monture spéciale…'],
+              ['Moine', 'Attaque à mains nues, Défense sans armure, Corps de diamant…'],
+              ['Druide', 'Forme sauvage, Empathie sauvage, Compagnon animal…'],
+              ['Prêtre', 'Renvoi des morts-vivants, Domaines, Sorts spontanés…'],
+            ].map(([classe, caps]) => (
+              <div key={classe} className="bg-stone-800/40 rounded px-3 py-2 text-xs">
+                <span className="text-amber-300 font-medium">{classe}</span>
+                <span className="text-stone-500 ml-2">{caps}</span>
+              </div>
+            ))}
+          </div>
+          <Tip>Le niveau indiqué (niv.X) sur chaque capacité correspond au niveau de classe requis pour l'acquérir. En multi-classes, les capacités de chaque classe sont affichées séparément.</Tip>
         </Section>
 
         <Section titre="🖼️ Photo de portrait">
