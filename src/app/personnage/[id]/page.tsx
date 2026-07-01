@@ -47,6 +47,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const caArmure = armor.reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
   const maxDex = armor.length > 0 ? Math.min(...armor.map(({ armor: a }) => a.maxDex ?? 10)) : 10
   const dexModCA = Math.min(dexMod, maxDex)
+  // Malus de compétence cumulé de toutes les armures portées
+  const malusArmure = armor.reduce((sum, { armor: a }) => sum + (a.malusCompetence ?? 0), 0)
+  // Risque d'échec arcanique cumulé (s'additionnent si plusieurs armures)
+  const risqueEchecTotal = armor.reduce((sum, { armor: a }) => sum + (a.risqueEchecMagique ?? 0), 0)
+  // Compétences pénalisées par le malus d'armure (PHB 3.5)
+  const COMPETENCES_MALUS_ARMURE = ['Acrobaties', 'Discrétion', 'Déplacement silencieux', 'Escalade', 'Évasion', 'Natation', 'Saut', 'Tour de passe-passe']
   const caTotal = combatStats
     ? 10 + caArmure + (combatStats.caNaturelle ?? 0) + (combatStats.caDeflexion ?? 0) + (combatStats.caDivers ?? 0) + dexModCA + caMagique
     : 10
@@ -438,6 +444,13 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                 />
               }
             >
+              {arcaneClasseSort && risqueEchecTotal > 0 && (
+                <div className="mb-3 flex items-center gap-2 bg-red-950/60 border border-red-800/50 rounded-lg px-3 py-2">
+                  <span className="text-red-400 text-lg">⚠</span>
+                  <span className="text-red-300 text-sm font-medium">Risque d'échec arcanique : <span className="text-red-200 font-bold">{risqueEchecTotal}%</span></span>
+                  <span className="text-red-500 text-xs">(armure portée)</span>
+                </div>
+              )}
               {spells.length === 0 ? (
                 <>
                   <p className="text-stone-600 text-sm italic">
@@ -518,17 +531,19 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                         CHA: Math.floor((((abilityScores.chaBase ?? 10) + (abilityScores.chaMagique ?? 0)) - 10) / 2) }
                     : { FOR: 0, DEX: 0, CON: 0, INT: 0, SAG: 0, CHA: 0 }
                   const caracMod = carac[skill.caracteristique as keyof typeof carac] ?? 0
-                  const total = (charSkill.rangsInvestis ?? 0) + caracMod + (charSkill.modifDivers ?? 0)
+                  const hasArmorMalus = malusArmure > 0 && COMPETENCES_MALUS_ARMURE.includes(skill.nom)
+                  const total = (charSkill.rangsInvestis ?? 0) + caracMod + (charSkill.modifDivers ?? 0) - (hasArmorMalus ? malusArmure : 0)
                   return (
                     <div key={skill.id} className="flex items-center justify-between py-1 border-b border-stone-800 last:border-0">
                       <div>
                         <span className="text-stone-200 text-sm">{skill.nom}</span>
                         <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(skill.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="ml-1.5 text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
                         <span className="text-stone-500 text-xs ml-2">({skill.caracteristique})</span>
+                        {hasArmorMalus && <span className="text-red-500 text-xs ml-1" title={`Malus armure −${malusArmure}`}>−{malusArmure}⚔</span>}
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-stone-500 text-xs">{charSkill.rangsInvestis} rangs</span>
-                        <span className="text-amber-300 font-bold w-8 text-right">{signedNum(total)}</span>
+                        <span className={`font-bold w-8 text-right ${hasArmorMalus ? 'text-red-400' : 'text-amber-300'}`}>{signedNum(total)}</span>
                       </div>
                     </div>
                   )
@@ -568,9 +583,10 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                     {a.nom}{charArmor.bonusMagique ? ` +${charArmor.bonusMagique}` : ''}
                   </div>
                   <div className="text-stone-400 text-xs mt-1 space-x-3">
-                    <span>Bonus : <span className="text-amber-300">+{(a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0)}</span></span>
-                    {a.maxDex !== null && <span>Max DEX : <span className="text-amber-300">+{a.maxDex}</span></span>}
-                    <span>Échec magique : <span className="text-amber-300">{a.risqueEchecMagique}%</span></span>
+                    <span>Bonus CA : <span className="text-amber-300">+{(a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0)}</span></span>
+                    {a.maxDex != null && <span>Max DEX : <span className="text-amber-300">+{a.maxDex}</span></span>}
+                    {(a.malusCompetence ?? 0) > 0 && <span>Malus compétences : <span className="text-red-400">−{a.malusCompetence}</span></span>}
+                    {(a.risqueEchecMagique ?? 0) > 0 && <span>Échec arcanique : <span className="text-red-400">{a.risqueEchecMagique}%</span></span>}
                   </div>
                 </div>
               ))}
