@@ -35,7 +35,7 @@ export const DEFAULT_FORM: CharacterFormData = {
   conBase: 10, conMagique: 0, intBase: 10, intMagique: 0,
   sagBase: 10, sagMagique: 0, chaBase: 10, chaMagique: 0,
   pvMax: 10, pvActuels: 10,
-  caArme: 0, caBouclier: 0, caNaturelle: 0, caDeflexion: 0, caDivers: 0,
+  caNaturelle: 0, caDeflexion: 0, caDivers: 0,
   initiativeBonus: 0, bbaCorpsOverride: null, bbaProjectilesOverride: null,
   deplacement: null, karma: 0,
   reflexesMagique: 0, vigueurMagique: 0, volonteMagique: 0,
@@ -91,7 +91,8 @@ function calcDerived(data: CharacterFormData) {
     vigBase, vigTotal: vigBase + conMod + data.vigueurMagique,
     refBase, refTotal: refBase + dexMod + data.reflexesMagique,
     volBase, volTotal: volBase + sagMod + data.volonteMagique,
-    caTotal: 10 + dexMod + data.caArme + data.caBouclier + data.caNaturelle + data.caDeflexion + data.caDivers,
+    caArmure: data.armures.reduce((s, a) => s + (a.bonusCA ?? 0) + (a.bonusMagique ?? 0), 0),
+    caTotal: 10 + dexMod + data.armures.reduce((s, a) => s + (a.bonusCA ?? 0) + (a.bonusMagique ?? 0), 0) + data.caNaturelle + data.caDeflexion + data.caDivers,
     initiativeTotal: dexMod + data.initiativeBonus,
     deplacement: data.deplacement ?? (raceInfo?.deplacement ?? 9),
     dv: classeInfo ? `d${classeInfo.de}` : '—',
@@ -316,13 +317,12 @@ function SectionCombat({ data, update, derived }: { data: CharacterFormData; upd
         <div className={SEC_H}>Classe d'armure</div>
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 items-end">
           <div><label className={LBL}>CA totale</label><div className={AUTO + ' text-xl font-bold text-white py-2'}>{derived.caTotal}</div></div>
-          <div><label className={LBL}>Armure</label><input className={INP_NUM + ' w-full'} type="number" value={data.caArme} onChange={e => update('caArme', parseInt(e.target.value) || 0)} /></div>
-          <div><label className={LBL}>Bouclier</label><input className={INP_NUM + ' w-full'} type="number" value={data.caBouclier} onChange={e => update('caBouclier', parseInt(e.target.value) || 0)} /></div>
+          <div><label className={LBL}>Armures (auto)</label><div className={AUTO}>{derived.caArmure}</div></div>
           <div><label className={LBL}>Naturelle</label><input className={INP_NUM + ' w-full'} type="number" value={data.caNaturelle} onChange={e => update('caNaturelle', parseInt(e.target.value) || 0)} /></div>
           <div><label className={LBL}>Déviation</label><input className={INP_NUM + ' w-full'} type="number" value={data.caDeflexion} onChange={e => update('caDeflexion', parseInt(e.target.value) || 0)} /></div>
           <div><label className={LBL}>Divers</label><input className={INP_NUM + ' w-full'} type="number" value={data.caDivers} onChange={e => update('caDivers', parseInt(e.target.value) || 0)} /></div>
         </div>
-        <div className="mt-2 text-stone-500 text-xs">10 + DEX({fm(derived.dexMod)}) + armure({data.caArme}) + bouclier({data.caBouclier}) + nat.({data.caNaturelle}) + dév.({data.caDeflexion}) + div.({data.caDivers})</div>
+        <div className="mt-2 text-stone-500 text-xs">10 + DEX({fm(derived.dexMod)}) + armures({derived.caArmure}) + nat.({data.caNaturelle}) + dév.({data.caDeflexion}) + div.({data.caDivers})</div>
       </div>
 
       {/* Initiative + BBA */}

@@ -269,10 +269,8 @@ export function generateCharacter(params: GenParams): CharacterFormData {
   const listeNoms = sexe === 'Féminin' ? nomsList.feminin : nomsList.masculin
   const nom = listeNoms[Math.floor(Math.random() * listeNoms.length)]
 
-  // ── CA ──────────────────────────────────────────────────────────────────────
+  // ── CA (auto-calculé depuis armures) ────────────────────────────────────────
   const armures = ARMURES_PAR_CLASSE[classe] ?? []
-  const caArme = armures.find(a => a.type === 'armure')?.bonusCA ?? 0
-  const caBouclier = armures.find(a => a.type === 'bouclier')?.bonusCA ?? 0
 
   return {
     nom, surnom: '', sexe, age: '', taille: '', poids: '', yeux: '', cheveux: '',
@@ -288,7 +286,6 @@ export function generateCharacter(params: GenParams): CharacterFormData {
     chaBase: base.CHA, chaMagique: 0,
 
     pvMax, pvActuels: pvMax,
-    caArme, caBouclier,
     caNaturelle: 0, caDeflexion: 0, caDivers: 0,
     initiativeBonus: 0,
     bbaCorpsOverride: null, bbaProjectilesOverride: null,

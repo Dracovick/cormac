@@ -88,7 +88,9 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   const refT = refBase + dexMod + (savingThrows?.reflexesMagique ?? 0)
   const volT = volBase + sagMod + (savingThrows?.volonteMagique ?? 0)
 
-  const caTotal = 10 + dexMod + (combatStats?.caArme ?? 0) + (combatStats?.caBouclier ?? 0) + (combatStats?.caNaturelle ?? 0) + (combatStats?.caDeflexion ?? 0) + (combatStats?.caDivers ?? 0)
+  const caArmure = armor.reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
+  const caMagique = magicItems.reduce((sum, { item }) => sum + (item.bonus ?? 0), 0)
+  const caTotal = 10 + dexMod + caArmure + (combatStats?.caNaturelle ?? 0) + (combatStats?.caDeflexion ?? 0) + (combatStats?.caDivers ?? 0) + caMagique
   const initT = dexMod + (combatStats?.initiativeBonus ?? 0)
 
   const abilMods: Record<string, number> = { FOR: forMod, DEX: dexMod, CON: conMod, INT: intMod, SAG: sagMod, CHA: chaMod }
@@ -356,9 +358,9 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                       <td rowSpan={2} style={{ border: '1px solid #000', fontWeight: 'bold', fontSize: '9pt', background: '#000', color: '#fff', textAlign: 'center', padding: '4px', width: '8%' }}>CA<br/><span style={{ fontSize: '7pt' }}>Armure</span></td>
                       <td rowSpan={2} style={{ border: '1px solid #000', fontSize: '16pt', fontWeight: 'bold', textAlign: 'center', padding: '4px', width: '8%' }}>{caTotal}</td>
                       <td style={{ border: '1px solid #000', textAlign: 'center', fontSize: '9pt' }}>=</td>
-                      <td style={{ border: '1px solid #000', textAlign: 'center', fontSize: '10pt', fontWeight: 'bold' }}>{combatStats?.caArme || 0}</td>
+                      <td style={{ border: '1px solid #000', textAlign: 'center', fontSize: '10pt', fontWeight: 'bold' }}>{caArmure}</td>
                       <td style={{ border: '1px solid #000', textAlign: 'center', color: '#555' }}>+</td>
-                      <td style={{ border: '1px solid #000', textAlign: 'center', fontSize: '10pt', fontWeight: 'bold' }}>{combatStats?.caBouclier || 0}</td>
+                      <td style={{ border: '1px solid #000', textAlign: 'center', fontSize: '10pt', fontWeight: 'bold' }}>{caMagique || 0}</td>
                       <td style={{ border: '1px solid #000', textAlign: 'center', color: '#555' }}>+</td>
                       <td style={{ border: '1px solid #000', textAlign: 'center', fontSize: '10pt', fontWeight: 'bold' }}>{fm(dexMod)}</td>
                       <td style={{ border: '1px solid #000', textAlign: 'center', color: '#555' }}>+</td>
@@ -376,7 +378,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                       <td style={{ border: '1px solid #aaa', padding: '1px 2px', fontSize: '6pt', color: '#888', textAlign: 'center' }}></td>
                       <td style={{ border: '1px solid #aaa', padding: '1px 2px', fontSize: '6pt', color: '#888', textAlign: 'center' }}>Armure</td>
                       <td></td>
-                      <td style={{ border: '1px solid #aaa', padding: '1px 2px', fontSize: '6pt', color: '#888', textAlign: 'center' }}>Bouclier</td>
+                      <td style={{ border: '1px solid #aaa', padding: '1px 2px', fontSize: '6pt', color: '#888', textAlign: 'center' }}>Magique</td>
                       <td></td>
                       <td style={{ border: '1px solid #aaa', padding: '1px 2px', fontSize: '6pt', color: '#888', textAlign: 'center' }}>Mod.DEX</td>
                       <td></td>

@@ -37,7 +37,6 @@ export function charDataToForm(d: CharacterData): CharacterFormData {
     sagBase: abilityScores?.sagBase ?? 10, sagMagique: abilityScores?.sagMagique ?? 0,
     chaBase: abilityScores?.chaBase ?? 10, chaMagique: abilityScores?.chaMagique ?? 0,
     pvMax: combatStats?.pvMax ?? 0, pvActuels: combatStats?.pvActuels ?? 0,
-    caArme: combatStats?.caArme ?? 0, caBouclier: combatStats?.caBouclier ?? 0,
     caNaturelle: combatStats?.caNaturelle ?? 0, caDeflexion: combatStats?.caDeflexion ?? 0,
     caDivers: combatStats?.caDivers ?? 0, initiativeBonus: combatStats?.initiativeBonus ?? 0,
     bbaCorpsOverride: combatStats?.bbaCorpsACorps ?? null,
