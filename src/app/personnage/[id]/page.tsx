@@ -25,8 +25,8 @@ import { PreparerSorts } from '@/components/fiche/PreparerSorts'
 import { AjouterSort } from '@/components/fiche/AjouterSort'
 import { SupprimerSort } from '@/components/fiche/SupprimerSort'
 import { DescriptionSort } from '@/components/fiche/DescriptionSort'
-import { EffetsCA } from '@/components/fiche/EffetsCA'
-import { calculeBonusEffetsCA } from '@/lib/dnd35/ca-effects'
+import { EffetsSorts } from '@/components/fiche/EffetsSorts'
+import { calculeBonusEffetsCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
 
 function modif(score: number) {
   const m = Math.floor((score - 10) / 2)
@@ -42,10 +42,16 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const data = await getCharacter(Number(id))
   if (!data) notFound()
 
-  const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, currency, languages, creatures, companions, caEffects } = data
+  const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, currency, languages, creatures, companions, spellEffects } = data
 
-  const forT = (abilityScores?.forBase ?? 10) + (abilityScores?.forMagique ?? 0) + (race?.bonusFor ?? 0)
-  const dexT = (abilityScores?.dexBase ?? 10) + (abilityScores?.dexMagique ?? 0) + (race?.bonusDex ?? 0)
+  // Effets de sorts actifs : ceux qui touchent une caractéristique se propagent
+  // dans tous les calculs (mods, CA, attaques, sauvegardes, compétences…)
+  const effetsCA = spellEffects.filter(e => e.cible === 'CA')
+  const effetsCarac = spellEffects.filter(e => e.cible !== 'CA')
+  const { bonus: effCarac, contributions: contributionsCarac } = calculeBonusEffetsCarac(effetsCarac)
+
+  const forT = (abilityScores?.forBase ?? 10) + (abilityScores?.forMagique ?? 0) + (race?.bonusFor ?? 0) + effCarac.FOR
+  const dexT = (abilityScores?.dexBase ?? 10) + (abilityScores?.dexMagique ?? 0) + (race?.bonusDex ?? 0) + effCarac.DEX
   const forMod = Math.floor((forT - 10) / 2)
   const dexMod = Math.floor((dexT - 10) / 2)
   const caMagique = magicItems.reduce((sum, { item }) => sum + (item.bonus ?? 0), 0)
@@ -64,7 +70,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
     .filter(({ armor: a }) => !estBouclier(a.type))
     .reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
   const bonusBouclierPorte = caArmure - bonusArmurePortee
-  const { total: bonusSortsCA, contributions: contributionsCA } = calculeBonusEffetsCA(caEffects, { bonusArmurePortee, bonusBouclierPorte })
+  const { total: bonusSortsCA, contributions: contributionsCA } = calculeBonusEffetsCA(effetsCA, { bonusArmurePortee, bonusBouclierPorte })
   const caTotal = (combatStats
     ? 10 + caArmure + (combatStats.caNaturelle ?? 0) + (combatStats.caDeflexion ?? 0) + (combatStats.caDivers ?? 0) + dexModCA + caMagique
     : 10) + bonusSortsCA
@@ -110,7 +116,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const xpProchain = XP_PAR_NIVEAU[niveauTotal + 1] ?? null
 
   // PV attendus : plage selon dé de vie et CON (après niveauTotal)
-  const conT = (abilityScores?.conBase ?? 10) + (abilityScores?.conMagique ?? 0) + (race?.bonusCon ?? 0)
+  const conT = (abilityScores?.conBase ?? 10) + (abilityScores?.conMagique ?? 0) + (race?.bonusCon ?? 0) + effCarac.CON
   const conMod = Math.floor((conT - 10) / 2)
   const primaryDe = classes[0] ? (getClasseInfo(classes[0].classe.nom)?.de ?? 6) : 6
   const pvAttenduMax = niveauTotal > 0 ? niveauTotal * (primaryDe + conMod) : 0
@@ -301,12 +307,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           <Section titre="Caractéristiques">
             {abilityScores && (
               <div className="grid grid-cols-3 gap-2">
-                <CaracteristiqueBadge label="FOR" base={abilityScores.forBase ?? 10} magic={abilityScores.forMagique ?? 0} />
-                <CaracteristiqueBadge label="DEX" base={abilityScores.dexBase ?? 10} magic={abilityScores.dexMagique ?? 0} />
-                <CaracteristiqueBadge label="CON" base={abilityScores.conBase ?? 10} magic={abilityScores.conMagique ?? 0} />
-                <CaracteristiqueBadge label="INT" base={abilityScores.intBase ?? 10} magic={abilityScores.intMagique ?? 0} />
-                <CaracteristiqueBadge label="SAG" base={abilityScores.sagBase ?? 10} magic={abilityScores.sagMagique ?? 0} />
-                <CaracteristiqueBadge label="CHA" base={abilityScores.chaBase ?? 10} magic={abilityScores.chaMagique ?? 0} />
+                <CaracteristiqueBadge label="FOR" base={abilityScores.forBase ?? 10} magic={abilityScores.forMagique ?? 0} sort={effCarac.FOR} />
+                <CaracteristiqueBadge label="DEX" base={abilityScores.dexBase ?? 10} magic={abilityScores.dexMagique ?? 0} sort={effCarac.DEX} />
+                <CaracteristiqueBadge label="CON" base={abilityScores.conBase ?? 10} magic={abilityScores.conMagique ?? 0} sort={effCarac.CON} />
+                <CaracteristiqueBadge label="INT" base={abilityScores.intBase ?? 10} magic={abilityScores.intMagique ?? 0} sort={effCarac.INT} />
+                <CaracteristiqueBadge label="SAG" base={abilityScores.sagBase ?? 10} magic={abilityScores.sagMagique ?? 0} sort={effCarac.SAG} />
+                <CaracteristiqueBadge label="CHA" base={abilityScores.chaBase ?? 10} magic={abilityScores.chaMagique ?? 0} sort={effCarac.CHA} />
               </div>
             )}
           </Section>
@@ -323,16 +329,16 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             <StatBlock label="Dé de vie" value={classes[0]?.classe.deVie ?? '—'} />
           </div>
 
-          {/* Sorts actifs sur la CA — le joueur active/retire selon le temps de jeu */}
-          <EffetsCA personnageId={character.id} contributions={contributionsCA} />
+          {/* Sorts actifs (CA + caractéristiques) — le joueur retire selon le temps de jeu */}
+          <EffetsSorts personnageId={character.id} contributions={[...contributionsCA, ...contributionsCarac]} />
 
           {/* Jets de sauvegarde */}
           {savingThrows && (
             <div className="grid grid-cols-3 gap-3 mb-4">
               {[
                 { label: 'Réflexes', base: savingThrows.reflexesBase, mod: dexMod, mag: savingThrows.reflexesMagique },
-                { label: 'Vigueur', base: savingThrows.vigueurBase, mod: Math.floor(((abilityScores?.conBase ?? 10) + (abilityScores?.conMagique ?? 0) - 10) / 2), mag: savingThrows.vigueurMagique },
-                { label: 'Volonté', base: savingThrows.volonteBase, mod: Math.floor(((abilityScores?.sagBase ?? 10) + (abilityScores?.sagMagique ?? 0) - 10) / 2), mag: savingThrows.volonteMagique },
+                { label: 'Vigueur', base: savingThrows.vigueurBase, mod: Math.floor(((abilityScores?.conBase ?? 10) + (abilityScores?.conMagique ?? 0) + effCarac.CON - 10) / 2), mag: savingThrows.vigueurMagique },
+                { label: 'Volonté', base: savingThrows.volonteBase, mod: Math.floor(((abilityScores?.sagBase ?? 10) + (abilityScores?.sagMagique ?? 0) + effCarac.SAG - 10) / 2), mag: savingThrows.volonteMagique },
               ].map(({ label, base, mod, mag }) => (
                 <div key={label} className="bg-stone-800/60 rounded p-3 text-center">
                   <div className="text-amber-500 text-xs uppercase tracking-wide">{label}</div>
@@ -566,7 +572,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                                     )}
                                   </div>
                                   <span className="flex items-center shrink-0">
-                                    {caEffects.some(e => e.nom === spell.nom) && (
+                                    {spellEffects.some(e => e.nom === spell.nom) && (
                                       <span className="text-xs text-violet-300 bg-violet-900/40 border border-violet-700 rounded px-1.5 py-0.5 ml-2" title="Effet actif sur la CA — se retire dans la section Combat">🛡 actif</span>
                                     )}
                                     <LiveSort charSpellId={charSpell.id} personnageId={character.id} estPrepare={charSpell.estPrepare ?? 0} />
@@ -602,12 +608,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
               <div className="space-y-1">
                 {skills.map(({ skill, charSkill }) => {
                   const carac = abilityScores
-                    ? { FOR: Math.floor((((abilityScores.forBase ?? 10) + (abilityScores.forMagique ?? 0)) - 10) / 2),
-                        DEX: Math.floor((((abilityScores.dexBase ?? 10) + (abilityScores.dexMagique ?? 0)) - 10) / 2),
-                        CON: Math.floor((((abilityScores.conBase ?? 10) + (abilityScores.conMagique ?? 0)) - 10) / 2),
-                        INT: Math.floor((((abilityScores.intBase ?? 10) + (abilityScores.intMagique ?? 0)) - 10) / 2),
-                        SAG: Math.floor((((abilityScores.sagBase ?? 10) + (abilityScores.sagMagique ?? 0)) - 10) / 2),
-                        CHA: Math.floor((((abilityScores.chaBase ?? 10) + (abilityScores.chaMagique ?? 0)) - 10) / 2) }
+                    ? { FOR: Math.floor((((abilityScores.forBase ?? 10) + (abilityScores.forMagique ?? 0) + effCarac.FOR) - 10) / 2),
+                        DEX: Math.floor((((abilityScores.dexBase ?? 10) + (abilityScores.dexMagique ?? 0) + effCarac.DEX) - 10) / 2),
+                        CON: Math.floor((((abilityScores.conBase ?? 10) + (abilityScores.conMagique ?? 0) + effCarac.CON) - 10) / 2),
+                        INT: Math.floor((((abilityScores.intBase ?? 10) + (abilityScores.intMagique ?? 0) + effCarac.INT) - 10) / 2),
+                        SAG: Math.floor((((abilityScores.sagBase ?? 10) + (abilityScores.sagMagique ?? 0) + effCarac.SAG) - 10) / 2),
+                        CHA: Math.floor((((abilityScores.chaBase ?? 10) + (abilityScores.chaMagique ?? 0) + effCarac.CHA) - 10) / 2) }
                     : { FOR: 0, DEX: 0, CON: 0, INT: 0, SAG: 0, CHA: 0 }
                   const caracMod = carac[skill.caracteristique as keyof typeof carac] ?? 0
                   const hasArmorMalus = malusArmure > 0 && COMPETENCES_MALUS_ARMURE.includes(skill.nom)

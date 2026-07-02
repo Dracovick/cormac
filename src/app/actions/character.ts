@@ -10,7 +10,7 @@ import { RACES_DND35, getRaceInfo } from '@/lib/dnd35/races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { getBab, getModifier, getMultiClassSave } from '@/lib/dnd35/rules'
 import { SORTS_DND35 } from '@/lib/dnd35/spells'
-import { SORTS_EFFETS_CA, valeurEffetSelonNiveau } from '@/lib/dnd35/ca-effects'
+import { SORTS_EFFETS_CA, SORTS_EFFETS_CARAC, valeurEffetSelonNiveau } from '@/lib/dnd35/spell-effects'
 
 // ─── Type exported for the form component ───────────────────────────────────
 export interface CharacterFormData {
@@ -480,29 +480,43 @@ export async function depenseSort(charSpellId: number, personnageId: number) {
     .set({ estPrepare: newVal })
     .where(eq(schema.characterSpells.id, charSpellId))
 
-  // Sort qui affecte la CA : l'effet s'active automatiquement au lancement.
-  // Le joueur le retire lui-même (✕ dans la section Combat) quand le sort prend fin.
-  const effetCatalogue = SORTS_EFFETS_CA.find(e => e.nom === row.nomSort)
-  if (effetCatalogue) {
+  // Sort qui affecte la CA ou une caractéristique : l'effet s'active automatiquement
+  // au lancement. Le joueur le retire lui-même (✕ dans la section Combat) quand le
+  // sort prend fin.
+  const effetCA = SORTS_EFFETS_CA.find(e => e.nom === row.nomSort)
+  const effetCarac = SORTS_EFFETS_CARAC.find(e => e.nom === row.nomSort)
+  if (effetCA || effetCarac) {
+    const nomEffet = (effetCA ?? effetCarac)!.nom
     const [dejaActif] = await getDb()
-      .select({ id: schema.characterCaEffects.id })
-      .from(schema.characterCaEffects)
+      .select({ id: schema.characterSpellEffects.id })
+      .from(schema.characterSpellEffects)
       .where(and(
-        eq(schema.characterCaEffects.personnageId, personnageId),
-        eq(schema.characterCaEffects.nom, effetCatalogue.nom)
+        eq(schema.characterSpellEffects.personnageId, personnageId),
+        eq(schema.characterSpellEffects.nom, nomEffet)
       ))
     if (!dejaActif) {
-      const classesRows = await getDb()
-        .select({ niveau: schema.characterClasses.niveau })
-        .from(schema.characterClasses)
-        .where(eq(schema.characterClasses.personnageId, personnageId))
-      const niveauLanceur = Math.max(1, ...classesRows.map(c => c.niveau ?? 0))
-      await getDb().insert(schema.characterCaEffects).values({
-        personnageId,
-        nom: effetCatalogue.nom,
-        typeBonus: effetCatalogue.typeBonus,
-        valeur: valeurEffetSelonNiveau(effetCatalogue, niveauLanceur),
-      })
+      if (effetCarac) {
+        await getDb().insert(schema.characterSpellEffects).values({
+          personnageId,
+          nom: effetCarac.nom,
+          cible: effetCarac.carac,
+          typeBonus: effetCarac.typeBonus,
+          valeur: effetCarac.valeur,
+        })
+      } else if (effetCA) {
+        const classesRows = await getDb()
+          .select({ niveau: schema.characterClasses.niveau })
+          .from(schema.characterClasses)
+          .where(eq(schema.characterClasses.personnageId, personnageId))
+        const niveauLanceur = Math.max(1, ...classesRows.map(c => c.niveau ?? 0))
+        await getDb().insert(schema.characterSpellEffects).values({
+          personnageId,
+          nom: effetCA.nom,
+          cible: 'CA',
+          typeBonus: effetCA.typeBonus,
+          valeur: valeurEffetSelonNiveau(effetCA, niveauLanceur),
+        })
+      }
     }
   }
   revalidatePath(`/personnage/${personnageId}`)
@@ -638,11 +652,11 @@ export async function updateNotes(personnageId: number, notes: string) {
   revalidatePath(`/personnage/${personnageId}`)
 }
 
-export async function retirerEffetCA(effetId: number, personnageId: number) {
-  await getDb().delete(schema.characterCaEffects).where(
+export async function retirerEffetSort(effetId: number, personnageId: number) {
+  await getDb().delete(schema.characterSpellEffects).where(
     and(
-      eq(schema.characterCaEffects.id, effetId),
-      eq(schema.characterCaEffects.personnageId, personnageId)
+      eq(schema.characterSpellEffects.id, effetId),
+      eq(schema.characterSpellEffects.personnageId, personnageId)
     )
   )
   revalidatePath(`/personnage/${personnageId}`)

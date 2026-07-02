@@ -50,7 +50,7 @@ export async function getCharacter(id: number) {
       : Promise.resolve([]),
   ])
 
-  const [spells, weapons, armor, magicItems, potions, currency, languages, creatures, companions, caEffects] = await Promise.all([
+  const [spells, weapons, armor, magicItems, potions, currency, languages, creatures, companions, spellEffects] = await Promise.all([
     getDb().select({ charSpell: schema.characterSpells, spell: schema.spells })
       .from(schema.characterSpells)
       .innerJoin(schema.spells, eq(schema.characterSpells.sortId, schema.spells.id))
@@ -95,12 +95,12 @@ export async function getCharacter(id: number) {
     getDb().select().from(schema.characterCompanions)
       .where(eq(schema.characterCompanions.personnageId, id)),
 
-    getDb().select().from(schema.characterCaEffects)
-      .where(eq(schema.characterCaEffects.personnageId, id))
-      .orderBy(schema.characterCaEffects.id),
+    getDb().select().from(schema.characterSpellEffects)
+      .where(eq(schema.characterSpellEffects.personnageId, id))
+      .orderBy(schema.characterSpellEffects.id),
   ])
 
-  return { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, currency, languages, creatures, companions, caEffects }
+  return { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, currency, languages, creatures, companions, spellEffects }
 }
 
 export type CharacterData = NonNullable<Awaited<ReturnType<typeof getCharacter>>>
