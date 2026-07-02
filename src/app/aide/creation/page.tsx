@@ -91,7 +91,7 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           <Row label="PV actuels">Peut différer des PV max si le personnage a subi des dégâts. Utilisez la fiche joueur pour les ajuster en temps réel.</Row>
           <Row label="Déplacement">En mètres. Laissez vide pour utiliser la valeur par défaut (9 m). Si le personnage porte une armure lourde, la fiche réduit automatiquement le déplacement à 6 m.</Row>
           <Row label="Jets de sauvegarde">Les bases sont calculées automatiquement. Entrez un bonus magique si le personnage porte des objets qui les améliorent.</Row>
-          <Row label="Domaines divins">Si le personnage a la classe <strong>Prêtre</strong> ou <strong>Druide</strong>, une carte <em>Domaines divins</em> apparaît dans cet onglet avec deux menus déroulants (23 domaines du PHB 3.5 : Air, Animal, Guérison, Guerre, Magie, Mort, Protection, Voyage…). Les domaines choisis s'affichent ensuite sur la fiche avec leur pouvoir et leurs 9 sorts de domaine.</Row>
+          <Row label="Domaines divins">Si le personnage a la classe <strong>Prêtre</strong> ou <strong>Druide</strong>, une carte <em>Domaines divins</em> apparaît dans cet onglet avec deux menus déroulants : les 23 domaines du PHB 3.5 (Air, Animal, Guérison, Guerre, Magie, Mort, Protection, Voyage…) <strong>plus les 34 domaines des Royaumes Oubliés</strong> (Araignées, Charme, Drows, Elfes, Lune, Nains, Noblesse, Obscurité, Océan, Runes, Tempête, Temps…). Les domaines choisis s'affichent ensuite sur la fiche avec leur pouvoir et leurs 9 sorts de domaine.</Row>
         </Section>
 
         <Section titre="🧙 Onglet Sorts — grimoire et préparations">
