@@ -13,6 +13,7 @@ export type TypeBonusCA =
   | 'armure naturelle'
   | 'esquive'
   | 'taille'
+  | 'intuition'
   | 'divers'
 
 export type EffetCACatalogue = {
@@ -61,6 +62,7 @@ export const SORTS_EFFETS_CA: EffetCACatalogue[] = [
   { nom: 'Hâte',                     typeBonus: 'esquive',          valeur: 1,               duree: '1 round/niveau',  note: 'Bonus d\'esquive : se cumule avec tout.' },
   { nom: 'Rapetissement',            typeBonus: 'taille',           valeur: 1,               duree: '1 min/niveau',    note: 'Taille P : +1 CA et +1 attaque.' },
   { nom: 'Agrandissement',           typeBonus: 'taille',           valeur: -1,              duree: '1 min/niveau',    note: 'Taille G : −1 CA et −1 attaque.' },
+  { nom: 'Vision du futur',          typeBonus: 'intuition',        valeur: 2,               duree: '10 min/niveau',   note: '+2 aussi aux attaques et sauvegardes ; ne peut pas être surpris.' },
 ]
 
 // Sorts d'amélioration de caractéristique (+4 amélioration, PHB 3.5).
@@ -75,18 +77,73 @@ export const SORTS_EFFETS_CARAC: EffetCaracCatalogue[] = [
   { nom: 'Splendeur de l\'aigle',  carac: 'CHA', valeur: 4, typeBonus: 'amélioration', duree: '1 min/niveau', note: 'Compétences de Charisme.' },
 ]
 
-// Sorts à effet purement visuel sur la fiche (aucune statistique modifiée).
+// Sorts à effet purement visuel sur le portrait (aucune statistique modifiée).
 // cible en DB : 'VISUEL', typeBonus : nom de l'effet visuel.
+export type EffetVisuel = 'halo' | 'pierre' | 'feu' | 'invisible'
+
 export type EffetVisuelCatalogue = {
   nom: string
-  effet: 'halo' // halo lumineux autour du portrait
+  effet: EffetVisuel
   duree: string
   note?: string
 }
 
 export const SORTS_EFFETS_VISUELS: EffetVisuelCatalogue[] = [
-  { nom: 'Lumière',         effet: 'halo', duree: '10 min/niveau', note: 'L\'objet touché brille comme une torche (9 m de rayon).' },
-  { nom: 'Lumière du jour', effet: 'halo', duree: '10 min/niveau', note: 'Lumière aussi brillante que le plein jour (18 m de rayon).' },
+  { nom: 'Lumière',              effet: 'halo',      duree: '10 min/niveau',    note: 'L\'objet touché brille comme une torche (9 m de rayon).' },
+  { nom: 'Lumière du jour',      effet: 'halo',      duree: '10 min/niveau',    note: 'Lumière aussi brillante que le plein jour (18 m de rayon).' },
+  { nom: 'Peau de pierre',       effet: 'pierre',    duree: '10 min/niveau',    note: 'Réduction de dégâts 10/adamantine (max 150 points absorbés).' },
+  { nom: 'Bouclier de feu',      effet: 'feu',       duree: '1 round/niveau',   note: 'Qui vous frappe au corps à corps subit 1d6+1/niv dégâts de feu (ou de froid).' },
+  { nom: 'Invisibilité',         effet: 'invisible', duree: '1 min/niveau',     note: 'Invisible jusqu\'à ce que vous attaquiez.' },
+  { nom: 'Invisibilité totale',  effet: 'invisible', duree: '1 min/niveau',     note: 'Invisible même en attaquant.' },
+]
+
+// Sorts lançables sur soi-même avec une durée : suivi seulement (aucune statistique
+// modifiée automatiquement — la note rappelle l'effet). cible en DB : 'SUIVI',
+// sauf indication (ex. Repli expéditif → cible 'DEPL', +9 m au déplacement affiché).
+export type EffetSuiviCatalogue = {
+  nom: string
+  duree: string
+  note: string
+  cible?: 'DEPL'
+  valeur?: number
+}
+
+export const SORTS_EFFETS_SUIVI: EffetSuiviCatalogue[] = [
+  // Niveau 0
+  { nom: 'Résistance',                     duree: '1 minute',        note: '+1 aux jets de sauvegarde.' },
+  { nom: 'Vertu',                          duree: '1 minute',        note: '+1 point de vie temporaire.' },
+  { nom: 'Guidage',                        duree: '1 minute',        note: '+1 au prochain test de compétence ou jet d\'attaque.' },
+  { nom: 'Sauvegarde contre le feu',       duree: '10 min/niveau',   note: 'Réduit les dégâts de feu non magique.' },
+  // Niveau 1
+  { nom: 'Repli expéditif',                duree: '1 min/niveau',    note: 'Déplacement augmenté de 9 m.', cible: 'DEPL', valeur: 9 },
+  { nom: 'Compréhension des langages',     duree: '10 min/niveau',   note: 'Comprend toutes les langues écrites et parlées.' },
+  { nom: 'Faveur divine',                  duree: '1 minute',        note: '+1 aux attaques et dégâts par 3 niveaux (max +3).' },
+  { nom: 'Sanctuaire',                     duree: '1 round/niveau',  note: 'Les adversaires doivent réussir un JS Volonté pour vous attaquer.' },
+  { nom: 'Bénédiction',                    duree: '1 min/niveau',    note: '+1 attaques et JS contre la peur (vous et vos alliés à 15 m).' },
+  // Niveau 2
+  { nom: 'Image miroir',                   duree: '1 min/niveau',    note: '1d4+1 doubles illusoires — chaque attaque ratée en détruit un.' },
+  { nom: 'Résistance aux énergies',        duree: '10 min/niveau',   note: 'Résistance 10 à un type d\'énergie choisi.' },
+  { nom: 'Vision dans le noir',            duree: '1 h/niveau',      note: 'Vision dans le noir jusqu\'à 18 m.' },
+  { nom: 'Sens de la nature',              duree: '1 min/niveau',    note: 'Perception animaux/plantes à 9 m, +4 aux tests d\'initiative.' },
+  { nom: 'Lame de feu',                    duree: '1 min/niveau',    note: 'Lame enflammée en main : 1d8 + ½ niveau dégâts de feu.' },
+  { nom: 'Aide',                           duree: '1 min/niveau',    note: '+1 attaques, +1 JS contre la peur, +1d8 PV temporaires.' },
+  // Niveau 3
+  { nom: 'Vol',                            duree: '1 min/niveau',    note: 'Vole à 18 m/round (bonne manœuvrabilité).' },
+  { nom: 'Forme gazeuse',                  duree: '2 min/niveau',    note: 'Corps gazeux : immunité à la plupart des attaques, déplacement 3 m.' },
+  { nom: 'Respiration aquatique',          duree: '2 h/niveau',      note: 'Respire sous l\'eau comme à l\'air libre.' },
+  { nom: 'Vision magique',                 duree: '1 min/niveau',    note: 'Voit les auras magiques, leurs écoles et intensités.' },
+  { nom: 'Protection contre les énergies', duree: '10 min/niveau',   note: 'Absorbe jusqu\'à 12 points de dégâts/niveau d\'un type d\'énergie.' },
+  { nom: 'Prière',                         duree: '1 round/niveau',  note: '+1 attaques/dégâts/comp./JS pour vous et vos alliés ; −1 pour les ennemis.' },
+  // Niveau 4
+  { nom: 'Globe d\'invulnérabilité mineur', duree: '1 round/niveau', note: 'Bloque les sorts de niveau 1 à 3.' },
+  { nom: 'Liberté de mouvement',           duree: '10 min/niveau',   note: 'Se déplace normalement malgré entraves magiques ou naturelles.' },
+  { nom: 'Immunité aux énergies',          duree: '24 heures',       note: 'Immunité totale à un type d\'énergie choisi.' },
+  { nom: 'Métamorphose',                   duree: '1 min/niveau',    note: 'Transformé en une autre créature (pouvoirs, FOR/DEX/CON selon la forme).' },
+  // Niveau 6+
+  { nom: 'Globe d\'invulnérabilité',       duree: '1 round/niveau',  note: 'Bloque les sorts de niveau 1 à 4.' },
+  { nom: 'Festin des héros',               duree: '12 heures',       note: 'Immunité peur et poison, +1 morale attaques/JS, +2d8 PV temporaires.' },
+  { nom: 'Régénération',                   duree: '1 min/niveau',    note: 'Régénère 1 PV/round, repousse les membres coupés.' },
+  { nom: 'Sphère prismatique',             duree: '10 min/niveau',   note: 'Sphère de 7 couches colorées protégeant contre tout.' },
 ]
 
 export type EffetSortActif = { id: number; nom: string; cible: string; typeBonus: string; valeur: number }

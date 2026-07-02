@@ -48,11 +48,17 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   // dans tous les calculs (mods, CA, attaques, sauvegardes, compétences…)
   const effetsCA = spellEffects.filter(e => e.cible === 'CA')
   const effetsVisuels = spellEffects.filter(e => e.cible === 'VISUEL')
-  const effetsCarac = spellEffects.filter(e => e.cible !== 'CA' && e.cible !== 'VISUEL')
+  const effetsSuivi = spellEffects.filter(e => e.cible === 'SUIVI')
+  const effetsDepl = spellEffects.filter(e => e.cible === 'DEPL')
+  const CIBLES_CARAC = ['FOR', 'DEX', 'CON', 'INT', 'SAG', 'CHA']
+  const effetsCarac = spellEffects.filter(e => CIBLES_CARAC.includes(e.cible))
   const { bonus: effCarac, contributions: contributionsCarac } = calculeBonusEffetsCarac(effetsCarac)
-  // Effets visuels (ex. Lumière) : halo autour du portrait, aucune statistique modifiée
+  // Effets visuels (portrait) et de suivi : aucune statistique modifiée
   const contributionsVisuels = effetsVisuels.map(e => ({ ...e, effective: 0 }))
-  const haloLumineux = effetsVisuels.some(e => e.typeBonus === 'halo')
+  const contributionsSuivi = effetsSuivi.map(e => ({ ...e, effective: 0 }))
+  const contributionsDepl = effetsDepl.map(e => ({ ...e, effective: e.valeur }))
+  const visuelsActifs = effetsVisuels.map(e => e.typeBonus)
+  const bonusDepl = effetsDepl.reduce((sum, e) => sum + e.valeur, 0)
 
   const forT = (abilityScores?.forBase ?? 10) + (abilityScores?.forMagique ?? 0) + (race?.bonusFor ?? 0) + effCarac.FOR
   const dexT = (abilityScores?.dexBase ?? 10) + (abilityScores?.dexMagique ?? 0) + (race?.bonusDex ?? 0) + effCarac.DEX
@@ -81,15 +87,16 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const initiativeTotal = combatStats ? dexMod + (combatStats.initiativeBonus ?? 0) : 0
 
   // Déplacement auto : utilise l'armure.deplacement si renseigné, sinon détecte armure lourde
+  // + bonus des sorts actifs (ex. Repli expéditif +9 m)
   const baseDepl = combatStats?.deplacement ?? 9
   const deplacement = (() => {
     const armorDeplValues = armor.map(({ armor: a }) => a.deplacement).filter((d): d is number => d != null)
-    if (armorDeplValues.length > 0) return Math.min(...armorDeplValues)
+    if (armorDeplValues.length > 0) return Math.min(...armorDeplValues) + bonusDepl
     const hasHeavy = armor.some(({ armor: a }) =>
       (a.type ?? '').toLowerCase().includes('lourde') || (a.type ?? '').toLowerCase().includes('lourd')
     )
-    if (hasHeavy) return baseDepl >= 9 ? 6 : 4
-    return baseDepl
+    if (hasHeavy) return (baseDepl >= 9 ? 6 : 4) + bonusDepl
+    return baseDepl + bonusDepl
   })()
 
   // BAB multi-classes : somme de chaque contribution
@@ -273,7 +280,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                 personnageId={character.id}
                 photoUrl={character.photoUrl ?? null}
                 nom={character.nom}
-                halo={haloLumineux}
+                visuels={visuelsActifs}
               />
             </div>
           </div>
@@ -329,13 +336,13 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             <LiveHP personnageId={character.id} pvActuels={combatStats?.pvActuels ?? 0} pvMax={combatStats?.pvMax ?? 0} />
             <StatBlock label="CA" value={caTotal} sub={`(armure +${caArmure} · DEX ${dexModCA >= 0 ? '+' : ''}${dexModCA}${caMagique ? ` · mag +${caMagique}` : ''}${bonusSortsCA ? ` · sorts ${bonusSortsCA > 0 ? '+' : ''}${bonusSortsCA}` : ''})`} />
             <StatBlock label="Initiative" value={signedNum(initiativeTotal)} sub="DEX + divers + Science" />
-            <StatBlock label="Déplacement" value={`${deplacement}m`} sub={deplacement !== baseDepl ? `base ${baseDepl}m, réduit armure` : undefined} />
+            <StatBlock label="Déplacement" value={`${deplacement}m`} sub={bonusDepl > 0 ? `base ${baseDepl}m · sort +${bonusDepl}m` : deplacement !== baseDepl ? `base ${baseDepl}m, réduit armure` : undefined} />
             <StatBlock label="Karma" value={combatStats?.karma ?? 0} />
             <StatBlock label="Dé de vie" value={classes[0]?.classe.deVie ?? '—'} />
           </div>
 
-          {/* Sorts actifs (CA + caractéristiques + visuels) — le joueur retire selon le temps de jeu */}
-          <EffetsSorts personnageId={character.id} contributions={[...contributionsCA, ...contributionsCarac, ...contributionsVisuels]} />
+          {/* Sorts actifs (CA, caractéristiques, déplacement, visuels, suivi) — le joueur retire selon le temps de jeu */}
+          <EffetsSorts personnageId={character.id} contributions={[...contributionsCA, ...contributionsCarac, ...contributionsDepl, ...contributionsVisuels, ...contributionsSuivi]} />
 
           {/* Jets de sauvegarde */}
           {savingThrows && (

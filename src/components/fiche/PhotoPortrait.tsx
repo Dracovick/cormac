@@ -7,10 +7,10 @@ type Props = {
   personnageId: number
   photoUrl: string | null
   nom: string
-  halo?: boolean // sort de lumière actif : halo lumineux autour du portrait
+  visuels?: string[] // effets visuels actifs : 'halo', 'pierre', 'feu', 'invisible'
 }
 
-export function PhotoPortrait({ personnageId, photoUrl, nom, halo = false }: Props) {
+export function PhotoPortrait({ personnageId, photoUrl, nom, visuels = [] }: Props) {
   const [editing, setEditing] = useState(false)
   const [url, setUrl] = useState(photoUrl ?? '')
   const [isPending, startTransition] = useTransition()
@@ -54,18 +54,35 @@ export function PhotoPortrait({ personnageId, photoUrl, nom, halo = false }: Pro
 
   return (
     <div className="flex flex-col items-center gap-2">
-      {/* Portrait — halo lumineux quand un sort de lumière est actif */}
-      <div className={`relative w-32 h-48 rounded-xl border-2 overflow-hidden bg-stone-800 shrink-0 flex items-center justify-center group transition-shadow duration-700 ${
-        halo
-          ? 'border-yellow-300/80 shadow-[0_0_28px_10px_rgba(253,224,71,0.55)]'
+      {/* Portrait — effets visuels des sorts actifs (halo, pierre, feu, invisible) */}
+      {(() => {
+        const halo = visuels.includes('halo')
+        const pierre = visuels.includes('pierre')
+        const feu = visuels.includes('feu')
+        const invisible = visuels.includes('invisible')
+        const lueurs = [
+          feu && '0 0 30px 12px rgba(249,115,22,0.6)',
+          halo && '0 0 28px 10px rgba(253,224,71,0.55)',
+          pierre && '0 0 16px 5px rgba(148,163,184,0.45)',
+        ].filter(Boolean).join(', ')
+        const bordure = feu ? 'border-orange-400/80'
+          : halo ? 'border-yellow-300/80'
+          : pierre ? 'border-stone-400/90'
+          : invisible ? 'border-dashed border-stone-500/70'
           : 'border-amber-700/60'
-      }`}>
+        return (
+      <div
+        className={`relative w-32 h-48 rounded-xl border-2 ${bordure} overflow-hidden bg-stone-800 shrink-0 flex items-center justify-center group transition-shadow duration-700`}
+        style={lueurs ? { boxShadow: lueurs } : undefined}
+      >
         {halo && <div className="pointer-events-none absolute inset-0 bg-yellow-200/10 animate-pulse z-10" />}
+        {feu && <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-orange-500/35 via-red-500/10 to-transparent animate-pulse z-10" />}
+        {pierre && <div className="pointer-events-none absolute inset-0 bg-stone-400/20 z-10" />}
         {url || photoUrl ? (
           <img
             src={url || photoUrl!}
             alt={`Portrait de ${nom}`}
-            className="w-full h-full object-cover object-top"
+            className={`w-full h-full object-cover object-top transition-all duration-700 ${pierre ? 'grayscale contrast-125' : ''} ${invisible ? 'opacity-25' : ''}`}
           />
         ) : (
           <div className="flex flex-col items-center justify-center w-full h-full text-stone-600">
@@ -88,6 +105,8 @@ export function PhotoPortrait({ personnageId, photoUrl, nom, halo = false }: Pro
           </svg>
         </button>
       </div>
+        )
+      })()}
 
       {/* Bouton plein écran */}
       {photoUrl && (

@@ -10,7 +10,7 @@ import { RACES_DND35, getRaceInfo } from '@/lib/dnd35/races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { getBab, getModifier, getMultiClassSave } from '@/lib/dnd35/rules'
 import { SORTS_DND35 } from '@/lib/dnd35/spells'
-import { SORTS_EFFETS_CA, SORTS_EFFETS_CARAC, SORTS_EFFETS_VISUELS, valeurEffetSelonNiveau } from '@/lib/dnd35/spell-effects'
+import { SORTS_EFFETS_CA, SORTS_EFFETS_CARAC, SORTS_EFFETS_VISUELS, SORTS_EFFETS_SUIVI, valeurEffetSelonNiveau } from '@/lib/dnd35/spell-effects'
 
 // ─── Type exported for the form component ───────────────────────────────────
 export interface CharacterFormData {
@@ -486,8 +486,9 @@ export async function depenseSort(charSpellId: number, personnageId: number) {
   const effetCA = SORTS_EFFETS_CA.find(e => e.nom === row.nomSort)
   const effetCarac = SORTS_EFFETS_CARAC.find(e => e.nom === row.nomSort)
   const effetVisuel = SORTS_EFFETS_VISUELS.find(e => e.nom === row.nomSort)
-  if (effetCA || effetCarac || effetVisuel) {
-    const nomEffet = (effetCA ?? effetCarac ?? effetVisuel)!.nom
+  const effetSuivi = SORTS_EFFETS_SUIVI.find(e => e.nom === row.nomSort)
+  if (effetCA || effetCarac || effetVisuel || effetSuivi) {
+    const nomEffet = (effetCA ?? effetCarac ?? effetVisuel ?? effetSuivi)!.nom
     const [dejaActif] = await getDb()
       .select({ id: schema.characterSpellEffects.id })
       .from(schema.characterSpellEffects)
@@ -496,7 +497,15 @@ export async function depenseSort(charSpellId: number, personnageId: number) {
         eq(schema.characterSpellEffects.nom, nomEffet)
       ))
     if (!dejaActif) {
-      if (effetVisuel) {
+      if (effetSuivi) {
+        await getDb().insert(schema.characterSpellEffects).values({
+          personnageId,
+          nom: effetSuivi.nom,
+          cible: effetSuivi.cible ?? 'SUIVI',
+          typeBonus: 'suivi',
+          valeur: effetSuivi.valeur ?? 0,
+        })
+      } else if (effetVisuel) {
         await getDb().insert(schema.characterSpellEffects).values({
           personnageId,
           nom: effetVisuel.nom,
