@@ -610,6 +610,28 @@ export async function updateNotes(personnageId: number, notes: string) {
   revalidatePath(`/personnage/${personnageId}`)
 }
 
+export async function ajouterEffetCA(personnageId: number, nom: string, typeBonus: string, valeur: number) {
+  const nomClean = nom.trim()
+  if (!nomClean || !Number.isFinite(valeur) || valeur === 0) return
+  await getDb().insert(schema.characterCaEffects).values({
+    personnageId,
+    nom: nomClean.slice(0, 200),
+    typeBonus: typeBonus.slice(0, 50) || 'divers',
+    valeur: Math.trunc(valeur),
+  })
+  revalidatePath(`/personnage/${personnageId}`)
+}
+
+export async function retirerEffetCA(effetId: number, personnageId: number) {
+  await getDb().delete(schema.characterCaEffects).where(
+    and(
+      eq(schema.characterCaEffects.id, effetId),
+      eq(schema.characterCaEffects.personnageId, personnageId)
+    )
+  )
+  revalidatePath(`/personnage/${personnageId}`)
+}
+
 export async function depenseChargeObjet(charItemId: number, personnageId: number) {
   const [row] = await getDb()
     .select({ chargesRestantes: schema.characterMagicItems.chargesRestantes })

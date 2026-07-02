@@ -25,6 +25,8 @@ import { PreparerSorts } from '@/components/fiche/PreparerSorts'
 import { AjouterSort } from '@/components/fiche/AjouterSort'
 import { SupprimerSort } from '@/components/fiche/SupprimerSort'
 import { DescriptionSort } from '@/components/fiche/DescriptionSort'
+import { EffetsCA } from '@/components/fiche/EffetsCA'
+import { calculeBonusEffetsCA } from '@/lib/dnd35/ca-effects'
 
 function modif(score: number) {
   const m = Math.floor((score - 10) / 2)
@@ -40,7 +42,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const data = await getCharacter(Number(id))
   if (!data) notFound()
 
-  const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, currency, languages, creatures, companions } = data
+  const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, currency, languages, creatures, companions, caEffects } = data
 
   const forT = (abilityScores?.forBase ?? 10) + (abilityScores?.forMagique ?? 0) + (race?.bonusFor ?? 0)
   const dexT = (abilityScores?.dexBase ?? 10) + (abilityScores?.dexMagique ?? 0) + (race?.bonusDex ?? 0)
@@ -56,9 +58,16 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const risqueEchecTotal = armor.reduce((sum, { armor: a }) => sum + (a.risqueEchecMagique ?? 0), 0)
   // Compétences pénalisées par le malus d'armure (PHB 3.5)
   const COMPETENCES_MALUS_ARMURE = ['Acrobaties', 'Discrétion', 'Déplacement silencieux', 'Escalade', 'Évasion', 'Natation', 'Saut', 'Tour de passe-passe']
-  const caTotal = combatStats
+  // Effets de sorts actifs sur la CA (activés/retirés par le joueur) — cumul PHB 3.5
+  const estBouclier = (t: string | null) => (t ?? '').toLowerCase().includes('bouclier')
+  const bonusArmurePortee = armor
+    .filter(({ armor: a }) => !estBouclier(a.type))
+    .reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
+  const bonusBouclierPorte = caArmure - bonusArmurePortee
+  const { total: bonusSortsCA, contributions: contributionsCA } = calculeBonusEffetsCA(caEffects, { bonusArmurePortee, bonusBouclierPorte })
+  const caTotal = (combatStats
     ? 10 + caArmure + (combatStats.caNaturelle ?? 0) + (combatStats.caDeflexion ?? 0) + (combatStats.caDivers ?? 0) + dexModCA + caMagique
-    : 10
+    : 10) + bonusSortsCA
   const initiativeTotal = combatStats ? dexMod + (combatStats.initiativeBonus ?? 0) : 0
 
   // Déplacement auto : utilise l'armure.deplacement si renseigné, sinon détecte armure lourde
@@ -307,12 +316,15 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
         <Section titre="Combat">
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-4">
             <LiveHP personnageId={character.id} pvActuels={combatStats?.pvActuels ?? 0} pvMax={combatStats?.pvMax ?? 0} />
-            <StatBlock label="CA" value={caTotal} sub={`(armure +${caArmure} · DEX ${dexModCA >= 0 ? '+' : ''}${dexModCA}${caMagique ? ` · mag +${caMagique}` : ''})`} />
+            <StatBlock label="CA" value={caTotal} sub={`(armure +${caArmure} · DEX ${dexModCA >= 0 ? '+' : ''}${dexModCA}${caMagique ? ` · mag +${caMagique}` : ''}${bonusSortsCA ? ` · sorts ${bonusSortsCA > 0 ? '+' : ''}${bonusSortsCA}` : ''})`} />
             <StatBlock label="Initiative" value={signedNum(initiativeTotal)} sub="DEX + divers + Science" />
             <StatBlock label="Déplacement" value={`${deplacement}m`} sub={deplacement !== baseDepl ? `base ${baseDepl}m, réduit armure` : undefined} />
             <StatBlock label="Karma" value={combatStats?.karma ?? 0} />
             <StatBlock label="Dé de vie" value={classes[0]?.classe.deVie ?? '—'} />
           </div>
+
+          {/* Sorts actifs sur la CA — le joueur active/retire selon le temps de jeu */}
+          <EffetsCA personnageId={character.id} contributions={contributionsCA} />
 
           {/* Jets de sauvegarde */}
           {savingThrows && (

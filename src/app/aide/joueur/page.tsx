@@ -93,6 +93,14 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
           <Tip>Les PV sont sauvegardés automatiquement en base de données. Si vous rechargez la page, votre valeur actuelle est conservée.</Tip>
         </Section>
 
+        <Section titre="🛡️ Sorts actifs sur la CA">
+          <p>Certains sorts modifient temporairement la classe d'armure — <strong className="text-amber-200">Armure de mage</strong> (+4), <strong className="text-amber-200">Bouclier</strong> (+4), <strong className="text-amber-200">Bouclier de la foi</strong>, <strong className="text-amber-200">Peau d'écorce</strong>, etc. Comme le temps de jeu ne correspond pas au temps réel, c'est <strong>vous</strong> qui activez et retirez ces effets sur la fiche, quand bon vous semble.</p>
+          <Row label="Activer un effet">Dans la section Combat, cliquez <span className="bg-violet-900/40 border border-violet-800 text-violet-300 px-1.5 py-0.5 rounded text-xs font-mono">＋ Lancer un sort</span>, choisissez le sort dans la liste (ou « Autre sort ou effet… » pour un effet non répertorié), ajustez le bonus si le sort varie selon le niveau du lanceur, puis cliquez <strong>Activer</strong>. La CA est recalculée immédiatement et le détail affiche <span className="font-mono text-stone-400">· sorts +N</span>.</Row>
+          <Row label="Retirer un effet">Quand le sort prend fin dans le jeu, cliquez le <span className="font-mono text-stone-500">✕</span> sur l'étiquette violette de l'effet. La CA revient à sa valeur normale.</Row>
+          <Row label="Règles de cumul (PHB 3.5)">Les bonus de <strong>même type</strong> ne se cumulent pas — seul le meilleur s'applique. Une Armure de mage (+4 armure) ne se cumule pas avec une armure portée. Seuls les bonus d'<strong>esquive</strong> (ex. Hâte) se cumulent avec tout. Un effet rendu inopérant reste affiché en gris avec <span className="font-mono">⊘</span> : il compte pour zéro mais vous rappelle qu'il est actif.</Row>
+          <Tip>Les effets actifs sont sauvegardés en base de données : ils survivent au rechargement de la page, mais n'apparaissent pas sur la fiche PDF imprimée (qui montre la CA permanente du personnage).</Tip>
+        </Section>
+
         <Section titre="✨ Sorts — préparer et dépenser">
           <p>La section <strong className="text-amber-200">Sorts</strong> est visible dès qu'un personnage est lanceur de sorts, même si aucun sort n'est encore préparé pour la journée.</p>
 

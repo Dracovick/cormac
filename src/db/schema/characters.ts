@@ -158,6 +158,16 @@ export const characterSpells = pgTable('character_spells', {
   estConnu: integer('est_connu').default(1),
 })
 
+// Effets de sorts actifs sur la CA — activés/retirés manuellement par le joueur
+// (le temps de jeu ne correspond pas au temps réel, pas d'expiration automatique)
+export const characterCaEffects = pgTable('character_ca_effects', {
+  id: serial('id').primaryKey(),
+  personnageId: integer('personnage_id').notNull().references(() => characters.id),
+  nom: varchar('nom', { length: 200 }).notNull(),
+  typeBonus: varchar('type_bonus', { length: 50 }).notNull().default('divers'),
+  valeur: integer('valeur').notNull().default(0),
+})
+
 export const characterCreatures = pgTable('character_creatures', {
   id: serial('id').primaryKey(),
   personnageId: integer('personnage_id').notNull().references(() => characters.id),
