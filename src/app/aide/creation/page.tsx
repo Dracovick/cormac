@@ -91,6 +91,7 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           <Row label="PV actuels">Peut différer des PV max si le personnage a subi des dégâts. Utilisez la fiche joueur pour les ajuster en temps réel.</Row>
           <Row label="Déplacement">En mètres. Laissez vide pour utiliser la valeur par défaut (9 m). Si le personnage porte une armure lourde, la fiche réduit automatiquement le déplacement à 6 m.</Row>
           <Row label="Jets de sauvegarde">Les bases sont calculées automatiquement. Entrez un bonus magique si le personnage porte des objets qui les améliorent.</Row>
+          <Row label="Domaines divins">Si le personnage a la classe <strong>Prêtre</strong> ou <strong>Druide</strong>, une carte <em>Domaines divins</em> apparaît dans cet onglet avec deux menus déroulants (23 domaines du PHB 3.5 : Air, Animal, Guérison, Guerre, Magie, Mort, Protection, Voyage…). Les domaines choisis s'affichent ensuite sur la fiche avec leur pouvoir et leurs 9 sorts de domaine.</Row>
         </Section>
 
         <Section titre="🧙 Onglet Sorts — grimoire et préparations">
@@ -106,7 +107,7 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           <Row label="Retirer un sort">Cliquez sur le sort dans le grimoire pour le retirer.</Row>
 
           <p className="font-semibold text-stone-400 mt-3">Ensorceleur / Barde — sorts connus</p>
-          <p>Ces lanceurs spontanés ne préparent pas de sorts mais connaissent un nombre limité de sorts permanents. Ajoutez ici les sorts connus du personnage — ils seront disponibles sur la fiche sans nécessiter de préparation quotidienne.</p>
+          <p>Ces lanceurs spontanés ne préparent pas de sorts mais connaissent un nombre limité de sorts permanents. Ajoutez ici les sorts connus du personnage — ils seront disponibles sur la fiche sans nécessiter de préparation quotidienne. Sur la fiche, leur bouton s'appelle <strong>✨ Repos</strong> (au lieu de 📖 Étudier) et sert uniquement à suivre les emplacements dépensés dans la journée.</p>
 
           <Row label="Emplacements par jour">Le tableau en haut de l'onglet affiche les emplacements disponibles par niveau de sort selon le niveau de classe.</Row>
 
@@ -127,6 +128,7 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           <Row label="Ajouter un don">Cliquez sur le don dans la liste. Il est ajouté immédiatement à la liste du personnage. Les dons déjà sélectionnés s'affichent grisés avec une ✓.</Row>
           <Row label="Dons ciblant une arme">Pour <strong>Arme de prédilection</strong>, <strong>Spécialisation martiale</strong>, <strong>Acuité martiale</strong> et leurs variantes, un sélecteur d'arme s'ouvre après le clic. Il liste toutes les armes SRD (groupées par catégorie) et les armes personnalisées du personnage.</Row>
           <Row label="Don hors liste">Un champ de saisie libre en bas de l'onglet permet d'ajouter n'importe quel don non présent dans la liste (suppléments, homebrew, etc.).</Row>
+          <Row label="Prérequis vérifiés">Les dons majeurs ont leurs prérequis D&D 3.5 encodés (BBA minimum, caractéristique minimum, dons requis). Sur la <strong>fiche joueur</strong>, un avertissement <span className="text-red-400 font-mono">⚠</span> rouge signale tout don dont les prérequis ne sont pas satisfaits, avec le détail de ce qui manque.</Row>
           <Tip>Les dons d'arme (ex. Arme de prédilection) peuvent être pris plusieurs fois avec des armes différentes — ils ne se grisent donc pas après sélection.</Tip>
         </Section>
 

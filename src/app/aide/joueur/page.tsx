@@ -110,7 +110,11 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
           <p>Le Magicien ne connaît que les sorts de son <strong>grimoire</strong>, ajoutés manuellement dans l'onglet Sorts du formulaire. Chaque matin, il choisit parmi ces sorts ceux qu'il prépare avec <span className="bg-stone-800 border border-stone-700 text-amber-300 px-1.5 py-0.5 rounded text-xs font-mono">📖 Étudier</span>.</p>
 
           <p className="font-semibold text-stone-400 mt-3">Lanceurs spontanés — Ensorceleur, Barde</p>
-          <p>L'Ensorceleur et le Barde connaissent un nombre limité de sorts (ajoutés dans le formulaire) et les lancent spontanément, sans préparation quotidienne. Utilisez le bouton <span className="bg-stone-800 border border-stone-700 text-amber-300 px-1.5 py-0.5 rounded text-xs font-mono">📖 Étudier</span> pour marquer combien d'emplacements vous avez utilisés dans la journée.</p>
+          <p>L'Ensorceleur et le Barde connaissent un nombre limité de sorts (ajoutés dans le formulaire) et les lancent spontanément, <strong>sans préparation quotidienne</strong>. Leur bouton s'appelle <span className="bg-stone-800 border border-stone-700 text-amber-300 px-1.5 py-0.5 rounded text-xs font-mono">✨ Repos</span> (et non 📖 Étudier) : la modale rappelle qu'ils peuvent lancer n'importe quel sort connu tant qu'il reste des emplacements du niveau correspondant.</p>
+          <ul className="list-disc list-inside space-y-1 pl-2 mt-1 text-xs">
+            <li>Utilisez les compteurs <strong>+</strong> / <strong>−</strong> pour suivre les emplacements dépensés dans la journée.</li>
+            <li>Après une nuit de repos, cliquez <strong>Tout effacer</strong> puis <strong>Confirmer</strong> pour repartir à zéro.</li>
+          </ul>
 
           <p className="font-semibold text-stone-400 mt-3">Sorts personnalisés — homebrew et magie de campagne</p>
           <p>Chaque lanceur peut posséder des sorts inventés, bénis par sa divinité ou issus d'un supplément non inclus dans la liste officielle. Cliquez sur <span className="bg-stone-800 border border-stone-700 text-amber-400/80 px-1.5 py-0.5 rounded text-xs font-mono">+ Ajouter un sort personnalisé</span> en bas de la section Sorts.</p>
@@ -212,6 +216,51 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
             <li>Un <strong>résumé mécanique</strong> de l'effet</li>
           </ul>
           <Tip>En montant de niveau (puis en sauvegardant la modification), les nouvelles capacités apparaissent automatiquement sur la fiche.</Tip>
+        </Section>
+
+        <Section titre="⛪ Domaines divins — Prêtre et Druide">
+          <p>Si le personnage a choisi ses deux domaines dans le formulaire (<strong>Modifier</strong> → onglet <strong>Combat</strong>), une section <strong className="text-amber-200">Domaines divins</strong> apparaît sur la fiche, entre les capacités de classe et l'armure.</p>
+          <p className="mt-2">Pour chaque domaine, la fiche affiche :</p>
+          <ul className="list-disc list-inside space-y-1 pl-2">
+            <li>Le <strong>pouvoir de domaine</strong> — capacité spéciale accordée en permanence (ex. domaine Guérison : sorts de soins lancés à +1 niveau effectif).</li>
+            <li>Les <strong>9 sorts de domaine</strong>, un par niveau de sort (niv. 1 à 9).</li>
+          </ul>
+          <Tip>Règle D&D 3.5 : le prêtre dispose d'<strong>un emplacement de domaine bonus par niveau de sort</strong>, dans lequel il ne peut préparer qu'un sort de l'un de ses deux domaines. Gérez cet emplacement bonus mentalement lors de la prière — le panneau 🙏 Prier compte les emplacements normaux.</Tip>
+        </Section>
+
+        <Section titre="🎒 Encombrement — charge portée">
+          <p>Dans la section Combat, une ligne indique le <strong>poids total porté</strong> (armes + armures) et la catégorie de charge correspondante selon la Force du personnage :</p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2 text-xs text-center">
+            <div className="bg-green-900/30 border border-green-800/40 rounded p-2">
+              <div className="text-green-400 font-bold">Légère</div>
+              <div className="text-stone-500 mt-0.5">Aucun malus</div>
+            </div>
+            <div className="bg-yellow-900/30 border border-yellow-800/40 rounded p-2">
+              <div className="text-yellow-400 font-bold">Moyenne</div>
+              <div className="text-stone-500 mt-0.5">Max DEX +3, malus −3</div>
+            </div>
+            <div className="bg-orange-900/30 border border-orange-800/40 rounded p-2">
+              <div className="text-orange-400 font-bold">Lourde</div>
+              <div className="text-stone-500 mt-0.5">Max DEX +1, malus −6, pas de course</div>
+            </div>
+            <div className="bg-red-900/30 border border-red-800/40 rounded p-2">
+              <div className="text-red-400 font-bold">Surchargé</div>
+              <div className="text-stone-500 mt-0.5">Peut seulement pousser/traîner</div>
+            </div>
+          </div>
+          <p className="mt-2">Les trois seuils (légère / moyenne / lourde) sont affichés à côté du badge — ils dépendent uniquement du score de <strong>Force</strong>, selon la table officielle du PHB 3.5 (p.162).</p>
+          <Tip>Le calcul ne compte que les armes et armures de l'équipement. Le petit matériel (sac, corde, rations…) n'est pas suivi — ajoutez mentalement ~10-20 lbs si votre MJ est pointilleux.</Tip>
+        </Section>
+
+        <Section titre="⚠️ Prérequis de dons — vérification automatique">
+          <p>Chaque don de la section <strong className="text-amber-200">Dons</strong> est vérifié contre ses prérequis D&D 3.5. Si un prérequis n'est pas satisfait, un avertissement <span className="text-red-400 font-mono text-xs">⚠</span> rouge apparaît à droite du don avec la liste de ce qui manque.</p>
+          <p className="mt-2">Trois types de prérequis sont vérifiés :</p>
+          <ul className="list-disc list-inside space-y-1 pl-2">
+            <li><strong>BBA minimum</strong> — ex. Tir rapide exige BBA +6.</li>
+            <li><strong>Caractéristique minimum</strong> — ex. Attaque en puissance exige FOR 13, Expertise de combat exige INT 13.</li>
+            <li><strong>Autres dons</strong> — ex. Mobilité exige Esquive ; Tourbillon exige toute la chaîne Combat défensif → Expertise → Mobilité → Attaque en vol.</li>
+          </ul>
+          <Tip>L'avertissement est purement informatif — le don reste actif sur la fiche. Il sert à repérer un oubli (don pris trop tôt, don prérequis retiré par erreur) à corriger avec votre MJ.</Tip>
         </Section>
 
         <Section titre="🖨️ Exporter en PDF">
