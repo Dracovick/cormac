@@ -96,6 +96,7 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
 
         <Section titre="🧙 Onglet Sorts — grimoire et préparations">
           <p>L'onglet Sorts ✨ fonctionne différemment selon le type de lanceur de sorts.</p>
+          <Tip>Le catalogue inclut maintenant les <strong>38 sorts des Royaumes Oubliés</strong> (Incinérateur d'Aganazzar, Nuée de boules de neige de Snilloc, Griffes d'ombres, Splendeur de l'aigle…). Les sorts réservés aux domaines de Faerûn (Araignées, Lune, Obscurité…) portent la mention « Sort de domaine » dans leur description.</Tip>
 
           <p className="font-semibold text-stone-400 mt-2">Lanceurs divins — Prêtre, Druide, Paladin, Rôdeur</p>
           <p>Aucune saisie n'est nécessaire dans cet onglet. Ces classes ont accès à toute leur liste de sorts automatiquement selon leur niveau — la fiche les affiche directement lors de la prière. Vous pouvez ignorer l'onglet Sorts lors de la création ou modification du personnage.</p>
