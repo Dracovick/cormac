@@ -10,6 +10,7 @@ import { RACES_DND35, getRaceInfo } from '@/lib/dnd35/races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { getBab, getModifier, getMultiClassSave } from '@/lib/dnd35/rules'
 import { SORTS_DND35 } from '@/lib/dnd35/spells'
+import { SORTS_EFFETS_CA, valeurEffetSelonNiveau } from '@/lib/dnd35/ca-effects'
 
 // ─── Type exported for the form component ───────────────────────────────────
 export interface CharacterFormData {
@@ -468,8 +469,9 @@ export async function updatePvActuels(personnageId: number, pvActuels: number) {
 
 export async function depenseSort(charSpellId: number, personnageId: number) {
   const [row] = await getDb()
-    .select({ estPrepare: schema.characterSpells.estPrepare })
+    .select({ estPrepare: schema.characterSpells.estPrepare, nomSort: schema.spells.nom })
     .from(schema.characterSpells)
+    .innerJoin(schema.spells, eq(schema.characterSpells.sortId, schema.spells.id))
     .where(eq(schema.characterSpells.id, charSpellId))
   if (!row) return
   const newVal = Math.max(0, (row.estPrepare ?? 0) - 1)
@@ -477,6 +479,32 @@ export async function depenseSort(charSpellId: number, personnageId: number) {
     .update(schema.characterSpells)
     .set({ estPrepare: newVal })
     .where(eq(schema.characterSpells.id, charSpellId))
+
+  // Sort qui affecte la CA : l'effet s'active automatiquement au lancement.
+  // Le joueur le retire lui-même (✕ dans la section Combat) quand le sort prend fin.
+  const effetCatalogue = SORTS_EFFETS_CA.find(e => e.nom === row.nomSort)
+  if (effetCatalogue) {
+    const [dejaActif] = await getDb()
+      .select({ id: schema.characterCaEffects.id })
+      .from(schema.characterCaEffects)
+      .where(and(
+        eq(schema.characterCaEffects.personnageId, personnageId),
+        eq(schema.characterCaEffects.nom, effetCatalogue.nom)
+      ))
+    if (!dejaActif) {
+      const classesRows = await getDb()
+        .select({ niveau: schema.characterClasses.niveau })
+        .from(schema.characterClasses)
+        .where(eq(schema.characterClasses.personnageId, personnageId))
+      const niveauLanceur = Math.max(1, ...classesRows.map(c => c.niveau ?? 0))
+      await getDb().insert(schema.characterCaEffects).values({
+        personnageId,
+        nom: effetCatalogue.nom,
+        typeBonus: effetCatalogue.typeBonus,
+        valeur: valeurEffetSelonNiveau(effetCatalogue, niveauLanceur),
+      })
+    }
+  }
   revalidatePath(`/personnage/${personnageId}`)
 }
 
@@ -607,18 +635,6 @@ export async function updateNotes(personnageId: number, notes: string) {
     .update(schema.characters)
     .set({ notes: notes.trim() || null })
     .where(eq(schema.characters.id, personnageId))
-  revalidatePath(`/personnage/${personnageId}`)
-}
-
-export async function ajouterEffetCA(personnageId: number, nom: string, typeBonus: string, valeur: number) {
-  const nomClean = nom.trim()
-  if (!nomClean || !Number.isFinite(valeur) || valeur === 0) return
-  await getDb().insert(schema.characterCaEffects).values({
-    personnageId,
-    nom: nomClean.slice(0, 200),
-    typeBonus: typeBonus.slice(0, 50) || 'divers',
-    valeur: Math.trunc(valeur),
-  })
   revalidatePath(`/personnage/${personnageId}`)
 }
 

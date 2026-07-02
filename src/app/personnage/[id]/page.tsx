@@ -565,7 +565,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                                       <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(spell.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
                                     )}
                                   </div>
-                                  <LiveSort charSpellId={charSpell.id} personnageId={character.id} estPrepare={charSpell.estPrepare ?? 0} />
+                                  <span className="flex items-center shrink-0">
+                                    {caEffects.some(e => e.nom === spell.nom) && (
+                                      <span className="text-xs text-violet-300 bg-violet-900/40 border border-violet-700 rounded px-1.5 py-0.5 ml-2" title="Effet actif sur la CA — se retire dans la section Combat">🛡 actif</span>
+                                    )}
+                                    <LiveSort charSpellId={charSpell.id} personnageId={character.id} estPrepare={charSpell.estPrepare ?? 0} />
+                                  </span>
                                 </div>
                                 {!isCustom && desc && (
                                   <div className="mt-0.5 space-y-0.5">
