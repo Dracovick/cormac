@@ -75,6 +75,20 @@ export const SORTS_EFFETS_CARAC: EffetCaracCatalogue[] = [
   { nom: 'Splendeur de l\'aigle',  carac: 'CHA', valeur: 4, typeBonus: 'amélioration', duree: '1 min/niveau', note: 'Compétences de Charisme.' },
 ]
 
+// Sorts à effet purement visuel sur la fiche (aucune statistique modifiée).
+// cible en DB : 'VISUEL', typeBonus : nom de l'effet visuel.
+export type EffetVisuelCatalogue = {
+  nom: string
+  effet: 'halo' // halo lumineux autour du portrait
+  duree: string
+  note?: string
+}
+
+export const SORTS_EFFETS_VISUELS: EffetVisuelCatalogue[] = [
+  { nom: 'Lumière',         effet: 'halo', duree: '10 min/niveau', note: 'L\'objet touché brille comme une torche (9 m de rayon).' },
+  { nom: 'Lumière du jour', effet: 'halo', duree: '10 min/niveau', note: 'Lumière aussi brillante que le plein jour (18 m de rayon).' },
+]
+
 export type EffetSortActif = { id: number; nom: string; cible: string; typeBonus: string; valeur: number }
 
 export type ContributionEffet = {

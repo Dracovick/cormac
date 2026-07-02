@@ -7,9 +7,10 @@ type Props = {
   personnageId: number
   photoUrl: string | null
   nom: string
+  halo?: boolean // sort de lumière actif : halo lumineux autour du portrait
 }
 
-export function PhotoPortrait({ personnageId, photoUrl, nom }: Props) {
+export function PhotoPortrait({ personnageId, photoUrl, nom, halo = false }: Props) {
   const [editing, setEditing] = useState(false)
   const [url, setUrl] = useState(photoUrl ?? '')
   const [isPending, startTransition] = useTransition()
@@ -53,8 +54,13 @@ export function PhotoPortrait({ personnageId, photoUrl, nom }: Props) {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      {/* Portrait */}
-      <div className="relative w-32 h-48 rounded-xl border-2 border-amber-700/60 overflow-hidden bg-stone-800 shrink-0 flex items-center justify-center group">
+      {/* Portrait — halo lumineux quand un sort de lumière est actif */}
+      <div className={`relative w-32 h-48 rounded-xl border-2 overflow-hidden bg-stone-800 shrink-0 flex items-center justify-center group transition-shadow duration-700 ${
+        halo
+          ? 'border-yellow-300/80 shadow-[0_0_28px_10px_rgba(253,224,71,0.55)]'
+          : 'border-amber-700/60'
+      }`}>
+        {halo && <div className="pointer-events-none absolute inset-0 bg-yellow-200/10 animate-pulse z-10" />}
         {url || photoUrl ? (
           <img
             src={url || photoUrl!}

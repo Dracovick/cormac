@@ -47,8 +47,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   // Effets de sorts actifs : ceux qui touchent une caractéristique se propagent
   // dans tous les calculs (mods, CA, attaques, sauvegardes, compétences…)
   const effetsCA = spellEffects.filter(e => e.cible === 'CA')
-  const effetsCarac = spellEffects.filter(e => e.cible !== 'CA')
+  const effetsVisuels = spellEffects.filter(e => e.cible === 'VISUEL')
+  const effetsCarac = spellEffects.filter(e => e.cible !== 'CA' && e.cible !== 'VISUEL')
   const { bonus: effCarac, contributions: contributionsCarac } = calculeBonusEffetsCarac(effetsCarac)
+  // Effets visuels (ex. Lumière) : halo autour du portrait, aucune statistique modifiée
+  const contributionsVisuels = effetsVisuels.map(e => ({ ...e, effective: 0 }))
+  const haloLumineux = effetsVisuels.some(e => e.typeBonus === 'halo')
 
   const forT = (abilityScores?.forBase ?? 10) + (abilityScores?.forMagique ?? 0) + (race?.bonusFor ?? 0) + effCarac.FOR
   const dexT = (abilityScores?.dexBase ?? 10) + (abilityScores?.dexMagique ?? 0) + (race?.bonusDex ?? 0) + effCarac.DEX
@@ -269,6 +273,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                 personnageId={character.id}
                 photoUrl={character.photoUrl ?? null}
                 nom={character.nom}
+                halo={haloLumineux}
               />
             </div>
           </div>
@@ -329,8 +334,8 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             <StatBlock label="Dé de vie" value={classes[0]?.classe.deVie ?? '—'} />
           </div>
 
-          {/* Sorts actifs (CA + caractéristiques) — le joueur retire selon le temps de jeu */}
-          <EffetsSorts personnageId={character.id} contributions={[...contributionsCA, ...contributionsCarac]} />
+          {/* Sorts actifs (CA + caractéristiques + visuels) — le joueur retire selon le temps de jeu */}
+          <EffetsSorts personnageId={character.id} contributions={[...contributionsCA, ...contributionsCarac, ...contributionsVisuels]} />
 
           {/* Jets de sauvegarde */}
           {savingThrows && (
