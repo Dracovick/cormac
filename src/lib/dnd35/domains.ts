@@ -293,6 +293,103 @@ export const DOMAINES_DND35: DomaineInfo[] = [
     pouvoir: 'Intimider ou contrôler les vases comme un prêtre mauvais avec les morts-vivants (3 + mod CHA fois/jour).',
     sorts: ['Graisse', 'Flèche acide de Melf', 'Empoisonnement', 'Rouille', 'Tentacules noirs d\'Evard', 'Transmutation de la pierre en boue', 'Destruction', 'Mot de pouvoir aveuglant', 'Implosion'],
   },
+
+  // ─── Domaines du Codex Divin (chapitre 7, p.140-145) ───
+  {
+    nom: 'Célérité',
+    pouvoir: '+3 m de déplacement au sol (perdu en armure ou charge intermédiaire/lourde). [Codex Divin]',
+    sorts: ['Repli expéditif', 'Grâce féline', 'Flou', 'Rapidité', 'Voyage par les arbres', 'Vent divin', 'Grâce féline de groupe', 'Clignotement supérieur', 'Arrêt du temps'],
+  },
+  {
+    nom: 'Climat',
+    pouvoir: 'Insensible au mauvais temps : Détection/Fouille non pénalisés par pluie et neige, vitesse normale sur neige et glace, le vent l\'affecte comme s\'il avait une taille de plus. [Codex Divin]',
+    sorts: ['Brume de dissimulation', 'Bourrasque', 'Appel de la foudre', 'Tempête de grêle', 'Vents paralysants', 'Marche des nuages', 'Contrôle du climat', 'Cyclone', 'Cyclone suprême'],
+  },
+  {
+    nom: 'Communauté',
+    pouvoir: 'Apaisement des émotions 1×/jour (pouvoir magique) ; +2 aux tests de Diplomatie. [Codex Divin]',
+    sorts: ['Bénédiction', 'Rapport', 'Prière', 'Don des langues', 'Lien télépathique de Rary', 'Festin des héros', 'Refuge', 'Manoir somptueux de Mordenkainen', 'Guérison suprême de groupe'],
+  },
+  {
+    nom: 'Compétition',
+    pouvoir: '+1 à tous les tests opposés. [Codex Divin]',
+    sorts: ['Regain d\'assurance', 'Zèle', 'Prière', 'Puissance divine', 'Force du colosse', 'Pacte du zélote', 'Régénération', 'Moment de prescience', 'Visage divin suprême'],
+  },
+  {
+    nom: 'Convocation',
+    pouvoir: 'Lance les sorts d\'Invocation (convocation/appel) avec +2 au niveau de lanceur. [Codex Divin]',
+    sorts: ['Convocation de monstres I', 'Convocation de monstres II', 'Convocation de monstres III', 'Allié d\'outreplan', 'Convocation de monstres V', 'Allié majeur d\'outreplan', 'Convocation de monstres VII', 'Allié suprême d\'outreplan', 'Portail'],
+  },
+  {
+    nom: 'Création',
+    pouvoir: 'Lance les sorts d\'Invocation (création) avec +1 au niveau de lanceur. [Codex Divin]',
+    sorts: ['Création d\'eau', 'Image imparfaite', 'Création de nourriture et d\'eau', 'Création mineure', 'Création majeure', 'Festin des héros', 'Image permanente', 'Création véritable', 'Pavillon de grandeur'],
+  },
+  {
+    nom: 'Domination',
+    pouvoir: 'Don École renforcée (Enchantement). [Codex Divin]',
+    sorts: ['Injonction', 'Discours captivant', 'Suggestion', 'Domination', 'Injonction suprême', 'Quête', 'Suggestion de groupe', 'Domination véritable', 'Esclave monstrueux'],
+  },
+  {
+    nom: 'Folie',
+    pouvoir: '−1 aux tests de Sagesse et jets de Volonté ; 1×/jour, +niveau/2 à un test de Sagesse ou jet de Volonté (déclaré avant le jet). [Codex Divin]',
+    sorts: ['Confusion mineure', 'Contact aliénant', 'Rage', 'Confusion', 'Rayons d\'ensorcellement', 'Assassin imaginaire', 'Aliénation mentale', 'Hurlement aliénant', 'Ennemi subconscient'],
+  },
+  {
+    nom: 'Forces',
+    pouvoir: '1×/jour, rejoue un jet de dégâts et garde le meilleur résultat. [Codex Divin]',
+    sorts: ['Armure de mage', 'Projectile magique', 'Explosion de force', 'Sphère d\'isolement d\'Otiluke', 'Mur de force', 'Champ de force', 'Cage de force', 'Sphère téléguidée d\'Otiluke', 'Main broyeuse de Bigby'],
+  },
+  {
+    nom: 'Froid',
+    pouvoir: 'Renvoie/détruit les créatures du Feu, intimide/contrôle celles du Froid (3 + mod CHA fois/jour). [Codex Divin]',
+    sorts: ['Contact glacial', 'Métal gelé', 'Tempête de neige', 'Tempête de grêle', 'Mur de glace', 'Cône de froid', 'Contrôle du climat', 'Rayon polaire', 'Avalanche vengeresse'],
+  },
+  {
+    nom: 'Inquisition',
+    pouvoir: '+4 aux tests de dissipation. [Codex Divin]',
+    sorts: ['Détection du Chaos', 'Zone de vérité', 'Détection de pensées', 'Détection du mensonge', 'Vision lucide', 'Quête', 'Décret', 'Bouclier de la Loi', 'Emprisonnement'],
+  },
+  {
+    nom: 'Libération',
+    pouvoir: 'Rejoue 1 round plus tard un JS raté contre un effet de charme, coercition ou terreur. [Codex Divin]',
+    sorts: ['Mauvais augure', 'Alignement indétectable', 'Rage', 'Liberté de mouvement', 'Annulation d\'enchantement', 'Dissipation suprême', 'Refuge', 'Esprit impénétrable', 'Rupture d\'entraves'],
+  },
+  {
+    nom: 'Mysticisme',
+    pouvoir: '1×/jour (action libre), bonus de chance aux jets de sauvegarde égal au mod de CHA pendant 1 round/niveau. [Codex Divin]',
+    sorts: ['Faveur divine', 'Arme spirituelle', 'Visage divin mineur', 'Arme de la divinité', 'Force du colosse', 'Visage divin', 'Blasphème ou Parole sacrée (selon l\'alignement)', 'Aura sacrée ou Aura maudite (selon l\'alignement)', 'Visage divin suprême'],
+  },
+  {
+    nom: 'Oracles',
+    pouvoir: 'Lance les sorts de Divination avec +2 au niveau de lanceur. [Codex Divin]',
+    sorts: ['Identification', 'Augure', 'Divination', 'Scrutation', 'Communion', 'Mythes et légendes', 'Scrutation suprême', 'Localisation suprême', 'Prémonition'],
+  },
+  {
+    nom: 'Pactes',
+    pouvoir: 'Estimation, Intimidation et Psychologie deviennent des compétences de classe. [Codex Divin]',
+    sorts: ['Injonction', 'Protection d\'autrui', 'Communication avec les morts', 'Divination', 'Pacte de vigueur', 'Pacte du zélote', 'Pacte de regain', 'Pacte mortel', 'Portail'],
+  },
+  {
+    nom: 'Pensée',
+    pouvoir: '+2 aux tests de Bluff, Diplomatie et Psychologie. [Codex Divin]',
+    sorts: ['Compréhension des langages', 'Détection de pensées', 'Lien télépathique mineur', 'Détection du mensonge', 'Lien télépathique de Rary', 'Exploration des pensées', 'Araignée mentale', 'Esprit impénétrable', 'Ennemi subconscient'],
+  },
+  {
+    nom: 'Pestilence',
+    pouvoir: 'Immunisé contre les maladies (peut être porteur sain). [Codex Divin]',
+    sorts: ['Anathème', 'Nuée grouillante', 'Contagion', 'Empoisonnement', 'Horde de rats', 'Malédiction de la lycanthropie', 'Fléau', 'Création de mort-vivant dominant (momies)', 'Nuée d\'otyughs'],
+  },
+  {
+    nom: 'Purification',
+    pouvoir: 'Lance les sorts d\'Abjuration avec +1 au niveau de lanceur. [Codex Divin]',
+    sorts: ['Auréole de lumière', 'Vengeance divine', 'Déclamation', 'Rudoiement', 'Brume de pureté', 'Feux purificateurs', 'Fureur vertueuse des fidèles', 'Explosion de lumière', 'Visage divin suprême'],
+  },
+  {
+    nom: 'Rêves',
+    pouvoir: 'Immunisé contre la terreur. [Codex Divin]',
+    sorts: ['Sommeil', 'Augure', 'Sommeil profond', 'Assassin imaginaire', 'Cauchemar', 'Décorporation', 'Scrutation suprême', 'Mot de pouvoir étourdissant', 'Ennemi subconscient'],
+  },
 ]
 
 export function getDomaineInfo(nom: string): DomaineInfo | undefined {

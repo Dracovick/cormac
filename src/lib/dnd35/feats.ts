@@ -8,7 +8,9 @@ export interface FeatDef {
   prerequis?: string[]  // ex. ["Arme de prédilection", "BBA+4"]
 }
 
-export const FEATS_DND35: FeatDef[] = [
+import { FEATS_SUPPLEMENTS } from './feats-supplements'
+
+const FEATS_BASE: FeatDef[] = [
   // ── GÉNÉRAL ─────────────────────────────────────────────────────────────────
   { nom: 'Robustesse',               categorie: 'Général', description: '+3 points de vie' },
   { nom: 'Grande résistance',        categorie: 'Général', description: '+2 aux jets de Vigueur' },
@@ -91,6 +93,10 @@ export const FEATS_DND35: FeatDef[] = [
   { nom: 'Renvoi renforcé',       categorie: 'Divin', description: '+4 tentatives de renvoi ou commandement par jour' },
   { nom: 'Incantation spontanée', categorie: 'Divin', description: 'Convertir un sort préparé en sort de soins ou d\'affliction' },
 ]
+
+// Catalogue complet : dons du Manuel des Joueurs + dons des suppléments
+// (Codex Divin, Codex Profane, Maîtres de la Nature, Royaumes Oubliés)
+export const FEATS_DND35: FeatDef[] = [...FEATS_BASE, ...FEATS_SUPPLEMENTS]
 
 // Vérifie les prérequis d'un don. prerequis peut contenir des noms de dons, "BBA+N", "STATX" (FOR13, INT13...)
 export function verifierPrerequisDon(
