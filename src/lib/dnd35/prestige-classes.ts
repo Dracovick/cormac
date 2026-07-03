@@ -462,6 +462,22 @@ export const PRESTIGE_CLASSES: ClassePrestigeInfo[] = [
     conditions: 'Bluff 3, Déplacement silencieux 3, Discrétion 8, Intimidation 3, Renseignements 3 ; don Persuasion ; membre de la guilde des Voleurs de l\'ombre.',
     resume: 'Criminel de la plus puissante guilde de Faerûn : attaque sournoise, réputation redoutée, contacts de guilde (MF p.79).' },
 
+  // ─── Les Royaumes Oubliés (p.40-53) ──────────────────────────────────────────
+  // Seules les classes du livre de campagne SANS version 3.5 ailleurs sont ici :
+  // Archimage, Champion divin, Chevalier Dragon Pourpre, Dévot profane, Disciple
+  // divin, Hathran, Hiérophante, Lanceur de runes, Magicien Rouge et Quêteur divin
+  // existent en 3.5 (Guide du Maître / MJ de Faerûn) ; l'Éclaireur ménestrel 3.0
+  // a été remplacé par l'Agent ménestrel du MJF.
+  { nom: 'Adepte des ombres', prestige: true, source: 'Royaumes Oubliés', niveauxMax: 10,
+    de: 4, bab: 'faible', bonsSauvegardes: ['volonte'], competencesParNiveau: 2, lanceurSorts: false,
+    progressionSorts: 'complete', typeLanceur: 'les-deux',
+    conditions: 'Non bon ; sorts profanes ou divins de 3e niveau ; Connaissance des sorts 8, Connaissances (mystères) 8 ; dons Magie de la Toile d\'Ombre et un autre don de métamagie.',
+    resume: 'Lanceur voué à la Toile d\'Ombre de Shar : dons de l\'ombre gratuits (Magie insidieuse, pernicieuse et tenace), défense d\'ombre +1 à +3 (sauvegardes contre Enchantement/Illusion/Nécromancie/obscurité), puissance magique +1 à +3 (DD et NLS des mêmes écoles), bouclier d\'ombre (35 % de camouflage, puis RM 12 + niveau), traversée des ombres, vision dans le noir, double d\'ombre final (RO p.40). Épique (MF p.127-128) : niveaux 11-20 — défense d\'ombre +1 tous les 3 niveaux, don épique tous les 4 niveaux ; NLS +1/niveau mais quota de sorts figé au niveau 10.' },
+  { nom: 'Voleur de guilde', prestige: true, source: 'Royaumes Oubliés', niveauxMax: 5,
+    de: 6, bab: 'moyenne', bonsSauvegardes: ['reflexes'], competencesParNiveau: 6, lanceurSorts: false,
+    conditions: 'Déplacement silencieux 3, Discrétion 8, Intimidation 3, Renseignements 3 ; appartenance à une guilde de voleurs.',
+    resume: 'Brigand organisé des villes de Faerûn : attaque sournoise +1d6/+2d6/+3d6 (cumulable avec le roublard), double langage (+2 Bluff, Diplomatie, Langage secret), esquive instinctive, Réputation +1 à +3, deux dons supplémentaires de la liste de guilde (RO p.52).' },
+
   // ─── Manuel des Joueurs de Faerûn — classes de prestige ÉPIQUES (p.133-135) ──
   // Réservées aux personnages de niveau 21 ou plus. Règle épique : la table de
   // classe n'accorde ni BAB ni sauvegardes ; le personnage gagne à la place le
