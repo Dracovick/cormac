@@ -241,6 +241,7 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
             <li>Les <strong>9 sorts de domaine</strong>, un par niveau de sort (niv. 1 à 9).</li>
           </ul>
           <Tip>Règle D&D 3.5 : le prêtre dispose d'<strong>un emplacement de domaine bonus par niveau de sort</strong>, dans lequel il ne peut préparer qu'un sort de l'un de ses deux domaines. Gérez cet emplacement bonus mentalement lors de la prière — le panneau 🙏 Prier compte les emplacements normaux.</Tip>
+          <Tip>Sorts propres aux dieux de Faerûn : les sorts marqués « <strong>Sort d&apos;initié (Initié de X)</strong> » dans le panneau 🙏 Prier sont réservés aux personnages possédant le <strong>don d&apos;initié</strong> correspondant (ex. Initié de Mystra). Ne les préparez que si votre personnage a ce don — un seul don d&apos;initié par personnage.</Tip>
         </Section>
 
         <Section titre="🎒 Encombrement — charge portée">
