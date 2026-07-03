@@ -190,7 +190,7 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           </ul>
           <Row label="BBA automatique">Le BBA est recalculé en additionnant la contribution de chaque classe selon sa progression (élevée / moyenne / faible).</Row>
           <Row label="Sauvegardes automatiques">Chaque classe contribue séparément à Vigueur, Réflexes et Volonté selon ses bons jets.</Row>
-          <Row label="Sorts multi-classes">L'onglet Sorts ✨ apparaît dès qu'au moins une classe est lanceuse de sorts.</Row>
+          <Row label="Sorts multi-classes">L'onglet Sorts ✨ apparaît dès qu'au moins une classe est lanceuse de sorts. Si plusieurs classes lancent des sorts (ex. Prêtre/Magicien), des boutons permettent de basculer entre elles : chaque sort choisi est <strong>attribué à la classe active</strong> et chaque classe a son propre grimoire, ses propres emplacements et sa propre liste sur la fiche.</Row>
           <Row label="Compétences de classe">Dans l'onglet Compétences, une compétence est traitée comme <em>compétence de classe</em> (rang max = niveau total + 3) dès qu'elle l'est pour <strong>au moins une</strong> de vos classes. Exemple : après avoir ajouté Magicien, <em>Connaissance (arcanes)</em> et <em>Concentration</em> deviennent compétences de classe pour tout le personnage.</Row>
 
           <p className="font-semibold text-stone-400 mt-4">Progression des XP en D&D 3.5</p>
@@ -212,6 +212,18 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           <p className="text-xs">Ces races choisissent librement leur classe préférée. Le système désigne automatiquement la <strong>classe la plus haute comme préférée</strong>, ce qui est le choix optimal. Conséquence importante : un Guerrier 6 qui ajoute Magicien 1 n'a <strong>aucune pénalité</strong> — le Guerrier est exempté du calcul, et le Magicien n'a pas d'autre classe non-préférée à laquelle se comparer.</p>
           <p className="text-xs mt-1 text-stone-500">La pénalité n'apparaît pour un humain que si deux classes secondaires (toutes deux derrière la classe principale) présentent un écart entre elles — ex. Guerrier 6 / Magicien 3 / Roublard 1 : Magicien et Roublard sont non-préférés, Roublard est 2 niveaux derrière Magicien → −20 %.</p>
           <Tip>Le message vert <strong>✓ Pas de pénalité XP · Classe préférée : Guerrier (auto — la plus haute)</strong> s'affiche pour confirmer quelle classe est exemptée. S'il devient orange ⚠, avancez la classe en retard au prochain niveau.</Tip>
+        </Section>
+
+        <Section titre="🏛 Classes de prestige">
+          <p>Le menu des classes contient maintenant <strong className="text-amber-200">79 classes de prestige</strong> tirées des suppléments : Codex Divin (24), Codex Profane (19), Les Maîtres de la Nature (18) et Manuel des Joueurs de Faerûn (18). Elles apparaissent dans le groupe <strong>« Classes de prestige »</strong> du sélecteur, avec leur livre d'origine entre parenthèses.</p>
+          <ul className="list-disc list-inside space-y-1 pl-2 mt-2">
+            <li>Une classe de prestige se <strong>superpose toujours à une classe de base</strong> : ajoutez-la comme classe supplémentaire (ex. Magicien 7 / Incantatrixe 3).</li>
+            <li>Dès qu'une classe de prestige est sélectionnée, un <strong className="text-violet-300">encadré violet 🏛</strong> affiche ses conditions d'accès, son maximum de niveaux, sa progression de sorts et un résumé de ses pouvoirs, avec la page du livre pour les détails complets.</li>
+            <li>Le BBA, les sauvegardes, le dé de vie et les compétences de classe sont calculés automatiquement, comme pour les classes de base.</li>
+          </ul>
+          <Row label="Progression de sorts (+1 niveau de lanceur)">Beaucoup de classes de prestige font progresser les sorts d'une classe de base existante. Le système ajoute automatiquement ces niveaux au calcul des emplacements : un Prêtre 7 / Disciple divin 3 prépare ses sorts comme un Prêtre 10. Les progressions partielles (ex. « un niveau sur deux ») sont respectées selon la table du livre.</Row>
+          <Row label="Classes à sorts propres">Certaines classes (Prêtre déicide, Croisé divin, Accord sublime, Arcanamach suellois…) ont leur <em>propre</em> table de sorts : consultez la page du livre indiquée dans l'encadré et gérez ces sorts avec « Ajouter un sort personnalisé » sur la fiche.</Row>
+          <Tip>Les conditions d'accès (BBA minimal, rangs de compétences, dons requis) relèvent du Maître de jeu — le système les affiche mais ne les bloque pas.</Tip>
         </Section>
 
         <Section titre="📐 Rang maximum de compétence">

@@ -107,6 +107,10 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
         <Section titre="✨ Sorts — préparer et dépenser">
           <p>La section <strong className="text-amber-200">Sorts</strong> est visible dès qu'un personnage est lanceur de sorts, même si aucun sort n'est encore préparé pour la journée.</p>
 
+          <p className="font-semibold text-stone-400 mt-3">Multi-classes lanceur — une section par classe</p>
+          <p>Un personnage avec plusieurs classes lanceuses (ex. Prêtre/Magicien) a <strong>une section de sorts par classe</strong> (« Sorts — Prêtre 5 », « Sorts — Magicien 3 »), chacune avec son propre bouton 🙏 Prier / 📖 Étudier et ses propres emplacements. Chaque sort appartient à une classe précise — préparer ses sorts de Prêtre ne touche jamais au grimoire de Magicien.</p>
+          <p className="mt-1">Si le personnage a une <strong>classe de prestige</strong> à progression de sorts (ex. Disciple divin), ses niveaux s'ajoutent automatiquement au calcul des emplacements de la classe de base : un Prêtre 7 / Disciple divin 3 prie comme un Prêtre 10.</p>
+
           <p className="font-semibold text-stone-400 mt-3">Lanceurs divins — Prêtre, Druide, Paladin, Rôdeur</p>
           <p>Les lanceurs divins ont accès à <strong>toute leur liste de sorts</strong> jusqu'au niveau maximum qu'ils peuvent lancer — pas besoin d'apprendre ou d'acquérir des sorts individuellement. C'est lors de la <strong>prière quotidienne</strong> qu'ils choisissent lesquels préparer pour la journée.</p>
           <ul className="list-disc list-inside space-y-1 pl-2 mt-1">

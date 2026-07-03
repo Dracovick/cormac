@@ -724,7 +724,11 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
               </tr>
             </thead>
             <tbody>
-              {spells.length > 0 ? spells.map(({ spell, charSpell }, i) => (
+              {spells.length > 0 ? [...spells].sort((a, b) =>
+                (a.charSpell.classe ?? '').localeCompare(b.charSpell.classe ?? '') ||
+                (a.charSpell.niveau ?? 0) - (b.charSpell.niveau ?? 0) ||
+                a.spell.nom.localeCompare(b.spell.nom, 'fr')
+              ).map(({ spell, charSpell }, i) => (
                 <tr key={charSpell.id} style={{ background: i % 2 === 0 ? '#fff' : '#f9f9f9' }}>
                   <td style={{ border: '1px solid #ddd', height: '20px', textAlign: 'center', fontSize: '9pt', fontWeight: 'bold' }}>
                     {charSpell.niveau ?? '—'}
@@ -732,6 +736,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                   <td style={{ border: '1px solid #ddd', padding: '2px 4px', fontSize: '9pt', fontWeight: (charSpell.estPrepare ?? 0) > 0 ? 'bold' : 'normal' }}>
                     {charSpell.estConnu === 2 ? '★ ' : ''}{(charSpell.estPrepare ?? 0) > 0 ? `×${charSpell.estPrepare} ` : ''}{spell.nom}
                     {charSpell.estConnu === 2 && <span style={{ fontSize: '7pt', color: '#888', marginLeft: '4px' }}>(perso.)</span>}
+                    {casterClasses.length > 1 && charSpell.classe && <span style={{ fontSize: '7pt', color: '#888', marginLeft: '4px' }}>({charSpell.classe})</span>}
                   </td>
                   <td style={{ border: '1px solid #ddd', padding: '2px 4px', fontSize: '8pt', color: '#555' }}>
                     {spell.ecole ?? ''}

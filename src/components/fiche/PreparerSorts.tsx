@@ -17,9 +17,10 @@ type Props = {
   niveau: number
   spells: Spell[]
   availableSpells?: AvailableSpell[]  // liste complète pour les lanceurs divins
+  classeAttribution?: string          // multi-classes : classe à laquelle attribuer les sorts préparés
 }
 
-export function PreparerSorts({ personnageId, classe, niveau, spells, availableSpells }: Props) {
+export function PreparerSorts({ personnageId, classe, niveau, spells, availableSpells, classeAttribution }: Props) {
   const [open, setOpen] = useState(false)
   // Map<string, number> — clé = charSpellId.toString() pour arcane, spell.nom pour divin
   const [preps, setPreps] = useState<Map<string, number>>(new Map())
@@ -99,7 +100,7 @@ export function PreparerSorts({ personnageId, classe, niveau, spells, availableS
           estPrepare: preps.get(s.nom) ?? 0,
           estPersonnalise: s.estPersonnalise ?? false,
         }))
-        await preparerSortsDivins(personnageId, preparations)
+        await preparerSortsDivins(personnageId, preparations, classeAttribution)
       } else {
         const preparations = spells.map(s => ({
           charSpellId: s.charSpellId,

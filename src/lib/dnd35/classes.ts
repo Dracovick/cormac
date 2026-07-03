@@ -1,4 +1,5 @@
 import type { BabProgression } from './rules'
+import { PRESTIGE_CLASSES } from './prestige-classes'
 
 export interface ClasseInfo {
   nom: string
@@ -26,7 +27,7 @@ export const CLASSES_DND35: ClasseInfo[] = [
 ]
 
 export function getClasseInfo(nom: string): ClasseInfo | undefined {
-  return CLASSES_DND35.find(c => c.nom === nom)
+  return CLASSES_DND35.find(c => c.nom === nom) ?? PRESTIGE_CLASSES.find(c => c.nom === nom)
 }
 
 // Emplacements de sorts par jour (index = niveau de sort 0-9), selon classe et niveau de personnage

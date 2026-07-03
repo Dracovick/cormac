@@ -156,6 +156,8 @@ export const characterSpells = pgTable('character_spells', {
   niveau: integer('niveau'),
   estPrepare: integer('est_prepare').default(0),
   estConnu: integer('est_connu').default(1),
+  // Classe lanceuse du sort (multi-classes) — null = classe lanceuse unique du personnage
+  classe: varchar('classe', { length: 50 }),
 })
 
 // Effets de sorts actifs (CA ou caractéristique) — activés au lancement du sort,

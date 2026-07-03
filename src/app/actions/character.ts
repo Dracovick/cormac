@@ -2,7 +2,7 @@
 
 import { getDb } from '@/db'
 import * as schema from '@/db/schema'
-import { eq, and, ne } from 'drizzle-orm'
+import { eq, and, ne, or, isNull } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { CLASSES_DND35, getClasseInfo } from '@/lib/dnd35/classes'
@@ -46,7 +46,7 @@ export interface CharacterFormData {
   potions: { nom: string; effet: string; charges: number }[]
   pp: number; po: number; pe: number; pa: number; pc: number; pm: number
   langues: string[]
-  sorts: { nom: string; niveau: number; ecole: string; nombrePrepare: number }[]
+  sorts: { nom: string; niveau: number; ecole: string; nombrePrepare: number; classe?: string }[]
   historique: string; notes: string
   compagnons: { nom: string; race: string; classe: string; joueur: string; notes: string }[]
   joueurPrenom: string; joueurNom: string
@@ -411,6 +411,7 @@ export async function saveCharacter(
       niveau: sort.niveau || null,
       estConnu: 1,
       estPrepare: sort.nombrePrepare ?? 0,
+      classe: sort.classe || null,
     })
   }
 
@@ -568,17 +569,23 @@ export async function preparerSorts(personnageId: number, preparations: { charSp
 
 export async function preparerSortsDivins(
   personnageId: number,
-  preparations: { nom: string; ecole: string; niveau: number; estPrepare: number; estPersonnalise?: boolean }[]
+  preparations: { nom: string; ecole: string; niveau: number; estPrepare: number; estPersonnalise?: boolean }[],
+  classe?: string
 ) {
   const db = getDb()
+  // Multi-classes : ne toucher qu'aux sorts de la classe lanceuse concernée
+  // (les sorts sans classe — anciens enregistrements — appartiennent à la classe par défaut)
+  const filtreClasse = classe
+    ? or(eq(schema.characterSpells.classe, classe), isNull(schema.characterSpells.classe))
+    : undefined
   // Supprimer seulement les sorts non-personnalisés (estConnu != 2), garder les custom
   await db.delete(schema.characterSpells).where(
-    and(eq(schema.characterSpells.personnageId, personnageId), ne(schema.characterSpells.estConnu, 2))
+    and(eq(schema.characterSpells.personnageId, personnageId), ne(schema.characterSpells.estConnu, 2), filtreClasse)
   )
   // Remettre estPrepare=0 pour les sorts personnalisés avant de les réappliquer
   await db.update(schema.characterSpells)
     .set({ estPrepare: 0 })
-    .where(and(eq(schema.characterSpells.personnageId, personnageId), eq(schema.characterSpells.estConnu, 2)))
+    .where(and(eq(schema.characterSpells.personnageId, personnageId), eq(schema.characterSpells.estConnu, 2), filtreClasse))
 
   for (const sort of preparations) {
     if (sort.estPrepare <= 0) continue
@@ -609,6 +616,7 @@ export async function preparerSortsDivins(
       )
       await db.insert(schema.characterSpells).values({
         personnageId, sortId, niveau: sort.niveau, estConnu: 1, estPrepare: sort.estPrepare,
+        classe: classe ?? null,
       })
     }
   }
@@ -617,7 +625,7 @@ export async function preparerSortsDivins(
 
 export async function ajouterSortPersonnalise(
   personnageId: number,
-  sort: { nom: string; ecole: string; niveau: number; description?: string }
+  sort: { nom: string; ecole: string; niveau: number; description?: string; classe?: string }
 ) {
   const db = getDb()
   const sortId = await findOrCreateByNom(
@@ -637,6 +645,7 @@ export async function ajouterSortPersonnalise(
   if (existing.length === 0) {
     await db.insert(schema.characterSpells).values({
       personnageId, sortId, niveau: sort.niveau, estConnu: 2, estPrepare: 0,
+      classe: sort.classe || null,
     })
   }
   revalidatePath(`/personnage/${personnageId}`)

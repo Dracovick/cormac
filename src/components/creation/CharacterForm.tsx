@@ -7,6 +7,7 @@ import type { CharacterFormData } from '@/app/actions/character'
 import { saveCharacter } from '@/app/actions/character'
 import { getModifier, formatMod, ALIGNEMENTS, calcXpPenalite } from '@/lib/dnd35/rules'
 import { CLASSES_DND35, getClasseInfo, getSortsSlotsParJour } from '@/lib/dnd35/classes'
+import { PRESTIGE_CLASSES, getPrestigeInfo, getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
 import { RACES_DND35, getRaceInfo } from '@/lib/dnd35/races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { sortsByClasseEtNiveau, niveauxMaxForClasse, type ClasseSortKey, type SortDnD } from '@/lib/dnd35/spells'
@@ -152,7 +153,12 @@ function SectionIdentite({ data, update }: { data: CharacterFormData; update: Up
                       const next = [...classes]; next[i] = { ...next[i], classe: e.target.value }
                       update('classes', next)
                     }}>
-                      {CLASSES_DND35.map(cl => <option key={cl.nom} value={cl.nom}>{cl.nom}</option>)}
+                      <optgroup label="Classes de base">
+                        {CLASSES_DND35.map(cl => <option key={cl.nom} value={cl.nom}>{cl.nom}</option>)}
+                      </optgroup>
+                      <optgroup label="Classes de prestige">
+                        {PRESTIGE_CLASSES.map(cl => <option key={cl.nom} value={cl.nom}>{cl.nom} ({cl.source})</option>)}
+                      </optgroup>
                     </select>
                     <span className="text-stone-500 text-xs shrink-0">niv.</span>
                     <input type="number" min={1} max={20} value={c.niveau} onChange={e => {
@@ -162,6 +168,24 @@ function SectionIdentite({ data, update }: { data: CharacterFormData; update: Up
                     {classes.length > 1 && (
                       <button onClick={() => update('classes', classes.filter((_, j) => j !== i))} className={BTN_DEL}>✕</button>
                     )}
+                  </div>
+                )
+              })}
+              {/* Conditions d'accès des classes de prestige sélectionnées */}
+              {(data.classes ?? []).map(c => {
+                const p = getPrestigeInfo(c.classe)
+                if (!p) return null
+                return (
+                  <div key={c.classe} className="text-xs px-3 py-2 rounded border bg-violet-950/30 border-violet-800/40 text-violet-200 space-y-0.5">
+                    <div className="font-semibold">🏛 {p.nom} <span className="text-violet-400 font-normal">— classe de prestige ({p.source}), max {p.niveauxMax} niveaux</span></div>
+                    <div><span className="text-violet-400">Conditions :</span> {p.conditions}</div>
+                    {p.progressionSorts && (
+                      <div className="text-violet-400 italic">
+                        {p.progressionSorts === 'complete' ? '+1 niveau de lanceur de sorts par niveau' : '+1 niveau de lanceur un niveau sur deux'}
+                        {p.typeLanceur === 'les-deux' ? ' (arcane ou divin)' : p.typeLanceur === 'arcane' ? ' (arcane)' : ' (divin)'}
+                      </div>
+                    )}
+                    <div className="text-violet-300/80">{p.resume}</div>
                   </div>
                 )
               })}
@@ -824,29 +848,38 @@ function SectionSorts({ data, update, derived }: { data: CharacterFormData; upda
   const casterClassNames = derived.casterClasses.map(c => c.classe)
   const [activeCasterClass, setActiveCasterClass] = useState<string>(casterClassNames[0] ?? data.classe)
   const effectiveCaster = casterClassNames.includes(activeCasterClass) ? activeCasterClass : (casterClassNames[0] ?? data.classe)
-  // Niveau de la classe lanceur active (pas le niveau total)
-  const activeCasterNiveau = (data.classes ?? [{ classe: data.classe, niveau: data.niveau }])
-    .find(c => c.classe === effectiveCaster)?.niveau ?? data.niveau
+  // Niveau de la classe lanceur active (pas le niveau total),
+  // en comptant les classes de prestige à progression de sorts
+  const activeCasterNiveau = getNiveauLanceurEffectif(
+    effectiveCaster,
+    data.classes ?? [{ classe: data.classe, niveau: data.niveau }]
+  ) || data.niveau
 
   const classeKey = effectiveCaster as ClasseSortKey
   const nMax = niveauxMaxForClasse(classeKey)
   const levels = Array.from({ length: nMax + 1 }, (_, i) => i)
   const sortsLevel = sortsByClasseEtNiveau(classeKey, spellLevel)
   const slots = getSortsSlotsParJour(effectiveCaster, activeCasterNiveau)
-  const selectedAtLevel = data.sorts.filter(s => s.niveau === spellLevel).reduce((sum, s) => sum + (s.nombrePrepare ?? 0), 0)
+
+  // Multi-classes : chaque sort appartient à une classe lanceuse.
+  // Les sorts sans classe (anciens personnages) appartiennent à la première classe lanceuse.
+  const classeDe = (s: { classe?: string }) => s.classe ?? casterClassNames[0] ?? data.classe
+  const sortsActifs = data.sorts.filter(s => classeDe(s) === effectiveCaster)
+
+  const selectedAtLevel = sortsActifs.filter(s => s.niveau === spellLevel).reduce((sum, s) => sum + (s.nombrePrepare ?? 0), 0)
   const slotsAtLevel = slots[spellLevel] ?? 0
 
   function toggle(sort: SortDnD) {
-    const exists = data.sorts.some(s => s.nom === sort.nom)
+    const exists = sortsActifs.some(s => s.nom === sort.nom)
     if (exists) {
-      update('sorts', data.sorts.filter(s => s.nom !== sort.nom))
+      update('sorts', data.sorts.filter(s => !(s.nom === sort.nom && classeDe(s) === effectiveCaster)))
     } else {
-      update('sorts', [...data.sorts, { nom: sort.nom, niveau: sort.niveaux[classeKey] ?? spellLevel, ecole: sort.ecole, nombrePrepare: 0 }])
+      update('sorts', [...data.sorts, { nom: sort.nom, niveau: sort.niveaux[classeKey] ?? spellLevel, ecole: sort.ecole, nombrePrepare: 0, classe: effectiveCaster }])
     }
   }
 
   function setPrep(nom: string, delta: number) {
-    update('sorts', data.sorts.map(s => s.nom === nom ? { ...s, nombrePrepare: Math.max(0, (s.nombrePrepare ?? 0) + delta) } : s))
+    update('sorts', data.sorts.map(s => s.nom === nom && classeDe(s) === effectiveCaster ? { ...s, nombrePrepare: Math.max(0, (s.nombrePrepare ?? 0) + delta) } : s))
   }
 
   const classeLabel = (data.classes ?? [{ classe: data.classe, niveau: data.niveau }]).map(c => `${c.classe} ${c.niveau}`).join(' / ')
@@ -894,8 +927,8 @@ function SectionSorts({ data, update, derived }: { data: CharacterFormData; upda
       <div className="flex flex-wrap gap-1 mb-2">
         {levels.map(l => {
           const slotCount = slots[l] ?? 0
-          const selCount = data.sorts.filter(s => s.niveau === l).reduce((sum, s) => sum + (s.nombrePrepare ?? 0), 0)
-          const knownCount = data.sorts.filter(s => s.niveau === l).length
+          const selCount = sortsActifs.filter(s => s.niveau === l).reduce((sum, s) => sum + (s.nombrePrepare ?? 0), 0)
+          const knownCount = sortsActifs.filter(s => s.niveau === l).length
           return (
             <button key={l} onClick={() => setSpellLevel(l)}
               className={`px-3 py-1 rounded text-sm font-medium transition-colors ${spellLevel === l ? 'bg-amber-700 text-white' : 'bg-stone-800 text-stone-400 hover:text-stone-200'}`}>
@@ -922,7 +955,7 @@ function SectionSorts({ data, update, derived }: { data: CharacterFormData; upda
       <div className="grid gap-1.5 max-h-96 overflow-y-auto pr-1">
         {sortsLevel.length === 0 && <p className="text-stone-600 text-sm italic">Aucun sort de ce niveau dans la liste.</p>}
         {sortsLevel.map(sort => {
-          const selected = data.sorts.some(s => s.nom === sort.nom)
+          const selected = sortsActifs.some(s => s.nom === sort.nom)
           return (
             <label key={sort.nom} className={`flex items-start gap-3 p-2.5 rounded cursor-pointer transition-colors ${selected ? 'bg-amber-900/30 border border-amber-700/40' : 'bg-stone-800/40 hover:bg-stone-800/70'}`}>
               <input type="checkbox" checked={selected} onChange={() => toggle(sort)} className="mt-0.5 shrink-0 accent-amber-600" />
@@ -939,15 +972,15 @@ function SectionSorts({ data, update, derived }: { data: CharacterFormData; upda
         })}
       </div>
 
-      {/* Sorts sélectionnés résumé */}
-      {data.sorts.length > 0 && (
+      {/* Sorts sélectionnés résumé (classe active seulement) */}
+      {sortsActifs.length > 0 && (
         <details className="mt-4" open>
           <summary className="text-amber-500 text-xs cursor-pointer hover:text-amber-300">
-            ▸ Grimoire ({data.sorts.length} sort{data.sorts.length > 1 ? 's' : ''}) — cliquer +/− pour préparer
+            ▸ Grimoire{casterClassNames.length > 1 ? ` de ${effectiveCaster}` : ''} ({sortsActifs.length} sort{sortsActifs.length > 1 ? 's' : ''}) — cliquer +/− pour préparer
           </summary>
           <div className="mt-2 grid gap-1">
             {(() => {
-              const sorted = [...data.sorts].sort((a, b) => a.niveau - b.niveau || a.nom.localeCompare(b.nom))
+              const sorted = [...sortsActifs].sort((a, b) => a.niveau - b.niveau || a.nom.localeCompare(b.nom))
               const levels = [...new Set(sorted.map(s => s.niveau))].sort((a, b) => a - b)
               return levels.map(lvl => {
                 const sortsLvl = sorted.filter(s => s.niveau === lvl)
@@ -974,7 +1007,7 @@ function SectionSorts({ data, update, derived }: { data: CharacterFormData; upda
                             {(s.nombrePrepare ?? 0) > 0 ? `×${s.nombrePrepare}` : '○'}
                           </span>
                           <button onClick={() => setPrep(s.nom, +1)} className="w-5 h-5 rounded bg-stone-700 hover:bg-amber-700 text-stone-300 text-center leading-none transition-colors">+</button>
-                          <button onClick={() => update('sorts', data.sorts.filter(x => x.nom !== s.nom))} className={BTN_DEL + ' ml-1'}>✕</button>
+                          <button onClick={() => update('sorts', data.sorts.filter(x => !(x.nom === s.nom && classeDe(x) === effectiveCaster)))} className={BTN_DEL + ' ml-1'}>✕</button>
                         </div>
                       </div>
                     ))}

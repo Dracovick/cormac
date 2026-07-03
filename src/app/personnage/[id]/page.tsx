@@ -4,6 +4,7 @@ import { getCharacter } from '@/lib/queries/character'
 import { DeleteButton } from '@/components/fiche/DeleteButton'
 import { getClasseInfo, getSortsSlotsParJour } from '@/lib/dnd35/classes'
 import { getMultiClassBab, XP_PAR_NIVEAU } from '@/lib/dnd35/rules'
+import { getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
 import { getCapacitesPourPersonnage } from '@/lib/dnd35/class-features'
 import { SORTS_DND35, type ClasseSortKey } from '@/lib/dnd35/spells'
 import { getFeatWeaponBonuses, getFeatDescription } from '@/lib/dnd35/feat-bonuses'
@@ -151,42 +152,32 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
     ? optsNiveauSuivant.slice(0, -1).join(', ') + ' ou ' + optsNiveauSuivant[optsNiveauSuivant.length - 1]
     : null
 
-  // Sorts : calcul de la liste disponible pour les lanceurs divins
+  // Sorts : classes lanceuses (multi-classes → une section de sorts par classe)
   const ARCANE_CLASSES = ['Magicien', 'Ensorceleur', 'Barde']
   const DIVIN_CLASSES  = ['Prêtre', 'Druide', 'Paladin', 'Rôdeur']
   const divineClasseSort = classes.find(c => DIVIN_CLASSES.includes(c.classe.nom))
   const arcaneClasseSort = classes.find(c => ARCANE_CLASSES.includes(c.classe.nom))
-  const classeSort = divineClasseSort ?? arcaneClasseSort
+  // Les sorts sans classe attribuée (anciens enregistrements) appartiennent à la classe par défaut
+  const classeSortDefaut = divineClasseSort ?? arcaneClasseSort
+  const casterClasses = classes.filter(c => DIVIN_CLASSES.includes(c.classe.nom) || ARCANE_CLASSES.includes(c.classe.nom))
 
-  // Sorts personnalisés (estConnu=2) pour tous les lanceurs
-  const customSpells = spells
-    .filter(s => s.charSpell.estConnu === 2)
-    .map(s => ({
-      charSpellId: s.charSpell.id,
-      nom: s.spell.nom,
-      ecole: s.spell.ecole ?? '',
-      niveau: s.charSpell.niveau ?? 0,
-      estPersonnalise: true as const,
-    }))
-
-  let divineAvailableSpells: { nom: string; ecole: string; niveau: number; estPersonnalise?: boolean }[] | undefined
-  if (divineClasseSort) {
-    const classeKey = divineClasseSort.classe.nom as ClasseSortKey
-    const slots = getSortsSlotsParJour(divineClasseSort.classe.nom, divineClasseSort.characterClass.niveau)
+  // Liste complète des sorts disponibles pour une classe divine (préparation par la prière)
+  function availableSpellsFor(nomClasse: string, niveauClasse: number, customSpells: { nom: string; ecole: string; niveau: number; estPersonnalise: true }[]) {
+    const classeKey = nomClasse as ClasseSortKey
+    const slots = getSortsSlotsParJour(nomClasse, niveauClasse)
     const maxSpellLevel = slots.reduce((max, count, idx) => count > 0 ? idx : max, -1)
-    if (maxSpellLevel >= 0) {
-      const predefined = SORTS_DND35
-        .filter(s => {
-          const niv = s.niveaux[classeKey]
-          return niv !== undefined && niv <= maxSpellLevel
-        })
-        .map(s => ({ nom: s.nom, ecole: s.ecole, niveau: s.niveaux[classeKey]!, estPersonnalise: false as const }))
-      // Fusionner avec les sorts personnalisés (en évitant les doublons)
-      const nomsPredefined = new Set(predefined.map(s => s.nom))
-      const customExtra = customSpells.filter(cs => !nomsPredefined.has(cs.nom))
-      divineAvailableSpells = [...predefined, ...customExtra]
-        .sort((a, b) => a.niveau - b.niveau || a.nom.localeCompare(b.nom, 'fr'))
-    }
+    if (maxSpellLevel < 0) return undefined
+    const predefined = SORTS_DND35
+      .filter(s => {
+        const niv = s.niveaux[classeKey]
+        return niv !== undefined && niv <= maxSpellLevel
+      })
+      .map(s => ({ nom: s.nom, ecole: s.ecole, niveau: s.niveaux[classeKey]!, estPersonnalise: false as const }))
+    // Fusionner avec les sorts personnalisés (en évitant les doublons)
+    const nomsPredefined = new Set(predefined.map(s => s.nom))
+    const customExtra = customSpells.filter(cs => !nomsPredefined.has(cs.nom))
+    return [...predefined, ...customExtra]
+      .sort((a, b) => a.niveau - b.niveau || a.nom.localeCompare(b.nom, 'fr'))
   }
 
   const sortsRefMap = new Map(SORTS_DND35.map(s => [s.nom, s]))
@@ -503,9 +494,33 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           </Section>
         )}
 
-        {/* ── SORTS ── */}
-        {classeSort != null && (() => {
-          const byNiveau = spells.reduce<Record<number, typeof spells>>((acc, s) => {
+        {/* ── SORTS (une section par classe lanceuse) ── */}
+        {casterClasses.map(casterC => {
+          const nomClasse = casterC.classe.nom
+          const estDivin = DIVIN_CLASSES.includes(nomClasse)
+          // Niveau de lanceur effectif : classe de base + classes de prestige à progression de sorts
+          const niveauLanceur = getNiveauLanceurEffectif(
+            nomClasse,
+            classes.map(c => ({ classe: c.classe.nom, niveau: c.characterClass.niveau }))
+          ) || casterC.characterClass.niveau
+          const estDefaut = classeSortDefaut != null && casterC.characterClass.id === classeSortDefaut.characterClass.id
+          // Sorts de cette classe : attribution explicite, ou sans attribution pour la classe par défaut
+          const sortsClasse = spells.filter(s =>
+            s.charSpell.classe === nomClasse || (s.charSpell.classe == null && estDefaut)
+          )
+          const customSpells = sortsClasse
+            .filter(s => s.charSpell.estConnu === 2)
+            .map(s => ({
+              charSpellId: s.charSpell.id,
+              nom: s.spell.nom,
+              ecole: s.spell.ecole ?? '',
+              niveau: s.charSpell.niveau ?? 0,
+              estPersonnalise: true as const,
+            }))
+          const divineAvailableSpells = estDivin
+            ? availableSpellsFor(nomClasse, niveauLanceur, customSpells)
+            : undefined
+          const byNiveau = sortsClasse.reduce<Record<number, typeof spells>>((acc, s) => {
             const n = s.charSpell.niveau ?? 0
             acc[n] = acc[n] ?? []
             acc[n].push(s)
@@ -513,7 +528,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           }, {})
           const niveaux = Object.keys(byNiveau).map(Number).sort((a, b) => a - b)
           const niveauLabel = (n: number) => n === 0 ? 'Oraisons (niv. 0)' : `Niveau ${n}`
-          const spellsMapped = spells.map(s => ({
+          const spellsMapped = sortsClasse.map(s => ({
             charSpellId: s.charSpell.id,
             nom: s.spell.nom,
             niveau: s.charSpell.niveau ?? 0,
@@ -525,32 +540,34 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             : 9
           return (
             <Section
-              titre="Sorts"
+              key={casterC.characterClass.id}
+              titre={casterClasses.length > 1 ? `Sorts — ${nomClasse} ${casterC.characterClass.niveau}` : 'Sorts'}
               action={
                 <PreparerSorts
                   personnageId={character.id}
-                  classe={classeSort.classe.nom}
-                  niveau={classeSort.characterClass.niveau}
+                  classe={nomClasse}
+                  niveau={niveauLanceur}
                   spells={spellsMapped}
                   availableSpells={divineAvailableSpells}
+                  classeAttribution={casterClasses.length > 1 ? nomClasse : undefined}
                 />
               }
             >
-              {arcaneClasseSort && risqueEchecTotal > 0 && (
+              {ARCANE_CLASSES.includes(nomClasse) && risqueEchecTotal > 0 && (
                 <div className="mb-3 flex items-center gap-2 bg-red-950/60 border border-red-800/50 rounded-lg px-3 py-2">
                   <span className="text-red-400 text-lg">⚠</span>
                   <span className="text-red-300 text-sm font-medium">Risque d'échec arcanique : <span className="text-red-200 font-bold">{risqueEchecTotal}%</span></span>
                   <span className="text-red-500 text-xs">(armure portée)</span>
                 </div>
               )}
-              {spells.length === 0 ? (
+              {sortsClasse.length === 0 ? (
                 <>
                   <p className="text-stone-600 text-sm italic">
-                    {divineClasseSort
+                    {estDivin
                       ? 'Aucun sort préparé — cliquez sur Prier pour commencer la journée.'
                       : 'Aucun sort dans le grimoire.'}
                   </p>
-                  <AjouterSort personnageId={character.id} maxNiveau={maxNiveau} />
+                  <AjouterSort personnageId={character.id} maxNiveau={maxNiveau} classe={casterClasses.length > 1 ? nomClasse : undefined} />
                 </>
               ) : (
                 <>
@@ -606,12 +623,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                       </div>
                     ))}
                   </div>
-                  <AjouterSort personnageId={character.id} maxNiveau={maxNiveau} />
+                  <AjouterSort personnageId={character.id} maxNiveau={maxNiveau} classe={casterClasses.length > 1 ? nomClasse : undefined} />
                 </>
               )}
             </Section>
           )
-        })()}
+        })}
 
         {/* ── COMPÉTENCES + DONS ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

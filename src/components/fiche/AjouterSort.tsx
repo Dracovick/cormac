@@ -8,9 +8,9 @@ const ECOLES = [
   'Illusion', 'Invocation', 'Nécromancie', 'Transmutation', 'Universel',
 ]
 
-type Props = { personnageId: number; maxNiveau?: number }
+type Props = { personnageId: number; maxNiveau?: number; classe?: string }
 
-export function AjouterSort({ personnageId, maxNiveau = 9 }: Props) {
+export function AjouterSort({ personnageId, maxNiveau = 9, classe }: Props) {
   const [open, setOpen] = useState(false)
   const [nom, setNom] = useState('')
   const [ecole, setEcole] = useState('')
@@ -21,7 +21,7 @@ export function AjouterSort({ personnageId, maxNiveau = 9 }: Props) {
   function submit() {
     if (!nom.trim()) return
     startTransition(async () => {
-      await ajouterSortPersonnalise(personnageId, { nom: nom.trim(), ecole, niveau, description: description.trim() || undefined })
+      await ajouterSortPersonnalise(personnageId, { nom: nom.trim(), ecole, niveau, description: description.trim() || undefined, classe })
       setNom(''); setEcole(''); setNiveau(1); setDescription('')
       setOpen(false)
     })

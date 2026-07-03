@@ -81,6 +81,7 @@ export function charDataToForm(d: CharacterData): CharacterFormData {
       niveau: s.charSpell.niveau ?? 0,
       ecole: s.spell.ecole ?? '',
       nombrePrepare: s.charSpell.estPrepare ?? 0,
+      classe: s.charSpell.classe ?? undefined,
     })),
     historique: character.historique ?? '', notes: character.notes ?? '',
     compagnons: companions.map(c => ({ nom: c.nom, race: c.race ?? '', classe: c.classe ?? '', joueur: c.joueur ?? '', notes: c.notes ?? '' })),

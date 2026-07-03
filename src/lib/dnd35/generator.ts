@@ -258,7 +258,7 @@ export function generateCharacter(params: GenParams): CharacterFormData {
         const nbSorts = Math.min(listeNiv.length, slots[i] + 2)
         for (let j = 0; j < nbSorts; j++) {
           const sortInfo = SORTS_DND35.find(s => s.nom === listeNiv[j] && (s.niveaux[classeKey] ?? -1) === nivSort)
-          if (sortInfo) sorts.push({ nom: sortInfo.nom, niveau: nivSort, ecole: sortInfo.ecole, nombrePrepare: 0 })
+          if (sortInfo) sorts.push({ nom: sortInfo.nom, niveau: nivSort, ecole: sortInfo.ecole, nombrePrepare: 0, classe })
         }
       }
     }
