@@ -45,3 +45,4 @@ next-env.d.ts
 # Livres PDF et exports FileMaker (locaux seulement)
 /Livres de jeu en PDF/
 /Anciens Personnages FileMaker TABLES/
+extraction.md
