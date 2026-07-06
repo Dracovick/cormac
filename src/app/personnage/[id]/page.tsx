@@ -188,14 +188,14 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
     <div className="min-h-screen bg-stone-950 text-stone-100">
       {/* ── EN-TÊTE ── */}
       <header className="bg-gradient-to-b from-stone-900 to-stone-950 border-b border-amber-900/40 py-8 px-6">
-        <div className="max-w-5xl mx-auto mb-4 flex items-center justify-between">
+        <div className="max-w-5xl mx-auto mb-4 flex flex-wrap items-center justify-between gap-y-2">
           <Link href="/" className="inline-flex items-center gap-2 text-stone-400 hover:text-amber-300 text-sm transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5M12 5l-7 7 7 7"/>
             </svg>
             Grimoire D&D 3e édition
           </Link>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Link
               href={`/personnage/${id}/imprimer`}
               className="inline-flex items-center gap-2 bg-stone-700/50 hover:bg-stone-600/70 border border-stone-600/50 text-stone-300 hover:text-white text-sm px-3 py-2 rounded-lg transition-all"
@@ -459,7 +459,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
 
                 return (
                   <div key={charWeapon.id} className="bg-stone-800/60 rounded p-3">
-                    <div className="flex items-start justify-between gap-2">
+                    <div className="flex flex-wrap items-start justify-between gap-2">
                       <div className="flex-1">
                         <div className="flex items-baseline gap-3">
                           <span className="text-white font-semibold">
