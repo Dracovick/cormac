@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getJournalPartie } from '@/app/actions/journal'
+import { getJournalPartie, getEtatGroupe } from '@/app/actions/journal'
 import { journeeLudiqueCourante, dateLisible, jourDecale } from '@/lib/journal-format'
 import { PartieTimeline } from '@/components/partie/PartieTimeline'
 
@@ -12,7 +12,7 @@ export default async function PartiePage({ searchParams }: { searchParams: Promi
   const { date } = await searchParams
   const aujourdhui = journeeLudiqueCourante()
   const jour = date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : aujourdhui
-  const entrees = await getJournalPartie(jour)
+  const [entrees, etatGroupe] = await Promise.all([getJournalPartie(jour), getEtatGroupe(jour)])
 
   return (
     <div className="min-h-screen p-4 sm:p-8" style={{ backgroundColor: '#080608' }}>
@@ -54,7 +54,7 @@ export default async function PartiePage({ searchParams }: { searchParams: Promi
           </form>
         </div>
 
-        <PartieTimeline entrees={entrees} />
+        <PartieTimeline entrees={entrees} etatGroupe={etatGroupe} enDirect={jour === aujourdhui} />
 
         <p className="mt-8 text-stone-700 text-xs text-center select-none">
           Chaque action posée sur une fiche (PV, sort, potion, attaque…) s&apos;inscrit ici automatiquement.

@@ -1,12 +1,12 @@
 'use client'
 
-import { useMemo, useState, useTransition } from 'react'
+import { useEffect, useMemo, useState, useTransition } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { ajouterNoteMJ, marquerRound, supprimerEntreePartie, type EntreeJournalPartie } from '@/app/actions/journal'
+import { ajouterNoteMJ, marquerRound, supprimerEntreePartie, type EntreeJournalPartie, type EtatPersonnage } from '@/app/actions/journal'
 import { heureQuebec, iconeEntree } from '@/lib/journal-format'
 
-type Props = { entrees: EntreeJournalPartie[] }
+type Props = { entrees: EntreeJournalPartie[]; etatGroupe: EtatPersonnage[]; enDirect: boolean }
 
 // Couleurs des badges de personnage (attribuées par ordre d'apparition dans la journée)
 const COULEURS = [
@@ -22,10 +22,20 @@ const COULEURS = [
 
 // Chronologie fusionnée de la table : les personnages actifs de la journée sont détectés
 // automatiquement ; le MJ peut en masquer d'un clic sur leur pastille.
-export function PartieTimeline({ entrees }: Props) {
+export function PartieTimeline({ entrees, etatGroupe, enDirect }: Props) {
   const router = useRouter()
   const [note, setNote] = useState('')
   const [isPending, startTransition] = useTransition()
+
+  // En direct : la page se rafraîchit toute seule pendant la partie (journée courante
+  // seulement, et uniquement quand l'onglet est visible). Le MJ ne recharge jamais.
+  useEffect(() => {
+    if (!enDirect) return
+    const t = setInterval(() => {
+      if (document.visibilityState === 'visible') router.refresh()
+    }, 10_000)
+    return () => clearInterval(t)
+  }, [enDirect, router])
 
   function envoyerNote() {
     const t = note.trim()
@@ -146,9 +156,46 @@ export function PartieTimeline({ entrees }: Props) {
   return (
     <div>
       {formNote}
+
+      {/* Tableau de bord : PV du groupe en un coup d'œil (lecture seule, mis à jour en direct) */}
+      {etatGroupe.length > 0 && (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+          {etatGroupe.map(p => {
+            const pv = p.pvActuels ?? 0
+            const max = p.pvMax ?? 0
+            const pct = max > 0 ? Math.round((pv / max) * 100) : 0
+            const barre = pct > 50 ? '#22c55e' : pct > 25 ? '#f59e0b' : '#ef4444'
+            const texte = pct > 50 ? 'text-green-400' : pct > 25 ? 'text-amber-400' : 'text-red-400'
+            return (
+              <Link
+                key={p.id}
+                href={`/personnage/${p.id}`}
+                className="bg-stone-900/70 border border-stone-800 hover:border-amber-800/60 rounded p-2 transition-colors"
+                title="Ouvrir la fiche"
+              >
+                <div className="text-stone-300 text-xs font-medium truncate">{p.nom}</div>
+                <div className="flex items-baseline gap-1 leading-none mt-1">
+                  <span className={`font-mono font-bold ${texte}`}>{pv}</span>
+                  <span className="text-stone-600 text-xs font-mono">/ {max}</span>
+                </div>
+                <div className="w-full mt-1.5 h-1.5 bg-stone-800 rounded-full overflow-hidden">
+                  <div className="h-full rounded-full transition-all duration-500" style={{ width: `${pct}%`, backgroundColor: barre }} />
+                </div>
+              </Link>
+            )
+          })}
+        </div>
+      )}
+
       {/* Pastilles des personnages actifs (cliquer pour masquer/afficher) */}
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <span className="text-stone-600 text-xs uppercase tracking-wide">À la table :</span>
+        {enDirect && (
+          <span className="order-last ml-auto text-xs text-stone-500 flex items-center gap-1.5" title="La page se met à jour toute seule pendant la partie">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+            en direct
+          </span>
+        )}
         {personnages.map(p => (
           <button
             key={p.id}
@@ -183,7 +230,7 @@ export function PartieTimeline({ entrees }: Props) {
             )
           }
           const { icone, couleur } = iconeEntree(e.type, e.valeur)
-          const estNoteMJ = e.type === 'note' && e.personnageId == null
+          const estNoteMJ = (e.type === 'note' && e.personnageId == null) || e.type === 'bilan'
           return (
             <div key={e.id} className={`flex items-start gap-2 text-sm rounded px-1 py-0.5 group hover:bg-stone-800/60 ${estNoteMJ ? 'bg-amber-950/30 border-l-2 border-amber-700/60' : ''}`}>
               <span className="text-stone-600 text-xs font-mono mt-0.5 shrink-0 w-10">{heureQuebec(new Date(e.createdAt))}</span>

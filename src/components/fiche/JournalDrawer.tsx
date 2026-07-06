@@ -118,7 +118,7 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
                           )
                         }
                         const { icone, couleur } = iconeEntree(e.type, e.valeur)
-                        const estNoteMJ = e.type === 'note' && e.personnageId == null
+                        const estNoteMJ = (e.type === 'note' && e.personnageId == null) || e.type === 'bilan'
                         return (
                           <div key={e.id} className={`flex items-start gap-2 text-sm group rounded px-1 py-0.5 hover:bg-stone-800/60 ${estNoteMJ ? 'bg-amber-950/30 border-l-2 border-amber-700/60' : ''}`}>
                             <span className="text-stone-600 text-xs font-mono mt-0.5 shrink-0">{heureQuebec(new Date(e.createdAt))}</span>

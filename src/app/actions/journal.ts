@@ -2,7 +2,7 @@
 
 import { getDb } from '@/db'
 import * as schema from '@/db/schema'
-import { and, desc, eq, gte, isNull, lt, or } from 'drizzle-orm'
+import { and, desc, eq, gt, gte, isNotNull, isNull, like, lt, or } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { logJournal } from '@/lib/journal'
 import { decalageQuebec, COUPURE_JOURNEE_H } from '@/lib/journal-format'
@@ -40,7 +40,9 @@ export async function marquerRound(action: 'debut' | 'suivant' | 'fin') {
   if (action === 'debut') {
     await logJournal(null, 'round', 'Début du combat — round 1', 1)
   } else if (action === 'fin') {
+    const bilan = await calculerBilanCombat()
     await logJournal(null, 'round', 'Fin du combat', null)
+    if (bilan) await logJournal(null, 'bilan', bilan.texte, bilan.rounds)
   } else {
     // Round suivant : reprend le dernier numéro de round et l'incrémente
     const [dernier] = await getDb()
@@ -53,6 +55,92 @@ export async function marquerRound(action: 'debut' | 'suivant' | 'fin') {
     await logJournal(null, 'round', `Round ${n}`, n)
   }
   revalidatePath('/partie')
+}
+
+// ─── Bilan de combat : statistiques depuis le dernier « Début du combat » ─────
+// Appelé au 🕊 Fin — dégâts infligés/subis et sorts par personnage, nombre de rounds.
+async function calculerBilanCombat(): Promise<{ texte: string; rounds: number } | null> {
+  const db = getDb()
+  const [debut] = await db
+    .select({ id: schema.characterJournal.id })
+    .from(schema.characterJournal)
+    .where(and(
+      eq(schema.characterJournal.type, 'round'),
+      like(schema.characterJournal.description, 'Début du combat%')
+    ))
+    .orderBy(desc(schema.characterJournal.id))
+    .limit(1)
+  if (!debut) return null
+
+  const entrees = await db
+    .select({
+      personnageId: schema.characterJournal.personnageId,
+      type: schema.characterJournal.type,
+      description: schema.characterJournal.description,
+      valeur: schema.characterJournal.valeur,
+      nom: schema.characters.nom,
+    })
+    .from(schema.characterJournal)
+    .leftJoin(schema.characters, eq(schema.characterJournal.personnageId, schema.characters.id))
+    .where(gt(schema.characterJournal.id, debut.id))
+
+  let rounds = 1
+  const stats = new Map<number, { nom: string; infliges: number; touches: number; rates: number; subis: number; sorts: number }>()
+  for (const e of entrees) {
+    if (e.type === 'round' && e.valeur != null) rounds = Math.max(rounds, e.valeur)
+    if (e.personnageId == null) continue
+    let s = stats.get(e.personnageId)
+    if (!s) {
+      s = { nom: e.nom ?? `#${e.personnageId}`, infliges: 0, touches: 0, rates: 0, subis: 0, sorts: 0 }
+      stats.set(e.personnageId, s)
+    }
+    if (e.type === 'attaque') {
+      if (e.description.includes('— touché')) { s.touches++; s.infliges += e.valeur ?? 0 }
+      else if (e.description.includes('— raté')) s.rates++
+    } else if (e.type === 'pv' && (e.valeur ?? 0) < 0) {
+      s.subis += -(e.valeur ?? 0)
+    } else if (e.type === 'sort') {
+      s.sorts++
+    }
+  }
+  if (stats.size === 0) return null
+
+  const lignes = [...stats.values()].map(s => {
+    const morceaux: string[] = []
+    if (s.touches || s.rates) {
+      morceaux.push(`${s.infliges} dégâts infligés (${s.touches} touché${s.touches > 1 ? 's' : ''}${s.rates ? `, ${s.rates} raté${s.rates > 1 ? 's' : ''}` : ''})`)
+    }
+    if (s.subis) morceaux.push(`${s.subis} subis`)
+    if (s.sorts) morceaux.push(`${s.sorts} sort${s.sorts > 1 ? 's' : ''}`)
+    return `${s.nom} : ${morceaux.length ? morceaux.join(', ') : 'a observé prudemment'}`
+  })
+  return {
+    texte: `Bilan du combat — ${rounds} round${rounds > 1 ? 's' : ''}\n${lignes.join('\n')}`,
+    rounds,
+  }
+}
+
+// ─── État du groupe : PV actuels des personnages actifs d'une journée ─────────
+export type EtatPersonnage = { id: number; nom: string; pvActuels: number | null; pvMax: number | null }
+
+export async function getEtatGroupe(dateStr: string): Promise<EtatPersonnage[]> {
+  const debut = new Date(`${dateStr}T${String(COUPURE_JOURNEE_H).padStart(2, '0')}:00:00${decalageQuebec(dateStr)}`)
+  const fin = new Date(debut.getTime() + 24 * 3600_000)
+  return getDb()
+    .selectDistinct({
+      id: schema.characters.id,
+      nom: schema.characters.nom,
+      pvActuels: schema.characterCombatStats.pvActuels,
+      pvMax: schema.characterCombatStats.pvMax,
+    })
+    .from(schema.characterJournal)
+    .innerJoin(schema.characters, eq(schema.characterJournal.personnageId, schema.characters.id))
+    .leftJoin(schema.characterCombatStats, eq(schema.characterCombatStats.personnageId, schema.characters.id))
+    .where(and(
+      isNotNull(schema.characterJournal.personnageId),
+      gte(schema.characterJournal.createdAt, debut),
+      lt(schema.characterJournal.createdAt, fin)
+    ))
 }
 
 // ─── Note du Maître de jeu (globale : visible par toute la table) ────────────
