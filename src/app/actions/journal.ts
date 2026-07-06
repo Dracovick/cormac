@@ -55,6 +55,20 @@ export async function marquerRound(action: 'debut' | 'suivant' | 'fin') {
   revalidatePath('/partie')
 }
 
+// ─── Note du Maître de jeu (globale : visible par toute la table) ────────────
+export async function ajouterNoteMJ(texte: string) {
+  const t = texte.trim().slice(0, 500)
+  if (!t) return
+  await logJournal(null, 'note', t)
+  revalidatePath('/partie')
+}
+
+// ─── Suppression d'une entrée depuis la vue du MJ (toute entrée) ─────────────
+export async function supprimerEntreePartie(id: number) {
+  await getDb().delete(schema.characterJournal).where(eq(schema.characterJournal.id, id))
+  revalidatePath('/partie')
+}
+
 // ─── Lecture du journal d'un personnage (+ marqueurs globaux de round) ────────
 export async function getJournal(personnageId: number, limite = 300): Promise<EntreeJournal[]> {
   return getDb()
