@@ -71,17 +71,23 @@ export function PartieTimeline({ entrees }: Props) {
 
   const visibles = entrees.filter(e => e.personnageId == null || !masques.has(e.personnageId))
 
-  // Champ de note du MJ — toujours disponible, même sur une journée vierge
+  // Champ de note du MJ — toujours disponible, même sur une journée vierge.
+  // Multiligne : Entrée = saut de ligne, Ctrl+Entrée = publier (idéal pour le
+  // résumé de fin de partie qui prépare la prochaine soirée).
   const formNote = (
-    <div className="flex gap-2 mb-4">
-      <input
-        type="text"
+    <div className="flex gap-2 mb-4 items-end">
+      <textarea
         value={note}
-        onChange={e => setNote(e.target.value)}
-        onKeyDown={e => { if (e.key === 'Enter') envoyerNote() }}
-        maxLength={500}
-        placeholder="Note du MJ — moment mémorable, indice trouvé, décision du groupe…"
-        className="flex-1 bg-stone-900 border border-stone-700 rounded px-3 py-1.5 text-stone-200 text-sm placeholder:text-stone-600 focus:outline-none focus:border-amber-600"
+        onChange={e => {
+          setNote(e.target.value)
+          e.target.style.height = 'auto'
+          e.target.style.height = Math.min(e.target.scrollHeight, 300) + 'px'
+        }}
+        onKeyDown={e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); envoyerNote() } }}
+        maxLength={4000}
+        rows={1}
+        placeholder="Note du MJ — moment mémorable, indice, résumé de fin de partie… (Ctrl+Entrée pour publier)"
+        className="flex-1 bg-stone-900 border border-stone-700 rounded px-3 py-1.5 text-stone-200 text-sm placeholder:text-stone-600 focus:outline-none focus:border-amber-600 resize-none overflow-y-auto leading-snug"
       />
       <button
         onClick={envoyerNote}
@@ -160,7 +166,7 @@ export function PartieTimeline({ entrees }: Props) {
                 </Link>
               )}
               <span className={`shrink-0 ${couleur}`}>{icone}</span>
-              <span className={`flex-1 leading-snug ${estNoteMJ ? 'text-amber-100/90 italic' : 'text-stone-300'}`}>{e.description}</span>
+              <span className={`flex-1 leading-snug whitespace-pre-wrap ${estNoteMJ ? 'text-amber-100/90 italic' : 'text-stone-300'}`}>{e.description}</span>
               <button
                 onClick={() => supprimer(e.id)}
                 className="opacity-0 group-hover:opacity-100 text-stone-600 hover:text-red-400 text-xs transition-all shrink-0 mt-0.5"

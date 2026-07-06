@@ -56,8 +56,9 @@ export async function marquerRound(action: 'debut' | 'suivant' | 'fin') {
 }
 
 // ─── Note du Maître de jeu (globale : visible par toute la table) ────────────
+// Multiligne : sert autant aux petites remarques qu'aux résumés de fin de partie.
 export async function ajouterNoteMJ(texte: string) {
-  const t = texte.trim().slice(0, 500)
+  const t = texte.trim().slice(0, 4000)
   if (!t) return
   await logJournal(null, 'note', t)
   revalidatePath('/partie')

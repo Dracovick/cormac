@@ -153,7 +153,7 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
                           <div key={e.id} className={`flex items-start gap-2 text-sm group rounded px-1 py-0.5 hover:bg-stone-800/60 ${estNoteMJ ? 'bg-amber-950/30 border-l-2 border-amber-700/60' : ''}`}>
                             <span className="text-stone-600 text-xs font-mono mt-0.5 shrink-0">{heureQuebec(new Date(e.createdAt))}</span>
                             <span className={`shrink-0 ${couleur}`}>{icone}</span>
-                            <span className={`flex-1 leading-snug ${estNoteMJ ? 'text-amber-100/90 italic' : 'text-stone-300'}`}>{e.description}</span>
+                            <span className={`flex-1 leading-snug whitespace-pre-wrap ${estNoteMJ ? 'text-amber-100/90 italic' : 'text-stone-300'}`}>{e.description}</span>
                             <button
                               onClick={() => supprimer(e.id)}
                               className="opacity-0 group-hover:opacity-100 text-stone-600 hover:text-red-400 text-xs transition-all shrink-0 mt-0.5"
