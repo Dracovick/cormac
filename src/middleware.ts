@@ -9,7 +9,13 @@ export function middleware(request: NextRequest) {
   if (
     pathname.startsWith('/login') ||
     pathname.startsWith('/_next') ||
-    pathname.startsWith('/favicon')
+    pathname.startsWith('/favicon') ||
+    // Ressources PWA : le téléphone les récupère sans cookie à l'installation
+    pathname === '/manifest.webmanifest' ||
+    pathname === '/icon.png' ||
+    pathname === '/apple-icon.png' ||
+    pathname === '/icon-192.png' ||
+    pathname === '/icon-512.png'
   ) {
     return NextResponse.next()
   }
