@@ -48,7 +48,7 @@ export function AjouterSort({ personnageId, maxNiveau = 9, classe }: Props) {
         placeholder="Nom du sort"
         autoFocus
         onKeyDown={e => { if (e.key === 'Enter') submit(); if (e.key === 'Escape') setOpen(false) }}
-        className="flex-1 min-w-36 bg-stone-900 border border-stone-700 rounded px-2 py-1 text-xs text-stone-200 placeholder-stone-600 focus:outline-none focus:border-amber-600"
+        className="flex-1 min-w-36 bg-stone-900 border border-stone-700 rounded px-2 py-1 text-base sm:text-xs text-stone-200 placeholder-stone-600 focus:outline-none focus:border-amber-600"
       />
       <select
         value={ecole}
@@ -73,7 +73,7 @@ export function AjouterSort({ personnageId, maxNiveau = 9, classe }: Props) {
         onChange={e => setDescription(e.target.value)}
         placeholder="Description (optionnel) — effets, portée, durée, composantes…"
         rows={2}
-        className="w-full bg-stone-900 border border-stone-700 rounded px-2 py-1 text-xs text-stone-200 placeholder-stone-600 focus:outline-none focus:border-amber-600 resize-none"
+        className="w-full bg-stone-900 border border-stone-700 rounded px-2 py-1 text-base sm:text-xs text-stone-200 placeholder-stone-600 focus:outline-none focus:border-amber-600 resize-none"
       />
       <div className="flex gap-2 w-full">
         <button

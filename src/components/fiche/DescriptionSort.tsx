@@ -56,7 +56,7 @@ export function DescriptionSort({ sortId, description, personnageId }: Props) {
           if (e.key === 'Escape') cancel()
           if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) save()
         }}
-        className="w-full bg-stone-900 border border-stone-700 focus:border-amber-600 rounded px-2 py-1.5 text-xs text-stone-200 placeholder-stone-600 focus:outline-none resize-none"
+        className="w-full bg-stone-900 border border-stone-700 focus:border-amber-600 rounded px-2 py-1.5 text-base sm:text-xs text-stone-200 placeholder-stone-600 focus:outline-none resize-none"
       />
       <div className="flex items-center gap-3">
         <button

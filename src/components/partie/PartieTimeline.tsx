@@ -87,7 +87,7 @@ export function PartieTimeline({ entrees }: Props) {
         maxLength={4000}
         rows={1}
         placeholder="Note du MJ — moment mémorable, indice, résumé de fin de partie… (Ctrl+Entrée pour publier)"
-        className="flex-1 bg-stone-900 border border-stone-700 rounded px-3 py-1.5 text-stone-200 text-sm placeholder:text-stone-600 focus:outline-none focus:border-amber-600 resize-none overflow-y-auto leading-snug"
+        className="flex-1 bg-stone-900 border border-stone-700 rounded px-3 py-1.5 text-stone-200 text-base sm:text-sm placeholder:text-stone-600 focus:outline-none focus:border-amber-600 resize-none overflow-y-auto leading-snug"
       />
       <button
         onClick={envoyerNote}

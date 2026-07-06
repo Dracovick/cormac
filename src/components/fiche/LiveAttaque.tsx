@@ -78,7 +78,7 @@ export function LiveAttaque({ personnageId, nomArme }: Props) {
           onChange={e => setDegats(e.target.value)}
           onKeyDown={handleKey}
           autoFocus
-          className="w-12 bg-stone-700 border border-stone-600 rounded px-1 text-stone-100 text-xs text-center focus:outline-none focus:border-amber-500"
+          className="w-14 sm:w-12 bg-stone-700 border border-stone-600 rounded px-1 text-stone-100 text-base sm:text-xs text-center focus:outline-none focus:border-amber-500"
           placeholder="dég."
           title="Dégâts infligés (optionnel)"
         />

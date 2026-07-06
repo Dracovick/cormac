@@ -46,7 +46,7 @@ export default async function PartiePage({ searchParams }: { searchParams: Promi
               type="date"
               name="date"
               defaultValue={jour}
-              className="bg-stone-900 border border-stone-700 rounded px-2 py-1 text-stone-300 text-sm focus:outline-none focus:border-amber-600 [color-scheme:dark]"
+              className="bg-stone-900 border border-stone-700 rounded px-2 py-1 text-stone-300 text-base sm:text-sm focus:outline-none focus:border-amber-600 [color-scheme:dark]"
             />
             <button className="text-sm bg-amber-900/40 hover:bg-amber-800/60 border border-amber-800/50 text-amber-300 rounded px-2.5 py-1 transition-colors">
               Voir

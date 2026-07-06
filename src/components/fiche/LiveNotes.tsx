@@ -30,7 +30,7 @@ export function LiveNotes({ personnageId, notes }: Props) {
           onChange={e => setValue(e.target.value)}
           autoFocus
           rows={6}
-          className="w-full bg-stone-800 border border-amber-700/50 focus:border-amber-500 rounded-lg px-3 py-2 text-stone-200 text-sm leading-relaxed resize-y focus:outline-none"
+          className="w-full bg-stone-800 border border-amber-700/50 focus:border-amber-500 rounded-lg px-3 py-2 text-stone-200 text-base sm:text-sm leading-relaxed resize-y focus:outline-none"
           placeholder="Notes de partie, informations importantes, contacts..."
         />
         <div className="flex gap-2">
