@@ -39,8 +39,9 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
     })
   }
 
-  // Groupement par journée ludique (les entrées arrivent du plus récent au plus ancien ;
-  // on remet chaque journée en ordre chronologique pour une lecture naturelle)
+  // Groupement par journée ludique, en antichronologique : la dernière action en haut,
+  // pas besoin de scroller pendant la partie. Un marqueur de round fait alors office de
+  // « plancher » : tout ce qui est au-dessus appartient à ce round.
   const jours: { jour: string; items: EntreeJournal[] }[] = []
   for (const e of entrees ?? []) {
     const jour = journeeLudique(new Date(e.createdAt))
@@ -49,7 +50,7 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
       bloc = { jour, items: [] }
       jours.push(bloc)
     }
-    bloc.items.unshift(e)
+    bloc.items.push(e)
   }
 
   return (

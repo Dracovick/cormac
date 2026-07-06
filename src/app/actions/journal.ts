@@ -105,5 +105,6 @@ export async function getJournalPartie(dateStr: string): Promise<EntreeJournalPa
       gte(schema.characterJournal.createdAt, debut),
       lt(schema.characterJournal.createdAt, fin)
     ))
-    .orderBy(schema.characterJournal.id)
+    // Antichronologique : la dernière action en haut, le MJ n'a jamais à scroller
+    .orderBy(desc(schema.characterJournal.id))
 }
