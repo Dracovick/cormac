@@ -91,6 +91,14 @@ export default async function Home() {
             </Link>
           </div>
 
+          <Link
+            href="/partie"
+            className="flex items-center justify-center gap-2 mb-4 bg-stone-900/50 hover:bg-stone-800/60 border border-stone-700/40 hover:border-amber-700/50 rounded-lg p-2 transition-all group"
+          >
+            <span className="text-amber-600 group-hover:scale-110 transition-transform">📜</span>
+            <span className="text-stone-400 group-hover:text-amber-300 transition-colors text-sm">Journal de partie — vue du Maître de jeu</span>
+          </Link>
+
           <CharacterList characters={characters} />
         </div>
 

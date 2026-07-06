@@ -11,6 +11,7 @@ import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { getBab, getModifier, getMultiClassSave } from '@/lib/dnd35/rules'
 import { SORTS_DND35 } from '@/lib/dnd35/spells'
 import { SORTS_EFFETS_CA, SORTS_EFFETS_CARAC, SORTS_EFFETS_VISUELS, SORTS_EFFETS_SUIVI, valeurEffetSelonNiveau } from '@/lib/dnd35/spell-effects'
+import { logJournal } from '@/lib/journal'
 
 // ─── Type exported for the form component ───────────────────────────────────
 export interface CharacterFormData {
@@ -461,10 +462,23 @@ export async function deleteCharacter(personnageId: number): Promise<void> {
 // ─── Actions de jeu en temps réel ────────────────────────────────────────────
 
 export async function updatePvActuels(personnageId: number, pvActuels: number) {
+  const [avant] = await getDb()
+    .select({ pvActuels: schema.characterCombatStats.pvActuels })
+    .from(schema.characterCombatStats)
+    .where(eq(schema.characterCombatStats.personnageId, personnageId))
   await getDb()
     .update(schema.characterCombatStats)
     .set({ pvActuels })
     .where(eq(schema.characterCombatStats.personnageId, personnageId))
+  const pvAvant = avant?.pvActuels ?? pvActuels
+  const delta = pvActuels - pvAvant
+  if (delta !== 0) {
+    await logJournal(personnageId, 'pv',
+      delta < 0
+        ? `Subit ${-delta} dégâts (PV ${pvAvant} → ${pvActuels})`
+        : `Récupère ${delta} PV (${pvAvant} → ${pvActuels})`,
+      delta)
+  }
   revalidatePath(`/personnage/${personnageId}`)
 }
 
@@ -484,6 +498,8 @@ export async function depenseSort(charSpellId: number, personnageId: number) {
   // Sort qui affecte la CA ou une caractéristique : l'effet s'active automatiquement
   // au lancement. Le joueur le retire lui-même (✕ dans la section Combat) quand le
   // sort prend fin.
+  await logJournal(personnageId, 'sort', `Lance « ${row.nomSort} »`)
+
   const effetCA = SORTS_EFFETS_CA.find(e => e.nom === row.nomSort)
   const effetCarac = SORTS_EFFETS_CARAC.find(e => e.nom === row.nomSort)
   const effetVisuel = SORTS_EFFETS_VISUELS.find(e => e.nom === row.nomSort)
@@ -543,8 +559,9 @@ export async function depenseSort(charSpellId: number, personnageId: number) {
 
 export async function depensePotion(charPotionId: number, personnageId: number) {
   const [row] = await getDb()
-    .select({ chargesRestantes: schema.characterPotions.chargesRestantes })
+    .select({ chargesRestantes: schema.characterPotions.chargesRestantes, nomPotion: schema.potions.nom })
     .from(schema.characterPotions)
+    .innerJoin(schema.potions, eq(schema.characterPotions.potionId, schema.potions.id))
     .where(eq(schema.characterPotions.id, charPotionId))
   if (!row) return
   const newVal = Math.max(0, (row.chargesRestantes ?? 1) - 1)
@@ -552,6 +569,8 @@ export async function depensePotion(charPotionId: number, personnageId: number) 
     .update(schema.characterPotions)
     .set({ chargesRestantes: newVal })
     .where(eq(schema.characterPotions.id, charPotionId))
+  await logJournal(personnageId, 'potion',
+    `Boit « ${row.nomPotion} » (${newVal} ${newVal > 1 ? 'gorgées restantes' : 'gorgée restante'})`)
   revalidatePath(`/personnage/${personnageId}`)
 }
 
@@ -564,6 +583,7 @@ export async function preparerSorts(personnageId: number, preparations: { charSp
         .where(eq(schema.characterSpells.id, p.charSpellId))
     )
   )
+  await logJournal(personnageId, 'repos', 'Étudie et prépare ses sorts (repos)')
   revalidatePath(`/personnage/${personnageId}`)
 }
 
@@ -620,6 +640,7 @@ export async function preparerSortsDivins(
       })
     }
   }
+  await logJournal(personnageId, 'repos', 'Prie et prépare ses sorts (repos)')
   revalidatePath(`/personnage/${personnageId}`)
 }
 
@@ -680,19 +701,27 @@ export async function updateNotes(personnageId: number, notes: string) {
 }
 
 export async function retirerEffetSort(effetId: number, personnageId: number) {
+  const [effet] = await getDb()
+    .select({ nom: schema.characterSpellEffects.nom })
+    .from(schema.characterSpellEffects)
+    .where(eq(schema.characterSpellEffects.id, effetId))
   await getDb().delete(schema.characterSpellEffects).where(
     and(
       eq(schema.characterSpellEffects.id, effetId),
       eq(schema.characterSpellEffects.personnageId, personnageId)
     )
   )
+  if (effet) {
+    await logJournal(personnageId, 'effet', `Fin de l'effet « ${effet.nom} »`)
+  }
   revalidatePath(`/personnage/${personnageId}`)
 }
 
 export async function depenseChargeObjet(charItemId: number, personnageId: number) {
   const [row] = await getDb()
-    .select({ chargesRestantes: schema.characterMagicItems.chargesRestantes })
+    .select({ chargesRestantes: schema.characterMagicItems.chargesRestantes, nomObjet: schema.magicItems.nom })
     .from(schema.characterMagicItems)
+    .innerJoin(schema.magicItems, eq(schema.characterMagicItems.objetId, schema.magicItems.id))
     .where(eq(schema.characterMagicItems.id, charItemId))
   if (!row) return
   const newVal = Math.max(0, (row.chargesRestantes ?? 0) - 1)
@@ -700,5 +729,7 @@ export async function depenseChargeObjet(charItemId: number, personnageId: numbe
     .update(schema.characterMagicItems)
     .set({ chargesRestantes: newVal })
     .where(eq(schema.characterMagicItems.id, charItemId))
+  await logJournal(personnageId, 'charge',
+    `Utilise « ${row.nomObjet} » (${newVal} ${newVal > 1 ? 'charges restantes' : 'charge restante'})`)
   revalidatePath(`/personnage/${personnageId}`)
 }

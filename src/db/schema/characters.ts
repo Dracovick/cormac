@@ -196,3 +196,15 @@ export const characterNotes = pgTable('character_notes', {
   contenu: text('contenu').notNull(),
   createdAt: timestamp('created_at').defaultNow(),
 })
+
+// Journal de partie — chaque action de jeu (PV, sort, potion, attaque…) y laisse une trace,
+// écrite automatiquement par les actions serveur. personnageId null = marqueur global de
+// table (rounds de combat), visible sur toutes les fiches et dans le journal du MJ.
+export const characterJournal = pgTable('character_journal', {
+  id: serial('id').primaryKey(),
+  personnageId: integer('personnage_id').references(() => characters.id),
+  type: varchar('type', { length: 20 }).notNull(), // pv | sort | potion | charge | effet | attaque | repos | round | note
+  description: text('description').notNull(),
+  valeur: integer('valeur'), // delta PV, numéro de round…
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+})

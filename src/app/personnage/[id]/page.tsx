@@ -27,6 +27,8 @@ import { AjouterSort } from '@/components/fiche/AjouterSort'
 import { SupprimerSort } from '@/components/fiche/SupprimerSort'
 import { DescriptionSort } from '@/components/fiche/DescriptionSort'
 import { EffetsSorts } from '@/components/fiche/EffetsSorts'
+import { LiveAttaque } from '@/components/fiche/LiveAttaque'
+import { JournalDrawer } from '@/components/fiche/JournalDrawer'
 import { calculeBonusEffetsCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
 
 function modif(score: number) {
@@ -323,6 +325,9 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
 
         {/* ── COMBAT ── */}
         <Section titre="Combat">
+          <div className="flex justify-end -mt-1 mb-2">
+            <JournalDrawer personnageId={character.id} nomPersonnage={character.nom} />
+          </div>
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-4">
             <LiveHP personnageId={character.id} pvActuels={combatStats?.pvActuels ?? 0} pvMax={combatStats?.pvMax ?? 0} />
             <StatBlock label="CA" value={caTotal} sub={`(armure +${caArmure} · DEX ${dexModCA >= 0 ? '+' : ''}${dexModCA}${caMagique ? ` · mag +${caMagique}` : ''}${bonusSortsCA ? ` · sorts ${bonusSortsCA > 0 ? '+' : ''}${bonusSortsCA}` : ''})`} />
@@ -483,6 +488,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                           </div>
                         )}
                       </div>
+                      <LiveAttaque personnageId={character.id} nomArme={nomDisplay} />
                     </div>
                     {charWeapon.proprietesSpeciales && (
                       <p className="text-purple-300 text-xs mt-2 italic">{charWeapon.proprietesSpeciales}</p>
