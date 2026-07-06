@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import Link from 'next/link'
-import { getJournal, marquerRound, supprimerEntreeJournal, type EntreeJournal } from '@/app/actions/journal'
+import { getJournal, supprimerEntreeJournal, type EntreeJournal } from '@/app/actions/journal'
 import { journeeLudique, journeeLudiqueCourante, dateLisible, heureQuebec, iconeEntree } from '@/lib/journal-format'
 
 type Props = { personnageId: number; nomPersonnage: string }
@@ -23,13 +23,6 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
   function ouvrir() {
     setOpen(true)
     charger()
-  }
-
-  function round(action: 'debut' | 'suivant' | 'fin') {
-    startTransition(async () => {
-      await marquerRound(action)
-      setEntrees(await getJournal(personnageId))
-    })
   }
 
   function supprimer(id: number) {
@@ -91,30 +84,7 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
               </div>
             </div>
 
-            {/* Marqueurs de combat (globaux, partagés par toute la table) */}
-            <div className="flex items-center gap-2 px-4 py-2 border-b border-stone-800 shrink-0">
-              <span className="text-stone-600 text-xs uppercase tracking-wide">Combat :</span>
-              <button
-                onClick={() => round('debut')}
-                disabled={isPending}
-                className="text-xs bg-red-900/40 hover:bg-red-800/60 text-red-400 hover:text-red-300 rounded px-2 py-0.5 transition-colors"
-                title="Marque le début d'un combat (round 1) — visible sur toutes les fiches"
-              >⚔ Combat !</button>
-              <button
-                onClick={() => round('suivant')}
-                disabled={isPending}
-                className="text-xs bg-amber-900/40 hover:bg-amber-800/60 text-amber-400 hover:text-amber-300 rounded px-2 py-0.5 transition-colors"
-                title="Passe au round suivant"
-              >▶ Round suivant</button>
-              <button
-                onClick={() => round('fin')}
-                disabled={isPending}
-                className="text-xs bg-stone-800 hover:bg-stone-700 text-stone-400 hover:text-stone-200 rounded px-2 py-0.5 transition-colors"
-                title="Marque la fin du combat"
-              >🕊 Fin</button>
-            </div>
-
-            {/* Chronologie */}
+            {/* Chronologie (les marqueurs de round sont gérés par le MJ depuis /partie) */}
             <div className="flex-1 overflow-y-auto px-4 py-3">
               {entrees === null ? (
                 <div className="text-stone-500 text-sm italic mt-4 text-center">Chargement…</div>
