@@ -3,7 +3,7 @@
 import { useMemo, useState, useTransition } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { ajouterNoteMJ, supprimerEntreePartie, type EntreeJournalPartie } from '@/app/actions/journal'
+import { ajouterNoteMJ, marquerRound, supprimerEntreePartie, type EntreeJournalPartie } from '@/app/actions/journal'
 import { heureQuebec, iconeEntree } from '@/lib/journal-format'
 
 type Props = { entrees: EntreeJournalPartie[] }
@@ -44,6 +44,13 @@ export function PartieTimeline({ entrees }: Props) {
     })
   }
 
+  function round(action: 'debut' | 'suivant' | 'fin') {
+    startTransition(async () => {
+      await marquerRound(action)
+      router.refresh()
+    })
+  }
+
   // Personnages actifs de la journée, dans l'ordre de leur première action
   const personnages = useMemo(() => {
     const vus = new Map<number, { id: number; nom: string; nb: number }>()
@@ -71,11 +78,33 @@ export function PartieTimeline({ entrees }: Props) {
 
   const visibles = entrees.filter(e => e.personnageId == null || !masques.has(e.personnageId))
 
-  // Champ de note du MJ — toujours disponible, même sur une journée vierge.
-  // Multiligne : Entrée = saut de ligne, Ctrl+Entrée = publier (idéal pour le
-  // résumé de fin de partie qui prépare la prochaine soirée).
+  // Marqueurs de combat (globaux, mêmes boutons que le tiroir des fiches) + champ de
+  // note du MJ — toujours disponibles, même sur une journée vierge. Note multiligne :
+  // Entrée = saut de ligne, Ctrl+Entrée = publier (idéal pour le résumé de fin de partie).
   const formNote = (
-    <div className="flex gap-2 mb-4 items-end">
+    <div className="mb-4">
+      <div className="flex flex-wrap items-center gap-2 mb-2">
+        <span className="text-stone-600 text-xs uppercase tracking-wide">Combat :</span>
+        <button
+          onClick={() => round('debut')}
+          disabled={isPending}
+          className="text-xs bg-red-900/40 hover:bg-red-800/60 text-red-400 hover:text-red-300 rounded px-2 py-1 transition-colors"
+          title="Marque le début d'un combat (round 1) — visible sur toutes les fiches"
+        >⚔ Combat !</button>
+        <button
+          onClick={() => round('suivant')}
+          disabled={isPending}
+          className="text-xs bg-amber-900/40 hover:bg-amber-800/60 text-amber-400 hover:text-amber-300 rounded px-2 py-1 transition-colors"
+          title="Passe au round suivant"
+        >▶ Round suivant</button>
+        <button
+          onClick={() => round('fin')}
+          disabled={isPending}
+          className="text-xs bg-stone-800 hover:bg-stone-700 text-stone-400 hover:text-stone-200 rounded px-2 py-1 transition-colors"
+          title="Marque la fin du combat"
+        >🕊 Fin</button>
+      </div>
+      <div className="flex gap-2 items-end">
       <textarea
         value={note}
         onChange={e => {
@@ -96,6 +125,7 @@ export function PartieTimeline({ entrees }: Props) {
       >
         📝 Noter
       </button>
+      </div>
     </div>
   )
 
