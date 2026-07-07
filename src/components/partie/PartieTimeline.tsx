@@ -28,12 +28,16 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect }: Props) {
   const [isPending, startTransition] = useTransition()
 
   // En direct : la page se rafraîchit toute seule pendant la partie (journée courante
-  // seulement, et uniquement quand l'onglet est visible). Le MJ ne recharge jamais.
+  // seulement, onglet visible seulement). Le texte d'une note en cours vit dans l'état
+  // local et survit au rafraîchissement; on met quand même la mise à jour en pause
+  // pendant que le MJ écrit (focus dans la zone de note) — zéro distraction.
   useEffect(() => {
     if (!enDirect) return
     const t = setInterval(() => {
-      if (document.visibilityState === 'visible') router.refresh()
-    }, 10_000)
+      if (document.visibilityState !== 'visible') return
+      if (document.activeElement?.tagName === 'TEXTAREA') return
+      router.refresh()
+    }, 5_000)
     return () => clearInterval(t)
   }, [enDirect, router])
 
