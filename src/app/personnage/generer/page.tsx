@@ -47,7 +47,7 @@ export default function GenererPersonnage() {
       <div className="max-w-lg mx-auto px-4 py-12">
 
         <div className="mb-8">
-          <Link href="/" className="text-stone-500 hover:text-amber-400 text-sm transition-colors">
+          <Link href="/" className="inline-flex items-center text-stone-500 hover:text-amber-400 active:text-amber-400 text-sm transition-colors px-3 -mx-3 min-h-[44px] rounded-lg">
             ← Accueil
           </Link>
         </div>
