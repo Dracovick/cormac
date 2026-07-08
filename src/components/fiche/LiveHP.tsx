@@ -11,15 +11,16 @@ export function LiveHP({ personnageId, pvActuels, pvMax }: Props) {
   const [amount, setAmount] = useState('')
   const [isPending, startTransition] = useTransition()
 
-  const pct = pvMax > 0 ? Math.round((current / pvMax) * 100) : 0
+  const pct = pvMax > 0 ? Math.max(0, Math.round((current / pvMax) * 100)) : 0
   const barColor = pct > 50 ? '#22c55e' : pct > 25 ? '#f59e0b' : '#ef4444'
-  const textColor = pct > 50 ? 'text-green-400' : pct > 25 ? 'text-amber-400' : 'text-red-400'
+  const textColor = current < 0 ? 'text-red-500' : pct > 50 ? 'text-green-400' : pct > 25 ? 'text-amber-400' : 'text-red-400'
 
   function apply() {
     const n = parseInt(amount, 10)
     if (!n || n < 0) return
     const delta = mode === 'degats' ? -n : n
-    const newVal = Math.min(pvMax, Math.max(0, current + delta))
+    // Règle 3.5 : mourant de −1 à −9, mort à −10 (le plancher)
+    const newVal = Math.min(pvMax, Math.max(-10, current + delta))
     setCurrent(newVal)
     setMode(null)
     setAmount('')
@@ -48,6 +49,13 @@ export function LiveHP({ personnageId, pvActuels, pvMax }: Props) {
           style={{ width: `${pct}%`, backgroundColor: barColor }}
         />
       </div>
+
+      {/* PV négatifs : mourant (−1 à −9) ou mort (−10) — perd 1 PV/round s'il n'est pas stabilisé */}
+      {current < 0 && (
+        <span className="text-[10px] font-semibold text-red-500 mt-0.5 uppercase tracking-wide">
+          {current <= -10 ? '☠ mort' : '🩸 mourant'}
+        </span>
+      )}
 
       {/* Boutons Dégâts / Soins */}
       {mode === null ? (

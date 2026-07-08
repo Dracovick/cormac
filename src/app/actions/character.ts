@@ -482,6 +482,57 @@ export async function updatePvActuels(personnageId: number, pvActuels: number) {
   revalidatePath(`/personnage/${personnageId}`)
 }
 
+export type ResultatNuitDeRepos =
+  | { statut: 'soigne'; gain: number; pvApres: number }
+  | { statut: 'complet' }
+  | { statut: 'negatif' }
+
+// Nuit de repos (8 h de sommeil, règle 3.5) : guérison naturelle de 1 PV par niveau
+// de personnage. PV négatifs = pas de guérison naturelle — le personnage doit d'abord
+// être stabilisé et soigné (au MJ de décider, au prêtre de soigner).
+export async function nuitDeRepos(personnageId: number): Promise<ResultatNuitDeRepos | null> {
+  const db = getDb()
+  const [stats] = await db
+    .select({ pvActuels: schema.characterCombatStats.pvActuels, pvMax: schema.characterCombatStats.pvMax })
+    .from(schema.characterCombatStats)
+    .where(eq(schema.characterCombatStats.personnageId, personnageId))
+  if (!stats) return null
+
+  const pvAvant = stats.pvActuels ?? 0
+  const pvMax = stats.pvMax ?? 0
+
+  if (pvAvant < 0) {
+    await logJournal(personnageId, 'repos',
+      `Nuit de repos — PV négatifs (${pvAvant}), aucune guérison naturelle`)
+    revalidatePath(`/personnage/${personnageId}`)
+    return { statut: 'negatif' }
+  }
+
+  const classesRows = await db
+    .select({ niveau: schema.characterClasses.niveau })
+    .from(schema.characterClasses)
+    .where(eq(schema.characterClasses.personnageId, personnageId))
+  const niveauTotal = Math.max(1, classesRows.reduce((somme, c) => somme + (c.niveau ?? 0), 0))
+
+  const pvApres = Math.min(pvMax, pvAvant + niveauTotal)
+  const gain = pvApres - pvAvant
+
+  if (gain <= 0) {
+    await logJournal(personnageId, 'repos', 'Nuit de repos (PV déjà au maximum)')
+    revalidatePath(`/personnage/${personnageId}`)
+    return { statut: 'complet' }
+  }
+
+  await db
+    .update(schema.characterCombatStats)
+    .set({ pvActuels: pvApres })
+    .where(eq(schema.characterCombatStats.personnageId, personnageId))
+  await logJournal(personnageId, 'repos',
+    `Nuit de repos : récupère ${gain} PV (${pvAvant} → ${pvApres})`, gain)
+  revalidatePath(`/personnage/${personnageId}`)
+  return { statut: 'soigne', gain, pvApres }
+}
+
 export async function depenseSort(charSpellId: number, personnageId: number) {
   const [row] = await getDb()
     .select({ estPrepare: schema.characterSpells.estPrepare, nomSort: schema.spells.nom })

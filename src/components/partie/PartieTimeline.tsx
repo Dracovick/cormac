@@ -167,9 +167,9 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect }: Props) {
           {etatGroupe.map(p => {
             const pv = p.pvActuels ?? 0
             const max = p.pvMax ?? 0
-            const pct = max > 0 ? Math.round((pv / max) * 100) : 0
+            const pct = max > 0 ? Math.max(0, Math.round((pv / max) * 100)) : 0
             const barre = pct > 50 ? '#22c55e' : pct > 25 ? '#f59e0b' : '#ef4444'
-            const texte = pct > 50 ? 'text-green-400' : pct > 25 ? 'text-amber-400' : 'text-red-400'
+            const texte = pv < 0 ? 'text-red-500' : pct > 50 ? 'text-green-400' : pct > 25 ? 'text-amber-400' : 'text-red-400'
             return (
               <Link
                 key={p.id}
@@ -181,6 +181,11 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect }: Props) {
                 <div className="flex items-baseline gap-1 leading-none mt-1">
                   <span className={`font-mono font-bold ${texte}`}>{pv}</span>
                   <span className="text-stone-600 text-xs font-mono">/ {max}</span>
+                  {pv < 0 && (
+                    <span className="text-[10px] font-semibold text-red-500 uppercase tracking-wide">
+                      {pv <= -10 ? '☠ mort' : '🩸 mourant'}
+                    </span>
+                  )}
                 </div>
                 <div className="w-full mt-1.5 h-1.5 bg-stone-800 rounded-full overflow-hidden">
                   <div className="h-full rounded-full transition-all duration-500" style={{ width: `${pct}%`, backgroundColor: barre }} />

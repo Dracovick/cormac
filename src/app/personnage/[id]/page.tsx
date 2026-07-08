@@ -18,6 +18,7 @@ import { CaracteristiqueBadge } from '@/components/fiche/CaracteristiqueBadge'
 import { StatBlock } from '@/components/fiche/StatBlock'
 import { PhotoPortrait } from '@/components/fiche/PhotoPortrait'
 import { LiveHP } from '@/components/fiche/LiveHP'
+import { NuitDeRepos } from '@/components/fiche/NuitDeRepos'
 import { LiveSort } from '@/components/fiche/LiveSort'
 import { LivePotion } from '@/components/fiche/LivePotion'
 import { LiveCharge } from '@/components/fiche/LiveCharge'
@@ -325,7 +326,8 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
 
         {/* ── COMBAT ── */}
         <Section titre="Combat">
-          <div className="flex justify-end -mt-1 mb-2">
+          <div className="flex justify-between items-start gap-2 -mt-1 mb-2">
+            <NuitDeRepos personnageId={character.id} estLanceur={casterClasses.length > 0} />
             <JournalDrawer personnageId={character.id} nomPersonnage={character.nom} />
           </div>
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-4">
