@@ -28,7 +28,7 @@ export function NuitDeRepos({ personnageId, estLanceur }: Props) {
   }
 
   return (
-    <div className="flex items-center gap-2 min-w-0">
+    <div className="flex flex-col items-start gap-1 min-w-0 flex-1">
       {confirmation ? (
         <div className="flex items-center gap-1.5">
           <span className="text-xs text-sky-300">Dormir 8 h ?</span>
@@ -50,7 +50,7 @@ export function NuitDeRepos({ personnageId, estLanceur }: Props) {
         >🌙 Nuit de repos</button>
       )}
       {message && (
-        <span className="text-xs text-sky-300/90 leading-tight truncate sm:whitespace-normal">{message}</span>
+        <p className="text-xs text-sky-300/90 leading-snug break-words w-full">{message}</p>
       )}
     </div>
   )
