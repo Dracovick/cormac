@@ -40,9 +40,14 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
             </svg>
             {labelRetour}
           </Link>
-          <Link href="/aide/creation" className="text-stone-500 hover:text-amber-300 text-xs transition-colors">
-            Aide — Création / Modification →
-          </Link>
+          <div className="flex flex-col items-end gap-1">
+            <Link href="/aide/creation" className="text-stone-500 hover:text-amber-300 text-xs transition-colors">
+              Aide — Création / Modification →
+            </Link>
+            <Link href="/aide/mj" className="text-stone-500 hover:text-amber-300 text-xs transition-colors">
+              Aide — Maître de jeu →
+            </Link>
+          </div>
         </div>
         <div className="max-w-3xl mx-auto mt-4">
           <h1 className="text-3xl font-bold text-amber-300">Guide du joueur</h1>

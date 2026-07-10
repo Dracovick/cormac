@@ -23,7 +23,10 @@ export default async function PartiePage({ searchParams }: { searchParams: Promi
             <h1 className="text-2xl sm:text-3xl font-bold text-amber-300 tracking-wide">📜 Journal de partie</h1>
             <p className="text-stone-500 text-sm mt-0.5">Vue du Maître de jeu — toute la table, round par round</p>
           </div>
-          <Link href="/" className="inline-flex items-center text-stone-400 hover:text-amber-300 active:text-amber-300 text-sm transition-colors px-3 -mx-3 min-h-[44px] rounded-lg">← Accueil</Link>
+          <div className="flex items-center gap-2">
+            <Link href="/aide/mj?from=/partie" className="inline-flex items-center bg-stone-900/80 border border-stone-700 hover:border-amber-800/60 text-stone-400 hover:text-amber-300 active:text-amber-300 text-sm transition-colors px-3 min-h-[44px] rounded-lg">📖 Aide MJ</Link>
+            <Link href="/" className="inline-flex items-center text-stone-400 hover:text-amber-300 active:text-amber-300 text-sm transition-colors px-3 -mx-1 min-h-[44px] rounded-lg">← Accueil</Link>
+          </div>
         </div>
 
         {/* Navigation de date */}
