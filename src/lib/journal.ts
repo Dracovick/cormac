@@ -2,7 +2,7 @@ import { getDb } from '@/db'
 import * as schema from '@/db/schema'
 
 // Types d'entrées du journal de partie
-export type JournalType = 'pv' | 'sort' | 'potion' | 'charge' | 'effet' | 'attaque' | 'repos' | 'round' | 'note' | 'bilan'
+export type JournalType = 'pv' | 'sort' | 'potion' | 'charge' | 'effet' | 'attaque' | 'repos' | 'round' | 'note' | 'bilan' | 'xp'
 
 // Écrit une entrée dans le journal de partie. personnageId null = marqueur global de
 // table (rounds de combat). Le journal ne doit JAMAIS faire échouer l'action de jeu

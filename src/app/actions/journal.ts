@@ -6,6 +6,8 @@ import { and, desc, eq, gt, gte, isNotNull, isNull, like, lt, or } from 'drizzle
 import { revalidatePath } from 'next/cache'
 import { logJournal } from '@/lib/journal'
 import { decalageQuebec, COUPURE_JOURNEE_H } from '@/lib/journal-format'
+import { calcXpPenalite, XP_PAR_NIVEAU } from '@/lib/dnd35/rules'
+import { getRaceInfo } from '@/lib/dnd35/races'
 
 export type EntreeJournal = {
   id: number
@@ -141,6 +143,108 @@ export async function getEtatGroupe(dateStr: string): Promise<EtatPersonnage[]> 
       gte(schema.characterJournal.createdAt, debut),
       lt(schema.characterJournal.createdAt, fin)
     ))
+}
+
+// ─── Distribution d'XP (⭐ sur /partie) ───────────────────────────────────────
+// Le MJ entre le total de la rencontre; les parts sont pré-remplies (répartition
+// égale, pénalité multi-classes appliquée) puis ajustables une à une.
+export type PersonnageXp = {
+  id: number
+  nom: string
+  xp: number
+  niveauTotal: number
+  penalite: number // pénalité multi-classes en % (0 ou 20, 40…)
+  actif: boolean   // a agi dans la journée ludique consultée
+}
+
+export async function getGroupeXp(dateStr: string): Promise<PersonnageXp[]> {
+  const db = getDb()
+  const debut = new Date(`${dateStr}T${String(COUPURE_JOURNEE_H).padStart(2, '0')}:00:00${decalageQuebec(dateStr)}`)
+  const fin = new Date(debut.getTime() + 24 * 3600_000)
+  const [actifs, persos, classesRows] = await Promise.all([
+    db.selectDistinct({ id: schema.characterJournal.personnageId })
+      .from(schema.characterJournal)
+      .where(and(
+        isNotNull(schema.characterJournal.personnageId),
+        gte(schema.characterJournal.createdAt, debut),
+        lt(schema.characterJournal.createdAt, fin)
+      )),
+    db.select({
+      id: schema.characters.id,
+      nom: schema.characters.nom,
+      xp: schema.characters.xp,
+      race: schema.races.nom,
+    })
+      .from(schema.characters)
+      .leftJoin(schema.races, eq(schema.characters.raceId, schema.races.id)),
+    db.select({
+      personnageId: schema.characterClasses.personnageId,
+      niveau: schema.characterClasses.niveau,
+      classe: schema.classes.nom,
+    })
+      .from(schema.characterClasses)
+      .innerJoin(schema.classes, eq(schema.characterClasses.classeId, schema.classes.id)),
+  ])
+
+  const actifsIds = new Set(actifs.map(a => a.id))
+  const classesPar = new Map<number, { classe: string; niveau: number }[]>()
+  for (const c of classesRows) {
+    const liste = classesPar.get(c.personnageId) ?? []
+    liste.push({ classe: c.classe, niveau: c.niveau })
+    classesPar.set(c.personnageId, liste)
+  }
+
+  return persos
+    .map(p => {
+      const cls = classesPar.get(p.id) ?? []
+      return {
+        id: p.id,
+        nom: p.nom,
+        xp: p.xp ?? 0,
+        niveauTotal: cls.reduce((s, c) => s + c.niveau, 0),
+        penalite: calcXpPenalite(cls, getRaceInfo(p.race ?? '')?.classePreferee ?? 'any'),
+        actif: actifsIds.has(p.id),
+      }
+    })
+    .sort((a, b) => Number(b.actif) - Number(a.actif) || a.nom.localeCompare(b.nom, 'fr'))
+}
+
+export async function distribuerXp(parts: { personnageId: number; montant: number }[]) {
+  const db = getDb()
+  const propres = parts
+    .filter(p => Number.isInteger(p.montant) && p.montant > 0 && p.montant <= 1_000_000)
+    .slice(0, 40)
+  for (const part of propres) {
+    const [perso] = await db
+      .select({ xp: schema.characters.xp })
+      .from(schema.characters)
+      .where(eq(schema.characters.id, part.personnageId))
+    if (!perso) continue
+    const cls = await db
+      .select({ niveau: schema.characterClasses.niveau })
+      .from(schema.characterClasses)
+      .where(eq(schema.characterClasses.personnageId, part.personnageId))
+    const niveauTotal = cls.reduce((s, c) => s + c.niveau, 0)
+
+    const avant = perso.xp ?? 0
+    const apres = avant + part.montant
+    await db.update(schema.characters)
+      .set({ xp: apres, updatedAt: new Date() })
+      .where(eq(schema.characters.id, part.personnageId))
+
+    // Seuil de niveau franchi PAR CETTE distribution ? (le site ne monte pas le
+    // personnage automatiquement — le joueur choisit sa classe avec le MJ)
+    let franchi: number | null = null
+    for (let n = Math.max(niveauTotal + 1, 2); n <= 20; n++) {
+      const seuil = XP_PAR_NIVEAU[n]
+      if (apres >= seuil && avant < seuil) franchi = n
+    }
+    let description = `Reçoit ${part.montant.toLocaleString('fr-CA')} XP (total ${apres.toLocaleString('fr-CA')})`
+    if (franchi) description += ` — 🎉 seuil du niveau ${franchi} franchi !`
+    await logJournal(part.personnageId, 'xp', description, part.montant)
+    revalidatePath(`/personnage/${part.personnageId}`)
+  }
+  revalidatePath('/partie')
 }
 
 // ─── Note du Maître de jeu (globale : visible par toute la table) ────────────

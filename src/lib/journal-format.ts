@@ -58,6 +58,7 @@ export function iconeEntree(type: string, valeur: number | null): { icone: strin
     case 'repos':   return { icone: '🌙', couleur: 'text-sky-300' }
     case 'round':   return { icone: '▶', couleur: 'text-amber-500' }
     case 'bilan':   return { icone: '🏆', couleur: 'text-amber-300' }
+    case 'xp':      return { icone: '⭐', couleur: 'text-yellow-300' }
     default:        return { icone: '📝', couleur: 'text-stone-300' }
   }
 }

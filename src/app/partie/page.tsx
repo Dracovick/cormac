@@ -54,7 +54,7 @@ export default async function PartiePage({ searchParams }: { searchParams: Promi
           </form>
         </div>
 
-        <PartieTimeline entrees={entrees} etatGroupe={etatGroupe} enDirect={jour === aujourdhui} />
+        <PartieTimeline entrees={entrees} etatGroupe={etatGroupe} enDirect={jour === aujourdhui} jour={jour} />
 
         <p className="mt-8 text-stone-700 text-xs text-center select-none">
           Chaque action posée sur une fiche (PV, sort, potion, attaque…) s&apos;inscrit ici automatiquement.

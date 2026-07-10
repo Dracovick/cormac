@@ -5,8 +5,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ajouterNoteMJ, marquerRound, supprimerEntreePartie, type EntreeJournalPartie, type EtatPersonnage } from '@/app/actions/journal'
 import { heureQuebec, iconeEntree } from '@/lib/journal-format'
+import { DistribuerXp } from '@/components/partie/DistribuerXp'
 
-type Props = { entrees: EntreeJournalPartie[]; etatGroupe: EtatPersonnage[]; enDirect: boolean }
+type Props = { entrees: EntreeJournalPartie[]; etatGroupe: EtatPersonnage[]; enDirect: boolean; jour: string }
 
 // Couleurs des badges de personnage (attribuées par ordre d'apparition dans la journée)
 const COULEURS = [
@@ -22,7 +23,7 @@ const COULEURS = [
 
 // Chronologie fusionnée de la table : les personnages actifs de la journée sont détectés
 // automatiquement ; le MJ peut en masquer d'un clic sur leur pastille.
-export function PartieTimeline({ entrees, etatGroupe, enDirect }: Props) {
+export function PartieTimeline({ entrees, etatGroupe, enDirect, jour }: Props) {
   const router = useRouter()
   const [note, setNote] = useState('')
   const [isPending, startTransition] = useTransition()
@@ -35,7 +36,8 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect }: Props) {
     if (!enDirect) return
     const t = setInterval(() => {
       if (document.visibilityState !== 'visible') return
-      if (document.activeElement?.tagName === 'TEXTAREA') return
+      const tag = document.activeElement?.tagName
+      if (tag === 'TEXTAREA' || tag === 'INPUT' || tag === 'SELECT') return
       router.refresh()
     }, 5_000)
     return () => clearInterval(t)
@@ -118,6 +120,7 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect }: Props) {
           title="Marque la fin du combat"
         >🕊 Fin</button>
       </div>
+      <DistribuerXp jour={jour} />
       <div className="flex gap-2 items-end">
       <textarea
         value={note}
