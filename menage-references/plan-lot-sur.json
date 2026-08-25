@@ -1,0 +1,915 @@
+[
+ {
+  "cible": "Acrobaties",
+  "survId": 35,
+  "survNom": "Acrobaties",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 102,
+    "lot": "S",
+    "nom": "Acrobatie"
+   },
+   {
+    "id": 88,
+    "lot": "S",
+    "nom": "Tumble"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Dressage",
+  "survId": 98,
+  "survNom": "Dressage",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 143,
+    "lot": "S",
+    "nom": "Handle Animal"
+   }
+  ],
+  "gardees": [
+   "153:\"Animal Empathy\"",
+   "100:\"Empathie Animaux\"",
+   "166:\"Empathie avec les animaux\"",
+   "120:\"Emphatie avec les animaux\""
+  ]
+ },
+ {
+  "cible": "Estimation",
+  "survId": 111,
+  "survNom": "Estimation",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 66,
+    "lot": "S",
+    "nom": "Appraise"
+   },
+   {
+    "id": 149,
+    "lot": "S",
+    "nom": "Apparaise"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Artisanat",
+  "survId": 18,
+  "survNom": "Artisanat",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 148,
+    "lot": "S",
+    "nom": "Craft"
+   }
+  ],
+  "gardees": [
+   "188:\"Fabrication\""
+  ]
+ },
+ {
+  "cible": "Artisanat (pièges)",
+  "survId": 36,
+  "survNom": "Artisanat (pièges)",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 187,
+    "lot": "S",
+    "nom": "Artisant (piège)"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Artisanat (tissage)",
+  "survId": 186,
+  "survNom": "Artisanat (tissage)",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 177,
+    "lot": "S",
+    "nom": "Artisanat/tissage"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Artisanat (flèches)",
+  "survId": 123,
+  "survNom": "artisanat fabrication flèche",
+  "renommer": true,
+  "aFusionner": [
+   {
+    "id": 101,
+    "lot": "S",
+    "nom": "Craft (arrows)"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Artisanat (serrurerie)",
+  "survId": 84,
+  "survNom": "Craft - Serrurier",
+  "renommer": true,
+  "aFusionner": [],
+  "gardees": []
+ },
+ {
+  "cible": "Évasion",
+  "survId": 57,
+  "survNom": "Évasion",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 190,
+    "lot": "S",
+    "nom": "Artiste de l'évasion"
+   },
+   {
+    "id": 69,
+    "lot": "S",
+    "nom": "Escape artist"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Équilibre",
+  "survId": 56,
+  "survNom": "Équilibre",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 67,
+    "lot": "S",
+    "nom": "Balance"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Escalade",
+  "survId": 5,
+  "survNom": "Escalade",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 142,
+    "lot": "S",
+    "nom": "Climb"
+   },
+   {
+    "id": 79,
+    "lot": "S",
+    "nom": "Grimper"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Art de la magie",
+  "survId": 164,
+  "survNom": "Conn des sorts",
+  "renommer": true,
+  "aFusionner": [
+   {
+    "id": 40,
+    "lot": "S",
+    "nom": "Conn. des sorts"
+   },
+   {
+    "id": 22,
+    "lot": "S",
+    "nom": "Connaissance des sorts"
+   },
+   {
+    "id": 129,
+    "lot": "S",
+    "nom": "Connaissance des sorts (spellcraft)"
+   },
+   {
+    "id": 109,
+    "lot": "S",
+    "nom": "Connaissance sort"
+   },
+   {
+    "id": 99,
+    "lot": "S",
+    "nom": "Connaissance Sorts"
+   },
+   {
+    "id": 48,
+    "lot": "S",
+    "nom": "Spellcraft"
+   },
+   {
+    "id": 94,
+    "lot": "S",
+    "nom": "Spellcraft (connaissance sorts)"
+   }
+  ],
+  "gardees": [
+   "20:\"Connaissance de la magie\"",
+   "13:\"Magie divine\""
+  ]
+ },
+ {
+  "cible": "Connaissances (dragons)",
+  "survId": 50,
+  "survNom": "Connaiss. DRAGONS",
+  "renommer": true,
+  "aFusionner": [],
+  "gardees": [
+   "19:\"Connaissance Dragons\""
+  ]
+ },
+ {
+  "cible": "Connaissances (mystères)",
+  "survId": 10,
+  "survNom": "Connaissance (arcanes)",
+  "renommer": true,
+  "aFusionner": [
+   {
+    "id": 171,
+    "lot": "S",
+    "nom": "Connaissance mystère"
+   },
+   {
+    "id": 144,
+    "lot": "S",
+    "nom": "Knomwledge Arcana"
+   },
+   {
+    "id": 135,
+    "lot": "S",
+    "nom": "Knowledge (Arcana)"
+   },
+   {
+    "id": 77,
+    "lot": "S",
+    "nom": "Knowledge arcana"
+   },
+   {
+    "id": 43,
+    "lot": "S",
+    "nom": "Knowledge-arcana"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Connaissances (histoire)",
+  "survId": 12,
+  "survNom": "Connaissance (histoire)",
+  "renommer": true,
+  "aFusionner": [
+   {
+    "id": 140,
+    "lot": "S",
+    "nom": "Knowledge (History)"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Connaissances (nature)",
+  "survId": 30,
+  "survNom": "Connaissance (nature)",
+  "renommer": true,
+  "aFusionner": [
+   {
+    "id": 118,
+    "lot": "S",
+    "nom": "Connaissance de la nature"
+   },
+   {
+    "id": 97,
+    "lot": "S",
+    "nom": "Connaissance Nature"
+   },
+   {
+    "id": 155,
+    "lot": "S",
+    "nom": "Knowledge (Nature)"
+   },
+   {
+    "id": 158,
+    "lot": "S",
+    "nom": "Knowledge Nature"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Connaissances (plans)",
+  "survId": 11,
+  "survNom": "Connaissance (plans)",
+  "renommer": true,
+  "aFusionner": [
+   {
+    "id": 21,
+    "lot": "S",
+    "nom": "Connaissance des Plans"
+   },
+   {
+    "id": 105,
+    "lot": "S",
+    "nom": "Knowledge Planes"
+   },
+   {
+    "id": 45,
+    "lot": "S",
+    "nom": "Knowledge-planes"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Connaissances (religion)",
+  "survId": 181,
+  "survNom": "Connaissance des religions",
+  "renommer": true,
+  "aFusionner": [
+   {
+    "id": 172,
+    "lot": "S",
+    "nom": "connaissance religion"
+   },
+   {
+    "id": 85,
+    "lot": "S",
+    "nom": "Connaissane religion"
+   },
+   {
+    "id": 93,
+    "lot": "S",
+    "nom": "Knowledge (religion)"
+   },
+   {
+    "id": 126,
+    "lot": "S",
+    "nom": "Knowledge Religion"
+   }
+  ],
+  "gardees": [
+   "65:\"Religion\""
+  ]
+ },
+ {
+  "cible": "Connaissances (exploration souterraine)",
+  "survId": 121,
+  "survNom": "Knowledge Underground",
+  "renommer": true,
+  "aFusionner": [],
+  "gardees": []
+ },
+ {
+  "cible": "Connaissances (noblesse et royauté)",
+  "survId": 151,
+  "survNom": "Knowledge (nobility)",
+  "renommer": true,
+  "aFusionner": [],
+  "gardees": []
+ },
+ {
+  "cible": "Connaissances (folklore local)",
+  "survId": 150,
+  "survNom": "Knowledge (local Blackmoor)",
+  "renommer": true,
+  "aFusionner": [],
+  "gardees": [
+   "1:\"Connaissance des nains\""
+  ]
+ },
+ {
+  "cible": "Décryptage",
+  "survId": 53,
+  "survNom": "Décryptage",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 68,
+    "lot": "S",
+    "nom": "Decipher script"
+   },
+   {
+    "id": 14,
+    "lot": "S",
+    "nom": "Déchiffrage"
+   }
+  ],
+  "gardees": [
+   "131:\"Connaissance langues anciennes\""
+  ]
+ },
+ {
+  "cible": "Contrefaçon",
+  "survId": 52,
+  "survNom": "Contrefaçon",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 145,
+    "lot": "S",
+    "nom": "Forgery"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Crochetage",
+  "survId": 39,
+  "survNom": "Crochetage",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 73,
+    "lot": "S",
+    "nom": "Open lock"
+   },
+   {
+    "id": 127,
+    "lot": "S",
+    "nom": "OpenLock"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Diplomatie",
+  "survId": 3,
+  "survNom": "Diplomatie",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 141,
+    "lot": "S",
+    "nom": "Diplomacy"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Discrétion",
+  "survId": 31,
+  "survNom": "Discrétion",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 87,
+    "lot": "S",
+    "nom": "Hide"
+   }
+  ],
+  "gardees": [
+   "160:\"Dissimulation\""
+  ]
+ },
+ {
+  "cible": "Déplacement silencieux",
+  "survId": 33,
+  "survNom": "Déplacement silencieux",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 82,
+    "lot": "S",
+    "nom": "Déplacement sans bruit"
+   },
+   {
+    "id": 184,
+    "lot": "S",
+    "nom": "Déplacements silencieux"
+   },
+   {
+    "id": 72,
+    "lot": "S",
+    "nom": "Move silently"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Désamorçage/sabotage",
+  "survId": 110,
+  "survNom": "Désamorsage/sabotage",
+  "renommer": true,
+  "aFusionner": [
+   {
+    "id": 55,
+    "lot": "S",
+    "nom": "Désamorçage"
+   },
+   {
+    "id": 170,
+    "lot": "S",
+    "nom": "Désamorçage-sabotage"
+   },
+   {
+    "id": 176,
+    "lot": "S",
+    "nom": "désamorçage/sabotage"
+   },
+   {
+    "id": 38,
+    "lot": "S",
+    "nom": "Sabotage"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Détection",
+  "survId": 2,
+  "survNom": "Détection",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 180,
+    "lot": "S",
+    "nom": "Détection (spot)"
+   },
+   {
+    "id": 49,
+    "lot": "S",
+    "nom": "Spot"
+   },
+   {
+    "id": 91,
+    "lot": "S",
+    "nom": "Spot (détection)"
+   },
+   {
+    "id": 16,
+    "lot": "S",
+    "nom": "Vue"
+   }
+  ],
+  "gardees": [
+   "60:\"Lecture sur les lèvres\""
+  ]
+ },
+ {
+  "cible": "Perception auditive",
+  "survId": 6,
+  "survNom": "Perception auditive",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 81,
+    "lot": "S",
+    "nom": "Ecouter"
+   },
+   {
+    "id": 46,
+    "lot": "S",
+    "nom": "Listen"
+   },
+   {
+    "id": 89,
+    "lot": "S",
+    "nom": "Listen (écoute)"
+   },
+   {
+    "id": 32,
+    "lot": "S",
+    "nom": "Ouïe"
+   },
+   {
+    "id": 157,
+    "lot": "S",
+    "nom": "Écoute"
+   },
+   {
+    "id": 119,
+    "lot": "S",
+    "nom": "Percetion auditive"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Équitation",
+  "survId": 4,
+  "survNom": "Équitation",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 185,
+    "lot": "S",
+    "nom": "Equitation"
+   },
+   {
+    "id": 161,
+    "lot": "S",
+    "nom": "Monter à cheval"
+   },
+   {
+    "id": 63,
+    "lot": "S",
+    "nom": "Ride"
+   }
+  ],
+  "gardees": [
+   "189:\"Monture\""
+  ]
+ },
+ {
+  "cible": "Fouille",
+  "survId": 34,
+  "survNom": "Fouille",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 179,
+    "lot": "S",
+    "nom": "Fouille (search)"
+   },
+   {
+    "id": 47,
+    "lot": "S",
+    "nom": "Search"
+   },
+   {
+    "id": 90,
+    "lot": "S",
+    "nom": "Search (fouille)"
+   },
+   {
+    "id": 7,
+    "lot": "S",
+    "nom": "Recherche"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Renseignements",
+  "survId": 70,
+  "survNom": "Gather information",
+  "renommer": true,
+  "aFusionner": [],
+  "gardees": []
+ },
+ {
+  "cible": "Premiers secours",
+  "survId": 191,
+  "survNom": "Premiers secours",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 64,
+    "lot": "S",
+    "nom": "Heal"
+   },
+   {
+    "id": 136,
+    "lot": "S",
+    "nom": "Healing"
+   },
+   {
+    "id": 41,
+    "lot": "S",
+    "nom": "Premier secours"
+   }
+  ],
+  "gardees": [
+   "92:\"Heal (2 pv x jour x niv.)\"",
+   "182:\"Premiers soins (2 pv x jour x niv.)\"",
+   "169:\"Premier soins animaux\""
+  ]
+ },
+ {
+  "cible": "Intimidation",
+  "survId": 138,
+  "survNom": "Intimidate",
+  "renommer": true,
+  "aFusionner": [
+   {
+    "id": 175,
+    "lot": "S",
+    "nom": "intimidation"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Survie",
+  "survId": 9,
+  "survNom": "Survie",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 62,
+    "lot": "S",
+    "nom": "Sens de la nature"
+   },
+   {
+    "id": 128,
+    "lot": "S",
+    "nom": "Wilderness Lore"
+   }
+  ],
+  "gardees": [
+   "154:\"Intuit Direction\"",
+   "116:\"Orientation\"",
+   "96:\"Sens de l'orientation\"",
+   "124:\"Sens orientation\""
+  ]
+ },
+ {
+  "cible": "Saut",
+  "survId": 8,
+  "survNom": "Saut",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 71,
+    "lot": "S",
+    "nom": "Jump"
+   },
+   {
+    "id": 80,
+    "lot": "S",
+    "nom": "Sauter"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Maîtrise des cordes",
+  "survId": 113,
+  "survNom": "Maitrise corde",
+  "renommer": true,
+  "aFusionner": [
+   {
+    "id": 58,
+    "lot": "S",
+    "nom": "Maitrise des cordes"
+   },
+   {
+    "id": 76,
+    "lot": "S",
+    "nom": "Use rope"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Représentation (flûte)",
+  "survId": 167,
+  "survNom": "Musique (flute)",
+  "renommer": true,
+  "aFusionner": [],
+  "gardees": []
+ },
+ {
+  "cible": "Représentation (danse)",
+  "survId": 152,
+  "survNom": "Perform (dance)",
+  "renommer": true,
+  "aFusionner": [],
+  "gardees": []
+ },
+ {
+  "cible": "Représentation (art oratoire)",
+  "survId": 147,
+  "survNom": "Perform oratory",
+  "renommer": true,
+  "aFusionner": [],
+  "gardees": []
+ },
+ {
+  "cible": "Profession (charpentier)",
+  "survId": 168,
+  "survNom": "Métier charpentier",
+  "renommer": true,
+  "aFusionner": [],
+  "gardees": []
+ },
+ {
+  "cible": "Profession",
+  "survId": 174,
+  "survNom": "profession",
+  "renommer": true,
+  "aFusionner": [],
+  "gardees": []
+ },
+ {
+  "cible": "Profession (jardinier)",
+  "survId": 103,
+  "survNom": "Profession (jardinière)",
+  "renommer": true,
+  "aFusionner": [],
+  "gardees": []
+ },
+ {
+  "cible": "Profession (poterie)",
+  "survId": 108,
+  "survNom": "Profession (pottery)",
+  "renommer": true,
+  "aFusionner": [],
+  "gardees": []
+ },
+ {
+  "cible": "Profession (apothicaire)",
+  "survId": 133,
+  "survNom": "Profession apothicaire",
+  "renommer": true,
+  "aFusionner": [
+   {
+    "id": 26,
+    "lot": "S",
+    "nom": "Profession Apoticaire"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Profession (herboriste)",
+  "survId": 159,
+  "survNom": "Profession Herbalist",
+  "renommer": true,
+  "aFusionner": [],
+  "gardees": []
+ },
+ {
+  "cible": "Natation",
+  "survId": 25,
+  "survNom": "Natation",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 83,
+    "lot": "S",
+    "nom": "Nager"
+   },
+   {
+    "id": 156,
+    "lot": "S",
+    "nom": "Swim"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Escamotage",
+  "survId": 74,
+  "survNom": "Pick pocket",
+  "renommer": true,
+  "aFusionner": [
+   {
+    "id": 59,
+    "lot": "S",
+    "nom": "Vol à la tire"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Psychologie",
+  "survId": 165,
+  "survNom": "Psychologie",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 146,
+    "lot": "S",
+    "nom": "Sense motive"
+   }
+  ],
+  "gardees": []
+ },
+ {
+  "cible": "Utilisation d'objets magiques",
+  "survId": 78,
+  "survNom": "Utilisation d'objets magiques",
+  "renommer": false,
+  "aFusionner": [
+   {
+    "id": 75,
+    "lot": "S",
+    "nom": "Use magic device"
+   },
+   {
+    "id": 139,
+    "lot": "S",
+    "nom": "Utilisation d'obj. magique"
+   },
+   {
+    "id": 114,
+    "lot": "S",
+    "nom": "Utilisation objet magique"
+   }
+  ],
+  "gardees": []
+ }
+]
