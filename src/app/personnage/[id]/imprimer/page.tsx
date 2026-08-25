@@ -546,7 +546,10 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                         <td style={{ border: '1px solid #ddd', padding: '1px', textAlign: 'center', fontSize: '8pt' }}>{s.divers || ''}</td>
                       </tr>
                     ))}
-                    {Array.from({ length: Math.max(0, 20 - skillsData.length) }).map((_, i) => (
+                    {/* Le tableau est complété jusqu'à 24 lignes : la fiche la plus chargée
+                        (Tatiana) en imprime 21 depuis le ménage des compétences, et les
+                        arbitrages restants peuvent en ajouter deux ou trois. */}
+                    {Array.from({ length: Math.max(0, 24 - skillsData.length) }).map((_, i) => (
                       <tr key={`es-${i}`}><td colSpan={7} style={{ border: '1px solid #eee', height: '16px' }}></td></tr>
                     ))}
                   </tbody>

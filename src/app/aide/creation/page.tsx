@@ -66,6 +66,7 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           </ul>
           <p>Le système génère automatiquement : les caractéristiques (tableau standard [15,14,13,12,10,8] assigné par priorité de classe), les PV, les compétences, les dons, les sorts, une arme et une armure de départ, les langues raciales, et un nom aléatoire.</p>
           <p>Le formulaire s'ouvre pré-rempli — vous pouvez tout modifier avant de sauvegarder.</p>
+          <Tip>Les anciennes fiches où la race est écrite <em>Petite-gens</em> (le nom de la 3.0) sont reconnues comme des <strong>Halfelins</strong> : elles reçoivent bien −2 en Force, +2 en Dextérité, la taille P et les six traits raciaux. Le nom reste affiché tel qu'il est écrit sur la fiche.</Tip>
           <Tip>Un bouton <strong>⚡ Recommencer</strong> flottant en haut à droite permet de revenir au formulaire de sélection sans perdre votre travail.</Tip>
         </Section>
 
