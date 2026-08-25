@@ -1,6 +1,26 @@
 import { neon } from '@neondatabase/serverless'
 import fs from 'fs'
-import { FUSIONS, RENOMMAGES, SCORIES } from './ch2-plan.mts'
+// Constantes reprises de ch2-plan.mts (archive du chantier 2)
+const FUSIONS: Array<{ cible: number; cibleNom: string; sources: number[]; motif: string }> = [
+  { cible: 17, cibleNom: 'Alchimie', sources: [42], motif: 'anglais -> francais (Alchemy)' },
+  { cible: 166, cibleNom: 'Empathie avec les animaux', sources: [153, 100, 120],
+    motif: 'anglais (Animal Empathy), casse (Empathie Animaux), faute de frappe (Emphatie)' },
+  { cible: 96, cibleNom: "Sens de l'orientation", sources: [154, 116, 124],
+    motif: 'anglais (Intuit Direction), abreviations (Orientation, Sens orientation)' },
+  { cible: 162, cibleNom: 'Connaissance des monstres', sources: [130, 23, 173, 104, 44],
+    motif: 'pluriel, casse, anglais (Knowledge Monsters / Knowledge-monsters)' },
+  { cible: 27, cibleNom: 'Scrutation', sources: [106, 95], motif: 'anglais (Scry) et anglais glose (Scry (scrutation))' },
+  { cible: 61, cibleNom: 'Langage secret', sources: [112], motif: 'abreviation (Lang secret)' },
+]
+
+/** TYPE A — renommages de pure graphie, sans fusion. */
+const RENOMMAGES: Array<{ id: number; de: string; vers: string; motif: string }> = [
+  { id: 19, de: 'Connaissance Dragons', vers: 'Connaissances (dragons)', motif: 'casse et mise en forme' },
+  { id: 134, de: 'Profession danseur', vers: 'Profession (danseur)', motif: 'specialite entre parentheses, comme les 8 autres Profession' },
+]
+
+/** TYPE A — scories : aucun personnage, aucun rang. */
+const SCORIES: number[] = [50]  // « Connaissances (dragons) », 0 lien
 const sql = neon(fs.readFileSync('X:/Claude-Tools/cormac/.env.local', 'utf8').match(/DATABASE_URL=(.+)/)![1].trim())
 const stop = (m: string) => { console.error('\n⛔ ARRET : ' + m); process.exit(1) }
 
@@ -70,7 +90,7 @@ await sql.transaction(reqs as never)
 console.log('  transaction : OK')
 
 // ─── CONTROLE ───────────────────────────────────────────────────────────────
-const absorbees = FUSIONS.reduce((s, f) => s + f.sources.length, 0)
+const absorbees = FUSIONS.reduce((acc: number, f: { sources: number[] }) => acc + f.sources.length, 0)
 const t = {
   skills: (await sql`select count(*)::int n from skills`)[0].n,
   liens: (await sql`select count(*)::int n from character_skills`)[0].n,

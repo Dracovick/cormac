@@ -1,0 +1,7733 @@
+{
+ "horodatage": "2026-08-25T14:57:02.208Z",
+ "feats": [
+  {
+   "id": 1,
+   "nom": "Tir à bout portant",
+   "categorie": "Combat",
+   "prerequis": null,
+   "description": "+1 aux jets d'attaque et aux dégâts avec des armes à distance à moins de 9 mètres.",
+   "effet_mecanique": "+1 attaque et dégâts à portée courte (≤ 9m)"
+  },
+  {
+   "id": 2,
+   "nom": "Tir rapide",
+   "categorie": "Combat",
+   "prerequis": "Tir à bout portant, DEX 13",
+   "description": "Une attaque supplémentaire à -2 avec une arme à distance par round.",
+   "effet_mecanique": "Attaque supplémentaire à -2 en tir"
+  },
+  {
+   "id": 3,
+   "nom": "Tir de précision",
+   "categorie": "Combat",
+   "prerequis": "Tir à bout portant",
+   "description": "Permet de tirer ou lancer des projectiles en mêlée sans malus.",
+   "effet_mecanique": "Pas de malus en mêlée pour les attaques à distance"
+  },
+  {
+   "id": 4,
+   "nom": "Spécialisation martiale (arc long)",
+   "categorie": "Combat",
+   "prerequis": "Arme de prédilection (arc long), Guerrier niv. 4",
+   "description": "+2 aux dégâts avec l'arc long.",
+   "effet_mecanique": "+2 dégâts avec arc long"
+  },
+  {
+   "id": 5,
+   "nom": "Arme de prédilection (arc long)",
+   "categorie": "Combat",
+   "prerequis": "BBA +1",
+   "description": "+1 aux jets d'attaque avec l'arc long.",
+   "effet_mecanique": "+1 attaque avec arc long"
+  },
+  {
+   "id": 6,
+   "nom": "Science de l'initiative",
+   "categorie": "Général",
+   "prerequis": null,
+   "description": "+4 à l'initiative.",
+   "effet_mecanique": "+4 initiative"
+  },
+  {
+   "id": 7,
+   "nom": "Maîtrise des sorts (Évocation)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 8,
+   "nom": "Maîtrise supérieure (Évocation)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 9,
+   "nom": "Art magique",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 10,
+   "nom": "Sort accéléré",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 11,
+   "nom": "Pouvoirs raciaux elfes",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 12,
+   "nom": "Écriture de parchemins",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Permet de créer des parchemins magiques",
+   "effet_mecanique": null
+  },
+  {
+   "id": 13,
+   "nom": "Quintessence des sorts",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Maximise les dés de dégâts des sorts",
+   "effet_mecanique": null
+  },
+  {
+   "id": 14,
+   "nom": "Préparation de potions",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Permet de créer des potions magiques",
+   "effet_mecanique": null
+  },
+  {
+   "id": 15,
+   "nom": "Volonté de fer",
+   "categorie": null,
+   "prerequis": null,
+   "description": "+2 aux jets de sauvegarde de Volonté",
+   "effet_mecanique": null
+  },
+  {
+   "id": 16,
+   "nom": "Création d'armes et armures magiques",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Permet de créer des armes et armures magiques",
+   "effet_mecanique": null
+  },
+  {
+   "id": 17,
+   "nom": "Création de bâtons magiques",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Permet de créer des bâtons magiques",
+   "effet_mecanique": null
+  },
+  {
+   "id": 18,
+   "nom": "Incantation silencieuse",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Lance des sorts sans composante verbale",
+   "effet_mecanique": null
+  },
+  {
+   "id": 19,
+   "nom": "Incantation statique",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Lance des sorts sans composante somatique",
+   "effet_mecanique": null
+  },
+  {
+   "id": 20,
+   "nom": "Esquive",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 21,
+   "nom": "Combat à deux armes",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 22,
+   "nom": "Spécialisation martiale (arc long composite)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 23,
+   "nom": "Arme de prédilection (arc long composite)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 24,
+   "nom": "Tir à bout portant (Arc long composite)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 25,
+   "nom": "Vigilance",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 26,
+   "nom": "blablabla",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 27,
+   "nom": "Emprise sur les morts-Vivants",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 28,
+   "nom": "Mounted Combat",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 29,
+   "nom": "Pack Attack",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 30,
+   "nom": "Rank Fighting",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 31,
+   "nom": "Combat Reflexes",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 32,
+   "nom": "Hold The Line",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 33,
+   "nom": "Alertness",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 34,
+   "nom": "Résistance au feu (+5)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 35,
+   "nom": "L1: STIL SPELL (cast without gestures)\u000b+1 spell slot",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 36,
+   "nom": "L3: POINT BLANK (+1 attack and damage with ranged weaponds)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 37,
+   "nom": "L6: RAPID SHOT (extra attack with ranged weapons)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 38,
+   "nom": "L9: WEAPON FOCUS (+1 attack roll with bow)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 39,
+   "nom": "L12: MAXIMIZE SPELL (+3 spell slots)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 40,
+   "nom": "Detect secret doors 5' (Search DD20)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 41,
+   "nom": "Nightvision (1.5 vision normale)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 42,
+   "nom": "Immune against sleep",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 43,
+   "nom": "+2 DEX, -2 CON, +2 vs enchantment (ex.: Hold), +2 Listen/Spot/Search,",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 44,
+   "nom": "Summon familiar (Giant Magpie). Grant Alertness within arm reach.",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 45,
+   "nom": "Volonté de fer (+2 Volonté)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 46,
+   "nom": "Création d'armes t armures magiques",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 47,
+   "nom": "Création de bâton magiques",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 48,
+   "nom": "Attaque en puissance",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 49,
+   "nom": "Attaque sournoise (+8d6)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 50,
+   "nom": "Botte secrète (rapière)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 51,
+   "nom": "Esquive instinctive (+2 contre les pièges)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 52,
+   "nom": "Esquive totale",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 53,
+   "nom": "Équivoque (15% + 2%/niv) = 45%",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 54,
+   "nom": "Santé divine",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 55,
+   "nom": "Science du critique (arbalète)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 56,
+   "nom": "Science du critique (rapière)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 57,
+   "nom": "--Dracologiste du 8 ième Cercle --",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 58,
+   "nom": "1) specialisation in evocation without penalties",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 59,
+   "nom": "2) Protection from Dragons",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 60,
+   "nom": "3) Bonus Maîtrise des sorts pour l'école \"évocation\"",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 61,
+   "nom": "4) Dragon Tooth, Eye, Paw, Scale, Dragon Wing",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 62,
+   "nom": "5) Extension de durée, Extention de portée, Incantation silencieuse, Still Spell feats no longer increase spell level for evocation spells",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 63,
+   "nom": "6) Dragon Breath",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 64,
+   "nom": "7) Augmentation d'intensité, Heighten Spell feats no longer increase spell level for evocation spells",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 65,
+   "nom": "8) Dragon Might",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 66,
+   "nom": "Smite Good +12 Dégâts vs good (2 x jour)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 67,
+   "nom": "Detect Good",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 68,
+   "nom": "Aura of despair (ennemies -2 sur saves)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 69,
+   "nom": "Sneak attack +3d6",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 70,
+   "nom": "Command undead",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 71,
+   "nom": "Lay on hands",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 72,
+   "nom": "Weapon focus (bastard) +1",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 73,
+   "nom": "Exotic weapon (bastard)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 74,
+   "nom": "Power attack (max 18/13)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 75,
+   "nom": "Improved critical (bastard)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 76,
+   "nom": "Mobility (+4 AC)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 77,
+   "nom": "Rebuke undead",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 78,
+   "nom": "Weapon finesse (mace)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 79,
+   "nom": "Empower spell (x1.5)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 80,
+   "nom": "Weapon focus (mace) +1",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 81,
+   "nom": "Improved critical (mace)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 82,
+   "nom": "Improved initiative +4",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 83,
+   "nom": "Empower spells",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 84,
+   "nom": "Maximize spells",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 85,
+   "nom": "Silent spells",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 86,
+   "nom": "Still spells",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 87,
+   "nom": "Still spell",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 88,
+   "nom": "Empower spell",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 89,
+   "nom": "Point blank shot",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 90,
+   "nom": "Silent spell",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 91,
+   "nom": "Improved critical (bow)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 92,
+   "nom": "Improved initiative",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 93,
+   "nom": "Sneak attack +6d6",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 94,
+   "nom": "Weapon focus (dagger)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 95,
+   "nom": "Weapon finesse (dagger)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 96,
+   "nom": "Power attack",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 97,
+   "nom": "Weapon finesse (rapier)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 98,
+   "nom": "Evasion (if reflex save succeeds, no damage)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 99,
+   "nom": "Uncanny Dodge",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 100,
+   "nom": "Improved evasion  (if  reflex save fails, half damage)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 101,
+   "nom": "Improved critical (dagger)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 102,
+   "nom": "Quick draw",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 103,
+   "nom": "Weapon focus (bastard)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 104,
+   "nom": "Point blank shot +1 to hit missile",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 105,
+   "nom": "Rapid shot +1 attaque bonus  -2 to hit",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 106,
+   "nom": "Souplesse du serpent",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 107,
+   "nom": "Vigilence",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 108,
+   "nom": "Improved Evasion (if Reflex save succeed, no damage, else half damage)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 109,
+   "nom": "Uncanny dodge (Dex bonus always apply to AC)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 110,
+   "nom": "Uncanny dodge (can't be flanked)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 111,
+   "nom": "Uncanny dodge (+1 against save reflex traps)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 112,
+   "nom": "Bonus feat (human) : Shield proficiency (no armor check penalty)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 113,
+   "nom": "1st level feat: Weapon focus (dagger)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 114,
+   "nom": "3rd level feat: Weapon finesse (dagger)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 115,
+   "nom": "6th level feat: Improved critical (dagger)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 116,
+   "nom": "9th level feat: Quick Draw (free action)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 117,
+   "nom": "CLASS : Turn Undead",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 118,
+   "nom": "CLASS :  Spontaneous Casting (remplacer un sort étudié par un sort de guérison)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 119,
+   "nom": "DOMAIN FEAT: Protective Ward (bonus +17 sur prochain jet de sauvegarde, 1 x jour pendant 1 h)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 120,
+   "nom": "DOMAIN FEAT: Martial weapon (longsword)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 121,
+   "nom": "DOMAIN FEAT : Weapon focus (longsword)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 122,
+   "nom": "FEAT Niv1: Extra Turning (3+ cha mod. + 4 = 6 fois par jour)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 123,
+   "nom": "FEAT Niv 3: Silent Spell (+1 niveau)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 124,
+   "nom": "FEAT Niv 6: Empower Spell (+1 niveau)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 125,
+   "nom": "Arme en main",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 126,
+   "nom": "Use higher spell slots to cast lower level spells",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 127,
+   "nom": "Improved Critical (épée à 2 mains)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 128,
+   "nom": "Niv 2 Déplacement facilité",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 129,
+   "nom": "Niv 3 Absence de traces",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 130,
+   "nom": "Niv 4 Résistance appel Nature",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 131,
+   "nom": "Niv 5-6-7 Forme Animale 3/jour Niv 8 F. animale taille G",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 132,
+   "nom": "--------------------------------",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 133,
+   "nom": "Pouvoir de Demi-Elfe (page 14):",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 134,
+   "nom": "Vision nocturne",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 135,
+   "nom": "Immunité au sorts et effets magique de type: Sommeil",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 136,
+   "nom": "+2 J.S. Enchantement",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 137,
+   "nom": "Peut utiliser Objets magiques elfiques comme un elfe.",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 138,
+   "nom": "---------------------------------",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 139,
+   "nom": "Science du Critique Cimettre 15-20",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 140,
+   "nom": "Combat à 2 armes  JdA -4 à chaque main",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 141,
+   "nom": "Ambidexterie",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 142,
+   "nom": "BONUS: QUICK DRAW avec arc magique si j'utilise les flèches magiques +0",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 143,
+   "nom": "1   Specialisation in abjuration without penalties",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 144,
+   "nom": "2   Glyphs of Matter (niv 1) 82%, 3x jour (or, acier, pierre) _ _ _",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 145,
+   "nom": "3   bonus Spell Mastery feat for spells of abjuration school",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 146,
+   "nom": "4   Glyphs of Life (niv 3), 72%, 2x jour (rapaces, félins) _ _",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 147,
+   "nom": "5   Enlarge Spell, Extend Spell, Silent Spell, Still Spell feats no longer increase spell level for abjuration spells",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 148,
+   "nom": "6   Glyphs of Power (niv 5),  62%, 1x jour (16d6 électricité) _",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 149,
+   "nom": "7   Empower Spell, Heighten Spell feats no longer increase spell level for abjuration spells",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 150,
+   "nom": "Esquive surnaturelle",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 151,
+   "nom": "Attaque éclair (déplacement + attaque + déplacement)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 152,
+   "nom": "Esquive (+1 CA contre un adversaire choisi)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 153,
+   "nom": "Plénitude du corps (soins):  _____/ 28  en banque",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 154,
+   "nom": "Parade de projectiles",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 155,
+   "nom": "Bonus de sagesse ajouter à la CA",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 156,
+   "nom": "8   Glyphs of Magic (niv 7), 52%, 1x semaine - rune of lightning bolt",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 157,
+   "nom": "NIV01 (start): EXTEND SPELL (augmenter la durée d'un sort) (+1 spell slots)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 158,
+   "nom": "NIV01 (race): SILENT SPELL (incanter sans paroles) (+1 spell slots)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 159,
+   "nom": "NIV01 (bonus) : SUMMON FAMILIAR",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 160,
+   "nom": "NIV01 (bonus) : SCRIBE SCROLL",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 161,
+   "nom": "NIV03 (general): STILL SPELL (incanter sans gestes) (+1 spell slots)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 162,
+   "nom": "NIV05 (class): EMPOWER SPELL (+2 spell slots)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 163,
+   "nom": "NIV06 (general): HEIGHTEN SPELL (pour augmenter le niveau du sort)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 164,
+   "nom": "botte secrète",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 165,
+   "nom": "Souplesse serpent",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 166,
+   "nom": "Esquive instinctive",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 167,
+   "nom": "Pas pris en tenaille",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 168,
+   "nom": "Écriture parchemin",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 169,
+   "nom": "Appel familier",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 170,
+   "nom": "Sens du critique épée courte",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 171,
+   "nom": "Sérénité",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 172,
+   "nom": "Pureté physique (immunisé contre maladies)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 173,
+   "nom": "Science du croc en jambe (p.86)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 174,
+   "nom": "Envol du héron (p.74)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 175,
+   "nom": "Corps de Diamant (immune to poison)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 176,
+   "nom": "Pas chassé (porte dimensionnelle - spell-like ability)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 177,
+   "nom": "NIV09 (general): SPELL PENETRATION (+2 versus Spell resistance)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 178,
+   "nom": "FEAT Niv 9: Improved ctritical (17 à 20)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 179,
+   "nom": "Pistage",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 180,
+   "nom": "Ennemi juré No1 Géants (+3)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 181,
+   "nom": "Ennemi Jure N02: Morts vivants (+2)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 182,
+   "nom": "Ennemi juré N03: Démons (+1)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 183,
+   "nom": "Science du combat à deux armes",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 184,
+   "nom": "NIV10 (class): SPELL MASTERY (apprendre sorts par coeur)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 185,
+   "nom": "NIV12 (general) : MAXIMIZE SPELL (+3 spell slots)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 186,
+   "nom": "NIV15 (class) : QUICKEN SPELL (+4 spell slots)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 187,
+   "nom": "Âme de diamand (résistance à la magie 23)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 188,
+   "nom": "Maîtrise des sorts (p. 39) rappel deux sorts par jour",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 189,
+   "nom": "NIV1 - Weapon focus: warhammer",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 190,
+   "nom": "RACE - Improved bull rush",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 191,
+   "nom": "NIV3 - Improved critical : warhammer",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 192,
+   "nom": "NIV6 - Improved initiative",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 193,
+   "nom": "NIV9 - Power attack",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 194,
+   "nom": "NIV12 - Toughness",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 195,
+   "nom": "CLASS - Detect Aura of Evil (at will)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 196,
+   "nom": "CLASS - Lay on hands",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 197,
+   "nom": "CLASS - Divine grace (add charisma bonus to saving throws)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 198,
+   "nom": "CLASS - Aura of courage (+4 save versus fear for all friends)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 199,
+   "nom": "CLASS - Smite Evil  (1x jour ajouter 1 point de dégât par niveau, + bonus charisma au jet d'attaque)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 200,
+   "nom": "CLASS - Turn Undead",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 201,
+   "nom": "CLASS - Code of conduct",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 202,
+   "nom": "CLASS - Associates",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 203,
+   "nom": "NIV01 (start): SPELL MASTERY (apprendre 4 sorts par coeur)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 204,
+   "nom": "NIV01 (race): POINT BLANK (+1 dégâts et attaque à distance)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 205,
+   "nom": "NIV06 (general): IMPROVED CRITICAL (crossbow)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 206,
+   "nom": "NIV10 (class): SPELL MASTERY (apprendre 4 sorts par coeur)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 207,
+   "nom": "NIV01 (bonus) : BREW POTION",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 208,
+   "nom": "NIV12 (general) : RAPID SHOT (extra attaque avec arabalète)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 209,
+   "nom": "Télépathie 100'",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 210,
+   "nom": "Mind blast (SP) - cone 60 feet,  Will DC 17 or stunned for 3d4 rnds",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 211,
+   "nom": "Psionics",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 212,
+   "nom": "Improved grab",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 213,
+   "nom": "Extract",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 214,
+   "nom": "Combat casting",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 215,
+   "nom": "Dodge",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 216,
+   "nom": "Weapon finesse (tentacle)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 217,
+   "nom": "1- Tir à bout portant",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 218,
+   "nom": "2- Tir rapide",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 219,
+   "nom": "3- Tir de précision (peut tirer en corps à corps)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 220,
+   "nom": "4- Arme de prédilection (arc +1)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 221,
+   "nom": "5- Science de l'initiative (+4)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 222,
+   "nom": "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 223,
+   "nom": "Roulé-boulé (évite de tomber à 0)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 224,
+   "nom": "Vision 1200\"",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 225,
+   "nom": "Maniement des armes courantes",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 226,
+   "nom": "École renforcé: a joute +2 au DD jet sauvegarde école évocation",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 227,
+   "nom": "Création arme et armure magique",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 228,
+   "nom": "Incantation silencieuse (1 niveau supérieur)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 229,
+   "nom": "Quintessence des sorts (3 niveaux supérieurs)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 230,
+   "nom": "Maîtrise des sorts (5): Boule de feu, Dissipation de la magie, image miroir,",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 231,
+   "nom": "- Métamorphose, Peau de pierre",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 232,
+   "nom": "Spell penetration +2",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 233,
+   "nom": "Sorts permanents sur Zébulon: Détection invisibilité, Détection magie, Résistance",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 234,
+   "nom": "(+1 jet svgarde)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 235,
+   "nom": "Improved Initiative (+4)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 236,
+   "nom": "Noble blood",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 237,
+   "nom": "Skill Focus (+2 diplomacy)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 238,
+   "nom": "BONUS THRALL : Iron will  (+2 sur jet de sauvegarde Volonté)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 239,
+   "nom": "BONUS THRALL : Toughness (+3 pv)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 240,
+   "nom": "Lowlight vision",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 241,
+   "nom": "Ligthning reflexes",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 242,
+   "nom": "Silent Spell (1 spell slot)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 243,
+   "nom": "Still Spell (1 spell slot)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 244,
+   "nom": "Weapon focus (batlleaxe) +2 attack rolls",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 245,
+   "nom": "Parry Arrow",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 246,
+   "nom": "BONUS THRALL : Iron Will (+2 sur jet de sauvegarde Volonté)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 247,
+   "nom": "Weapon Finesse (peut utiliser le bonus de Dex sur jets d'attaque)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 248,
+   "nom": "Lightning Reflexes (+4 init)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 249,
+   "nom": "Rogue abilties :",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 250,
+   "nom": "Improved Evasion",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 251,
+   "nom": "Uncanny Dodge  (bonus de Dex permanent sur CA même si flat footed)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 252,
+   "nom": "Sneak attack +5d6",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 253,
+   "nom": "Thrall of Coot qualities :",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 254,
+   "nom": "Magical puissance (EX) => casts all spell and use spell like abilities at +2 CL",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 255,
+   "nom": "Mage's Sight (SP) => Continual Detec Magic with eerie blue eyes",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 256,
+   "nom": "Fast Healing (EX) => Heals 1 point of damage each round",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 257,
+   "nom": "Resilient (EX) => 1d6 less damage from sneak attacks and half damage from critical hits",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 258,
+   "nom": "Immunities (EX) =>  Immune to mind affecting effects, poison, charm, sleep, paralysis and stunning",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 259,
+   "nom": "Magical resistance (EX) => receive a spell resistance of 20",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 260,
+   "nom": "Improved Critical (battle axe)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 261,
+   "nom": "Weapon specialization (battleaxe) +3 damage",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 262,
+   "nom": "Darkvision 60 ft",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 263,
+   "nom": "Deflect Spells with Batlleaxe (all 2nd level spells)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 264,
+   "nom": "Quickdraw",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 265,
+   "nom": "Point Blank",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 266,
+   "nom": "Improved initiative +5",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 267,
+   "nom": "Spell penetration (+2 pour percer la résistance des autres)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 268,
+   "nom": "Quicken Spell (+4 spell slot)  free action",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 269,
+   "nom": "Still Spell  (+1 spell slot)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 270,
+   "nom": "Silent Spell (+1 spell slot)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 271,
+   "nom": "Empower Spell (+2 spell slot)  x1.5 degats",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 272,
+   "nom": "Quicken Spell (+1 sort par round, +4 spell slot)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 273,
+   "nom": "Alertness (+2 listen  and Spot)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 274,
+   "nom": "Weapon Focus (great axe)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 275,
+   "nom": "Darkvision 60 feet, long arms (reach 10 feet)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 276,
+   "nom": "Parry Arrows (with GreatAxe)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 277,
+   "nom": "Deflect Spells",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 278,
+   "nom": "Iron Will (+2 will save)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 279,
+   "nom": "Deflect Spells (once per round, 4th level spells)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 280,
+   "nom": "Improved critical (greataxe)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 281,
+   "nom": "Noble Blood (bous)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 282,
+   "nom": "Racial reputation (dwarf)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 283,
+   "nom": "Skill focus (diplomacy)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 284,
+   "nom": "Expertise (peut diminuer attack de -5 pour ajourer +5 à la CA",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 285,
+   "nom": "Great Fortitude +2 save",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 286,
+   "nom": "Improved disarm  (pas d'attaque d'opportunité quand disarm)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 287,
+   "nom": "Iron will +2 save",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 288,
+   "nom": "Leadership (voir DMG)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 289,
+   "nom": "Mobilité +4 AC",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 290,
+   "nom": "Weapon focus (rapier)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 291,
+   "nom": "Weapon Specialization (rapier)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 292,
+   "nom": "Spell Penetration +2 versus other (from Robe)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 293,
+   "nom": "Quickdraw (Dégaine comme action simple)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 294,
+   "nom": "Pointblank Shot (+1 attack avec l'arc si moins de 30 pieds)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 295,
+   "nom": "Rapidshot  (1 extra ranged attack per round, all with -2 penalty)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 296,
+   "nom": "Weapon focus:  Elven longsword (+1 attack - déjà inclus)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 297,
+   "nom": "Improved critical : Elven longblade (double threat range)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 298,
+   "nom": "Track (Pour suivre les traces d'une créature)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 299,
+   "nom": "1st Favored Enemy : Beasts (+3 compétences et dégâts versus)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 300,
+   "nom": "2nd Favored Enemy : Undeads (+2 compétences et dégâts versus)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 301,
+   "nom": "3rd Favored Enemy : Aberrations (+1 compétences et dégâts versus)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 302,
+   "nom": "Damage reduction (SU)  5/magic",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 303,
+   "nom": "Fiery Death (SU) :  when 0 hp, explodes as a fireball 1d6 x 13 HD to all within 20 ft. (Reflex DC 15 save half)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 304,
+   "nom": "Sense Heat (EX) : sense any source of heat warmer than the surrounding room within 30 feet (to see warm blooded creatures, even when invisible).",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 305,
+   "nom": "Summoning Stone Power",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 306,
+   "nom": "Turn Resistance +4",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 307,
+   "nom": "Undead Traits",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 308,
+   "nom": "Ash Cloud (SU) : breathing creatures within 5 ft. radius save Fortitude (DC 15 + 1 per previous check) or begin coughing and choking (1d6 non lethal damage).",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 309,
+   "nom": "Creature within Ash cloud receive 20% concealment, including the backbone itself",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 310,
+   "nom": "Fiery Touch (SU) : at will, any metal object touched is affected by Heat Metal (CL13).  Will save DC 26 to avoid effect.",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 311,
+   "nom": "L1 : ELEMENTAL SPELL FOCUS (DC 15 + spell level pour tous les sorts élémentaires)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 312,
+   "nom": "L3 : SILENT SPELL (incanter sans paroles) (+1 spell slots)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 313,
+   "nom": "L6 : EMPOWER SPELL (+2 spell slots)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 314,
+   "nom": "L9 : SPELL PENETRATION (+2 versus Spell resistance)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 315,
+   "nom": "L12 : QUICKEN SPELL (+4 spell slots)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 316,
+   "nom": "L15 : MAXIMIZE SPELL (+3 spell slots)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 317,
+   "nom": "Immunity to cold, electricity, polymorph, mind-affecting spells, and all forms of venom.  immune to critical damage (undead traits)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 318,
+   "nom": "Mind Spells (EX) :  Silent and Still spell feats do not require higher slots",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 319,
+   "nom": "Nature Sense : Identify plants and animal with perfect accuracy",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 320,
+   "nom": "Resist Nature Lure : +4 WILL save versus feys",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 321,
+   "nom": "Spontaneous Casting : ability to replace domain spell by Summon nature's ally of the equivalent level",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 322,
+   "nom": "Tainted Sight (SP) : Can view the scar influenced area with Clairaudience/Clairvoyance at will",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 323,
+   "nom": "Wild Empathy (can communicate with plants)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 324,
+   "nom": "Wild Shape (Black Bear) 6/day : Regains hit point as if rested for full day",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 325,
+   "nom": "FEATS : Plants Control,  Plant Defiance",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 326,
+   "nom": "FEAT : Silent Spell",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 327,
+   "nom": "FEAT : Still Spell",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 328,
+   "nom": "+8 racial bonus to Spot, Search, Listen and Sense Motive",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 329,
+   "nom": "Bonus feat (human)",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Shield proficiency (no armor check penalty)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 330,
+   "nom": "CLASS",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Turn Undead",
+   "effet_mecanique": null
+  },
+  {
+   "id": 331,
+   "nom": "DOMAIN FEAT",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Weapon focus (longsword)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 332,
+   "nom": "NIV01 (bonus)",
+   "categorie": null,
+   "prerequis": null,
+   "description": "SUMMON FAMILIAR",
+   "effet_mecanique": null
+  },
+  {
+   "id": 333,
+   "nom": "NIV12 (general)",
+   "categorie": null,
+   "prerequis": null,
+   "description": "MAXIMIZE SPELL (+3 spell slots)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 334,
+   "nom": "NIV15 (class)",
+   "categorie": null,
+   "prerequis": null,
+   "description": "QUICKEN SPELL (+4 spell slots)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 335,
+   "nom": "NIV3 - Improved critical",
+   "categorie": null,
+   "prerequis": null,
+   "description": "warhammer",
+   "effet_mecanique": null
+  },
+  {
+   "id": 336,
+   "nom": "BONUS THRALL",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Iron will  (+2 sur jet de sauvegarde Volonté)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 337,
+   "nom": "Improved critical",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Elven longblade (double threat range)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 338,
+   "nom": "1st Favored Enemy",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Beasts (+3 compétences et dégâts versus)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 339,
+   "nom": "2nd Favored Enemy",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Undeads (+2 compétences et dégâts versus)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 340,
+   "nom": "3rd Favored Enemy",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Aberrations (+1 compétences et dégâts versus)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 341,
+   "nom": "Fiery Death (SU)",
+   "categorie": null,
+   "prerequis": null,
+   "description": "when 0 hp, explodes as a fireball 1d6 x 13 HD to all within 20 ft. (Reflex DC 15 save half)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 342,
+   "nom": "Sense Heat (EX)",
+   "categorie": null,
+   "prerequis": null,
+   "description": "sense any source of heat warmer than the surrounding room within 30 feet (to see warm blooded creatures, even when invisible).",
+   "effet_mecanique": null
+  },
+  {
+   "id": 343,
+   "nom": "Ash Cloud (SU)",
+   "categorie": null,
+   "prerequis": null,
+   "description": "breathing creatures within 5 ft. radius save Fortitude (DC 15 + 1 per previous check) or begin coughing and choking (1d6 non lethal damage).",
+   "effet_mecanique": null
+  },
+  {
+   "id": 344,
+   "nom": "Fiery Touch (SU)",
+   "categorie": null,
+   "prerequis": null,
+   "description": "at will, any metal object touched is affected by Heat Metal (CL13).  Will save DC 26 to avoid effect.",
+   "effet_mecanique": null
+  },
+  {
+   "id": 345,
+   "nom": "L1",
+   "categorie": null,
+   "prerequis": null,
+   "description": "ELEMENTAL SPELL FOCUS (DC 15 + spell level pour tous les sorts élémentaires)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 346,
+   "nom": "L3",
+   "categorie": null,
+   "prerequis": null,
+   "description": "SILENT SPELL (incanter sans paroles) (+1 spell slots)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 347,
+   "nom": "L6",
+   "categorie": null,
+   "prerequis": null,
+   "description": "EMPOWER SPELL (+2 spell slots)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 348,
+   "nom": "L9",
+   "categorie": null,
+   "prerequis": null,
+   "description": "SPELL PENETRATION (+2 versus Spell resistance)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 349,
+   "nom": "L12",
+   "categorie": null,
+   "prerequis": null,
+   "description": "QUICKEN SPELL (+4 spell slots)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 350,
+   "nom": "L15",
+   "categorie": null,
+   "prerequis": null,
+   "description": "MAXIMIZE SPELL (+3 spell slots)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 351,
+   "nom": "Mind Spells (EX)",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Silent and Still spell feats do not require higher slots",
+   "effet_mecanique": null
+  },
+  {
+   "id": 352,
+   "nom": "Nature Sense",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Identify plants and animal with perfect accuracy",
+   "effet_mecanique": null
+  },
+  {
+   "id": 353,
+   "nom": "Resist Nature Lure",
+   "categorie": null,
+   "prerequis": null,
+   "description": "+4 WILL save versus feys",
+   "effet_mecanique": null
+  },
+  {
+   "id": 354,
+   "nom": "Spontaneous Casting",
+   "categorie": null,
+   "prerequis": null,
+   "description": "ability to replace domain spell by Summon nature's ally of the equivalent level",
+   "effet_mecanique": null
+  },
+  {
+   "id": 355,
+   "nom": "Tainted Sight (SP)",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Can view the scar influenced area with Clairaudience/Clairvoyance at will",
+   "effet_mecanique": null
+  },
+  {
+   "id": 356,
+   "nom": "Wild Shape (Black Bear) 6/day",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Regains hit point as if rested for full day",
+   "effet_mecanique": null
+  },
+  {
+   "id": 357,
+   "nom": "FEATS",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Plants Control,  Plant Defiance",
+   "effet_mecanique": null
+  },
+  {
+   "id": 358,
+   "nom": "FEAT",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Silent Spell",
+   "effet_mecanique": null
+  },
+  {
+   "id": 359,
+   "nom": "Animate Trees (SP)",
+   "categorie": null,
+   "prerequis": null,
+   "description": "animate trees and other vegetation as Animate Plants, with unlimited range  (up to 5 Large animated plants at a time, Huge plants counting as two Large, and Gargantuan counting as four)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 360,
+   "nom": "Thousand Faces",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Alter Self at will",
+   "effet_mecanique": null
+  },
+  {
+   "id": 361,
+   "nom": "Timeless Body",
+   "categorie": null,
+   "prerequis": null,
+   "description": "no longer suffers from age",
+   "effet_mecanique": null
+  },
+  {
+   "id": 362,
+   "nom": "DOMAIN",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Protection Domain Spells (1 x jour)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 363,
+   "nom": "Niv 1",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Sanctuary\u000bNiv 2 : Shield Other\u000bNiv 3 : Protection from elements",
+   "effet_mecanique": null
+  },
+  {
+   "id": 364,
+   "nom": "Niv 4",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Spell Immunity\u000bNiv 5 : Spell Resistance\u000bNiv 6 : Antimagic Field",
+   "effet_mecanique": null
+  },
+  {
+   "id": 365,
+   "nom": "RACE: lowlight vision, immune to sleep, +2 save vs. enchantment, +1 listen/search/spot",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 366,
+   "nom": "Endurance (+4 vigueur)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 367,
+   "nom": "Combat aveugle",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 368,
+   "nom": "Initiative améliorée",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 369,
+   "nom": "Spécialiste de l'épée",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 370,
+   "nom": "Spécialiste de l'arc",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 371,
+   "nom": "Combat monté (cheval)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 372,
+   "nom": "Spell penetration (niveau 1)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 373,
+   "nom": "Scribe scroll (bonus)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 374,
+   "nom": "Silent spell (niveau 3)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 375,
+   "nom": "Still spell (niveau 5 extra)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 376,
+   "nom": "Summon familiar (bonus)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 377,
+   "nom": "Attaque sournoise 7d6",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 378,
+   "nom": "Esprit fuyant",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 379,
+   "nom": "---------------------------------------",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 380,
+   "nom": "+2 jet sauvegarde école enchantement _race",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 381,
+   "nom": "Vision nocturne 2X+ humain_race",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 382,
+   "nom": "+1 détection, fouille et perseption",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 383,
+   "nom": "Domaines chance et chaos",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 384,
+   "nom": "Arme de prédilection +1",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 385,
+   "nom": "Emprise sur les morts vivants +4 quatre tentatives de renvois par jour",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 386,
+   "nom": "Science du critique +2 sur dé 20",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 387,
+   "nom": "Efficacité de sorts accru +2 niveau",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 388,
+   "nom": "Niv 2",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Spiritual Weapon\u000bNiv 3 : Magic Vestment",
+   "effet_mecanique": null
+  },
+  {
+   "id": 389,
+   "nom": "BONUS: SPELL PENETRATION avec robe magique",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 390,
+   "nom": "Don de race: Voit deux fois plus loin que humain dans le noir",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 391,
+   "nom": "Don de race: Jet de fouille si passe à moins de 1,5 mètre de porte ou passage secret",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 392,
+   "nom": "Don de race: immunisté sort et effet magique sommeil",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 393,
+   "nom": "Don de race: +2 jet sauvegarde sorts et effets école enchantement",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 394,
+   "nom": "Don de race: immunité type sort et effets sommeil",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 395,
+   "nom": "Don de race: +2 jet sauvegarde sort et effets enchantement",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 396,
+   "nom": "Don de race: Droit à jet de de fouille si moins de 1,5 m de porte ou passage cachés",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 397,
+   "nom": "Don de race: voit deux plus plus loin que humain dans pénombre",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 398,
+   "nom": "Don niveau 1: Instinct naturel",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 399,
+   "nom": "Don initial: Sens de l'initiative",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 400,
+   "nom": "vigueur surhumaine",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 401,
+   "nom": "ennemi juré (humain) +1",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 402,
+   "nom": "ennemi juré (demi-elfe) +1",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 403,
+   "nom": "dégainement rapide",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 404,
+   "nom": "coup mortel",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 405,
+   "nom": "poison",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 406,
+   "nom": "esquive total",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 407,
+   "nom": "+3 jet de sauvegarde contre poison",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 408,
+   "nom": "botte secrète (lame secrète)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 409,
+   "nom": "talent",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 410,
+   "nom": "arme de prédilection: grande hache",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 411,
+   "nom": "esquive instinctive (AC DEX)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 412,
+   "nom": "DON RACE",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Vision dans la noirceur (60')",
+   "effet_mecanique": null
+  },
+  {
+   "id": 413,
+   "nom": "DON INITIAL",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Weapon Focus (sabre)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 414,
+   "nom": "Repousser les morts vivants",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 415,
+   "nom": "DON INITIAL: Weapon Focus (hache de guerre)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 416,
+   "nom": "DON Niv 1",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Improved initiative",
+   "effet_mecanique": null
+  },
+  {
+   "id": 417,
+   "nom": "DON BONUS",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Attaque en puissance",
+   "effet_mecanique": null
+  },
+  {
+   "id": 418,
+   "nom": "Écriture des parchemins",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 419,
+   "nom": "DON INITIAL (HUMAIN)",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Weapon Focus (masse d'arme)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 420,
+   "nom": "DON BONUS Niv 1",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Quick Draw",
+   "effet_mecanique": null
+  },
+  {
+   "id": 421,
+   "nom": "DON BONUS Niv 2",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Point blank",
+   "effet_mecanique": null
+  },
+  {
+   "id": 422,
+   "nom": "Vision nocturne (Low-light Vision)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 423,
+   "nom": "DON DÉPART",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Track",
+   "effet_mecanique": null
+  },
+  {
+   "id": 424,
+   "nom": "DON DE DÉPART",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Power attack",
+   "effet_mecanique": null
+  },
+  {
+   "id": 425,
+   "nom": "DON Niveau 1",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Point blank",
+   "effet_mecanique": null
+  },
+  {
+   "id": 426,
+   "nom": "DON Niv 3",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Power Attack",
+   "effet_mecanique": null
+  },
+  {
+   "id": 427,
+   "nom": "DON Niveau 3 :",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 428,
+   "nom": "Vigilance (Familier)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 429,
+   "nom": "Point Blank (Niveau 1)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 430,
+   "nom": "Rapid shot (Niveau 3)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 431,
+   "nom": "NIV15 (general)",
+   "categorie": null,
+   "prerequis": null,
+   "description": "SPELL FOCUS (save DC+2 vs evocation)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 432,
+   "nom": "À venir... NIV 18 (general):  BREW POTION",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 433,
+   "nom": "Science du critique (katana)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 434,
+   "nom": "Don niveau 1: Compagnon animal",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 435,
+   "nom": "Don niveau 2: Déplacement facilité",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 436,
+   "nom": "Don de race: immunité sort type sommeil",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 437,
+   "nom": "Don de race voit 2 = plus loin qu'humain condition faible éclairage",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 438,
+   "nom": "Vision dans le noir",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 439,
+   "nom": "Immunité contre les sorts de sommeil",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 440,
+   "nom": "Invocation d'un familier",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 441,
+   "nom": "Incantation sans gestuelle",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 442,
+   "nom": "Art de la pierre (+2 détection des pièges)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 443,
+   "nom": "Critique amélioré",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 444,
+   "nom": "Arme focus (Marteau de guerre)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 445,
+   "nom": "Dégainage rapide",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 446,
+   "nom": "Combat à mains nues amélioré",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 447,
+   "nom": "Attaque étourdissante (1x jour - Jet de vigueur DD 14)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 448,
+   "nom": "Esquive (aucun dégâts si jet de réflexe réussi)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 449,
+   "nom": "Parade de projectiles (1x par round, Jet de réflexes DD20)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 450,
+   "nom": "Attaques en furie (2 attaques à -2, full round)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 451,
+   "nom": "Réflexes surnaturels (+2  sur les jets de réflexe)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 452,
+   "nom": "Attaque ressort (déplacement avant et après l'attaque)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 453,
+   "nom": "Combat à deux armes (2 attaques à -4 chacune)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 454,
+   "nom": "Don de race: Jet de fouille automatique pour passe secret à - de 1,5 m",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 455,
+   "nom": "Don initial: Arme en main",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 456,
+   "nom": "Don niv 1 Ambidextrie",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 457,
+   "nom": "Don niv 2 Arme de prédilection (épée longue) +1 à l'attaque",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 458,
+   "nom": "Don niveau 4 Science du critique double probabilité coup critique épée longue",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 459,
+   "nom": "Don  niveau 1: Attaque sournoise +1d6",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 460,
+   "nom": "Don niveau 2: Esquive totale",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 461,
+   "nom": "Esquive instinctive (bonus Dex CA +  attaque sournoise 2d6",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 462,
+   "nom": "Don Niveau 3: Absence de traces",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 463,
+   "nom": "Don niveau 4: Résistance appel nature",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 464,
+   "nom": "Don niveau 5",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Forme animale 1xjour",
+   "effet_mecanique": null
+  },
+  {
+   "id": 465,
+   "nom": "DON Niv 4",
+   "categorie": null,
+   "prerequis": null,
+   "description": "Weapon Specialization (Épée +2)",
+   "effet_mecanique": null
+  },
+  {
+   "id": 466,
+   "nom": "Don niveau 5: attaque sournoise 3d6",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 467,
+   "nom": "Renvoie des morts vivants",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 468,
+   "nom": "Maniement des armes de guerre",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 469,
+   "nom": "Grande résistance",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 470,
+   "nom": "Arme de prédilection (Morgenstern)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 471,
+   "nom": "Maîtrise martiale supérieure (Morgenstern)",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 472,
+   "nom": "Science du renvoi",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 473,
+   "nom": "Robustesse",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 474,
+   "nom": "Frappe précise",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 475,
+   "nom": "Souffle draconique",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 476,
+   "nom": "Résistance draconique",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 477,
+   "nom": "Puissance draconique",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 478,
+   "nom": "Présence draconique",
+   "categorie": null,
+   "prerequis": null,
+   "description": null,
+   "effet_mecanique": null
+  },
+  {
+   "id": 479,
+   "nom": "Arme de prédilection (hache de guerre naine)",
+   "categorie": "Combat",
+   "prerequis": "BAB +1, maniement de la hache de guerre naine",
+   "description": "+1 aux jets d’attaque avec la hache de guerre naine.",
+   "effet_mecanique": null
+  },
+  {
+   "id": 480,
+   "nom": "Spécialisation martiale (hache de guerre naine)",
+   "categorie": "Combat",
+   "prerequis": "Guerrier niveau 4, Arme de prédilection (hache de guerre naine)",
+   "description": "+2 aux jets de dégâts avec la hache de guerre naine.",
+   "effet_mecanique": null
+  }
+ ],
+ "character_feats": [
+  {
+   "id": 118,
+   "personnage_id": 5,
+   "feat_id": 1,
+   "notes": null
+  },
+  {
+   "id": 119,
+   "personnage_id": 5,
+   "feat_id": 20,
+   "notes": null
+  },
+  {
+   "id": 120,
+   "personnage_id": 5,
+   "feat_id": 21,
+   "notes": null
+  },
+  {
+   "id": 127,
+   "personnage_id": 3,
+   "feat_id": 7,
+   "notes": null
+  },
+  {
+   "id": 128,
+   "personnage_id": 3,
+   "feat_id": 8,
+   "notes": null
+  },
+  {
+   "id": 129,
+   "personnage_id": 3,
+   "feat_id": 9,
+   "notes": null
+  },
+  {
+   "id": 130,
+   "personnage_id": 3,
+   "feat_id": 10,
+   "notes": null
+  },
+  {
+   "id": 131,
+   "personnage_id": 3,
+   "feat_id": 11,
+   "notes": null
+  },
+  {
+   "id": 224,
+   "personnage_id": 6,
+   "feat_id": 25,
+   "notes": null
+  },
+  {
+   "id": 225,
+   "personnage_id": 6,
+   "feat_id": 20,
+   "notes": null
+  },
+  {
+   "id": 574,
+   "personnage_id": 23,
+   "feat_id": 27,
+   "notes": null
+  },
+  {
+   "id": 575,
+   "personnage_id": 23,
+   "feat_id": 14,
+   "notes": null
+  },
+  {
+   "id": 576,
+   "personnage_id": 24,
+   "feat_id": 28,
+   "notes": null
+  },
+  {
+   "id": 577,
+   "personnage_id": 24,
+   "feat_id": 29,
+   "notes": null
+  },
+  {
+   "id": 578,
+   "personnage_id": 24,
+   "feat_id": 30,
+   "notes": null
+  },
+  {
+   "id": 579,
+   "personnage_id": 24,
+   "feat_id": 31,
+   "notes": null
+  },
+  {
+   "id": 580,
+   "personnage_id": 24,
+   "feat_id": 32,
+   "notes": null
+  },
+  {
+   "id": 581,
+   "personnage_id": 24,
+   "feat_id": 33,
+   "notes": null
+  },
+  {
+   "id": 582,
+   "personnage_id": 24,
+   "feat_id": 34,
+   "notes": null
+  },
+  {
+   "id": 583,
+   "personnage_id": 28,
+   "feat_id": 35,
+   "notes": null
+  },
+  {
+   "id": 584,
+   "personnage_id": 28,
+   "feat_id": 36,
+   "notes": null
+  },
+  {
+   "id": 585,
+   "personnage_id": 28,
+   "feat_id": 37,
+   "notes": null
+  },
+  {
+   "id": 586,
+   "personnage_id": 28,
+   "feat_id": 38,
+   "notes": null
+  },
+  {
+   "id": 587,
+   "personnage_id": 28,
+   "feat_id": 39,
+   "notes": null
+  },
+  {
+   "id": 588,
+   "personnage_id": 28,
+   "feat_id": 40,
+   "notes": null
+  },
+  {
+   "id": 589,
+   "personnage_id": 28,
+   "feat_id": 41,
+   "notes": null
+  },
+  {
+   "id": 590,
+   "personnage_id": 28,
+   "feat_id": 42,
+   "notes": null
+  },
+  {
+   "id": 591,
+   "personnage_id": 28,
+   "feat_id": 43,
+   "notes": null
+  },
+  {
+   "id": 592,
+   "personnage_id": 28,
+   "feat_id": 44,
+   "notes": null
+  },
+  {
+   "id": 601,
+   "personnage_id": 30,
+   "feat_id": 48,
+   "notes": null
+  },
+  {
+   "id": 602,
+   "personnage_id": 30,
+   "feat_id": 49,
+   "notes": null
+  },
+  {
+   "id": 603,
+   "personnage_id": 30,
+   "feat_id": 50,
+   "notes": null
+  },
+  {
+   "id": 604,
+   "personnage_id": 30,
+   "feat_id": 51,
+   "notes": null
+  },
+  {
+   "id": 605,
+   "personnage_id": 30,
+   "feat_id": 52,
+   "notes": null
+  },
+  {
+   "id": 606,
+   "personnage_id": 30,
+   "feat_id": 53,
+   "notes": null
+  },
+  {
+   "id": 607,
+   "personnage_id": 30,
+   "feat_id": 54,
+   "notes": null
+  },
+  {
+   "id": 608,
+   "personnage_id": 30,
+   "feat_id": 55,
+   "notes": null
+  },
+  {
+   "id": 609,
+   "personnage_id": 30,
+   "feat_id": 56,
+   "notes": null
+  },
+  {
+   "id": 610,
+   "personnage_id": 30,
+   "feat_id": 6,
+   "notes": null
+  },
+  {
+   "id": 620,
+   "personnage_id": 35,
+   "feat_id": 66,
+   "notes": null
+  },
+  {
+   "id": 621,
+   "personnage_id": 35,
+   "feat_id": 67,
+   "notes": null
+  },
+  {
+   "id": 622,
+   "personnage_id": 35,
+   "feat_id": 68,
+   "notes": null
+  },
+  {
+   "id": 623,
+   "personnage_id": 35,
+   "feat_id": 69,
+   "notes": null
+  },
+  {
+   "id": 624,
+   "personnage_id": 35,
+   "feat_id": 70,
+   "notes": null
+  },
+  {
+   "id": 625,
+   "personnage_id": 35,
+   "feat_id": 71,
+   "notes": null
+  },
+  {
+   "id": 626,
+   "personnage_id": 35,
+   "feat_id": 72,
+   "notes": null
+  },
+  {
+   "id": 627,
+   "personnage_id": 35,
+   "feat_id": 73,
+   "notes": null
+  },
+  {
+   "id": 628,
+   "personnage_id": 35,
+   "feat_id": 74,
+   "notes": null
+  },
+  {
+   "id": 629,
+   "personnage_id": 35,
+   "feat_id": 75,
+   "notes": null
+  },
+  {
+   "id": 630,
+   "personnage_id": 35,
+   "feat_id": 76,
+   "notes": null
+  },
+  {
+   "id": 631,
+   "personnage_id": 36,
+   "feat_id": 77,
+   "notes": null
+  },
+  {
+   "id": 632,
+   "personnage_id": 36,
+   "feat_id": 78,
+   "notes": null
+  },
+  {
+   "id": 633,
+   "personnage_id": 36,
+   "feat_id": 79,
+   "notes": null
+  },
+  {
+   "id": 634,
+   "personnage_id": 36,
+   "feat_id": 80,
+   "notes": null
+  },
+  {
+   "id": 635,
+   "personnage_id": 36,
+   "feat_id": 81,
+   "notes": null
+  },
+  {
+   "id": 636,
+   "personnage_id": 37,
+   "feat_id": 77,
+   "notes": null
+  },
+  {
+   "id": 637,
+   "personnage_id": 37,
+   "feat_id": 82,
+   "notes": null
+  },
+  {
+   "id": 638,
+   "personnage_id": 37,
+   "feat_id": 81,
+   "notes": null
+  },
+  {
+   "id": 639,
+   "personnage_id": 37,
+   "feat_id": 80,
+   "notes": null
+  },
+  {
+   "id": 640,
+   "personnage_id": 37,
+   "feat_id": 83,
+   "notes": null
+  },
+  {
+   "id": 641,
+   "personnage_id": 37,
+   "feat_id": 84,
+   "notes": null
+  },
+  {
+   "id": 642,
+   "personnage_id": 37,
+   "feat_id": 85,
+   "notes": null
+  },
+  {
+   "id": 643,
+   "personnage_id": 37,
+   "feat_id": 86,
+   "notes": null
+  },
+  {
+   "id": 644,
+   "personnage_id": 38,
+   "feat_id": 87,
+   "notes": null
+  },
+  {
+   "id": 645,
+   "personnage_id": 38,
+   "feat_id": 88,
+   "notes": null
+  },
+  {
+   "id": 646,
+   "personnage_id": 38,
+   "feat_id": 89,
+   "notes": null
+  },
+  {
+   "id": 647,
+   "personnage_id": 38,
+   "feat_id": 90,
+   "notes": null
+  },
+  {
+   "id": 648,
+   "personnage_id": 38,
+   "feat_id": 89,
+   "notes": null
+  },
+  {
+   "id": 649,
+   "personnage_id": 38,
+   "feat_id": 91,
+   "notes": null
+  },
+  {
+   "id": 650,
+   "personnage_id": 39,
+   "feat_id": 92,
+   "notes": null
+  },
+  {
+   "id": 651,
+   "personnage_id": 39,
+   "feat_id": 93,
+   "notes": null
+  },
+  {
+   "id": 652,
+   "personnage_id": 39,
+   "feat_id": 94,
+   "notes": null
+  },
+  {
+   "id": 653,
+   "personnage_id": 39,
+   "feat_id": 95,
+   "notes": null
+  },
+  {
+   "id": 654,
+   "personnage_id": 39,
+   "feat_id": 96,
+   "notes": null
+  },
+  {
+   "id": 656,
+   "personnage_id": 39,
+   "feat_id": 98,
+   "notes": null
+  },
+  {
+   "id": 657,
+   "personnage_id": 39,
+   "feat_id": 99,
+   "notes": null
+  },
+  {
+   "id": 658,
+   "personnage_id": 39,
+   "feat_id": 100,
+   "notes": null
+  },
+  {
+   "id": 659,
+   "personnage_id": 39,
+   "feat_id": 101,
+   "notes": null
+  },
+  {
+   "id": 660,
+   "personnage_id": 27,
+   "feat_id": 82,
+   "notes": null
+  },
+  {
+   "id": 661,
+   "personnage_id": 27,
+   "feat_id": 102,
+   "notes": null
+  },
+  {
+   "id": 662,
+   "personnage_id": 27,
+   "feat_id": 75,
+   "notes": null
+  },
+  {
+   "id": 663,
+   "personnage_id": 27,
+   "feat_id": 96,
+   "notes": null
+  },
+  {
+   "id": 664,
+   "personnage_id": 27,
+   "feat_id": 103,
+   "notes": null
+  },
+  {
+   "id": 665,
+   "personnage_id": 27,
+   "feat_id": 95,
+   "notes": null
+  },
+  {
+   "id": 666,
+   "personnage_id": 27,
+   "feat_id": 94,
+   "notes": null
+  },
+  {
+   "id": 667,
+   "personnage_id": 27,
+   "feat_id": 104,
+   "notes": null
+  },
+  {
+   "id": 668,
+   "personnage_id": 27,
+   "feat_id": 105,
+   "notes": null
+  },
+  {
+   "id": 669,
+   "personnage_id": 30,
+   "feat_id": 106,
+   "notes": null
+  },
+  {
+   "id": 670,
+   "personnage_id": 30,
+   "feat_id": 107,
+   "notes": null
+  },
+  {
+   "id": 671,
+   "personnage_id": 41,
+   "feat_id": 93,
+   "notes": null
+  },
+  {
+   "id": 672,
+   "personnage_id": 41,
+   "feat_id": 108,
+   "notes": null
+  },
+  {
+   "id": 673,
+   "personnage_id": 41,
+   "feat_id": 109,
+   "notes": null
+  },
+  {
+   "id": 674,
+   "personnage_id": 41,
+   "feat_id": 110,
+   "notes": null
+  },
+  {
+   "id": 675,
+   "personnage_id": 41,
+   "feat_id": 111,
+   "notes": null
+  },
+  {
+   "id": 676,
+   "personnage_id": 41,
+   "feat_id": 329,
+   "notes": null
+  },
+  {
+   "id": 677,
+   "personnage_id": 41,
+   "feat_id": 113,
+   "notes": null
+  },
+  {
+   "id": 678,
+   "personnage_id": 41,
+   "feat_id": 114,
+   "notes": null
+  },
+  {
+   "id": 679,
+   "personnage_id": 41,
+   "feat_id": 115,
+   "notes": null
+  },
+  {
+   "id": 680,
+   "personnage_id": 41,
+   "feat_id": 116,
+   "notes": null
+  },
+  {
+   "id": 681,
+   "personnage_id": 42,
+   "feat_id": 330,
+   "notes": null
+  },
+  {
+   "id": 682,
+   "personnage_id": 42,
+   "feat_id": 330,
+   "notes": null
+  },
+  {
+   "id": 683,
+   "personnage_id": 42,
+   "feat_id": 119,
+   "notes": null
+  },
+  {
+   "id": 684,
+   "personnage_id": 42,
+   "feat_id": 120,
+   "notes": null
+  },
+  {
+   "id": 685,
+   "personnage_id": 42,
+   "feat_id": 331,
+   "notes": null
+  },
+  {
+   "id": 686,
+   "personnage_id": 42,
+   "feat_id": 122,
+   "notes": null
+  },
+  {
+   "id": 687,
+   "personnage_id": 42,
+   "feat_id": 123,
+   "notes": null
+  },
+  {
+   "id": 688,
+   "personnage_id": 42,
+   "feat_id": 124,
+   "notes": null
+  },
+  {
+   "id": 689,
+   "personnage_id": 30,
+   "feat_id": 125,
+   "notes": null
+  },
+  {
+   "id": 690,
+   "personnage_id": 28,
+   "feat_id": 126,
+   "notes": null
+  },
+  {
+   "id": 691,
+   "personnage_id": 24,
+   "feat_id": 127,
+   "notes": null
+  },
+  {
+   "id": 706,
+   "personnage_id": 28,
+   "feat_id": 142,
+   "notes": null
+  },
+  {
+   "id": 728,
+   "personnage_id": 46,
+   "feat_id": 164,
+   "notes": null
+  },
+  {
+   "id": 729,
+   "personnage_id": 46,
+   "feat_id": 18,
+   "notes": null
+  },
+  {
+   "id": 730,
+   "personnage_id": 46,
+   "feat_id": 20,
+   "notes": null
+  },
+  {
+   "id": 731,
+   "personnage_id": 46,
+   "feat_id": 165,
+   "notes": null
+  },
+  {
+   "id": 732,
+   "personnage_id": 46,
+   "feat_id": 52,
+   "notes": null
+  },
+  {
+   "id": 733,
+   "personnage_id": 46,
+   "feat_id": 166,
+   "notes": null
+  },
+  {
+   "id": 734,
+   "personnage_id": 46,
+   "feat_id": 167,
+   "notes": null
+  },
+  {
+   "id": 735,
+   "personnage_id": 46,
+   "feat_id": 168,
+   "notes": null
+  },
+  {
+   "id": 736,
+   "personnage_id": 46,
+   "feat_id": 169,
+   "notes": null
+  },
+  {
+   "id": 737,
+   "personnage_id": 46,
+   "feat_id": 170,
+   "notes": null
+  },
+  {
+   "id": 746,
+   "personnage_id": 42,
+   "feat_id": 178,
+   "notes": null
+  },
+  {
+   "id": 756,
+   "personnage_id": 46,
+   "feat_id": 150,
+   "notes": null
+  },
+  {
+   "id": 757,
+   "personnage_id": 46,
+   "feat_id": 188,
+   "notes": null
+  },
+  {
+   "id": 758,
+   "personnage_id": 48,
+   "feat_id": 189,
+   "notes": null
+  },
+  {
+   "id": 759,
+   "personnage_id": 48,
+   "feat_id": 190,
+   "notes": null
+  },
+  {
+   "id": 760,
+   "personnage_id": 48,
+   "feat_id": 335,
+   "notes": null
+  },
+  {
+   "id": 761,
+   "personnage_id": 48,
+   "feat_id": 192,
+   "notes": null
+  },
+  {
+   "id": 762,
+   "personnage_id": 48,
+   "feat_id": 193,
+   "notes": null
+  },
+  {
+   "id": 763,
+   "personnage_id": 48,
+   "feat_id": 194,
+   "notes": null
+  },
+  {
+   "id": 764,
+   "personnage_id": 48,
+   "feat_id": 195,
+   "notes": null
+  },
+  {
+   "id": 765,
+   "personnage_id": 48,
+   "feat_id": 196,
+   "notes": null
+  },
+  {
+   "id": 766,
+   "personnage_id": 48,
+   "feat_id": 197,
+   "notes": null
+  },
+  {
+   "id": 767,
+   "personnage_id": 48,
+   "feat_id": 198,
+   "notes": null
+  },
+  {
+   "id": 768,
+   "personnage_id": 48,
+   "feat_id": 199,
+   "notes": null
+  },
+  {
+   "id": 769,
+   "personnage_id": 48,
+   "feat_id": 200,
+   "notes": null
+  },
+  {
+   "id": 770,
+   "personnage_id": 48,
+   "feat_id": 201,
+   "notes": null
+  },
+  {
+   "id": 771,
+   "personnage_id": 48,
+   "feat_id": 202,
+   "notes": null
+  },
+  {
+   "id": 772,
+   "personnage_id": 51,
+   "feat_id": 203,
+   "notes": null
+  },
+  {
+   "id": 773,
+   "personnage_id": 51,
+   "feat_id": 204,
+   "notes": null
+  },
+  {
+   "id": 774,
+   "personnage_id": 51,
+   "feat_id": 161,
+   "notes": null
+  },
+  {
+   "id": 775,
+   "personnage_id": 51,
+   "feat_id": 162,
+   "notes": null
+  },
+  {
+   "id": 776,
+   "personnage_id": 51,
+   "feat_id": 205,
+   "notes": null
+  },
+  {
+   "id": 777,
+   "personnage_id": 51,
+   "feat_id": 177,
+   "notes": null
+  },
+  {
+   "id": 778,
+   "personnage_id": 51,
+   "feat_id": 206,
+   "notes": null
+  },
+  {
+   "id": 779,
+   "personnage_id": 51,
+   "feat_id": 332,
+   "notes": null
+  },
+  {
+   "id": 780,
+   "personnage_id": 51,
+   "feat_id": 332,
+   "notes": null
+  },
+  {
+   "id": 781,
+   "personnage_id": 51,
+   "feat_id": 333,
+   "notes": null
+  },
+  {
+   "id": 782,
+   "personnage_id": 39,
+   "feat_id": 209,
+   "notes": null
+  },
+  {
+   "id": 783,
+   "personnage_id": 39,
+   "feat_id": 210,
+   "notes": null
+  },
+  {
+   "id": 784,
+   "personnage_id": 39,
+   "feat_id": 211,
+   "notes": null
+  },
+  {
+   "id": 785,
+   "personnage_id": 39,
+   "feat_id": 212,
+   "notes": null
+  },
+  {
+   "id": 786,
+   "personnage_id": 39,
+   "feat_id": 213,
+   "notes": null
+  },
+  {
+   "id": 787,
+   "personnage_id": 39,
+   "feat_id": 33,
+   "notes": null
+  },
+  {
+   "id": 788,
+   "personnage_id": 39,
+   "feat_id": 214,
+   "notes": null
+  },
+  {
+   "id": 789,
+   "personnage_id": 39,
+   "feat_id": 215,
+   "notes": null
+  },
+  {
+   "id": 790,
+   "personnage_id": 39,
+   "feat_id": 92,
+   "notes": null
+  },
+  {
+   "id": 791,
+   "personnage_id": 39,
+   "feat_id": 216,
+   "notes": null
+  },
+  {
+   "id": 812,
+   "personnage_id": 53,
+   "feat_id": 235,
+   "notes": null
+  },
+  {
+   "id": 813,
+   "personnage_id": 53,
+   "feat_id": 236,
+   "notes": null
+  },
+  {
+   "id": 814,
+   "personnage_id": 53,
+   "feat_id": 237,
+   "notes": null
+  },
+  {
+   "id": 815,
+   "personnage_id": 54,
+   "feat_id": 336,
+   "notes": null
+  },
+  {
+   "id": 816,
+   "personnage_id": 54,
+   "feat_id": 336,
+   "notes": null
+  },
+  {
+   "id": 817,
+   "personnage_id": 54,
+   "feat_id": 240,
+   "notes": null
+  },
+  {
+   "id": 818,
+   "personnage_id": 54,
+   "feat_id": 241,
+   "notes": null
+  },
+  {
+   "id": 819,
+   "personnage_id": 54,
+   "feat_id": 242,
+   "notes": null
+  },
+  {
+   "id": 820,
+   "personnage_id": 54,
+   "feat_id": 243,
+   "notes": null
+  },
+  {
+   "id": 821,
+   "personnage_id": 55,
+   "feat_id": 244,
+   "notes": null
+  },
+  {
+   "id": 822,
+   "personnage_id": 55,
+   "feat_id": 245,
+   "notes": null
+  },
+  {
+   "id": 823,
+   "personnage_id": 56,
+   "feat_id": 336,
+   "notes": null
+  },
+  {
+   "id": 824,
+   "personnage_id": 56,
+   "feat_id": 336,
+   "notes": null
+  },
+  {
+   "id": 825,
+   "personnage_id": 56,
+   "feat_id": 247,
+   "notes": null
+  },
+  {
+   "id": 826,
+   "personnage_id": 56,
+   "feat_id": 248,
+   "notes": null
+  },
+  {
+   "id": 827,
+   "personnage_id": 56,
+   "feat_id": 249,
+   "notes": null
+  },
+  {
+   "id": 828,
+   "personnage_id": 56,
+   "feat_id": 250,
+   "notes": null
+  },
+  {
+   "id": 829,
+   "personnage_id": 56,
+   "feat_id": 251,
+   "notes": null
+  },
+  {
+   "id": 830,
+   "personnage_id": 56,
+   "feat_id": 252,
+   "notes": null
+  },
+  {
+   "id": 831,
+   "personnage_id": 56,
+   "feat_id": 253,
+   "notes": null
+  },
+  {
+   "id": 832,
+   "personnage_id": 56,
+   "feat_id": 254,
+   "notes": null
+  },
+  {
+   "id": 833,
+   "personnage_id": 56,
+   "feat_id": 255,
+   "notes": null
+  },
+  {
+   "id": 834,
+   "personnage_id": 56,
+   "feat_id": 256,
+   "notes": null
+  },
+  {
+   "id": 835,
+   "personnage_id": 56,
+   "feat_id": 257,
+   "notes": null
+  },
+  {
+   "id": 836,
+   "personnage_id": 56,
+   "feat_id": 258,
+   "notes": null
+  },
+  {
+   "id": 837,
+   "personnage_id": 56,
+   "feat_id": 259,
+   "notes": null
+  },
+  {
+   "id": 838,
+   "personnage_id": 55,
+   "feat_id": 260,
+   "notes": null
+  },
+  {
+   "id": 839,
+   "personnage_id": 55,
+   "feat_id": 261,
+   "notes": null
+  },
+  {
+   "id": 840,
+   "personnage_id": 55,
+   "feat_id": 262,
+   "notes": null
+  },
+  {
+   "id": 841,
+   "personnage_id": 55,
+   "feat_id": 263,
+   "notes": null
+  },
+  {
+   "id": 842,
+   "personnage_id": 55,
+   "feat_id": 264,
+   "notes": null
+  },
+  {
+   "id": 843,
+   "personnage_id": 55,
+   "feat_id": 265,
+   "notes": null
+  },
+  {
+   "id": 844,
+   "personnage_id": 55,
+   "feat_id": 266,
+   "notes": null
+  },
+  {
+   "id": 845,
+   "personnage_id": 54,
+   "feat_id": 267,
+   "notes": null
+  },
+  {
+   "id": 846,
+   "personnage_id": 54,
+   "feat_id": 253,
+   "notes": null
+  },
+  {
+   "id": 847,
+   "personnage_id": 54,
+   "feat_id": 254,
+   "notes": null
+  },
+  {
+   "id": 848,
+   "personnage_id": 54,
+   "feat_id": 255,
+   "notes": null
+  },
+  {
+   "id": 849,
+   "personnage_id": 54,
+   "feat_id": 256,
+   "notes": null
+  },
+  {
+   "id": 850,
+   "personnage_id": 54,
+   "feat_id": 257,
+   "notes": null
+  },
+  {
+   "id": 851,
+   "personnage_id": 54,
+   "feat_id": 258,
+   "notes": null
+  },
+  {
+   "id": 852,
+   "personnage_id": 54,
+   "feat_id": 259,
+   "notes": null
+  },
+  {
+   "id": 853,
+   "personnage_id": 53,
+   "feat_id": 268,
+   "notes": null
+  },
+  {
+   "id": 854,
+   "personnage_id": 53,
+   "feat_id": 269,
+   "notes": null
+  },
+  {
+   "id": 855,
+   "personnage_id": 53,
+   "feat_id": 270,
+   "notes": null
+  },
+  {
+   "id": 856,
+   "personnage_id": 53,
+   "feat_id": 271,
+   "notes": null
+  },
+  {
+   "id": 857,
+   "personnage_id": 53,
+   "feat_id": 126,
+   "notes": null
+  },
+  {
+   "id": 858,
+   "personnage_id": 54,
+   "feat_id": 126,
+   "notes": null
+  },
+  {
+   "id": 859,
+   "personnage_id": 53,
+   "feat_id": 272,
+   "notes": null
+  },
+  {
+   "id": 860,
+   "personnage_id": 57,
+   "feat_id": 273,
+   "notes": null
+  },
+  {
+   "id": 861,
+   "personnage_id": 57,
+   "feat_id": 274,
+   "notes": null
+  },
+  {
+   "id": 862,
+   "personnage_id": 57,
+   "feat_id": 275,
+   "notes": null
+  },
+  {
+   "id": 863,
+   "personnage_id": 57,
+   "feat_id": 276,
+   "notes": null
+  },
+  {
+   "id": 864,
+   "personnage_id": 57,
+   "feat_id": 277,
+   "notes": null
+  },
+  {
+   "id": 865,
+   "personnage_id": 57,
+   "feat_id": 278,
+   "notes": null
+  },
+  {
+   "id": 866,
+   "personnage_id": 57,
+   "feat_id": 279,
+   "notes": null
+  },
+  {
+   "id": 867,
+   "personnage_id": 57,
+   "feat_id": 280,
+   "notes": null
+  },
+  {
+   "id": 868,
+   "personnage_id": 52,
+   "feat_id": 281,
+   "notes": null
+  },
+  {
+   "id": 869,
+   "personnage_id": 52,
+   "feat_id": 282,
+   "notes": null
+  },
+  {
+   "id": 870,
+   "personnage_id": 52,
+   "feat_id": 283,
+   "notes": null
+  },
+  {
+   "id": 871,
+   "personnage_id": 52,
+   "feat_id": 284,
+   "notes": null
+  },
+  {
+   "id": 872,
+   "personnage_id": 52,
+   "feat_id": 285,
+   "notes": null
+  },
+  {
+   "id": 873,
+   "personnage_id": 52,
+   "feat_id": 286,
+   "notes": null
+  },
+  {
+   "id": 874,
+   "personnage_id": 52,
+   "feat_id": 82,
+   "notes": null
+  },
+  {
+   "id": 875,
+   "personnage_id": 52,
+   "feat_id": 287,
+   "notes": null
+  },
+  {
+   "id": 876,
+   "personnage_id": 52,
+   "feat_id": 288,
+   "notes": null
+  },
+  {
+   "id": 877,
+   "personnage_id": 52,
+   "feat_id": 289,
+   "notes": null
+  },
+  {
+   "id": 878,
+   "personnage_id": 52,
+   "feat_id": 290,
+   "notes": null
+  },
+  {
+   "id": 879,
+   "personnage_id": 52,
+   "feat_id": 291,
+   "notes": null
+  },
+  {
+   "id": 880,
+   "personnage_id": 53,
+   "feat_id": 292,
+   "notes": null
+  },
+  {
+   "id": 881,
+   "personnage_id": 59,
+   "feat_id": 293,
+   "notes": null
+  },
+  {
+   "id": 882,
+   "personnage_id": 59,
+   "feat_id": 294,
+   "notes": null
+  },
+  {
+   "id": 883,
+   "personnage_id": 59,
+   "feat_id": 295,
+   "notes": null
+  },
+  {
+   "id": 884,
+   "personnage_id": 59,
+   "feat_id": 296,
+   "notes": null
+  },
+  {
+   "id": 885,
+   "personnage_id": 59,
+   "feat_id": 337,
+   "notes": null
+  },
+  {
+   "id": 886,
+   "personnage_id": 59,
+   "feat_id": 298,
+   "notes": null
+  },
+  {
+   "id": 887,
+   "personnage_id": 59,
+   "feat_id": 338,
+   "notes": null
+  },
+  {
+   "id": 888,
+   "personnage_id": 59,
+   "feat_id": 339,
+   "notes": null
+  },
+  {
+   "id": 889,
+   "personnage_id": 59,
+   "feat_id": 340,
+   "notes": null
+  },
+  {
+   "id": 890,
+   "personnage_id": 60,
+   "feat_id": 262,
+   "notes": null
+  },
+  {
+   "id": 891,
+   "personnage_id": 60,
+   "feat_id": 70,
+   "notes": null
+  },
+  {
+   "id": 892,
+   "personnage_id": 60,
+   "feat_id": 302,
+   "notes": null
+  },
+  {
+   "id": 893,
+   "personnage_id": 60,
+   "feat_id": 341,
+   "notes": null
+  },
+  {
+   "id": 894,
+   "personnage_id": 60,
+   "feat_id": 342,
+   "notes": null
+  },
+  {
+   "id": 895,
+   "personnage_id": 60,
+   "feat_id": 305,
+   "notes": null
+  },
+  {
+   "id": 896,
+   "personnage_id": 60,
+   "feat_id": 306,
+   "notes": null
+  },
+  {
+   "id": 897,
+   "personnage_id": 60,
+   "feat_id": 307,
+   "notes": null
+  },
+  {
+   "id": 898,
+   "personnage_id": 60,
+   "feat_id": 343,
+   "notes": null
+  },
+  {
+   "id": 899,
+   "personnage_id": 60,
+   "feat_id": 309,
+   "notes": null
+  },
+  {
+   "id": 900,
+   "personnage_id": 60,
+   "feat_id": 344,
+   "notes": null
+  },
+  {
+   "id": 901,
+   "personnage_id": 60,
+   "feat_id": 345,
+   "notes": null
+  },
+  {
+   "id": 902,
+   "personnage_id": 60,
+   "feat_id": 346,
+   "notes": null
+  },
+  {
+   "id": 903,
+   "personnage_id": 60,
+   "feat_id": 347,
+   "notes": null
+  },
+  {
+   "id": 904,
+   "personnage_id": 60,
+   "feat_id": 348,
+   "notes": null
+  },
+  {
+   "id": 905,
+   "personnage_id": 60,
+   "feat_id": 349,
+   "notes": null
+  },
+  {
+   "id": 906,
+   "personnage_id": 60,
+   "feat_id": 350,
+   "notes": null
+  },
+  {
+   "id": 907,
+   "personnage_id": 61,
+   "feat_id": 317,
+   "notes": null
+  },
+  {
+   "id": 908,
+   "personnage_id": 61,
+   "feat_id": 351,
+   "notes": null
+  },
+  {
+   "id": 909,
+   "personnage_id": 61,
+   "feat_id": 352,
+   "notes": null
+  },
+  {
+   "id": 910,
+   "personnage_id": 61,
+   "feat_id": 353,
+   "notes": null
+  },
+  {
+   "id": 911,
+   "personnage_id": 61,
+   "feat_id": 354,
+   "notes": null
+  },
+  {
+   "id": 912,
+   "personnage_id": 61,
+   "feat_id": 355,
+   "notes": null
+  },
+  {
+   "id": 913,
+   "personnage_id": 61,
+   "feat_id": 306,
+   "notes": null
+  },
+  {
+   "id": 914,
+   "personnage_id": 61,
+   "feat_id": 323,
+   "notes": null
+  },
+  {
+   "id": 915,
+   "personnage_id": 61,
+   "feat_id": 356,
+   "notes": null
+  },
+  {
+   "id": 916,
+   "personnage_id": 61,
+   "feat_id": 357,
+   "notes": null
+  },
+  {
+   "id": 917,
+   "personnage_id": 61,
+   "feat_id": 358,
+   "notes": null
+  },
+  {
+   "id": 918,
+   "personnage_id": 61,
+   "feat_id": 358,
+   "notes": null
+  },
+  {
+   "id": 919,
+   "personnage_id": 61,
+   "feat_id": 328,
+   "notes": null
+  },
+  {
+   "id": 920,
+   "personnage_id": 61,
+   "feat_id": 359,
+   "notes": null
+  },
+  {
+   "id": 921,
+   "personnage_id": 61,
+   "feat_id": 360,
+   "notes": null
+  },
+  {
+   "id": 922,
+   "personnage_id": 61,
+   "feat_id": 361,
+   "notes": null
+  },
+  {
+   "id": 923,
+   "personnage_id": 42,
+   "feat_id": 362,
+   "notes": null
+  },
+  {
+   "id": 924,
+   "personnage_id": 42,
+   "feat_id": 363,
+   "notes": null
+  },
+  {
+   "id": 925,
+   "personnage_id": 42,
+   "feat_id": 364,
+   "notes": null
+  },
+  {
+   "id": 926,
+   "personnage_id": 42,
+   "feat_id": 362,
+   "notes": null
+  },
+  {
+   "id": 927,
+   "personnage_id": 42,
+   "feat_id": 363,
+   "notes": null
+  },
+  {
+   "id": 928,
+   "personnage_id": 42,
+   "feat_id": 364,
+   "notes": null
+  },
+  {
+   "id": 929,
+   "personnage_id": 42,
+   "feat_id": 365,
+   "notes": null
+  },
+  {
+   "id": 930,
+   "personnage_id": 62,
+   "feat_id": 366,
+   "notes": null
+  },
+  {
+   "id": 931,
+   "personnage_id": 63,
+   "feat_id": 367,
+   "notes": null
+  },
+  {
+   "id": 932,
+   "personnage_id": 63,
+   "feat_id": 368,
+   "notes": null
+  },
+  {
+   "id": 933,
+   "personnage_id": 63,
+   "feat_id": 369,
+   "notes": null
+  },
+  {
+   "id": 934,
+   "personnage_id": 63,
+   "feat_id": 370,
+   "notes": null
+  },
+  {
+   "id": 935,
+   "personnage_id": 63,
+   "feat_id": 371,
+   "notes": null
+  },
+  {
+   "id": 936,
+   "personnage_id": 58,
+   "feat_id": 372,
+   "notes": null
+  },
+  {
+   "id": 937,
+   "personnage_id": 58,
+   "feat_id": 373,
+   "notes": null
+  },
+  {
+   "id": 938,
+   "personnage_id": 58,
+   "feat_id": 374,
+   "notes": null
+  },
+  {
+   "id": 939,
+   "personnage_id": 58,
+   "feat_id": 375,
+   "notes": null
+  },
+  {
+   "id": 940,
+   "personnage_id": 58,
+   "feat_id": 376,
+   "notes": null
+  },
+  {
+   "id": 941,
+   "personnage_id": 46,
+   "feat_id": 377,
+   "notes": null
+  },
+  {
+   "id": 942,
+   "personnage_id": 46,
+   "feat_id": 378,
+   "notes": null
+  },
+  {
+   "id": 945,
+   "personnage_id": 66,
+   "feat_id": 380,
+   "notes": null
+  },
+  {
+   "id": 946,
+   "personnage_id": 66,
+   "feat_id": 381,
+   "notes": null
+  },
+  {
+   "id": 947,
+   "personnage_id": 66,
+   "feat_id": 382,
+   "notes": null
+  },
+  {
+   "id": 948,
+   "personnage_id": 66,
+   "feat_id": 383,
+   "notes": null
+  },
+  {
+   "id": 949,
+   "personnage_id": 66,
+   "feat_id": 384,
+   "notes": null
+  },
+  {
+   "id": 950,
+   "personnage_id": 66,
+   "feat_id": 385,
+   "notes": null
+  },
+  {
+   "id": 951,
+   "personnage_id": 66,
+   "feat_id": 386,
+   "notes": null
+  },
+  {
+   "id": 952,
+   "personnage_id": 66,
+   "feat_id": 387,
+   "notes": null
+  },
+  {
+   "id": 953,
+   "personnage_id": 66,
+   "feat_id": 18,
+   "notes": null
+  },
+  {
+   "id": 954,
+   "personnage_id": 66,
+   "feat_id": 388,
+   "notes": null
+  },
+  {
+   "id": 955,
+   "personnage_id": 66,
+   "feat_id": 364,
+   "notes": null
+  },
+  {
+   "id": 956,
+   "personnage_id": 66,
+   "feat_id": 365,
+   "notes": null
+  },
+  {
+   "id": 957,
+   "personnage_id": 28,
+   "feat_id": 389,
+   "notes": null
+  },
+  {
+   "id": 958,
+   "personnage_id": 68,
+   "feat_id": 390,
+   "notes": null
+  },
+  {
+   "id": 959,
+   "personnage_id": 68,
+   "feat_id": 391,
+   "notes": null
+  },
+  {
+   "id": 960,
+   "personnage_id": 68,
+   "feat_id": 392,
+   "notes": null
+  },
+  {
+   "id": 961,
+   "personnage_id": 68,
+   "feat_id": 393,
+   "notes": null
+  },
+  {
+   "id": 962,
+   "personnage_id": 67,
+   "feat_id": 394,
+   "notes": null
+  },
+  {
+   "id": 963,
+   "personnage_id": 67,
+   "feat_id": 395,
+   "notes": null
+  },
+  {
+   "id": 964,
+   "personnage_id": 67,
+   "feat_id": 396,
+   "notes": null
+  },
+  {
+   "id": 965,
+   "personnage_id": 67,
+   "feat_id": 397,
+   "notes": null
+  },
+  {
+   "id": 966,
+   "personnage_id": 67,
+   "feat_id": 398,
+   "notes": null
+  },
+  {
+   "id": 967,
+   "personnage_id": 68,
+   "feat_id": 399,
+   "notes": null
+  },
+  {
+   "id": 971,
+   "personnage_id": 71,
+   "feat_id": 401,
+   "notes": null
+  },
+  {
+   "id": 972,
+   "personnage_id": 71,
+   "feat_id": 402,
+   "notes": null
+  },
+  {
+   "id": 973,
+   "personnage_id": 71,
+   "feat_id": 403,
+   "notes": null
+  },
+  {
+   "id": 974,
+   "personnage_id": 72,
+   "feat_id": 377,
+   "notes": null
+  },
+  {
+   "id": 975,
+   "personnage_id": 72,
+   "feat_id": 404,
+   "notes": null
+  },
+  {
+   "id": 976,
+   "personnage_id": 72,
+   "feat_id": 405,
+   "notes": null
+  },
+  {
+   "id": 977,
+   "personnage_id": 72,
+   "feat_id": 166,
+   "notes": null
+  },
+  {
+   "id": 978,
+   "personnage_id": 72,
+   "feat_id": 406,
+   "notes": null
+  },
+  {
+   "id": 979,
+   "personnage_id": 72,
+   "feat_id": 407,
+   "notes": null
+  },
+  {
+   "id": 980,
+   "personnage_id": 72,
+   "feat_id": 408,
+   "notes": null
+  },
+  {
+   "id": 981,
+   "personnage_id": 72,
+   "feat_id": 6,
+   "notes": null
+  },
+  {
+   "id": 982,
+   "personnage_id": 72,
+   "feat_id": 409,
+   "notes": null
+  },
+  {
+   "id": 983,
+   "personnage_id": 71,
+   "feat_id": 410,
+   "notes": null
+  },
+  {
+   "id": 984,
+   "personnage_id": 71,
+   "feat_id": 411,
+   "notes": null
+  },
+  {
+   "id": 985,
+   "personnage_id": 74,
+   "feat_id": 412,
+   "notes": null
+  },
+  {
+   "id": 986,
+   "personnage_id": 76,
+   "feat_id": 413,
+   "notes": null
+  },
+  {
+   "id": 987,
+   "personnage_id": 75,
+   "feat_id": 414,
+   "notes": null
+  },
+  {
+   "id": 988,
+   "personnage_id": 74,
+   "feat_id": 415,
+   "notes": null
+  },
+  {
+   "id": 989,
+   "personnage_id": 74,
+   "feat_id": 416,
+   "notes": null
+  },
+  {
+   "id": 990,
+   "personnage_id": 76,
+   "feat_id": 417,
+   "notes": null
+  },
+  {
+   "id": 991,
+   "personnage_id": 76,
+   "feat_id": 418,
+   "notes": null
+  },
+  {
+   "id": 992,
+   "personnage_id": 75,
+   "feat_id": 419,
+   "notes": null
+  },
+  {
+   "id": 993,
+   "personnage_id": 74,
+   "feat_id": 420,
+   "notes": null
+  },
+  {
+   "id": 994,
+   "personnage_id": 74,
+   "feat_id": 421,
+   "notes": null
+  },
+  {
+   "id": 995,
+   "personnage_id": 76,
+   "feat_id": 422,
+   "notes": null
+  },
+  {
+   "id": 996,
+   "personnage_id": 76,
+   "feat_id": 423,
+   "notes": null
+  },
+  {
+   "id": 997,
+   "personnage_id": 75,
+   "feat_id": 424,
+   "notes": null
+  },
+  {
+   "id": 998,
+   "personnage_id": 76,
+   "feat_id": 425,
+   "notes": null
+  },
+  {
+   "id": 999,
+   "personnage_id": 74,
+   "feat_id": 426,
+   "notes": null
+  },
+  {
+   "id": 1000,
+   "personnage_id": 75,
+   "feat_id": 427,
+   "notes": null
+  },
+  {
+   "id": 1001,
+   "personnage_id": 76,
+   "feat_id": 427,
+   "notes": null
+  },
+  {
+   "id": 1002,
+   "personnage_id": 77,
+   "feat_id": 428,
+   "notes": null
+  },
+  {
+   "id": 1003,
+   "personnage_id": 77,
+   "feat_id": 429,
+   "notes": null
+  },
+  {
+   "id": 1004,
+   "personnage_id": 77,
+   "feat_id": 430,
+   "notes": null
+  },
+  {
+   "id": 1009,
+   "personnage_id": 67,
+   "feat_id": 434,
+   "notes": null
+  },
+  {
+   "id": 1010,
+   "personnage_id": 67,
+   "feat_id": 435,
+   "notes": null
+  },
+  {
+   "id": 1011,
+   "personnage_id": 78,
+   "feat_id": 436,
+   "notes": null
+  },
+  {
+   "id": 1012,
+   "personnage_id": 78,
+   "feat_id": 393,
+   "notes": null
+  },
+  {
+   "id": 1013,
+   "personnage_id": 78,
+   "feat_id": 437,
+   "notes": null
+  },
+  {
+   "id": 1014,
+   "personnage_id": 79,
+   "feat_id": 438,
+   "notes": null
+  },
+  {
+   "id": 1015,
+   "personnage_id": 79,
+   "feat_id": 439,
+   "notes": null
+  },
+  {
+   "id": 1016,
+   "personnage_id": 79,
+   "feat_id": 440,
+   "notes": null
+  },
+  {
+   "id": 1017,
+   "personnage_id": 79,
+   "feat_id": 441,
+   "notes": null
+  },
+  {
+   "id": 1018,
+   "personnage_id": 81,
+   "feat_id": 134,
+   "notes": null
+  },
+  {
+   "id": 1019,
+   "personnage_id": 81,
+   "feat_id": 442,
+   "notes": null
+  },
+  {
+   "id": 1020,
+   "personnage_id": 81,
+   "feat_id": 443,
+   "notes": null
+  },
+  {
+   "id": 1021,
+   "personnage_id": 81,
+   "feat_id": 444,
+   "notes": null
+  },
+  {
+   "id": 1022,
+   "personnage_id": 81,
+   "feat_id": 445,
+   "notes": null
+  },
+  {
+   "id": 1023,
+   "personnage_id": 80,
+   "feat_id": 446,
+   "notes": null
+  },
+  {
+   "id": 1024,
+   "personnage_id": 80,
+   "feat_id": 447,
+   "notes": null
+  },
+  {
+   "id": 1025,
+   "personnage_id": 80,
+   "feat_id": 448,
+   "notes": null
+  },
+  {
+   "id": 1026,
+   "personnage_id": 80,
+   "feat_id": 449,
+   "notes": null
+  },
+  {
+   "id": 1027,
+   "personnage_id": 80,
+   "feat_id": 450,
+   "notes": null
+  },
+  {
+   "id": 1028,
+   "personnage_id": 80,
+   "feat_id": 451,
+   "notes": null
+  },
+  {
+   "id": 1029,
+   "personnage_id": 80,
+   "feat_id": 452,
+   "notes": null
+  },
+  {
+   "id": 1030,
+   "personnage_id": 80,
+   "feat_id": 368,
+   "notes": null
+  },
+  {
+   "id": 1031,
+   "personnage_id": 80,
+   "feat_id": 453,
+   "notes": null
+  },
+  {
+   "id": 1032,
+   "personnage_id": 78,
+   "feat_id": 454,
+   "notes": null
+  },
+  {
+   "id": 1033,
+   "personnage_id": 78,
+   "feat_id": 455,
+   "notes": null
+  },
+  {
+   "id": 1034,
+   "personnage_id": 78,
+   "feat_id": 456,
+   "notes": null
+  },
+  {
+   "id": 1035,
+   "personnage_id": 78,
+   "feat_id": 457,
+   "notes": null
+  },
+  {
+   "id": 1036,
+   "personnage_id": 78,
+   "feat_id": 458,
+   "notes": null
+  },
+  {
+   "id": 1037,
+   "personnage_id": 68,
+   "feat_id": 459,
+   "notes": null
+  },
+  {
+   "id": 1038,
+   "personnage_id": 68,
+   "feat_id": 460,
+   "notes": null
+  },
+  {
+   "id": 1039,
+   "personnage_id": 68,
+   "feat_id": 461,
+   "notes": null
+  },
+  {
+   "id": 1040,
+   "personnage_id": 68,
+   "feat_id": 125,
+   "notes": null
+  },
+  {
+   "id": 1041,
+   "personnage_id": 67,
+   "feat_id": 462,
+   "notes": null
+  },
+  {
+   "id": 1042,
+   "personnage_id": 67,
+   "feat_id": 463,
+   "notes": null
+  },
+  {
+   "id": 1043,
+   "personnage_id": 67,
+   "feat_id": 464,
+   "notes": null
+  },
+  {
+   "id": 1044,
+   "personnage_id": 74,
+   "feat_id": 465,
+   "notes": null
+  },
+  {
+   "id": 1045,
+   "personnage_id": 68,
+   "feat_id": 466,
+   "notes": null
+  },
+  {
+   "id": 1046,
+   "personnage_id": 82,
+   "feat_id": 467,
+   "notes": null
+  },
+  {
+   "id": 1047,
+   "personnage_id": 82,
+   "feat_id": 468,
+   "notes": null
+  },
+  {
+   "id": 1048,
+   "personnage_id": 82,
+   "feat_id": 13,
+   "notes": null
+  },
+  {
+   "id": 1063,
+   "personnage_id": 70,
+   "feat_id": 13,
+   "notes": null
+  },
+  {
+   "id": 1064,
+   "personnage_id": 70,
+   "feat_id": 141,
+   "notes": null
+  },
+  {
+   "id": 1065,
+   "personnage_id": 70,
+   "feat_id": 400,
+   "notes": null
+  },
+  {
+   "id": 1066,
+   "personnage_id": 47,
+   "feat_id": 125,
+   "notes": null
+  },
+  {
+   "id": 1067,
+   "personnage_id": 47,
+   "feat_id": 179,
+   "notes": null
+  },
+  {
+   "id": 1068,
+   "personnage_id": 47,
+   "feat_id": 180,
+   "notes": null
+  },
+  {
+   "id": 1069,
+   "personnage_id": 47,
+   "feat_id": 181,
+   "notes": null
+  },
+  {
+   "id": 1070,
+   "personnage_id": 47,
+   "feat_id": 182,
+   "notes": null
+  },
+  {
+   "id": 1071,
+   "personnage_id": 47,
+   "feat_id": 183,
+   "notes": null
+  },
+  {
+   "id": 1072,
+   "personnage_id": 47,
+   "feat_id": 433,
+   "notes": null
+  },
+  {
+   "id": 1110,
+   "personnage_id": 49,
+   "feat_id": 51,
+   "notes": null
+  },
+  {
+   "id": 1111,
+   "personnage_id": 49,
+   "feat_id": 150,
+   "notes": null
+  },
+  {
+   "id": 1112,
+   "personnage_id": 49,
+   "feat_id": 217,
+   "notes": null
+  },
+  {
+   "id": 1113,
+   "personnage_id": 49,
+   "feat_id": 218,
+   "notes": null
+  },
+  {
+   "id": 1114,
+   "personnage_id": 49,
+   "feat_id": 219,
+   "notes": null
+  },
+  {
+   "id": 1115,
+   "personnage_id": 49,
+   "feat_id": 220,
+   "notes": null
+  },
+  {
+   "id": 1116,
+   "personnage_id": 49,
+   "feat_id": 221,
+   "notes": null
+  },
+  {
+   "id": 1117,
+   "personnage_id": 49,
+   "feat_id": 222,
+   "notes": null
+  },
+  {
+   "id": 1118,
+   "personnage_id": 49,
+   "feat_id": 223,
+   "notes": null
+  },
+  {
+   "id": 1119,
+   "personnage_id": 49,
+   "feat_id": 224,
+   "notes": null
+  },
+  {
+   "id": 1120,
+   "personnage_id": 45,
+   "feat_id": 143,
+   "notes": null
+  },
+  {
+   "id": 1121,
+   "personnage_id": 45,
+   "feat_id": 144,
+   "notes": null
+  },
+  {
+   "id": 1122,
+   "personnage_id": 45,
+   "feat_id": 145,
+   "notes": null
+  },
+  {
+   "id": 1123,
+   "personnage_id": 45,
+   "feat_id": 146,
+   "notes": null
+  },
+  {
+   "id": 1124,
+   "personnage_id": 45,
+   "feat_id": 147,
+   "notes": null
+  },
+  {
+   "id": 1125,
+   "personnage_id": 45,
+   "feat_id": 148,
+   "notes": null
+  },
+  {
+   "id": 1126,
+   "personnage_id": 45,
+   "feat_id": 149,
+   "notes": null
+  },
+  {
+   "id": 1127,
+   "personnage_id": 45,
+   "feat_id": 156,
+   "notes": null
+  },
+  {
+   "id": 1128,
+   "personnage_id": 45,
+   "feat_id": 157,
+   "notes": null
+  },
+  {
+   "id": 1129,
+   "personnage_id": 45,
+   "feat_id": 158,
+   "notes": null
+  },
+  {
+   "id": 1130,
+   "personnage_id": 45,
+   "feat_id": 161,
+   "notes": null
+  },
+  {
+   "id": 1131,
+   "personnage_id": 45,
+   "feat_id": 162,
+   "notes": null
+  },
+  {
+   "id": 1132,
+   "personnage_id": 45,
+   "feat_id": 163,
+   "notes": null
+  },
+  {
+   "id": 1133,
+   "personnage_id": 45,
+   "feat_id": 177,
+   "notes": null
+  },
+  {
+   "id": 1134,
+   "personnage_id": 45,
+   "feat_id": 184,
+   "notes": null
+  },
+  {
+   "id": 1135,
+   "personnage_id": 45,
+   "feat_id": 332,
+   "notes": null
+  },
+  {
+   "id": 1136,
+   "personnage_id": 45,
+   "feat_id": 332,
+   "notes": null
+  },
+  {
+   "id": 1137,
+   "personnage_id": 45,
+   "feat_id": 333,
+   "notes": null
+  },
+  {
+   "id": 1138,
+   "personnage_id": 45,
+   "feat_id": 334,
+   "notes": null
+  },
+  {
+   "id": 1139,
+   "personnage_id": 45,
+   "feat_id": 431,
+   "notes": null
+  },
+  {
+   "id": 1140,
+   "personnage_id": 45,
+   "feat_id": 432,
+   "notes": null
+  },
+  {
+   "id": 1156,
+   "personnage_id": 33,
+   "feat_id": 97,
+   "notes": null
+  },
+  {
+   "id": 1262,
+   "personnage_id": 83,
+   "feat_id": 473,
+   "notes": null
+  },
+  {
+   "id": 1263,
+   "personnage_id": 83,
+   "feat_id": 25,
+   "notes": null
+  },
+  {
+   "id": 1264,
+   "personnage_id": 83,
+   "feat_id": 6,
+   "notes": null
+  },
+  {
+   "id": 1265,
+   "personnage_id": 83,
+   "feat_id": 474,
+   "notes": null
+  },
+  {
+   "id": 1286,
+   "personnage_id": 22,
+   "feat_id": 106,
+   "notes": null
+  },
+  {
+   "id": 1287,
+   "personnage_id": 22,
+   "feat_id": 150,
+   "notes": null
+  },
+  {
+   "id": 1288,
+   "personnage_id": 22,
+   "feat_id": 151,
+   "notes": null
+  },
+  {
+   "id": 1289,
+   "personnage_id": 22,
+   "feat_id": 152,
+   "notes": null
+  },
+  {
+   "id": 1290,
+   "personnage_id": 22,
+   "feat_id": 153,
+   "notes": null
+  },
+  {
+   "id": 1291,
+   "personnage_id": 22,
+   "feat_id": 154,
+   "notes": null
+  },
+  {
+   "id": 1292,
+   "personnage_id": 22,
+   "feat_id": 155,
+   "notes": null
+  },
+  {
+   "id": 1293,
+   "personnage_id": 22,
+   "feat_id": 171,
+   "notes": null
+  },
+  {
+   "id": 1294,
+   "personnage_id": 22,
+   "feat_id": 172,
+   "notes": null
+  },
+  {
+   "id": 1295,
+   "personnage_id": 22,
+   "feat_id": 173,
+   "notes": null
+  },
+  {
+   "id": 1296,
+   "personnage_id": 22,
+   "feat_id": 174,
+   "notes": null
+  },
+  {
+   "id": 1297,
+   "personnage_id": 22,
+   "feat_id": 175,
+   "notes": null
+  },
+  {
+   "id": 1298,
+   "personnage_id": 22,
+   "feat_id": 176,
+   "notes": null
+  },
+  {
+   "id": 1299,
+   "personnage_id": 22,
+   "feat_id": 187,
+   "notes": null
+  },
+  {
+   "id": 1300,
+   "personnage_id": 43,
+   "feat_id": 128,
+   "notes": null
+  },
+  {
+   "id": 1301,
+   "personnage_id": 43,
+   "feat_id": 129,
+   "notes": null
+  },
+  {
+   "id": 1302,
+   "personnage_id": 43,
+   "feat_id": 130,
+   "notes": null
+  },
+  {
+   "id": 1303,
+   "personnage_id": 43,
+   "feat_id": 131,
+   "notes": null
+  },
+  {
+   "id": 1304,
+   "personnage_id": 43,
+   "feat_id": 132,
+   "notes": null
+  },
+  {
+   "id": 1305,
+   "personnage_id": 43,
+   "feat_id": 133,
+   "notes": null
+  },
+  {
+   "id": 1306,
+   "personnage_id": 43,
+   "feat_id": 134,
+   "notes": null
+  },
+  {
+   "id": 1307,
+   "personnage_id": 43,
+   "feat_id": 135,
+   "notes": null
+  },
+  {
+   "id": 1308,
+   "personnage_id": 43,
+   "feat_id": 136,
+   "notes": null
+  },
+  {
+   "id": 1309,
+   "personnage_id": 43,
+   "feat_id": 137,
+   "notes": null
+  },
+  {
+   "id": 1310,
+   "personnage_id": 43,
+   "feat_id": 138,
+   "notes": null
+  },
+  {
+   "id": 1311,
+   "personnage_id": 43,
+   "feat_id": 139,
+   "notes": null
+  },
+  {
+   "id": 1312,
+   "personnage_id": 43,
+   "feat_id": 140,
+   "notes": null
+  },
+  {
+   "id": 1313,
+   "personnage_id": 43,
+   "feat_id": 141,
+   "notes": null
+  },
+  {
+   "id": 1374,
+   "personnage_id": 20,
+   "feat_id": 6,
+   "notes": null
+  },
+  {
+   "id": 1375,
+   "personnage_id": 20,
+   "feat_id": 469,
+   "notes": null
+  },
+  {
+   "id": 1376,
+   "personnage_id": 20,
+   "feat_id": 470,
+   "notes": null
+  },
+  {
+   "id": 1377,
+   "personnage_id": 20,
+   "feat_id": 470,
+   "notes": null
+  },
+  {
+   "id": 1378,
+   "personnage_id": 20,
+   "feat_id": 471,
+   "notes": null
+  },
+  {
+   "id": 1379,
+   "personnage_id": 20,
+   "feat_id": 472,
+   "notes": null
+  },
+  {
+   "id": 1386,
+   "personnage_id": 1,
+   "feat_id": 2,
+   "notes": null
+  },
+  {
+   "id": 1387,
+   "personnage_id": 1,
+   "feat_id": 3,
+   "notes": null
+  },
+  {
+   "id": 1388,
+   "personnage_id": 1,
+   "feat_id": 6,
+   "notes": null
+  },
+  {
+   "id": 1389,
+   "personnage_id": 1,
+   "feat_id": 22,
+   "notes": null
+  },
+  {
+   "id": 1390,
+   "personnage_id": 1,
+   "feat_id": 23,
+   "notes": null
+  },
+  {
+   "id": 1391,
+   "personnage_id": 1,
+   "feat_id": 24,
+   "notes": null
+  },
+  {
+   "id": 1395,
+   "personnage_id": 85,
+   "feat_id": 473,
+   "notes": null
+  },
+  {
+   "id": 1396,
+   "personnage_id": 85,
+   "feat_id": 25,
+   "notes": null
+  },
+  {
+   "id": 1397,
+   "personnage_id": 85,
+   "feat_id": 6,
+   "notes": null
+  },
+  {
+   "id": 1408,
+   "personnage_id": 50,
+   "feat_id": 225,
+   "notes": null
+  },
+  {
+   "id": 1409,
+   "personnage_id": 50,
+   "feat_id": 226,
+   "notes": null
+  },
+  {
+   "id": 1410,
+   "personnage_id": 50,
+   "feat_id": 227,
+   "notes": null
+  },
+  {
+   "id": 1411,
+   "personnage_id": 50,
+   "feat_id": 228,
+   "notes": null
+  },
+  {
+   "id": 1412,
+   "personnage_id": 50,
+   "feat_id": 229,
+   "notes": null
+  },
+  {
+   "id": 1413,
+   "personnage_id": 50,
+   "feat_id": 230,
+   "notes": null
+  },
+  {
+   "id": 1414,
+   "personnage_id": 50,
+   "feat_id": 231,
+   "notes": null
+  },
+  {
+   "id": 1415,
+   "personnage_id": 50,
+   "feat_id": 232,
+   "notes": null
+  },
+  {
+   "id": 1416,
+   "personnage_id": 50,
+   "feat_id": 233,
+   "notes": null
+  },
+  {
+   "id": 1417,
+   "personnage_id": 50,
+   "feat_id": 234,
+   "notes": null
+  },
+  {
+   "id": 1458,
+   "personnage_id": 4,
+   "feat_id": 12,
+   "notes": null
+  },
+  {
+   "id": 1459,
+   "personnage_id": 4,
+   "feat_id": 13,
+   "notes": null
+  },
+  {
+   "id": 1460,
+   "personnage_id": 4,
+   "feat_id": 14,
+   "notes": null
+  },
+  {
+   "id": 1461,
+   "personnage_id": 4,
+   "feat_id": 15,
+   "notes": null
+  },
+  {
+   "id": 1462,
+   "personnage_id": 4,
+   "feat_id": 16,
+   "notes": null
+  },
+  {
+   "id": 1463,
+   "personnage_id": 4,
+   "feat_id": 17,
+   "notes": null
+  },
+  {
+   "id": 1464,
+   "personnage_id": 4,
+   "feat_id": 18,
+   "notes": null
+  },
+  {
+   "id": 1465,
+   "personnage_id": 4,
+   "feat_id": 19,
+   "notes": null
+  },
+  {
+   "id": 1466,
+   "personnage_id": 4,
+   "feat_id": 45,
+   "notes": null
+  },
+  {
+   "id": 1467,
+   "personnage_id": 4,
+   "feat_id": 46,
+   "notes": null
+  },
+  {
+   "id": 1468,
+   "personnage_id": 4,
+   "feat_id": 47,
+   "notes": null
+  },
+  {
+   "id": 1469,
+   "personnage_id": 4,
+   "feat_id": 57,
+   "notes": null
+  },
+  {
+   "id": 1470,
+   "personnage_id": 4,
+   "feat_id": 58,
+   "notes": null
+  },
+  {
+   "id": 1471,
+   "personnage_id": 4,
+   "feat_id": 59,
+   "notes": null
+  },
+  {
+   "id": 1472,
+   "personnage_id": 4,
+   "feat_id": 60,
+   "notes": null
+  },
+  {
+   "id": 1473,
+   "personnage_id": 4,
+   "feat_id": 61,
+   "notes": null
+  },
+  {
+   "id": 1474,
+   "personnage_id": 4,
+   "feat_id": 62,
+   "notes": null
+  },
+  {
+   "id": 1475,
+   "personnage_id": 4,
+   "feat_id": 63,
+   "notes": null
+  },
+  {
+   "id": 1476,
+   "personnage_id": 4,
+   "feat_id": 64,
+   "notes": null
+  },
+  {
+   "id": 1477,
+   "personnage_id": 4,
+   "feat_id": 65,
+   "notes": null
+  },
+  {
+   "id": 1478,
+   "personnage_id": 4,
+   "feat_id": 475,
+   "notes": null
+  },
+  {
+   "id": 1479,
+   "personnage_id": 4,
+   "feat_id": 476,
+   "notes": null
+  },
+  {
+   "id": 1480,
+   "personnage_id": 4,
+   "feat_id": 477,
+   "notes": null
+  },
+  {
+   "id": 1481,
+   "personnage_id": 4,
+   "feat_id": 478,
+   "notes": null
+  },
+  {
+   "id": 1487,
+   "personnage_id": 86,
+   "feat_id": 48,
+   "notes": null
+  },
+  {
+   "id": 1488,
+   "personnage_id": 86,
+   "feat_id": 473,
+   "notes": null
+  },
+  {
+   "id": 1489,
+   "personnage_id": 86,
+   "feat_id": 6,
+   "notes": null
+  },
+  {
+   "id": 1490,
+   "personnage_id": 86,
+   "feat_id": 479,
+   "notes": null
+  },
+  {
+   "id": 1491,
+   "personnage_id": 86,
+   "feat_id": 480,
+   "notes": null
+  }
+ ],
+ "character_languages": [
+  {
+   "id": 65,
+   "personnage_id": 5,
+   "langue_id": 2
+  },
+  {
+   "id": 66,
+   "personnage_id": 5,
+   "langue_id": 1
+  },
+  {
+   "id": 70,
+   "personnage_id": 3,
+   "langue_id": 1
+  },
+  {
+   "id": 71,
+   "personnage_id": 3,
+   "langue_id": 2
+  },
+  {
+   "id": 72,
+   "personnage_id": 3,
+   "langue_id": 4
+  },
+  {
+   "id": 73,
+   "personnage_id": 3,
+   "langue_id": 5
+  },
+  {
+   "id": 121,
+   "personnage_id": 6,
+   "langue_id": 2
+  },
+  {
+   "id": 122,
+   "personnage_id": 6,
+   "langue_id": 9
+  },
+  {
+   "id": 128,
+   "personnage_id": 23,
+   "langue_id": 2
+  },
+  {
+   "id": 129,
+   "personnage_id": 35,
+   "langue_id": 2
+  },
+  {
+   "id": 130,
+   "personnage_id": 25,
+   "langue_id": 2
+  },
+  {
+   "id": 131,
+   "personnage_id": 24,
+   "langue_id": 2
+  },
+  {
+   "id": 133,
+   "personnage_id": 27,
+   "langue_id": 2
+  },
+  {
+   "id": 134,
+   "personnage_id": 27,
+   "langue_id": 12
+  },
+  {
+   "id": 135,
+   "personnage_id": 28,
+   "langue_id": 2
+  },
+  {
+   "id": 136,
+   "personnage_id": 28,
+   "langue_id": 13
+  },
+  {
+   "id": 137,
+   "personnage_id": 28,
+   "langue_id": 4
+  },
+  {
+   "id": 138,
+   "personnage_id": 28,
+   "langue_id": 14
+  },
+  {
+   "id": 142,
+   "personnage_id": 30,
+   "langue_id": 2
+  },
+  {
+   "id": 143,
+   "personnage_id": 30,
+   "langue_id": 10
+  },
+  {
+   "id": 144,
+   "personnage_id": 30,
+   "langue_id": 12
+  },
+  {
+   "id": 146,
+   "personnage_id": 40,
+   "langue_id": 2
+  },
+  {
+   "id": 147,
+   "personnage_id": 40,
+   "langue_id": 14
+  },
+  {
+   "id": 148,
+   "personnage_id": 40,
+   "langue_id": 2
+  },
+  {
+   "id": 149,
+   "personnage_id": 41,
+   "langue_id": 2
+  },
+  {
+   "id": 150,
+   "personnage_id": 41,
+   "langue_id": 11
+  },
+  {
+   "id": 151,
+   "personnage_id": 42,
+   "langue_id": 2
+  },
+  {
+   "id": 152,
+   "personnage_id": 42,
+   "langue_id": 10
+  },
+  {
+   "id": 153,
+   "personnage_id": 42,
+   "langue_id": 4
+  },
+  {
+   "id": 163,
+   "personnage_id": 24,
+   "langue_id": 10
+  },
+  {
+   "id": 164,
+   "personnage_id": 46,
+   "langue_id": 12
+  },
+  {
+   "id": 165,
+   "personnage_id": 46,
+   "langue_id": 2
+  },
+  {
+   "id": 166,
+   "personnage_id": 46,
+   "langue_id": 11
+  },
+  {
+   "id": 167,
+   "personnage_id": 46,
+   "langue_id": 14
+  },
+  {
+   "id": 168,
+   "personnage_id": 46,
+   "langue_id": 10
+  },
+  {
+   "id": 169,
+   "personnage_id": 46,
+   "langue_id": 21
+  },
+  {
+   "id": 173,
+   "personnage_id": 48,
+   "langue_id": 2
+  },
+  {
+   "id": 180,
+   "personnage_id": 51,
+   "langue_id": 16
+  },
+  {
+   "id": 181,
+   "personnage_id": 51,
+   "langue_id": 13
+  },
+  {
+   "id": 182,
+   "personnage_id": 39,
+   "langue_id": 23
+  },
+  {
+   "id": 187,
+   "personnage_id": 51,
+   "langue_id": 20
+  },
+  {
+   "id": 188,
+   "personnage_id": 51,
+   "langue_id": 14
+  },
+  {
+   "id": 189,
+   "personnage_id": 53,
+   "langue_id": 24
+  },
+  {
+   "id": 190,
+   "personnage_id": 53,
+   "langue_id": 2
+  },
+  {
+   "id": 191,
+   "personnage_id": 54,
+   "langue_id": 25
+  },
+  {
+   "id": 192,
+   "personnage_id": 54,
+   "langue_id": 2
+  },
+  {
+   "id": 193,
+   "personnage_id": 54,
+   "langue_id": 3
+  },
+  {
+   "id": 194,
+   "personnage_id": 55,
+   "langue_id": 2
+  },
+  {
+   "id": 195,
+   "personnage_id": 55,
+   "langue_id": 26
+  },
+  {
+   "id": 196,
+   "personnage_id": 56,
+   "langue_id": 25
+  },
+  {
+   "id": 197,
+   "personnage_id": 56,
+   "langue_id": 27
+  },
+  {
+   "id": 198,
+   "personnage_id": 56,
+   "langue_id": 28
+  },
+  {
+   "id": 199,
+   "personnage_id": 59,
+   "langue_id": 2
+  },
+  {
+   "id": 200,
+   "personnage_id": 59,
+   "langue_id": 3
+  },
+  {
+   "id": 201,
+   "personnage_id": 59,
+   "langue_id": 4
+  },
+  {
+   "id": 202,
+   "personnage_id": 59,
+   "langue_id": 17
+  },
+  {
+   "id": 203,
+   "personnage_id": 59,
+   "langue_id": 20
+  },
+  {
+   "id": 204,
+   "personnage_id": 60,
+   "langue_id": 29
+  },
+  {
+   "id": 205,
+   "personnage_id": 60,
+   "langue_id": 30
+  },
+  {
+   "id": 206,
+   "personnage_id": 60,
+   "langue_id": 31
+  },
+  {
+   "id": 207,
+   "personnage_id": 60,
+   "langue_id": 2
+  },
+  {
+   "id": 208,
+   "personnage_id": 60,
+   "langue_id": 10
+  },
+  {
+   "id": 210,
+   "personnage_id": 65,
+   "langue_id": 2
+  },
+  {
+   "id": 211,
+   "personnage_id": 65,
+   "langue_id": 12
+  },
+  {
+   "id": 212,
+   "personnage_id": 66,
+   "langue_id": 27
+  },
+  {
+   "id": 213,
+   "personnage_id": 66,
+   "langue_id": 10
+  },
+  {
+   "id": 214,
+   "personnage_id": 66,
+   "langue_id": 14
+  },
+  {
+   "id": 215,
+   "personnage_id": 66,
+   "langue_id": 4
+  },
+  {
+   "id": 216,
+   "personnage_id": 68,
+   "langue_id": 10
+  },
+  {
+   "id": 217,
+   "personnage_id": 68,
+   "langue_id": 2
+  },
+  {
+   "id": 218,
+   "personnage_id": 68,
+   "langue_id": 11
+  },
+  {
+   "id": 219,
+   "personnage_id": 67,
+   "langue_id": 10
+  },
+  {
+   "id": 220,
+   "personnage_id": 67,
+   "langue_id": 18
+  },
+  {
+   "id": 221,
+   "personnage_id": 67,
+   "langue_id": 2
+  },
+  {
+   "id": 222,
+   "personnage_id": 67,
+   "langue_id": 17
+  },
+  {
+   "id": 225,
+   "personnage_id": 71,
+   "langue_id": 2
+  },
+  {
+   "id": 226,
+   "personnage_id": 74,
+   "langue_id": 8
+  },
+  {
+   "id": 227,
+   "personnage_id": 74,
+   "langue_id": 16
+  },
+  {
+   "id": 228,
+   "personnage_id": 74,
+   "langue_id": 32
+  },
+  {
+   "id": 229,
+   "personnage_id": 74,
+   "langue_id": 33
+  },
+  {
+   "id": 230,
+   "personnage_id": 75,
+   "langue_id": 8
+  },
+  {
+   "id": 231,
+   "personnage_id": 75,
+   "langue_id": 16
+  },
+  {
+   "id": 232,
+   "personnage_id": 76,
+   "langue_id": 13
+  },
+  {
+   "id": 233,
+   "personnage_id": 76,
+   "langue_id": 20
+  },
+  {
+   "id": 234,
+   "personnage_id": 76,
+   "langue_id": 14
+  },
+  {
+   "id": 235,
+   "personnage_id": 76,
+   "langue_id": 16
+  },
+  {
+   "id": 236,
+   "personnage_id": 77,
+   "langue_id": 16
+  },
+  {
+   "id": 237,
+   "personnage_id": 77,
+   "langue_id": 12
+  },
+  {
+   "id": 238,
+   "personnage_id": 77,
+   "langue_id": 32
+  },
+  {
+   "id": 239,
+   "personnage_id": 77,
+   "langue_id": 10
+  },
+  {
+   "id": 240,
+   "personnage_id": 77,
+   "langue_id": 33
+  },
+  {
+   "id": 241,
+   "personnage_id": 77,
+   "langue_id": 20
+  },
+  {
+   "id": 242,
+   "personnage_id": 77,
+   "langue_id": 14
+  },
+  {
+   "id": 243,
+   "personnage_id": 78,
+   "langue_id": 10
+  },
+  {
+   "id": 244,
+   "personnage_id": 78,
+   "langue_id": 27
+  },
+  {
+   "id": 245,
+   "personnage_id": 78,
+   "langue_id": 14
+  },
+  {
+   "id": 246,
+   "personnage_id": 79,
+   "langue_id": 16
+  },
+  {
+   "id": 247,
+   "personnage_id": 79,
+   "langue_id": 13
+  },
+  {
+   "id": 248,
+   "personnage_id": 79,
+   "langue_id": 33
+  },
+  {
+   "id": 249,
+   "personnage_id": 79,
+   "langue_id": 17
+  },
+  {
+   "id": 250,
+   "personnage_id": 81,
+   "langue_id": 16
+  },
+  {
+   "id": 251,
+   "personnage_id": 81,
+   "langue_id": 32
+  },
+  {
+   "id": 252,
+   "personnage_id": 81,
+   "langue_id": 4
+  },
+  {
+   "id": 253,
+   "personnage_id": 81,
+   "langue_id": 34
+  },
+  {
+   "id": 254,
+   "personnage_id": 81,
+   "langue_id": 20
+  },
+  {
+   "id": 255,
+   "personnage_id": 81,
+   "langue_id": 14
+  },
+  {
+   "id": 256,
+   "personnage_id": 80,
+   "langue_id": 16
+  },
+  {
+   "id": 257,
+   "personnage_id": 80,
+   "langue_id": 13
+  },
+  {
+   "id": 258,
+   "personnage_id": 80,
+   "langue_id": 32
+  },
+  {
+   "id": 259,
+   "personnage_id": 82,
+   "langue_id": 14
+  },
+  {
+   "id": 260,
+   "personnage_id": 82,
+   "langue_id": 27
+  },
+  {
+   "id": 267,
+   "personnage_id": 70,
+   "langue_id": 2
+  },
+  {
+   "id": 268,
+   "personnage_id": 70,
+   "langue_id": 4
+  },
+  {
+   "id": 269,
+   "personnage_id": 47,
+   "langue_id": 2
+  },
+  {
+   "id": 270,
+   "personnage_id": 47,
+   "langue_id": 17
+  },
+  {
+   "id": 271,
+   "personnage_id": 47,
+   "langue_id": 22
+  },
+  {
+   "id": 296,
+   "personnage_id": 49,
+   "langue_id": 2
+  },
+  {
+   "id": 297,
+   "personnage_id": 49,
+   "langue_id": 10
+  },
+  {
+   "id": 298,
+   "personnage_id": 49,
+   "langue_id": 13
+  },
+  {
+   "id": 299,
+   "personnage_id": 49,
+   "langue_id": 16
+  },
+  {
+   "id": 300,
+   "personnage_id": 45,
+   "langue_id": 13
+  },
+  {
+   "id": 301,
+   "personnage_id": 45,
+   "langue_id": 14
+  },
+  {
+   "id": 302,
+   "personnage_id": 45,
+   "langue_id": 16
+  },
+  {
+   "id": 303,
+   "personnage_id": 45,
+   "langue_id": 19
+  },
+  {
+   "id": 304,
+   "personnage_id": 45,
+   "langue_id": 20
+  },
+  {
+   "id": 310,
+   "personnage_id": 33,
+   "langue_id": 10
+  },
+  {
+   "id": 344,
+   "personnage_id": 83,
+   "langue_id": 2
+  },
+  {
+   "id": 352,
+   "personnage_id": 22,
+   "langue_id": 2
+  },
+  {
+   "id": 395,
+   "personnage_id": 43,
+   "langue_id": 2
+  },
+  {
+   "id": 396,
+   "personnage_id": 43,
+   "langue_id": 10
+  },
+  {
+   "id": 397,
+   "personnage_id": 43,
+   "langue_id": 17
+  },
+  {
+   "id": 398,
+   "personnage_id": 43,
+   "langue_id": 18
+  },
+  {
+   "id": 422,
+   "personnage_id": 20,
+   "langue_id": 2
+  },
+  {
+   "id": 423,
+   "personnage_id": 20,
+   "langue_id": 10
+  },
+  {
+   "id": 427,
+   "personnage_id": 1,
+   "langue_id": 1
+  },
+  {
+   "id": 428,
+   "personnage_id": 1,
+   "langue_id": 2
+  },
+  {
+   "id": 429,
+   "personnage_id": 1,
+   "langue_id": 3
+  },
+  {
+   "id": 432,
+   "personnage_id": 85,
+   "langue_id": 2
+  },
+  {
+   "id": 433,
+   "personnage_id": 85,
+   "langue_id": 1
+  },
+  {
+   "id": 441,
+   "personnage_id": 50,
+   "langue_id": 2
+  },
+  {
+   "id": 442,
+   "personnage_id": 50,
+   "langue_id": 4
+  },
+  {
+   "id": 443,
+   "personnage_id": 50,
+   "langue_id": 10
+  },
+  {
+   "id": 444,
+   "personnage_id": 50,
+   "langue_id": 12
+  },
+  {
+   "id": 445,
+   "personnage_id": 50,
+   "langue_id": 14
+  },
+  {
+   "id": 446,
+   "personnage_id": 50,
+   "langue_id": 17
+  },
+  {
+   "id": 447,
+   "personnage_id": 50,
+   "langue_id": 21
+  },
+  {
+   "id": 462,
+   "personnage_id": 4,
+   "langue_id": 2
+  },
+  {
+   "id": 463,
+   "personnage_id": 4,
+   "langue_id": 4
+  },
+  {
+   "id": 464,
+   "personnage_id": 4,
+   "langue_id": 7
+  },
+  {
+   "id": 465,
+   "personnage_id": 4,
+   "langue_id": 8
+  },
+  {
+   "id": 466,
+   "personnage_id": 4,
+   "langue_id": 8
+  },
+  {
+   "id": 467,
+   "personnage_id": 4,
+   "langue_id": 15
+  },
+  {
+   "id": 468,
+   "personnage_id": 4,
+   "langue_id": 16
+  },
+  {
+   "id": 469,
+   "personnage_id": 21,
+   "langue_id": 2
+  },
+  {
+   "id": 470,
+   "personnage_id": 21,
+   "langue_id": 10
+  },
+  {
+   "id": 471,
+   "personnage_id": 21,
+   "langue_id": 11
+  },
+  {
+   "id": 476,
+   "personnage_id": 86,
+   "langue_id": 2
+  },
+  {
+   "id": 477,
+   "personnage_id": 86,
+   "langue_id": 20
+  },
+  {
+   "id": 478,
+   "personnage_id": 86,
+   "langue_id": 26
+  },
+  {
+   "id": 479,
+   "personnage_id": 86,
+   "langue_id": 33
+  }
+ ]
+}
