@@ -247,7 +247,14 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           <Tip>Une compétence est considérée <em>de classe</em> dès qu'elle l'est pour <strong>au moins une</strong> de vos classes. En multi-classes, la liste des compétences de classe s'élargit automatiquement.</Tip>
         </Section>
 
+        <Section titre="🆕 Nouvelles références — l'avertissement">
+          <p>Quand vous tapez à la main un nom de compétence, de don, d'arme, d'objet ou de divinité, le Grimoire cherche d'abord une entrée existante. La recherche <strong>ignore la casse, les accents et les espaces en trop</strong> : <em>equitation</em>, <em>Équitation</em> et <em>Équitation&nbsp;&nbsp;</em> désignent la même compétence et ne créent pas trois entrées.</p>
+          <p className="mt-2">Si aucune entrée ne correspond, elle est créée — mais <strong>plus en silence</strong> : après la sauvegarde, un bandeau liste les références nouvellement créées et vous laisse revenir les corriger avant de quitter le formulaire.</p>
+          <Tip>La ponctuation, elle, compte&nbsp;: <em>Connaissances (mystères)</em> et <em>Connaissances (nature)</em> restent deux compétences distinctes, tout comme <em>Artisanat (armes)</em> et <em>Artisanat (armures)</em>. Si le bandeau signale une création que vous n'attendiez pas, c'est presque toujours une variante d'un nom qui existe déjà : corrigez-la plutôt que de la garder.</Tip>
+        </Section>
+
         <Section titre="⚔️ Malus d'armure sur les compétences">
+
           <p>Certaines armures imposent un <strong>malus de compétence</strong> (Armor Check Penalty) qui s'applique automatiquement sur la fiche joueur aux compétences physiques suivantes :</p>
           <div className="flex flex-wrap gap-1.5 mt-2">
             {['Acrobaties', 'Discrétion', 'Déplacement silencieux', 'Escalade', 'Évasion', 'Natation', 'Saut', 'Escamotage'].map(c => (

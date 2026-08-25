@@ -4,7 +4,7 @@ import { getCharacter } from '@/lib/queries/character'
 import { getClasseInfo } from '@/lib/dnd35/classes'
 import { getRaceInfo } from '@/lib/dnd35/races'
 import { getModifier, getBab, XP_PAR_NIVEAU } from '@/lib/dnd35/rules'
-import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
+import { getCompetenceRef, caracteristiqueDe } from '@/lib/dnd35/skills'
 import { PrintButton } from '@/components/fiche/PrintButton'
 
 export const dynamic = 'force-dynamic'
@@ -97,15 +97,23 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
 
   const abilMods: Record<string, number> = { FOR: forMod, DEX: dexMod, CON: conMod, INT: intMod, SAG: sagMod, CHA: chaMod }
 
-  const skillsData = COMPETENCES_DND35.map(ref => {
-    const saved = skills.find(s => s.skill.nom === ref.nom)
-    const rangs = saved?.charSkill.rangsInvestis ?? 0
-    const divers = saved?.charSkill.modifDivers ?? 0
-    const abilMod = abilMods[ref.caracteristique] ?? 0
+  // La fiche imprimée part des compétences DU PERSONNAGE, comme l'écran — et non
+  // de la table 4–2. Celle-ci reste consultée pour ce qu'elle sait (caractéristique
+  // officielle, compétence de classe), mais elle ne décide plus de ce qui s'imprime :
+  // une compétence maison comme « Magie divine », ou une spécialité libre comme
+  // « Artisanat (tissage) », doit apparaître sur la fiche du joueur qui l'a payée.
+  const skillsData = skills.map(({ skill, charSkill }) => {
+    const ref = getCompetenceRef(skill.nom)
+    const rangs = charSkill.rangsInvestis ?? 0
+    const divers = charSkill.modifDivers ?? 0
+    const caracteristique = caracteristiqueDe(skill.nom, skill.caracteristique)
+    const abilMod = abilMods[caracteristique] ?? 0
     const total = abilMod + rangs + divers
-    const isClasse = ref.classesCompetence.some(cc => allClassNoms.includes(cc))
-    return { ...ref, rangs, divers, abilMod, total, isClasse }
-  }).filter(s => s.rangs > 0 || s.divers !== 0)
+    const isClasse = ref?.classesCompetence.some(cc => allClassNoms.includes(cc)) ?? false
+    return { nom: skill.nom, caracteristique, formationRequise: ref?.formationRequise ?? false, rangs, divers, abilMod, total, isClasse }
+  })
+    .filter(s => s.rangs > 0 || s.divers !== 0)
+    .sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
 
   const totalRangs = skillsData.reduce((acc, s) => acc + s.rangs, 0)
 
@@ -546,10 +554,12 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                         <td style={{ border: '1px solid #ddd', padding: '1px', textAlign: 'center', fontSize: '8pt' }}>{s.divers || ''}</td>
                       </tr>
                     ))}
-                    {/* Le tableau est complété jusqu'à 24 lignes : la fiche la plus chargée
-                        (Tatiana) en imprime 21 depuis le ménage des compétences, et les
-                        arbitrages restants peuvent en ajouter deux ou trois. */}
-                    {Array.from({ length: Math.max(0, 24 - skillsData.length) }).map((_, i) => (
+                    {/* Lignes vides de remplissage, pour écrire à la main en cours de partie.
+                        Ce nombre ne tronque rien : une fiche qui compte plus de compétences
+                        s'allonge d'autant (Garret Blanche Pierre en imprime 25). Le monter
+                        n'aiderait donc pas les fiches chargées — cela ne ferait qu'allonger
+                        toutes les autres. On s'en tient au calibrage d'origine. */}
+                    {Array.from({ length: Math.max(0, 20 - skillsData.length) }).map((_, i) => (
                       <tr key={`es-${i}`}><td colSpan={7} style={{ border: '1px solid #eee', height: '16px' }}></td></tr>
                     ))}
                   </tbody>

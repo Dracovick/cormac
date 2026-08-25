@@ -12,6 +12,7 @@ import { getBab, getModifier, getMultiClassSave } from '@/lib/dnd35/rules'
 import { SORTS_DND35 } from '@/lib/dnd35/spells'
 import { SORTS_EFFETS_CA, SORTS_EFFETS_CARAC, SORTS_EFFETS_VISUELS, SORTS_EFFETS_SUIVI, valeurEffetSelonNiveau } from '@/lib/dnd35/spell-effects'
 import { logJournal } from '@/lib/journal'
+import { normaliserNom } from '@/lib/noms'
 
 // ─── Type exported for the form component ───────────────────────────────────
 export interface CharacterFormData {
@@ -64,13 +65,37 @@ export async function updatePhotoUrl(personnageId: number, photoUrl: string) {
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
+/** Référence créée faute d'avoir été reconnue — sert à en avertir l'utilisateur. */
+export type NouvelleReference = { table: string; nom: string }
+
 async function findOrCreateByNom<T extends { id: number }>(
   selectFn: () => Promise<T[]>,
-  insertFn: () => Promise<T[]>
+  insertFn: () => Promise<T[]>,
+  souple?: {
+    /** Tous les noms de la table. Chargés seulement si la recherche exacte a échoué. */
+    tous: () => Promise<{ id: number; nom: string }[]>
+    nom: string
+    table: string
+    /** Collecteur des créations, pour l'avertissement de fin de sauvegarde. */
+    creees?: NouvelleReference[]
+  }
 ): Promise<number> {
   const existing = await selectFn()
   if (existing.length > 0) return existing[0].id
+
+  // Deuxième chance : le nom existe peut-être déjà à la casse, aux accents ou
+  // aux espaces près. On réutilise alors l'entrée trouvée plutôt que d'en créer
+  // une jumelle — c'est ainsi que 45 compétences en étaient devenues 191.
+  // Cette requête ne part que lorsque la recherche exacte a échoué.
+  if (souple && normaliserNom(souple.nom) !== '') {
+    const cible = normaliserNom(souple.nom)
+    const tous = await souple.tous()
+    const trouve = tous.find(r => normaliserNom(r.nom) === cible)
+    if (trouve) return trouve.id
+  }
+
   const [created] = await insertFn()
+  if (souple?.creees) souple.creees.push({ table: souple.table, nom: souple.nom })
   return created.id
 }
 
@@ -78,8 +103,9 @@ async function findOrCreateByNom<T extends { id: number }>(
 export async function saveCharacter(
   data: CharacterFormData,
   personnageId?: number
-): Promise<{ id: number }> {
+): Promise<{ id: number; nouvellesReferences: NouvelleReference[] }> {
   const db = getDb()
+  const referencesCreees: NouvelleReference[] = []
   const raceInfo = getRaceInfo(data.race)
   const classeInfo = getClasseInfo(data.classe)
   const allClasses = data.classes?.length > 0 ? data.classes : [{ classe: data.classe, niveau: data.niveau }]
@@ -97,6 +123,9 @@ export async function saveCharacter(
         deplacementBase: raceInfo?.deplacement ?? 9,
         visionNocturne: raceInfo?.visionNocturne ?? false,
       }).returning({ id: schema.races.id })
+    ,
+      { tous: () => db.select({ id: schema.races.id, nom: schema.races.nom }).from(schema.races),
+        nom: data.race, table: 'races', creees: referencesCreees }
     )
   }
 
@@ -114,6 +143,9 @@ export async function saveCharacter(
         volonteProgression: (classeInfo?.bonsSauvegardes ?? []).includes('volonte') ? 'bon' : 'faible',
         competencesParNiveau: classeInfo?.competencesParNiveau ?? 2,
       }).returning({ id: schema.classes.id })
+    ,
+      { tous: () => db.select({ id: schema.classes.id, nom: schema.classes.nom }).from(schema.classes),
+        nom: data.classe, table: 'classes', creees: referencesCreees }
     )
   }
 
@@ -123,6 +155,9 @@ export async function saveCharacter(
     clanId = await findOrCreateByNom(
       () => db.select({ id: schema.clans.id }).from(schema.clans).where(eq(schema.clans.nom, data.clan.trim())).limit(1),
       () => db.insert(schema.clans).values({ nom: data.clan.trim() }).returning({ id: schema.clans.id })
+    ,
+      { tous: () => db.select({ id: schema.clans.id, nom: schema.clans.nom }).from(schema.clans),
+        nom: data.clan.trim(), table: 'clans', creees: referencesCreees }
     )
   }
 
@@ -132,6 +167,9 @@ export async function saveCharacter(
     dieuId = await findOrCreateByNom(
       () => db.select({ id: schema.gods.id }).from(schema.gods).where(eq(schema.gods.nom, data.divinite.trim())).limit(1),
       () => db.insert(schema.gods).values({ nom: data.divinite.trim() }).returning({ id: schema.gods.id })
+    ,
+      { tous: () => db.select({ id: schema.gods.id, nom: schema.gods.nom }).from(schema.gods),
+        nom: data.divinite.trim(), table: 'gods', creees: referencesCreees }
     )
   }
 
@@ -246,6 +284,9 @@ export async function saveCharacter(
         volonteProgression: (cInfo?.bonsSauvegardes ?? []).includes('volonte') ? 'bon' : 'faible',
         competencesParNiveau: cInfo?.competencesParNiveau ?? 2,
       }).returning({ id: schema.classes.id })
+    ,
+      { tous: () => db.select({ id: schema.classes.id, nom: schema.classes.nom }).from(schema.classes),
+        nom: c.classe, table: 'classes', creees: referencesCreees }
     )
     await db.insert(schema.characterClasses).values({ personnageId: charId, classeId: cId, niveau: c.niveau })
   }
@@ -264,7 +305,10 @@ export async function saveCharacter(
           caracteristique: comp.caracteristique,
           formationRequise: compRef?.formationRequise ?? false,
         }).returning({ id: schema.skills.id })
-      )
+      ,
+      { tous: () => db.select({ id: schema.skills.id, nom: schema.skills.nom }).from(schema.skills),
+        nom: comp.nom, table: 'skills', creees: referencesCreees }
+    )
     }
     await db.insert(schema.characterSkills).values({
       personnageId: charId, skillId,
@@ -280,6 +324,9 @@ export async function saveCharacter(
     const featId = await findOrCreateByNom(
       () => db.select({ id: schema.feats.id }).from(schema.feats).where(eq(schema.feats.nom, featNom.trim())).limit(1),
       () => db.insert(schema.feats).values({ nom: featNom.trim() }).returning({ id: schema.feats.id })
+    ,
+      { tous: () => db.select({ id: schema.feats.id, nom: schema.feats.nom }).from(schema.feats),
+        nom: featNom.trim(), table: 'feats', creees: referencesCreees }
     )
     await db.insert(schema.characterFeats).values({ personnageId: charId, featId })
   }
@@ -300,6 +347,9 @@ export async function saveCharacter(
         typeDegats: arme.typeDegats || null,
         portee: porteeNum,
       }).returning({ id: schema.weapons.id })
+    ,
+      { tous: () => db.select({ id: schema.weapons.id, nom: schema.weapons.nom }).from(schema.weapons),
+        nom: arme.nom.trim(), table: 'weapons', creees: referencesCreees }
     )
     await db.insert(schema.characterWeapons).values({
       personnageId: charId, armeId,
@@ -322,6 +372,9 @@ export async function saveCharacter(
         maxDex: armure.maxDex ?? null,
         malusCompetence: armure.malusComp ?? 0,
       }).returning({ id: schema.armor.id })
+    ,
+      { tous: () => db.select({ id: schema.armor.id, nom: schema.armor.nom }).from(schema.armor),
+        nom: armure.nom.trim(), table: 'armor', creees: referencesCreees }
     )
     await db.insert(schema.characterArmor).values({
       personnageId: charId, armureId,
@@ -343,6 +396,9 @@ export async function saveCharacter(
         description: obj.description || null,
         chargesMax: obj.charges > 0 ? obj.charges : null,
       }).returning({ id: schema.magicItems.id })
+    ,
+      { tous: () => db.select({ id: schema.magicItems.id, nom: schema.magicItems.nom }).from(schema.magicItems),
+        nom: obj.nom.trim(), table: 'magicItems', creees: referencesCreees }
     )
     await db.update(schema.magicItems).set({ bonus: bonusInt }).where(eq(schema.magicItems.id, objetId))
     await db.insert(schema.characterMagicItems).values({
@@ -361,6 +417,9 @@ export async function saveCharacter(
       () => db.insert(schema.potions).values({
         nom: pot.nom.trim(), sortEffet: pot.effet || null, chargesMax: pot.charges ?? 1,
       }).returning({ id: schema.potions.id })
+    ,
+      { tous: () => db.select({ id: schema.potions.id, nom: schema.potions.nom }).from(schema.potions),
+        nom: pot.nom.trim(), table: 'potions', creees: referencesCreees }
     )
     await db.insert(schema.characterPotions).values({
       personnageId: charId, potionId,
@@ -388,6 +447,9 @@ export async function saveCharacter(
     const langueId = await findOrCreateByNom(
       () => db.select({ id: schema.languages.id }).from(schema.languages).where(eq(schema.languages.nom, langNom.trim())).limit(1),
       () => db.insert(schema.languages).values({ nom: langNom.trim() }).returning({ id: schema.languages.id })
+    ,
+      { tous: () => db.select({ id: schema.languages.id, nom: schema.languages.nom }).from(schema.languages),
+        nom: langNom.trim(), table: 'languages', creees: referencesCreees }
     )
     await db.insert(schema.characterLanguages).values({ personnageId: charId, langueId })
   }
@@ -406,6 +468,9 @@ export async function saveCharacter(
         portee: sortRef?.portee ?? null,
         duree: sortRef?.duree ?? null,
       }).returning({ id: schema.spells.id })
+    ,
+      { tous: () => db.select({ id: schema.spells.id, nom: schema.spells.nom }).from(schema.spells),
+        nom: sort.nom.trim(), table: 'spells' }
     )
     await db.insert(schema.characterSpells).values({
       personnageId: charId, sortId,
@@ -430,7 +495,7 @@ export async function saveCharacter(
 
   revalidatePath('/')
   revalidatePath(`/personnage/${charId}`)
-  return { id: charId }
+  return { id: charId, nouvellesReferences: referencesCreees }
 }
 
 // ─── Delete character ─────────────────────────────────────────────────────────
@@ -684,7 +749,10 @@ export async function preparerSortsDivins(
           portee: ref?.portee ?? null,
           duree: ref?.duree ?? null,
         }).returning({ id: schema.spells.id })
-      )
+      ,
+      { tous: () => db.select({ id: schema.spells.id, nom: schema.spells.nom }).from(schema.spells),
+        nom: sort.nom, table: 'spells' }
+    )
       await db.insert(schema.characterSpells).values({
         personnageId, sortId, niveau: sort.niveau, estConnu: 1, estPrepare: sort.estPrepare,
         classe: classe ?? null,
@@ -706,7 +774,10 @@ export async function ajouterSortPersonnalise(
       nom: sort.nom.trim(), ecole: sort.ecole || null,
       description: sort.description?.trim() || null,
     }).returning({ id: schema.spells.id })
-  )
+  ,
+      { tous: () => db.select({ id: schema.spells.id, nom: schema.spells.nom }).from(schema.spells),
+        nom: sort.nom.trim(), table: 'spells' }
+    )
   if (sort.description?.trim()) {
     await db.update(schema.spells).set({ description: sort.description.trim() }).where(eq(schema.spells.id, sortId))
   }

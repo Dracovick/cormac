@@ -1054,10 +1054,19 @@ function SectionNotes({ data, update }: { data: CharacterFormData; update: Upd }
 }
 
 // ─── Main form component ──────────────────────────────────────────────────────
+const NOMS_TABLES: Record<string, string> = {
+  races: 'race', classes: 'classe', clans: 'clan', gods: 'divinité',
+  skills: 'compétence', feats: 'don', weapons: 'arme', armor: 'armure',
+  magicItems: 'objet magique', potions: 'potion', languages: 'langue', spells: 'sort',
+}
+
 export function CharacterForm({ personnageId, initialData }: { personnageId?: number; initialData?: CharacterFormData }) {
   const [data, setData] = useState<CharacterFormData>(initialData ?? DEFAULT_FORM)
   const [tab, setTab] = useState('identite')
   const [error, setError] = useState<string | null>(null)
+  // Références créées faute d'avoir été reconnues : on les montre avant de quitter la page.
+  const [nouvellesRefs, setNouvellesRefs] = useState<{ table: string; nom: string }[] | null>(null)
+  const [idApresSauvegarde, setIdApresSauvegarde] = useState<number | null>(null)
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
@@ -1092,7 +1101,12 @@ export function CharacterForm({ personnageId, initialData }: { personnageId?: nu
     startTransition(async () => {
       try {
         const result = await saveCharacter(data, personnageId)
-        router.push(`/personnage/${result.id}`)
+        if (result.nouvellesReferences.length > 0) {
+          setIdApresSauvegarde(result.id)
+          setNouvellesRefs(result.nouvellesReferences)
+        } else {
+          router.push(`/personnage/${result.id}`)
+        }
       } catch (e) {
         setError('Erreur lors de la sauvegarde. Vérifiez votre connexion.')
       }
@@ -1131,6 +1145,29 @@ export function CharacterForm({ personnageId, initialData }: { personnageId?: nu
           </div>
         </div>
         {error && <div className="bg-red-900/50 border-t border-red-700/50 px-4 py-2 text-red-300 text-sm">{error}</div>}
+        {nouvellesRefs && (
+          <div className="bg-amber-950/60 border-t border-amber-700/50 px-4 py-3 text-sm">
+            <div className="max-w-5xl mx-auto">
+              <p className="text-amber-200 font-semibold">Personnage enregistré — {nouvellesRefs.length} nouvelle{nouvellesRefs.length > 1 ? 's' : ''} référence{nouvellesRefs.length > 1 ? 's' : ''} créée{nouvellesRefs.length > 1 ? 's' : ''}</p>
+              <p className="text-stone-400 text-xs mt-1">Ces noms n’existaient pas encore dans le Grimoire, même à la casse, aux accents et aux espaces près. S’il s’agit d’une variante d’une entrée existante, revenez la corriger : c’est ainsi que les doublons s’accumulent.</p>
+              <ul className="mt-2 space-y-0.5">
+                {nouvellesRefs.map((r, i) => (
+                  <li key={i} className="text-stone-300">
+                    <span className="text-stone-500 text-xs uppercase mr-2">{NOMS_TABLES[r.table] ?? r.table}</span>{r.nom}
+                  </li>
+                ))}
+              </ul>
+              <div className="flex gap-2 mt-3">
+                <button onClick={() => idApresSauvegarde && router.push(`/personnage/${idApresSauvegarde}`)} className="bg-amber-700 hover:bg-amber-600 text-white text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors">
+                  J’ai compris — voir la fiche
+                </button>
+                <button onClick={() => setNouvellesRefs(null)} className="text-stone-400 hover:text-amber-300 text-sm px-3 py-1.5 transition-colors">
+                  Rester et corriger
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         {/* Tab bar */}
         <div className="max-w-5xl mx-auto px-4 flex gap-0.5 overflow-x-auto pb-0">
           {TABS.map(t => (

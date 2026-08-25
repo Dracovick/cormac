@@ -9,6 +9,7 @@ import { getCapacitesPourPersonnage } from '@/lib/dnd35/class-features'
 import { SORTS_DND35, type ClasseSortKey } from '@/lib/dnd35/spells'
 import { getFeatWeaponBonuses, getFeatDescription } from '@/lib/dnd35/feat-bonuses'
 import { getDomaineInfo } from '@/lib/dnd35/domains'
+import { caracteristiqueDe } from '@/lib/dnd35/skills'
 import { getChargeCategorie, getChargeLimites } from '@/lib/dnd35/encumbrance'
 import { FEATS_DND35, verifierPrerequisDon } from '@/lib/dnd35/feats'
 
@@ -653,7 +654,8 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                         SAG: Math.floor((((abilityScores.sagBase ?? 10) + (abilityScores.sagMagique ?? 0) + effCarac.SAG) - 10) / 2),
                         CHA: Math.floor((((abilityScores.chaBase ?? 10) + (abilityScores.chaMagique ?? 0) + effCarac.CHA) - 10) / 2) }
                     : { FOR: 0, DEX: 0, CON: 0, INT: 0, SAG: 0, CHA: 0 }
-                  const caracMod = carac[skill.caracteristique as keyof typeof carac] ?? 0
+                  const caracSkill = caracteristiqueDe(skill.nom, skill.caracteristique)
+                  const caracMod = carac[caracSkill as keyof typeof carac] ?? 0
                   const hasArmorMalus = malusArmure > 0 && COMPETENCES_MALUS_ARMURE.includes(skill.nom)
                   const total = (charSkill.rangsInvestis ?? 0) + caracMod + (charSkill.modifDivers ?? 0) - (hasArmorMalus ? malusArmure : 0)
                   return (
@@ -661,7 +663,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                       <div>
                         <span className="text-stone-200 text-sm">{skill.nom}</span>
                         <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(skill.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="ml-1.5 text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
-                        <span className="text-stone-500 text-xs ml-2">({skill.caracteristique})</span>
+                        <span className="text-stone-500 text-xs ml-2">({caracSkill})</span>
                         {hasArmorMalus && <span className="text-red-500 text-xs ml-1" title={`Malus armure −${malusArmure}`}>−{malusArmure}⚔</span>}
                       </div>
                       <div className="flex items-center gap-2">

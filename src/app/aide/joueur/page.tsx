@@ -312,6 +312,8 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
           <Row label="Bouton PDF">En haut à droite de la fiche, cliquez <strong>PDF</strong> pour ouvrir la page d'impression.</Row>
           <Row label="Imprimer">Utilisez la fonction d'impression du navigateur (<kbd className="bg-stone-700 px-1 rounded">Ctrl+P</kbd>). Le format est configuré pour du papier <strong>Letter (8,5" × 11")</strong> avec marges ¾".</Row>
           <Tip>Dans les options d'impression, activez <strong>«&nbsp;Imprimer les arrière-plans&nbsp;»</strong> pour conserver les couleurs et les cadres.</Tip>
+          <Row label="Compétences imprimées">La fiche imprime <strong>toutes</strong> vos compétences, y compris celles qui n’existent pas dans le manuel : compétences maison comme <em>Magie divine</em>, et spécialités libres comme <em>Artisanat (tissage)</em> ou <em>Profession (apothicaire)</em>. Seules les lignes à zéro rang et sans modificateur sont omises.</Row>
+          <Tip>Pour les compétences du manuel, la caractéristique et la case <em>compétence de classe</em> viennent de la table officielle. Pour une compétence maison, la caractéristique est celle enregistrée sur la fiche, et la case de classe reste vide.</Tip>
         </Section>
 
         <Section titre="📊 Progression en XP">

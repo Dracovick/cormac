@@ -58,3 +58,20 @@ export const COMPETENCES_DND35: CompetenceRef[] = [
   { nom: 'Déplacement silencieux',     caracteristique: 'DEX', formationRequise: false, classesCompetence: ['Barbare', 'Barde', 'Druide', 'Moine', 'Rôdeur', 'Roublard'] },
   { nom: 'Crochetage',                 caracteristique: 'DEX', formationRequise: true,  classesCompetence: ['Roublard'] },
 ]
+
+export function getCompetenceRef(nom: string): CompetenceRef | undefined {
+  return COMPETENCES_DND35.find(c => c.nom === nom)
+}
+
+/**
+ * Caractéristique associée à une compétence, pour l'écran comme pour la fiche
+ * imprimée — les deux doivent afficher la même chose.
+ *
+ * La table 4–2 fait autorité quand elle connaît la compétence : plusieurs
+ * entrées de la base portent une caractéristique fautive (« Psychologie » y est
+ * rattachée au Charisme au lieu de la Sagesse). Pour les compétences maison,
+ * qui ne sont dans aucune table officielle, c'est la base qui décide.
+ */
+export function caracteristiqueDe(nom: string, caracteristiqueEnBase?: string | null): string {
+  return getCompetenceRef(nom)?.caracteristique ?? caracteristiqueEnBase ?? '—'
+}
