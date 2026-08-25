@@ -1,0 +1,152 @@
+=== RACES (toutes) ===
+{"id":1,"nom":"Elfe","bonus_for":0,"bonus_dex":2,"bonus_con":-2,"bonus_int":0,"bonus_sag":0,"bonus_cha":0,"taille":"Moyenne","deplacement_base":9,"vision_nocturne":true}
+{"id":2,"nom":"Humain","bonus_for":0,"bonus_dex":0,"bonus_con":0,"bonus_int":0,"bonus_sag":0,"bonus_cha":0,"taille":"Moyenne","deplacement_base":9,"vision_nocturne":false}
+{"id":3,"nom":"Demi-Elfe","bonus_for":0,"bonus_dex":0,"bonus_con":0,"bonus_int":0,"bonus_sag":0,"bonus_cha":0,"taille":"Moyenne","deplacement_base":9,"vision_nocturne":true}
+{"id":4,"nom":"Nain","bonus_for":0,"bonus_dex":0,"bonus_con":2,"bonus_int":0,"bonus_sag":0,"bonus_cha":-2,"taille":"Petite","deplacement_base":6,"vision_nocturne":true}
+{"id":5,"nom":"Halfelin","bonus_for":-2,"bonus_dex":2,"bonus_con":0,"bonus_int":0,"bonus_sag":0,"bonus_cha":0,"taille":"Petite","deplacement_base":6,"vision_nocturne":false}
+{"id":6,"nom":"Gnome","bonus_for":-2,"bonus_dex":0,"bonus_con":2,"bonus_int":0,"bonus_sag":0,"bonus_cha":0,"taille":"Petite","deplacement_base":6,"vision_nocturne":true}
+{"id":7,"nom":"Demi-Orque","bonus_for":2,"bonus_dex":0,"bonus_con":0,"bonus_int":-2,"bonus_sag":0,"bonus_cha":-2,"taille":"Moyenne","deplacement_base":9,"vision_nocturne":true}
+{"id":8,"nom":"Illithid","bonus_for":0,"bonus_dex":0,"bonus_con":0,"bonus_int":0,"bonus_sag":0,"bonus_cha":0,"taille":"Moyenne","deplacement_base":9,"vision_nocturne":false}
+{"id":9,"nom":"Demi-Orc","bonus_for":0,"bonus_dex":0,"bonus_con":0,"bonus_int":0,"bonus_sag":0,"bonus_cha":0,"taille":"Moyenne","deplacement_base":9,"vision_nocturne":false}
+{"id":10,"nom":"Demi-Elf","bonus_for":0,"bonus_dex":0,"bonus_con":0,"bonus_int":0,"bonus_sag":0,"bonus_cha":0,"taille":"Moyenne","deplacement_base":9,"vision_nocturne":false}
+{"id":11,"nom":"Petite-gens","bonus_for":0,"bonus_dex":0,"bonus_con":0,"bonus_int":0,"bonus_sag":0,"bonus_cha":0,"taille":"Moyenne","deplacement_base":9,"vision_nocturne":false}
+{"id":12,"nom":"Bariaure","bonus_for":0,"bonus_dex":0,"bonus_con":0,"bonus_int":0,"bonus_sag":0,"bonus_cha":0,"taille":"Moyenne","deplacement_base":9,"vision_nocturne":false}
+
+=== personnages par race ===
+race 1 Elfe -> 17 personnages
+race 2 Humain -> 30 personnages
+race 3 Demi-Elfe -> 2 personnages
+race 4 Nain -> 3 personnages
+race 5 Halfelin -> 1 personnages
+race 6 Gnome -> 0 personnages
+race 7 Demi-Orque -> 0 personnages
+race 8 Illithid -> 1 personnages
+race 9 Demi-Orc -> 3 personnages
+race 10 Demi-Elf -> 6 personnages
+race 11 Petite-gens -> 3 personnages
+race 12 Bariaure -> 1 personnages
+
+=== racial_features par race ===
+race_id 1 -> 6 traits
+race_id 2 -> 4 traits
+race_id 3 -> 6 traits
+race_id 4 -> 8 traits
+race_id 5 -> 6 traits
+race_id 6 -> 7 traits
+race_id 7 -> 3 traits
+
+=== clans par race ===
+clans race_id 1 -> 1
+
+=== CLASSES (toutes) ===
+{"id":1,"nom":"Guerrier","de_vie":"d12","bba_progression":"Plein","vigueur_progression":"Bon","reflexes_progression":"Mauvais","volonte_progression":"Mauvais","competences_par_niveau":2}
+{"id":2,"nom":"Magicien","de_vie":"d4","bba_progression":"faible","vigueur_progression":"faible","reflexes_progression":"faible","volonte_progression":"bon","competences_par_niveau":2}
+{"id":3,"nom":"Rôdeur","de_vie":"d8","bba_progression":"elevee","vigueur_progression":"bon","reflexes_progression":"bon","volonte_progression":"faible","competences_par_niveau":6}
+{"id":4,"nom":"Roublard","de_vie":"d6","bba_progression":"moyenne","vigueur_progression":"faible","reflexes_progression":"bon","volonte_progression":"faible","competences_par_niveau":8}
+{"id":5,"nom":"Prêtre","de_vie":"d8","bba_progression":"Moyen","vigueur_progression":"Mauvais","reflexes_progression":"Mauvais","volonte_progression":"Mauvais","competences_par_niveau":2}
+{"id":6,"nom":"Moine","de_vie":"d8","bba_progression":"Moyen","vigueur_progression":"Mauvais","reflexes_progression":"Mauvais","volonte_progression":"Mauvais","competences_par_niveau":2}
+{"id":7,"nom":"Paladin","de_vie":"d8","bba_progression":"Moyen","vigueur_progression":"Mauvais","reflexes_progression":"Mauvais","volonte_progression":"Mauvais","competences_par_niveau":2}
+{"id":8,"nom":"Ensorcelleur","de_vie":"d8","bba_progression":"Moyen","vigueur_progression":"Mauvais","reflexes_progression":"Mauvais","volonte_progression":"Mauvais","competences_par_niveau":2}
+{"id":9,"nom":"Dracologist","de_vie":"d8","bba_progression":"Moyen","vigueur_progression":"Mauvais","reflexes_progression":"Mauvais","volonte_progression":"Mauvais","competences_par_niveau":2}
+{"id":10,"nom":"Battle-mage","de_vie":"d8","bba_progression":"Moyen","vigueur_progression":"Mauvais","reflexes_progression":"Mauvais","volonte_progression":"Mauvais","competences_par_niveau":2}
+{"id":11,"nom":"Blackguard","de_vie":"d8","bba_progression":"Moyen","vigueur_progression":"Mauvais","reflexes_progression":"Mauvais","volonte_progression":"Mauvais","competences_par_niveau":2}
+{"id":12,"nom":"Druide","de_vie":"d8","bba_progression":"Moyen","vigueur_progression":"Mauvais","reflexes_progression":"Mauvais","volonte_progression":"Mauvais","competences_par_niveau":2}
+{"id":13,"nom":"Cryptomancière","de_vie":"d8","bba_progression":"Moyen","vigueur_progression":"Mauvais","reflexes_progression":"Mauvais","volonte_progression":"Mauvais","competences_par_niveau":2}
+{"id":14,"nom":"Noble","de_vie":"d8","bba_progression":"Moyen","vigueur_progression":"Mauvais","reflexes_progression":"Mauvais","volonte_progression":"Mauvais","competences_par_niveau":2}
+{"id":15,"nom":"Assassin","de_vie":"d8","bba_progression":"Moyen","vigueur_progression":"Mauvais","reflexes_progression":"Mauvais","volonte_progression":"Mauvais","competences_par_niveau":2}
+{"id":16,"nom":"Barbare","de_vie":"d12","bba_progression":"elevee","vigueur_progression":"bon","reflexes_progression":"faible","volonte_progression":"faible","competences_par_niveau":4}
+
+=== personnages par classe (character_classes) ===
+classe 1 Guerrier -> 12 liens / 12 personnages
+classe 2 Magicien -> 16 liens / 16 personnages
+classe 3 Rôdeur -> 5 liens / 5 personnages
+classe 4 Roublard -> 11 liens / 11 personnages
+classe 5 Prêtre -> 10 liens / 10 personnages
+classe 6 Moine -> 3 liens / 3 personnages
+classe 7 Paladin -> 4 liens / 4 personnages
+classe 8 Ensorcelleur -> 9 liens / 9 personnages
+classe 9 Dracologist -> 0 liens / 0 personnages
+classe 10 Battle-mage -> 1 liens / 1 personnages
+classe 11 Blackguard -> 1 liens / 1 personnages
+classe 12 Druide -> 4 liens / 4 personnages
+classe 13 Cryptomancière -> 1 liens / 1 personnages
+classe 14 Noble -> 1 liens / 1 personnages
+classe 15 Assassin -> 1 liens / 1 personnages
+classe 16 Barbare -> 1 liens / 1 personnages
+
+=== class_features / class_skill_list par classe ===
+
+=== TOTAUX ===
+characters: 70
+characters avec race_id non nul: 67
+character_classes: 80
+character_skills: 510
+races: 12
+classes: 16
+skills: 191
+
+=== COLLISION race : un perso ne peut avoir qu une race (champ simple) — verif structurelle ===
+OK par construction : characters.race_id est scalaire
+
+=== COLLISION classe : perso lie a la fois a Ensorcelleur et a un autre nom ? ===
+perso 1 Cormac : 2 classes [1,2]
+perso 6 Lidda : 2 classes [4,2]
+perso 22 Cixi : 2 classes [5,6]
+perso 33 Aramil (Sean le trappeur) : 2 classes [8,10]
+perso 35 Benar : 2 classes [7,11]
+perso 39 L'vethian : 2 classes [4,2]
+perso 45 Elora Vlaardoen : 2 classes [2,13]
+perso 46 Garret Blanche Pierre : 2 classes [4,2]
+perso 52 Telian Fore : 2 classes [1,4]
+perso 53 Simmone Walcrest : 2 classes [8,14]
+perso 72 Sornë Verca : 2 classes [4,15]
+perso 76 Radriel Wyrdlore : 2 classes [2,1]
+
+=== NOMS des 6 Demi-Elf / 3 Demi-Orc / 3 Petite-gens / 3 Nain ===
+  Demi-Elf : perso 42 Ferazel
+  Demi-Elf : perso 43 Gaïa
+  Demi-Elf : perso 50 Zébulon Haute-pierre
+  Demi-Elf : perso 66 Ivanhoé
+  Demi-Elf : perso 69 Zaïd
+  Demi-Elf : perso 79 Peren Holimion
+  Demi-Elfe : perso 5 Elvar
+  Demi-Elfe : perso 85 Elvar
+  Demi-Orc : perso 40 Surya
+  Demi-Orc : perso 57 Beastman
+  Demi-Orc : perso 82 Krugg Coeur-Flamboyant
+  Halfelin : perso 6 Lidda
+  Nain : perso 55 Gorm
+  Nain : perso 73 Delgar des Monts de Fer
+  Nain : perso 81 Urmora
+  Petite-gens : perso 46 Garret Blanche Pierre
+  Petite-gens : perso 56 Tellian Fore
+  Petite-gens : perso 77 Sabin Gazonvert
+
+=== NOMS des 9 Ensorcelleur ===
+  perso 28 Nayla Brisenocturne niv 12
+  perso 33 Aramil (Sean le trappeur) niv 10
+  perso 38 Camla niv 16
+  perso 53 Simmone Walcrest niv 14
+  perso 54 Phyllin Thoddin niv 9
+  perso 60 Vallin Tefferti niv 16
+  perso 62 Legolas niv 3
+  perso 77 Sabin Gazonvert niv 4
+  perso 79 Peren Holimion niv 2
+
+=== Guerrier / Paladin : personnages ===
+  Guerrier : perso 1 Cormac
+  Guerrier : perso 27 Miridor
+  Guerrier : perso 34 Leena
+  Guerrier : perso 52 Telian Fore
+  Guerrier : perso 55 Gorm
+  Guerrier : perso 57 Beastman
+  Guerrier : perso 63 Gimli
+  Guerrier : perso 65 Gwendoline
+  Guerrier : perso 74 Dragar Thunderhammer
+  Guerrier : perso 76 Radriel Wyrdlore
+  Guerrier : perso 78 Éloban
+  Guerrier : perso 81 Urmora
+  Paladin : perso 24 Laban
+  Paladin : perso 31 Taria
+  Paladin : perso 35 Benar
+  Paladin : perso 48 Larissa

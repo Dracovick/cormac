@@ -1,0 +1,985 @@
+<title>Ménage des références</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    /* neutres froids biaisés pétrole — le registre, pas le parchemin */
+    --bg:#eef2f3; --pan:#fbfdfd; --ink:#141d20; --ink2:#5a6a6e; --line:#d3dcde;
+    --ac:#0f6a72; --ac-bg:#e2eeef;
+    --vert:#2b6a45; --vert-bg:#e6f0e9;
+    --rouge:#a03b28; --rouge-bg:#f6e8e4;
+    --ambre:#835b12; --ambre-bg:#f4ecdc;
+    --bleu:#26506e; --bleu-bg:#e5edf3;
+    --shadow:0 1px 2px rgba(20,29,32,.06),0 3px 10px rgba(20,29,32,.045);
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --bg:#0e1416; --pan:#161f22; --ink:#e4ecee; --ink2:#93a4a8; --line:#28353a;
+    --ac:#5cc4cc; --ac-bg:#0f2a2d;
+    --vert:#74c294; --vert-bg:#12241a;
+    --rouge:#e59079; --rouge-bg:#2a1712;
+    --ambre:#d8ac5c; --ambre-bg:#261d0d;
+    --bleu:#8bb6d8; --bleu-bg:#111f2a;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 3px 12px rgba(0,0,0,.3);
+  }}
+  :root[data-theme="dark"]{
+    --bg:#0e1416; --pan:#161f22; --ink:#e4ecee; --ink2:#93a4a8; --line:#28353a;
+    --ac:#5cc4cc; --ac-bg:#0f2a2d;
+    --vert:#74c294; --vert-bg:#12241a;
+    --rouge:#e59079; --rouge-bg:#2a1712;
+    --ambre:#d8ac5c; --ambre-bg:#261d0d;
+    --bleu:#8bb6d8; --bleu-bg:#111f2a;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 3px 12px rgba(0,0,0,.3);
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);margin:0;padding:0 1.1rem 5rem;
+       font:400 15.5px/1.62 "IBM Plex Sans",-apple-system,"Segoe UI",system-ui,sans-serif;
+       -webkit-text-size-adjust:100%}
+  .wrap{max-width:1060px;margin:0 auto}
+
+  header{padding:3rem 0 1.5rem;margin-bottom:2rem;border-bottom:1px solid var(--line)}
+  h1{font:600 2.3rem/1.12 Spectral,Georgia,serif;margin:0 0 .5rem;letter-spacing:-.015em;text-wrap:balance}
+  .sub{color:var(--ink2);font-size:1rem;margin:0;max-width:66ch}
+
+  h2{font:600 1.48rem/1.25 Spectral,Georgia,serif;margin:3.6rem 0 .3rem;padding-top:1.6rem;
+     border-top:1px solid var(--line);letter-spacing:-.01em;text-wrap:balance}
+  h2 .k{font:500 .71rem/1 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.13em;
+        text-transform:uppercase;color:var(--ac);display:block;margin-bottom:.55rem}
+  h3{font:600 1.06rem/1.35 "IBM Plex Sans",sans-serif;margin:2.1rem 0 .55rem;text-wrap:balance}
+  .box h3:first-child{margin-top:0}
+  p{margin:.75rem 0}
+  b,strong{font-weight:600}
+
+  code{font:400 .855em/1.4 "IBM Plex Mono",ui-monospace,Consolas,monospace;
+       background:var(--ac-bg);color:var(--ac);padding:.09em .38em;border-radius:3px;white-space:nowrap}
+  .n{color:var(--ink2);font:400 .76em/1 "IBM Plex Mono",ui-monospace,monospace;margin-left:.3em;white-space:nowrap}
+  .warn{color:var(--rouge);font-weight:600}
+  .src{font-size:.87rem;color:var(--ink2);line-height:1.55}
+
+  .box{background:var(--pan);border:1px solid var(--line);border-radius:5px;
+       padding:1.05rem 1.25rem;margin:1.3rem 0;box-shadow:var(--shadow)}
+  .box.or{border-left:3px solid var(--ambre);background:var(--ambre-bg)}
+  .box.vert{border-left:3px solid var(--vert);background:var(--vert-bg)}
+  .box.rouge{border-left:3px solid var(--rouge);background:var(--rouge-bg)}
+  .box.bleu{border-left:3px solid var(--bleu);background:var(--bleu-bg)}
+  .verdict{font-size:1.04rem}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.7rem;margin:1.5rem 0}
+  .stat{background:var(--pan);border:1px solid var(--line);border-radius:5px;padding:.85rem .95rem;
+        box-shadow:var(--shadow)}
+  .stat b{display:block;font:600 1.7rem/1.05 Spectral,Georgia,serif;
+          font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .stat span{color:var(--ink2);font-size:.79rem;line-height:1.42;display:block;margin-top:.35rem}
+  .stat.hi b{color:var(--rouge)} .stat.ok b{color:var(--vert)}
+
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1.1rem 0;
+          border:1px solid var(--line);border-radius:5px;background:var(--pan);box-shadow:var(--shadow)}
+  table{border-collapse:collapse;width:100%;font-size:.885rem}
+  th,td{text-align:left;padding:.58rem .75rem;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--ac-bg);color:var(--ac);font:500 .72rem/1.3 "IBM Plex Mono",ui-monospace,monospace;
+     letter-spacing:.09em;text-transform:uppercase;position:sticky;top:0;white-space:nowrap}
+  tr:last-child td{border-bottom:0}
+  td.num{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink2);white-space:nowrap;
+         font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.92em}
+  td.cible{min-width:11.5rem}
+  .note{margin-top:.5rem;padding:.52rem .72rem;background:var(--bg);border-left:2px solid var(--ambre);
+        border-radius:0 3px 3px 0;font-size:.93em;color:var(--ink2);line-height:1.55}
+
+  ul,ol{margin:.75rem 0;padding-left:1.35rem} li{margin:.38rem 0}
+  .tag{display:inline-block;font:500 .67rem/1.5 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.07em;
+       text-transform:uppercase;padding:.06em .5em;border-radius:3px;vertical-align:.1em;white-space:nowrap}
+  .tag.s{background:var(--vert-bg);color:var(--vert);border:1px solid var(--vert)}
+  .tag.a{background:var(--rouge-bg);color:var(--rouge);border:1px solid var(--rouge)}
+
+  footer{margin-top:4.5rem;padding-top:1.3rem;border-top:1px solid var(--line);
+         color:var(--ink2);font-size:.85rem;line-height:1.6}
+  a{color:var(--ac)}
+  :focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media (max-width:560px){ h1{font-size:1.8rem} h2{font-size:1.26rem} body{font-size:15px} }
+</style>
+
+<div class="wrap">
+
+<header>
+  <h1>Ménage des tables de référence</h1>
+  <p class="sub">Grimoire D&amp;D&nbsp;3.5 · inventaire du 25&nbsp;août&nbsp;2026 · <b>phase&nbsp;1 : rien n’a été modifié</b></p>
+</header>
+
+<div class="box rouge">
+  <p style="margin:0"><b>⛔ Aucune écriture n’a été faite.</b> Ce document propose&nbsp;; c’est toi qui décides.
+  Tout ce qui suit a été mesuré sur la base de production en lecture seule.
+  Les fusions ne partiront qu’après ton accord, dans l’ordre décrit à la fin.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2><span class="k">La question tranchée</span>Détection, pas Vue — <span style="color:var(--vert)">ta base a raison</span></h2>
+
+<div class="box vert verdict">
+  <p style="margin-top:0"><b>Vérification faite avant de connaître ta réponse&nbsp;: le manuel te donne raison.</b>
+  Les noms français des règles 3.5 sont bien <b>Détection</b> et <b>Perception auditive</b>.
+  C’est <code>COMPETENCES_DND35</code> qui porte des traductions maison — direction <b>(b)</b>.</p>
+  <p class="src">Source&nbsp;: <b>Manuel des Joueurs, Livre de Règles I v.3.5</b> (édition française), chapitre 4,
+  <b>table 4–2 : Compétences</b>, page 63 — le PDF de ta bibliothèque
+  (<code>Livres de jeu en PDF/Manuel_Des_Joueurs3.5.pdf</code>, page 64 du fichier).
+  Le scan n’a pas de couche texte&nbsp;: j’ai extrait la page en image et lu le tableau ligne à ligne.
+  Ni « Vue » ni « Ouïe » n’y figurent nulle part.</p>
+</div>
+
+<p><b>L’écart va bien plus loin que ces deux lignes.</b> En confrontant la liste du code aux 45 compétences
+de la table 4–2&nbsp;: <b>douze noms sur quarante-trois sont faux</b>, la liste contient <b>un doublon interne</b>,
+et <b>cinq compétences officielles y manquent</b>. Bonne nouvelle&nbsp;: les caractéristiques et les
+« formation requise » sont, eux, <b>tous exacts</b> — j’ai vérifié les 43 lignes contre les deux colonnes
+de droite de la table 4–2. C’est un problème de vocabulaire, pas de règles.</p>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2><span class="k">Section à part — ceci ne touche pas la base</span>Corrections à faire dans le code</h2>
+
+<div class="box bleu">
+  <p style="margin:0">Ce qui suit se corrige dans <b>deux fichiers TypeScript</b>, sans qu’une seule ligne de la
+  base ne bouge. C’est nettement plus sûr qu’un renommage de références auxquelles des personnages sont
+  rattachés — et c’est réversible d’un <code>git revert</code>.</p>
+</div>
+
+<h3>1. <code>src/lib/dnd35/skills.ts</code> — les douze renommages</h3>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Ligne actuelle</th><th>Nom correct (table 4–2)</th><th>Compétence anglaise</th></tr></thead>
+  <tbody>
+    <tr><td><code>Vue</code></td><td><b>Détection</b></td><td>Spot</td></tr>
+    <tr><td><code>Ouïe</code></td><td><b>Perception auditive</b></td><td>Listen</td></tr>
+    <tr><td><code>Magie divine</code></td><td><b>Art de la magie</b></td><td>Spellcraft — le nom du code est trompeur, la compétence n’a rien de divin</td></tr>
+    <tr><td><code>Filature</code></td><td><b>Renseignements</b></td><td>Gather Information — « Filature » n’existe pas en 3.5</td></tr>
+    <tr><td><code>Métier</code></td><td><b>Profession</b></td><td>Profession</td></tr>
+    <tr><td><code>Déchiffrage</code></td><td><b>Décryptage</b></td><td>Decipher Script</td></tr>
+    <tr><td><code>Sabotage</code></td><td><b>Désamorçage/sabotage</b></td><td>Disable Device</td></tr>
+    <tr><td><code>Utilisation des cordes</code></td><td><b>Maîtrise des cordes</b></td><td>Use Rope</td></tr>
+    <tr><td><code>Utilisation des obj. mag.</code></td><td><b>Utilisation d’objets magiques</b></td><td>Use Magic Device — abréviation à écrire en entier</td></tr>
+    <tr><td><code>Connaissance (arcanes)</code></td><td><b>Connaissances (mystères)</b></td><td>Knowledge (arcana)</td></tr>
+    <tr><td><code>Connaissance (donjons)</code></td><td><b>Connaissances (exploration souterraine)</b></td><td>Knowledge (dungeoneering)</td></tr>
+    <tr><td><code>Connaissance (…)</code> — les 7 autres</td><td><b>Connaissances (…)</b></td><td>pluriel dans le manuel : géographie, histoire, nature, religion, plans</td></tr>
+    <tr><td class="warn"><code>Tour de passe-passe</code></td><td><b>à supprimer</b></td><td class="warn">doublon interne : <code>Escamotage</code> est déjà dans la liste, deux lignes plus haut. Les deux traduisent Sleight of Hand.</td></tr>
+    <tr><td>— absentes —</td><td><b>Contrefaçon</b> (Int, innée)<br><b>Langue</b> (aucune carac., formation)<br><b>Connaissances (architecture et ingénierie)</b><br><b>Connaissances (folklore local)</b><br><b>Connaissances (noblesse et royauté)</b></td><td>cinq compétences officielles à ajouter — tes personnages en portent déjà quatre</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>2. <code>src/lib/dnd35/generator.ts</code> — ⛔ le piège</h3>
+
+<div class="box rouge">
+  <p style="margin-top:0"><b>La table <code>COMPETENCES_PRIORITAIRES</code> (lignes 40 à 52) contient
+  les mêmes noms fautifs</b> — et elle est reliée à <code>COMPETENCES_DND35</code> par une comparaison
+  de chaînes&nbsp;:</p>
+  <p style="margin:.5rem 0"><code>priorites.map(nom =&gt; deClasse.find(c =&gt; c.nom === nom)).filter(Boolean)</code></p>
+  <p style="margin-bottom:0">Le <code>.filter(Boolean)</code> <b>avale l’échec en silence</b>.
+  Si on corrige <code>skills.ts</code> sans corriger ces treize lignes, le générateur automatique cesse de
+  prioriser sans le dire&nbsp;: les personnages générés recevront leurs rangs dans l’ordre arbitraire
+  de la liste. <b>Les deux fichiers doivent être corrigés dans le même commit.</b></p>
+</div>
+
+<p>Noms à remplacer dans <code>COMPETENCES_PRIORITAIRES</code>&nbsp;: <code>Vue</code> et <code>Ouïe</code>
+(9 classes chacun), <code>Magie divine</code> (3&nbsp;classes), <code>Déchiffrage</code>, <code>Sabotage</code>,
+<code>Connaissance (arcanes)</code>, <code>(histoire)</code>, <code>(nature)</code>, <code>(plans)</code>,
+<code>(religion)</code>. Ce sont exactement les mêmes corrections que dans le tableau ci-dessus.</p>
+
+<h3>3. Où cette liste sert ailleurs — les cinq usages</h3>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Fichier</th><th>Ce qu’il en fait</th><th>Effet de la correction</th></tr></thead>
+  <tbody>
+    <tr><td><code>imprimer/page.tsx</code><br><span class=n>ligne 100</span></td>
+        <td>Construit la fiche à imprimer&nbsp;: pour chaque nom de la liste, cherche la compétence du personnage
+        par <b>égalité stricte de chaîne</b>.</td>
+        <td><span class="tag s">le gain</span> C’est le défaut principal. 30&nbsp;% → 50&nbsp;% des lignes imprimées
+        par la seule correction de code, sans toucher à la base.</td></tr>
+    <tr><td><code>CharacterForm.tsx</code><br><span class=n>lignes 45 et 465</span></td>
+        <td>Génère les lignes du tableau de compétences du formulaire, et détermine si c’est
+        une <b>compétence de classe</b> — ce qui fixe le <b>plafond de rangs</b>.</td>
+        <td><span class="tag s">gain</span> Aujourd’hui « Détection » n’est pas reconnue&nbsp;: elle est traitée
+        comme hors classe et <b>plafonnée à la moitié des rangs</b>. Après correction, le plafond redevient juste.
+        Le formulaire proposera aussi les bons noms&nbsp;: <b>une saisie manuelle ne créera plus de doublon</b> —
+        c’est exactement ce qui bloquait Sylvain.</td></tr>
+    <tr><td><code>char-convert.ts</code><br><span class=n>ligne 10</span></td>
+        <td>Charge une fiche existante dans le formulaire d’édition.</td>
+        <td><span class="tag s">sans risque</span> Une seconde boucle ajoute déjà à la fin les compétences absentes
+        de la liste, et <code>saveCharacter</code> ignore les lignes à 0 rang. <b>Aucune perte de données</b>
+        avant comme après. Vérifié.</td></tr>
+    <tr><td><code>actions/character.ts</code><br><span class=n>ligne 259</span></td>
+        <td>À la sauvegarde, y lit le « formation requise » d’une compétence à créer.</td>
+        <td><span class="tag s">sans risque</span> Retombe sur <code>false</code> si le nom est inconnu. Ne casse rien.</td></tr>
+    <tr><td><code>generator.ts</code><br><span class=n>lignes 215 et 230</span></td>
+        <td>Génère un personnage complet.</td>
+        <td><span class="tag a">à corriger ensemble</span> Voir le piège ci-dessus.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>4. ⚠️ L’effet de bord sur la mise en page — mesuré</h3>
+
+<p>Des compétences qui ne s’imprimaient pas vont se mettre à s’imprimer. C’est le but,
+mais la fiche est calibrée pour <b>20 lignes</b> de compétences
+(<code>imprimer/page.tsx</code> ligne 549&nbsp;: <code>Math.max(0, 20 - skillsData.length)</code> — le gabarit
+complète le tableau jusqu’à 20 lignes vides).</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Lignes de compétences par fiche</th><th>Aujourd’hui</th><th>Après lot sûr</th><th>Après tout</th></tr></thead>
+  <tbody>
+    <tr><td>Maximum sur une fiche</td><td class=num>12</td><td class=num><b>21</b></td><td class=num><b>23</b></td></tr>
+    <tr><td>Médiane</td><td class=num>2</td><td class=num>6</td><td class=num>6</td></tr>
+    <tr><td>Fiches atteignant ou dépassant 20 lignes</td><td class=num>0</td><td class="num warn">2</td><td class="num warn">2</td></tr>
+    <tr><td>Fiches n’imprimant aucune compétence</td><td class="num warn">10</td><td class=num>0</td><td class=num>0</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><b>Deux fiches déborderont&nbsp;: Tatiana (21 lignes, 23 après arbitrages) et Garret Blanche Pierre (20, puis 23).</b>
+Rien ne plante — le tableau s’allonge simplement et pousse ce qui le suit vers le bas.
+Il faudra tester ces deux fiches à l’impression, et probablement relever le gabarit de 20 à 24 lignes.
+Les 66 autres fiches restent bien en deçà.</p>
+
+<div class="box or">
+  <p style="margin:0"><b>Un dernier point sur la direction (b).</b> La table 4–2 emploie
+  <i>Artisanat</i>, <i>Connaissances</i>, <i>Profession</i> et <i>Représentation</i> sans spécialité&nbsp;:
+  celle-ci est libre et se note entre parenthèses. Le code, lui, fige <code>Artisanat (armures)</code>,
+  <code>Artisanat (armes)</code>, <code>Artisanat (pièges)</code>. Tes personnages, eux, ont
+  <i>Artisanat (tissage)</i>, <i>Profession (apothicaire)</i>, <i>Représentation (flûte)</i>…
+  Pour que ces lignes s’impriment, la fiche devra accepter les compétences <b>à spécialité libre</b>,
+  pas seulement les noms figés. Sans cela, une trentaine de lignes resteront invisibles même après le ménage.</p>
+</div>
+
+<div class="box or">
+  <h3>Recoupement dans l’autre sens&nbsp;: la base a-t-elle tort quelque part&nbsp;?</h3>
+  <p>Avoir raison sur <i>Détection</i> ne veut pas dire avoir raison partout. J’ai comparé les 191 compétences
+  de la base à la table 4–2. Verdict&nbsp;:</p>
+  <ul style="margin-bottom:0">
+    <li><b>Les noms les plus utilisés sont justes</b>&nbsp;: <i>Détection</i> (18 personnages),
+      <i>Perception auditive</i> (19), <i>Concentration</i> (27), <i>Fouille</i> (16), <i>Discrétion</i>,
+      <i>Déplacement silencieux</i>, <i>Crochetage</i>, <i>Escalade</i>, <i>Natation</i>, <i>Saut</i>…</li>
+    <li><b>Mais 191 entrées pour 45 compétences</b>&nbsp;: le reste est un empilement de fautes de frappe
+      (<i>Percetion auditive</i>, <i>Connaissane religion</i>, <i>Artisant (piège)</i>, <i>Knomwledge Arcana</i>),
+      de doublons singulier/pluriel (<i>Acrobatie</i>/<i>Acrobaties</i>, <i>Déplacement</i>/<i>Déplacements silencieux</i>),
+      d’accents manquants (<i>Equitation</i>/<i>Équitation</i>, <i>Maitrise des cordes</i>) et de la
+      <b>même compétence en anglais</b> (<i>Spot</i> 14 personnages, <i>Listen</i> 13, <i>Search</i> 11, <i>Hide</i> 7…).</li>
+    <li>Quelques noms de la base sont bel et bien fautifs au regard des règles&nbsp;: <i>Vue</i> (3 personnages)
+      et <i>Ouïe</i> (2) s’y trouvent aussi — importés d’anciennes fiches — et se fondent dans
+      <i>Détection</i> et <i>Perception auditive</i>. <i>Sabotage</i> devient <i>Désamorçage/sabotage</i>,
+      <i>Déchiffrage</i> devient <i>Décryptage</i>.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2><span class="k">Ce que ça coûte aujourd’hui</span>Les chiffres</h2>
+
+<div class="stats">
+  <div class="stat hi"><b>30&nbsp;%</b><span>des compétences de tes personnages s’impriment sur la fiche<br>155 lignes sur 510</span></div>
+  <div class="stat hi"><b>52</b><span>personnages sur 70 ont au moins une compétence qui ne s’imprime pas</span></div>
+  <div class="stat hi"><b>10</b><span>personnages n’impriment <b>aucune</b> de leurs compétences</span></div>
+  <div class="stat ok"><b>84&nbsp;%</b><span>après la liste corrigée + le lot sûr<br>428 lignes sur 510</span></div>
+  <div class="stat ok"><b>94&nbsp;%</b><span>après le lot sûr <i>et</i> tes arbitrages<br>481 lignes sur 510</span></div>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>191 → 67</b><span>compétences, avant → après</span></div>
+  <div class="stat"><b>33 → 26</b><span>langues</span></div>
+  <div class="stat"><b>12 → 9</b><span>races</span></div>
+  <div class="stat"><b>27 → 24</b><span>dieux</span></div>
+  <div class="stat"><b>16 → 16</b><span>classes (un seul renommage)</span></div>
+  <div class="stat" id="stat-dons"><b>478 → ~109</b><span>dons — second passage</span></div>
+</div>
+
+<h3>Deux dégâts que je n’attendais pas</h3>
+
+<div class="box rouge">
+  <p style="margin-top:0"><b>1. Neuf personnages perdent leurs ajustements raciaux à l’impression.</b>
+  La fiche imprimée résout la race par son <i>nom</i> dans <code>RACES_DND35</code>, qui ne connaît que
+  <code>Demi-Elfe</code> et <code>Demi-Orque</code>. Or six personnages sont rattachés à <code>Demi-Elf</code>
+  et trois à <code>Demi-Orc</code>&nbsp;: l’appariement échoue en silence. Pour les trois demi-orques,
+  ce sont <b>+2&nbsp;FOR, −2&nbsp;INT, −2&nbsp;CHA</b> qui manquent. Trois autres personnages, rattachés à
+  <code>Petite-gens</code>, perdent <b>−2&nbsp;FOR et +2&nbsp;DEX</b>. Au total <b>14 personnages sur 70</b>
+  ont une race que le code ne reconnaît pas — <b>douze d’entre eux pour une simple lettre</b>.</p>
+  <p style="margin-bottom:0"><b>2. Neuf ensorceleurs n’ont ni dé de vie, ni BBA, ni sauvegardes.</b>
+  La base écrit <code>Ensorcelleur</code> (deux L), la liste du code attend <code>Ensorceleur</code>.
+  <code>getClasseInfo</code> renvoie <i>undefined</i> pour ces neuf personnages —
+  c’est la troisième classe la plus jouée de ta table.</p>
+</div>
+
+<p>Ces deux dégâts se réparent par de simples renommages, sans aucune décision de ta part.
+Ils sont dans le lot sûr.</p>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2><span class="k">Lot 1 — à approuver en bloc</span>Compétences&nbsp;: les fusions sûres <span class="tag s">sûr</span></h2>
+
+<p><b>113 entrées</b> à réaffecter vers <b>51 compétences</b>. Ce sont des variantes de casse, d’accent,
+d’orthographe, d’abréviation, ou la même compétence en anglais. Le sens ne fait aucun doute dans aucun cas.</p>
+
+<div class="box vert">
+  <p style="margin:0"><b>Ce lot ne produit aucune collision de liaison. Je l’ai vérifié&nbsp;:</b> parmi les 51 groupes,
+  <b>aucun personnage n’est rattaché à deux membres du même groupe</b>. La réaffectation ne peut donc pas
+  créer de doublon dans <code>character_skills</code>, et aucun rang n’a besoin d’être arbitré.
+  Les 15 collisions que j’ai trouvées sont <b>toutes</b> dans le lot 2.</p>
+</div>
+
+<p class="src">Lecture du tableau&nbsp;: <code>id</code>&nbsp;« nom actuel »&nbsp;<span class="n">Xp</span> = identifiant en base,
+nom tel qu’il est écrit, et nombre de personnages rattachés.
+La colonne de gauche donne le nom retenu — celui de la table 4–2 du manuel.</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Nom retenu</th><th>Entrées à y réaffecter, puis supprimer</th><th>Nb</th><th>Liens</th></tr></thead>
+  <tbody>
+<tr><td class=cible><b>Acrobaties</b><br><span class=n>entrée conservée&nbsp;: <code>35</code></span></td>
+  <td><code>102</code>&nbsp;« Acrobatie »<span class=n>5p</span> · <code>88</code>&nbsp;« Tumble »<span class=n>2p</span></td>
+  <td class=num>2</td><td class=num>7</td></tr>
+<tr><td class=cible><b>Art de la magie</b></td>
+  <td><code>48</code>&nbsp;« Spellcraft »<span class=n>7p</span> · <code>22</code>&nbsp;« Connaissance des sorts »<span class=n>5p</span> · <code>164</code>&nbsp;« Conn des sorts »<span class=n>1p</span> · <code>40</code>&nbsp;« Conn. des sorts »<span class=n>1p</span> · <code>129</code>&nbsp;« Connaissance des sorts (spellcraft) »<span class=n>1p</span> · <code>109</code>&nbsp;« Connaissance sort »<span class=n>1p</span> · <code>99</code>&nbsp;« Connaissance Sorts »<span class=n>1p</span> · <code>94</code>&nbsp;« Spellcraft (connaissance sorts) »<span class=n>1p</span></td>
+  <td class=num>8</td><td class=num>18</td></tr>
+<tr><td class=cible><b>Artisanat</b><br><span class=n>entrée conservée&nbsp;: <code>18</code></span></td>
+  <td><code>148</code>&nbsp;« Craft »<span class=n>1p</span></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Artisanat (flèches)</b></td>
+  <td><code>123</code>&nbsp;« artisanat fabrication flèche »<span class=n>1p</span> · <code>101</code>&nbsp;« Craft (arrows) »<span class=n>1p</span></td>
+  <td class=num>2</td><td class=num>2</td></tr>
+<tr><td class=cible><b>Artisanat (pièges)</b><br><span class=n>entrée conservée&nbsp;: <code>36</code></span></td>
+  <td><code>187</code>&nbsp;« Artisant (piège) »<span class=n>1p</span></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Artisanat (serrurerie)</b></td>
+  <td><code>84</code>&nbsp;« Craft - Serrurier »<span class=n>1p</span></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Artisanat (tissage)</b><br><span class=n>entrée conservée&nbsp;: <code>186</code></span></td>
+  <td><code>177</code>&nbsp;« Artisanat/tissage »<span class=n>2p</span></td>
+  <td class=num>1</td><td class=num>2</td></tr>
+<tr><td class=cible><b>Connaissances (dragons)</b></td>
+  <td><code>50</code>&nbsp;« Connaiss. DRAGONS »<span class=n>0p</span></td>
+  <td class=num>1</td><td class=num>0</td></tr>
+<tr><td class=cible><b>Connaissances (exploration souterraine)</b></td>
+  <td><code>121</code>&nbsp;« Knowledge Underground »<span class=n>1p</span></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Connaissances (folklore local)</b></td>
+  <td><code>150</code>&nbsp;« Knowledge (local Blackmoor) »<span class=n>1p</span></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Connaissances (histoire)</b></td>
+  <td><code>12</code>&nbsp;« Connaissance (histoire) »<span class=n>2p</span> · <code>140</code>&nbsp;« Knowledge (History) »<span class=n>2p</span></td>
+  <td class=num>2</td><td class=num>4</td></tr>
+<tr><td class=cible><b>Connaissances (mystères)</b></td>
+  <td><code>77</code>&nbsp;« Knowledge arcana »<span class=n>4p</span> · <code>10</code>&nbsp;« Connaissance (arcanes) »<span class=n>3p</span> · <code>171</code>&nbsp;« Connaissance mystère »<span class=n>1p</span> · <code>144</code>&nbsp;« Knomwledge Arcana »<span class=n>1p</span> · <code>135</code>&nbsp;« Knowledge (Arcana) »<span class=n>1p</span> · <code>43</code>&nbsp;« Knowledge-arcana »<span class=n>1p</span></td>
+  <td class=num>6</td><td class=num>11</td></tr>
+<tr><td class=cible><b>Connaissances (nature)</b></td>
+  <td><code>97</code>&nbsp;« Connaissance Nature »<span class=n>3p</span> · <code>30</code>&nbsp;« Connaissance (nature) »<span class=n>1p</span> · <code>118</code>&nbsp;« Connaissance de la nature »<span class=n>1p</span> · <code>155</code>&nbsp;« Knowledge (Nature) »<span class=n>1p</span> · <code>158</code>&nbsp;« Knowledge Nature »<span class=n>1p</span></td>
+  <td class=num>5</td><td class=num>7</td></tr>
+<tr><td class=cible><b>Connaissances (noblesse et royauté)</b></td>
+  <td><code>151</code>&nbsp;« Knowledge (nobility) »<span class=n>1p</span></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Connaissances (plans)</b></td>
+  <td><code>21</code>&nbsp;« Connaissance des Plans »<span class=n>3p</span> · <code>11</code>&nbsp;« Connaissance (plans) »<span class=n>1p</span> · <code>105</code>&nbsp;« Knowledge Planes »<span class=n>1p</span> · <code>45</code>&nbsp;« Knowledge-planes »<span class=n>1p</span></td>
+  <td class=num>4</td><td class=num>6</td></tr>
+<tr><td class=cible><b>Connaissances (religion)</b></td>
+  <td><code>181</code>&nbsp;« Connaissance des religions »<span class=n>2p</span> · <code>93</code>&nbsp;« Knowledge (religion) »<span class=n>2p</span> · <code>172</code>&nbsp;« connaissance religion »<span class=n>1p</span> · <code>85</code>&nbsp;« Connaissane religion »<span class=n>1p</span> · <code>126</code>&nbsp;« Knowledge Religion »<span class=n>1p</span></td>
+  <td class=num>5</td><td class=num>7</td></tr>
+<tr><td class=cible><b>Contrefaçon</b><br><span class=n>entrée conservée&nbsp;: <code>52</code></span></td>
+  <td><code>145</code>&nbsp;« Forgery »<span class=n>1p</span></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Crochetage</b><br><span class=n>entrée conservée&nbsp;: <code>39</code></span></td>
+  <td><code>73</code>&nbsp;« Open lock »<span class=n>2p</span> · <code>127</code>&nbsp;« OpenLock »<span class=n>1p</span></td>
+  <td class=num>2</td><td class=num>3</td></tr>
+<tr><td class=cible><b>Décryptage</b><br><span class=n>entrée conservée&nbsp;: <code>53</code></span></td>
+  <td><code>14</code>&nbsp;« Déchiffrage »<span class=n>3p</span> · <code>68</code>&nbsp;« Decipher script »<span class=n>2p</span></td>
+  <td class=num>2</td><td class=num>5</td></tr>
+<tr><td class=cible><b>Déplacement silencieux</b><br><span class=n>entrée conservée&nbsp;: <code>33</code></span></td>
+  <td><code>72</code>&nbsp;« Move silently »<span class=n>8p</span> · <code>82</code>&nbsp;« Déplacement sans bruit »<span class=n>1p</span> · <code>184</code>&nbsp;« Déplacements silencieux »<span class=n>1p</span></td>
+  <td class=num>3</td><td class=num>10</td></tr>
+<tr><td class=cible><b>Désamorçage/sabotage</b></td>
+  <td><code>110</code>&nbsp;« Désamorsage/sabotage »<span class=n>1p</span> · <code>55</code>&nbsp;« Désamorçage »<span class=n>1p</span> · <code>170</code>&nbsp;« Désamorçage-sabotage »<span class=n>1p</span> · <code>176</code>&nbsp;« désamorçage/sabotage »<span class=n>1p</span> · <code>38</code>&nbsp;« Sabotage »<span class=n>1p</span></td>
+  <td class=num>5</td><td class=num>5</td></tr>
+<tr><td class=cible><b>Détection</b><br><span class=n>entrée conservée&nbsp;: <code>2</code></span></td>
+  <td><code>49</code>&nbsp;« Spot »<span class=n>14p</span> · <code>16</code>&nbsp;« Vue »<span class=n>3p</span> · <code>180</code>&nbsp;« Détection (spot) »<span class=n>1p</span> · <code>91</code>&nbsp;« Spot (détection) »<span class=n>1p</span></td>
+  <td class=num>4</td><td class=num>19</td></tr>
+<tr><td class=cible><b>Diplomatie</b><br><span class=n>entrée conservée&nbsp;: <code>3</code></span></td>
+  <td><code>141</code>&nbsp;« Diplomacy »<span class=n>4p</span></td>
+  <td class=num>1</td><td class=num>4</td></tr>
+<tr><td class=cible><b>Discrétion</b><br><span class=n>entrée conservée&nbsp;: <code>31</code></span></td>
+  <td><code>87</code>&nbsp;« Hide »<span class=n>7p</span></td>
+  <td class=num>1</td><td class=num>7</td></tr>
+<tr><td class=cible><b>Dressage</b><br><span class=n>entrée conservée&nbsp;: <code>98</code></span></td>
+  <td><code>143</code>&nbsp;« Handle Animal »<span class=n>2p</span></td>
+  <td class=num>1</td><td class=num>2</td></tr>
+<tr><td class=cible><b>Équilibre</b><br><span class=n>entrée conservée&nbsp;: <code>56</code></span></td>
+  <td><code>67</code>&nbsp;« Balance »<span class=n>2p</span></td>
+  <td class=num>1</td><td class=num>2</td></tr>
+<tr><td class=cible><b>Équitation</b><br><span class=n>entrée conservée&nbsp;: <code>4</code></span></td>
+  <td><code>63</code>&nbsp;« Ride »<span class=n>3p</span> · <code>185</code>&nbsp;« Equitation »<span class=n>1p</span> · <code>161</code>&nbsp;« Monter à cheval »<span class=n>1p</span></td>
+  <td class=num>3</td><td class=num>5</td></tr>
+<tr><td class=cible><b>Escalade</b><br><span class=n>entrée conservée&nbsp;: <code>5</code></span></td>
+  <td><code>142</code>&nbsp;« Climb »<span class=n>3p</span> · <code>79</code>&nbsp;« Grimper »<span class=n>3p</span></td>
+  <td class=num>2</td><td class=num>6</td></tr>
+<tr><td class=cible><b>Escamotage</b></td>
+  <td><code>59</code>&nbsp;« Vol à la tire »<span class=n>5p</span> · <code>74</code>&nbsp;« Pick pocket »<span class=n>3p</span></td>
+  <td class=num>2</td><td class=num>8</td></tr>
+<tr><td class=cible><b>Estimation</b><br><span class=n>entrée conservée&nbsp;: <code>111</code></span></td>
+  <td><code>66</code>&nbsp;« Appraise »<span class=n>3p</span> · <code>149</code>&nbsp;« Apparaise »<span class=n>1p</span></td>
+  <td class=num>2</td><td class=num>4</td></tr>
+<tr><td class=cible><b>Évasion</b><br><span class=n>entrée conservée&nbsp;: <code>57</code></span></td>
+  <td><code>69</code>&nbsp;« Escape artist »<span class=n>3p</span> · <code>190</code>&nbsp;« Artiste de l'évasion »<span class=n>1p</span></td>
+  <td class=num>2</td><td class=num>4</td></tr>
+<tr><td class=cible><b>Fouille</b><br><span class=n>entrée conservée&nbsp;: <code>34</code></span></td>
+  <td><code>47</code>&nbsp;« Search »<span class=n>11p</span> · <code>179</code>&nbsp;« Fouille (search) »<span class=n>1p</span> · <code>90</code>&nbsp;« Search (fouille) »<span class=n>1p</span> · <code>7</code>&nbsp;« Recherche »<span class=n>1p</span></td>
+  <td class=num>4</td><td class=num>14</td></tr>
+<tr><td class=cible><b>Intimidation</b></td>
+  <td><code>138</code>&nbsp;« Intimidate »<span class=n>1p</span> · <code>175</code>&nbsp;« intimidation »<span class=n>1p</span></td>
+  <td class=num>2</td><td class=num>2</td></tr>
+<tr><td class=cible><b>Maîtrise des cordes</b></td>
+  <td><code>76</code>&nbsp;« Use rope »<span class=n>3p</span> · <code>113</code>&nbsp;« Maitrise corde »<span class=n>1p</span> · <code>58</code>&nbsp;« Maitrise des cordes »<span class=n>1p</span></td>
+  <td class=num>3</td><td class=num>5</td></tr>
+<tr><td class=cible><b>Natation</b><br><span class=n>entrée conservée&nbsp;: <code>25</code></span></td>
+  <td><code>83</code>&nbsp;« Nager »<span class=n>1p</span> · <code>156</code>&nbsp;« Swim »<span class=n>1p</span></td>
+  <td class=num>2</td><td class=num>2</td></tr>
+<tr><td class=cible><b>Perception auditive</b><br><span class=n>entrée conservée&nbsp;: <code>6</code></span></td>
+  <td><code>46</code>&nbsp;« Listen »<span class=n>13p</span> · <code>157</code>&nbsp;« Écoute »<span class=n>3p</span> · <code>32</code>&nbsp;« Ouïe »<span class=n>2p</span> · <code>81</code>&nbsp;« Ecouter »<span class=n>1p</span> · <code>89</code>&nbsp;« Listen (écoute) »<span class=n>1p</span> · <code>119</code>&nbsp;« Percetion auditive »<span class=n>1p</span></td>
+  <td class=num>6</td><td class=num>21</td></tr>
+<tr><td class=cible><b>Premiers secours</b><br><span class=n>entrée conservée&nbsp;: <code>191</code></span></td>
+  <td><code>64</code>&nbsp;« Heal »<span class=n>5p</span> · <code>41</code>&nbsp;« Premier secours »<span class=n>4p</span> · <code>136</code>&nbsp;« Healing »<span class=n>1p</span></td>
+  <td class=num>3</td><td class=num>10</td></tr>
+<tr><td class=cible><b>Profession</b></td>
+  <td><code>174</code>&nbsp;« profession »<span class=n>1p</span></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Profession (apothicaire)</b></td>
+  <td><code>133</code>&nbsp;« Profession apothicaire »<span class=n>1p</span> · <code>26</code>&nbsp;« Profession Apoticaire »<span class=n>1p</span></td>
+  <td class=num>2</td><td class=num>2</td></tr>
+<tr><td class=cible><b>Profession (charpentier)</b></td>
+  <td><code>168</code>&nbsp;« Métier charpentier »<span class=n>1p</span></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Profession (herboriste)</b></td>
+  <td><code>159</code>&nbsp;« Profession Herbalist »<span class=n>1p</span></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Profession (jardinier)</b></td>
+  <td><code>103</code>&nbsp;« Profession (jardinière) »<span class=n>1p</span></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Profession (poterie)</b></td>
+  <td><code>108</code>&nbsp;« Profession (pottery) »<span class=n>1p</span></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Psychologie</b><br><span class=n>entrée conservée&nbsp;: <code>165</code></span></td>
+  <td><code>146</code>&nbsp;« Sense motive »<span class=n>3p</span></td>
+  <td class=num>1</td><td class=num>3</td></tr>
+<tr><td class=cible><b>Renseignements</b></td>
+  <td><code>70</code>&nbsp;« Gather information »<span class=n>3p</span></td>
+  <td class=num>1</td><td class=num>3</td></tr>
+<tr><td class=cible><b>Représentation (art oratoire)</b></td>
+  <td><code>147</code>&nbsp;« Perform oratory »<span class=n>1p</span></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Représentation (danse)</b></td>
+  <td><code>152</code>&nbsp;« Perform (dance) »<span class=n>1p</span></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Représentation (flûte)</b></td>
+  <td><code>167</code>&nbsp;« Musique (flute) »<span class=n>1p</span></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Saut</b><br><span class=n>entrée conservée&nbsp;: <code>8</code></span></td>
+  <td><code>71</code>&nbsp;« Jump »<span class=n>3p</span> · <code>80</code>&nbsp;« Sauter »<span class=n>3p</span></td>
+  <td class=num>2</td><td class=num>6</td></tr>
+<tr><td class=cible><b>Survie</b><br><span class=n>entrée conservée&nbsp;: <code>9</code></span></td>
+  <td><code>62</code>&nbsp;« Sens de la nature »<span class=n>4p</span> · <code>128</code>&nbsp;« Wilderness Lore »<span class=n>4p</span></td>
+  <td class=num>2</td><td class=num>8</td></tr>
+<tr><td class=cible><b>Utilisation d'objets magiques</b><br><span class=n>entrée conservée&nbsp;: <code>78</code></span></td>
+  <td><code>75</code>&nbsp;« Use magic device »<span class=n>5p</span> · <code>139</code>&nbsp;« Utilisation d'obj. magique »<span class=n>1p</span> · <code>114</code>&nbsp;« Utilisation objet magique »<span class=n>1p</span></td>
+  <td class=num>3</td><td class=num>7</td></tr>
+
+  </tbody>
+</table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2><span class="k">Lot 2 — ta décision</span>Compétences&nbsp;: les arbitrages <span class="tag a">à trancher</span></h2>
+
+<p><b>49 entrées</b> réparties en <b>24 questions</b>. La plupart tiennent à un même fait&nbsp;:
+tes personnages ont jusqu’à 25 ans, et plusieurs portent des compétences de la <b>3.0</b> que la 3.5 a
+supprimées, renommées ou absorbées. Fusionner, c’est moderniser&nbsp;; garder, c’est rester fidèle
+à la fiche d’origine. Aucune des deux réponses n’est fausse — mais c’est la tienne qui compte.</p>
+
+<div class="box rouge">
+  <h3>⛔ Les 15 collisions de liaison</h3>
+  <p>Elles sont toutes ici, et elles demandent une décision de plus&nbsp;: <b>quel rang survit&nbsp;?</b>
+  Quand un personnage possède déjà les deux compétences d’un groupe, les fusionner écraserait une des
+  deux lignes. L’ordre d’exécution devra donc être&nbsp;: <b>résoudre le rang, réaffecter, puis supprimer</b>
+  — jamais l’inverse.</p>
+  <div class="scroll" style="margin-bottom:0">
+  <table>
+    <thead><tr><th>Groupe</th><th>Personnage</th><th>Les deux lignes en conflit</th></tr></thead>
+    <tbody>
+      <tr><td><b>Art de la magie</b></td><td>Zébulon Haute-pierre</td><td>Connaissance de la magie <b>17 rangs</b> + 1 · Connaissance des sorts (spellcraft) <b>15 rangs</b> + 1</td></tr>
+      <tr><td><b>Art de la magie</b></td><td>DracoVick Von Drag</td><td>Connaissance de la magie <b>10</b> · Connaissance des sorts <b>11</b></td></tr>
+      <tr><td><b>Art de la magie</b></td><td>Willarth</td><td>Connaissance de la magie <b>8</b> · Connaissance des sorts <b>8</b></td></tr>
+      <tr><td><b>Art de la magie</b></td><td>Legolas</td><td>Connaissance de la magie <b>3</b> · Connaissance des sorts <b>3</b></td></tr>
+      <tr><td><b>Art de la magie</b></td><td>Peren Holimion</td><td>Connaissance des sorts <b>2</b> · Connaissance de la magie <b>2</b></td></tr>
+      <tr><td><b>Survie</b></td><td>Rham</td><td>Orientation <b>10</b> · Sens de l’orientation <b>10</b></td></tr>
+      <tr><td><b>Survie</b></td><td>Gaïa</td><td>Sens de l’orientation <b>5</b> · Sens de la nature <b>10</b></td></tr>
+      <tr><td><b>Survie</b></td><td>Laban</td><td>Sens de la nature <b>4</b> · Sens de l’orientation <b>3</b></td></tr>
+      <tr><td><b>Survie</b></td><td>Uhlmar Thobin</td><td>Intuit Direction <b>7</b> · Wilderness Lore <b>7</b></td></tr>
+      <tr><td><b>Dressage</b></td><td>Gaïa</td><td>Empathie Animaux <b>5</b> · Dressage <b>10</b></td></tr>
+      <tr><td><b>Dressage</b></td><td>Uhlmar Thobin</td><td>Animal Empathy <b>7</b> · Handle Animal <b>7</b></td></tr>
+      <tr><td><b>Détection</b></td><td>Tatiana</td><td>Détection <b>16</b> · Lecture sur les lèvres <b>3</b></td></tr>
+      <tr><td><b>Détection</b></td><td>Picasso</td><td>Lecture sur les lèvres <b>2</b> · Détection <b>0</b>, divers +2</td></tr>
+      <tr><td><b>à identifier</b></td><td>DracoVick Von Drag</td><td>Variante de sort <b>5</b> · Volonté <b>10</b></td></tr>
+      <tr><td><b>à identifier</b></td><td>Zébulon Haute-pierre</td><td>Variante de sort <b>5</b> · Aura magique <b>5</b></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Cible proposée</th><th>Entrées concernées et question</th><th>Nb</th><th>Liens</th></tr></thead>
+  <tbody>
+<tr><td class=cible><b>Art de la magie</b></td>
+  <td><code>20</code>&nbsp;« Connaissance de la magie »<span class=n>7p</span> · <code>13</code>&nbsp;« Magie divine »<span class=n>3p</span><div class=note><b>Question&nbsp;:</b> <i>Connaissance de la magie</i> (7 personnages) et <i>Magie divine</i> (3) désignent-elles bien Spellcraft, ou sont-ce des compétences maison distinctes&nbsp;? <span class=warn>Cinq personnages ont déjà deux membres du groupe&nbsp;: DracoVick (10 et 11 rangs), Willarth, Legolas, Peren Holimion, Zébulon Haute-pierre (17 et 15 rangs).</span></div></td>
+  <td class=num>2</td><td class=num>10</td></tr>
+<tr><td class=cible><b>Artisanat</b></td>
+  <td><code>188</code>&nbsp;« Fabrication »<span class=n>1p</span><div class=note><b>Question&nbsp;:</b> <i>Fabrication</i> — Artisanat générique&nbsp;?</div></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Artisanat (alchimie)</b></td>
+  <td><code>17</code>&nbsp;« Alchimie »<span class=n>5p</span> · <code>42</code>&nbsp;« Alchemy »<span class=n>5p</span><div class=note><b>Question&nbsp;:</b> l’Alchimie était une compétence à part entière en 3.0. En 3.5 elle devient une spécialité d’Artisanat. Fusionner sous <i>Artisanat (alchimie)</i>, ou garder <i>Alchimie</i> telle quelle comme compétence de ta table&nbsp;? 10 liens, 10 personnages.</div></td>
+  <td class=num>2</td><td class=num>10</td></tr>
+<tr><td class=cible><b>Connaissances (architecture et ingénierie)</b></td>
+  <td><code>183</code>&nbsp;« Ingénierie magique »<span class=n>2p</span><div class=note><b>Question&nbsp;:</b> <i>Ingénierie magique</i> (2 personnages) — architecture et ingénierie, ou une compétence maison liée à la magie&nbsp;?</div></td>
+  <td class=num>1</td><td class=num>2</td></tr>
+<tr><td class=cible><b>Connaissances (astronomie)</b></td>
+  <td><code>132</code>&nbsp;« Connaissance astronomie »<span class=n>1p</span><div class=note>Spécialité libre de Connaissances — hors des dix catégories du manuel. À garder.</div></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Connaissances (commerce)</b></td>
+  <td><code>125</code>&nbsp;« Connaissance du commerce »<span class=n>1p</span><div class=note>Spécialité libre de Connaissances — hors des dix catégories du manuel. À garder.</div></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Connaissances (dragons)</b></td>
+  <td><code>19</code>&nbsp;« Connaissance Dragons »<span class=n>1p</span><div class=note><i>Connaiss. DRAGONS</i> (id 50) n’est <b>rattachée à aucun personnage</b>&nbsp;: suppression sans risque. Reste à décider du sort de <i>Connaissance Dragons</i> (1 personnage).</div></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Connaissances (folklore local)</b></td>
+  <td><code>1</code>&nbsp;« Connaissance des nains »<span class=n>1p</span><div class=note><b>Question&nbsp;:</b> <i>Connaissance des nains</i> — folklore local, ou une connaissance raciale maison à garder&nbsp;?</div></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Connaissances (monstres)</b></td>
+  <td><code>162</code>&nbsp;« Connaissance des monstres »<span class=n>3p</span> · <code>173</code>&nbsp;« connaissance monstre »<span class=n>1p</span> · <code>23</code>&nbsp;« Connaissance Monstres »<span class=n>1p</span> · <code>130</code>&nbsp;« Connaissances des monstres »<span class=n>1p</span> · <code>104</code>&nbsp;« Knowledge Monsters »<span class=n>1p</span> · <code>44</code>&nbsp;« Knowledge-monsters »<span class=n>1p</span><div class=note><b>Question&nbsp;:</b> « Connaissance des monstres » n’existe pas en 3.5 — le savoir sur les monstres s’y répartit entre Connaissances (mystères), (nature), (plans), (religion) selon le type de créature. Regrouper les 6 orthographes sous une compétence maison <i>Connaissances (monstres)</i> est le choix le plus fidèle à ta table&nbsp;; la répartir demanderait de savoir quels monstres chaque personnage connaît.</div></td>
+  <td class=num>6</td><td class=num>8</td></tr>
+<tr><td class=cible><b>Connaissances (Radiance)</b></td>
+  <td><code>137</code>&nbsp;« Knowledge (Radiance) »<span class=n>1p</span><div class=note>Savoir propre à la campagne Blackmoor (la Radiance). À garder tel quel, en corrigeant seulement la forme du nom.</div></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Connaissances (religion)</b></td>
+  <td><code>65</code>&nbsp;« Religion »<span class=n>1p</span><div class=note><b>Question&nbsp;:</b> l’entrée <i>Religion</i> toute seule (1 personnage) — Connaissances (religion), ou autre chose&nbsp;?</div></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Décryptage</b></td>
+  <td><code>131</code>&nbsp;« Connaissance langues anciennes »<span class=n>1p</span><div class=note><b>Question&nbsp;:</b> <i>Connaissance langues anciennes</i> — Décryptage, ou une Connaissances maison&nbsp;?</div></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Détection</b></td>
+  <td><code>60</code>&nbsp;« Lecture sur les lèvres »<span class=n>2p</span><div class=note><b>Question&nbsp;:</b> <i>Lecture sur les lèvres</i> (Read Lips) est une compétence 3.0 supprimée en 3.5, absorbée par Détection. <span class=warn>Picasso et Tatiana possèdent déjà les deux.</span></div></td>
+  <td class=num>1</td><td class=num>2</td></tr>
+<tr><td class=cible><b>Discrétion</b></td>
+  <td><code>160</code>&nbsp;« Dissimulation »<span class=n>4p</span><div class=note><b>Question&nbsp;:</b> <i>Dissimulation</i> (4 personnages) est-elle le Hide anglais — donc Discrétion — ou autre chose&nbsp;? Aucune collision&nbsp;: personne ne possède les deux.</div></td>
+  <td class=num>1</td><td class=num>4</td></tr>
+<tr><td class=cible><b>Dressage</b></td>
+  <td><code>153</code>&nbsp;« Animal Empathy »<span class=n>1p</span> · <code>100</code>&nbsp;« Empathie Animaux »<span class=n>1p</span> · <code>166</code>&nbsp;« Empathie avec les animaux »<span class=n>1p</span> · <code>120</code>&nbsp;« Emphatie avec les animaux »<span class=n>1p</span><div class=note><b>Question&nbsp;:</b> <i>Empathie avec les animaux</i> (Animal Empathy) est une compétence 3.0 <b>supprimée</b> en 3.5, absorbée par Dressage (Handle Animal). Les fusionner, ou les garder distinctes&nbsp;? <span class=warn>Deux personnages possèdent DÉJÀ les deux&nbsp;: Gaïa (Empathie 5 rangs + Dressage 10) et Uhlmar Thobin (Animal Empathy 7 + Handle Animal 7). Il faudra choisir quel rang survit.</span></div></td>
+  <td class=num>4</td><td class=num>4</td></tr>
+<tr><td class=cible><b>Équitation</b></td>
+  <td><code>189</code>&nbsp;« Monture »<span class=n>1p</span><div class=note><b>Question&nbsp;:</b> <i>Monture</i> — est-ce bien Équitation&nbsp;?</div></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Équitation (dragon)</b></td>
+  <td><code>24</code>&nbsp;« Équitation Dragon »<span class=n>1p</span><div class=note><b>Question&nbsp;:</b> compétence maison manifeste. La garder telle quelle&nbsp;?</div></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Langue</b></td>
+  <td><code>61</code>&nbsp;« Langage secret »<span class=n>2p</span> · <code>112</code>&nbsp;« Lang secret »<span class=n>1p</span><div class=note><b>Question&nbsp;:</b> <i>Langage secret</i> / <i>Lang secret</i> — s’agit-il du druidique (langue secrète des druides), de l’argot des voleurs, ou d’une langue de campagne&nbsp;? La cible dépend de ta réponse.</div></td>
+  <td class=num>2</td><td class=num>3</td></tr>
+<tr><td class=cible><b>Premiers secours</b></td>
+  <td><code>92</code>&nbsp;« Heal (2 pv x jour x niv.) »<span class=n>1p</span> · <code>182</code>&nbsp;« Premiers soins (2 pv x jour x niv.) »<span class=n>1p</span> · <code>169</code>&nbsp;« Premier soins animaux »<span class=n>1p</span><div class=note><b>Question&nbsp;:</b> deux entrées portent une mécanique dans leur nom&nbsp;: <i>Heal (2 pv x jour x niv.)</i> et <i>Premiers soins (2 pv x jour x niv.)</i>. C’est une capacité de soin, pas un nom de compétence. Fusionner sous Premiers secours <b>et recopier « 2 pv × jour × niveau » dans les notes du personnage</b>&nbsp;? Idem pour <i>Premier soins animaux</i>.</div></td>
+  <td class=num>3</td><td class=num>3</td></tr>
+<tr><td class=cible><b>Profession (danseur)</b></td>
+  <td><code>134</code>&nbsp;« Profession danseur »<span class=n>1p</span><div class=note><b>Question&nbsp;:</b> danser pour gagner sa vie relève de Profession&nbsp;; danser pour un public relève de Représentation. Laquelle&nbsp;?</div></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Représentation</b></td>
+  <td><code>117</code>&nbsp;« Don artistique »<span class=n>1p</span><div class=note><b>Question&nbsp;:</b> <i>Don artistique</i> — Représentation, ou un don plutôt qu’une compétence&nbsp;?</div></td>
+  <td class=num>1</td><td class=num>1</td></tr>
+<tr><td class=cible><b>Scrutation</b></td>
+  <td><code>27</code>&nbsp;« Scrutation »<span class=n>4p</span> · <code>106</code>&nbsp;« Scry »<span class=n>2p</span> · <code>95</code>&nbsp;« Scry (scrutation) »<span class=n>1p</span><div class=note><b>Question&nbsp;:</b> Scry / Scrutation est une compétence <b>3.0 supprimée sans remplacement</b> en 3.5. 7 liens, 7 personnages. La garder telle quelle comme compétence maison, ou la retirer des fiches&nbsp;? ⛔ Ne rien supprimer sans ta décision.</div></td>
+  <td class=num>3</td><td class=num>7</td></tr>
+<tr><td class=cible><b>Survie</b></td>
+  <td><code>96</code>&nbsp;« Sens de l'orientation »<span class=n>4p</span> · <code>154</code>&nbsp;« Intuit Direction »<span class=n>1p</span> · <code>116</code>&nbsp;« Orientation »<span class=n>1p</span> · <code>124</code>&nbsp;« Sens orientation »<span class=n>1p</span><div class=note><b>Question&nbsp;:</b> trois compétences 3.0 se sont fondues dans Survie en 3.5&nbsp;: <i>Sens de la nature</i> (Wilderness Lore, renommée) — fusion sûre — mais aussi <i>Sens de l’orientation</i> (Intuit Direction, <b>supprimée</b> et absorbée). Fusionner les deux familles&nbsp;? <span class=warn>Quatre personnages possèdent déjà deux membres du groupe&nbsp;: Rham, Laban, Uhlmar Thobin, Gaïa.</span></div></td>
+  <td class=num>4</td><td class=num>7</td></tr>
+<tr><td class=cible><b><span class=warn>à identifier</span></b></td>
+  <td><code>107</code>&nbsp;« Spellflash »<span class=n>2p</span> · <code>28</code>&nbsp;« Variante de sort »<span class=n>2p</span> · <code>163</code>&nbsp;« Aura magique »<span class=n>1p</span> · <code>122</code>&nbsp;« connaissance des femmes »<span class=n>1p</span> · <code>115</code>&nbsp;« Jeux »<span class=n>1p</span> · <code>86</code>&nbsp;« Prédiction »<span class=n>1p</span> · <code>178</code>&nbsp;« Stabilité »<span class=n>1p</span> · <code>29</code>&nbsp;« Volonté »<span class=n>1p</span><div class=note><b>⛔ Huit entrées que je ne peux pas rattacher.</b> Chacune est portée par un ou deux personnages, donc aucune ne peut être supprimée sans décision. <i>Volonté</i> est un jet de sauvegarde, pas une compétence. <i>Stabilité</i> est un trait racial nain. <i>Spellflash</i>, <i>Variante de sort</i>, <i>Aura magique</i>, <i>Prédiction</i> ressemblent à des capacités maison. <i>Jeux</i> serait Profession (joueur). <i>connaissance des femmes</i> — à toi de me dire.</div></td>
+  <td class=num>8</td><td class=num>10</td></tr>
+
+  </tbody>
+</table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2><span class="k">33 entrées → 26</span>Langues</h2>
+
+<p class="src">Source des noms retenus&nbsp;: <b>Manuel des Joueurs 3.5 fr, page 80</b>, tableau de la compétence
+<i>Langue</i> (page 81 du PDF). Le manuel emploie la forme adjectivale — <i>Commune</i>, <i>Elfique</i>,
+<i>Orque</i>, <i>Halfeline</i>, <i>Gobeline</i>, <i>Sylvestre</i>, <i>Draconien</i>, <i>Commune des Profondeurs</i>.</p>
+
+<h3>Sûr <span class="tag s">sûr</span></h3>
+<div class="scroll">
+<table>
+  <thead><tr><th>Nom retenu</th><th>Entrées à y réaffecter</th><th>Liens</th></tr></thead>
+  <tbody>
+    <tr><td><b>Commun</b></td><td><code>2</code> « Commun » <span class=n>36p</span> · <code>27</code> « Common » <span class=n>4p</span></td><td class=num>41</td></tr>
+    <tr><td><b>Elfique</b></td><td><code>10</code> « Elfe » <span class=n>16p</span> · <code>1</code> « Elfique » <span class=n>4p</span></td><td class=num>20</td></tr>
+    <tr><td><b>Orque</b></td><td><code>14</code> « Orchish » <span class=n>12p</span></td><td class=num>12</td></tr>
+    <tr><td><b>Draconique</b></td><td><code>4</code> « Draconique » <span class=n>9p</span> · <code>19</code> « Draconish » <span class=n>1p</span></td><td class=num>10</td></tr>
+    <tr><td><b>Halfelin</b></td><td><code>12</code> « Halfling » <span class=n>6p</span> · <code>9</code> « Halfelin » <span class=n>1p</span></td><td class=num>7</td></tr>
+    <tr><td><b>Nain</b></td><td><code>32</code> « Dwarvish » <span class=n>4p</span> · <code>26</code> « Nain » <span class=n>1p</span></td><td class=num>5</td></tr>
+    <tr><td><b>Gnome</b></td><td><code>33</code> « Gnomish » <span class=n>3p</span></td><td class=num>3</td></tr>
+    <tr><td><b>Abyssal</b></td><td><code>31</code> « Abyssal (demons) » <span class=n>1p</span></td><td class=num>1</td></tr>
+    <tr><td><b>Infernal</b></td><td><code>30</code> « Infernal (devils) » <span class=n>1p</span></td><td class=num>1</td></tr>
+    <tr><td><b>Igné</b></td><td><code>29</code> « Ignan (fire) » <span class=n>1p</span></td><td class=num>1</td></tr>
+    <tr><td><b>Commun des profondeurs</b></td><td><code>23</code> « Undercommon » <span class=n>1p</span></td><td class=num>1</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>À trancher <span class="tag a">à trancher</span></h3>
+<div class="scroll">
+<table>
+  <thead><tr><th>Entrées</th><th>Question</th></tr></thead>
+  <tbody>
+    <tr><td><code>5</code> « Sylvain » <span class=n>1p</span><br><code>17</code> « Sylvanique » <span class=n>6p</span></td>
+        <td>Le manuel dit <b>Sylvestre</b>. Fusionner les deux sous « Sylvestre », ou garder ton usage&nbsp;? Aucune collision.</td></tr>
+    <tr><td><code>16</code> « Mounamis (commun) » <span class=n>11p</span><br><code>7</code> « Mounamis » <span class=n>1p</span></td>
+        <td>Langue de campagne. Est-ce le commun de Mounamis, donc la même chose que « Commun », ou une langue à part&nbsp;?
+        <span class="warn">DracoVick possède déjà les deux&nbsp;: seule collision de langue du lot.</span></td></tr>
+    <tr><td><code>3</code> « Elfe (cumasti) » <span class=n>3p</span></td><td>Dialecte elfique à garder à part, ou à fondre dans « Elfique »&nbsp;?</td></tr>
+    <tr><td><code>13</code> « Elvinor » <span class=n>7p</span></td><td>Langue elfique de campagne, ou variante d’écriture d’« Elfique »&nbsp;? 7 personnages, ça compte.</td></tr>
+    <tr><td><code>20</code> « Goblinour » <span class=n>6p</span></td><td>Le manuel dit <b>Gobeline</b>. Est-ce la même langue, ou une langue de ton monde&nbsp;?</td></tr>
+    <tr><td><code>15</code> « Draconique (crystallin) » <span class=n>1p</span></td><td>Dialecte à garder&nbsp;? Au minimum l’orthographe « cristallin ».</td></tr>
+    <tr><td>Toutes les langues fusionnées</td><td><b>Question de fond&nbsp;:</b> garder tes formes courtes (<i>Commun</i>, <i>Nain</i>, <i>Orque</i>)
+        ou adopter la forme du manuel (<i>Commune</i>, <i>Naine</i>…)&nbsp;? Je te recommande <b>tes formes courtes</b>&nbsp;:
+        c’est l’usage à ta table depuis 25 ans, et le manuel lui-même note que ces termes sont des adjectifs
+        qu’on emploie substantivés.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>À garder telles quelles</h3>
+<p>Géant, Druidique, Argot des voleurs, Bestial, Chale, Docrae, Traladarien, Adhelzo (Calimshan), Bariaure —
+langues de campagne ou déjà conformes.</p>
+
+<div class="box or">
+  <p style="margin:0"><b>Deux doublons de liaison existent déjà, indépendamment de toute fusion.</b>
+  <code>character_languages</code> contient deux fois la même ligne pour
+  <b>Surya</b> (Commun, deux fois) et pour <b>DracoVick Von Drag</b> (Traladarien, deux fois).
+  À nettoyer au passage. Aucune autre table de jonction n’en contient, et
+  <b>aucun lien orphelin</b> n’existe nulle part — je l’ai vérifié sur les sept tables de jonction.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2><span class="k">12 entrées → 9</span>Races</h2>
+
+<p class="src">Source&nbsp;: <b>Manuel des Joueurs 3.5 fr, chapitre 2</b> (table des matières, page 3)&nbsp;:
+Humains, <b>Demi-elfes</b>, <b>Demi-orques</b>, Elfes, Gnomes, <b>Halfelins</b>, Nains.</p>
+
+<div class="box or">
+  <p style="margin:0"><b>Ces trois fusions réparent davantage qu’un nom.</b> Dans chaque paire, l’entrée
+  à laquelle tes personnages sont rattachés est <b>vide de traits raciaux</b>, et celle qui porte les traits
+  est presque inutilisée. La fusion rend donc aux personnages leurs traits <i>et</i> leurs ajustements.
+  <b>La cible doit être l’entrée qui porte les traits</b> — pas la plus peuplée.</p>
+</div>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Nom retenu</th><th>Entrée cible (garde les traits)</th><th>Entrée à vider puis supprimer</th><th>Verdict</th></tr></thead>
+  <tbody>
+    <tr><td><b>Demi-elfe</b></td><td><code>3</code> « Demi-Elfe » — <b>6 traits</b>, 2 personnages</td>
+        <td><code>10</code> « Demi-Elf » — 0 trait, <b>6 personnages</b></td><td><span class="tag s">sûr</span></td></tr>
+    <tr><td><b>Demi-orque</b></td><td><code>7</code> « Demi-Orque » — <b>3 traits</b>, bonus +2&nbsp;FOR / −2&nbsp;INT / −2&nbsp;CHA, 0 personnage</td>
+        <td><code>9</code> « Demi-Orc » — 0 trait, aucun bonus, <b>3 personnages</b></td><td><span class="tag s">sûr</span></td></tr>
+    <tr><td><b>Halfelin</b></td><td><code>5</code> « Halfelin » — <b>6 traits</b>, −2&nbsp;FOR / +2&nbsp;DEX, taille P, 1 personnage</td>
+        <td><code>11</code> « Petite-gens » — 0 trait, taille M, <b>3 personnages</b></td>
+        <td><span class="tag a">à trancher</span> — « Petites-gens » était le nom de la 3.0&nbsp;; le manuel 3.5 dit Halfelin</td></tr>
+    <tr><td colspan="4" style="color:var(--ink2)"><b>À garder&nbsp;:</b> Humain (30 p.), Elfe (17 p.), Nain (3 p.), Gnome (0 p. mais 7 traits — c’est une référence),
+        Bariaure (1 p., Planescape), Illithid (1 p.). <b>Aucune collision possible&nbsp;:</b> <code>characters.race_id</code>
+        est un champ simple, un personnage n’a qu’une race.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="box rouge">
+  <p style="margin:0"><b>Défaut trouvé en chemin&nbsp;:</b> l’entrée <code>Nain</code> porte <b>taille = Petite</b> et
+  <b>déplacement = 6</b>. En 3.5 le nain est de <b>taille M</b> (avec un déplacement de 6&nbsp;m, lui, correct).
+  Trois personnages sont concernés. Ce n’est pas un doublon — c’est une valeur fausse, à corriger séparément.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2><span class="k">16 entrées → 16</span>Classes</h2>
+
+<p>Aucune fusion&nbsp;: les seize noms sont distincts. <b>Un seul renommage</b>, mais il est important.</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Entrée</th><th>Verdict</th></tr></thead>
+  <tbody>
+    <tr><td><code>8</code> <b>« Ensorcelleur »</b> — <b>9 personnages</b></td>
+        <td><span class="tag s">sûr</span> → <b>Ensorceleur</b> (un seul L, chapitre 3 du manuel).
+        Débloque le dé de vie, le BBA et les sauvegardes de neuf personnages.</td></tr>
+    <tr><td><code>9</code> « Dracologist » — <b>0 personnage</b></td>
+        <td><span class="tag s">sûr</span> → suppression sans risque, ou francisation en « Dracologiste » si tu comptes t’en resservir.</td></tr>
+    <tr><td><code>11</code> « Blackguard » — 1 personnage</td>
+        <td><span class="tag a">à trancher</span> → le Guide du Maître 3.5 fr traduit <i>blackguard</i> par <b>Chevalier noir</b>. Franciser&nbsp;?</td></tr>
+    <tr><td>« Battle-mage », « Cryptomancière », « Noble », « Assassin »</td>
+        <td>Classes de prestige ou maison — à garder telles quelles.</td></tr>
+    <tr><td>Guerrier, Magicien, Roublard, Prêtre, Rôdeur, Paladin, Druide, Moine, Barbare</td>
+        <td>Conformes.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="box rouge">
+  <p style="margin-top:0"><b>Défauts trouvés en chemin.</b> La table <code>classes</code> contient des valeurs
+  fausses que la fiche affiche à l’écran (le champ « Dé de vie » lit la table, pas la liste du code)&nbsp;:</p>
+  <ul style="margin-bottom:0">
+    <li><b>Guerrier&nbsp;: d12</b> au lieu de <b>d10</b> — <b>12 personnages</b> voient un dé de vie faux sur leur fiche.</li>
+    <li><b>Paladin&nbsp;: d8</b> au lieu de <b>d10</b> — 4 personnages.</li>
+    <li><b>Ensorcelleur&nbsp;: d8</b> au lieu de <b>d4</b> — 9 personnages.</li>
+    <li><b>Druide et Moine&nbsp;: 2 points de compétence par niveau</b> au lieu de <b>4</b>.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2><span class="k">27 entrées → 24</span>Dieux</h2>
+
+<p>Aucune collision possible ici non plus&nbsp;: <code>characters.dieu_id</code> est un champ simple.
+Chaque fusion se règle en repointant un ou deux personnages.</p>
+
+<h3>Sûr <span class="tag s">sûr</span></h3>
+<div class="scroll">
+<table>
+  <thead><tr><th>Nom retenu</th><th>Entrées</th><th>Personnages concernés</th></tr></thead>
+  <tbody>
+    <tr><td><b>Tymora</b></td>
+        <td><code>1</code> « Tymora » · <code>27</code> « Tymora (déesse de la chance) » · <code>26</code> « Tymora déesse de la chance » <span class=n>0p</span></td>
+        <td>Zack et <b>Lucky</b>. L’entrée 26 n’a personne&nbsp;: suppression sans risque.</td></tr>
+    <tr><td><b>Olidammara</b></td>
+        <td><code>18</code> « Olidammra » · <code>20</code> « olidaramma »</td>
+        <td>Ivanhoé et Sornë Verca. <span class="src">Orthographe vérifiée&nbsp;: Manuel des Joueurs 3.5 fr, p. 108 — <b>ni</b> l’une <b>ni</b> l’autre des deux graphies de la base n’est correcte.</span></td></tr>
+    <tr><td><b>Dénéir</b></td><td><code>2</code> « ? Dénéir ? »</td><td>Cixi — retirer les points d’interrogation.</td></tr>
+    <tr><td><b>Tyr</b></td><td><code>17</code> « TYR »</td><td>Gwendoline — casse.</td></tr>
+    <tr><td><b>Corellon Larethian</b></td><td><code>3</code> « Corélon »</td><td>Laban — <span class="tag a">à trancher</span> si tu préfères ta forme courte.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>À trancher <span class="tag a">à trancher</span></h3>
+<div class="scroll">
+<table>
+  <thead><tr><th>Entrée</th><th>Personnage</th><th>Question</th></tr></thead>
+  <tbody>
+    <tr><td><code>14</code> « Mystra, Sunie, Sylvanius, Tymora »</td><td>Zébulon Haute-pierre</td>
+        <td>Quatre divinités dans un seul champ. Le champ n’en accepte qu’une. Laquelle est la divinité tutélaire&nbsp;?
+        Les trois autres iraient dans les notes du personnage. ⛔ Ne rien supprimer avant ta réponse.</td></tr>
+    <tr><td><code>12</code> « Sylvanus / Mailiki »</td><td>Elrannel M’Lachel, Gaïa</td>
+        <td>Même cas&nbsp;: deux dieux (Silvanus et Mielikki). Un par personnage, ou un panthéon commun&nbsp;?</td></tr>
+    <tr><td><code>9</code> « Aucun » · <code>10</code> « Athéisme »</td><td>L’vethian, William Pilsener</td>
+        <td>Ce ne sont pas des dieux. Proposition&nbsp;: mettre <code>dieu_id</code> à <i>NULL</i> pour ces deux personnages,
+        puis supprimer les deux entrées. La fiche affichera « — » au lieu d’un faux dieu.</td></tr>
+    <tr><td><code>5</code> « RAD »</td><td>Chath Restoun, Elora Vlaardoen</td>
+        <td>Abréviation de la <i>Radiance</i> de Blackmoor&nbsp;? Si oui, écrire le nom en toutes lettres.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>À garder</h3>
+<p>Asterius, Halav, Kagyar, Zirchev, Idris, Illsundal, Ordana, Tarastia, Odir, Yolanda La Sainte (Mystara / campagne),
+Boccob, Kord, Lathander, Héronéus (panthéons officiels, orthographe correcte).</p>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2><span class="k">478 → environ 109</span>Dons</h2>
+
+<div class="box or">
+  <p style="margin:0"><b>Ce chapitre est un second passage, et je le dis franchement.</b> J’ai fait inventorier
+  les 478 dons en parallèle du reste et j’en ai vérifié les chiffres clés moi-même sur la base
+  (total, collisions, doublons préexistants — tous exacts). Mais c’est de loin le morceau le plus lourd,
+  et surtout le plus délicat&nbsp;: <b>195 entrées sur 478 ne sont pas des dons du tout</b>, et leur contenu
+  appartient à un personnage. <b>Ne le traite pas avant que les compétences et les langues soient réglées</b> —
+  ce sont elles qui bloquent Grimdar et l’impression.</p>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>478</b><span>entrées aujourd’hui</span></div>
+  <div class="stat"><b>42</b><span>scories</span></div>
+  <div class="stat"><b>180 → 48</b><span>entrées absorbées par 48 fusions</span></div>
+  <div class="stat hi"><b>195</b><span>ne sont pas des dons</span></div>
+  <div class="stat ok"><b>61</b><span>légitimes, à garder</span></div>
+  <div class="stat ok"><b>41</b><span>rattachées à aucun personnage&nbsp;: suppression sans risque</span></div>
+</div>
+
+<h3>Les scories <span class="tag s">sûr, avec une réserve</span></h3>
+<p><b>42 entrées</b> qui ne portent aucune information&nbsp;: séparateurs (<code>----</code>, <code>====</code>),
+<code>blablabla</code>, et surtout les <b>en-têtes de section FileMaker</b> —
+<code>CLASS</code>, <code>DOMAIN FEAT</code>, <code>FEAT</code>, <code>DON BONUS</code>, <code>Niv 1</code>,
+<code>L1</code> à <code>L15</code>, <code>NIV01 (bonus)</code>, <code>BONUS THRALL</code>,
+<code>Rogue abilties :</code>…</p>
+
+<div class="box rouge">
+  <p style="margin:0"><b>⛔ Presque toutes sont rattachées à un personnage</b> — Ferazel, Radriel, Dragar,
+  Maxalla, Elora, Chath, Vallin Tefferti, Elrannel… Elles ne peuvent donc pas être simplement effacées.
+  <b>Ma recommandation&nbsp;: supprimer aussi le lien</b>, parce que l’information qu’il prétendait porter
+  <b>est déjà perdue</b> — on ne sait plus quel don Ferazel avait pris « au niveau 4 », ni lequel Radriel
+  avait reçu comme « DON INITIAL ». Garder la ligne n’entretient qu’une illusion.
+  <b>Mais c’est à toi de le confirmer</b>&nbsp;: c’est la seule suppression de ce document qui touche
+  des liens vivants.</p>
+</div>
+
+<h3>Les 195 entrées qui ne sont pas des dons <span class="tag a">à trancher</span></h3>
+
+<p>C’est le vrai sujet de ce chapitre. Ce sont des <b>capacités de classe, des traits raciaux et des
+blocs de statistiques de PNJ</b> saisis dans la case « dons » par commodité, il y a des années.
+<b>Chacune porte une information réelle qui appartient à un personnage.</b> ⛔ Rien ne doit être supprimé
+avant que ce contenu ait été recopié — <b>dans <code>characters.notes</code> ou dans <code>character_notes</code></b>,
+personnage par personnage.</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Famille</th><th>Personnages</th><th>Exemples de contenu à préserver</th></tr></thead>
+  <tbody>
+    <tr><td><b>Blocs de PNJ entiers</b></td>
+        <td>Vallin Tefferti, Elrannel M’Lachel, Larissa, Phyllin Thoddin, Tellian Fore, Beastman, Gorm, Ferazel, Benar</td>
+        <td>Fiches de créature complètes&nbsp;: <i>Ash Cloud</i>, <i>Fiery Death</i>, <i>Damage reduction (SU) 5/magic</i>,
+        <i>Wild Shape</i>, <i>Thousand Faces</i>, le gabarit « <i>Thrall of Coot</i> », l’aura et le <i>Smite</i> du paladin…</td></tr>
+    <tr><td><b>Capacités de classe</b></td>
+        <td>Garret, Sornë, Tatiana, Wolfrarg, Picasso, Karad, L’vethian, William, Cixi, Rham, Uhlmar, Élianne, Gaïa…</td>
+        <td><i>Attaque sournoise (+8d6)</i> et ses variantes (8 lignes), <i>Esquive instinctive / surnaturelle / Uncanny Dodge</i>
+        (12 lignes), les <i>Ennemis jurés</i> du rôdeur, les 7 capacités de moine de Cixi,
+        le compagnon animal et la forme animale du druide.</td></tr>
+    <tr><td><b>Traits raciaux</b></td>
+        <td>Ivanhoé, Nayla, Gaïa, Picasso, Éloban, Élianne, Urmora, Radriel</td>
+        <td>Vision nocturne, immunité au sommeil, bonus aux jets contre l’enchantement, recherche de portes secrètes —
+        une vingtaine de lignes quasi identiques répétées d’un personnage à l’autre. <b>Ces traits sont déjà
+        dans <code>racial_features</code></b>&nbsp;: là, c’est du doublon pur.</td></tr>
+    <tr><td><b>Listes de prestige numérotées</b></td>
+        <td>DracoVick Von Drag, Elora Vlaardoen</td>
+        <td>Les 8 capacités du Disciple draconique, les 9 glyphes de l’abjuratrice.
+        <span class="warn">Attention&nbsp;: DracoVick possède <i>aussi</i> les vrais dons Héritage draconique —
+        ne pas confondre les deux.</span></td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Les 48 fusions</h3>
+<p>Elles regroupent 180 entrées. Le gros des cas est mécanique&nbsp;: variantes français/anglais
+(<i>Alertness</i> / <i>Vigilance</i>, <i>Quick draw</i> / <i>Dégainage rapide</i>), fautes de frappe
+(<i>Vigilence</i>, <i>Ambidexterie</i>, <i>Ligthning reflexes</i>, <i>Improved ctritical</i>),
+et surtout <b>les préfixes de niveau collés au nom</b> — <code>NIV1 - Weapon focus: warhammer</code>,
+<code>3rd level feat: Weapon finesse (dagger)</code>, <code>4- Arme de prédilection (arc +1)</code>.
+Les noms retenus sont ceux de <code>feats.ts</code> quand ils y figurent.</p>
+
+<div class="box rouge">
+  <p style="margin-top:0"><b>⛔ Cinq collisions de liaison — vérifiées une à une sur la base&nbsp;:</b></p>
+  <ul style="margin-bottom:.6rem">
+    <li><b>DracoVick Von Drag</b>, trois fois&nbsp;: <i>Volonté de fer</i> (15 et 45),
+      <i>Création d’armes et armures magiques</i> (16 et 46 — la seconde a une coquille, « t » pour « et »),
+      <i>Création de bâtons magiques</i> (17 et 47).</li>
+    <li><b>Chath Restoun</b>&nbsp;: <i>Maîtrise des sorts</i> (203 et 206).</li>
+    <li><b>Simmone Walcrest</b>&nbsp;: <i>Sort rapide</i> (268 et 272).</li>
+  </ul>
+  <p style="margin-bottom:0">Dans les cinq cas, les <code>notes</code> des deux lignes sont vides&nbsp;:
+  <b>rien à concilier</b>, il suffit de garder une ligne et de supprimer l’autre.</p>
+</div>
+
+<div class="box or">
+  <p style="margin:0"><b>Et 12 doublons de liaison qui existent déjà</b>, avant toute fusion&nbsp;:
+  10 dons distincts pour lesquels un personnage est rattaché deux fois à la même entrée —
+  Camla (<i>Point blank shot</i>), L’vethian (<i>Improved initiative</i>), Lucky
+  (<i>Arme de prédilection (Morgenstern)</i>), et neuf autres sur des scories.
+  À nettoyer indépendamment.</p>
+</div>
+
+<h3>Ce que l’inventaire n’a pas pu trancher</h3>
+<ul>
+  <li><b>L’arme manquante.</b> <i>Arme de prédilection +1</i> (Ivanhoé), <i>Weapon Finesse</i> (Tellian) et
+    quatre <i>Critique amélioré</i> génériques (Uhlmar, Urmora, Larissa, Ferazel) <b>n’indiquent aucune arme</b>.
+    Impossible de les paramétrer sans toi.</li>
+  <li><b>Des dons peut-être maison</b>&nbsp;: <i>botte secrète</i> (Garret, Sornë, Tatiana),
+    <i>Esquive totale</i> (4 personnages), <i>Souplesse du serpent</i>, <i>Rank Fighting</i> (Laban),
+    <i>Noble blood</i>. Absents du SRD comme des suppléments consultés.</li>
+  <li><b>Des fragments sans contexte</b>&nbsp;: <i>(+1 jet svgarde)</i> (Zébulon), <i>poison</i> (Sornë),
+    <i>vigueur surhumaine</i> (Drakara), <i>Art magique</i> (Elbereth — probablement la compétence,
+    mal rangée).</li>
+  <li><b>Un lien qui ne devrait peut-être pas exister</b>&nbsp;: Elora Vlaardoen est rattachée à
+    <i>« À venir… NIV 18 (general): BREW POTION »</i> — un don <b>qu’elle n’a pas encore</b>.</li>
+</ul>
+
+<div class="box bleu">
+  <p style="margin:0"><b>Un manque dans le catalogue du code, révélé par l’inventaire.</b>
+  Plusieurs dons très présents dans tes 25 ans de fiches sont <b>absents</b> de <code>feats.ts</code>
+  et <code>feats-supplements.ts</code> — à commencer par <b>Critique amélioré</b>, le don le plus répété
+  de toute la base. Manquent aussi&nbsp;: Pénétration des sorts, Écriture de parchemins,
+  Préparation de potions, Création d’armes et armures magiques, Création de bâtons magiques,
+  Dégainage rapide, Parade de projectiles, les maniements d’armes, Leadership.
+  Si le formulaire doit un jour proposer ces dons, il faudra les y ajouter.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2><span class="k">Vérifié, rien à faire</span>Armes, armures, objets magiques, potions</h2>
+
+<p>J’ai passé les quatre tables au même filtre (comparaison des noms en ignorant la casse, les accents
+et les espaces multiples)&nbsp;:</p>
+<ul>
+  <li><b>Armes</b> — 170 entrées, <b>0 doublon</b></li>
+  <li><b>Armures</b> — 4 entrées, <b>0 doublon</b></li>
+  <li><b>Objets magiques</b> — 272 entrées, <b>0 doublon</b></li>
+  <li><b>Potions</b> — 12 entrées, <b>0 doublon</b></li>
+</ul>
+<p>Ces tables ne portent pas de contrainte d’unicité sur le nom, mais aucun doublon ne s’y est formé.
+Elles ne bloquent ni l’importation de Grimdar ni l’impression. <b>Je n’ai rien à y proposer.</b>
+Réserve honnête&nbsp;: je n’ai comparé que la <i>forme</i> des noms. Des doublons de <i>sens</i>
+(« Épée longue&nbsp;+1 » et « Longsword&nbsp;+1 ») échapperaient à ce filtre&nbsp;; vu les 272 objets magiques,
+ce serait un passage à part.</p>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2><span class="k">Comment on procède</span>Ordre d’exécution proposé</h2>
+
+<div class="box bleu">
+  <p style="margin-top:0"><b>La règle qui gouverne tout&nbsp;:</b> on réaffecte les liens d’abord,
+  on supprime l’entrée devenue orpheline ensuite. Jamais l’inverse. Et chaque étape se vérifie
+  avant la suivante&nbsp;: aucune entrée ne doit être supprimée tant qu’un personnage y est encore rattaché.</p>
+</div>
+
+<ol>
+  <li><b>Sauvegarde de la base</b> avant la première écriture. Sans exception.</li>
+  <li><b>Les corrections de code, en un seul commit</b> — <code>skills.ts</code> (les douze noms,
+      le doublon <i>Tour de passe-passe</i>, les cinq compétences manquantes) <b>et</b>
+      <code>generator.ts</code> (<code>COMPETENCES_PRIORITAIRES</code>), plus le gabarit d’impression
+      porté de 20 à 24 lignes et la prise en charge des spécialités libres.
+      <b>Aucune écriture en base à cette étape</b> — et à elle seule elle fait passer l’impression
+      de 30&nbsp;% à environ 50&nbsp;%. Valider avec <code>tsc --noEmit</code>, puis vérifier les fiches
+      de <b>Tatiana</b> et <b>Garret Blanche Pierre</b>, les deux qui débordent.</li>
+  <li><b>Renommages simples</b> (aucun lien à déplacer, juste un <code>UPDATE … SET nom</code>)&nbsp;:
+      <code>Ensorcelleur</code>&nbsp;→ Ensorceleur, <code>TYR</code>&nbsp;→ Tyr, <code>? Dénéir ?</code>&nbsp;→ Dénéir.
+      Effet immédiat sur 11 personnages.</li>
+  <li><b>Lot 1 — compétences, 113 réaffectations.</b> Sans collision, donc mécanique&nbsp;:
+      <code>UPDATE character_skills SET skill_id = cible WHERE skill_id IN (…)</code>, puis suppression des sources.
+      C’est le gros du gain&nbsp;: 30&nbsp;% → 84&nbsp;%.</li>
+  <li><b>Langues et races du lot sûr</b>, même méthode. Pour les races, penser à pointer vers
+      l’entrée qui porte les traits.</li>
+  <li><b>Nettoyer les deux doublons de liaison</b> de Surya et DracoVick.</li>
+  <li><b>Vérification</b>&nbsp;: relancer les mesures et confirmer 84&nbsp;% d’impression, 0 orphelin,
+      0 doublon de liaison. Imprimer une fiche à l’écran pour voir de ses yeux.</li>
+  <li><b>Lot 2 — tes arbitrages</b>, un par un, en résolvant chaque collision de rang avant sa fusion.</li>
+  <li><b>Les dons</b>, en dernier — c’est le morceau le plus lourd.</li>
+  <li>Puis seulement&nbsp;: l’importateur strict, l’entrée de Grimdar, et la fiche de Sylvain.</li>
+  <li><b>Mettre à jour <code>/aide/joueur</code> et <code>/aide/creation</code></b> — les noms de compétences y changent.</li>
+</ol>
+
+<div class="box or">
+  <h3>Ce que ce ménage ne règle pas</h3>
+  <p style="margin-bottom:0">Tant que <code>findOrCreateByNom</code> comparera les noms à l’octet près,
+  <b>chaque saisie manuelle pourra recréer un doublon</b> — c’est exactement comme ça que les 191 compétences
+  sont nées. Le ménage nettoie le passé&nbsp;; il ne ferme pas la porte. Avant que Sylvain touche à sa fiche,
+  il faudra soit une comparaison insensible à la casse et aux accents, soit une liste fermée dans le formulaire.
+  Sinon on refera ce travail dans deux ans.</p>
+</div>
+
+<footer>
+  Inventaire établi le 25 août 2026 sur la base Neon de production, en lecture seule.
+  Sources de règles&nbsp;: Manuel des Joueurs — Livre de Règles I v.3.5, édition française
+  (table 4–2 p.&nbsp;63, langues p.&nbsp;80, chapitres 2 et 3, divinités p.&nbsp;108).
+  Aucune donnée n’a été modifiée.
+</footer>
+
+</div>
