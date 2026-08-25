@@ -192,7 +192,7 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           <Row label="BBA automatique">Le BBA est recalculé en additionnant la contribution de chaque classe selon sa progression (élevée / moyenne / faible).</Row>
           <Row label="Sauvegardes automatiques">Chaque classe contribue séparément à Vigueur, Réflexes et Volonté selon ses bons jets.</Row>
           <Row label="Sorts multi-classes">L'onglet Sorts ✨ apparaît dès qu'au moins une classe est lanceuse de sorts. Si plusieurs classes lancent des sorts (ex. Prêtre/Magicien), des boutons permettent de basculer entre elles : chaque sort choisi est <strong>attribué à la classe active</strong> et chaque classe a son propre grimoire, ses propres emplacements et sa propre liste sur la fiche.</Row>
-          <Row label="Compétences de classe">Dans l'onglet Compétences, une compétence est traitée comme <em>compétence de classe</em> (rang max = niveau total + 3) dès qu'elle l'est pour <strong>au moins une</strong> de vos classes. Exemple : après avoir ajouté Magicien, <em>Connaissance (arcanes)</em> et <em>Concentration</em> deviennent compétences de classe pour tout le personnage.</Row>
+          <Row label="Compétences de classe">Dans l'onglet Compétences, une compétence est traitée comme <em>compétence de classe</em> (rang max = niveau total + 3) dès qu'elle l'est pour <strong>au moins une</strong> de vos classes. Exemple : après avoir ajouté Magicien, <em>Connaissances (mystères)</em> et <em>Concentration</em> deviennent compétences de classe pour tout le personnage.</Row>
 
           <p className="font-semibold text-stone-400 mt-4">Progression des XP en D&D 3.5</p>
           <p>Un personnage multi-classé n'a <strong>qu'un seul total d'XP</strong>, partagé entre toutes ses classes. Les seuils de niveau sont basés sur le <em>niveau total</em> du personnage (somme de tous ses niveaux). Quand le seuil est atteint, le joueur choisit dans quelle classe placer le nouveau niveau.</p>
@@ -249,7 +249,7 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
         <Section titre="⚔️ Malus d'armure sur les compétences">
           <p>Certaines armures imposent un <strong>malus de compétence</strong> (Armor Check Penalty) qui s'applique automatiquement sur la fiche joueur aux compétences physiques suivantes :</p>
           <div className="flex flex-wrap gap-1.5 mt-2">
-            {['Acrobaties', 'Discrétion', 'Déplacement silencieux', 'Escalade', 'Évasion', 'Natation', 'Saut', 'Tour de passe-passe'].map(c => (
+            {['Acrobaties', 'Discrétion', 'Déplacement silencieux', 'Escalade', 'Évasion', 'Natation', 'Saut', 'Escamotage'].map(c => (
               <span key={c} className="bg-stone-800 border border-stone-700 text-stone-300 text-xs px-2 py-0.5 rounded">{c}</span>
             ))}
           </div>

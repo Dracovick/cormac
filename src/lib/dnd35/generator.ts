@@ -37,18 +37,22 @@ const DONS_PAR_CLASSE: Record<string, string[]> = {
   'Roublard':    ['Vigilance', 'Esquive', 'Frappe précise', 'Tir à bout portant', 'Science de l\'initiative', 'Combat à deux armes', 'Robustesse', 'Réflexes surhumains', 'Endurance', 'Tir de précision'],
 }
 
+// ⚠️ Ces noms doivent correspondre EXACTEMENT à ceux de COMPETENCES_DND35 (skills.ts).
+// La résolution se fait par égalité de chaîne, et le .filter(Boolean) plus bas
+// avalerait silencieusement toute faute de frappe : le générateur cesserait de
+// prioriser sans le moindre message d'erreur. Les deux listes se corrigent ensemble.
 const COMPETENCES_PRIORITAIRES: Record<string, string[]> = {
-  'Guerrier':    ['Intimidation', 'Équitation', 'Natation', 'Saut', 'Escalade', 'Ouïe', 'Vue'],
-  'Barbare':     ['Survie', 'Escalade', 'Natation', 'Intimidation', 'Ouïe', 'Vue', 'Saut'],
-  'Paladin':     ['Diplomatie', 'Équitation', 'Premiers secours', 'Psychologie', 'Ouïe', 'Vue', 'Connaissance (religion)'],
-  'Rôdeur':      ['Survie', 'Discrétion', 'Vue', 'Ouïe', 'Déplacement silencieux', 'Connaissance (nature)', 'Dressage'],
-  'Magicien':    ['Connaissance (arcanes)', 'Magie divine', 'Concentration', 'Déchiffrage', 'Connaissance (histoire)', 'Connaissance (plans)', 'Fouille'],
-  'Ensorceleur': ['Magie divine', 'Connaissance (arcanes)', 'Concentration', 'Bluff', 'Connaissance (religion)', 'Connaissance (plans)', 'Fouille'],
-  'Prêtre':      ['Connaissance (religion)', 'Diplomatie', 'Premiers secours', 'Concentration', 'Psychologie', 'Ouïe', 'Vue'],
-  'Druide':      ['Survie', 'Connaissance (nature)', 'Premiers secours', 'Concentration', 'Dressage', 'Ouïe', 'Vue'],
-  'Barde':       ['Représentation', 'Diplomatie', 'Bluff', 'Connaissance (arcanes)', 'Ouïe', 'Vue', 'Magie divine'],
-  'Moine':       ['Équilibre', 'Acrobaties', 'Concentration', 'Diplomatie', 'Psychologie', 'Ouïe', 'Vue'],
-  'Roublard':    ['Discrétion', 'Déplacement silencieux', 'Fouille', 'Crochetage', 'Sabotage', 'Vue', 'Ouïe'],
+  'Guerrier':    ['Intimidation', 'Équitation', 'Natation', 'Saut', 'Escalade', 'Perception auditive', 'Détection'],
+  'Barbare':     ['Survie', 'Escalade', 'Natation', 'Intimidation', 'Perception auditive', 'Détection', 'Saut'],
+  'Paladin':     ['Diplomatie', 'Équitation', 'Premiers secours', 'Psychologie', 'Perception auditive', 'Détection', 'Connaissances (religion)'],
+  'Rôdeur':      ['Survie', 'Discrétion', 'Détection', 'Perception auditive', 'Déplacement silencieux', 'Connaissances (nature)', 'Dressage'],
+  'Magicien':    ['Connaissances (mystères)', 'Art de la magie', 'Concentration', 'Décryptage', 'Connaissances (histoire)', 'Connaissances (plans)', 'Fouille'],
+  'Ensorceleur': ['Art de la magie', 'Connaissances (mystères)', 'Concentration', 'Bluff', 'Connaissances (religion)', 'Connaissances (plans)', 'Fouille'],
+  'Prêtre':      ['Connaissances (religion)', 'Diplomatie', 'Premiers secours', 'Concentration', 'Psychologie', 'Perception auditive', 'Détection'],
+  'Druide':      ['Survie', 'Connaissances (nature)', 'Premiers secours', 'Concentration', 'Dressage', 'Perception auditive', 'Détection'],
+  'Barde':       ['Représentation', 'Diplomatie', 'Bluff', 'Connaissances (mystères)', 'Perception auditive', 'Détection', 'Art de la magie'],
+  'Moine':       ['Équilibre', 'Acrobaties', 'Concentration', 'Diplomatie', 'Psychologie', 'Perception auditive', 'Détection'],
+  'Roublard':    ['Discrétion', 'Déplacement silencieux', 'Fouille', 'Crochetage', 'Désamorçage/sabotage', 'Détection', 'Perception auditive'],
 }
 
 // For Paladin/Rôdeur, index 0 = spell level 1 (no level 0 spells).

@@ -338,7 +338,7 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
           <Row label="BBA (Base d'Attaque)">Le BBA total est la <strong>somme</strong> des BBA de chaque classe, calculés séparément selon leur progression (élevée / moyenne / faible).</Row>
           <Row label="Jets de sauvegarde">Chaque classe contribue indépendamment selon sa liste de bons jets. Résultat : les jets d'un multi-classe sont toujours ≥ chacune des classes seules.</Row>
           <Row label="Points de vie">Chaque niveau de chaque classe ajoute son propre dé de vie. La fiche cumule le total en créant le personnage.</Row>
-          <Row label="Compétences">Une compétence est traitée comme compétence de classe dès qu'elle l'est pour <em>au moins une</em> de vos classes. Exemple : un Guerrier 6 / Magicien 1 traite <em>Connaissance (arcanes)</em> et <em>Concentration</em> comme compétences de classe — rang max = niveau total + 3.</Row>
+          <Row label="Compétences">Une compétence est traitée comme compétence de classe dès qu'elle l'est pour <em>au moins une</em> de vos classes. Exemple : un Guerrier 6 / Magicien 1 traite <em>Connaissances (mystères)</em> et <em>Concentration</em> comme compétences de classe — rang max = niveau total + 3.</Row>
 
           <p className="font-semibold text-stone-400 mt-4">Progression des XP — un seul total partagé</p>
           <p>En D&D 3.5, <strong>tous les niveaux de toutes les classes partagent un unique total d'XP</strong>. Il n'y a pas d'XP séparés par classe. Les seuils du tableau ci-dessus s'appliquent au <em>niveau total</em> du personnage (somme de tous ses niveaux de classe).</p>

@@ -77,7 +77,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   // Risque d'échec arcanique cumulé (s'additionnent si plusieurs armures)
   const risqueEchecTotal = armor.reduce((sum, { armor: a }) => sum + (a.risqueEchecMagique ?? 0), 0)
   // Compétences pénalisées par le malus d'armure (PHB 3.5)
-  const COMPETENCES_MALUS_ARMURE = ['Acrobaties', 'Discrétion', 'Déplacement silencieux', 'Escalade', 'Évasion', 'Natation', 'Saut', 'Tour de passe-passe']
+  const COMPETENCES_MALUS_ARMURE = ['Acrobaties', 'Discrétion', 'Déplacement silencieux', 'Escalade', 'Évasion', 'Natation', 'Saut', 'Escamotage']
   // Effets de sorts actifs sur la CA (activés/retirés par le joueur) — cumul PHB 3.5
   const estBouclier = (t: string | null) => (t ?? '').toLowerCase().includes('bouclier')
   const bonusArmurePortee = armor

@@ -1,0 +1,1435 @@
+{
+ "horodatage": "2026-08-25T13:30:59.855Z",
+ "races": [
+  {
+   "id": 1,
+   "nom": "Elfe",
+   "bonus_for": 0,
+   "bonus_dex": 2,
+   "bonus_con": -2,
+   "bonus_int": 0,
+   "bonus_sag": 0,
+   "bonus_cha": 0,
+   "taille": "Moyenne",
+   "deplacement_base": 9,
+   "vision_nocturne": true,
+   "description": "Vision nocturne (lumière faible x2), immunité sommeil magique, +2 aux JS contre magie, +2 Détection/Recherche/Perception auditive."
+  },
+  {
+   "id": 2,
+   "nom": "Humain",
+   "bonus_for": 0,
+   "bonus_dex": 0,
+   "bonus_con": 0,
+   "bonus_int": 0,
+   "bonus_sag": 0,
+   "bonus_cha": 0,
+   "taille": "Moyenne",
+   "deplacement_base": 9,
+   "vision_nocturne": false,
+   "description": null
+  },
+  {
+   "id": 3,
+   "nom": "Demi-Elfe",
+   "bonus_for": 0,
+   "bonus_dex": 0,
+   "bonus_con": 0,
+   "bonus_int": 0,
+   "bonus_sag": 0,
+   "bonus_cha": 0,
+   "taille": "Moyenne",
+   "deplacement_base": 9,
+   "vision_nocturne": true,
+   "description": null
+  },
+  {
+   "id": 4,
+   "nom": "Nain",
+   "bonus_for": 0,
+   "bonus_dex": 0,
+   "bonus_con": 2,
+   "bonus_int": 0,
+   "bonus_sag": 0,
+   "bonus_cha": -2,
+   "taille": "Petite",
+   "deplacement_base": 6,
+   "vision_nocturne": true,
+   "description": null
+  },
+  {
+   "id": 5,
+   "nom": "Halfelin",
+   "bonus_for": -2,
+   "bonus_dex": 2,
+   "bonus_con": 0,
+   "bonus_int": 0,
+   "bonus_sag": 0,
+   "bonus_cha": 0,
+   "taille": "Petite",
+   "deplacement_base": 6,
+   "vision_nocturne": false,
+   "description": null
+  },
+  {
+   "id": 6,
+   "nom": "Gnome",
+   "bonus_for": -2,
+   "bonus_dex": 0,
+   "bonus_con": 2,
+   "bonus_int": 0,
+   "bonus_sag": 0,
+   "bonus_cha": 0,
+   "taille": "Petite",
+   "deplacement_base": 6,
+   "vision_nocturne": true,
+   "description": null
+  },
+  {
+   "id": 7,
+   "nom": "Demi-Orque",
+   "bonus_for": 2,
+   "bonus_dex": 0,
+   "bonus_con": 0,
+   "bonus_int": -2,
+   "bonus_sag": 0,
+   "bonus_cha": -2,
+   "taille": "Moyenne",
+   "deplacement_base": 9,
+   "vision_nocturne": true,
+   "description": null
+  },
+  {
+   "id": 8,
+   "nom": "Illithid",
+   "bonus_for": 0,
+   "bonus_dex": 0,
+   "bonus_con": 0,
+   "bonus_int": 0,
+   "bonus_sag": 0,
+   "bonus_cha": 0,
+   "taille": "Moyenne",
+   "deplacement_base": 9,
+   "vision_nocturne": false,
+   "description": null
+  },
+  {
+   "id": 9,
+   "nom": "Demi-Orc",
+   "bonus_for": 0,
+   "bonus_dex": 0,
+   "bonus_con": 0,
+   "bonus_int": 0,
+   "bonus_sag": 0,
+   "bonus_cha": 0,
+   "taille": "Moyenne",
+   "deplacement_base": 9,
+   "vision_nocturne": false,
+   "description": null
+  },
+  {
+   "id": 10,
+   "nom": "Demi-Elf",
+   "bonus_for": 0,
+   "bonus_dex": 0,
+   "bonus_con": 0,
+   "bonus_int": 0,
+   "bonus_sag": 0,
+   "bonus_cha": 0,
+   "taille": "Moyenne",
+   "deplacement_base": 9,
+   "vision_nocturne": false,
+   "description": null
+  },
+  {
+   "id": 11,
+   "nom": "Petite-gens",
+   "bonus_for": 0,
+   "bonus_dex": 0,
+   "bonus_con": 0,
+   "bonus_int": 0,
+   "bonus_sag": 0,
+   "bonus_cha": 0,
+   "taille": "Moyenne",
+   "deplacement_base": 9,
+   "vision_nocturne": false,
+   "description": null
+  },
+  {
+   "id": 12,
+   "nom": "Bariaure",
+   "bonus_for": 0,
+   "bonus_dex": 0,
+   "bonus_con": 0,
+   "bonus_int": 0,
+   "bonus_sag": 0,
+   "bonus_cha": 0,
+   "taille": "Moyenne",
+   "deplacement_base": 9,
+   "vision_nocturne": false,
+   "description": null
+  }
+ ],
+ "classes": [
+  {
+   "id": 1,
+   "nom": "Guerrier",
+   "de_vie": "d12",
+   "bba_progression": "Plein",
+   "vigueur_progression": "Bon",
+   "reflexes_progression": "Mauvais",
+   "volonte_progression": "Mauvais",
+   "competences_par_niveau": 2,
+   "description": "Maître du combat, le guerrier excelle dans toutes les formes de combat armé."
+  },
+  {
+   "id": 2,
+   "nom": "Magicien",
+   "de_vie": "d4",
+   "bba_progression": "faible",
+   "vigueur_progression": "faible",
+   "reflexes_progression": "faible",
+   "volonte_progression": "bon",
+   "competences_par_niveau": 2,
+   "description": null
+  },
+  {
+   "id": 3,
+   "nom": "Rôdeur",
+   "de_vie": "d8",
+   "bba_progression": "elevee",
+   "vigueur_progression": "bon",
+   "reflexes_progression": "bon",
+   "volonte_progression": "faible",
+   "competences_par_niveau": 6,
+   "description": null
+  },
+  {
+   "id": 4,
+   "nom": "Roublard",
+   "de_vie": "d6",
+   "bba_progression": "moyenne",
+   "vigueur_progression": "faible",
+   "reflexes_progression": "bon",
+   "volonte_progression": "faible",
+   "competences_par_niveau": 8,
+   "description": null
+  },
+  {
+   "id": 5,
+   "nom": "Prêtre",
+   "de_vie": "d8",
+   "bba_progression": "Moyen",
+   "vigueur_progression": "Mauvais",
+   "reflexes_progression": "Mauvais",
+   "volonte_progression": "Mauvais",
+   "competences_par_niveau": 2,
+   "description": null
+  },
+  {
+   "id": 6,
+   "nom": "Moine",
+   "de_vie": "d8",
+   "bba_progression": "Moyen",
+   "vigueur_progression": "Mauvais",
+   "reflexes_progression": "Mauvais",
+   "volonte_progression": "Mauvais",
+   "competences_par_niveau": 2,
+   "description": null
+  },
+  {
+   "id": 7,
+   "nom": "Paladin",
+   "de_vie": "d8",
+   "bba_progression": "Moyen",
+   "vigueur_progression": "Mauvais",
+   "reflexes_progression": "Mauvais",
+   "volonte_progression": "Mauvais",
+   "competences_par_niveau": 2,
+   "description": null
+  },
+  {
+   "id": 8,
+   "nom": "Ensorcelleur",
+   "de_vie": "d8",
+   "bba_progression": "Moyen",
+   "vigueur_progression": "Mauvais",
+   "reflexes_progression": "Mauvais",
+   "volonte_progression": "Mauvais",
+   "competences_par_niveau": 2,
+   "description": null
+  },
+  {
+   "id": 9,
+   "nom": "Dracologist",
+   "de_vie": "d8",
+   "bba_progression": "Moyen",
+   "vigueur_progression": "Mauvais",
+   "reflexes_progression": "Mauvais",
+   "volonte_progression": "Mauvais",
+   "competences_par_niveau": 2,
+   "description": null
+  },
+  {
+   "id": 10,
+   "nom": "Battle-mage",
+   "de_vie": "d8",
+   "bba_progression": "Moyen",
+   "vigueur_progression": "Mauvais",
+   "reflexes_progression": "Mauvais",
+   "volonte_progression": "Mauvais",
+   "competences_par_niveau": 2,
+   "description": null
+  },
+  {
+   "id": 11,
+   "nom": "Blackguard",
+   "de_vie": "d8",
+   "bba_progression": "Moyen",
+   "vigueur_progression": "Mauvais",
+   "reflexes_progression": "Mauvais",
+   "volonte_progression": "Mauvais",
+   "competences_par_niveau": 2,
+   "description": null
+  },
+  {
+   "id": 12,
+   "nom": "Druide",
+   "de_vie": "d8",
+   "bba_progression": "Moyen",
+   "vigueur_progression": "Mauvais",
+   "reflexes_progression": "Mauvais",
+   "volonte_progression": "Mauvais",
+   "competences_par_niveau": 2,
+   "description": null
+  },
+  {
+   "id": 13,
+   "nom": "Cryptomancière",
+   "de_vie": "d8",
+   "bba_progression": "Moyen",
+   "vigueur_progression": "Mauvais",
+   "reflexes_progression": "Mauvais",
+   "volonte_progression": "Mauvais",
+   "competences_par_niveau": 2,
+   "description": null
+  },
+  {
+   "id": 14,
+   "nom": "Noble",
+   "de_vie": "d8",
+   "bba_progression": "Moyen",
+   "vigueur_progression": "Mauvais",
+   "reflexes_progression": "Mauvais",
+   "volonte_progression": "Mauvais",
+   "competences_par_niveau": 2,
+   "description": null
+  },
+  {
+   "id": 15,
+   "nom": "Assassin",
+   "de_vie": "d8",
+   "bba_progression": "Moyen",
+   "vigueur_progression": "Mauvais",
+   "reflexes_progression": "Mauvais",
+   "volonte_progression": "Mauvais",
+   "competences_par_niveau": 2,
+   "description": null
+  },
+  {
+   "id": 16,
+   "nom": "Barbare",
+   "de_vie": "d12",
+   "bba_progression": "elevee",
+   "vigueur_progression": "bon",
+   "reflexes_progression": "faible",
+   "volonte_progression": "faible",
+   "competences_par_niveau": 4,
+   "description": null
+  }
+ ],
+ "characters": [
+  {
+   "id": 1,
+   "nom": "Cormac",
+   "race_id": 1
+  },
+  {
+   "id": 3,
+   "nom": "Elbereth",
+   "race_id": 1
+  },
+  {
+   "id": 4,
+   "nom": "DracoVick Von Drag",
+   "race_id": 2
+  },
+  {
+   "id": 5,
+   "nom": "Elvar",
+   "race_id": 3
+  },
+  {
+   "id": 6,
+   "nom": "Lidda",
+   "race_id": 5
+  },
+  {
+   "id": 20,
+   "nom": "Lucky",
+   "race_id": 2
+  },
+  {
+   "id": 21,
+   "nom": "Ariane... la main froide",
+   "race_id": 1
+  },
+  {
+   "id": 22,
+   "nom": "Cixi",
+   "race_id": 2
+  },
+  {
+   "id": 23,
+   "nom": "Zack",
+   "race_id": 2
+  },
+  {
+   "id": 24,
+   "nom": "Laban",
+   "race_id": 2
+  },
+  {
+   "id": 25,
+   "nom": "Sean",
+   "race_id": 2
+  },
+  {
+   "id": 26,
+   "nom": "Todd",
+   "race_id": 2
+  },
+  {
+   "id": 27,
+   "nom": "Miridor",
+   "race_id": 1
+  },
+  {
+   "id": 28,
+   "nom": "Nayla Brisenocturne",
+   "race_id": 1
+  },
+  {
+   "id": 30,
+   "nom": "Tatiana",
+   "race_id": 2
+  },
+  {
+   "id": 31,
+   "nom": "Taria",
+   "race_id": 2
+  },
+  {
+   "id": 32,
+   "nom": "Pochutla",
+   "race_id": 2
+  },
+  {
+   "id": 33,
+   "nom": "Aramil (Sean le trappeur)",
+   "race_id": 1
+  },
+  {
+   "id": 34,
+   "nom": "Leena",
+   "race_id": 1
+  },
+  {
+   "id": 35,
+   "nom": "Benar",
+   "race_id": 2
+  },
+  {
+   "id": 36,
+   "nom": "Parx",
+   "race_id": 2
+  },
+  {
+   "id": 37,
+   "nom": "Naru",
+   "race_id": 2
+  },
+  {
+   "id": 38,
+   "nom": "Camla",
+   "race_id": 1
+  },
+  {
+   "id": 39,
+   "nom": "L'vethian",
+   "race_id": 8
+  },
+  {
+   "id": 40,
+   "nom": "Surya",
+   "race_id": 9
+  },
+  {
+   "id": 41,
+   "nom": "William Pilsener (Wilfrid)",
+   "race_id": 2
+  },
+  {
+   "id": 42,
+   "nom": "Ferazel",
+   "race_id": 10
+  },
+  {
+   "id": 43,
+   "nom": "Gaïa",
+   "race_id": 10
+  },
+  {
+   "id": 44,
+   "nom": "Willow - Loup de Gaïa",
+   "race_id": null
+  },
+  {
+   "id": 45,
+   "nom": "Elora Vlaardoen",
+   "race_id": 2
+  },
+  {
+   "id": 46,
+   "nom": "Garret Blanche Pierre",
+   "race_id": 11
+  },
+  {
+   "id": 47,
+   "nom": "Rham",
+   "race_id": 12
+  },
+  {
+   "id": 48,
+   "nom": "Larissa",
+   "race_id": 2
+  },
+  {
+   "id": 49,
+   "nom": "Elwin Brokenarrow",
+   "race_id": 1
+  },
+  {
+   "id": 50,
+   "nom": "Zébulon Haute-pierre",
+   "race_id": 10
+  },
+  {
+   "id": 51,
+   "nom": "Chath Restoun",
+   "race_id": 2
+  },
+  {
+   "id": 52,
+   "nom": "Telian Fore",
+   "race_id": 2
+  },
+  {
+   "id": 53,
+   "nom": "Simmone Walcrest",
+   "race_id": 2
+  },
+  {
+   "id": 54,
+   "nom": "Phyllin Thoddin",
+   "race_id": 1
+  },
+  {
+   "id": 55,
+   "nom": "Gorm",
+   "race_id": 4
+  },
+  {
+   "id": 56,
+   "nom": "Tellian Fore",
+   "race_id": 11
+  },
+  {
+   "id": 57,
+   "nom": "Beastman",
+   "race_id": 9
+  },
+  {
+   "id": 58,
+   "nom": "Willarth",
+   "race_id": 2
+  },
+  {
+   "id": 59,
+   "nom": "Uhlmar Thobin",
+   "race_id": 1
+  },
+  {
+   "id": 60,
+   "nom": "Vallin Tefferti",
+   "race_id": 1
+  },
+  {
+   "id": 61,
+   "nom": "Elrannel M'Lachel",
+   "race_id": 1
+  },
+  {
+   "id": 62,
+   "nom": "Legolas",
+   "race_id": null
+  },
+  {
+   "id": 63,
+   "nom": "Gimli",
+   "race_id": null
+  },
+  {
+   "id": 64,
+   "nom": "Willarth",
+   "race_id": 2
+  },
+  {
+   "id": 65,
+   "nom": "Gwendoline",
+   "race_id": 2
+  },
+  {
+   "id": 66,
+   "nom": "Ivanhoé",
+   "race_id": 10
+  },
+  {
+   "id": 67,
+   "nom": "Élianne",
+   "race_id": 1
+  },
+  {
+   "id": 68,
+   "nom": "Picasso",
+   "race_id": 1
+  },
+  {
+   "id": 69,
+   "nom": "Zaïd",
+   "race_id": 10
+  },
+  {
+   "id": 70,
+   "nom": "Drakara",
+   "race_id": 2
+  },
+  {
+   "id": 71,
+   "nom": "Wolfrarg la Borgne(leader gnoll)",
+   "race_id": 2
+  },
+  {
+   "id": 72,
+   "nom": "Sornë Verca",
+   "race_id": 2
+  },
+  {
+   "id": 73,
+   "nom": "Delgar des Monts de Fer",
+   "race_id": 4
+  },
+  {
+   "id": 74,
+   "nom": "Dragar Thunderhammer",
+   "race_id": 2
+  },
+  {
+   "id": 75,
+   "nom": "Maxalla Trigostas",
+   "race_id": 2
+  },
+  {
+   "id": 76,
+   "nom": "Radriel Wyrdlore",
+   "race_id": 1
+  },
+  {
+   "id": 77,
+   "nom": "Sabin Gazonvert",
+   "race_id": 11
+  },
+  {
+   "id": 78,
+   "nom": "Éloban",
+   "race_id": 1
+  },
+  {
+   "id": 79,
+   "nom": "Peren Holimion",
+   "race_id": 10
+  },
+  {
+   "id": 80,
+   "nom": "Karad Malar",
+   "race_id": 2
+  },
+  {
+   "id": 81,
+   "nom": "Urmora",
+   "race_id": 4
+  },
+  {
+   "id": 82,
+   "nom": "Krugg Coeur-Flamboyant",
+   "race_id": 9
+  },
+  {
+   "id": 83,
+   "nom": "Doran",
+   "race_id": 2
+  },
+  {
+   "id": 84,
+   "nom": "Mesh-En Borhis",
+   "race_id": 2
+  },
+  {
+   "id": 85,
+   "nom": "Elvar",
+   "race_id": 3
+  }
+ ],
+ "character_classes": [
+  {
+   "id": 21,
+   "personnage_id": 5,
+   "classe_id": 3,
+   "niveau": 7
+  },
+  {
+   "id": 23,
+   "personnage_id": 3,
+   "classe_id": 2,
+   "niveau": 6
+  },
+  {
+   "id": 42,
+   "personnage_id": 6,
+   "classe_id": 4,
+   "niveau": 4
+  },
+  {
+   "id": 43,
+   "personnage_id": 6,
+   "classe_id": 2,
+   "niveau": 1
+  },
+  {
+   "id": 63,
+   "personnage_id": 23,
+   "classe_id": 5,
+   "niveau": 4
+  },
+  {
+   "id": 64,
+   "personnage_id": 24,
+   "classe_id": 7,
+   "niveau": 12
+  },
+  {
+   "id": 65,
+   "personnage_id": 25,
+   "classe_id": 2,
+   "niveau": 4
+  },
+  {
+   "id": 66,
+   "personnage_id": 26,
+   "classe_id": 3,
+   "niveau": 4
+  },
+  {
+   "id": 67,
+   "personnage_id": 27,
+   "classe_id": 1,
+   "niveau": 10
+  },
+  {
+   "id": 68,
+   "personnage_id": 28,
+   "classe_id": 8,
+   "niveau": 12
+  },
+  {
+   "id": 71,
+   "personnage_id": 30,
+   "classe_id": 4,
+   "niveau": 15
+  },
+  {
+   "id": 72,
+   "personnage_id": 31,
+   "classe_id": 7,
+   "niveau": 17
+  },
+  {
+   "id": 73,
+   "personnage_id": 32,
+   "classe_id": 5,
+   "niveau": 14
+  },
+  {
+   "id": 76,
+   "personnage_id": 34,
+   "classe_id": 1,
+   "niveau": 10
+  },
+  {
+   "id": 77,
+   "personnage_id": 35,
+   "classe_id": 7,
+   "niveau": 11
+  },
+  {
+   "id": 78,
+   "personnage_id": 35,
+   "classe_id": 11,
+   "niveau": 8
+  },
+  {
+   "id": 79,
+   "personnage_id": 36,
+   "classe_id": 5,
+   "niveau": 8
+  },
+  {
+   "id": 80,
+   "personnage_id": 37,
+   "classe_id": 5,
+   "niveau": 16
+  },
+  {
+   "id": 81,
+   "personnage_id": 38,
+   "classe_id": 8,
+   "niveau": 16
+  },
+  {
+   "id": 82,
+   "personnage_id": 39,
+   "classe_id": 4,
+   "niveau": 12
+  },
+  {
+   "id": 83,
+   "personnage_id": 39,
+   "classe_id": 2,
+   "niveau": 8
+  },
+  {
+   "id": 84,
+   "personnage_id": 40,
+   "classe_id": 6,
+   "niveau": 13
+  },
+  {
+   "id": 85,
+   "personnage_id": 41,
+   "classe_id": 4,
+   "niveau": 11
+  },
+  {
+   "id": 86,
+   "personnage_id": 42,
+   "classe_id": 5,
+   "niveau": 17
+  },
+  {
+   "id": 90,
+   "personnage_id": 46,
+   "classe_id": 4,
+   "niveau": 13
+  },
+  {
+   "id": 91,
+   "personnage_id": 46,
+   "classe_id": 2,
+   "niveau": 6
+  },
+  {
+   "id": 93,
+   "personnage_id": 48,
+   "classe_id": 7,
+   "niveau": 12
+  },
+  {
+   "id": 96,
+   "personnage_id": 51,
+   "classe_id": 2,
+   "niveau": 14
+  },
+  {
+   "id": 97,
+   "personnage_id": 52,
+   "classe_id": 1,
+   "niveau": 6
+  },
+  {
+   "id": 98,
+   "personnage_id": 52,
+   "classe_id": 4,
+   "niveau": 4
+  },
+  {
+   "id": 99,
+   "personnage_id": 53,
+   "classe_id": 8,
+   "niveau": 14
+  },
+  {
+   "id": 100,
+   "personnage_id": 53,
+   "classe_id": 14,
+   "niveau": 6
+  },
+  {
+   "id": 101,
+   "personnage_id": 54,
+   "classe_id": 8,
+   "niveau": 9
+  },
+  {
+   "id": 102,
+   "personnage_id": 55,
+   "classe_id": 1,
+   "niveau": 12
+  },
+  {
+   "id": 103,
+   "personnage_id": 56,
+   "classe_id": 4,
+   "niveau": 10
+  },
+  {
+   "id": 104,
+   "personnage_id": 57,
+   "classe_id": 1,
+   "niveau": 6
+  },
+  {
+   "id": 105,
+   "personnage_id": 58,
+   "classe_id": 2,
+   "niveau": 14
+  },
+  {
+   "id": 106,
+   "personnage_id": 59,
+   "classe_id": 3,
+   "niveau": 13
+  },
+  {
+   "id": 107,
+   "personnage_id": 60,
+   "classe_id": 8,
+   "niveau": 16
+  },
+  {
+   "id": 108,
+   "personnage_id": 61,
+   "classe_id": 12,
+   "niveau": 20
+  },
+  {
+   "id": 109,
+   "personnage_id": 62,
+   "classe_id": 8,
+   "niveau": 3
+  },
+  {
+   "id": 110,
+   "personnage_id": 63,
+   "classe_id": 1,
+   "niveau": 3
+  },
+  {
+   "id": 111,
+   "personnage_id": 64,
+   "classe_id": 2,
+   "niveau": 5
+  },
+  {
+   "id": 112,
+   "personnage_id": 65,
+   "classe_id": 1,
+   "niveau": 12
+  },
+  {
+   "id": 113,
+   "personnage_id": 66,
+   "classe_id": 5,
+   "niveau": 12
+  },
+  {
+   "id": 114,
+   "personnage_id": 67,
+   "classe_id": 12,
+   "niveau": 5
+  },
+  {
+   "id": 115,
+   "personnage_id": 68,
+   "classe_id": 4,
+   "niveau": 5
+  },
+  {
+   "id": 116,
+   "personnage_id": 69,
+   "classe_id": 12,
+   "niveau": 10
+  },
+  {
+   "id": 118,
+   "personnage_id": 71,
+   "classe_id": 3,
+   "niveau": 8
+  },
+  {
+   "id": 119,
+   "personnage_id": 72,
+   "classe_id": 4,
+   "niveau": 5
+  },
+  {
+   "id": 120,
+   "personnage_id": 72,
+   "classe_id": 15,
+   "niveau": 7
+  },
+  {
+   "id": 121,
+   "personnage_id": 74,
+   "classe_id": 1,
+   "niveau": 4
+  },
+  {
+   "id": 122,
+   "personnage_id": 75,
+   "classe_id": 5,
+   "niveau": 3
+  },
+  {
+   "id": 123,
+   "personnage_id": 76,
+   "classe_id": 2,
+   "niveau": 3
+  },
+  {
+   "id": 124,
+   "personnage_id": 76,
+   "classe_id": 1,
+   "niveau": 1
+  },
+  {
+   "id": 125,
+   "personnage_id": 77,
+   "classe_id": 8,
+   "niveau": 4
+  },
+  {
+   "id": 126,
+   "personnage_id": 78,
+   "classe_id": 1,
+   "niveau": 5
+  },
+  {
+   "id": 127,
+   "personnage_id": 79,
+   "classe_id": 8,
+   "niveau": 2
+  },
+  {
+   "id": 128,
+   "personnage_id": 80,
+   "classe_id": 6,
+   "niveau": 2
+  },
+  {
+   "id": 129,
+   "personnage_id": 81,
+   "classe_id": 1,
+   "niveau": 2
+  },
+  {
+   "id": 130,
+   "personnage_id": 82,
+   "classe_id": 5,
+   "niveau": 6
+  },
+  {
+   "id": 133,
+   "personnage_id": 70,
+   "classe_id": 2,
+   "niveau": 14
+  },
+  {
+   "id": 134,
+   "personnage_id": 47,
+   "classe_id": 3,
+   "niveau": 18
+  },
+  {
+   "id": 148,
+   "personnage_id": 49,
+   "classe_id": 4,
+   "niveau": 15
+  },
+  {
+   "id": 149,
+   "personnage_id": 45,
+   "classe_id": 2,
+   "niveau": 16
+  },
+  {
+   "id": 150,
+   "personnage_id": 45,
+   "classe_id": 13,
+   "niveau": 8
+  },
+  {
+   "id": 154,
+   "personnage_id": 33,
+   "classe_id": 8,
+   "niveau": 10
+  },
+  {
+   "id": 155,
+   "personnage_id": 33,
+   "classe_id": 10,
+   "niveau": 7
+  },
+  {
+   "id": 167,
+   "personnage_id": 83,
+   "classe_id": 2,
+   "niveau": 6
+  },
+  {
+   "id": 169,
+   "personnage_id": 22,
+   "classe_id": 5,
+   "niveau": 8
+  },
+  {
+   "id": 170,
+   "personnage_id": 22,
+   "classe_id": 6,
+   "niveau": 16
+  },
+  {
+   "id": 185,
+   "personnage_id": 43,
+   "classe_id": 12,
+   "niveau": 8
+  },
+  {
+   "id": 199,
+   "personnage_id": 20,
+   "classe_id": 5,
+   "niveau": 11
+  },
+  {
+   "id": 202,
+   "personnage_id": 1,
+   "classe_id": 1,
+   "niveau": 6
+  },
+  {
+   "id": 203,
+   "personnage_id": 1,
+   "classe_id": 2,
+   "niveau": 1
+  },
+  {
+   "id": 204,
+   "personnage_id": 84,
+   "classe_id": 16,
+   "niveau": 1
+  },
+  {
+   "id": 206,
+   "personnage_id": 85,
+   "classe_id": 2,
+   "niveau": 6
+  },
+  {
+   "id": 208,
+   "personnage_id": 50,
+   "classe_id": 2,
+   "niveau": 17
+  },
+  {
+   "id": 211,
+   "personnage_id": 4,
+   "classe_id": 2,
+   "niveau": 16
+  },
+  {
+   "id": 212,
+   "personnage_id": 21,
+   "classe_id": 4,
+   "niveau": 10
+  }
+ ],
+ "racial_features": [
+  {
+   "id": 1,
+   "race_id": 1,
+   "nom": "Vision nocturne",
+   "description": "Voit 2x plus loin en lumière faible. PAS de vision dans le noir total."
+  },
+  {
+   "id": 2,
+   "race_id": 1,
+   "nom": "Immunité au sommeil magique",
+   "description": "Immunisé aux effets magiques de sommeil."
+  },
+  {
+   "id": 3,
+   "race_id": 1,
+   "nom": "+2 aux jets de sauvegarde contre la magie",
+   "description": "Bonus de +2 aux JS contre les sorts et effets magiques."
+  },
+  {
+   "id": 4,
+   "race_id": 1,
+   "nom": "Sens aiguisés",
+   "description": "+2 en Détection, Recherche et Perception auditive."
+  },
+  {
+   "id": 5,
+   "race_id": 1,
+   "nom": "Détection des portes secrètes",
+   "description": "Test automatique de Recherche pour les portes secrètes à moins de 1,5 m."
+  },
+  {
+   "id": 6,
+   "race_id": 1,
+   "nom": "Langues raciales",
+   "description": "Parle Elfique et Commun. Langues bonus : Elfe (cumasti), Gnome, Orque, Sylvain, Aérien, Aquatique."
+  },
+  {
+   "id": 7,
+   "race_id": 2,
+   "nom": "Don supplémentaire",
+   "description": "Obtient un don supplémentaire au niveau 1 (en plus du don normal)."
+  },
+  {
+   "id": 8,
+   "race_id": 2,
+   "nom": "Compétences supplémentaires",
+   "description": "4 points de compétence supplémentaires au niveau 1, puis +1 point par niveau supplémentaire."
+  },
+  {
+   "id": 9,
+   "race_id": 2,
+   "nom": "Polyvalence",
+   "description": "Les humains choisissent n'importe quelle classe comme classe de prédilection."
+  },
+  {
+   "id": 10,
+   "race_id": 2,
+   "nom": "Langues raciales",
+   "description": "Parle le Commun. Langues bonus : toutes (au choix du joueur)."
+  },
+  {
+   "id": 11,
+   "race_id": 3,
+   "nom": "Vision nocturne",
+   "description": "Voit 2x plus loin en lumière faible. PAS de vision dans le noir total."
+  },
+  {
+   "id": 12,
+   "race_id": 3,
+   "nom": "Immunité au sommeil magique",
+   "description": "Immunisé aux effets magiques de sommeil."
+  },
+  {
+   "id": 13,
+   "race_id": 3,
+   "nom": "+2 aux jets de sauvegarde contre la magie",
+   "description": "Bonus de +2 aux JS contre les sorts et effets magiques."
+  },
+  {
+   "id": 14,
+   "race_id": 3,
+   "nom": "Sens semi-elfiques",
+   "description": "+1 en Détection, Recherche et Perception auditive."
+  },
+  {
+   "id": 15,
+   "race_id": 3,
+   "nom": "Affinité sociale",
+   "description": "+2 aux tests de Diplomatie et Rassemblement d'informations grâce au charme naturel des demi-elfes."
+  },
+  {
+   "id": 16,
+   "race_id": 3,
+   "nom": "Langues raciales",
+   "description": "Parle le Commun et l'Elfique. Langues bonus : toutes (au choix du joueur)."
+  },
+  {
+   "id": 17,
+   "race_id": 4,
+   "nom": "Vision dans le noir",
+   "description": "Voit dans l'obscurité totale jusqu'à 18 m (60 pi) en niveaux de gris."
+  },
+  {
+   "id": 18,
+   "race_id": 4,
+   "nom": "Robustesse naine",
+   "description": "+2 aux jets de sauvegarde contre le poison et +2 contre les sorts et effets magiques."
+  },
+  {
+   "id": 19,
+   "race_id": 4,
+   "nom": "Stabilité",
+   "description": "+4 aux tests de Force contre les tentatives de bousculade et de désarme lorsqu'il est debout."
+  },
+  {
+   "id": 20,
+   "race_id": 4,
+   "nom": "Sens de la pierre",
+   "description": "+2 aux tests de Compétence en Artisanat liés à la pierre ou au métal. Détection automatique (test de Recherche) des pièges et portes dérobées en pierre à moins de 3 m."
+  },
+  {
+   "id": 21,
+   "race_id": 4,
+   "nom": "Haine des gobelinoïdes et orques",
+   "description": "+1 aux jets d'attaque contre les orques et les gobelinoïdes (gobelins, hobgobelins, gobelours)."
+  },
+  {
+   "id": 22,
+   "race_id": 4,
+   "nom": "Esquive contre les géants",
+   "description": "+4 en esquive à la CA contre les attaques des créatures de type géant."
+  },
+  {
+   "id": 23,
+   "race_id": 4,
+   "nom": "Familiarité avec les armes naines",
+   "description": "Maîtrise martiale de la hache de guerre naine et de la hachette de lancer naine."
+  },
+  {
+   "id": 24,
+   "race_id": 4,
+   "nom": "Langues raciales",
+   "description": "Parle le Nain et le Commun. Langues bonus : Gnome, Gobelineux, Orque, Commun des profondeurs, Terran."
+  },
+  {
+   "id": 25,
+   "race_id": 5,
+   "nom": "+2 aux tests d'Escalade, Saut et Discrétion",
+   "description": "Les halfelins sont agiles et discrets malgré leur petite taille."
+  },
+  {
+   "id": 26,
+   "race_id": 5,
+   "nom": "+1 aux jets d'attaque avec les armes de jet",
+   "description": "Précision naturelle avec les frondes, arbalètes légères et armes de jet."
+  },
+  {
+   "id": 27,
+   "race_id": 5,
+   "nom": "+2 aux jets de sauvegarde contre la peur",
+   "description": "Les halfelins sont naturellement courageux face à la peur."
+  },
+  {
+   "id": 28,
+   "race_id": 5,
+   "nom": "Sens aiguisés",
+   "description": "+2 aux tests de Perception auditive."
+  },
+  {
+   "id": 29,
+   "race_id": 5,
+   "nom": "Chance halfeline",
+   "description": "+1 à tous les jets de sauvegarde (inclus dans le bonus général)."
+  },
+  {
+   "id": 30,
+   "race_id": 5,
+   "nom": "Langues raciales",
+   "description": "Parle le Halfelin et le Commun. Langues bonus : Elfique, Nain, Gnome, Gobelineux, Orque."
+  },
+  {
+   "id": 31,
+   "race_id": 6,
+   "nom": "Vision dans le noir",
+   "description": "Voit dans l'obscurité totale jusqu'à 18 m (60 pi) en niveaux de gris."
+  },
+  {
+   "id": 32,
+   "race_id": 6,
+   "nom": "+2 aux jets de sauvegarde contre les illusions",
+   "description": "Résistance naturelle aux sorts et effets d'illusion."
+  },
+  {
+   "id": 33,
+   "race_id": 6,
+   "nom": "Sorts mineurs de gnome",
+   "description": "Peut lancer 1 fois/jour : parler aux animaux, lumières dansantes, son imaginaire, odeur magique. DD = 10 + modificateur de CHA. Ces sorts sont des pouvoirs magiques innés."
+  },
+  {
+   "id": 34,
+   "race_id": 6,
+   "nom": "+1 aux jets d'attaque contre les kobolds et gobelinoïdes",
+   "description": "Haine ancestrale des gnomes envers ces races."
+  },
+  {
+   "id": 35,
+   "race_id": 6,
+   "nom": "Esquive contre les géants",
+   "description": "+4 en esquive à la CA contre les attaques des créatures de type géant."
+  },
+  {
+   "id": 36,
+   "race_id": 6,
+   "nom": "Affinité avec les animaux",
+   "description": "+4 aux tests de Dressage et Empathie sauvage grâce à leur lien naturel avec les bêtes."
+  },
+  {
+   "id": 37,
+   "race_id": 6,
+   "nom": "Langues raciales",
+   "description": "Parle le Gnome et le Commun. Langues bonus : Elfique, Nain, Gobelineux, Géant, Sylvain."
+  },
+  {
+   "id": 38,
+   "race_id": 7,
+   "nom": "Vision dans le noir",
+   "description": "Voit dans l'obscurité totale jusqu'à 18 m (60 pi) en niveaux de gris."
+  },
+  {
+   "id": 39,
+   "race_id": 7,
+   "nom": "Sang-mêlé",
+   "description": "Considéré à la fois comme humain et comme orque pour les effets qui ciblent l'un ou l'autre de ces types."
+  },
+  {
+   "id": 40,
+   "race_id": 7,
+   "nom": "Langues raciales",
+   "description": "Parle le Commun et l'Orque. Langues bonus : Abyssal, Géant, Gnoll, Gobelineux, Infernal, Nain."
+  }
+ ],
+ "clans": [
+  {
+   "id": 1,
+   "nom": "Le clan de l'Arbre sombre",
+   "race_id": 1,
+   "description": "Clan elfique associé à l'Arbre sombre."
+  }
+ ]
+}
