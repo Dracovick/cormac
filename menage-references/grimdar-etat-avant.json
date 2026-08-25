@@ -1,0 +1,50 @@
+{
+ "horodatage": "2026-08-25T14:28:32.035Z",
+ "refs": {
+  "clans": {
+   "maxId": 1,
+   "nb": 1
+  },
+  "skills": {
+   "maxId": 191,
+   "nb": 104
+  },
+  "feats": {
+   "maxId": 478,
+   "nb": 478
+  },
+  "weapons": {
+   "maxId": 170,
+   "nb": 170
+  },
+  "armor": {
+   "maxId": 4,
+   "nb": 4
+  },
+  "magic_items": {
+   "maxId": 272,
+   "nb": 272
+  }
+ },
+ "perso": {
+  "characters": 70,
+  "character_classes": 80,
+  "character_ability_scores": 70,
+  "character_combat_stats": 70,
+  "character_saving_throws": 70,
+  "character_skills": 510,
+  "character_feats": 509,
+  "character_weapons": 189,
+  "character_armor": 3,
+  "character_magic_items": 84,
+  "character_currency": 70,
+  "character_languages": 156,
+  "character_companions": 2,
+  "character_notes": 37,
+  "character_journal": 61,
+  "character_potions": 9,
+  "character_spells": 197,
+  "character_spell_effects": 4,
+  "character_creatures": 1
+ }
+}
