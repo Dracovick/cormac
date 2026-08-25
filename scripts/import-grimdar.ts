@@ -3,6 +3,11 @@
  * ---------------------------------------------------------------------------------
  * ⛔ CE SCRIPT N'ÉCRIT RIEN SANS L'INDICATEUR --commit.
  *
+ * ⚠️ Mis à jour le 2026-08-25 APRÈS le ménage des tables de référence (skills 191 → 104,
+ * races 12 → 10, Ensorcelleur → Ensorceleur). Un seul id épinglé avait bougé : la
+ * compétence Intimidation. Depuis l'étape 3, la fiche imprimée n'ignore plus les noms
+ * hors table 4–2 : toute compétence du personnage s'imprime.
+ *
  *   Vérification seule (aucune écriture, à faire en premier) :
  *     npx tsx --env-file=.env.local scripts/import-grimdar.ts
  *
@@ -97,12 +102,12 @@ const REF_COMPETENCES: Array<{
     divA1: 8, divA2: 11, note: 'seule compétence touchée par le malus d’armure −6 de la plaque complète' },
   { id: 54,  nom: 'Déguisement', source: 'Déguisement', totalFichier: 6,
     divA1: 6, divA2: 6,  note: '' },
-  { id: 175, nom: 'intimidation', source: 'Intimidation', totalFichier: 4,
-    divA1: 4, divA2: 4,  note: '⚠️ minuscule en base ; ne s’imprimera PAS sur le PDF (COMPETENCES_DND35 attend « Intimidation »)' },
+  { id: 138, nom: 'Intimidation', source: 'Intimidation', totalFichier: 4,
+    divA1: 4, divA2: 4,  note: 'id remis a jour le 2026-08-25 : l’entree 175 « intimidation » (minuscule) a ete fusionnee dans 138 par le lot sur' },
   { id: 9,   nom: 'Survie',      source: 'Survie',      totalFichier: 4,
     divA1: 4, divA2: 3,  note: '' },
-  { id: null, nom: 'Connaissance (architecture et ingénierie)', source: 'Architecture', totalFichier: 4,
-    divA1: 4, divA2: 4,  note: 'à créer — absente de la base ET de COMPETENCES_DND35 ; ne s’imprimera pas sur le PDF' },
+  { id: null, nom: 'Connaissances (architecture et ingénierie)', source: 'Architecture', totalFichier: 4,
+    divA1: 4, divA2: 4,  note: 'à créer — au pluriel, graphie officielle ajoutée à COMPETENCES_DND35 à l’étape 1. ⚠️ à ne pas confondre avec skills 183 « Ingénierie magique », qui est une compétence maison distincte' },
 ]
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -116,7 +121,7 @@ const CREATIONS = {
     // justif : la table clans ne contient qu’une seule entrée, elfique.
   },
   competenceArchitecture: {
-    nom: 'Connaissance (architecture et ingénierie)', caracteristique: 'INT', formationRequise: true,
+    nom: 'Connaissances (architecture et ingénierie)', caracteristique: 'INT', formationRequise: true,
     // justif : Knowledge (architecture and engineering) du SRD, absente de la base.
   },
   dons: [
