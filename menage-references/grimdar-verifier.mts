@@ -78,7 +78,7 @@ for (const { weapon, charWeapon } of weapons) {
   const abilityDmg = !isRanged ? forMod : 0
   const atk = rawBab + (isRanged ? dexMod : forMod) + wpn + atkF
   const tot = wpn + abilityDmg + dmgF
-  const dmg = tot === 0 ? weapon.degats : `${weapon.degats}${tot > 0 ? '+' : ''}${tot}`
+  const dmg: string = tot === 0 ? (weapon.degats ?? '') : `${weapon.degats}${tot > 0 ? '+' : ''}${tot}`
   const [aAtk, aDmg] = attendues[weapon.nom] ?? [0, '?']
   const bon = atk === aAtk && dmg === aDmg
   if (!bon) ko++

@@ -63,3 +63,26 @@ export const XP_PAR_NIVEAU: Record<number, number> = {
   11: 55000, 12: 66000, 13: 78000, 14: 91000, 15: 105000,
   16: 120000, 17: 136000, 18: 153000, 19: 171000, 20: 190000,
 }
+
+/**
+ * Modificateur de caractéristique servant à un jet de sauvegarde.
+ *
+ * ⛔ Le bonus racial en fait partie. L'oublier fausse la Vigueur de tous les nains
+ * (+2 CON) et de tous les elfes (−2 CON) : c'est le défaut qui faisait afficher +7
+ * à l'écran et +8 sur la fiche imprimée pour un même personnage.
+ *
+ * Partagée par la fiche à l'écran et par la fiche imprimée, pour qu'elles ne
+ * puissent plus diverger. Les Réflexes passent déjà par le modificateur de
+ * Dextérité complet ; Vigueur et Volonté doivent faire de même.
+ *
+ * ⚠️ `base` est le score SAISI, sans bonus racial : c'est la convention de
+ * `character_ability_scores` (un nain à CON 16 est enregistré 14).
+ */
+export function modSauvegarde(
+  base: number | null | undefined,
+  magique: number | null | undefined,
+  bonusRacial: number,
+  bonusSorts = 0,
+): number {
+  return getModifier((base ?? 10) + (magique ?? 0) + bonusRacial + bonusSorts)
+}

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { getCharacter } from '@/lib/queries/character'
 import { DeleteButton } from '@/components/fiche/DeleteButton'
 import { getClasseInfo, getSortsSlotsParJour } from '@/lib/dnd35/classes'
-import { getMultiClassBab, XP_PAR_NIVEAU } from '@/lib/dnd35/rules'
+import { getMultiClassBab, XP_PAR_NIVEAU, modSauvegarde } from '@/lib/dnd35/rules'
 import { getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
 import { getCapacitesPourPersonnage } from '@/lib/dnd35/class-features'
 import { SORTS_DND35, type ClasseSortKey } from '@/lib/dnd35/spells'
@@ -349,8 +349,8 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             <div className="grid grid-cols-3 gap-3 mb-4">
               {[
                 { label: 'Réflexes', base: savingThrows.reflexesBase, mod: dexMod, mag: savingThrows.reflexesMagique },
-                { label: 'Vigueur', base: savingThrows.vigueurBase, mod: Math.floor(((abilityScores?.conBase ?? 10) + (abilityScores?.conMagique ?? 0) + effCarac.CON - 10) / 2), mag: savingThrows.vigueurMagique },
-                { label: 'Volonté', base: savingThrows.volonteBase, mod: Math.floor(((abilityScores?.sagBase ?? 10) + (abilityScores?.sagMagique ?? 0) + effCarac.SAG - 10) / 2), mag: savingThrows.volonteMagique },
+                { label: 'Vigueur', base: savingThrows.vigueurBase, mod: modSauvegarde(abilityScores?.conBase, abilityScores?.conMagique, race?.bonusCon ?? 0, effCarac.CON), mag: savingThrows.vigueurMagique },
+                { label: 'Volonté', base: savingThrows.volonteBase, mod: modSauvegarde(abilityScores?.sagBase, abilityScores?.sagMagique, race?.bonusSag ?? 0, effCarac.SAG), mag: savingThrows.volonteMagique },
               ].map(({ label, base, mod, mag }) => (
                 <div key={label} className="bg-stone-800/60 rounded p-3 text-center">
                   <div className="text-amber-500 text-xs uppercase tracking-wide">{label}</div>

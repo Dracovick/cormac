@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { getCharacter } from '@/lib/queries/character'
 import { getClasseInfo } from '@/lib/dnd35/classes'
 import { getRaceInfo } from '@/lib/dnd35/races'
-import { getModifier, getBab, XP_PAR_NIVEAU } from '@/lib/dnd35/rules'
+import { getModifier, getBab, XP_PAR_NIVEAU, modSauvegarde } from '@/lib/dnd35/rules'
 import { getCompetenceRef, caracteristiqueDe } from '@/lib/dnd35/skills'
 import { PrintButton } from '@/components/fiche/PrintButton'
 
@@ -84,9 +84,10 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   const vigBase = savingThrows?.vigueurBase ?? (saveBonnes.includes('vigueur') ? 2 + Math.floor(niveau / 2) : Math.floor(niveau / 3))
   const refBase = savingThrows?.reflexesBase ?? (saveBonnes.includes('reflexes') ? 2 + Math.floor(niveau / 2) : Math.floor(niveau / 3))
   const volBase = savingThrows?.volonteBase ?? (saveBonnes.includes('volonte') ? 2 + Math.floor(niveau / 2) : Math.floor(niveau / 3))
-  const vigT = vigBase + conMod + (savingThrows?.vigueurMagique ?? 0)
-  const refT = refBase + dexMod + (savingThrows?.reflexesMagique ?? 0)
-  const volT = volBase + sagMod + (savingThrows?.volonteMagique ?? 0)
+  // Mêmes modificateurs que la fiche à l'écran — bonus racial compris (voir modSauvegarde).
+  const vigT = vigBase + modSauvegarde(abilityScores?.conBase, abilityScores?.conMagique, raceInfo?.bonusCon ?? 0) + (savingThrows?.vigueurMagique ?? 0)
+  const refT = refBase + modSauvegarde(abilityScores?.dexBase, abilityScores?.dexMagique, raceInfo?.bonusDex ?? 0) + (savingThrows?.reflexesMagique ?? 0)
+  const volT = volBase + modSauvegarde(abilityScores?.sagBase, abilityScores?.sagMagique, raceInfo?.bonusSag ?? 0) + (savingThrows?.volonteMagique ?? 0)
 
   const caArmure = armor.reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
   const caMagique = magicItems.reduce((sum, { item }) => sum + (item.bonus ?? 0), 0)
