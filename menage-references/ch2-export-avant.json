@@ -1,0 +1,4409 @@
+{
+ "horodatage": "2026-08-25T14:52:08.605Z",
+ "skills": [
+  {
+   "id": 1,
+   "nom": "Connaissance des nains",
+   "nom_en": "Knowledge (Dwarves)",
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 2,
+   "nom": "Détection",
+   "nom_en": "Spot",
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 3,
+   "nom": "Diplomatie",
+   "nom_en": "Diplomacy",
+   "caracteristique": "CHA",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 4,
+   "nom": "Équitation",
+   "nom_en": "Ride",
+   "caracteristique": "DEX",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 5,
+   "nom": "Escalade",
+   "nom_en": "Climb",
+   "caracteristique": "FOR",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 6,
+   "nom": "Perception auditive",
+   "nom_en": "Listen",
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 8,
+   "nom": "Saut",
+   "nom_en": "Jump",
+   "caracteristique": "FOR",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 9,
+   "nom": "Survie",
+   "nom_en": "Survival",
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 10,
+   "nom": "Connaissances (mystères)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 11,
+   "nom": "Connaissances (plans)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 12,
+   "nom": "Connaissances (histoire)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 13,
+   "nom": "Magie divine",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 15,
+   "nom": "Concentration",
+   "nom_en": null,
+   "caracteristique": "CON",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 17,
+   "nom": "Alchimie",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 18,
+   "nom": "Artisanat",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 19,
+   "nom": "Connaissance Dragons",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 20,
+   "nom": "Connaissance de la magie",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 23,
+   "nom": "Connaissance Monstres",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 24,
+   "nom": "Équitation Dragon",
+   "nom_en": null,
+   "caracteristique": "DEX",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 25,
+   "nom": "Natation",
+   "nom_en": null,
+   "caracteristique": "FOR",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 27,
+   "nom": "Scrutation",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 28,
+   "nom": "Variante de sort",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 29,
+   "nom": "Volonté",
+   "nom_en": null,
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 30,
+   "nom": "Connaissances (nature)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": true,
+   "description": null
+  },
+  {
+   "id": 31,
+   "nom": "Discrétion",
+   "nom_en": null,
+   "caracteristique": "DEX",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 33,
+   "nom": "Déplacement silencieux",
+   "nom_en": null,
+   "caracteristique": "DEX",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 34,
+   "nom": "Fouille",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 35,
+   "nom": "Acrobaties",
+   "nom_en": null,
+   "caracteristique": "DEX",
+   "formation_requise": true,
+   "description": null
+  },
+  {
+   "id": 36,
+   "nom": "Artisanat (pièges)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 37,
+   "nom": "Bluff",
+   "nom_en": null,
+   "caracteristique": "CHA",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 39,
+   "nom": "Crochetage",
+   "nom_en": null,
+   "caracteristique": "DEX",
+   "formation_requise": true,
+   "description": null
+  },
+  {
+   "id": 42,
+   "nom": "Alchemy",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 44,
+   "nom": "Knowledge-monsters",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 50,
+   "nom": "Connaissances (dragons)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 51,
+   "nom": "Artisanat (armes)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 52,
+   "nom": "Contrefaçon",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 53,
+   "nom": "Décryptage",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 54,
+   "nom": "Déguisement",
+   "nom_en": null,
+   "caracteristique": "CHA",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 56,
+   "nom": "Équilibre",
+   "nom_en": null,
+   "caracteristique": "DEX",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 57,
+   "nom": "Évasion",
+   "nom_en": null,
+   "caracteristique": "DEX",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 60,
+   "nom": "Lecture sur les lèvres",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 61,
+   "nom": "Langage secret",
+   "nom_en": null,
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 65,
+   "nom": "Religion",
+   "nom_en": null,
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 70,
+   "nom": "Renseignements",
+   "nom_en": null,
+   "caracteristique": "CHA",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 74,
+   "nom": "Escamotage",
+   "nom_en": null,
+   "caracteristique": "DEX",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 78,
+   "nom": "Utilisation d'objets magiques",
+   "nom_en": null,
+   "caracteristique": "CHA",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 84,
+   "nom": "Artisanat (serrurerie)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 86,
+   "nom": "Prédiction",
+   "nom_en": null,
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 92,
+   "nom": "Heal (2 pv x jour x niv.)",
+   "nom_en": null,
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 95,
+   "nom": "Scry (scrutation)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 96,
+   "nom": "Sens de l'orientation",
+   "nom_en": null,
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 98,
+   "nom": "Dressage",
+   "nom_en": null,
+   "caracteristique": "CHA",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 100,
+   "nom": "Empathie Animaux",
+   "nom_en": null,
+   "caracteristique": "CHA",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 103,
+   "nom": "Profession (jardinier)",
+   "nom_en": null,
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 104,
+   "nom": "Knowledge Monsters",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 106,
+   "nom": "Scry",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 107,
+   "nom": "Spellflash",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 108,
+   "nom": "Profession (poterie)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 110,
+   "nom": "Désamorçage/sabotage",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 111,
+   "nom": "Estimation",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 112,
+   "nom": "Lang secret",
+   "nom_en": null,
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 113,
+   "nom": "Maîtrise des cordes",
+   "nom_en": null,
+   "caracteristique": "DEX",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 115,
+   "nom": "Jeux",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 116,
+   "nom": "Orientation",
+   "nom_en": null,
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 117,
+   "nom": "Don artistique",
+   "nom_en": null,
+   "caracteristique": "DEX",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 120,
+   "nom": "Emphatie avec les animaux",
+   "nom_en": null,
+   "caracteristique": "CHA",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 121,
+   "nom": "Connaissances (exploration souterraine)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 122,
+   "nom": "connaissance des femmes",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 123,
+   "nom": "Artisanat (flèches)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 124,
+   "nom": "Sens orientation",
+   "nom_en": null,
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 125,
+   "nom": "Connaissance du commerce",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 130,
+   "nom": "Connaissances des monstres",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 131,
+   "nom": "Connaissance langues anciennes",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 132,
+   "nom": "Connaissance astronomie",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 133,
+   "nom": "Profession (apothicaire)",
+   "nom_en": null,
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 134,
+   "nom": "Profession danseur",
+   "nom_en": null,
+   "caracteristique": "DEX",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 137,
+   "nom": "Knowledge (Radiance)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 138,
+   "nom": "Intimidation",
+   "nom_en": null,
+   "caracteristique": "CHA",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 147,
+   "nom": "Représentation (art oratoire)",
+   "nom_en": null,
+   "caracteristique": "CHA",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 150,
+   "nom": "Connaissances (folklore local)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 151,
+   "nom": "Connaissances (noblesse et royauté)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 152,
+   "nom": "Représentation (danse)",
+   "nom_en": null,
+   "caracteristique": "CHA",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 153,
+   "nom": "Animal Empathy",
+   "nom_en": null,
+   "caracteristique": "CHA",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 154,
+   "nom": "Intuit Direction",
+   "nom_en": null,
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 159,
+   "nom": "Profession (herboriste)",
+   "nom_en": null,
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 160,
+   "nom": "Dissimulation",
+   "nom_en": null,
+   "caracteristique": "DEX",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 162,
+   "nom": "Connaissance des monstres",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 163,
+   "nom": "Aura magique",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 164,
+   "nom": "Art de la magie",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 165,
+   "nom": "Psychologie",
+   "nom_en": null,
+   "caracteristique": "CHA",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 166,
+   "nom": "Empathie avec les animaux",
+   "nom_en": null,
+   "caracteristique": "CHA",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 167,
+   "nom": "Représentation (flûte)",
+   "nom_en": null,
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 168,
+   "nom": "Profession (charpentier)",
+   "nom_en": null,
+   "caracteristique": "DEX",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 169,
+   "nom": "Premier soins animaux",
+   "nom_en": null,
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 173,
+   "nom": "connaissance monstre",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 174,
+   "nom": "Profession",
+   "nom_en": null,
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 178,
+   "nom": "Stabilité",
+   "nom_en": null,
+   "caracteristique": "FOR",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 181,
+   "nom": "Connaissances (religion)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 182,
+   "nom": "Premiers soins (2 pv x jour x niv.)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 183,
+   "nom": "Ingénierie magique",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 186,
+   "nom": "Artisanat (tissage)",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 188,
+   "nom": "Fabrication",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 189,
+   "nom": "Monture",
+   "nom_en": null,
+   "caracteristique": "INT",
+   "formation_requise": false,
+   "description": null
+  },
+  {
+   "id": 191,
+   "nom": "Premiers secours",
+   "nom_en": null,
+   "caracteristique": "SAG",
+   "formation_requise": false,
+   "description": null
+  }
+ ],
+ "character_skills": [
+  {
+   "id": 204,
+   "personnage_id": 5,
+   "skill_id": 30,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 205,
+   "personnage_id": 5,
+   "skill_id": 31,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 206,
+   "personnage_id": 5,
+   "skill_id": 6,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 207,
+   "personnage_id": 5,
+   "skill_id": 9,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 208,
+   "personnage_id": 5,
+   "skill_id": 2,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 209,
+   "personnage_id": 5,
+   "skill_id": 33,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 219,
+   "personnage_id": 3,
+   "skill_id": 15,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 220,
+   "personnage_id": 3,
+   "skill_id": 10,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 221,
+   "personnage_id": 3,
+   "skill_id": 12,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 222,
+   "personnage_id": 3,
+   "skill_id": 11,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 223,
+   "personnage_id": 3,
+   "skill_id": 53,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 224,
+   "personnage_id": 3,
+   "skill_id": 13,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 225,
+   "personnage_id": 3,
+   "skill_id": 2,
+   "rangs_investis": 4,
+   "modif_divers": 2
+  },
+  {
+   "id": 226,
+   "personnage_id": 3,
+   "skill_id": 6,
+   "rangs_investis": 4,
+   "modif_divers": 2
+  },
+  {
+   "id": 227,
+   "personnage_id": 3,
+   "skill_id": 34,
+   "rangs_investis": 5,
+   "modif_divers": 2
+  },
+  {
+   "id": 396,
+   "personnage_id": 6,
+   "skill_id": 35,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 397,
+   "personnage_id": 6,
+   "skill_id": 36,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 398,
+   "personnage_id": 6,
+   "skill_id": 37,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 399,
+   "personnage_id": 6,
+   "skill_id": 31,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 400,
+   "personnage_id": 6,
+   "skill_id": 34,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 401,
+   "personnage_id": 6,
+   "skill_id": 6,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 402,
+   "personnage_id": 6,
+   "skill_id": 110,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 403,
+   "personnage_id": 6,
+   "skill_id": 2,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 404,
+   "personnage_id": 6,
+   "skill_id": 33,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 405,
+   "personnage_id": 6,
+   "skill_id": 39,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 407,
+   "personnage_id": 23,
+   "skill_id": 15,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 408,
+   "personnage_id": 23,
+   "skill_id": 164,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 409,
+   "personnage_id": 23,
+   "skill_id": 6,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 410,
+   "personnage_id": 23,
+   "skill_id": 191,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 411,
+   "personnage_id": 28,
+   "skill_id": 42,
+   "rangs_investis": 12,
+   "modif_divers": 0
+  },
+  {
+   "id": 412,
+   "personnage_id": 28,
+   "skill_id": 15,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 413,
+   "personnage_id": 28,
+   "skill_id": 10,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 414,
+   "personnage_id": 28,
+   "skill_id": 44,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 415,
+   "personnage_id": 28,
+   "skill_id": 11,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 416,
+   "personnage_id": 28,
+   "skill_id": 6,
+   "rangs_investis": 0,
+   "modif_divers": 4
+  },
+  {
+   "id": 417,
+   "personnage_id": 28,
+   "skill_id": 34,
+   "rangs_investis": 0,
+   "modif_divers": 2
+  },
+  {
+   "id": 418,
+   "personnage_id": 28,
+   "skill_id": 164,
+   "rangs_investis": 12,
+   "modif_divers": 0
+  },
+  {
+   "id": 419,
+   "personnage_id": 28,
+   "skill_id": 2,
+   "rangs_investis": 2,
+   "modif_divers": 4
+  },
+  {
+   "id": 431,
+   "personnage_id": 30,
+   "skill_id": 37,
+   "rangs_investis": 14,
+   "modif_divers": 0
+  },
+  {
+   "id": 432,
+   "personnage_id": 30,
+   "skill_id": 35,
+   "rangs_investis": 6,
+   "modif_divers": 0
+  },
+  {
+   "id": 433,
+   "personnage_id": 30,
+   "skill_id": 51,
+   "rangs_investis": 13,
+   "modif_divers": 0
+  },
+  {
+   "id": 434,
+   "personnage_id": 30,
+   "skill_id": 52,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 435,
+   "personnage_id": 30,
+   "skill_id": 39,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 436,
+   "personnage_id": 30,
+   "skill_id": 53,
+   "rangs_investis": 14,
+   "modif_divers": 0
+  },
+  {
+   "id": 437,
+   "personnage_id": 30,
+   "skill_id": 54,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 438,
+   "personnage_id": 30,
+   "skill_id": 33,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 439,
+   "personnage_id": 30,
+   "skill_id": 110,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 440,
+   "personnage_id": 30,
+   "skill_id": 2,
+   "rangs_investis": 16,
+   "modif_divers": 0
+  },
+  {
+   "id": 441,
+   "personnage_id": 30,
+   "skill_id": 31,
+   "rangs_investis": 8,
+   "modif_divers": 10
+  },
+  {
+   "id": 442,
+   "personnage_id": 30,
+   "skill_id": 56,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 443,
+   "personnage_id": 30,
+   "skill_id": 57,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 444,
+   "personnage_id": 30,
+   "skill_id": 34,
+   "rangs_investis": 14,
+   "modif_divers": 0
+  },
+  {
+   "id": 445,
+   "personnage_id": 30,
+   "skill_id": 113,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 446,
+   "personnage_id": 30,
+   "skill_id": 74,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 447,
+   "personnage_id": 30,
+   "skill_id": 60,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 448,
+   "personnage_id": 30,
+   "skill_id": 6,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 449,
+   "personnage_id": 30,
+   "skill_id": 15,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 450,
+   "personnage_id": 30,
+   "skill_id": 5,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 451,
+   "personnage_id": 30,
+   "skill_id": 61,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 452,
+   "personnage_id": 30,
+   "skill_id": 9,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 453,
+   "personnage_id": 35,
+   "skill_id": 4,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 454,
+   "personnage_id": 35,
+   "skill_id": 191,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 455,
+   "personnage_id": 35,
+   "skill_id": 15,
+   "rangs_investis": 6,
+   "modif_divers": 0
+  },
+  {
+   "id": 456,
+   "personnage_id": 36,
+   "skill_id": 6,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 457,
+   "personnage_id": 36,
+   "skill_id": 2,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 458,
+   "personnage_id": 36,
+   "skill_id": 34,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 459,
+   "personnage_id": 36,
+   "skill_id": 15,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 460,
+   "personnage_id": 36,
+   "skill_id": 191,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 461,
+   "personnage_id": 37,
+   "skill_id": 15,
+   "rangs_investis": 19,
+   "modif_divers": 0
+  },
+  {
+   "id": 462,
+   "personnage_id": 37,
+   "skill_id": 6,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 463,
+   "personnage_id": 37,
+   "skill_id": 2,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 464,
+   "personnage_id": 37,
+   "skill_id": 191,
+   "rangs_investis": 19,
+   "modif_divers": 0
+  },
+  {
+   "id": 465,
+   "personnage_id": 37,
+   "skill_id": 65,
+   "rangs_investis": 19,
+   "modif_divers": 0
+  },
+  {
+   "id": 466,
+   "personnage_id": 39,
+   "skill_id": 111,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 467,
+   "personnage_id": 39,
+   "skill_id": 56,
+   "rangs_investis": 15,
+   "modif_divers": 0
+  },
+  {
+   "id": 468,
+   "personnage_id": 39,
+   "skill_id": 37,
+   "rangs_investis": 10,
+   "modif_divers": 8
+  },
+  {
+   "id": 469,
+   "personnage_id": 39,
+   "skill_id": 53,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 470,
+   "personnage_id": 39,
+   "skill_id": 57,
+   "rangs_investis": 15,
+   "modif_divers": 0
+  },
+  {
+   "id": 471,
+   "personnage_id": 39,
+   "skill_id": 70,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 472,
+   "personnage_id": 39,
+   "skill_id": 8,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 473,
+   "personnage_id": 39,
+   "skill_id": 6,
+   "rangs_investis": 10,
+   "modif_divers": 10
+  },
+  {
+   "id": 474,
+   "personnage_id": 39,
+   "skill_id": 33,
+   "rangs_investis": 15,
+   "modif_divers": 17
+  },
+  {
+   "id": 475,
+   "personnage_id": 39,
+   "skill_id": 39,
+   "rangs_investis": 15,
+   "modif_divers": 0
+  },
+  {
+   "id": 476,
+   "personnage_id": 39,
+   "skill_id": 74,
+   "rangs_investis": 15,
+   "modif_divers": 0
+  },
+  {
+   "id": 477,
+   "personnage_id": 39,
+   "skill_id": 34,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 478,
+   "personnage_id": 39,
+   "skill_id": 2,
+   "rangs_investis": 10,
+   "modif_divers": 10
+  },
+  {
+   "id": 479,
+   "personnage_id": 39,
+   "skill_id": 78,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 480,
+   "personnage_id": 39,
+   "skill_id": 113,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 481,
+   "personnage_id": 38,
+   "skill_id": 33,
+   "rangs_investis": 6,
+   "modif_divers": 10
+  },
+  {
+   "id": 482,
+   "personnage_id": 38,
+   "skill_id": 15,
+   "rangs_investis": 19,
+   "modif_divers": 0
+  },
+  {
+   "id": 483,
+   "personnage_id": 38,
+   "skill_id": 42,
+   "rangs_investis": 19,
+   "modif_divers": 0
+  },
+  {
+   "id": 484,
+   "personnage_id": 38,
+   "skill_id": 10,
+   "rangs_investis": 18,
+   "modif_divers": 0
+  },
+  {
+   "id": 485,
+   "personnage_id": 38,
+   "skill_id": 34,
+   "rangs_investis": 0,
+   "modif_divers": 2
+  },
+  {
+   "id": 486,
+   "personnage_id": 38,
+   "skill_id": 6,
+   "rangs_investis": 2,
+   "modif_divers": 2
+  },
+  {
+   "id": 487,
+   "personnage_id": 38,
+   "skill_id": 2,
+   "rangs_investis": 2,
+   "modif_divers": 2
+  },
+  {
+   "id": 488,
+   "personnage_id": 30,
+   "skill_id": 78,
+   "rangs_investis": 6,
+   "modif_divers": 0
+  },
+  {
+   "id": 489,
+   "personnage_id": 40,
+   "skill_id": 5,
+   "rangs_investis": 13,
+   "modif_divers": 4
+  },
+  {
+   "id": 490,
+   "personnage_id": 40,
+   "skill_id": 57,
+   "rangs_investis": 7,
+   "modif_divers": 2
+  },
+  {
+   "id": 491,
+   "personnage_id": 40,
+   "skill_id": 8,
+   "rangs_investis": 8,
+   "modif_divers": 4
+  },
+  {
+   "id": 492,
+   "personnage_id": 40,
+   "skill_id": 6,
+   "rangs_investis": 3,
+   "modif_divers": 4
+  },
+  {
+   "id": 493,
+   "personnage_id": 40,
+   "skill_id": 33,
+   "rangs_investis": 5,
+   "modif_divers": 2
+  },
+  {
+   "id": 494,
+   "personnage_id": 40,
+   "skill_id": 25,
+   "rangs_investis": 1,
+   "modif_divers": 4
+  },
+  {
+   "id": 495,
+   "personnage_id": 40,
+   "skill_id": 84,
+   "rangs_investis": 8,
+   "modif_divers": -1
+  },
+  {
+   "id": 496,
+   "personnage_id": 32,
+   "skill_id": 17,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 497,
+   "personnage_id": 32,
+   "skill_id": 37,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 498,
+   "personnage_id": 32,
+   "skill_id": 181,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 499,
+   "personnage_id": 32,
+   "skill_id": 86,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 500,
+   "personnage_id": 32,
+   "skill_id": 15,
+   "rangs_investis": 14,
+   "modif_divers": 0
+  },
+  {
+   "id": 501,
+   "personnage_id": 32,
+   "skill_id": 6,
+   "rangs_investis": 0,
+   "modif_divers": 2
+  },
+  {
+   "id": 502,
+   "personnage_id": 32,
+   "skill_id": 2,
+   "rangs_investis": 0,
+   "modif_divers": 2
+  },
+  {
+   "id": 503,
+   "personnage_id": 41,
+   "skill_id": 111,
+   "rangs_investis": 6,
+   "modif_divers": 0
+  },
+  {
+   "id": 504,
+   "personnage_id": 41,
+   "skill_id": 37,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 505,
+   "personnage_id": 41,
+   "skill_id": 53,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 506,
+   "personnage_id": 41,
+   "skill_id": 57,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 507,
+   "personnage_id": 41,
+   "skill_id": 70,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 508,
+   "personnage_id": 41,
+   "skill_id": 31,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 509,
+   "personnage_id": 41,
+   "skill_id": 6,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 510,
+   "personnage_id": 41,
+   "skill_id": 33,
+   "rangs_investis": 10,
+   "modif_divers": 10
+  },
+  {
+   "id": 511,
+   "personnage_id": 41,
+   "skill_id": 39,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 512,
+   "personnage_id": 41,
+   "skill_id": 74,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 513,
+   "personnage_id": 41,
+   "skill_id": 34,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 514,
+   "personnage_id": 41,
+   "skill_id": 2,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 515,
+   "personnage_id": 41,
+   "skill_id": 35,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 516,
+   "personnage_id": 41,
+   "skill_id": 78,
+   "rangs_investis": 14,
+   "modif_divers": 2
+  },
+  {
+   "id": 517,
+   "personnage_id": 41,
+   "skill_id": 113,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 518,
+   "personnage_id": 42,
+   "skill_id": 6,
+   "rangs_investis": 0,
+   "modif_divers": 1
+  },
+  {
+   "id": 519,
+   "personnage_id": 42,
+   "skill_id": 34,
+   "rangs_investis": 0,
+   "modif_divers": 1
+  },
+  {
+   "id": 520,
+   "personnage_id": 42,
+   "skill_id": 2,
+   "rangs_investis": 0,
+   "modif_divers": 1
+  },
+  {
+   "id": 521,
+   "personnage_id": 42,
+   "skill_id": 15,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 522,
+   "personnage_id": 42,
+   "skill_id": 92,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 523,
+   "personnage_id": 42,
+   "skill_id": 181,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 524,
+   "personnage_id": 42,
+   "skill_id": 164,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 525,
+   "personnage_id": 42,
+   "skill_id": 95,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 526,
+   "personnage_id": 24,
+   "skill_id": 2,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 527,
+   "personnage_id": 24,
+   "skill_id": 31,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 528,
+   "personnage_id": 24,
+   "skill_id": 4,
+   "rangs_investis": 6,
+   "modif_divers": 0
+  },
+  {
+   "id": 529,
+   "personnage_id": 24,
+   "skill_id": 34,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 530,
+   "personnage_id": 24,
+   "skill_id": 9,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 531,
+   "personnage_id": 24,
+   "skill_id": 96,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 540,
+   "personnage_id": 28,
+   "skill_id": 123,
+   "rangs_investis": 1,
+   "modif_divers": 10
+  },
+  {
+   "id": 541,
+   "personnage_id": 28,
+   "skill_id": 33,
+   "rangs_investis": 0,
+   "modif_divers": 10
+  },
+  {
+   "id": 561,
+   "personnage_id": 46,
+   "skill_id": 35,
+   "rangs_investis": 7,
+   "modif_divers": 3
+  },
+  {
+   "id": 562,
+   "personnage_id": 46,
+   "skill_id": 17,
+   "rangs_investis": 4,
+   "modif_divers": 3
+  },
+  {
+   "id": 563,
+   "personnage_id": 46,
+   "skill_id": 37,
+   "rangs_investis": 5,
+   "modif_divers": 2
+  },
+  {
+   "id": 564,
+   "personnage_id": 46,
+   "skill_id": 164,
+   "rangs_investis": 5,
+   "modif_divers": 3
+  },
+  {
+   "id": 565,
+   "personnage_id": 46,
+   "skill_id": 39,
+   "rangs_investis": 14,
+   "modif_divers": 1
+  },
+  {
+   "id": 566,
+   "personnage_id": 46,
+   "skill_id": 53,
+   "rangs_investis": 5,
+   "modif_divers": 2
+  },
+  {
+   "id": 567,
+   "personnage_id": 46,
+   "skill_id": 33,
+   "rangs_investis": 7,
+   "modif_divers": 13
+  },
+  {
+   "id": 568,
+   "personnage_id": 46,
+   "skill_id": 110,
+   "rangs_investis": 11,
+   "modif_divers": 1
+  },
+  {
+   "id": 569,
+   "personnage_id": 46,
+   "skill_id": 2,
+   "rangs_investis": 14,
+   "modif_divers": 1
+  },
+  {
+   "id": 570,
+   "personnage_id": 46,
+   "skill_id": 31,
+   "rangs_investis": 9,
+   "modif_divers": 1
+  },
+  {
+   "id": 571,
+   "personnage_id": 46,
+   "skill_id": 56,
+   "rangs_investis": 7,
+   "modif_divers": 3
+  },
+  {
+   "id": 572,
+   "personnage_id": 46,
+   "skill_id": 5,
+   "rangs_investis": 5,
+   "modif_divers": 5
+  },
+  {
+   "id": 573,
+   "personnage_id": 46,
+   "skill_id": 111,
+   "rangs_investis": 8,
+   "modif_divers": 5
+  },
+  {
+   "id": 574,
+   "personnage_id": 46,
+   "skill_id": 57,
+   "rangs_investis": 10,
+   "modif_divers": 3
+  },
+  {
+   "id": 575,
+   "personnage_id": 46,
+   "skill_id": 34,
+   "rangs_investis": 12,
+   "modif_divers": 1
+  },
+  {
+   "id": 576,
+   "personnage_id": 46,
+   "skill_id": 112,
+   "rangs_investis": 6,
+   "modif_divers": 5
+  },
+  {
+   "id": 577,
+   "personnage_id": 46,
+   "skill_id": 113,
+   "rangs_investis": 4,
+   "modif_divers": 5
+  },
+  {
+   "id": 578,
+   "personnage_id": 46,
+   "skill_id": 6,
+   "rangs_investis": 13,
+   "modif_divers": 3
+  },
+  {
+   "id": 579,
+   "personnage_id": 46,
+   "skill_id": 78,
+   "rangs_investis": 9,
+   "modif_divers": 2
+  },
+  {
+   "id": 580,
+   "personnage_id": 46,
+   "skill_id": 74,
+   "rangs_investis": 10,
+   "modif_divers": 5
+  },
+  {
+   "id": 594,
+   "personnage_id": 46,
+   "skill_id": 122,
+   "rangs_investis": 5,
+   "modif_divers": 1
+  },
+  {
+   "id": 595,
+   "personnage_id": 46,
+   "skill_id": 54,
+   "rangs_investis": 8,
+   "modif_divers": 1
+  },
+  {
+   "id": 596,
+   "personnage_id": 46,
+   "skill_id": 123,
+   "rangs_investis": 7,
+   "modif_divers": 1
+  },
+  {
+   "id": 597,
+   "personnage_id": 46,
+   "skill_id": 124,
+   "rangs_investis": 6,
+   "modif_divers": 1
+  },
+  {
+   "id": 598,
+   "personnage_id": 46,
+   "skill_id": 125,
+   "rangs_investis": 5,
+   "modif_divers": 1
+  },
+  {
+   "id": 599,
+   "personnage_id": 48,
+   "skill_id": 191,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 600,
+   "personnage_id": 48,
+   "skill_id": 181,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 601,
+   "personnage_id": 48,
+   "skill_id": 39,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 602,
+   "personnage_id": 48,
+   "skill_id": 4,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 603,
+   "personnage_id": 48,
+   "skill_id": 9,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 615,
+   "personnage_id": 51,
+   "skill_id": 15,
+   "rangs_investis": 15,
+   "modif_divers": 0
+  },
+  {
+   "id": 616,
+   "personnage_id": 51,
+   "skill_id": 164,
+   "rangs_investis": 15,
+   "modif_divers": 0
+  },
+  {
+   "id": 617,
+   "personnage_id": 51,
+   "skill_id": 10,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 618,
+   "personnage_id": 51,
+   "skill_id": 191,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 619,
+   "personnage_id": 51,
+   "skill_id": 137,
+   "rangs_investis": 15,
+   "modif_divers": 4
+  },
+  {
+   "id": 620,
+   "personnage_id": 39,
+   "skill_id": 15,
+   "rangs_investis": 0,
+   "modif_divers": 12
+  },
+  {
+   "id": 621,
+   "personnage_id": 39,
+   "skill_id": 31,
+   "rangs_investis": 0,
+   "modif_divers": 18
+  },
+  {
+   "id": 622,
+   "personnage_id": 39,
+   "skill_id": 138,
+   "rangs_investis": 0,
+   "modif_divers": 10
+  },
+  {
+   "id": 632,
+   "personnage_id": 51,
+   "skill_id": 12,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 633,
+   "personnage_id": 51,
+   "skill_id": 42,
+   "rangs_investis": 15,
+   "modif_divers": 0
+  },
+  {
+   "id": 634,
+   "personnage_id": 51,
+   "skill_id": 106,
+   "rangs_investis": 15,
+   "modif_divers": 0
+  },
+  {
+   "id": 635,
+   "personnage_id": 51,
+   "skill_id": 107,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 636,
+   "personnage_id": 51,
+   "skill_id": 181,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 637,
+   "personnage_id": 53,
+   "skill_id": 3,
+   "rangs_investis": 7,
+   "modif_divers": 2
+  },
+  {
+   "id": 638,
+   "personnage_id": 54,
+   "skill_id": 10,
+   "rangs_investis": 0,
+   "modif_divers": 8
+  },
+  {
+   "id": 639,
+   "personnage_id": 54,
+   "skill_id": 164,
+   "rangs_investis": 0,
+   "modif_divers": 8
+  },
+  {
+   "id": 640,
+   "personnage_id": 54,
+   "skill_id": 78,
+   "rangs_investis": 0,
+   "modif_divers": 8
+  },
+  {
+   "id": 641,
+   "personnage_id": 55,
+   "skill_id": 5,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 642,
+   "personnage_id": 55,
+   "skill_id": 98,
+   "rangs_investis": 6,
+   "modif_divers": 0
+  },
+  {
+   "id": 643,
+   "personnage_id": 55,
+   "skill_id": 10,
+   "rangs_investis": 3,
+   "modif_divers": 8
+  },
+  {
+   "id": 644,
+   "personnage_id": 55,
+   "skill_id": 164,
+   "rangs_investis": 3,
+   "modif_divers": 8
+  },
+  {
+   "id": 645,
+   "personnage_id": 55,
+   "skill_id": 78,
+   "rangs_investis": 3,
+   "modif_divers": 8
+  },
+  {
+   "id": 646,
+   "personnage_id": 56,
+   "skill_id": 56,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 647,
+   "personnage_id": 56,
+   "skill_id": 3,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 648,
+   "personnage_id": 56,
+   "skill_id": 52,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 649,
+   "personnage_id": 56,
+   "skill_id": 31,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 650,
+   "personnage_id": 56,
+   "skill_id": 10,
+   "rangs_investis": 5,
+   "modif_divers": 8
+  },
+  {
+   "id": 651,
+   "personnage_id": 56,
+   "skill_id": 6,
+   "rangs_investis": 7,
+   "modif_divers": 2
+  },
+  {
+   "id": 652,
+   "personnage_id": 56,
+   "skill_id": 165,
+   "rangs_investis": 7,
+   "modif_divers": 2
+  },
+  {
+   "id": 653,
+   "personnage_id": 56,
+   "skill_id": 74,
+   "rangs_investis": 6,
+   "modif_divers": 0
+  },
+  {
+   "id": 654,
+   "personnage_id": 56,
+   "skill_id": 164,
+   "rangs_investis": 5,
+   "modif_divers": 8
+  },
+  {
+   "id": 655,
+   "personnage_id": 56,
+   "skill_id": 2,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 656,
+   "personnage_id": 56,
+   "skill_id": 35,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 657,
+   "personnage_id": 56,
+   "skill_id": 78,
+   "rangs_investis": 7,
+   "modif_divers": 8
+  },
+  {
+   "id": 658,
+   "personnage_id": 56,
+   "skill_id": 8,
+   "rangs_investis": 7,
+   "modif_divers": 2
+  },
+  {
+   "id": 659,
+   "personnage_id": 56,
+   "skill_id": 5,
+   "rangs_investis": 7,
+   "modif_divers": 2
+  },
+  {
+   "id": 660,
+   "personnage_id": 56,
+   "skill_id": 33,
+   "rangs_investis": 7,
+   "modif_divers": 2
+  },
+  {
+   "id": 661,
+   "personnage_id": 56,
+   "skill_id": 147,
+   "rangs_investis": 7,
+   "modif_divers": 2
+  },
+  {
+   "id": 662,
+   "personnage_id": 55,
+   "skill_id": 111,
+   "rangs_investis": 3,
+   "modif_divers": 2
+  },
+  {
+   "id": 663,
+   "personnage_id": 55,
+   "skill_id": 18,
+   "rangs_investis": 7,
+   "modif_divers": 2
+  },
+  {
+   "id": 664,
+   "personnage_id": 55,
+   "skill_id": 2,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 665,
+   "personnage_id": 55,
+   "skill_id": 34,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 666,
+   "personnage_id": 54,
+   "skill_id": 6,
+   "rangs_investis": 0,
+   "modif_divers": 2
+  },
+  {
+   "id": 667,
+   "personnage_id": 54,
+   "skill_id": 34,
+   "rangs_investis": 0,
+   "modif_divers": 2
+  },
+  {
+   "id": 668,
+   "personnage_id": 54,
+   "skill_id": 2,
+   "rangs_investis": 0,
+   "modif_divers": 2
+  },
+  {
+   "id": 669,
+   "personnage_id": 57,
+   "skill_id": 33,
+   "rangs_investis": 6,
+   "modif_divers": 0
+  },
+  {
+   "id": 670,
+   "personnage_id": 57,
+   "skill_id": 31,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 671,
+   "personnage_id": 57,
+   "skill_id": 6,
+   "rangs_investis": 4,
+   "modif_divers": 2
+  },
+  {
+   "id": 672,
+   "personnage_id": 57,
+   "skill_id": 2,
+   "rangs_investis": 4,
+   "modif_divers": 2
+  },
+  {
+   "id": 673,
+   "personnage_id": 52,
+   "skill_id": 111,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 674,
+   "personnage_id": 52,
+   "skill_id": 37,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 675,
+   "personnage_id": 52,
+   "skill_id": 3,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 676,
+   "personnage_id": 52,
+   "skill_id": 70,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 677,
+   "personnage_id": 52,
+   "skill_id": 12,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 678,
+   "personnage_id": 52,
+   "skill_id": 150,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 679,
+   "personnage_id": 52,
+   "skill_id": 151,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 680,
+   "personnage_id": 52,
+   "skill_id": 6,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 681,
+   "personnage_id": 52,
+   "skill_id": 152,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 682,
+   "personnage_id": 52,
+   "skill_id": 34,
+   "rangs_investis": 9,
+   "modif_divers": 10
+  },
+  {
+   "id": 683,
+   "personnage_id": 52,
+   "skill_id": 165,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 684,
+   "personnage_id": 52,
+   "skill_id": 2,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 685,
+   "personnage_id": 52,
+   "skill_id": 31,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 686,
+   "personnage_id": 52,
+   "skill_id": 9,
+   "rangs_investis": 9,
+   "modif_divers": 10
+  },
+  {
+   "id": 687,
+   "personnage_id": 59,
+   "skill_id": 6,
+   "rangs_investis": 7,
+   "modif_divers": 2
+  },
+  {
+   "id": 688,
+   "personnage_id": 59,
+   "skill_id": 2,
+   "rangs_investis": 6,
+   "modif_divers": 2
+  },
+  {
+   "id": 689,
+   "personnage_id": 59,
+   "skill_id": 34,
+   "rangs_investis": 6,
+   "modif_divers": 2
+  },
+  {
+   "id": 690,
+   "personnage_id": 59,
+   "skill_id": 153,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 691,
+   "personnage_id": 59,
+   "skill_id": 5,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 692,
+   "personnage_id": 59,
+   "skill_id": 15,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 693,
+   "personnage_id": 59,
+   "skill_id": 98,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 694,
+   "personnage_id": 59,
+   "skill_id": 191,
+   "rangs_investis": 6,
+   "modif_divers": 0
+  },
+  {
+   "id": 695,
+   "personnage_id": 59,
+   "skill_id": 31,
+   "rangs_investis": 5,
+   "modif_divers": 25
+  },
+  {
+   "id": 696,
+   "personnage_id": 59,
+   "skill_id": 154,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 697,
+   "personnage_id": 59,
+   "skill_id": 8,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 698,
+   "personnage_id": 59,
+   "skill_id": 30,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 699,
+   "personnage_id": 59,
+   "skill_id": 33,
+   "rangs_investis": 5,
+   "modif_divers": 10
+  },
+  {
+   "id": 700,
+   "personnage_id": 59,
+   "skill_id": 4,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 701,
+   "personnage_id": 59,
+   "skill_id": 25,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 702,
+   "personnage_id": 59,
+   "skill_id": 113,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 703,
+   "personnage_id": 59,
+   "skill_id": 9,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 704,
+   "personnage_id": 60,
+   "skill_id": 15,
+   "rangs_investis": 17,
+   "modif_divers": 0
+  },
+  {
+   "id": 705,
+   "personnage_id": 60,
+   "skill_id": 11,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 706,
+   "personnage_id": 60,
+   "skill_id": 6,
+   "rangs_investis": 17,
+   "modif_divers": 0
+  },
+  {
+   "id": 707,
+   "personnage_id": 60,
+   "skill_id": 33,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 708,
+   "personnage_id": 60,
+   "skill_id": 34,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 709,
+   "personnage_id": 60,
+   "skill_id": 20,
+   "rangs_investis": 12,
+   "modif_divers": 0
+  },
+  {
+   "id": 710,
+   "personnage_id": 61,
+   "skill_id": 42,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 711,
+   "personnage_id": 61,
+   "skill_id": 3,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 712,
+   "personnage_id": 61,
+   "skill_id": 30,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 713,
+   "personnage_id": 61,
+   "skill_id": 6,
+   "rangs_investis": 11,
+   "modif_divers": 8
+  },
+  {
+   "id": 714,
+   "personnage_id": 61,
+   "skill_id": 159,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 715,
+   "personnage_id": 61,
+   "skill_id": 34,
+   "rangs_investis": 11,
+   "modif_divers": 8
+  },
+  {
+   "id": 716,
+   "personnage_id": 61,
+   "skill_id": 165,
+   "rangs_investis": 11,
+   "modif_divers": 8
+  },
+  {
+   "id": 717,
+   "personnage_id": 61,
+   "skill_id": 164,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 718,
+   "personnage_id": 61,
+   "skill_id": 2,
+   "rangs_investis": 11,
+   "modif_divers": 8
+  },
+  {
+   "id": 719,
+   "personnage_id": 61,
+   "skill_id": 9,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 723,
+   "personnage_id": 62,
+   "skill_id": 20,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 724,
+   "personnage_id": 62,
+   "skill_id": 15,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 725,
+   "personnage_id": 62,
+   "skill_id": 3,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 726,
+   "personnage_id": 62,
+   "skill_id": 160,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 727,
+   "personnage_id": 62,
+   "skill_id": 33,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 728,
+   "personnage_id": 62,
+   "skill_id": 164,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 729,
+   "personnage_id": 63,
+   "skill_id": 5,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 730,
+   "personnage_id": 63,
+   "skill_id": 8,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 731,
+   "personnage_id": 63,
+   "skill_id": 4,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 732,
+   "personnage_id": 63,
+   "skill_id": 25,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 733,
+   "personnage_id": 63,
+   "skill_id": 6,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 734,
+   "personnage_id": 63,
+   "skill_id": 34,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 735,
+   "personnage_id": 63,
+   "skill_id": 2,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 736,
+   "personnage_id": 64,
+   "skill_id": 15,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 737,
+   "personnage_id": 64,
+   "skill_id": 20,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 738,
+   "personnage_id": 64,
+   "skill_id": 162,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 739,
+   "personnage_id": 64,
+   "skill_id": 164,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 740,
+   "personnage_id": 64,
+   "skill_id": 17,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 741,
+   "personnage_id": 64,
+   "skill_id": 6,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 742,
+   "personnage_id": 64,
+   "skill_id": 2,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 745,
+   "personnage_id": 66,
+   "skill_id": 15,
+   "rangs_investis": 12,
+   "modif_divers": 0
+  },
+  {
+   "id": 746,
+   "personnage_id": 66,
+   "skill_id": 164,
+   "rangs_investis": 12,
+   "modif_divers": 0
+  },
+  {
+   "id": 747,
+   "personnage_id": 66,
+   "skill_id": 3,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 748,
+   "personnage_id": 66,
+   "skill_id": 6,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 749,
+   "personnage_id": 66,
+   "skill_id": 27,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 750,
+   "personnage_id": 66,
+   "skill_id": 165,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 751,
+   "personnage_id": 67,
+   "skill_id": 166,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 752,
+   "personnage_id": 67,
+   "skill_id": 167,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 753,
+   "personnage_id": 67,
+   "skill_id": 9,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 754,
+   "personnage_id": 67,
+   "skill_id": 25,
+   "rangs_investis": 4,
+   "modif_divers": 10
+  },
+  {
+   "id": 755,
+   "personnage_id": 67,
+   "skill_id": 168,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 756,
+   "personnage_id": 67,
+   "skill_id": 169,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 757,
+   "personnage_id": 68,
+   "skill_id": 74,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 758,
+   "personnage_id": 68,
+   "skill_id": 39,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 759,
+   "personnage_id": 68,
+   "skill_id": 5,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 760,
+   "personnage_id": 68,
+   "skill_id": 110,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 761,
+   "personnage_id": 68,
+   "skill_id": 34,
+   "rangs_investis": 4,
+   "modif_divers": 2
+  },
+  {
+   "id": 762,
+   "personnage_id": 68,
+   "skill_id": 6,
+   "rangs_investis": 4,
+   "modif_divers": 2
+  },
+  {
+   "id": 763,
+   "personnage_id": 68,
+   "skill_id": 31,
+   "rangs_investis": 4,
+   "modif_divers": 10
+  },
+  {
+   "id": 764,
+   "personnage_id": 68,
+   "skill_id": 61,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 765,
+   "personnage_id": 68,
+   "skill_id": 25,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 779,
+   "personnage_id": 71,
+   "skill_id": 2,
+   "rangs_investis": 0,
+   "modif_divers": 20
+  },
+  {
+   "id": 780,
+   "personnage_id": 71,
+   "skill_id": 6,
+   "rangs_investis": 0,
+   "modif_divers": 20
+  },
+  {
+   "id": 781,
+   "personnage_id": 71,
+   "skill_id": 138,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 782,
+   "personnage_id": 72,
+   "skill_id": 35,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 783,
+   "personnage_id": 72,
+   "skill_id": 39,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 784,
+   "personnage_id": 72,
+   "skill_id": 2,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 785,
+   "personnage_id": 72,
+   "skill_id": 37,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 786,
+   "personnage_id": 72,
+   "skill_id": 110,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 787,
+   "personnage_id": 72,
+   "skill_id": 53,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 788,
+   "personnage_id": 72,
+   "skill_id": 54,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 789,
+   "personnage_id": 72,
+   "skill_id": 33,
+   "rangs_investis": 7,
+   "modif_divers": 10
+  },
+  {
+   "id": 790,
+   "personnage_id": 72,
+   "skill_id": 31,
+   "rangs_investis": 9,
+   "modif_divers": 10
+  },
+  {
+   "id": 791,
+   "personnage_id": 72,
+   "skill_id": 56,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 792,
+   "personnage_id": 72,
+   "skill_id": 5,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 793,
+   "personnage_id": 72,
+   "skill_id": 8,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 794,
+   "personnage_id": 67,
+   "skill_id": 27,
+   "rangs_investis": 1,
+   "modif_divers": 0
+  },
+  {
+   "id": 795,
+   "personnage_id": 67,
+   "skill_id": 186,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 796,
+   "personnage_id": 68,
+   "skill_id": 53,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 797,
+   "personnage_id": 68,
+   "skill_id": 4,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 798,
+   "personnage_id": 68,
+   "skill_id": 37,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 799,
+   "personnage_id": 68,
+   "skill_id": 60,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 800,
+   "personnage_id": 67,
+   "skill_id": 4,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 801,
+   "personnage_id": 74,
+   "skill_id": 34,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 802,
+   "personnage_id": 74,
+   "skill_id": 178,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 803,
+   "personnage_id": 74,
+   "skill_id": 111,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 804,
+   "personnage_id": 75,
+   "skill_id": 34,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 805,
+   "personnage_id": 76,
+   "skill_id": 20,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 806,
+   "personnage_id": 76,
+   "skill_id": 34,
+   "rangs_investis": 4,
+   "modif_divers": 2
+  },
+  {
+   "id": 807,
+   "personnage_id": 76,
+   "skill_id": 2,
+   "rangs_investis": 3,
+   "modif_divers": 2
+  },
+  {
+   "id": 808,
+   "personnage_id": 76,
+   "skill_id": 15,
+   "rangs_investis": 6,
+   "modif_divers": 0
+  },
+  {
+   "id": 809,
+   "personnage_id": 76,
+   "skill_id": 162,
+   "rangs_investis": 6,
+   "modif_divers": 0
+  },
+  {
+   "id": 810,
+   "personnage_id": 75,
+   "skill_id": 181,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 811,
+   "personnage_id": 75,
+   "skill_id": 15,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 812,
+   "personnage_id": 75,
+   "skill_id": 2,
+   "rangs_investis": 6,
+   "modif_divers": 0
+  },
+  {
+   "id": 813,
+   "personnage_id": 75,
+   "skill_id": 182,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 814,
+   "personnage_id": 76,
+   "skill_id": 183,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 815,
+   "personnage_id": 75,
+   "skill_id": 183,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 816,
+   "personnage_id": 74,
+   "skill_id": 8,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 817,
+   "personnage_id": 74,
+   "skill_id": 160,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 818,
+   "personnage_id": 74,
+   "skill_id": 6,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 819,
+   "personnage_id": 76,
+   "skill_id": 6,
+   "rangs_investis": 3,
+   "modif_divers": 2
+  },
+  {
+   "id": 820,
+   "personnage_id": 77,
+   "skill_id": 160,
+   "rangs_investis": 0,
+   "modif_divers": 4
+  },
+  {
+   "id": 821,
+   "personnage_id": 77,
+   "skill_id": 5,
+   "rangs_investis": 0,
+   "modif_divers": 2
+  },
+  {
+   "id": 822,
+   "personnage_id": 77,
+   "skill_id": 8,
+   "rangs_investis": 0,
+   "modif_divers": 2
+  },
+  {
+   "id": 823,
+   "personnage_id": 77,
+   "skill_id": 33,
+   "rangs_investis": 0,
+   "modif_divers": 2
+  },
+  {
+   "id": 824,
+   "personnage_id": 77,
+   "skill_id": 6,
+   "rangs_investis": 0,
+   "modif_divers": 4
+  },
+  {
+   "id": 825,
+   "personnage_id": 77,
+   "skill_id": 2,
+   "rangs_investis": 0,
+   "modif_divers": 2
+  },
+  {
+   "id": 828,
+   "personnage_id": 78,
+   "skill_id": 8,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 829,
+   "personnage_id": 78,
+   "skill_id": 4,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 830,
+   "personnage_id": 78,
+   "skill_id": 25,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 831,
+   "personnage_id": 78,
+   "skill_id": 186,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 832,
+   "personnage_id": 78,
+   "skill_id": 36,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 834,
+   "personnage_id": 79,
+   "skill_id": 164,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 835,
+   "personnage_id": 79,
+   "skill_id": 20,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 836,
+   "personnage_id": 79,
+   "skill_id": 162,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 837,
+   "personnage_id": 79,
+   "skill_id": 6,
+   "rangs_investis": 2,
+   "modif_divers": 1
+  },
+  {
+   "id": 838,
+   "personnage_id": 79,
+   "skill_id": 2,
+   "rangs_investis": 2,
+   "modif_divers": 1
+  },
+  {
+   "id": 839,
+   "personnage_id": 79,
+   "skill_id": 34,
+   "rangs_investis": 2,
+   "modif_divers": 1
+  },
+  {
+   "id": 840,
+   "personnage_id": 79,
+   "skill_id": 15,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 841,
+   "personnage_id": 81,
+   "skill_id": 111,
+   "rangs_investis": 1,
+   "modif_divers": 2
+  },
+  {
+   "id": 842,
+   "personnage_id": 81,
+   "skill_id": 188,
+   "rangs_investis": 1,
+   "modif_divers": 2
+  },
+  {
+   "id": 843,
+   "personnage_id": 81,
+   "skill_id": 5,
+   "rangs_investis": 1,
+   "modif_divers": 0
+  },
+  {
+   "id": 844,
+   "personnage_id": 81,
+   "skill_id": 189,
+   "rangs_investis": 1,
+   "modif_divers": 0
+  },
+  {
+   "id": 845,
+   "personnage_id": 81,
+   "skill_id": 25,
+   "rangs_investis": 1,
+   "modif_divers": 0
+  },
+  {
+   "id": 846,
+   "personnage_id": 81,
+   "skill_id": 8,
+   "rangs_investis": 1,
+   "modif_divers": 0
+  },
+  {
+   "id": 847,
+   "personnage_id": 81,
+   "skill_id": 6,
+   "rangs_investis": 1,
+   "modif_divers": 0
+  },
+  {
+   "id": 848,
+   "personnage_id": 81,
+   "skill_id": 34,
+   "rangs_investis": 1,
+   "modif_divers": 0
+  },
+  {
+   "id": 849,
+   "personnage_id": 81,
+   "skill_id": 2,
+   "rangs_investis": 2,
+   "modif_divers": 2
+  },
+  {
+   "id": 850,
+   "personnage_id": 80,
+   "skill_id": 56,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 851,
+   "personnage_id": 80,
+   "skill_id": 5,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 852,
+   "personnage_id": 80,
+   "skill_id": 57,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 853,
+   "personnage_id": 80,
+   "skill_id": 160,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 854,
+   "personnage_id": 80,
+   "skill_id": 8,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 855,
+   "personnage_id": 80,
+   "skill_id": 6,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 856,
+   "personnage_id": 80,
+   "skill_id": 33,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 857,
+   "personnage_id": 80,
+   "skill_id": 35,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 858,
+   "personnage_id": 80,
+   "skill_id": 191,
+   "rangs_investis": 1,
+   "modif_divers": 0
+  },
+  {
+   "id": 859,
+   "personnage_id": 68,
+   "skill_id": 96,
+   "rangs_investis": 6,
+   "modif_divers": 0
+  },
+  {
+   "id": 860,
+   "personnage_id": 68,
+   "skill_id": 186,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 861,
+   "personnage_id": 78,
+   "skill_id": 2,
+   "rangs_investis": 0,
+   "modif_divers": 2
+  },
+  {
+   "id": 862,
+   "personnage_id": 78,
+   "skill_id": 34,
+   "rangs_investis": 1,
+   "modif_divers": 2
+  },
+  {
+   "id": 863,
+   "personnage_id": 78,
+   "skill_id": 6,
+   "rangs_investis": 2,
+   "modif_divers": 2
+  },
+  {
+   "id": 864,
+   "personnage_id": 67,
+   "skill_id": 2,
+   "rangs_investis": 0,
+   "modif_divers": 2
+  },
+  {
+   "id": 865,
+   "personnage_id": 67,
+   "skill_id": 34,
+   "rangs_investis": 0,
+   "modif_divers": 2
+  },
+  {
+   "id": 866,
+   "personnage_id": 67,
+   "skill_id": 6,
+   "rangs_investis": 0,
+   "modif_divers": 2
+  },
+  {
+   "id": 867,
+   "personnage_id": 68,
+   "skill_id": 2,
+   "rangs_investis": 0,
+   "modif_divers": 2
+  },
+  {
+   "id": 868,
+   "personnage_id": 78,
+   "skill_id": 5,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 869,
+   "personnage_id": 82,
+   "skill_id": 3,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 870,
+   "personnage_id": 82,
+   "skill_id": 191,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 871,
+   "personnage_id": 82,
+   "skill_id": 181,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 872,
+   "personnage_id": 82,
+   "skill_id": 15,
+   "rangs_investis": 1,
+   "modif_divers": 0
+  },
+  {
+   "id": 901,
+   "personnage_id": 70,
+   "skill_id": 15,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 902,
+   "personnage_id": 70,
+   "skill_id": 5,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 903,
+   "personnage_id": 70,
+   "skill_id": 25,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 904,
+   "personnage_id": 70,
+   "skill_id": 17,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 905,
+   "personnage_id": 70,
+   "skill_id": 18,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 906,
+   "personnage_id": 70,
+   "skill_id": 30,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 907,
+   "personnage_id": 70,
+   "skill_id": 164,
+   "rangs_investis": 17,
+   "modif_divers": 0
+  },
+  {
+   "id": 908,
+   "personnage_id": 70,
+   "skill_id": 10,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 909,
+   "personnage_id": 70,
+   "skill_id": 27,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 910,
+   "personnage_id": 70,
+   "skill_id": 74,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 911,
+   "personnage_id": 70,
+   "skill_id": 173,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 912,
+   "personnage_id": 70,
+   "skill_id": 181,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 913,
+   "personnage_id": 70,
+   "skill_id": 174,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 914,
+   "personnage_id": 47,
+   "skill_id": 31,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 915,
+   "personnage_id": 47,
+   "skill_id": 34,
+   "rangs_investis": 6,
+   "modif_divers": 0
+  },
+  {
+   "id": 916,
+   "personnage_id": 47,
+   "skill_id": 8,
+   "rangs_investis": 4,
+   "modif_divers": 2
+  },
+  {
+   "id": 917,
+   "personnage_id": 47,
+   "skill_id": 33,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 918,
+   "personnage_id": 47,
+   "skill_id": 35,
+   "rangs_investis": 5,
+   "modif_divers": 2
+  },
+  {
+   "id": 919,
+   "personnage_id": 47,
+   "skill_id": 30,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 920,
+   "personnage_id": 47,
+   "skill_id": 117,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 921,
+   "personnage_id": 47,
+   "skill_id": 2,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 922,
+   "personnage_id": 47,
+   "skill_id": 120,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 923,
+   "personnage_id": 47,
+   "skill_id": 115,
+   "rangs_investis": 6,
+   "modif_divers": 0
+  },
+  {
+   "id": 924,
+   "personnage_id": 47,
+   "skill_id": 116,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 925,
+   "personnage_id": 47,
+   "skill_id": 6,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 926,
+   "personnage_id": 47,
+   "skill_id": 191,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 927,
+   "personnage_id": 47,
+   "skill_id": 96,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 964,
+   "personnage_id": 49,
+   "skill_id": 35,
+   "rangs_investis": 17,
+   "modif_divers": 0
+  },
+  {
+   "id": 965,
+   "personnage_id": 49,
+   "skill_id": 31,
+   "rangs_investis": 17,
+   "modif_divers": 0
+  },
+  {
+   "id": 966,
+   "personnage_id": 49,
+   "skill_id": 111,
+   "rangs_investis": 17,
+   "modif_divers": 0
+  },
+  {
+   "id": 967,
+   "personnage_id": 49,
+   "skill_id": 34,
+   "rangs_investis": 17,
+   "modif_divers": 0
+  },
+  {
+   "id": 968,
+   "personnage_id": 49,
+   "skill_id": 33,
+   "rangs_investis": 17,
+   "modif_divers": 10
+  },
+  {
+   "id": 969,
+   "personnage_id": 49,
+   "skill_id": 2,
+   "rangs_investis": 17,
+   "modif_divers": 0
+  },
+  {
+   "id": 970,
+   "personnage_id": 49,
+   "skill_id": 6,
+   "rangs_investis": 17,
+   "modif_divers": 0
+  },
+  {
+   "id": 971,
+   "personnage_id": 49,
+   "skill_id": 78,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 972,
+   "personnage_id": 49,
+   "skill_id": 74,
+   "rangs_investis": 17,
+   "modif_divers": 0
+  },
+  {
+   "id": 973,
+   "personnage_id": 45,
+   "skill_id": 15,
+   "rangs_investis": 19,
+   "modif_divers": 0
+  },
+  {
+   "id": 974,
+   "personnage_id": 45,
+   "skill_id": 42,
+   "rangs_investis": 15,
+   "modif_divers": 0
+  },
+  {
+   "id": 975,
+   "personnage_id": 45,
+   "skill_id": 31,
+   "rangs_investis": 0,
+   "modif_divers": 15
+  },
+  {
+   "id": 976,
+   "personnage_id": 45,
+   "skill_id": 104,
+   "rangs_investis": 19,
+   "modif_divers": 0
+  },
+  {
+   "id": 977,
+   "personnage_id": 45,
+   "skill_id": 11,
+   "rangs_investis": 15,
+   "modif_divers": 0
+  },
+  {
+   "id": 978,
+   "personnage_id": 45,
+   "skill_id": 121,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 979,
+   "personnage_id": 45,
+   "skill_id": 10,
+   "rangs_investis": 19,
+   "modif_divers": 0
+  },
+  {
+   "id": 980,
+   "personnage_id": 45,
+   "skill_id": 6,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 981,
+   "personnage_id": 45,
+   "skill_id": 33,
+   "rangs_investis": 6,
+   "modif_divers": 10
+  },
+  {
+   "id": 982,
+   "personnage_id": 45,
+   "skill_id": 108,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 983,
+   "personnage_id": 45,
+   "skill_id": 106,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 984,
+   "personnage_id": 45,
+   "skill_id": 34,
+   "rangs_investis": 6,
+   "modif_divers": 0
+  },
+  {
+   "id": 985,
+   "personnage_id": 45,
+   "skill_id": 164,
+   "rangs_investis": 19,
+   "modif_divers": 0
+  },
+  {
+   "id": 986,
+   "personnage_id": 45,
+   "skill_id": 107,
+   "rangs_investis": 19,
+   "modif_divers": 0
+  },
+  {
+   "id": 987,
+   "personnage_id": 45,
+   "skill_id": 2,
+   "rangs_investis": 6,
+   "modif_divers": 0
+  },
+  {
+   "id": 1074,
+   "personnage_id": 83,
+   "skill_id": 15,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 1075,
+   "personnage_id": 83,
+   "skill_id": 10,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 1076,
+   "personnage_id": 83,
+   "skill_id": 12,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 1077,
+   "personnage_id": 83,
+   "skill_id": 53,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 1078,
+   "personnage_id": 83,
+   "skill_id": 13,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 1093,
+   "personnage_id": 22,
+   "skill_id": 56,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 1094,
+   "personnage_id": 22,
+   "skill_id": 57,
+   "rangs_investis": 12,
+   "modif_divers": 0
+  },
+  {
+   "id": 1095,
+   "personnage_id": 22,
+   "skill_id": 8,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 1096,
+   "personnage_id": 22,
+   "skill_id": 33,
+   "rangs_investis": 12,
+   "modif_divers": 0
+  },
+  {
+   "id": 1097,
+   "personnage_id": 22,
+   "skill_id": 35,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 1098,
+   "personnage_id": 22,
+   "skill_id": 6,
+   "rangs_investis": 12,
+   "modif_divers": 0
+  },
+  {
+   "id": 1099,
+   "personnage_id": 22,
+   "skill_id": 103,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 1100,
+   "personnage_id": 43,
+   "skill_id": 98,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 1101,
+   "personnage_id": 43,
+   "skill_id": 25,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 1102,
+   "personnage_id": 43,
+   "skill_id": 30,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 1103,
+   "personnage_id": 43,
+   "skill_id": 164,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 1104,
+   "personnage_id": 43,
+   "skill_id": 100,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 1105,
+   "personnage_id": 43,
+   "skill_id": 191,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 1106,
+   "personnage_id": 43,
+   "skill_id": 96,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 1107,
+   "personnage_id": 43,
+   "skill_id": 9,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 1144,
+   "personnage_id": 1,
+   "skill_id": 3,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 1145,
+   "personnage_id": 1,
+   "skill_id": 4,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 1146,
+   "personnage_id": 1,
+   "skill_id": 5,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 1147,
+   "personnage_id": 1,
+   "skill_id": 34,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 1148,
+   "personnage_id": 1,
+   "skill_id": 8,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 1149,
+   "personnage_id": 1,
+   "skill_id": 9,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 1150,
+   "personnage_id": 1,
+   "skill_id": 1,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 1151,
+   "personnage_id": 1,
+   "skill_id": 2,
+   "rangs_investis": 6,
+   "modif_divers": 2
+  },
+  {
+   "id": 1152,
+   "personnage_id": 1,
+   "skill_id": 6,
+   "rangs_investis": 5,
+   "modif_divers": 2
+  },
+  {
+   "id": 1157,
+   "personnage_id": 85,
+   "skill_id": 15,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 1158,
+   "personnage_id": 85,
+   "skill_id": 10,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 1159,
+   "personnage_id": 85,
+   "skill_id": 53,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 1160,
+   "personnage_id": 85,
+   "skill_id": 13,
+   "rangs_investis": 9,
+   "modif_divers": 0
+  },
+  {
+   "id": 1174,
+   "personnage_id": 50,
+   "skill_id": 15,
+   "rangs_investis": 16,
+   "modif_divers": 1
+  },
+  {
+   "id": 1175,
+   "personnage_id": 50,
+   "skill_id": 25,
+   "rangs_investis": 4,
+   "modif_divers": 1
+  },
+  {
+   "id": 1176,
+   "personnage_id": 50,
+   "skill_id": 163,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 1177,
+   "personnage_id": 50,
+   "skill_id": 30,
+   "rangs_investis": 7,
+   "modif_divers": 1
+  },
+  {
+   "id": 1178,
+   "personnage_id": 50,
+   "skill_id": 132,
+   "rangs_investis": 9,
+   "modif_divers": 1
+  },
+  {
+   "id": 1179,
+   "personnage_id": 50,
+   "skill_id": 20,
+   "rangs_investis": 17,
+   "modif_divers": 1
+  },
+  {
+   "id": 1180,
+   "personnage_id": 50,
+   "skill_id": 11,
+   "rangs_investis": 4,
+   "modif_divers": 1
+  },
+  {
+   "id": 1181,
+   "personnage_id": 50,
+   "skill_id": 164,
+   "rangs_investis": 15,
+   "modif_divers": 1
+  },
+  {
+   "id": 1182,
+   "personnage_id": 50,
+   "skill_id": 131,
+   "rangs_investis": 8,
+   "modif_divers": 1
+  },
+  {
+   "id": 1183,
+   "personnage_id": 50,
+   "skill_id": 130,
+   "rangs_investis": 16,
+   "modif_divers": 1
+  },
+  {
+   "id": 1184,
+   "personnage_id": 50,
+   "skill_id": 133,
+   "rangs_investis": 12,
+   "modif_divers": 1
+  },
+  {
+   "id": 1185,
+   "personnage_id": 50,
+   "skill_id": 134,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 1186,
+   "personnage_id": 50,
+   "skill_id": 28,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 1215,
+   "personnage_id": 4,
+   "skill_id": 15,
+   "rangs_investis": 15,
+   "modif_divers": 0
+  },
+  {
+   "id": 1216,
+   "personnage_id": 4,
+   "skill_id": 25,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 1217,
+   "personnage_id": 4,
+   "skill_id": 17,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 1218,
+   "personnage_id": 4,
+   "skill_id": 18,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 1219,
+   "personnage_id": 4,
+   "skill_id": 19,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 1220,
+   "personnage_id": 4,
+   "skill_id": 23,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 1221,
+   "personnage_id": 4,
+   "skill_id": 20,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 1222,
+   "personnage_id": 4,
+   "skill_id": 11,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 1223,
+   "personnage_id": 4,
+   "skill_id": 164,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 1224,
+   "personnage_id": 4,
+   "skill_id": 133,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 1225,
+   "personnage_id": 4,
+   "skill_id": 27,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 1226,
+   "personnage_id": 4,
+   "skill_id": 28,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 1227,
+   "personnage_id": 4,
+   "skill_id": 29,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 1228,
+   "personnage_id": 4,
+   "skill_id": 24,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  }
+ ]
+}
