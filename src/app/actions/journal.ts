@@ -6,7 +6,7 @@ import { and, desc, eq, gt, gte, isNotNull, isNull, like, lt, or } from 'drizzle
 import { revalidatePath } from 'next/cache'
 import { logJournal } from '@/lib/journal'
 import { decalageQuebec, COUPURE_JOURNEE_H } from '@/lib/journal-format'
-import { calcXpPenalite, XP_PAR_NIVEAU } from '@/lib/dnd35/rules'
+import { calcXpPenalite, xpPourNiveau } from '@/lib/dnd35/rules'
 import { getRaceInfo } from '@/lib/dnd35/races'
 
 export type EntreeJournal = {
@@ -235,9 +235,11 @@ export async function distribuerXp(parts: { personnageId: number; montant: numbe
     // Seuil de niveau franchi PAR CETTE distribution ? (le site ne monte pas le
     // personnage automatiquement — le joueur choisit sa classe avec le MJ)
     let franchi: number | null = null
-    for (let n = Math.max(niveauTotal + 1, 2); n <= 20; n++) {
-      const seuil = XP_PAR_NIVEAU[n]
-      if (apres >= seuil && avant < seuil) franchi = n
+    // ⛔ Pas de borne à 20 : la boucle s'arrête d'elle-même au premier seuil hors
+    // d'atteinte, ce qui couvre les niveaux épiques (21+) sans plafond artificiel.
+    for (let n = Math.max(niveauTotal + 1, 2); xpPourNiveau(n) <= apres; n++) {
+      const seuil = xpPourNiveau(n)
+      if (avant < seuil) franchi = n
     }
     let description = `Reçoit ${part.montant.toLocaleString('fr-CA')} XP (total ${apres.toLocaleString('fr-CA')})`
     if (franchi) description += ` — 🎉 seuil du niveau ${franchi} franchi !`

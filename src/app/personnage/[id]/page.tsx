@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { getCharacter } from '@/lib/queries/character'
 import { DeleteButton } from '@/components/fiche/DeleteButton'
 import { getClasseInfo, getSortsSlotsParJour } from '@/lib/dnd35/classes'
-import { getMultiClassBab, XP_PAR_NIVEAU, modSauvegarde } from '@/lib/dnd35/rules'
+import { getMultiClassBab, xpPourNiveau, modSauvegarde } from '@/lib/dnd35/rules'
 import { getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
 import { getCapacitesPourPersonnage } from '@/lib/dnd35/class-features'
 import { SORTS_DND35, type ClasseSortKey } from '@/lib/dnd35/spells'
@@ -129,7 +129,10 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
 
   const classeLabel = classes.map(c => `${c.classe.nom} ${c.characterClass.niveau}`).join(' / ')
   const niveauTotal = classes.reduce((sum, c) => sum + c.characterClass.niveau, 0)
-  const xpProchain = XP_PAR_NIVEAU[niveauTotal + 1] ?? null
+  // ⛔ Aucun plafond : le jeu épique (niveau 21+) n'a pas de niveau maximum en 3.5.
+  // Math.max(1, …) : un personnage sans classe compte comme niveau 1, exactement
+  // comme sur la fiche imprimée — sinon le papier et l'écran divergeraient.
+  const xpProchain = xpPourNiveau(Math.max(1, niveauTotal) + 1)
 
   // PV attendus : plage selon dé de vie et CON (après niveauTotal)
   const conT = (abilityScores?.conBase ?? 10) + (abilityScores?.conMagique ?? 0) + (race?.bonusCon ?? 0) + effCarac.CON
@@ -152,7 +155,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
 
   // Pour les multi-classés : afficher les options de prochain niveau
   const optsNiveauSuivant = classes.map(c => `${c.classe.nom} ${c.characterClass.niveau + 1}`)
-  const prochainesOptions = classes.length > 1 && xpProchain != null
+  const prochainesOptions = classes.length > 1
     ? optsNiveauSuivant.slice(0, -1).join(', ') + ' ou ' + optsNiveauSuivant[optsNiveauSuivant.length - 1]
     : null
 
@@ -258,7 +261,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
               <div className="text-right">
                 <div className="text-amber-400 text-2xl font-bold">{character.xp?.toLocaleString('fr-FR')} XP</div>
                 <div className="text-stone-500 text-sm">
-                  {xpProchain != null ? `Prochain niveau : ${xpProchain.toLocaleString('fr-FR')} XP` : 'Niveau maximum atteint'}
+                  Prochain niveau : {xpProchain.toLocaleString('fr-FR')} XP
                 </div>
                 {prochainesOptions && (
                   <div className="text-stone-600 text-xs mt-0.5">→ {prochainesOptions}</div>
@@ -266,7 +269,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                 <div className="mt-2 w-48 bg-stone-800 rounded-full h-2">
                   <div
                     className="bg-amber-500 h-2 rounded-full"
-                    style={{ width: xpProchain != null ? `${Math.min(100, ((character.xp ?? 0) / xpProchain) * 100)}%` : '100%' }}
+                    style={{ width: xpProchain > 0 ? `${Math.min(100, ((character.xp ?? 0) / xpProchain) * 100)}%` : '100%' }}
                   />
                 </div>
               </div>

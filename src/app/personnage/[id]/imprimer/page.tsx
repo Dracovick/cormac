@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { getCharacter } from '@/lib/queries/character'
 import { getClasseInfo } from '@/lib/dnd35/classes'
 import { getRaceInfo } from '@/lib/dnd35/races'
-import { getModifier, getBab, XP_PAR_NIVEAU, modSauvegarde } from '@/lib/dnd35/rules'
+import { getModifier, getBab, xpPourNiveau, modSauvegarde } from '@/lib/dnd35/rules'
 import { getCompetenceRef, caracteristiqueDe } from '@/lib/dnd35/skills'
 import { PrintButton } from '@/components/fiche/PrintButton'
 
@@ -318,7 +318,10 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                   <tbody>
                     {classes.map((c, i) => {
                       const ci = getClasseInfo(c.classe.nom)
-                      const xpProchain = Object.entries(XP_PAR_NIVEAU).find(([, v]) => v > (character.xp ?? 0))?.[1]
+                      // ⛔ Indexé sur le NIVEAU TOTAL, comme la fiche à l'écran. L'ancienne
+                      // version cherchait le premier seuil supérieur aux XP : le papier et
+                      // l'écran affichaient deux nombres différents pour un même personnage.
+                      const xpProchain = xpPourNiveau(niveauTotal + 1)
                       return (
                         <tr key={c.classe.id}>
                           {td(i === 0 ? 'Principale' : `Multi (${i + 1})`, { fontSize: '7pt' })}
@@ -327,7 +330,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                           {td(ci ? `d${ci.de}` : '—', { textAlign: 'center' })}
                           {i === 0 ? td(fm(bbaBase), { textAlign: 'center' }) : td('', {})}
                           {i === 0 ? td(character.xp?.toLocaleString('fr-FR') ?? 0, { textAlign: 'center' }) : td('', {})}
-                          {i === 0 ? td(xpProchain?.toLocaleString('fr-FR') ?? '—', { textAlign: 'center' }) : td(`Niv. total : ${niveauTotal}`, { textAlign: 'center', fontSize: '7pt', color: '#555' })}
+                          {i === 0 ? td(xpProchain.toLocaleString('fr-FR'), { textAlign: 'center' }) : td(`Niv. total : ${niveauTotal}`, { textAlign: 'center', fontSize: '7pt', color: '#555' })}
                         </tr>
                       )
                     })}

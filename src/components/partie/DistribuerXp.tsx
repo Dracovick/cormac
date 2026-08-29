@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { distribuerXp, getGroupeXp, type PersonnageXp } from '@/app/actions/journal'
-import { XP_PAR_NIVEAU } from '@/lib/dnd35/rules'
+import { xpPourNiveau } from '@/lib/dnd35/rules'
 
 // Distribution d'XP depuis la vue du MJ : le total de la rencontre est réparti
 // également entre les personnages cochés (pénalité multi-classes déduite), puis
@@ -134,12 +134,13 @@ export function DistribuerXp({ jour }: { jour: string }) {
             {visibles.map(p => {
               const montant = parseInt(montants[p.id] ?? '', 10)
               const apres = Number.isInteger(montant) && montant > 0 ? p.xp + montant : null
-              // Aperçu du 🎉 : plus haut seuil (≤ 20) que cette part fait franchir
+              // Aperçu du 🎉 : plus haut seuil que cette part fait franchir (niveaux
+              // épiques compris — la boucle s'arrête au premier seuil hors d'atteinte)
               let franchi: number | null = null
               if (apres != null) {
-                for (let n = Math.max(p.niveauTotal + 1, 2); n <= 20; n++) {
-                  const seuil = XP_PAR_NIVEAU[n]
-                  if (apres >= seuil && p.xp < seuil) franchi = n
+                for (let n = Math.max(p.niveauTotal + 1, 2); xpPourNiveau(n) <= apres; n++) {
+                  const seuil = xpPourNiveau(n)
+                  if (p.xp < seuil) franchi = n
                 }
               }
               return (
@@ -174,7 +175,7 @@ export function DistribuerXp({ jour }: { jour: string }) {
                     {p.xp.toLocaleString('fr-CA')}{apres != null && <> → <span className="text-stone-300">{apres.toLocaleString('fr-CA')}</span></>}
                   </span>
                   {franchi && (
-                    <span className="text-yellow-300 text-xs shrink-0" title={`Le total franchit le seuil du niveau ${franchi} (${XP_PAR_NIVEAU[franchi].toLocaleString('fr-CA')} XP)`}>
+                    <span className="text-yellow-300 text-xs shrink-0" title={`Le total franchit le seuil du niveau ${franchi} (${xpPourNiveau(franchi).toLocaleString('fr-CA')} XP)`}>
                       🎉 niv. {franchi} !
                     </span>
                   )}

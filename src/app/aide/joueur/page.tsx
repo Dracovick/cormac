@@ -317,7 +317,8 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
         </Section>
 
         <Section titre="📊 Progression en XP">
-          <p>La barre de progression d'XP en haut de la fiche indique votre avancement vers le prochain niveau. Le seuil est calculé automatiquement selon les règles D&D 3.5.</p>
+          <p>La barre de progression d'XP en haut de la fiche indique votre avancement vers le prochain niveau. Le seuil est calculé automatiquement selon les règles D&D 3.5, à partir de votre <strong>niveau total</strong> (somme de tous vos niveaux de classe).</p>
+          <Row label="Jeu épique — aucun plafond">Il n'existe <strong>aucun niveau maximum</strong> en D&D 3.5. La fiche affiche le seuil du prochain niveau <em>au-delà du niveau 20</em> comme en deçà : un Magicien 16 / Cryptomancière 8 (niveau total 24) voit « Prochain niveau : 300 000 XP ». Les seuils 21 à 30 sont ceux du <em>Epic Level Handbook</em> (table 1-2, p. 7); au-delà, la même formule se prolonge indéfiniment — le livre l'autorise explicitement (encadré « No Limits », p. 6).</Row>
           <Row label="Mettre à jour les XP">Allez dans <strong>Modifier</strong> → onglet <strong>Identité</strong> → champ <strong>XP</strong>.</Row>
 
           <p className="font-semibold text-stone-400 mt-3">Seuils de niveau en D&D 3.5</p>
@@ -326,6 +327,7 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
               ['Niv. 2','1 000'],['Niv. 3','3 000'],['Niv. 4','6 000'],['Niv. 5','10 000'],
               ['Niv. 6','15 000'],['Niv. 7','21 000'],['Niv. 8','28 000'],['Niv. 9','36 000'],
               ['Niv. 10','45 000'],['Niv. 15','105 000'],['Niv. 20','190 000'],
+              ['Niv. 21','210 000'],['Niv. 24','276 000'],['Niv. 25','300 000'],['Niv. 30','435 000'],
             ].map(([niv, xp]) => (
               <div key={niv} className="bg-stone-800/50 rounded p-1.5">
                 <div className="text-amber-500 font-bold">{niv}</div>
@@ -344,6 +346,7 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
 
           <p className="font-semibold text-stone-400 mt-4">Progression des XP — un seul total partagé</p>
           <p>En D&D 3.5, <strong>tous les niveaux de toutes les classes partagent un unique total d'XP</strong>. Il n'y a pas d'XP séparés par classe. Les seuils du tableau ci-dessus s'appliquent au <em>niveau total</em> du personnage (somme de tous ses niveaux de classe).</p>
+          <Tip>La formule officielle est <span className="font-mono text-stone-300">500 × niveau × (niveau − 1)</span>. Elle donne les seuils du Manuel des Joueurs pour les niveaux 1 à 20 et ceux du <em>Epic Level Handbook</em> pour les niveaux 21 à 30, sans rupture — c'est elle que le site applique, à tous les niveaux.</Tip>
           <p className="mt-2">Lorsque votre total d'XP franchit un seuil, vous gagnez <strong>un niveau dans la classe de votre choix</strong>. La fiche affiche vos options directement :</p>
           <div className="bg-stone-800/50 rounded p-3 mt-2 font-mono text-xs">
             <span className="text-amber-400">12 000 XP</span>

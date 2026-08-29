@@ -1,7 +1,7 @@
 import type { CharacterFormData } from '@/app/actions/character'
 import { getRaceInfo } from './races'
 import { getClasseInfo, getSortsSlotsParJour } from './classes'
-import { getModifier, XP_PAR_NIVEAU } from './rules'
+import { getModifier, xpPourNiveau } from './rules'
 import { COMPETENCES_DND35 } from './skills'
 import { SORTS_DND35, type ClasseSortKey } from './spells'
 
@@ -280,7 +280,7 @@ export function generateCharacter(params: GenParams): CharacterFormData {
     nom, surnom: '', sexe, age: '', taille: '', poids: '', yeux: '', cheveux: '',
     race, classe, niveau, alignement,
     classes: [{ classe, niveau }],
-    divinite: '', clan: '', xp: XP_PAR_NIVEAU[niveau] ?? 0, photoUrl: '',
+    divinite: '', clan: '', xp: xpPourNiveau(niveau), photoUrl: '',
 
     forBase: base.FOR, forMagique: 0,
     dexBase: base.DEX, dexMagique: 0,
