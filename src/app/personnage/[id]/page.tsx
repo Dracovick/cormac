@@ -28,6 +28,7 @@ import { PreparerSorts } from '@/components/fiche/PreparerSorts'
 import { AjouterSort } from '@/components/fiche/AjouterSort'
 import { SupprimerSort } from '@/components/fiche/SupprimerSort'
 import { DescriptionSort } from '@/components/fiche/DescriptionSort'
+import { LigneSort } from '@/components/fiche/LigneSort'
 import { EffetsSorts } from '@/components/fiche/EffetsSorts'
 import { LiveAttaque } from '@/components/fiche/LiveAttaque'
 import { JournalDrawer } from '@/components/fiche/JournalDrawer'
@@ -179,7 +180,16 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
         const niv = s.niveaux[classeKey]
         return niv !== undefined && niv <= maxSpellLevel
       })
-      .map(s => ({ nom: s.nom, ecole: s.ecole, niveau: s.niveaux[classeKey]!, estPersonnalise: false as const }))
+      .map(s => ({
+        nom: s.nom,
+        ecole: s.ecole,
+        niveau: s.niveaux[classeKey]!,
+        estPersonnalise: false as const,
+        // La liste divine est bâtie sur le catalogue statique : sa définition
+        // vient donc du catalogue lui-même, pas de la base.
+        description: s.description || null,
+        meta: [s.composantes, s.portee, s.duree].filter(Boolean).join(' · ') || null,
+      }))
     // Fusionner avec les sorts personnalisés (en évitant les doublons)
     const nomsPredefined = new Set(predefined.map(s => s.nom))
     const customExtra = customSpells.filter(cs => !nomsPredefined.has(cs.nom))
@@ -541,13 +551,27 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           }, {})
           const niveaux = Object.keys(byNiveau).map(Number).sort((a, b) => a - b)
           const niveauLabel = (n: number) => n === 0 ? 'Oraisons (niv. 0)' : `Niveau ${n}`
-          const spellsMapped = sortsClasse.map(s => ({
-            charSpellId: s.charSpell.id,
-            nom: s.spell.nom,
-            niveau: s.charSpell.niveau ?? 0,
-            ecole: s.spell.ecole ?? '',
-            estPrepare: s.charSpell.estPrepare ?? 0,
-          }))
+          const spellsMapped = sortsClasse.map(s => {
+            // Deux catalogues cohabitent : la définition enregistrée en base
+            // (spell.description) et celle du catalogue statique SORTS_DND35.
+            // Même ordre de priorité que l'affichage de la fiche juste dessous.
+            const isCustom = s.charSpell.estConnu === 2
+            const ref = !isCustom ? sortsRefMap.get(s.spell.nom) : undefined
+            const meta = [
+              s.spell.composantes || ref?.composantes,
+              s.spell.portee || ref?.portee,
+              s.spell.duree || ref?.duree,
+            ].filter(Boolean).join(' · ')
+            return {
+              charSpellId: s.charSpell.id,
+              nom: s.spell.nom,
+              niveau: s.charSpell.niveau ?? 0,
+              ecole: s.spell.ecole ?? '',
+              estPrepare: s.charSpell.estPrepare ?? 0,
+              description: !isCustom ? (s.spell.description || ref?.description || null) : null,
+              meta: meta || null,
+            }
+          })
           const maxNiveau = divineAvailableSpells
             ? Math.max(...divineAvailableSpells.map(s => s.niveau), 0)
             : 9
@@ -598,9 +622,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                             const dur = spell.duree || sortRef?.duree || null
                             const meta = [comp, port, dur].filter(Boolean).join(' · ')
                             return (
-                              <div key={charSpell.id} className="py-1.5 border-b border-stone-800/60 last:border-0">
-                                <div className="flex items-center justify-between">
-                                  <div className="flex items-center min-w-0 flex-wrap gap-x-1">
+                              <LigneSort
+                                key={charSpell.id}
+                                description={!isCustom ? desc : null}
+                                meta={meta || null}
+                                entete={
+                                  <>
                                     <span className={`text-sm font-medium ${(charSpell.estPrepare ?? 0) > 0 ? 'text-amber-200' : 'text-stone-400'}`}>{spell.nom}</span>
                                     {isCustom && (
                                       <>
@@ -610,26 +637,23 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                                     )}
                                     {spell.ecole && <span className="text-stone-600 text-xs">· {spell.ecole}</span>}
                                     {!isCustom && (
-                                      <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(spell.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
+                                      <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(spell.nom)}`} target="_blank" rel="noopener noreferrer" title="Chercher ce sort sur le web" className="text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
                                     )}
-                                  </div>
-                                  <span className="flex items-center shrink-0">
+                                  </>
+                                }
+                                actions={
+                                  <>
                                     {spellEffects.some(e => e.nom === spell.nom) && (
                                       <span className="text-xs text-violet-300 bg-violet-900/40 border border-violet-700 rounded px-1.5 py-0.5 ml-2" title="Effet actif sur la CA — se retire dans la section Combat">🛡 actif</span>
                                     )}
                                     <LiveSort charSpellId={charSpell.id} personnageId={character.id} estPrepare={charSpell.estPrepare ?? 0} />
-                                  </span>
-                                </div>
-                                {!isCustom && desc && (
-                                  <div className="mt-0.5 space-y-0.5">
-                                    <p className="text-xs text-stone-400 leading-snug">{desc}</p>
-                                    {meta && <p className="text-xs text-stone-600">{meta}</p>}
-                                  </div>
-                                )}
+                                  </>
+                                }
+                              >
                                 {isCustom && (
                                   <DescriptionSort sortId={spell.id} description={spell.description ?? null} personnageId={character.id} />
                                 )}
-                              </div>
+                              </LigneSort>
                             )
                           })}
                         </div>

@@ -136,6 +136,15 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
         <Section titre="✨ Sorts — préparer et dépenser">
           <p>La section <strong className="text-amber-200">Sorts</strong> est visible dès qu'un personnage est lanceur de sorts, même si aucun sort n'est encore préparé pour la journée.</p>
 
+          <p className="font-semibold text-stone-400 mt-3">Le livre 📖 — lire la définition d'un sort</p>
+          <p>Chaque sort porte un petit livre <span className="text-stone-500">📖</span> à côté de son nom. Cliquez-le : la définition du sort se déplie juste en dessous, avec ses <strong>composantes · portée · durée</strong>. Cliquez de nouveau (le livre est alors <span className="text-amber-400">doré</span>) et elle se referme. Les définitions restent ainsi <strong>fermées par défaut</strong> : la liste des sorts tient à l'écran.</p>
+          <ul className="list-disc list-inside space-y-1 pl-2 mt-1">
+            <li>Le livre apparaît aux <strong>quatre endroits</strong> où vous voyez des sorts : la section Sorts de la fiche, le panneau <strong>🙏 Prier</strong>, le panneau <strong>📖 Étudier</strong> et l'onglet Sorts du formulaire de modification.</li>
+            <li>Dans les <strong>panneaux de préparation</strong>, une seule définition reste ouverte à la fois : ouvrir un sort referme le précédent, pour que la liste ne s'allonge pas indéfiniment.</li>
+            <li>Un sort <strong>sans définition connue</strong> n'affiche aucun livre — c'est normal, et c'est le cas des sorts personnalisés, qui ont leur propre description éditable.</li>
+            <li>La loupe 🔍 reste à côté du livre : elle cherche le sort sur le web, tandis que le livre montre la définition déjà enregistrée dans le Grimoire.</li>
+          </ul>
+
           <p className="font-semibold text-stone-400 mt-3">Multi-classes lanceur — une section par classe</p>
           <p>Un personnage avec plusieurs classes lanceuses (ex. Prêtre/Magicien) a <strong>une section de sorts par classe</strong> (« Sorts — Prêtre 5 », « Sorts — Magicien 3 »), chacune avec son propre bouton 🙏 Prier / 📖 Étudier et ses propres emplacements. Chaque sort appartient à une classe précise — préparer ses sorts de Prêtre ne touche jamais au grimoire de Magicien.</p>
           <p className="mt-1">Si le personnage a une <strong>classe de prestige</strong> à progression de sorts (ex. Disciple divin), ses niveaux s'ajoutent automatiquement au calcul des emplacements de la classe de base : un Prêtre 7 / Disciple divin 3 prie comme un Prêtre 10.</p>

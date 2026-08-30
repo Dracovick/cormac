@@ -843,6 +843,10 @@ function SectionEquipement({ data, update, derived }: { data: CharacterFormData;
 // ─── Section: Sorts ──────────────────────────────────────────────────────────
 function SectionSorts({ data, update, derived }: { data: CharacterFormData; update: Upd; derived: Derived }) {
   const [spellLevel, setSpellLevel] = useState(0)
+  // Définition repliée derrière le bouton 📖, une seule ouverte à la fois :
+  // la liste compte parfois plus de cent sorts et les définitions font
+  // 560 caractères en moyenne — tout afficher noyait la liste.
+  const [defOuverte, setDefOuverte] = useState<string | null>(null)
 
   // Si plusieurs classes lanceurs de sorts, permettre le choix de la classe active
   const casterClassNames = derived.casterClasses.map(c => c.classe)
@@ -956,16 +960,35 @@ function SectionSorts({ data, update, derived }: { data: CharacterFormData; upda
         {sortsLevel.length === 0 && <p className="text-stone-600 text-sm italic">Aucun sort de ce niveau dans la liste.</p>}
         {sortsLevel.map(sort => {
           const selected = sortsActifs.some(s => s.nom === sort.nom)
+          const ouvert = defOuverte === sort.nom
+          const aDefinition = Boolean(sort.description)
           return (
             <label key={sort.nom} className={`flex items-start gap-3 p-2.5 rounded cursor-pointer transition-colors ${selected ? 'bg-amber-900/30 border border-amber-700/40' : 'bg-stone-800/40 hover:bg-stone-800/70'}`}>
               <input type="checkbox" checked={selected} onChange={() => toggle(sort)} className="mt-0.5 shrink-0 accent-amber-600" />
               <div>
                 <div className="text-stone-100 text-sm font-medium">
                   {sort.nom} <span className="text-stone-500 text-xs">({sort.ecole})</span>
-                  <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(sort.nom)}`} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} title="Voir la description D&D 3.5" className="ml-1.5 text-stone-600 hover:text-amber-400 transition-colors">🔍</a>
+                  <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(sort.nom)}`} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} title="Chercher ce sort sur le web" className="ml-1.5 text-stone-600 hover:text-amber-400 transition-colors">🔍</a>
+                  {aDefinition && (
+                    <button
+                      type="button"
+                      // Le bouton vit dans un <label> : sans preventDefault, le clic
+                      // cocherait aussi la case du sort.
+                      onClick={e => { e.preventDefault(); e.stopPropagation(); setDefOuverte(d => d === sort.nom ? null : sort.nom) }}
+                      aria-expanded={ouvert}
+                      title={ouvert ? 'Masquer la définition' : 'Voir la définition'}
+                      className={`ml-1.5 text-xs leading-none transition-colors ${ouvert ? 'text-amber-400' : 'text-stone-600 hover:text-amber-400'}`}
+                    >
+                      📖
+                    </button>
+                  )}
                 </div>
-                <div className="text-stone-400 text-xs mt-0.5">{sort.description}</div>
-                <div className="text-stone-600 text-xs mt-0.5">{sort.composantes} · {sort.portee} · {sort.duree}</div>
+                {ouvert && (
+                  <div className="mt-1.5 mb-0.5 border-l-2 border-stone-700 pl-2.5 space-y-1">
+                    <div className="text-stone-400 text-xs leading-snug whitespace-pre-line">{sort.description}</div>
+                    <div className="text-stone-600 text-xs">{sort.composantes} · {sort.portee} · {sort.duree}</div>
+                  </div>
+                )}
               </div>
             </label>
           )

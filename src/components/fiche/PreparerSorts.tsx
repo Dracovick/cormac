@@ -3,13 +3,17 @@
 import { useState, useTransition } from 'react'
 import { preparerSorts, preparerSortsDivins } from '@/app/actions/character'
 import { getSortsSlotsParJour } from '@/lib/dnd35/classes'
+import { LigneSort } from './LigneSort'
 
 const ARCANE    = ['Magicien', 'Ensorceleur', 'Barde']
 const DIVIN     = ['Prêtre', 'Druide', 'Paladin', 'Rôdeur']
 const SPONTANE  = ['Ensorceleur', 'Barde']  // lanceurs spontanés : pas de préparation
 
-type Spell = { charSpellId: number; nom: string; niveau: number; ecole: string; estPrepare: number }
-type AvailableSpell = { nom: string; ecole: string; niveau: number; estPersonnalise?: boolean }
+// `description` et `meta` (composantes · portée · durée) alimentent le bouton 📖
+// de chaque ligne. Elles sont facultatives : un sort sans définition n'affiche
+// simplement pas de bouton, exactement comme sur la fiche.
+type Spell = { charSpellId: number; nom: string; niveau: number; ecole: string; estPrepare: number; description?: string | null; meta?: string | null }
+type AvailableSpell = { nom: string; ecole: string; niveau: number; estPersonnalise?: boolean; description?: string | null; meta?: string | null }
 
 type Props = {
   personnageId: number
@@ -24,6 +28,10 @@ export function PreparerSorts({ personnageId, classe, niveau, spells, availableS
   const [open, setOpen] = useState(false)
   // Map<string, number> — clé = charSpellId.toString() pour arcane, spell.nom pour divin
   const [preps, setPreps] = useState<Map<string, number>>(new Map())
+  // Une seule définition ouverte à la fois : la modale est haute de 85vh au plus
+  // et les définitions font 560 caractères en moyenne — ouvrir tout d'un coup
+  // rendrait la liste impraticable, ce qui est justement ce qu'on veut éviter.
+  const [defOuverte, setDefOuverte] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
 
   const isArcane  = ARCANE.includes(classe)
@@ -42,7 +50,7 @@ export function PreparerSorts({ personnageId, classe, niveau, spells, availableS
   // Source de la liste affichée dans la modale
   const listSpells: AvailableSpell[] = isDivin && availableSpells
     ? availableSpells
-    : spells.map(s => ({ nom: s.nom, ecole: s.ecole, niveau: s.niveau }))
+    : spells.map(s => ({ nom: s.nom, ecole: s.ecole, niveau: s.niveau, description: s.description, meta: s.meta }))
 
   const niveaux = [...new Set(listSpells.map(s => s.niveau))].sort((a, b) => a - b)
 
@@ -61,6 +69,7 @@ export function PreparerSorts({ personnageId, classe, niveau, spells, availableS
       m.set(key, s.estPrepare)
     })
     setPreps(new Map(m))
+    setDefOuverte(null)
     setOpen(true)
   }
 
@@ -182,26 +191,38 @@ export function PreparerSorts({ personnageId, classe, niveau, spells, availableS
                         const cur  = preps.get(key) ?? 0
                         const full = used >= max && cur === 0
                         return (
-                          <div key={key} className="flex items-center gap-2 py-1 border-b border-stone-800/60 last:border-0">
-                            <span className={`text-sm flex-1 ${cur > 0 ? 'text-amber-200' : 'text-stone-400'}`}>
-                              {s.nom}
-                              {s.estPersonnalise && <span className="text-amber-700 text-xs ml-1" title="Sort personnalisé">★</span>}
-                            </span>
-                            {s.ecole && <span className="text-stone-700 text-xs shrink-0">{s.ecole}</span>}
-                            <div className="flex items-center gap-1 shrink-0">
-                              <button
-                                onClick={() => setPrep(s, n, -1)}
-                                disabled={cur <= 0}
-                                className="w-6 h-6 flex items-center justify-center rounded bg-stone-800 hover:bg-stone-700 disabled:opacity-30 text-stone-300 text-sm transition-colors"
-                              >−</button>
-                              <span className={`w-6 text-center text-sm font-mono ${cur > 0 ? 'text-amber-300 font-bold' : 'text-stone-600'}`}>{cur}</span>
-                              <button
-                                onClick={() => setPrep(s, n, 1)}
-                                disabled={full || used >= max}
-                                className="w-6 h-6 flex items-center justify-center rounded bg-stone-800 hover:bg-stone-700 disabled:opacity-30 text-stone-300 text-sm transition-colors"
-                              >+</button>
-                            </div>
-                          </div>
+                          <LigneSort
+                            key={key}
+                            description={s.description ?? null}
+                            meta={s.meta ?? null}
+                            panneauCompact
+                            ouvert={defOuverte === key}
+                            onToggle={() => setDefOuverte(d => d === key ? null : key)}
+                            entete={
+                              <>
+                                <span className={`text-sm ${cur > 0 ? 'text-amber-200' : 'text-stone-400'}`}>{s.nom}</span>
+                                {s.estPersonnalise && <span className="text-amber-700 text-xs" title="Sort personnalisé">★</span>}
+                              </>
+                            }
+                            actions={
+                              <>
+                                {s.ecole && <span className="text-stone-700 text-xs mr-2 hidden sm:inline">{s.ecole}</span>}
+                                <span className="flex items-center gap-1">
+                                  <button
+                                    onClick={() => setPrep(s, n, -1)}
+                                    disabled={cur <= 0}
+                                    className="w-6 h-6 flex items-center justify-center rounded bg-stone-800 hover:bg-stone-700 disabled:opacity-30 text-stone-300 text-sm transition-colors"
+                                  >−</button>
+                                  <span className={`w-6 text-center text-sm font-mono ${cur > 0 ? 'text-amber-300 font-bold' : 'text-stone-600'}`}>{cur}</span>
+                                  <button
+                                    onClick={() => setPrep(s, n, 1)}
+                                    disabled={full || used >= max}
+                                    className="w-6 h-6 flex items-center justify-center rounded bg-stone-800 hover:bg-stone-700 disabled:opacity-30 text-stone-300 text-sm transition-colors"
+                                  >+</button>
+                                </span>
+                              </>
+                            }
+                          />
                         )
                       })}
                     </div>
