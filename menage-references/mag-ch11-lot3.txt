@@ -1,0 +1,73 @@
+# pages PDF 245-264
+Fracassement|Évocation [son]|Bard 2, Chaos 2, Destruction 2, Ens/Mag 2, Prê 2|V, G, M/FD|Courte|instantanée
+Frayeur|Nécromancie [mental, terreur]|Bard 1, Ens/Mag 1, Mort 1, Prê 1|V, G|Courte|1d4 rounds ou 1 round (voir description)
+Glissement de terrain|Transmutation [terre]|Dru 6, Ens/Mag 6|V, G, M|Longue|instantanée
+Globe d'invulnérabilité partielle|Abjuration|Ens/Mag 4|V, G, M|3 m|1 round/niveau (T)
+Globe d'invulnérabilité renforcée|Abjuration|Ens/Mag 6|?|?|?
+Grâce féline|Transmutation|Bard 2, Dru 2, Ens/Mag 2, Rôd 2|V, G, M|Contact|1 minute/niveau
+Grâce féline de groupe|Transmutation|Bard 6, Dru 6, Ens/Mag 6|?|Courte|?
+Graisse|Invocation (création)|Bard 1, Ens/Mag 1|V, G, M|Courte|1 round/niveau (T)
+Hébétement|Enchantement (coercition) [mental]|Bard 0, Ens/Mag 0|V, G, M|Courte|1 round
+Hébétement de monstre|Enchantement (coercition) [mental]|Bard 2, Ens/Mag 2|?|Moyenne|?
+Héroïsme|Enchantement (coercition) [mental]|Bard 2, Ens/Mag 3|V, G|Contact|10 minutes/niveau
+Héroïsme suprême|Enchantement (coercition) [mental]|Bard 5, Ens/Mag 6|?|?|1 minute/niveau
+Hypnose|Enchantement (coercition) [mental]|Bard 1, Ens/Mag 1|V, G|Courte|2d4 rounds (T)
+Identification|Divination|Bard 1, Ens/Mag 1, Magie 2|V, G, M/FD|Contact|instantanée
+Idiotie|Enchantement (coercition) [mental]|Ens/Mag 2|V, G|Contact|10 minutes/niveau
+Illumination|Évocation [lumière]|Bard 0, Dru 0, Ens/Mag 0|V|Courte|instantanée
+Image accomplie|Illusion (chimère)|Bard 3, Ens/Mag 3|?|?|concentration + 3 rounds
+Image imparfaite|Illusion (chimère)|Bard 2, Ens/Mag 2|?|?|concentration + 2 rounds
+Image miroir|Illusion (chimère)|Bard 2, Ens/Mag 2|V, G|Personnelle|1 minute/niveau (T)
+Image permanente|Illusion (chimère)|Bard 6, Ens/Mag 6|?|?|permanente (T)
+Image prédéterminée|Illusion (chimère)|Bard 5, Ens/Mag 5|?|?|1 minute/niveau (T)
+Image programmée|Illusion (chimère)|Bard 6, Ens/Mag 6|?|?|permanente jusqu'au déclenchement, puis 1 round/niveau
+Image silencieuse|Illusion (chimère)|Bard 1, Ens/Mag 1|V, G, F|Longue|concentration
+Immobilisation de monstre|Enchantement (coercition) [mental]|Bard 4, Ens/Mag 5, Loi 6|V, G, M/FD|?|?
+Immobilisation de monstre de groupe|Enchantement (coercition) [mental]|Ens/Mag 9|?|?|?
+Immobilisation de morts-vivants|Nécromancie|Ens/Mag 3|V, G, M|Moyenne|1 round/niveau
+Immobilisation de personne|Enchantement (coercition) [mental]|Bard 2, Ens/Mag 3, Prê 2|V, G, F/FD|Moyenne|1 round/niveau (T) (voir description)
+Immobilisation de personne de groupe|Enchantement (coercition) [mental]|Ens/Mag 7|?|?|?
+Inversion de la gravité|Transmutation|Dru 8, Ens/Mag 7|V, G, M/FD|Moyenne|1 round/niveau (T)
+Invisibilité|Illusion (hallucination)|Bard 2, Duperie 2, Ens/Mag 2|V, G, M/FD|Personnelle ou contact|1 minute/niveau (T)
+Invisibilité de groupe|Illusion (hallucination)|Ens/Mag 7|V, G, M|Longue|?
+Invisibilité suprême|Illusion (hallucination)|Bard 4, Ens/Mag 4|V, G|?|1 round/niveau (T)
+Invocation instantanée de Drawmij|Invocation (convocation)|Ens/Mag 7|V, G, M|voir description|permanente jusqu'à utilisation
+Lecture de la magie|Divination|Bard 0, Dru 0, Ens/Mag 0, Pal 1, Prê 0, Rôd 1|V, G, F|Personnelle|10 minutes/niveau
+Lenteur|Transmutation|Bard 3, Ens/Mag 3|V, G, M|Courte|1 round/niveau
+Leurre|Illusion (hallucination)|Bard 5, Duperie 5, Ens/Mag 5|V, G, M|Contact|1 heure/niveau (T)
+Lévitation|Transmutation|Ens/Mag 2|V, G, F|Personnelle ou courte|1 minutes/niveau (T)
+Lien télépathique de Rary|Divination|Ens/Mag 5|V, G, M|Courte|10 minutes/niveau (T)
+Localisation d'objet|Divination|Bard 2, Ens/Mag 2, Prê 3, Voyage 2|V, G, F/FD|Longue|1 minute/niveau
+Localisation de créature|Divination|Bard 4, Ens/Mag 4|V, G, M|?|10 minutes/niveau
+Localisation suprême|Divination|Connaissance 8, Ens/Mag 8, Prê 8|V, G, FD|Illimitée|instantanée
+Lueur d'arc-en-ciel|Illusion (mirage) [mental]|Bard 4, Ens/Mag 4|V (Bard uniquement), G, M, F (voir description)|Moyenne|concentration + 1 round/niveau (T)
+Lueurs hypnotiques|Illusion (mirage) [mental]|Bard 2, Ens/Mag 2|V (Bard uniquement), G, M (voir description)|Moyenne|concentration + 2 rounds
+Lumière|Évocation [lumière]|Bard 0, Dru 0, Ens/Mag 0, Prê 0|V, M/FD|Contact|10 minutes/niveau (T)
+Lumière du jour|Évocation [lumière]|Bard 3, Dru 3, Ens/Mag 3, Pal 3, Prê 3|V, G|Contact|10 minutes/niveau (T)
+Lumières dansantes|Évocation [lumière]|Bard 0, Ens/Mag 0|V, G|Moyenne|1 minute (T)
+Magie des ombres|Illusion (ombre)|Bard 5, Ens/Mag 5|V, G|voir description|voir description
+Magie des ombres suprême|Illusion (ombre)|Ens/Mag 8|?|?|?
+Main broyeuse de Bigby|Évocation [force]|Ens/Mag 9, Force 9|V, G, M, F/FD|?|?
+Main impérieuse de Bigby|Évocation [force]|Ens/Mag 6|V, G, F|?|?
+Main interposée de Bigby|Évocation [force]|Ens/Mag 5|V, G, F|Moyenne|1 round/niveau (T)
+Mains brûlantes|Évocation [feu]|Ens/Mag 1, Feu 1|V, G|4,50 m|instantanée
+Main spectrale|Nécromancie|Ens/Mag 2|V, G|Moyenne|1 minute/niveau (T)
+Malédiction|Nécromancie|Ens/Mag 4, Prê 3|V, G|Contact|permanente
+Manipulation à distance|Transmutation|Bard 0, Ens/Mag 0|V, G|Courte|concentration
+Manoir somptueux de Mordenkainen|Invocation (création)|Ens/Mag 7|V, G, F|Courte|2 heures/niveau (T)
+Mauvais œil|Transmutation [Mal]|Bard 6, Ens/Mag 6|V, G|Courte|1 round/3 niveaux (voir description)
+Message|Transmutation [langage]|Bard 0, Ens/Mag 0|V, G, F|Moyenne|10 minutes/niveau
+Métamorphose|Transmutation|Ens/Mag 4|V, G, M|Contact|1 minute/niveau (T)
+Métamorphose funeste|Transmutation|Dru 5, Ens/Mag 5|V, G|Courte|permanente
+Métamorphose universelle|Transmutation|Duperie 8, Ens/Mag 8|V, G, M/FD|Courte|voir description
+Mirage|Illusion (hallucination)|Bard 5, Ens/Mag 5|V, G|?|concentration + 1 heure/niveau (T)
+Mission|Enchantement (coercition) [langage, mental]|Bard 3, Ens/Mag 4|V|Courte|1 jour/niveau ou jusqu'à accomplissement (T)
+Modification d'apparence|Transmutation|Bard 2, Ens/Mag 2|V, G|Personnelle|10 minutes/niveau (T)
+Moment de prescience|Divination|Chance 8, Ens/Mag 8|V, G|Personnelle|1 heure/niveau ou jusqu'à utilisation
+Monture|Invocation (convocation)|Ens/Mag 1|V, G, M|Courte|2 heures/niveau (T)
+Mot de pouvoir aveuglant|Enchantement (coercition) [mental]|Ens/Mag 7, Guerre 7|V|Courte|voir description
+Mot de pouvoir étourdissant|Enchantement (coercition) [mental]|Ens/Mag 8, Guerre 8|V|Courte|voir description
+Mot de pouvoir mortel|Enchantement (coercition) [mental, mort]|Ens/Mag 9, Guerre 9|V|Courte|instantanée
+Motif scintillant|Illusion (mirage) [mental]|Ens/Mag 8|V, G, M|Courte|concentration + 2 rounds
+Mur de fer|Invocation (création)|Ens/Mag 6|V, G, M|Moyenne|instantanée
+Mur de feu|Évocation [feu]|Dru 5, Ens/Mag 4, Feu 4|V, G, M/FD|Moyenne|concentration + 1 round/niveau

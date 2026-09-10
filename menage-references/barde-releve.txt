@@ -1,0 +1,167 @@
+# Relevé de la liste de sorts du BARDE — Manuel des Joueurs 3.5 (fr)
+# Chapitre 11, pages imprimées 181 à 183 (pages PDF 182 à 184 ; décalage +1 confirmé).
+# Format : niveau|nom tel qu'imprimé dans la liste résumée
+0|Berceuse
+0|Convocation d'instrument
+0|Détection de la magie
+0|Hébétement
+0|Illumination
+0|Lecture de la magie
+0|Lumière
+0|Lumières dansantes
+0|Manipulation à distance
+0|Message
+0|Ouverture/fermeture
+0|Prestidigitation
+0|Réparation
+0|Repérage
+0|Résistance
+0|Son imaginaire
+1|Alarme
+1|Alignement indétectable
+1|Aura magique de Nystul
+1|Bouche magique
+1|Charme-personne
+1|Compréhension des langages
+1|Confusion mineure
+1|Convocation de monstres I
+1|Corde animée
+1|Déguisement
+1|Détection des passages secrets
+1|Dissimulation d'objet
+1|Effacement
+1|Feuille morte
+1|Fou rire de Tasha
+1|Frayeur
+1|Graisse
+1|Hypnose
+1|Identification
+1|Image silencieuse
+1|Regain d'assurance
+1|Repli expéditif
+1|Serviteur invisible
+1|Soins légers
+1|Sommeil
+1|Ventriloquie
+2|Apaisement des émotions
+2|Cacophonie
+2|Cécité/surdité
+2|Convocation de monstres II
+2|Détection de pensées
+2|Détection faussée
+2|Discours captivant
+2|Don des langues
+2|Effroi
+2|Flou
+2|Fracassement
+2|Grâce féline
+2|Hébétement de monstre
+2|Héroïsme
+2|Hypnose des animaux
+2|Image imparfaite
+2|Image miroir
+2|Immobilisation de personne
+2|Invisibilité
+2|Localisation d'objet
+2|Lueurs hypnotiques
+2|Messager animal
+2|Modification d'apparence
+2|Nuée grouillante
+2|Poussière scintillante
+2|Pyrotechnie
+2|Rage
+2|Ralentissement du poison
+2|Ruse du renard
+2|Silence
+2|Soins modérés
+2|Splendeur de l'aigle
+2|Suggestion
+2|Ténèbres
+2|Vent de murmures
+3|Abri de Léomund
+3|Bagou
+3|Charme-monstre
+3|Clairaudience/clairvoyance
+3|Clignotement
+3|Communication avec les animaux
+3|Confusion
+3|Convocation de monstres III
+3|Coursier fantôme
+3|Délivrance des malédictions
+3|Déplacement
+3|Désespoir foudroyant
+3|Détection de l'invisibilité
+3|Dissipation de la magie
+3|Espoir
+3|État gazeux
+3|Image accomplie
+3|Lenteur
+3|Lumière du jour
+3|Manipulation des sons
+3|Mission
+3|Page secrète
+3|Rapidité
+3|Sceau du serpent
+3|Scrutation
+3|Soins importants
+3|Sommeil profond
+3|Sphère d'invisibilité
+3|Terreur
+3|Texte illusoire
+4|Annulation d'enchantement
+4|Communication avec les plantes
+4|Convocation d'ombres
+4|Convocation de monstres IV
+4|Cri
+4|Détection de la scrutation
+4|Domination
+4|Immobilisation de monstre
+4|Invisibilité suprême
+4|Liberté de mouvement
+4|Localisation de créature
+4|Lueur d'arc-en-ciel
+4|Modification de mémoire
+4|Mythes et légendes
+4|Neutralisation du poison
+4|Porte dimensionnelle
+4|Refuge de Léomund
+4|Répulsif
+4|Soins intensifs
+4|Terrain hallucinatoire
+4|Zone de silence
+5|Brume mentale
+5|Cauchemar
+5|Chant de discorde
+5|Convocation de monstres V
+5|Dissipation suprême
+5|Double illusoire
+5|Faux-semblant
+5|Héroïsme suprême
+5|Image prédéterminée
+5|Leurre
+5|Magie des ombres
+5|Mirage
+5|Soins légers de groupe
+5|Songe
+5|Suggestion de groupe
+5|Traversée des ombres
+6|Analyse d'enchantement
+6|Animation d'objets
+6|Charme-monstre de groupe
+6|Convocation de monstres VI
+6|Cri suprême
+6|Danse irrésistible d'Otto
+6|Festin des héros
+6|Grâce féline de groupe
+6|Image permanente
+6|Image programmée
+6|Mauvais œil
+6|Orientation
+6|Projection d'image
+6|Quête
+6|Résonance
+6|Ruse du renard de groupe
+6|Scrutation suprême
+6|Soins modérés de groupe
+6|Splendeur de l'aigle de groupe
+6|Voile

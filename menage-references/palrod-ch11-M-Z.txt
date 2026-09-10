@@ -1,0 +1,53 @@
+# Chapitre 11 du Manuel des Joueurs 3.5 — lettres M à Z
+# Relevé à l'image (PDF = page imprimée + 1), lignes « Niveau » recoupées à 300-400 dpi.
+# Format : nom|école|composantes|portée|durée|description|page
+Messager animal|Enchantement|V, G, M|Courte|1 jour/niveau|Force un petit animal à gagner un lieu désigné, souvent pour y porter un message.|258
+Morsure magique|Transmutation|V, G, FD|Contact|1 minute/niveau|Une arme naturelle du sujet gagne +1 aux jets d'attaque et de dégâts.|262
+Morsure magique suprême|Transmutation|Voir description|Courte|1 heure/niveau|Comme morsure magique, mais +1 par tranche de 4 niveaux (max. +5).|262
+Passage sans trace|Transmutation|V, G, FD|Contact|1 heure/niveau (T)|Les sujets (1/niveau) ne laissent aucune trace ; seule la magie permet de les suivre.|269
+Peau d'écorce|Transmutation|V, G, FD|Contact|10 minutes/niveau|Confère un bonus d'armure naturelle de +2, +1 par 3 niveaux (max. +5 au niveau 12).|270
+Rabougrissement des plantes|Transmutation|V, G, FD|Voir description|Instantané|Éclaircit d'un tiers la végétation d'une zone, ou réduit d'un tiers la productivité des plantes.|278
+Rapetissement d'animal|Transmutation|V, G|Contact|1 heure/niveau (T)|Réduit d'une catégorie de taille un animal consentant (+2 Dex, +1 attaque et CA, −2 For).|279
+Voyage par les arbres|Invocation|V, G, FD|Personnelle|1 heure/niveau ou jusqu'à utilisation|Le PJ entre dans un arbre et ressort par un autre de la même espèce.|303
+
+# ⚠ Morsure magique suprême : bloc ABRÉGÉ — aucune ligne « Composantes » n'est imprimée
+#   (vérifié à 300 dpi). Ne pas les inventer.
+# ⚠ « Voie végétale » (Transmutation, Dru 6, p. 302) est un AUTRE sort que
+#   « Voyage par les arbres » (Invocation, Dru 5 / Rôd 4, p. 303).
+
+# Lignes NIVEAU vérifiées au chapitre 11
+# Marche sur l'onde : Prê 3, Rôd 3
+# Marque de la justice : Pal 4, Prê 5
+# Mur de vent : Air 2, Dru 3, Ens/Mag 3, Prê 3, Rôd 2
+# Neutralisation du poison : Bard 4, Dru 3, Pal 4, Prê 4, Rôd 3
+# Prière : Pal 3, Prê 3
+# Protection contre la mort : Dru 5, Mort 4, Pal 4, Prê 4
+# Protection contre le Chaos : Ens/Mag 1, Loi 1, Pal 1, Prê 1
+# Protection contre le Mal : Bien 1, Ens/Mag 1, Pal 1, Prê 1
+# Protection contre les énergies destructives : Chance 3, Dru 3, Ens/Mag 3, Prê 3, Protection 3, Rôd 2
+# Protection d'autrui : Pal 2, Prê 2, Protection 2
+# Ralentissement du poison : Bard 2, Dru 2, Pal 2, Prê 2, Rôd 1
+# Rejet du Chaos : Loi 5, Pal 4, Prê 5
+# Rejet du Mal : Bien 5, Pal 4, Prê 5
+# Répulsif : Bard 4, Dru 4, Prê 4, Rôd 3
+# Résistance : Bard 0, Dru 0, Ens/Mag 0, Pal 1, Prê 0
+# Résistance aux énergies destructives : Dru 2, Ens/Mag 2, Feu 3, Pal 2, Prê 2, Rôd 1
+# Restauration partielle : Dru 2, Pal 1, Prê 2      ⚠ DIVERGENCE (voir ci-dessous)
+# Sagesse du hibou : Dru 2, Ens/Mag 2, Pal 2, Prê 2, Rôd 2
+# Saut : Dru 1, Ens/Mag 1, Rôd 1
+# Soins importants : Bard 3, Dru 4, Guérison 3, Pal 4, Prê 3, Rôd 4
+# Soins légers : Bard 1, Dru 1, Guérison 1, Pal 1, Prê 1, Rôd 2   ⚠ le catalogue disait Rôdeur 1
+# Soins modérés : Bard 2, Dru 3, Guérison 2, Pal 3, Prê 2, Rôd 3
+# Splendeur de l'aigle : Bar 2, Ens/Mag 2, Pal 2, Prê 2   (« Bar » : coquille de l'édition française pour « Bard »)
+# Stimulant : Dru 0, Pal 1, Prê 0
+# Vision dans le noir : Ens/Mag 2, Rôd 3
+# Zone de vérité : Pal 2, Prê 2
+
+# ⚠⚠ DIVERGENCES REDRESSÉES PAR LE CHAPITRE 11
+# 1. « Soins légers » : le catalogue le portait en Rôdeur 1. Le chapitre 11 (p. 289)
+#    imprime « Rôd 2 », ce que confirme la liste résumée (p. 196). Corrigé en Rôdeur 2.
+#    Cohérent avec la série légers/modérés/importants = Rôd 2/3/4.
+# 2. « Restauration partielle » : le chapitre 11 (p. 284) imprime « Pal 1 », alors que
+#    la liste résumée (p. 190) la place dans les sorts de paladin du 4e NIVEAU.
+#    Le chapitre fait foi. Voir palrod-ch11-restauration.txt pour l'arbitrage complet.
+# 3. « Passage sans trace » : titre au SINGULIER au chapitre 11 (p. 269).

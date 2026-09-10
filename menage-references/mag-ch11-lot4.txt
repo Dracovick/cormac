@@ -1,0 +1,69 @@
+# pages PDF 265-284
+Mur de force|Évocation [force]|Ens/Mag 5|V, G, M|Courte|1 minute/niveau (T)
+Mur de glace|Évocation [froid]|Ens/Mag 4|V, G, M|Moyenne|1 minute/niveau
+Mur de pierre|Invocation (création) [terre]|Dru 6, Ens/Mag 5, Prê 5, Terre 5|V, G, M/FD|Moyenne|Instantanée
+Mur de vent|Évocation [air]|Air 2, Dru 3, Ens/Mag 3, Prê 3, Rôd 2|V, G, M/FD|Moyenne|1 round/niveau
+Mur illusoire|Illusion (chimère)|Ens/Mag 4|V, G|Courte|Permanente
+Mur prismatique|Abjuration|Ens/Mag 8|V, G|Courte|10 minutes/niveau (T)
+Mythes et légendes|Divination|Connaissance 7, Bard 4, Ens/Mag 6|V, G, M, F|Personnelle|Voir description
+Nappe de brouillard|Invocation (création)|Ens/Mag 2, Eau 2|V, G|Moyenne|10 minutes/niveau
+Nuage incendiaire|Invocation (création) [feu]|Ens/Mag 8, Feu 8|V, G|Moyenne|1 round/niveau
+Nuage nauséabond|Invocation (création)|Ens/Mag 3|V, G, M|Moyenne|1 round/niveau
+Nuée de météores|Évocation [feu]|Ens/Mag 9|V, G|Longue|Instantanée
+Nuée grouillante|Invocation (convocation)|Bard 2, Dru 2, Ens/Mag 2|V, G, M/FD|Courte|Concentration + 2 rounds
+Œil du mage|Divination (scrutation)|Ens/Mag 4|V, G, M|Illimitée|1 minute/niveau (T)
+Œil indiscret|Divination|Ens/Mag 5|V, G, M|1,5 km|1 heure/niveau (voir description) (T)
+Œil indiscret suprême|Divination|Ens/Mag 8|?|?|?
+Ouverture/fermeture|Transmutation|Bard 0, Ens/Mag 0|V, G, F|Courte|Instantanée
+Page secrète|Transmutation|Bard 3, Ens/Mag 3|V, G, M|Contact|Permanente
+Passage dans l'éther|Transmutation|Ens/Mag 9, Prê 9|?|Contact|1 minute/niveau (T)
+Passe-muraille|Transmutation|Ens/Mag 5|V, G, M|Courte|1 heure/niveau (T)
+Pattes d'araignée|Transmutation|Dru 2, Ens/Mag 2|V, G, M|Contact|10 minutes/niveau
+Peau de pierre|Abjuration|Dru 5, Ens/Mag 4, Force 6, Terre 6|V, G, M|Contact|10 minutes/niveau ou jusqu'à utilisation
+Permanence|Universel|Ens/Mag 5|V, G, PX|Voir description|Permanente (voir description)
+Pétrification|Transmutation|Ens/Mag 6|V, G, M|Moyenne|Instantanée
+Piège à feu|Abjuration [feu]|Dru 2, Ens/Mag 4|V, G, M|Contact|Permanente jusqu'au déclenchement (T)
+Piège de Léomund|Illusion (hallucination)|Ens/Mag 2|V, G, M|Contact|Permanente (T)
+Plainte d'outre-tombe|Nécromancie [mort, son]|Ens/Mag 9, Mort 9|V|Courte|Instantanée
+Poigne de Bigby|Évocation [force]|Ens/Mag 7, Force 7|V, G, F/FD|?|?
+Poing de Bigby|Évocation [force]|Ens/Mag 8, Force 8|V, G, F/FD|?|?
+Portail|Invocation (appel ou création)|Ens/Mag 9, Prê 9|V, G, PX (voir description)|Moyenne|Instantanée ou concentration (jusqu'à 1 round/niveau ; voir description)
+Porte de phase|Invocation (création)|Ens/Mag 7, Voyage 8|V|0 m|1 utilisation/2 niveaux
+Porte dimensionnelle|Invocation [téléportation]|Bard 4, Ens/Mag 4, Voyage 4|V|Longue|Instantanée
+Possession|Nécromancie|Ens/Mag 5|V, G, F|Moyenne|1 heure/niveau ou jusqu'à ce que le jeteur de sorts réintègre son corps
+Poussière scintillante|Invocation (création)|Bard 2, Ens/Mag 2|V, G, M|Moyenne|1 round/niveau
+Prémonition|Divination|Connaissance 9, Dru 9, Ens/Mag 9|V, G, M/FD|Personnelle ou contact|10 minutes/niveau
+Préservation des morts|Nécromancie|Ens/Mag 3, Prê 2|V, G, M/FD|Contact|1 jour/niveau
+Prestidigitation|Universel|Bard 0, Ens/Mag 0|V, G|3 m|1 heure
+Prévoyance|Évocation|Ens/Mag 6|V, G, M, F|Personnelle|1 jour/niveau (T) ou jusqu'à utilisation
+Projectile magique|Évocation [force]|Ens/Mag 1|V, G|Moyenne|Instantanée
+Projection astrale|Nécromancie|Ens/Mag 9, Prê 9, Voyage 9|V, G, M|Contact|Voir description
+Projection d'image|Illusion (ombre)|Bard 6, Ens/Mag 7|V, G, M|Moyenne|1 round/niveau (T)
+Protection contre la Loi|Abjuration [Chaos]|Chaos 1, Ens/Mag 1, Prê 1|?|?|?
+Protection contre le Bien|Abjuration [Mal]|Ens/Mag 1, Mal 1, Prê 1|?|?|?
+Protection contre le Chaos|Abjuration [Loi]|Ens/Mag 1, Loi 1, Pal 1, Prê 1|?|?|?
+Protection contre le Mal|Abjuration [Bien]|Bien 1, Ens/Mag 1, Pal 1, Prê 1|V, G, M/FD|Contact|1 minute/niveau (T)
+Protection contre les énergies destructives|Abjuration|Chance 3, Dru 3, Ens/Mag 3, Prê 3, Protection 3, Rôd 2|V, G, FD|Contact|10 minutes/niveau ou jusqu'à épuisement
+Protection contre les projectiles|Abjuration|Ens/Mag 2|V, G, F|Contact|1 heure/niveau ou jusqu'à épuisement
+Protection contre les sorts|Abjuration|Ens/Mag 8, Magie 8|V, G, M, F|Contact|10 minutes/niveau
+Pyrotechnie|Transmutation|Bard 2, Ens/Mag 2|V, G, M|Longue|1d4+1 rounds, ou 1d4+1 rounds après que les créatures ont quitté le nuage de fumée (voir description)
+Quête|Enchantement (coercition) [langage, mental]|Bard 6, Ens/Mag 6, Prê 6|?|?|?
+Rage|Enchantement (coercition) [mental]|Bard 2, Ens/Mag 3|V, G|Moyenne|Concentration + 1 round/niveau (T)
+Rapetissement|Transmutation|Ens/Mag 1|V, G, M|Courte|1 minute/niveau (T)
+Rapetissement de groupe|Transmutation|Ens/Mag 4|?|?|?
+Rapidité|Transmutation|Bard 3, Ens/Mag 3|V, G, M|Courte|1 round/niveau
+Rayon affaiblissant|Nécromancie|Ens/Mag 1|V, G|Courte|1 minute/niveau
+Rayon ardent|Évocation [feu]|Ens/Mag 2|V, G|Courte|Instantanée
+Rayon d'épuisement|Nécromancie|Ens/Mag 3|V, G, M|Courte|1 minute/niveau
+Rayon de givre|Évocation [froid]|Ens/Mag 0|V, G|Courte|Instantanée
+Rayon polaire|Évocation [froid]|Ens/Mag 8|V, G, F|Courte|Instantanée
+Rayons prismatiques|Évocation|Ens/Mag 7|V, G|18 m|Instantanée
+Réduction d'objet|Transmutation|Ens/Mag 3|V, G|Contact|1 jour/niveau (voir description)
+Reflets d'ombre|Illusion (ombre)|Ens/Mag 9|?|?|?
+Refuge|Transmutation [téléportation]|Ens/Mag 9, Prê 7|V, G, M|Contact|Permanente jusqu'à utilisation
+Refuge de Léomund|Invocation (création)|Bard 4, Ens/Mag 4|V, G, M, F (voir description)|Courte|2 heures/niveau (T)
+Renvoi|Abjuration|Ens/Mag 5, Prê 4|V, G, FD|Courte|Instantanée
+Renvoi des sorts|Abjuration|Chance 7, Ens/Mag 7, Magie 7|V, G, M/FD|Personnelle|Jusqu'à épuisement ou 10 minutes/niveau
+Réparation|Transmutation|Bard 0, Dru 0, Ens/Mag 0, Prê 0|V, G|3 m|Instantanée
+Repli expéditif|Transmutation|Bard 1, Ens/Mag 1|V, G|Personnelle|1 minute/niveau (T)
+Résistance|Abjuration|Bard 0, Dru 0, Ens/Mag 0, Pal 1, Prê 0|V, G, M/FD|Contact|1 minute

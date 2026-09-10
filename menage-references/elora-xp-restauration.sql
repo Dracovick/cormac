@@ -1,0 +1,33 @@
+-- ═══════════════════════════════════════════════════════════════════════════
+-- Filet de securite — ajustement des XP d'Elora Vlaardoen (characters.id = 45)
+-- Date : 2026-08-29
+-- Joueur : Philippe Lazzaroni.  MJ : Andre.
+-- ═══════════════════════════════════════════════════════════════════════════
+--
+-- CONTEXTE
+--   Elora est Magicien 16 / Cryptomanciere 8 = niveau total 24.
+--   Ses 128 908 XP sont un heritage de FileMaker, ou chaque classe avancait
+--   sur sa propre reserve d'XP. Le total etait donc incoherent avec le
+--   niveau 24 (seuil : 276 000 XP).
+--
+-- DECISION DE MJ (Andre, 2026-08-29)
+--   « C'est moi le maitre de jeu pour Elora Vlaardoen. Il peut ajuster ses
+--     points d'XP comme si elle etait au 1/4 des points pour le prochain
+--     niveau. »
+--
+-- CALCUL — formule PX(n) = 500 x n x (n - 1)  (src/lib/dnd35/rules.ts,
+--   xpPourNiveau ; recoupee sur Epic Level Handbook, Table 1-2, p. 7)
+--     niveau 24 -> 500 x 24 x 23 = 276 000
+--     niveau 25 -> 500 x 25 x 24 = 300 000
+--     ecart               =  24 000
+--     quart de l'ecart    =   6 000
+--     XP retenus  = 276 000 + 6 000 = 282 000
+--
+-- VALEUR AVANT : 128 908
+-- VALEUR APRES : 282 000
+--
+-- ─────────────── RESTAURATION : remettre les XP a l'identique ───────────────
+UPDATE characters SET xp = 128908 WHERE id = 45;
+
+-- Verification apres restauration (doit rendre 128908) :
+-- SELECT id, nom, xp FROM characters WHERE id = 45;

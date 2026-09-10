@@ -1,0 +1,150 @@
+# Relevé brut, liste résumée « Sorts d'ensorceleur ou de magicien », niveaux 6 à 9
+# Manuel des Joueurs 3.5 français, pages imprimées 187-189 (PDF 188-190)
+
+6|Abjuration|Champ de force|Nul ne peut approcher du PJ.
+6|Abjuration|Défense magique|Plusieurs effets magiques protègent une zone.
+6|Abjuration|Dissipation suprême|Comme dissipation de la magie, mais jusqu'à +20.
+6|Abjuration|Globe d'invulnérabilité renforcée|Comme globe d'invulnérabilité partielle, mais bloque aussi les sorts du 4e niveau.
+6|Abjuration|Zone d'antimagie|Réprime toute magie à moins de 3 m.
+6|Divination|Analyse d'enchantement|Révèle les propriétés magiques.
+6|Divination|Mythes et légendes|Révèle l'histoire d'un lieu, individu ou objet.
+6|Divination|Vision lucide|Permet de voir les choses telles qu'elles sont.
+6|Enchantement|Héroïsme suprême|Confère un bonus de +4 aux jets d'attaque, jets de dégâts et tests de compétence ; immunité contre la terreur ; pv temporaires.
+6|Enchantement|Quête|Comme mission, mais affecte n'importe quelle créature.
+6|Enchantement|Suggestion de groupe|Comme suggestion, mais 1 cible/niveau.
+6|Enchantement|Symbole de persuasion|La rune charme les créatures proches.
+6|Évocation|Éclair multiple|1d6 pts de dégâts/niveau ; 1 éclair secondaire/niveau infligeant demi-dégâts.
+6|Évocation|Main impérieuse de Bigby|Main repoussant les adversaires.
+6|Évocation|Prévoyance|Déclenche un autre sort sous condition.
+6|Évocation|Sphère glaciale d'Otiluke|Gèle l'eau ou inflige des dégâts de froid.
+6|Illusion|Double illusoire|Rend le PJ invisible et crée son double illusoire.
+6|Illusion|Image permanente|Comprend aspects visuels, sonores et olfactifs.
+6|Illusion|Image programmée|Comme image accomplie, mais déclenchée par condition.
+6|Illusion|Traversée des ombres|Permet de voyager plus rapidement.
+6|Illusion|Voile|Change l'aspect d'un groupe de créatures.
+6|Invocation|Brume acide|Brouillard infligeant des dégâts d'acide.
+6|Invocation|Contrat intermédiaire|Comme contrat, mais jusqu'à 12 DV.
+6|Invocation|Convocation de monstres VI|Appelle une ou plusieurs créatures extraplanaires luttant pour le PJ.
+6|Invocation|Mur de fer|30 pv/4 niveaux ; peut s'effondrer sur les adversaires.
+6|Nécromancie|Annihilation de mort-vivant|Détruit 1d4 DV de morts-vivants/niveau (max. 20d4).
+6|Nécromancie|Cercle de mort|Tue 1d4 DV de créatures/niveau.
+6|Nécromancie|Création de mort-vivant|Goule, blême, momie ou mohrg.
+6|Nécromancie|Mauvais œil|Cible paniquée, fiévreuse et comateuse.
+6|Nécromancie|Symbole de terreur|La rune frappe les créatures proches de panique.
+6|Transmutation|Contrôle de l'eau|Abaisse ou élève le niveau de l'eau.
+6|Transmutation|Désintégration|Fait disparaître un objet ou une créature.
+6|Transmutation|Endurance de l'ours de groupe|Comme endurance de l'ours, mais affecte 1 sujet/niveau.
+6|Transmutation|Force de taureau de groupe|Comme force de taureau, mais affecte 1 sujet/niveau.
+6|Transmutation|Grâce féline de groupe|Comme grâce féline, mais affecte 1 sujet/niveau.
+6|Transmutation|Glissement de terrain|Fait apparaître tranchées ou collines.
+6|Transmutation|Pétrification|Transforme la cible en statue.
+6|Transmutation|Remémoration de Mordenkainen|Permet de se rappeler d'un sort du 5e niveau ou moins. Magiciens uniquement.
+6|Transmutation|Ruse du renard de groupe|Comme ruse du renard, mais affecte 1 sujet/niveau.
+6|Transmutation|Sagesse du hibou de groupe|Comme sagesse du hibou, mais affecte 1 sujet/niveau.
+6|Transmutation|Splendeur de l'aigle de groupe|Comme splendeur de l'aigle, mais affecte 1 sujet/niveau.
+6|Transmutation|Transformation de Tenser|Le PJ gagne des bonus au combat.
+6|Transmutation|Transmutation de la pierre en chair|Ramène une créature pétrifiée à la vie.
+
+7|Abjuration|Bannissement|Bannit 2 DV/niveau de créatures extraplanaires.
+7|Abjuration|Dissimulation suprême|Rend le sujet invisible, même à la scrutation.
+7|Abjuration|Renvoi des sorts|Retourne 1d4+6 niveaux de sorts à l'envoyeur.
+7|Divination|Scrutation suprême|Comme scrutation, mais plus rapidement et plus longtemps.
+7|Divination|Vision magique suprême|Comme vision magique, mais révèle également les effets magiques de la cible et les objets.
+7|Divination|Vision mystique|Comme mythes et légendes, mais plus rapide.
+7|Enchantement|Aliénation mentale|La cible souffre en permanence de confusion.
+7|Enchantement|Immobilisation de personne de groupe|Comme immobilisation de personne, mais dans un rayon de 9 m.
+7|Enchantement|Mot de pouvoir aveuglant|Aveugle jusqu'à 200 pv de créatures.
+7|Enchantement|Symbole d'étourdissement|La rune étourdit les créatures proches.
+7|Évocation|Boule de feu à retardement|1d6 points de dégâts de feu/niveau ; l'explosion peut être retardée en max. de 5 rounds.
+7|Évocation|Cage de force|Cube de force emprisonnant qui se trouve à l'intérieur.
+7|Évocation|Épée de Mordenkainen|Lame d'énergie flottante.
+7|Évocation|Poigne de Bigby|Main géante qui abrite, pousse ou agrippe.
+7|Évocation|Rayons prismatiques|Rayons magiques à effets variés.
+7|Illusion|Convocation d'ombres suprême|Comme convocation d'ombres, mais jusqu'au 6e niveau et à 60 % réel.
+7|Illusion|Invisibilité de groupe|Comme invisibilité, mais multiples sujets.
+7|Illusion|Projection d'image|Double illusoire pouvant parler et lancer des sorts.
+7|Illusion|Simulacre|Crée un double partiellement réel du sujet.
+7|Invocation|Changement de plan|Permet de changer de plan (8 sujets max.).
+7|Invocation|Convocation de monstres VII|Appelle une ou plusieurs créatures extraplanaires luttant pour le PJ.
+7|Invocation|Invocation instantanée de Drawmij|L'objet préparé apparaît dans la main du PJ.
+7|Invocation|Manoir somptueux de Mordenkainen|Demeure extradimensionnelle.
+7|Invocation|Porte de phase|Passage invisible au travers du bois ou de la pierre.
+7|Invocation|Téléportation d'objet|Comme téléportation, mais sur un objet.
+# La liste résumée (p. 188) l'appelle « Téléportation suprême » ; le titre du bloc
+# au chapitre 11 (p. 296) est « Téléportation sans erreur » — et le corps du même
+# bloc réemploie « Téléportation suprême ». Le titre du chapitre fait foi.
+7|Invocation|Téléportation sans erreur|Comme téléportation, sans limite de portée et sans risque d'erreur. Le Manuel la nomme aussi « Téléportation suprême ».
+7|Nécromancie|Contrôle des morts-vivants|Les morts-vivants n'attaquent pas le PJ.
+7|Nécromancie|Doigt de mort|Tue la cible.
+7|Nécromancie|Symbole de faiblesse|La rune affaiblit les créatures proches.
+7|Nécromancie|Vagues d'épuisement|Plusieurs cibles sont épuisées.
+7|Transmutation|Contrôle du climat|Modifie le climat local.
+7|Transmutation|Forme éthérée|Le PJ passe dans le plan Éthéré pour 1 round/niveau.
+7|Transmutation|Inversion de la gravité|Objets et créatures tombent vers le haut.
+7|Transmutation|Statue|Le sujet peut se statufier à volonté.
+7|Universel|Souhait limité|Modifie la réalité dans une certaine mesure.
+
+8|Abjuration|Esprit impénétrable|Sujet immunisé contre les sorts mentaux et la scrutation.
+8|Abjuration|Mur prismatique|Mur à effets magiques variés.
+8|Abjuration|Protection contre les sorts|Confère un bonus de résistance de +8.
+8|Abjuration|Verrou dimensionnel|Téléportation et voyages interplanaires bloqués pendant 1 jour/niveau.
+8|Divination|Œil indiscret suprême|Comme œil indiscret, plus vision lucide.
+8|Divination|Localisation suprême|Localise précisément une créature ou un objet.
+8|Divination|Moment de prescience|Bonus d'intuition sur un jet d'attaque, un test ou un jet de sauvegarde.
+8|Enchantement|Attirance|Objet ou lieu attire certaines créatures.
+8|Enchantement|Aversion|Objet ou lieu repousse certaines créatures.
+8|Enchantement|Charme-monstre de groupe|Comme charme-monstre, mais sur 9 m de rayon.
+8|Enchantement|Danse irrésistible d'Otto|Force le sujet à danser.
+8|Enchantement|Entrave|Diverses possibilités pour emprisonner une créature.
+8|Enchantement|Exigence|Comme communication à distance, plus suggestion.
+8|Enchantement|Mot de pouvoir étourdissant|Étourdit une créature de 150 pv ou moins.
+8|Enchantement|Symbole d'aliénation mentale|La rune frappe les créatures proches de démence.
+8|Évocation|Cri suprême|Cri dévastateur infligeant 10d6 points de dégâts de son, étourdit les créatures, abîme les objets.
+8|Évocation|Explosion de lumière|Aveugle à moins de 3 m, 6d6 points de dégâts.
+8|Évocation|Poing de Bigby|Main géante qui abrite, pousse ou attaque.
+8|Évocation|Rayon polaire|Attaque de contact à distance infligeant 1d6 points de dégâts de froid/niveau.
+8|Évocation|Sphère téléguidée d'Otiluke|Comme sphère d'isolement d'Otiluke, mais le PJ la déplace par télékinésie.
+8|Illusion|Écran|Empêche de voir dans une zone, même par scrutation.
+8|Illusion|Magie des ombres suprême|Comme magie des ombres, mais jusqu'au 7e niveau ; 60 % sont réelles.
+8|Illusion|Motif scintillant|Les couleurs frappent de confusion, d'étourdissement ou d'inconscience.
+8|Invocation|Contrat suprême|Comme contrat, mais jusqu'à 18 DV.
+8|Invocation|Convocation de monstres VIII|Appelle une ou plusieurs créatures extraplanaires luttant pour le PJ.
+8|Invocation|Dédale|Enferme la cible dans un labyrinthe extradimensionnel.
+8|Invocation|Nuage incendiaire|Nuage infligeant 4d6 points de dégâts de feu/round.
+8|Invocation|Séquestration|Emprisonne la cible dans une gemme.
+8|Nécromancie|Clone|Double s'éveillant à la mort de l'original.
+8|Nécromancie|Création de mort-vivant dominant|Ombre, âme-en-peine, spectre ou dévoreur.
+8|Nécromancie|Flétrissure|1d6 points de dégâts/niveau dans un rayon de 9 m.
+8|Nécromancie|Symbole de mort|La rune tue les créatures proches.
+8|Transmutation|Animation suspendue|Met la cible en état de stase.
+8|Transmutation|Corps de fer|Le corps du PJ se transforme en fer vivant.
+8|Transmutation|Métamorphose universelle|Transforme n'importe quoi en n'importe quoi d'autre.
+
+9|Abjuration|Délivrance|Libère la victime d'un emprisonnement.
+9|Abjuration|Disjonction de Mordenkainen|Dissipe la magie et les propriétés des objets magiques.
+9|Abjuration|Emprisonnement|Emprisonne la cible au centre de la Terre.
+9|Abjuration|Sphère prismatique|Comme mur prismatique, mais protège de tous les côtés.
+9|Divination|Prémonition|« Sixième sens » avertissant le PJ en cas de danger.
+9|Enchantement|Domination universelle|Comme domination, mais sur n'importe qui.
+9|Enchantement|Immobilisation de monstre de groupe|Comme immobilisation de monstre, mais sur 9 m de rayon.
+9|Enchantement|Mot de pouvoir mortel|Tue un adversaire doté de 100 pv ou moins.
+9|Évocation|Main broyeuse de Bigby|Main géante qui abrite, pousse ou attaque.
+9|Évocation|Nuée de météores|Quatre sphères explosives infligent 6d6 points de dégâts de feu chacune.
+9|Illusion|Reflets d'ombre|Comme convocation d'ombres, mais jusqu'au 8e niveau et à 80 % réel.
+9|Illusion|Ennemi subconscient|Comme assassin imaginaire, mais à 9 m à la ronde.
+9|Invocation|Cercle de téléportation|Amène qui entre dans le cercle à une destination programmée.
+9|Invocation|Convocation de monstres IX|Appelle une ou plusieurs créatures extraplanaires luttant pour le PJ.
+9|Invocation|Portail|Relie deux plans pour se déplacer ou appeler une entité.
+# « Refuge » : la liste résumée (p. 189) le range sous « Invoc », mais le chapitre 11
+# (p. 281) l'imprime « Transmutation [téléportation] ». Le chapitre fait foi — et
+# l'entrée déjà au catalogue (spells-pretre.ts, Transmutation) était donc juste.
+9|Transmutation|Refuge|Enchante un objet pour ramener son possesseur jusqu'au PJ.
+9|Nécromancie|Absorption d'énergie|La cible gagne 2d4 niveaux négatifs.
+9|Nécromancie|Capture d'âme|Retient l'âme d'un défunt pour empêcher sa résurrection.
+9|Nécromancie|Plainte d'outre-tombe|Tue 1 créature/niveau.
+9|Nécromancie|Projection astrale|Emmène le PJ et ses compagnons dans le plan Astral.
+9|Transmutation|Arrêt du temps|Seul le PJ peut agir pendant 1d4+1 rds.
+9|Transmutation|Changement de forme|Le PJ peut se transformer à l'envi (1 fois/round).
+# Chapitre 11 (p. 269) : le bloc s'intitule « Passage dans l'éther ».
+9|Transmutation|Passage dans l'éther|Emmène plusieurs créatures dans le plan Éthéré.
+9|Universel|Souhait|Comme souhait limité, mais en plus puissant.

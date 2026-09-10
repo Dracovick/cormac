@@ -1,0 +1,40 @@
+# Chapitre 11 du Manuel des Joueurs 3.5 — lettres A à C
+# Relevé à l'image (PDF = page imprimée + 1). Format : nom|école|composantes|portée|durée|description|page
+Antidétection|Abjuration|V, G, M|Contact|1 heure/niveau|Rend la cible difficile à repérer par les divinations et la scrutation.|199
+Apaisement des animaux|Enchantement|V, G|Courte|1 minute/niveau|Calme 2d4 + niveau DV d'animaux, qui cessent d'attaquer ou de fuir.|200
+Bénédiction d'arme|Transmutation|V, G|Contact|1 minute/niveau|L'arme devient bonne, ignore la réduction de dégâts des créatures mauvaises et confirme les critiques.|204
+Charme-animal|Enchantement|V, G|Courte|1 heure/niveau|Un animal considère le PJ comme un ami fidèle et lui obéit dans la limite du raisonnable.|211
+Collet|Transmutation|V, G, FD|Contact|Jusqu'à déclenchement ou rupture|Crée un piège magique dissimulé dont le nœud coulant se referme sur la première créature.|213
+Communication avec les animaux|Divination|V, G|Personnelle|1 minute/niveau|Permet de comprendre les animaux et de dialoguer avec eux.|214
+Communication avec les plantes|Divination|V, G|Personnelle|1 minute/niveau|Permet de parler aux plantes et de les interroger sur leur voisinage.|214
+Communion avec la nature|Divination|V, G|Personnelle|Instantané|Apprend trois faits sur les environs naturels (1,5 km/niveau en extérieur).|215
+Convocation d'alliés naturels I|Invocation|V, G, FD|Courte|1 round/niveau (T)|Convoque une créature naturelle de niveau 1 qui combat pour le PJ.|218
+Convocation d'alliés naturels II|Invocation|V, G, FD|Courte|1 round/niveau (T)|Convoque 1 créature de niveau 2 ou 1d3 de niveau 1.|218
+Convocation d'alliés naturels III|Invocation|V, G, FD|Courte|1 round/niveau (T)|Convoque 1 créature de niveau 3, 1d3 de niveau 2 ou 1d4+1 de niveau 1.|218
+Convocation d'alliés naturels IV|Invocation|V, G, FD|Courte|1 round/niveau (T)|Convoque 1 créature de niveau 4, 1d3 de niveau 3 ou 1d4+1 de niveau moindre.|218
+Croissance d'épines|Transmutation|V, G, FD|Moyenne|1 heure/niveau (T)|Le sol se hérisse d'épines invisibles : 1d4 points de dégâts par 1,50 m parcouru.|225
+Croissance végétale|Transmutation|V, G, FD|Voir description|Instantané|Rend la végétation impénétrable (jungle) ou augmente d'un tiers la production agricole (engrais).|225
+
+# Lignes NIVEAU vérifiées au chapitre 11 (confirment le relevé des pages 189-190 et 195-196)
+# Alarme : Bard 1, Ens/Mag 1, Rôd 1
+# Alignement indétectable : Bard 1, Pal 2, Prê 2
+# Annulation d'enchantement : Bard 4, Chance 5, Ens/Mag 5, Pal 4, Prê 5
+# Arme magique : Ens/Mag 1, Guerre 1, Pal 1, Prê 1
+# Arme magique suprême : Ens/Mag 3, Pal 3, Prê 4
+# Bénédiction : Pal 1, Prê 1
+# Bénédiction de l'eau : Pal 1, Prê 1
+# Cercle magique contre le Chaos : Ens/Mag 3, Loi 3, Pal 3, Prê 3
+# Cercle magique contre le Mal : Bien 3, Ens/Mag 3, Pal 3, Prê 3
+# Création d'eau : Dru 0, Pal 1, Prê 0
+# Croissance animale : Dru 5, Ens/Mag 5, Rôd 4
+# Antidétection : Duperie 3, Ens/Mag 3, Rôd 4
+# Apaisement des animaux : Dru 1, Faune 1, Rôd 1
+# Bénédiction d'arme : Pal 1
+# Charme-animal : Dru 1, Rôd 1
+# Collet : Dru 3, Rôd 2
+# Communication avec les animaux : Bard 3, Dru 1, Rôd 1
+# Communication avec les plantes : Bard 4, Dru 3, Rôd 2
+# Communion avec la nature : Dru 5, Faune 5, Rôd 4
+# Convocation d'alliés naturels I à IV : Dru n, Rôd n (mêmes niveaux) ; V à IX = druide seul
+# Croissance d'épines : Dru 3, Rôd 2
+# Croissance végétale : Dru 3, Rôd 3, Flore 3

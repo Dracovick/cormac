@@ -1,0 +1,97 @@
+# Glané pour le MANDAT DRUIDE, au fil du relevé du barde (2026-08-30).
+# Manuel des Joueurs 3.5 (fr). Décalage confirmé : page PDF = page imprimée + 1.
+#
+# ── 1. LISTE RÉSUMÉE DU DRUIDE — page imprimée 183 (PDF 184) ──
+# La liste du druide SUIT immédiatement celle du barde dans le chapitre 11.
+# Elle commence en bas de la colonne du milieu du folio 183 et se poursuit
+# page 184 et suivantes (NON lues : le mandat barde s'arrêtait au folio 183).
+#
+# DRUIDE NIVEAU 0 (oraisons) — 13 sorts, liste COMPLÈTE lue :
+Assistance divine, Création d'eau, Détection de la magie, Détection du poison,
+Illumination, Lecture de la magie, Lumière, Purification de nourriture et d'eau,
+Réparation, Repérage, Résistance, Soins superficiels, Stimulant
+#
+# DRUIDE NIVEAU 1 — 20 sorts, liste COMPLÈTE lue :
+Apaisement des animaux, Baie nourricière, Brume de dissimulation, Charme-animal,
+Communication avec les animaux, Convocation d'alliés naturels I,
+Détection de la faune ou de la flore, Détection des collets et des fosses,
+Enchevêtrement, Endurance aux énergies destructives, Flammes, Gourdin magique,
+Grand pas, Invisibilité pour les animaux, Lueur féerique, Morsure magique,
+Passage sans traces, Pierre magique, Saut, Soins légers
+#
+# DRUIDE NIVEAU 2 — 26 sorts, liste COMPLÈTE lue :
+Bourrasque, Convocation d'alliés naturels II, Distorsion du bois,
+Endurance de l'ours, Façonnage du bois, Force de taureau, Forme d'arbre,
+Grâce féline, Hypnose des animaux, Immobilisation d'animal, Lame de feu,
+Messager animal, Métal brûlant, Métal gelé, Nappe de brouillard, Nuée grouillante,
+Pattes d'araignée, Peau d'écorce, Piège à feu, Ralentissement du poison,
+Ramollissement de la terre et de la pierre, Rapetissement d'animal,
+Résistance aux énergies destructives, Restauration partielle, Sagesse du hibou,
+Sphère de feu
+#
+# DRUIDE NIVEAU 3 — DÉBUT SEULEMENT (la page 183 se termine ici) :
+Appel de la foudre, Collet, [la suite est page 184]
+#
+# ── 2. LIGNES « NIVEAU » DU CHAPITRE 11 lues à l'image, portant Dru ──
+# Format : nom|ligne Niveau telle qu'imprimée|page imprimée
+Baie nourricière|Dru 1|204
+Bâton à sort|Dru 6|204
+Bâton sylvanien|Dru 7|204
+Bois de fer|Dru 6|205
+Charme-animal|Dru 1, Rôd 1|211
+Chêne animé|Dru 6|211
+Communion avec la nature|Dru 5, Faune 5, Rôd 4|215
+Contagion|Destruction 3, Dru 3, Ens/Mag 4, Prê 3|216
+Contrôle de l'eau|Dru 4, Eau 4, Ens/Mag 6, Prê 4|216
+Contrôle des plantes|Dru 8, Flore 8|217
+Contrôle des vents|Air 5, Dru 5|217
+Convocation d'alliés naturels VI|Dru 6|219
+Convocation d'alliés naturels VII|Dru 7|219
+Convocation d'alliés naturels VIII|Dru 8|219
+Convocation d'alliés naturels IX|Dru 9|219
+Dissipation de la magie|Bard 3, Dru 4, Ens/Mag 3, Magie 3, Pal 3, Prê 3|—
+Éveil|Dru 5|239
+Explosion de lumière|Dru 8, Ens/Mag 8, Soleil 8|240
+Extinction des feux|Dru 3|240
+Façonnage de la pierre|Dru 3, Ens/Mag 5, Prê 3, Terre 3|240
+Façonnage du bois|Dru 2|240
+Guérison suprême|Dru 7, Prê 6, Guérison 6|247
+Hypnose des animaux|Bard 2, Dru 2|247
+Illumination|Bard 0, Dru 0, Ens/Mag 0|248
+Immobilisation d'animal|Dru 2, Faune 2, Rôd 2|249
+Marche dans les airs|Air 4, Dru 4, Prê 4|256
+Morsure magique|Dru 1, Rôd 1|262
+Morsure magique suprême|Dru 3, Rôd 3|262
+Mort rampante|Dru 7|262
+Mot de rappel|Dru 8, Prê 6|262
+Réparation|Bard 0, Dru 0, Ens/Mag 0, Prê 0|283
+Repérage|Bard 0, Dru 0|283
+Répulsif|Bard 4, Dru 4, Prê 4, Rôd 3|283
+Résistance|Bard 0, Dru 0, Ens/Mag 0, Pal 1, Prê 0|283
+Résistance aux énergies destructives|Dru 2, Ens/Mag 2, Feu 3, Pal 2, Prê 2, Rôd 1|284
+Respiration aquatique|Dru 3, Eau 3, Ens/Mag 3, Prê 3|284
+Restauration partielle|Dru 2, Pal 1, Prê 2|284
+Soins importants|Bard 3, Dru 4, Guérison 3, Pal 4, Prê 3, Rôd 4|289
+Soins importants de groupe|Dru 8, Prê 7|289
+Soins intensifs|Bard 4, Dru 5, Guérison 4, Prê 4|289
+Soins intensifs de groupe|Dru 9, Guérison 8, Prê 8|289
+Soins légers|Bard 1, Dru 1, Guérison 1, Pal 1, Prê 1, Rôd 2|289
+Soins légers de groupe|Bard 5, Dru 6, Guérison 5, Prê 5|289
+Soins modérés|Bard 2, Dru 3, Guérison 2, Pal 3, Prê 2, Rôd 3|289
+Soins modérés de groupe|Bard 6, Dru 7, Prê 6|289
+Soins superficiels|Dru 0, Prê 0|289
+Voyage par les arbres|Dru 5, Rôd 4|303
+#
+# ── 3. REPÈRES DE PAGINATION DU CHAPITRE 11 (pages imprimées) ──
+# Bagou 203 · Bannissement/Bénédiction 204 · Berceuse/Blessures 205 ·
+# Chant de discorde/Charme-* 211 · Communion/Confusion/Cône de froid 215 ·
+# Contact/Contagion/Contrat 216 · Contrôle-* 217 · Convocation d'alliés 218-219 ·
+# Convocation d'instrument 219 · Convocation d'ombres 220 · Épée sainte/Espoir/
+# État gazeux/Éveil 239 · Exécution/Explosion/Extinction/Façonnage 240 ·
+# Guérison/Hébétement/Héroïsme/Hypnose 247 · Idiotie/Illumination/Image-* 248 ·
+# Immobilisation/Immunité/Implosion 249 · Malédiction/Manipulation/Manoir 256 ·
+# Modification/Moment de prescience 261 · Monture/Morsure/Mot de pouvoir 262 ·
+# Réincarnation/Rejet/Renvoi 282 · Réparation/Repérage/Répulsif/Résistance 283 ·
+# Résonance/Restauration 284 · Soins-*/Sommeil/Songe/Son imaginaire 289-290 ·
+# Voyage par les arbres/Zone d'antimagie/Zone de silence/Zone de vérité 303 ·
+# Fin du chapitre 11 : le glossaire commence page 304.

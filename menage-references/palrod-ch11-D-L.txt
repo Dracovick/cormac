@@ -1,0 +1,43 @@
+# Chapitre 11 du Manuel des Joueurs 3.5 — lettres D à L
+# Relevé à l'image (PDF = page imprimée + 1), lignes « Niveau » re-vérifiées à 300 dpi.
+# Format : nom|école|composantes|portée|durée|description|page
+Détection de la faune ou de la flore|Divination|V, G|Longue|Concentration, jusqu'à 10 mn/niveau (T)|Détecte dans un cône un type précis de plante ou d'animal, et son état de santé.|229
+Détection des collets et des fosses|Divination|V, G|18 m|Concentration, jusqu'à 10 mn/niveau (T)|Repère fosses, pièges rudimentaires et risques naturels du terrain.|230
+Empire végétal|Transmutation|V|Courte|1 jour/niveau|Les créatures végétales visées deviennent amicales et obéissent à des ordres simples.|236
+Épée sainte|Évocation|V, G|Contact|1 round/niveau|L'arme du paladin devient une arme sainte +5 et émet un cercle magique contre le Mal.|239
+Forme d'arbre|Transmutation|V, G, FD|Personnelle|1 heure/niveau (T)|Le PJ prend l'apparence indétectable d'un petit arbre ou d'un buisson (CA naturelle +10).|243
+Grand pas|Transmutation|V, G, M|Personnelle|1 heure/niveau (T)|Augmente de 3 m la vitesse de déplacement terrestre.|246
+Guérison de destrier|Invocation|V, G|Contact|Instantané|Comme guérison suprême, mais n'affecte que la monture du paladin.|246
+Immobilisation d'animal|Enchantement|V, G|Moyenne|1 round/niveau (T)|Fige un animal sur place, conscient mais incapable d'agir.|249
+Invisibilité pour les animaux|Abjuration|G, FD|Contact|10 minutes/niveau (T)|Les animaux ne peuvent ni voir, ni entendre, ni sentir les sujets (1/niveau).|251
+
+# ⚠ Immobilisation d'animal : entrée ABRÉGÉE au Manuel — portée et durée NON imprimées,
+#   reprises de « immobilisation de personne » (p. 249), auquel l'entrée renvoie explicitement.
+# ⚠ Invisibilité pour les animaux est une ABJURATION (pas une Illusion) et n'a PAS de
+#   composante verbale — à ne pas confondre avec « Invisibilité » (Illusion, p. 250).
+
+# Lignes NIVEAU vérifiées au chapitre 11
+# Délivrance de la paralysie : Pal 2, Prê 2
+# Délivrance des malédictions : Bard 3, Ens/Mag 4, Pal 3, Prê 3
+# Détection des morts-vivants : Ens/Mag 1, Pal 1, Prê 1
+# Détection du mensonge : Pal 3, Prê 4
+# Détection du poison : Dru 0, Ens/Mag 0, Pal 1, Prê 0, Rôd 1   ⚠ DIVERGENCE (voir ci-dessous)
+# Dissipation de la magie : Bard 3, Dru 4, Ens/Mag 3, Magie 3, Pal 3, Prê 3
+# Enchevêtrement : Dru 1, Flore 1, Rôd 1
+# Endurance aux énergies destructives : Dru 1, Ens/Mag 1, Pal 1, Prê 1, Rôd 1, Soleil 1
+# Endurance de l'ours : Dru 2, Ens/Mag 2, Prê 2, Rôd 2
+# Faveur divine : Pal 1, Prê 1
+# Force de taureau : Bard 2, Dru 2, Ens/Mag 2, Force 2, Pal 2, Prê 2
+# Grâce féline : Bard 2, Dru 2, Ens/Mag 2, Rôd 2
+# Guérison de la cécité/surdité : Pal 3, Prê 3
+# Guérison des maladies : Dru 3, Prê 3, Rôd 3
+# Lecture de la magie : Bard 0, Dru 0, Ens/Mag 0, Pal 1, Prê 0, Rôd 1
+# Liberté de mouvement : Bard 4, Chance 4, Dru 4, Prê 4, Rôd 4
+# Lumière du jour : Bard 3, Dru 3, Ens/Mag 3, Pal 3, Prê 3
+
+# ⚠⚠ DIVERGENCE REDRESSÉE PAR LE CHAPITRE 11
+# « Détection du poison » porte « Rôd 1 » au chapitre 11 (p. 231), mais la liste
+# résumée des sorts de rôdeur (p. 195) ne le mentionne PAS : elle passe de
+# « Détection des collets et des fosses » directement à « Enchevêtrement ».
+# Le chapitre fait foi : le sort RESTE rôdeur 1. Le catalogue le portait déjà.
+# La liste du rôdeur compte donc 51 sorts, et non 50.

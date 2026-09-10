@@ -1,0 +1,309 @@
+{
+ "horodatage": "2026-08-28T01:56:21.312Z",
+ "idExistant": 82,
+ "refs": {
+  "clans": {
+   "maxId": 2,
+   "nb": 2
+  },
+  "skills": {
+   "maxId": 191,
+   "nb": 88
+  },
+  "feats": {
+   "maxId": 480,
+   "nb": 477
+  },
+  "weapons": {
+   "maxId": 174,
+   "nb": 174
+  },
+  "armor": {
+   "maxId": 5,
+   "nb": 5
+  },
+  "magic_items": {
+   "maxId": 274,
+   "nb": 274
+  },
+  "potions": {
+   "maxId": 12,
+   "nb": 12
+  }
+ },
+ "perso": {
+  "characters": 71,
+  "character_classes": 81,
+  "character_ability_scores": 71,
+  "character_combat_stats": 71,
+  "character_saving_throws": 71,
+  "character_skills": 509,
+  "character_feats": 502,
+  "character_weapons": 193,
+  "character_armor": 4,
+  "character_magic_items": 87,
+  "character_currency": 71,
+  "character_languages": 158,
+  "character_companions": 4,
+  "character_notes": 38,
+  "character_journal": 61,
+  "character_potions": 9,
+  "character_spells": 197,
+  "character_spell_effects": 4,
+  "character_creatures": 1
+ },
+ "contenu82": {
+  "characters": [
+   {
+    "id": 82,
+    "nom": "Krugg Coeur-Flamboyant",
+    "surnom": null,
+    "race_id": 7,
+    "sexe": "M",
+    "taille": "1,88",
+    "poids": null,
+    "yeux": "ambre doré.",
+    "cheveux": "noirs",
+    "age": 24,
+    "alignement": "CB",
+    "dieu_id": 25,
+    "clan_id": null,
+    "xp": 19500,
+    "notes": "Très musclé, cicatrices bras et torse, canines visibles modérées\nDieu: Kord: force, du courage et du combat\u000bCouleur de peau : Gris olive foncé\u000bCheveux noirs et épais, tresses avec anneaux\u000bregard intense, animé d’une foi brûlante et d’un esprit indomptable\u000bVoit dans le noir à 20 m",
+    "created_at": "2026-06-29T21:29:54.776Z",
+    "updated_at": "2026-08-28T05:46:02.214Z",
+    "photo_url": null,
+    "joueur_prenom": "Daniel",
+    "joueur_nom": "Tarte",
+    "historique": null
+   }
+  ],
+  "character_classes": [
+   {
+    "id": 215,
+    "personnage_id": 82,
+    "classe_id": 5,
+    "niveau": 6
+   }
+  ],
+  "character_ability_scores": [
+   {
+    "id": 82,
+    "personnage_id": 82,
+    "for_base": 18,
+    "for_magique": 0,
+    "dex_base": 10,
+    "dex_magique": 0,
+    "con_base": 12,
+    "con_magique": 0,
+    "int_base": 8,
+    "int_magique": 0,
+    "sag_base": 16,
+    "sag_magique": 0,
+    "cha_base": 16,
+    "cha_magique": 0
+   }
+  ],
+  "character_combat_stats": [
+   {
+    "id": 82,
+    "personnage_id": 82,
+    "pv_max": 52,
+    "pv_actuels": 47,
+    "ca_base": 10,
+    "ca_arme": 8,
+    "ca_bouclier": 0,
+    "ca_naturelle": 0,
+    "ca_deflexion": 0,
+    "ca_divers": 2,
+    "deplacement": 10,
+    "karma": 6,
+    "initiative_bonus": 0,
+    "bba_corps_a_corps": 4,
+    "bba_projectiles": 4,
+    "domaine1": null,
+    "domaine2": null
+   }
+  ],
+  "character_saving_throws": [
+   {
+    "id": 82,
+    "personnage_id": 82,
+    "reflexes_base": 2,
+    "reflexes_magique": 1,
+    "vigueur_base": 5,
+    "vigueur_magique": 1,
+    "volonte_base": 5,
+    "volonte_magique": 1
+   }
+  ],
+  "character_skills": [
+   {
+    "id": 1229,
+    "personnage_id": 82,
+    "skill_id": 15,
+    "rangs_investis": 1,
+    "modif_divers": 0
+   },
+   {
+    "id": 1230,
+    "personnage_id": 82,
+    "skill_id": 181,
+    "rangs_investis": 2,
+    "modif_divers": 0
+   },
+   {
+    "id": 1231,
+    "personnage_id": 82,
+    "skill_id": 3,
+    "rangs_investis": 5,
+    "modif_divers": 0
+   },
+   {
+    "id": 1232,
+    "personnage_id": 82,
+    "skill_id": 191,
+    "rangs_investis": 2,
+    "modif_divers": 0
+   }
+  ],
+  "character_feats": [
+   {
+    "id": 1492,
+    "personnage_id": 82,
+    "feat_id": 13,
+    "notes": null
+   },
+   {
+    "id": 1493,
+    "personnage_id": 82,
+    "feat_id": 467,
+    "notes": null
+   },
+   {
+    "id": 1494,
+    "personnage_id": 82,
+    "feat_id": 468,
+    "notes": null
+   }
+  ],
+  "character_weapons": [
+   {
+    "id": 513,
+    "personnage_id": 82,
+    "arme_id": 157,
+    "bonus_magique": 0,
+    "proprietes_speciales": null,
+    "quantite": 1,
+    "cote_de_force": null,
+    "bonus_munitions": null
+   },
+   {
+    "id": 514,
+    "personnage_id": 82,
+    "arme_id": 158,
+    "bonus_magique": 0,
+    "proprietes_speciales": null,
+    "quantite": 1,
+    "cote_de_force": null,
+    "bonus_munitions": null
+   },
+   {
+    "id": 515,
+    "personnage_id": 82,
+    "arme_id": 159,
+    "bonus_magique": 0,
+    "proprietes_speciales": null,
+    "quantite": 1,
+    "cote_de_force": null,
+    "bonus_munitions": null
+   }
+  ],
+  "character_armor": [],
+  "character_magic_items": [
+   {
+    "id": 806,
+    "personnage_id": 82,
+    "objet_id": 71,
+    "emplacement": null,
+    "notes": null,
+    "charges_restantes": null
+   }
+  ],
+  "character_currency": [
+   {
+    "id": 82,
+    "personnage_id": 82,
+    "po": "0.00",
+    "pa": "0.00",
+    "pc": "0.00",
+    "pe": "0.00",
+    "pm": "0.00",
+    "pp": "0.00"
+   }
+  ],
+  "character_languages": [
+   {
+    "id": 480,
+    "personnage_id": 82,
+    "langue_id": 14
+   },
+   {
+    "id": 481,
+    "personnage_id": 82,
+    "langue_id": 27
+   }
+  ],
+  "character_companions": [],
+  "character_notes": [],
+  "character_journal": [],
+  "character_potions": [],
+  "character_spells": [],
+  "character_spell_effects": [],
+  "character_creatures": [],
+  "weapons_du_perso": [
+   {
+    "id": 157,
+    "nom": "Dague lancée",
+    "categorie_id": null,
+    "degats": "1d4",
+    "critique_min": 20,
+    "critique_mult": 2,
+    "portee": null,
+    "type_degats": null,
+    "taille": null,
+    "poids": null,
+    "prix": null,
+    "description": null
+   },
+   {
+    "id": 158,
+    "nom": "Dague frappée",
+    "categorie_id": null,
+    "degats": "1d4",
+    "critique_min": 20,
+    "critique_mult": 2,
+    "portee": null,
+    "type_degats": null,
+    "taille": null,
+    "poids": null,
+    "prix": null,
+    "description": null
+   },
+   {
+    "id": 159,
+    "nom": "Épée à deux mains",
+    "categorie_id": null,
+    "degats": "2d6",
+    "critique_min": 20,
+    "critique_mult": 2,
+    "portee": null,
+    "type_degats": null,
+    "taille": null,
+    "poids": null,
+    "prix": null,
+    "description": null
+   }
+  ]
+ }
+}

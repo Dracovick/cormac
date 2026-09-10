@@ -1,0 +1,64 @@
+# pages PDF 205-224
+Bannissement|Abjuration|Ens/Mag 7, Prê 6|V, G, F|Courte|instantanée
+Bouche magique|Illusion (hallucination)|Bard 1, Ens/Mag 2|V, G, M|Courte|permanente jusqu'à utilisation
+Bouclier|Abjuration [force]|Ens/Mag 1|V, G|Personnelle|1 minute/niveau (T)
+Bouclier de feu|Évocation [feu ou froid]|Ens/Mag 4, Feu 5, Soleil 4|V, G, M/FD|Personnelle|1 round/niveau (T)
+Boule de feu|Évocation [feu]|Ens/Mag 3|V, G, M|Longue|instantanée
+Boule de feu à retardement|Évocation [feu]|Ens/Mag 7|?|?|jusqu'à 5 rounds (voir description)
+Bourrasque|Évocation [air]|Dru 2, Ens/Mag 2|V, G|18 m|1 round
+Brouillard dense|Invocation (création)|Ens/Mag 4|V, G, M|?|1 minute/niveau
+Brume acide|Invocation (création) [acide]|Ens/Mag 6, Eau 7|V, G, M/FD|Moyenne|1 round/niveau
+Brume de dissimulation|Invocation (création)|Air 1, Dru 1, Eau 1, Ens/Mag 1, Prê 1|V, G|6 m|1 minute/niveau
+Brume mentale|Enchantement (coercition) [mental]|Bard 5, Ens/Mag 5|V, G|Moyenne|30 minutes et 2d6 rounds (voir description)
+Brume mortelle|Invocation (création)|Ens/Mag 5|V, G|Moyenne|1 minute/niveau
+Cage de force|Évocation [force]|Ens/Mag 7|V, G, M|Courte|2 heures/niveau (T)
+Capture d'âme|Nécromancie|Ens/Mag 9, Prê 9|V, G, F|Courte|permanente
+Cauchemar|Illusion (fantasme) [Mal, mental]|Bard 5, Ens/Mag 5|V, G|Illimitée|instantanée
+Cécité/surdité|Nécromancie|Bard 2, Ens/Mag 2, Prê 3|V|Moyenne|permanente (T)
+Cercle de mort|Nécromancie [mort]|Ens/Mag 6|V, G, M|Moyenne|instantanée
+Cercle de téléportation|Invocation (téléportation)|Ens/Mag 9|V, M|0 m|10 minutes/niveau (T)
+Cercle magique contre la Loi|Abjuration [Chaos]|Chaos 3, Ens/Mag 3, Prê 3|?|?|?
+Cercle magique contre le Bien|Abjuration [Mal]|Ens/Mag 3, Mal 3, Prê 3|?|?|?
+Cercle magique contre le Chaos|Abjuration [Loi]|Ens/Mag 3, Loi 3, Pal 3, Prê 3|?|?|?
+Cercle magique contre le Mal|Abjuration [Bien]|Bien 3, Ens/Mag 3, Pal 3, Prê 3|V, G, M/FD|?|10 minutes/niveau
+Champ de force|Abjuration|Ens/Mag 6, Prê 7, Protection 7|V, G, F/FD|jusqu'à 3 m/niveau|1 round/niveau (T)
+Changement de forme|Transmutation|Dru 9, Ens/Mag 9, Faune 9|V, G, F|Personnelle|10 minutes/niveau (T)
+Changement de plan|Invocation (téléportation)|Ens/Mag 7, Prê 5|V, G, F|Contact|instantanée
+Charme-monstre|Enchantement (charme) [mental]|Bard 3, Ens/Mag 4|?|?|1 jour/niveau
+Charme-monstre de groupe|Enchantement (charme) [mental]|Bard 6, Ens/Mag 8|V|?|1 jour/niveau
+Charme-personne|Enchantement (charme) [mental]|Bard 1, Ens/Mag 1|V, G|Courte|1 heure/niveau
+Chien de garde de Mordenkainen|Invocation (création)|Ens/Mag 5|V, G, M|Courte|1 heure/niveau de lanceur de sorts ou jusqu'à apparition, puis 1 round/niveau de lanceur de sorts (voir description)
+Clairaudience/clairvoyance|Divination (scrutation)|Bard 3, Connaissance 3, Ens/Mag 3|V, G, F/FD|Longue|1 minute/niveau (T)
+Clignotement|Transmutation|Bard 3, Ens/Mag 3|V, G|Personnelle|1 round/niveau (T)
+Clone|Nécromancie|Ens/Mag 8|V, G, M, F|0 m|instantanée
+Coffre secret de Léomund|Invocation (convocation)|Ens/Mag 5|V, G, F|voir description|60 jours ou jusqu'à utilisation
+Communication à distance|Évocation|Ens/Mag 5, Prê 4|V, G, M/FD|voir description|1 round (voir description)
+Compréhension des langages|Divination|Bard 1, Ens/Mag 1, Prê 1|V, G, M/FD|Personnelle|10 minutes/niveau
+Cône de froid|Évocation [froid]|Eau 6, Ens/Mag 5|V, G, M/FD|18 m|instantanée
+Confusion|Enchantement (coercition) [mental]|Bard 3, Duperie 4, Ens/Mag 4|V, G, M/FD|Moyenne|1 round/niveau
+Contact avec les plans|Divination|Ens/Mag 5|V|Personnelle|concentration
+Contact glacial|Nécromancie|Ens/Mag 1|V, G|Contact|instantanée
+Contagion|Nécromancie [Mal]|Destruction 3, Dru 3, Ens/Mag 4, Prê 3|V, G|Contact|instantanée
+Contrat|Invocation (appel) [voir description]|Ens/Mag 5|V, G|Courte|instantanée
+Contrat intermédiaire|Invocation (appel) [voir description de contrat]|Ens/Mag 6|V, G|?|?
+Contrat suprême|Invocation (appel) [voir description de contrat]|Ens/Mag 8|V, G|?|?
+Contrôle de l'eau|Transmutation [eau]|Dru 4, Eau 4, Ens/Mag 6, Prê 4|V, G, M/FD|Longue|10 minutes/niveau (T)
+Contrôle des morts-vivants|Nécromancie|Ens/Mag 7|V, G, M|Courte|1 minute/niveau
+Contrôle mineur des morts-vivants|Nécromancie|Ens/Mag 2|V, G, M|Courte|1 jour/niveau
+Contrôle du climat|Transmutation|Air 7, Dru 7, Ens/Mag 7, Prê 7|V, G|3 km|4d12 heures (voir description)
+Convocation d'ombres|Illusion (ombre)|Bard 4, Ens/Mag 4|V, G|voir description|voir description
+Convocation d'ombres suprême|Illusion (ombre)|Ens/Mag 7|?|?|?
+Convocation de monstres I|Invocation (convocation) [voir description]|Bard 1, Ens/Mag 1, Prê 1|V, G, F/FD|Courte|1 round/niveau (T)
+Convocation de monstres II|Invocation (convocation) [voir description de convocation de monstres I]|Bard 2, Ens/Mag 2, Prê 2|?|?|?
+Convocation de monstres III|Invocation (convocation) [voir description convocation de monstres I]|Bard 3, Ens/Mag 3, Prê 3|?|?|?
+Convocation de monstres IV|Invocation (convocation) [voir description convocation de monstres I]|Bard 4, Ens/Mag 4, Prê 4|?|?|?
+Convocation de monstres V|Invocation (convocation) [voir description convocation de monstres I]|Bard 5, Ens/Mag 5, Prê 5|?|?|?
+Convocation de monstres VI|Invocation (convocation) [voir description convocation de monstres I]|Bard 6, Ens/Mag 6, Prê 6|?|?|?
+Convocation de monstres VII|Invocation (convocation) [voir description convocation de monstres I]|Ens/Mag 7, Prê 7|?|?|?
+Convocation de monstres VIII|Invocation (convocation) [voir description convocation de monstres I]|Ens/Mag 8, Prê 8|?|?|?
+Convocation de monstres IX|Invocation (convocation) [voir description convocation de monstres I]|Bien 9, Chaos 9, Ens/Mag 9, Loi 9, Mal 9, Prê 9|?|?|?
+Corde animée|Transmutation|Bard 1, Ens/Mag 1|V, G|Moyenne|1 round/niveau
+Corde enchantée|Transmutation|Ens/Mag 2|V, G, M|Contact|1 heure/niveau (T)
+Corps de fer|Transmutation|Ens/Mag 8, Terre 8|V, G, M/FD|Personnelle|1 minute/niveau (T)
+Couleurs dansantes|Illusion (mirage) [mental]|Ens/Mag 1|V, G, M|4,50 m|instantanée (voir description)
+Coup au but|Divination|Ens/Mag 1|V, F|Personnelle|voir description

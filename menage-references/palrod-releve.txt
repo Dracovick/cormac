@@ -1,0 +1,98 @@
+# PALADIN — Manuel des Joueurs 3.5, pages imprimées 189-190 (PDF 190-191)
+P|1|Arme magique
+P|1|Bénédiction
+P|1|Bénédiction d'arme
+P|1|Bénédiction de l'eau
+P|1|Création d'eau
+P|1|Détection des morts-vivants
+P|1|Détection du poison
+P|1|Endurance aux énergies destructives
+P|1|Faveur divine
+P|1|Lecture de la magie
+P|1|Protection contre le Chaos
+P|1|Protection contre le Mal
+P|1|Résistance
+P|1|Soins légers
+P|1|Stimulant
+P|2|Alignement indétectable
+P|2|Délivrance de la paralysie
+P|2|Force de taureau
+P|2|Protection d'autrui
+P|2|Ralentissement du poison
+P|2|Résistance aux énergies destructives
+P|2|Sagesse du hibou
+P|2|Splendeur de l'aigle
+P|2|Zone de vérité
+P|3|Arme magique suprême
+P|3|Cercle magique contre le Chaos
+P|3|Cercle magique contre le Mal
+P|3|Délivrance des malédictions
+P|3|Détection du mensonge
+P|3|Dissipation de la magie
+P|3|Guérison de destrier
+P|3|Guérison de la cécité/surdité
+P|3|Lumière du jour
+P|3|Prière
+P|3|Soins modérés
+P|4|Annulation d'enchantement
+P|4|Épée sainte
+P|4|Marque de la justice
+P|4|Neutralisation du poison
+P|4|Protection contre la mort
+P|4|Rejet du Chaos
+P|4|Rejet du Mal
+P|4|Restauration
+P|1|Restauration partielle
+P|4|Soins importants
+# RÔDEUR — pages imprimées 195-196 (PDF 196-197)
+R|1|Alarme
+R|1|Apaisement des animaux
+R|1|Charme-animal
+R|1|Communication avec les animaux
+R|1|Convocation d'alliés naturels I
+R|1|Détection de la faune ou de la flore
+R|1|Détection des collets et des fosses
+R|1|Détection du poison
+R|1|Enchevêtrement
+R|1|Endurance aux énergies destructives
+R|1|Grand pas
+R|1|Invisibilité pour les animaux
+R|1|Lecture de la magie
+R|1|Messager animal
+R|1|Morsure magique
+R|1|Passage sans trace
+R|1|Ralentissement du poison
+R|1|Résistance aux énergies destructives
+R|1|Saut
+R|2|Collet
+R|2|Communication avec les plantes
+R|2|Convocation d'alliés naturels II
+R|2|Croissance d'épines
+R|2|Endurance de l'ours
+R|2|Grâce féline
+R|2|Immobilisation d'animal
+R|2|Mur de vent
+R|2|Peau d'écorce
+R|2|Protection contre les énergies destructives
+R|2|Sagesse du hibou
+R|2|Soins légers
+R|3|Convocation d'alliés naturels III
+R|3|Croissance végétale
+R|3|Empire végétal
+R|3|Forme d'arbre
+R|3|Guérison des maladies
+R|3|Marche sur l'onde
+R|3|Morsure magique suprême
+R|3|Neutralisation du poison
+R|3|Rabougrissement des plantes
+R|3|Rapetissement d'animal
+R|3|Répulsif
+R|3|Soins modérés
+R|3|Vision dans le noir
+R|4|Antidétection
+R|4|Communion avec la nature
+R|4|Convocation d'alliés naturels IV
+R|4|Croissance animale
+R|4|Liberté de mouvement
+R|4|Soins importants
+R|4|Voyage par les arbres

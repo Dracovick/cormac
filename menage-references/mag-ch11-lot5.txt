@@ -1,0 +1,76 @@
+# pages PDF 285-304
+Résistance aux énergies destructives|Abjuration|Dru 2, Ens/Mag 2, Feu 3, Pal 2, Prê 2, Rôd 1|V, G, FD|Contact|10 minutes/niveau
+Respiration aquatique|Transmutation|Dru 3, Eau 3, Ens/Mag 3, Prê 3|V, G, M/FD|Contact|2 heures/niveau (voir description)
+Runes explosives|Abjuration [force]|Ens/Mag 3|V, G|Contact|permanente jusqu'à explosion (T)
+Ruse du renard|Transmutation|Bar 2, Ens/Mag 2|V, G, M/FD|Contact|1 minute/niveau
+Ruse du renard de groupe|Transmutation|Bar 6, Ens/Mag 6|?|Courte|?
+Sagesse du hibou|Transmutation|Dru 2, Ens/Mag 2, Pal 2, Prê 2, Rôd 2|V, G, M/FD|Contact|1 minute/niveau
+Sagesse du hibou de groupe|Transmutation|Dru 6, Ens/Mag 6, Prê 6|?|Courte|?
+Sanctuaire de Mordenkaïnen|Abjuration|Ens/Mag 5|V, G, M|Courte|24 heures (T)
+Saut|Transmutation|Dru 1, Ens/Mag 1, Rôd 1|V, G, M|Contact|1 minute/niveau (T)
+Sceau du serpent|Invocation (création) [force]|Bard 3, Ens/Mag 3|V, G, M|Contact|permanente ou jusqu'à utilisation ; jusqu'à libération ou 1d4 jours + 1 jour/niveau (voir description)
+Scrutation|Divination (scrutation)|Bard 3, Dru 4, Ens/Mag 4, Prê 5|V, G, M/FD, F|voir description|1 minute/niveau
+Scrutation suprême|Divination (scrutation)|Bard 6, Dru 7, Ens/Mag 7, Prê 7|V, G|?|1 heure/niveau
+Séquestration|Invocation (convocation)|Ens/Mag 8|V, G, M, (F) (voir description)|Courte|permanente (voir description)
+Serviteur invisible|Invocation (création)|Bard 1, Ens/Mag 1|V, G, M|Courte|1 heure/niveau
+Signature magique|Universel|Ens/Mag 0|V, G|0 m|permanente
+Simulacre|Illusion (ombre)|Ens/Mag 7|V, G, M, PX|0 m|instantanée
+Simulacre de vie|Nécromancie|Ens/Mag 2|V, G, M|Personnelle|1 heure/niveau ou jusqu'à utilisation (voir description)
+Sommeil|Enchantement (coercition) [mental]|Bard 1, Ens/Mag 1|V, G, M|Moyenne|1 minute/niveau
+Sommeil profond|Enchantement (coercition) [mental]|Bard 3, Ens/Mag 3|?|Courte|?
+Songe|Illusion (fantasme) [mental]|Bard 5, Ens/Mag 5|V, G|Illimitée|voir description
+Son imaginaire|Illusion (chimère)|Bard 0, Ens/Mag 0|V, G, M|Courte|1 round/niveau (T)
+Souhait|Universel|Ens/Mag 9|V, PX|voir description|voir description
+Souhait limité|Universel|Ens/Mag 7|V, G, PX|voir description|voir description
+Sphère d'invisibilité|Illusion (hallucination)|Bard 3, Ens/Mag 3|V, G, M|?|?
+Sphère d'isolement d'Otiluke|Évocation [force]|Ens/Mag 4|V, G, M|Courte|1 minute/niveau (T)
+Sphère de feu|Évocation [feu]|Dru 2, Ens/Mag 2|V, G, M/FD|Moyenne|1 round/niveau
+Sphère glaciale d'Otiluke|Évocation [froid]|Ens/Mag 6|V, G, F|Longue|instantanée ou 1 round/niveau (voir description)
+Sphère téléguidée d'Otiluke|Évocation [force]|Ens/Mag 8|V, G, M|Courte|1 minute/niveau (T)
+Sphère prismatique|Abjuration|Ens/Mag 9, Protection 9, Soleil 9|V|3 m|?
+Splendeur de l'aigle|Transmutation|Bar 2, Ens/Mag 2, Pal 2, Prê 2|V, G, M/FD|Contact|1 minute/niveau
+Splendeur de l'aigle de groupe|Transmutation|Bar 6, Ens/Mag 6, Prê 6|?|Courte|?
+Statue|Transmutation|Ens/Mag 7|V, G, M|Contact|1 heure/niveau (T)
+Suggestion|Enchantement (coercition) [langage, mental]|Bard 2, Ens/Mag 3|V, M|Courte|1 heure/niveau ou jusqu'à accomplissement
+Suggestion de groupe|Enchantement (coercition) [langage, mental]|Bard 5, Ens/Mag 6|?|Moyenne|?
+Symbole d'aliénation mentale|Enchantement (coercition) [mental]|Ens/Mag 8, Prê 8|?|?|?
+Symbole d'étourdissement|Enchantement (coercition) [mental]|Ens/Mag 7, Prê 7|?|?|?
+Symbole de douleur|Nécromancie [Mal]|Ens/Mag 5, Prê 5|?|?|?
+Symbole de faiblesse|Nécromancie|Ens/Mag 7, Prê 7|?|?|?
+Symbole de mort|Nécromancie [mort]|Ens/Mag 8, Prê 8|V, G, M|0 m (voir description)|voir description
+Symbole de persuasion|Enchantement (charme) [mental]|Ens/Mag 6, Prê 6|?|?|?
+Symbole de sommeil|Enchantement (coercition) [mental]|Ens/Mag 5, Prê 5|?|?|?
+Symbole de terreur|Nécromancie [mental, terreur]|Ens/Mag 6, Prê 6|?|?|?
+Télékinésie|Transmutation|Ens/Mag 5|V, G|Longue|concentration (jusqu'à 1 round/niveau) ou instantanée (voir description)
+Téléportation|Invocation (téléportation)|Ens/Mag 5, Voyage 5|V|Personnelle et contact|instantanée
+Téléportation d'objet|Invocation (téléportation)|Ens/Mag 7|?|Contact|?
+Téléportation sans erreur|Invocation (téléportation)|Ens/Mag 7, Voyage 7|?|?|?
+Tempête de grêle|Évocation [froid]|Dru 4, Eau 5, Ens/Mag 4|V, G, M/FD|Longue|1 round entier
+Tempête de neige|Invocation (création) [froid]|Dru 3, Ens/Mag 3|V, G, M/FD|Longue|1 round/niveau
+Ténèbres|Évocation [obscurité]|Bard 2, Ens/Mag 2, Prê 2|V, M/FD|Contact|10 minutes/niveau (T)
+Tentacules noirs d'Évard|Invocation (création)|Ens/Mag 4|V, G, M|Moyenne|1 heure/niveau (T)
+Terrain hallucinatoire|Illusion (hallucination)|Bard 4, Ens/Mag 4|V, G, M|Longue|2 heures/niveau (T)
+Terreur|Nécromancie [mental, terreur]|Bard 3, Ens/Mag 4|V, G, M|9 m|1 round/niveau ou 1 round (voir description)
+Texte illusoire|Illusion (fantasme) [mental]|Bard 3, Ens/Mag 3|V, G, M|Contact|1 jour/niveau (T)
+Toile d'araignée|Invocation (création)|Ens/Mag 2|V, G, M|Moyenne|10 minutes/niveau (T)
+Transformation de Tenser|Transmutation|Ens/Mag 6|V, G, M|Personnelle|1 round/niveau
+Transmutation de la boue en pierre|Transmutation [terre]|Dru 5, Ens/Mag 5|V, G, M/FD|Moyenne|permanente
+Transmutation de la pierre en boue|Transmutation [terre]|Dru 5, Ens/Mag 5|V, G, M/FD|Moyenne|permanente (voir description)
+Transmutation de la pierre en chair|Transmutation|Ens/Mag 6|V, G, M|Moyenne|instantanée
+Traversée des ombres|Illusion (ombre)|Bard 5, Ens/Mag 6|V, G|Contact|1 heure/niveau (T)
+Vagues d'épuisement|Nécromancie|Ens/Mag 7|V, G|18 m|instantanée
+Vagues de fatigue|Nécromancie|Ens/Mag 5|V, G|9 m|instantanée
+Vent de murmures|Transmutation [air]|Bard 2, Ens/Mag 2|V, G|1,5 km/niveau|1 heure/niveau ou dès que la destination est atteinte
+Ventriloquie|Illusion (chimère)|Bard 1, Ens/Mag 1|V, F|Courte|1 minute/niveau (T)
+Verrou dimensionnel|Abjuration|Ens/Mag 8, Prê 8|V, G|Moyenne|1 jour/niveau
+Verrou du mage|Abjuration|Ens/Mag 2|V, G, M|Contact|permanente
+Verrouillage|Abjuration|Ens/Mag 1|V|Moyenne|1 minute/niveau (T)
+Vision dans le noir|Transmutation|Ens/Mag 2, Rôd 3|V, G, M|Contact|1 heure/niveau
+Vision lucide|Divination|Connaissance 5, Dru 7, Ens/Mag 6, Prê 5|V, G, M|Contact|1 minute/niveau
+Vision magique|Divination|Ens/Mag 3|V, G|Personnelle|permanente
+Vision magique suprême|Divination|Ens/Mag 7|?|?|?
+Vision mystique|Divination|Ens/Mag 7|V, G, M, PX|?|?
+Voile|Illusion (hallucination)|Bard 6, Ens/Mag 6|V, G|Longue|concentration + 1 heure/niveau (T)
+Vol|Transmutation|Ens/Mag 3, Voyage 3|V, G, F/FD|Contact|1 minute/niveau
+Vol supérieur|Transmutation|Ens/Mag 5|V, G|Personnelle|1 heure/niveau
+Zone d'antimagie|Abjuration|Ens/Mag 6, Magie 6, Prê 8, Protection 6|V, G, M/FD|3 m|10 minutes/niveau (T)

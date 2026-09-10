@@ -1,0 +1,130 @@
+# Relevé brut de la liste résumée « Sorts d'ensorceleur ou de magicien »
+# Manuel des Joueurs 3.5 français, pages imprimées 185-186 (PDF 186-187)
+# Format : NIVEAU|ÉCOLE|NOM|DESCRIPTION
+# « Protection contre la Loi/le Bien/le Chaos/le Mal » est UNE ligne imprimée
+# mais QUATRE sorts distincts : développée ici en quatre entrées.
+
+0|Abjuration|Résistance|Confère +1 aux jets de sauvegarde.
+0|Divination|Détection de la magie|Détecte sorts et objets magiques à 18 m à la ronde.
+0|Divination|Détection du poison|Détecte le poison chez 1 créature ou 1 petit objet.
+0|Divination|Lecture de la magie|Permet de lire parchemins et livres de sorts.
+0|Enchantement|Hébétement|Fait perdre 1 action à un humanoïde de 4 DV ou moins.
+0|Évocation|Illumination|Éblouit la cible (-1 aux jets d'attaque).
+0|Évocation|Lumière|Fait briller un objet comme une torche.
+0|Évocation|Lumières dansantes|Crée torches ou autres lueurs.
+0|Évocation|Rayon de givre|Rayon infligeant 1d3 points de dégâts.
+0|Illusion|Son imaginaire|Sons illusoires.
+0|Invocation|Aspersion acide|Orbe infligeant 1d3 points de dégâts d'acide.
+0|Nécromancie|Destruction de mort-vivant|1d6 points de dégâts à un mort-vivant.
+0|Nécromancie|Fatigue|Attaque de contact fatiguant la cible.
+0|Transmutation|Manipulation à distance|Télékinésie limitée (2,5 kg max.).
+0|Transmutation|Message|Conversation à distance.
+0|Transmutation|Ouverture/fermeture|Ouvre ou ferme portes, fenêtres ou objets.
+0|Transmutation|Réparation|Répare sommairement un objet.
+0|Universel|Prestidigitation|Tours de passe-passe.
+0|Universel|Signature magique|Inscrit la rune personnelle du PJ (visible ou non).
+
+1|Abjuration|Alarme|Protège une zone pendant 2 heures/niveau.
+1|Abjuration|Bouclier|Disque invisible conférant +4 à la CA et protégeant des projectiles magiques.
+1|Abjuration|Endurance aux énergies destructives|Protège des environnements chauds ou froids.
+1|Abjuration|Protection contre la Loi|+2 à la CA et aux jets de sauvegarde, empêche le contrôle mental, repousse élémentaires et Extérieurs.
+1|Abjuration|Protection contre le Bien|+2 à la CA et aux jets de sauvegarde, empêche le contrôle mental, repousse élémentaires et Extérieurs.
+1|Abjuration|Protection contre le Chaos|+2 à la CA et aux jets de sauvegarde, empêche le contrôle mental, repousse élémentaires et Extérieurs.
+1|Abjuration|Protection contre le Mal|+2 à la CA et aux jets de sauvegarde, empêche le contrôle mental, repousse élémentaires et Extérieurs.
+1|Abjuration|Verrouillage|Bloque une porte.
+1|Divination|Compréhension des langages|Le PJ comprend tous les langages écrits ou parlés.
+1|Divination|Coup au but|Confère un bonus de +20 au prochain jet d'attaque.
+1|Divination|Détection des morts-vivants|Révèle les morts-vivants à 18 m ou moins.
+1|Divination|Détection des passages secrets|Détecte les passages secrets à 18 m ou moins.
+1|Divination|Identification|Révèle les propriétés d'un objet magique.
+1|Enchantement|Charme-personne|La cible devient l'ami du PJ.
+1|Enchantement|Hypnose|Fascine 2d4 DV de créatures.
+1|Enchantement|Sommeil|Endort 4 DV de créatures.
+1|Évocation|Décharge électrique|1d6 points de dégâts d'électricité/niveau (max. 5d6).
+1|Évocation|Disque flottant de Tenser|Disque horizontal de 90 cm de diamètre portant 50 kg/niveau.
+1|Évocation|Mains brûlantes|1d4 points de dégâts de feu/niveau (max. 5d4).
+1|Évocation|Projectile magique|1d4+1 points de dégâts, 1 projectile tous les 2 niveaux au-delà du niveau 1 (max. 5).
+1|Illusion|Aura magique de Nystul|Crée une fausse aura magique.
+1|Illusion|Couleurs dansantes|Assomme, aveugle et/ou étourdit 1d6 créatures.
+1|Illusion|Déguisement|Modifie l'apparence du PJ.
+1|Illusion|Image silencieuse|Illusion visuelle mineure.
+1|Illusion|Ventriloquie|Permet de parler à distance pendant 1 minute/niveau.
+1|Invocation|Armure de mage|Confère un bonus d'armure de +4.
+1|Invocation|Brume de dissimulation|Le PJ est entouré de brouillard.
+1|Invocation|Convocation de monstres I|Appelle une créature extraplanaire luttant pour le PJ.
+1|Invocation|Graisse|Rend glissant un objet ou une zone (3 m de côté).
+1|Invocation|Monture|Appelle un cheval pendant 2 heures/niveau.
+1|Invocation|Serviteur invisible|Force invisible obéissant au PJ.
+1|Nécromancie|Contact glacial|1 attaque/niveau ; 1d6 points de dégâts, perte de 1 point de Force possible.
+1|Nécromancie|Frayeur|Une créature à 5 DV ou moins fuit pendant 1d4 rounds.
+1|Nécromancie|Rayon affaiblissant|La cible perd 1d6 points de For, +1/2 niveaux.
+1|Transmutation|Agrandissement|Double la taille d'un humanoïde.
+1|Transmutation|Arme magique|Confère un bonus de +1 à une arme.
+1|Transmutation|Corde animée|Une corde bouge sur ordre du PJ.
+1|Transmutation|Effacement|Efface un texte, même magique.
+1|Transmutation|Feuille morte|Ralentit la chute.
+1|Transmutation|Rapetissement|Réduit la taille d'un humanoïde de moitié.
+1|Transmutation|Repli expéditif|Augmente la vitesse de déplacement de 9 m.
+1|Transmutation|Saut|Confère un bonus aux tests de Saut.
+
+2|Abjuration|Dissimulation d'objet|Dissimule un objet à la scrutation.
+2|Abjuration|Protection contre les projectiles|Immunise contre la plupart des attaques à distance.
+2|Abjuration|Résistance aux énergies destructives|Protège contre la forme d'énergie choisie à raison de 10 points de dégâts/attaque.
+2|Abjuration|Verrou du mage|Ferme une serrure (porte, coffre) par magie.
+2|Divination|Détection de l'invisibilité|Révèle créatures et objets invisibles.
+2|Divination|Détection de pensées|Permet d'« écouter » les pensées superficielles.
+2|Divination|Localisation d'objet|Indique la direction de l'objet cherché.
+2|Enchantement|Fou rire de Tasha|La cible perd ses actions pendant 1 round/niveau.
+2|Enchantement|Hébétement de monstre|Une créature vivante de 6 DV ou moins perd sa prochaine action.
+2|Enchantement|Idiotie|Le sujet perd 1d6 points d'Int, de Sag et de Cha.
+2|Évocation|Bourrasque|Emporte ou renverse les créatures de taille modeste.
+2|Évocation|Flamme éternelle|Torche permanente ne dégageant aucune chaleur.
+2|Évocation|Fracassement|Endommage objets ou créatures cristallines.
+2|Évocation|Rayon ardent|Attaque à distance infligeant 4d6 points de dégâts de feu, +1 rayon/4 niveaux (max. 3).
+2|Évocation|Sphère de feu|Roule au sol, 2d6 points de dégâts, dure 1 round/niveau.
+2|Évocation|Ténèbres|Obscurité surnaturelle sur 6 m de rayon.
+2|Illusion|Bouche magique|Délivre un message quand on la déclenche.
+2|Illusion|Détection faussée|Abuse les divinations lancées sur la cible (créature ou objet).
+2|Illusion|Flou|Chaque attaque a 20 % de chances de rater la cible.
+2|Illusion|Image imparfaite|Comme image silencieuse, plus sons limités.
+2|Illusion|Image-miroir|Crée des doubles illusoires du PJ (1d4+1/3 niveaux, max. 8).
+2|Illusion|Invisibilité|Sujet invisible pendant 1 minute/niveau ou jusqu'à ce qu'il attaque.
+2|Illusion|Lueurs hypnotiques|Fascine (2d4 + niveau) DV de créatures.
+2|Illusion|Piège de Léomund|Confère l'impression qu'un objet est piégé.
+2|Invocation|Convocation de monstres II|Appelle une ou plusieurs créatures extraplanaires luttant pour le PJ.
+2|Invocation|Flèche acide de Melf|Attaque de contact à distance ; 2d4 points de dégâts pendant 1 round + 1 round/3 niveaux.
+2|Invocation|Nappe de brouillard|Brume gênant la visibilité.
+2|Invocation|Nuée grouillante|Convoque une nuée de chauves-souris, rats ou araignées.
+2|Invocation|Poussière scintillante|Aveugle, révèle la position des créatures invisibles.
+2|Invocation|Toile d'araignée|Toiles gluantes dans un rayon de 6 m.
+2|Nécromancie|Baiser de la goule|Paralyse la cible et lui fait dégager une odeur répugnante qui la rend nauséeuse.
+2|Nécromancie|Cécité/surdité|Rend la cible aveugle ou sourde.
+2|Nécromancie|Contrôle mineur des morts-vivants|Les morts-vivants obéissent au PJ.
+# ↑ La liste résumée (p. 186) nomme ce sort « Contrôle des morts-vivants », comme
+# celui de niveau 7. Le chapitre 11 (p. 217) les distingue clairement : « Contrôle
+# mineur des morts-vivants » (Ens/Mag 2) et « Contrôle des morts-vivants »
+# (Ens/Mag 7), deux blocs séparés sur la même page. Le chapitre fait foi — et sans
+# cette distinction, deux entrées auraient porté le même nom.
+2|Nécromancie|Effroi|Panique les créatures ayant moins de 6 DV.
+2|Nécromancie|Main spectrale|Main désincarnée portant des attaques de contact.
+2|Nécromancie|Simulacre de vie|Confère 1d10 pv temporaires, +1/niveau (max. +10).
+2|Transmutation|Corde enchantée|8 créatures peuvent se cacher dans un espace extradimensionnel.
+2|Transmutation|Déblocage|Ouvre les portes fermées, même par magie.
+# ⛔ « Endurance » RETIRÉ. La liste résumée (p. 186) porte la ligne « Endurance.
+# Confère 1d4+1 pts de Constitution pendant 1 h/niv. », mais le chapitre 11 ne
+# décrit AUCUN sort de ce nom : vérifié à l'image p. 237, la séquence va
+# « Emprisonnement, Enchevêtrement, Endurance aux énergies destructives,
+# Endurance de l'ours ». Ligne orpheline de l'édition française (vestige 3.0).
+# Le chapitre fait foi : le sort n'est pas repris.
+2|Transmutation|Endurance de l'ours|Confère +4 en Con pendant 1 minute/niveau.
+2|Transmutation|Force de taureau|Confère +4 en Force pendant 1 minute/niveau.
+2|Transmutation|Grâce féline|Confère +4 en Dex pendant 1 minute/niveau.
+2|Transmutation|Lévitation|La cible monte ou descend au gré du PJ.
+2|Transmutation|Modification d'apparence|Permet d'adopter la forme d'une créature.
+2|Transmutation|Pattes d'araignée|Permet de grimper aux murs.
+2|Transmutation|Pyrotechnie|Transforme un feu en fumée étouffante ou en lumière aveuglante.
+2|Transmutation|Ruse du renard|Confère +4 en Int pendant 1 minute/niveau.
+2|Transmutation|Sagesse du hibou|Confère +4 en Sag pendant 1 minute/niveau.
+2|Transmutation|Splendeur de l'aigle|Confère +4 en Cha pendant 1 minute/niveau.
+2|Transmutation|Vent de murmures|Transmet un court message à 1,5 km de distance/niv.
+2|Transmutation|Vision dans le noir|Permet de voir à 18 m sans la moindre luminosité.

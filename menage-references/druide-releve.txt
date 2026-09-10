@@ -1,0 +1,169 @@
+0|Assistance divine
+0|Création d'eau
+0|Détection de la magie
+0|Détection du poison
+0|Illumination
+0|Lecture de la magie
+0|Lumière
+0|Purification de nourriture et d'eau
+0|Réparation
+0|Repérage
+0|Résistance
+0|Soins superficiels
+0|Stimulant
+1|Apaisement des animaux
+1|Baie nourricière
+1|Brume de dissimulation
+1|Charme-animal
+1|Communication avec les animaux
+1|Convocation d'alliés naturels I
+1|Détection de la faune ou de la flore
+1|Détection des collets et des fosses
+1|Enchevêtrement
+1|Endurance aux énergies destructives
+1|Flammes
+1|Gourdin magique
+1|Grand pas
+1|Invisibilité pour les animaux
+1|Lueur féerique
+1|Morsure magique
+1|Passage sans trace
+1|Pierre magique
+1|Saut
+1|Soins légers
+2|Bourrasque
+2|Convocation d'alliés naturels II
+2|Distorsion du bois
+2|Endurance de l'ours
+2|Façonnage du bois
+2|Force de taureau
+2|Forme d'arbre
+2|Grâce féline
+2|Hypnose des animaux
+2|Immobilisation d'animal
+2|Lame de feu
+2|Messager animal
+2|Métal brûlant
+2|Métal gelé
+2|Nappe de brouillard
+2|Nuée grouillante
+2|Pattes d'araignée
+2|Peau d'écorce
+2|Piège à feu
+2|Ralentissement du poison
+2|Ramollissement de la terre et de la pierre
+2|Rapetissement d'animal
+2|Résistance aux énergies destructives
+2|Restauration partielle
+2|Sagesse du hibou
+2|Sphère de feu
+3|Appel de la foudre
+3|Collet
+3|Communication avec les plantes
+3|Contagion
+3|Convocation d'alliés naturels III
+3|Croissance d'épines
+3|Croissance végétale
+3|Domination d'animal
+3|Empoisonnement
+3|Extinction des feux
+3|Façonnage de la pierre
+3|Fusion dans la pierre
+3|Guérison des maladies
+3|Lumière du jour
+3|Morsure magique suprême
+3|Mur de vent
+3|Neutralisation du poison
+3|Protection contre les énergies destructives
+3|Rabougrissement des plantes
+3|Respiration aquatique
+3|Soins modérés
+3|Tempête de neige
+4|Colonne de feu
+4|Contrôle de l'eau
+4|Convocation d'alliés naturels IV
+4|Coquille antiplantes
+4|Dissipation de la magie
+4|Empire végétal
+4|Flétrissement végétal
+4|Liberté de mouvement
+4|Marche dans les airs
+4|Pierres acérées
+4|Réincarnation
+4|Répulsif
+4|Rouille
+4|Scrutation
+4|Soins importants
+4|Tempête de grêle
+4|Vermine géante
+5|Appel de la tempête
+5|Communion avec la nature
+5|Contrôle des vents
+5|Convocation d'alliés naturels V
+5|Croissance animale
+5|Éveil
+5|Fléau d'insectes
+5|Métamorphose funeste
+5|Mur d'épines
+5|Mur de feu
+5|Peau de pierre
+5|Pénitence
+5|Protection contre la mort
+5|Sanctification
+5|Sanctification maléfique
+5|Soins intensifs
+5|Transmutation de la boue en pierre
+5|Transmutation de la pierre en boue
+5|Voyage par les arbres
+6|Bâton à sort
+6|Bois de fer
+6|Chêne animé
+6|Convocation d'alliés naturels VI
+6|Coquille antivie
+6|Dissipation suprême
+6|Éloignement du bois
+6|Endurance de l'ours de groupe
+6|Force de taureau de groupe
+6|Germes de feu
+6|Glissement de terrain
+6|Grâce féline de groupe
+6|Mur de pierre
+6|Orientation
+6|Pierres commères
+6|Sagesse du hibou de groupe
+6|Soins légers de groupe
+6|Voie végétale
+7|Animation des plantes
+7|Bâton sylvanien
+7|Contrôle du climat
+7|Convocation d'alliés naturels VII
+7|Guérison suprême
+7|Mort rampante
+7|Rayon de soleil
+7|Scrutation suprême
+7|Soins modérés de groupe
+7|Tempête de feu
+7|Transmutation du métal en bois
+7|Vent divin
+7|Vision lucide
+8|Contrôle des plantes
+8|Convocation d'alliés naturels VIII
+8|Cyclone
+8|Doigt de mort
+8|Éloignement du métal et de la pierre
+8|Explosion de lumière
+8|Inversion de la gravité
+8|Métamorphose animale
+8|Mot de rappel
+8|Soins importants de groupe
+8|Tremblement de terre
+9|Attirance
+9|Aversion
+9|Changement de forme
+9|Convocation d'alliés naturels IX
+9|Grand tertre
+9|Nuée d'élémentaires
+9|Prémonition
+9|Régénération
+9|Soins intensifs de groupe
+9|Tempête vengeresse

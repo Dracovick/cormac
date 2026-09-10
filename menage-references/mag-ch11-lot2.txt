@@ -1,0 +1,73 @@
+# pages PDF 225-244
+Coursier fantôme|Invocation (création)|Bard 3, Ens/Mag 3|V, G|0 m|1 heure/niveau (T)
+Création de mort-vivant|Nécromancie [Mal]|Ens/Mag 6, Mal 6, Mort 6, Prê 6|V, G, M|Courte|instantanée
+Création de mort-vivant dominant|Nécromancie [Mal]|Ens/Mag 8, Mort 8, Prê 8|?|?|?
+Création majeure|Invocation (création)|Ens/Mag 5|?|Courte|voir description
+Création mineure|Invocation (création)|Ens/Mag 4|V, G, M|0 m|1 heure/niveau (T)
+Cri|Évocation [son]|Bard 4, Ens/Mag 4|V|9 m|instantanée
+Cri suprême|Évocation [son]|Bard 6, Ens/Mag 8|V, G, F|18 m|?
+Croissance animale|Transmutation|Dru 5, Ens/Mag 5, Rôd 4|V, G|Moyenne|1 minute/niveau
+Danse irrésistible d'Otto|Enchantement (coercition) [mental]|Bard 6, Ens/Mag 8|V|Contact|1d4+1 rounds
+Débilité|Enchantement (coercition) [mental]|Ens/Mag 5|V, G, M|Moyenne|instantanée
+Déblocage|Transmutation|Ens/Mag 2|V|Moyenne|instantanée (voir description)
+Décharge électrique|Évocation [électricité]|Ens/Mag 1|V, G|Contact|permanente jusqu'à utilisation
+Dédale|Invocation (téléportation)|Ens/Mag 8|V, G|Courte|voir description
+Défense magique|Abjuration|Ens/Mag 6|V, G, M, F|n'importe où dans la zone défendue|2 heures/niveau (T)
+Déguisement|Illusion (hallucination)|Bard 1, Duperie 1, Ens/Mag 1|V, G|Personnelle|10 minutes/niveau (T)
+Délivrance|Abjuration|Ens/Mag 9|V, G|Courte|instantanée
+Délivrance des malédictions|Abjuration|Bard 3, Ens/Mag 4, Pal 3, Prê 3|V, G|Contact|instantanée
+Déplacement|Illusion (hallucination)|Bard 3, Ens/Mag 3|V, M|Contact|1 round/niveau (T)
+Désespoir foudroyant|Enchantement (coercition) [mental]|Bard 3, Ens/Mag 4|V, G, M|9 m|1 minute/niveau
+Désintégration|Transmutation|Destruction 7, Ens/Mag 6|V, G, M/FD|Moyenne|instantanée
+Destruction de mort-vivant|Nécromancie|Ens/Mag 0|V, G|Courte|instantanée
+Détection de l'invisibilité|Divination|Bard 3, Ens/Mag 2|V, G, M|Personnelle|10 minutes/niveau (T)
+Détection de la magie|Universel|Bard 0, Dru 0, Ens/Mag 0, Prê 0|V, G|18 m|concentration, jusqu'à 1 minute/niveau (T)
+Détection de la scrutation|Divination|Bard 4, Ens/Mag 4|V, G, M|12 m|24 heures
+Détection de pensées|Divination [mental]|Bard 2, Connaissance 2, Ens/Mag 2|V, G, F/FD|18 m|concentration, jusqu'à 1 minute/niveau (T)
+Détection des morts-vivants|Divination|Ens/Mag 1, Pal 1, Prê 1|V, G, M/FD|18 m|concentration, jusqu'à 1 minute/niveau (T)
+Détection des passages secrets|Divination|Bard 1, Connaissance 1, Ens/Mag 1|V, G|18 m|concentration, jusqu'à 1 mn/niveau (T)
+Détection du poison|Divination|Dru 0, Ens/Mag 0, Pal 1, Prê 0, Rôd 1|V, G|Courte|instantanée
+Détection faussée|Illusion (hallucination)|Bard 2, Ens/Mag 2|V, G|Courte|1 heure/niveau
+Disjonction de Mordenkainen|Abjuration|Ens/Mag 9, Magie 9|V|Courte|instantanée
+Disque flottant de Tenser|Évocation [force]|Ens/Mag 1|V, G, M|Courte|1 heure/niveau
+Dissimulation d'objet|Abjuration|Bard 1, Ens/Mag 2, Prê 3|V, G, M/FD|Contact|8 heures (T)
+Dissimulation suprême|Abjuration|Ens/Mag 7|V, G, M|Contact|1 jour/niveau (T)
+Dissipation de la magie|Abjuration|Bard 3, Dru 4, Ens/Mag 3, Magie 3, Pal 3, Prê 3|V, G|Moyenne|instantanée
+Dissipation suprême|Abjuration|Bard 5, Dru 6, Ens/Mag 6, Prê 6|?|?|?
+Doigt de mort|Nécromancie [mort]|Dru 8, Ens/Mag 7|V, G|Courte|instantanée
+Domination|Enchantement (coercition) [mental]|Bard 4, Ens/Mag 5|V, G|Courte|1 jour/niveau
+Domination universelle|Enchantement (coercition) [mental]|Ens/Mag 9|?|?|?
+Don des langues|Divination|Bard 2, Ens/Mag 3, Prê 4|V, G, M/FD|Contact|10 minutes/niveau
+Double illusoire|Illusion (chimère, hallucination)|Bard 5, Chance 6, Duperie 6, Ens/Mag 6|G|Courte|1 round/niveau (T) et concentration + 3 rounds (voir description)
+Éclair|Évocation [électricité]|Ens/Mag 3|V, G, M|36 m|instantanée
+Éclair multiple|Évocation [électricité]|Air 6, Ens/Mag 6|V, G, F|Longue|instantanée
+Écran|Illusion (hallucination)|Duperie 7, Ens/Mag 8|V, G|Courte|24 heures
+Effacement|Transmutation|Bard 1, Ens/Mag 1|V, G|Courte|instantanée
+Effroi|Nécromancie [mental, terreur]|Bard 2, Ens/Mag 2|V, G, M|Moyenne|1 round/niveau ou 1 round (voir description de frayeur)
+Emprisonnement|Abjuration|Ens/Mag 9|V, G|Contact|instantanée
+Endurance aux énergies destructives|Abjuration|Dru 1, Ens/Mag 1, Pal 1, Prê 1, Rôd 1, Soleil 1|V, G|Contact|24 heures
+Endurance de l'ours|Transmutation|Dru 2, Ens/Mag 2, Prê 2, Rôd 2|V, G, FD|Contact|1 minute/niveau
+Endurance de l'ours de groupe|Transmutation|Dru 6, Ens/Mag 6, Prê 6|?|Courte|?
+Énergie négative|Nécromancie|Ens/Mag 4|V, G|Courte|instantanée
+Ennemi subconscient|Illusion (fantasme) [mental, terreur]|Ens/Mag 9|?|?|?
+Entrave|Enchantement (coercition) [mental]|Ens/Mag 8|V, G, M|Courte|voir description (T)
+Épée de Mordenkainen|Évocation [force]|Ens/Mag 7|V, G, F|Courte|1 round/niveau (T)
+Esprit impénétrable|Abjuration|Ens/Mag 8, Protection 8|V, G|Courte|24 heures
+État gazeux|Transmutation|Air 3, Bard 3, Ens/Mag 3|G, M/FD|Contact|2 minutes/niveau (T)
+Exigence|Enchantement (coercition) [mental]|Ens/Mag 8|?|?|?
+Explosion de lumière|Évocation [lumière]|Dru 8, Ens/Mag 8, Soleil 8|V, G, M/FD|Longue|instantanée
+Fabrication|Transmutation|Ens/Mag 5|V, G, M|Courte|instantanée
+Façonnage de la pierre|Transmutation [terre]|Dru 3, Ens/Mag 5, Prê 3, Terre 3|V, G, M/FD|Contact|instantanée
+Fatigue|Nécromancie|Ens/Mag 0|V, G, M|Contact|1 round/niveau
+Faux-semblant|Illusion (hallucination)|Bard 5, Ens/Mag 5|V, G|Courte|12 heures (T)
+Feuille morte|Transmutation|Bard 1, Ens/Mag 1|V|Courte|jusqu'à l'atterrissage ou 1 round/niveau
+Flamme éternelle|Évocation [lumière]|Ens/Mag 2, Prê 3|V, G, M|Contact|permanente
+Flèche acide de Melf|Invocation (création) [acide]|Ens/Mag 2|V, G, M, F|Longue|1 round + 1 round/3 niveaux
+Flèches enflammées|Invocation [feu]|Ens/Mag 3|V, G, M|Courte|10 minutes/niveau
+Flétrissement végétal|Nécromancie|Dru 4, Ens/Mag 5|V, G, FD|Contact|instantanée
+Flétrissure|Nécromancie|Eau 8, Ens/Mag 8|V, G, M/FD|Longue|instantanée
+Flou|Illusion (chimère)|Bard 2, Ens/Mag 2|V|Contact|1 minute/niveau (T)
+Force de taureau|Transmutation|Bard 2, Dru 2, Ens/Mag 2, Force 2, Pal 2, Prê 2|V, G, M/FD|Contact|1 minute/niveau
+Force de taureau de groupe|Transmutation|Dru 6, Ens/Mag 6, Prê 6|?|Courte|?
+Forme éthérée|Transmutation|Ens/Mag 7, Prê 7|V, G|Personnelle|1 round/niveau (T)
+Fou rire de Tasha|Enchantement (coercition) [mental]|Bard 1, Ens/Mag 2|V, G, M|Courte|1 round/niveau

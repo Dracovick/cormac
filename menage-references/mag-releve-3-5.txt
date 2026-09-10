@@ -1,0 +1,136 @@
+# Relevé brut, liste résumée « Sorts d'ensorceleur ou de magicien », niveaux 3 à 5
+# Manuel des Joueurs 3.5 français, pages imprimées 186-188 (PDF 187-189)
+# « Cercle magique contre la Loi/le Bien/le Chaos/le Mal » est UNE ligne imprimée
+# mais QUATRE sorts distincts : développée ici en quatre entrées.
+
+3|Abjuration|Antidétection|Protège contre la scrutation et les divinations.
+3|Abjuration|Cercle magique contre la Loi|Comme protection contre la Loi, mais avec un rayon de 3 m et une durée de 10 minutes/niveau.
+3|Abjuration|Cercle magique contre le Bien|Comme protection contre le Bien, mais avec un rayon de 3 m et une durée de 10 minutes/niveau.
+3|Abjuration|Cercle magique contre le Chaos|Comme protection contre le Chaos, mais avec un rayon de 3 m et une durée de 10 minutes/niveau.
+3|Abjuration|Cercle magique contre le Mal|Comme protection contre le Mal, mais avec un rayon de 3 m et une durée de 10 minutes/niveau.
+3|Abjuration|Dissipation de la magie|Annule sorts et effets magiques.
+3|Abjuration|Protection contre les énergies destructives|Absorbe 12 points de dégâts/niveau infligés par le type d'énergie choisi.
+3|Abjuration|Runes explosives|6d6 points de dégâts à qui les lit.
+3|Divination|Clairaudience/clairvoyance|Permet d'entendre ou de voir de loin pendant 1 minute/niveau.
+3|Divination|Don des langues|Permet de parler toutes les langues.
+3|Divination|Vision magique|Le PJ voit les auras magiques.
+3|Enchantement|Héroïsme|Confère +2 aux jets d'attaque, jets de dégâts et tests de compétence.
+3|Enchantement|Immobilisation de personne|Immobilise un humanoïde pendant 1 round/niveau.
+3|Enchantement|Rage|Confère +2 en For et en Con, +1 aux jets de Vol, -2 à la CA.
+3|Enchantement|Sommeil profond|Endort 10 DV de créatures.
+3|Enchantement|Suggestion|Force la cible à accomplir un acte décidé par le PJ.
+3|Évocation|Abri de Léomund|Crée un abri pour 10 créatures.
+3|Évocation|Boule de feu|1d6 points de dégâts de feu/niveau, 6 m de rayon.
+3|Évocation|Éclair|1d6 points de dégâts d'électricité/niveau.
+3|Évocation|Lumière du jour|Vive lumière sur 18 m de rayon.
+3|Évocation|Mur de vent|Détourne projectiles, gaz et créatures de taille modeste.
+3|Illusion|Déplacement|Chaque attaque a 50 % de chances de rater la cible.
+3|Illusion|Image accomplie|Comme image silencieuse, plus sons, odeurs et température.
+3|Illusion|Sphère d'invisibilité|Rend tout le monde invisible à 3 m à la ronde.
+3|Illusion|Texte illusoire|Seul le sujet parvient à le déchiffrer.
+3|Invocation|Convocation de monstres III|Appelle une ou plusieurs créatures extraplanaires luttant pour le PJ.
+3|Invocation|Coursier fantôme|Crée un cheval magique pour 1 heure/niveau.
+3|Invocation|Flèches enflammées|Les flèches infligent 1d6 points de dégâts de feu.
+3|Invocation|Nuage nauséabond|Vapeurs nocives, 1 round/niveau.
+3|Invocation|Sceau du serpent|Crée un symbole immobilisant le lecteur.
+3|Invocation|Tempête de neige|Réduit la visibilité et gêne les déplacements.
+3|Nécromancie|Baiser du vampire|1d6 points de dégâts/2 niveaux, récupérés sous forme de pv par le PJ.
+3|Nécromancie|Immobilisation de morts-vivants|Stoppe les morts-vivants pendant 1 round/niveau.
+3|Nécromancie|Préservation des morts|Préserve un cadavre.
+3|Nécromancie|Rayon d'épuisement|Un rayon épuise la cible.
+3|Transmutation|Affûtage|Double la zone de critique possible d'une arme.
+3|Transmutation|Arme magique suprême|Confère un bonus de +1/4 niveaux à une arme (max. +5).
+3|Transmutation|Clignotement|Le PJ apparaît et disparaît pendant 1 round/niveau.
+3|Transmutation|État gazeux|Le sujet devient intangible et peut voler lentement.
+3|Transmutation|Lenteur|1 cible/niveau n'a droit qu'à une action partielle/round, -1 à la CA et aux jets d'attaque, de dégâts et de Réflexes.
+3|Transmutation|Page secrète|Modifie une page pour cacher son contenu.
+3|Transmutation|Rapidité|Une créature/niveau se déplace plus rapidement, +1 aux jets d'attaque, à la CA et aux jets de Réflexes.
+3|Transmutation|Réduction d'objet|Réduit un objet (1/16e de sa taille initiale).
+3|Transmutation|Respiration aquatique|Permet de respirer sous l'eau.
+3|Transmutation|Vol|Le sujet vole à la vitesse de 18 m/round.
+
+4|Abjuration|Ancre dimensionnelle|Empêche tout déplacement extradimensionnel.
+4|Abjuration|Délivrance des malédictions|Libère des malédictions.
+4|Abjuration|Globe d'invulnérabilité partielle|Bloque les sorts de 3e niveau ou moins.
+4|Abjuration|Peau de pierre|Ignore 10 points de dégâts par attaque.
+4|Abjuration|Piège à feu|L'objet piégé inflige 1d4 points de dégâts, +1/niveau.
+4|Divination|Détection de la scrutation|Détecte l'espionnage magique.
+4|Divination|Localisation de créature|Indique la direction d'une créature connue.
+4|Divination|Œil du mage|Œil invisible avançant de 9 m/round.
+4|Divination|Scrutation|Permet d'espionner le sujet à distance.
+4|Enchantement|Charme-monstre|Le monstre croit être l'allié du PJ.
+4|Enchantement|Confusion|Le sujet se comporte bizarrement pendant 1 round/niv.
+4|Enchantement|Désespoir foudroyant|Les sujets subissent -2 aux jets d'attaque, jets de dégâts, jets de sauvegarde et tests.
+4|Enchantement|Mission|Assigne une tâche à une cible de 7 DV ou moins.
+4|Évocation|Bouclier de feu|Brûle les créatures attaquant le PJ en protégeant ce dernier contre le feu ou le froid.
+4|Évocation|Cri|Assourdit les victimes et leur inflige 5d6 points de dégâts de son.
+4|Évocation|Mur de feu|2d4 points de dégâts de feu à moins de 3 m, 1d4 à moins de 6 m. 2d6, +1/niveau, en cas de traversée.
+4|Évocation|Mur de glace|Mur plan ayant 15 points de résistance, +1/niveau, ou hémisphère permettant d'emprisonner des créatures.
+4|Évocation|Sphère d'isolement d'Otiluke|Globe de force emprisonne ou protège le sujet.
+4|Évocation|Tempête de grêle|5d6 points de dégâts dans un cylindre de 12 m de diamètre.
+4|Illusion|Assassin imaginaire|Illusion tuant la cible ou lui infligeant 3d6 points de dégâts.
+4|Illusion|Convocation d'ombres|Reproduit les invocations de 3e niveau ou moins ; 20 % sont réelles.
+4|Illusion|Invisibilité suprême|Comme invisibilité, mais continue quand le sujet attaque.
+4|Illusion|Lueur d'arc-en-ciel|Fascine jusqu'à 24 DV de créatures.
+4|Illusion|Mur illusoire|Mur, plancher ou plafond illusoire.
+4|Illusion|Terrain hallucinatoire|Transforme un type de terrain en un autre (champ en forêt, etc.).
+4|Invocation|Brouillard dense|Réduit la visibilité et gêne les déplacements.
+4|Invocation|Convocation de monstres IV|Appelle une ou plusieurs créatures extraplanaires luttant pour le PJ.
+4|Invocation|Création mineure|Crée un objet en tissu ou en bois.
+4|Invocation|Porte dimensionnelle|Téléporte le PJ sur une courte distance.
+4|Invocation|Refuge de Léomund|Crée une solide maisonnette.
+4|Invocation|Tentacules noirs d'Évard|Tentacules attaquant les créatures dans un rayon de 4,50 m.
+4|Nécromancie|Animation des morts|Crée squelettes et zombis morts-vivants.
+4|Nécromancie|Contagion|Infecte la cible.
+4|Nécromancie|Énergie négative|La cible gagne 1d4 niveaux négatifs.
+4|Nécromancie|Malédiction|-6 à une caractéristique, -4 aux jets d'attaque, jets de sauvegarde et tests de compétence, ou 50 % de chances de perdre chaque action.
+4|Nécromancie|Terreur|Les sujets fuient pendant 1 round/niveau.
+4|Transmutation|Agrandissement de groupe|Agrandit plusieurs créatures.
+4|Transmutation|Façonnage de la pierre|Permet de modeler la pierre.
+4|Transmutation|Mémorisation de Rary|Permet de préparer des sorts supplémentaires ou d'en récupérer un que l'on vient de lancer. Magiciens uniquement.
+4|Transmutation|Métamorphose|Change la forme du sujet.
+4|Transmutation|Rapetissement de groupe|Réduit la taille de plusieurs créatures.
+
+5|Abjuration|Annulation d'enchantement|Libère la cible des enchantements, des altérations, des malédictions et de la pétrification.
+5|Abjuration|Renvoi|Force une créature à repartir dans son plan d'origine.
+5|Abjuration|Sanctuaire de Mordenkainen|Empêche quiconque d'observer ou de scruter une zone pendant 24 heures.
+5|Divination|Contact avec les plans|Permet d'interroger une entité extraplanaire.
+5|Divination|Lien télépathique de Rary|Permet de communiquer mentalement.
+5|Divination|Œil indiscret|1d4 yeux flottants, +1/niveau, servant d'éclaireurs.
+5|Enchantement|Brume mentale|Malus de -10 aux tests de Sagesse et jets de Volonté.
+5|Enchantement|Débilité|L'Int et le Cha de la cible tombe à 1.
+5|Enchantement|Domination|Permet de contrôler un humanoïde par télépathie.
+5|Enchantement|Immobilisation de monstre|Immobilise n'importe quelle créature.
+5|Enchantement|Symbole de sommeil|La rune plonge les créatures proches dans un sommeil cataronique.
+5|Évocation|Communication à distance|Transmet un court message n'importe où.
+5|Évocation|Cône de froid|1d6 points de dégâts de froid/niveau.
+5|Évocation|Main interposée de Bigby|Abri contre un adversaire.
+5|Évocation|Mur de force|Mur immunisé contre les dégâts.
+5|Illusion|Cauchemar|Envoie des visions causant fatigue et perte de 1d10 pv.
+5|Illusion|Faux-semblant|Modifie l'aspect de 1 personne tous les 2 niveaux.
+5|Illusion|Image prédéterminée|Comme image accomplie, mais sans concentration.
+5|Illusion|Leurre|Illusion abusant la scrutation magique.
+5|Illusion|Magie des ombres|Reproduit les évocations de 4e niveau ou moins ; 20 % sont réelles.
+5|Illusion|Mirage|Comme terrain hallucinatoire, plus structures artificielles.
+5|Illusion|Songe|Envoie un message à un dormeur.
+5|Invocation|Brume mortelle|Tue les créatures de 3 DV ou moins ; celles de 4 à 6 DV meurent en cas de jet de sauvegarde raté ; celles de 6 DV ou plus subissent un affaiblissement temporaire de Con.
+5|Invocation|Chien de garde de Mordenkainen|Chien spectral capable de combattre.
+5|Invocation|Coffre secret de Léomund|Coffre caché dans le plan Éthéré.
+5|Invocation|Contrat|Force un élémentaire ou un Extérieur de 6 DV ou moins à accomplir une tâche pour le PJ.
+5|Invocation|Convocation de monstres V|Appelle une ou plusieurs créatures extraplanaires luttant pour le PJ.
+5|Invocation|Création majeure|Comme création mineure, plus pierre et métal.
+5|Invocation|Mur de pierre|Crée un mur qui peut être façonné.
+5|Invocation|Téléportation|Transporte instantanément le PJ jusqu'à 150 km/niveau.
+5|Nécromancie|Possession|Permet de s'emparer du corps d'un autre.
+5|Nécromancie|Flétrissement végétal|Flétrit une plante ou inflige 1d6 points de dégâts/niveau à une créature végétale.
+5|Nécromancie|Symbole de douleur|La rune inflige de terribles douleurs.
+5|Nécromancie|Vagues de fatigue|Plusieurs cibles sont fatiguées.
+5|Transmutation|Croissance animale|Double la taille de 1 animal/2 niveaux.
+5|Transmutation|Fabrication|Transforme les matières premières en produit fini.
+5|Transmutation|Métamorphose funeste|Transforme le sujet en animal inoffensif.
+5|Transmutation|Passe-muraille|Permet de se tailler un chemin au travers du bois ou de la pierre.
+5|Transmutation|Télékinésie|Permet de déplacer des objets, d'attaquer des créatures, de lancer des objets.
+5|Transmutation|Transmutation de la boue en pierre|Affecte 2 cubes de 3 m d'arête/niveau.
+5|Transmutation|Transmutation de la pierre en boue|Affecte 2 cubes de 3 m d'arête/niveau.
+5|Transmutation|Vol supérieur|Le PJ vole à 12 m/round et fait du « footing » sur longues distances.
+5|Universel|Permanence|Rend certains sorts permanents ; coûte des PX.

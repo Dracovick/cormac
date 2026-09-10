@@ -1,0 +1,53 @@
+# Données du chapitre 11 « Les sorts » (alphabétique), Manuel des Joueurs 3.5 fr.
+# Lues à l'image, page imprimée = page PDF - 1.
+# Format : NOM|ÉCOLE|NIVEAUX CH.11|COMPOSANTES|PORTÉE|DURÉE
+# Le chapitre 11 fait foi sur l'école, les composantes, la portée et la durée.
+# Avancement de la lecture noté en fin de fichier.
+
+Abri de Léomund|Évocation [force]|Bard 3, Ens/Mag 3|V, G, M|6 m|2 heures/niveau (T)
+Absorption d'énergie|Nécromancie|Ens/Mag 9, Pré 9|V, G|Contact|Instantané
+Affûtage|Transmutation|Ens/Mag 3|V, G|Courte|10 minutes/niveau
+Agrandissement|Transmutation|Ens/Mag 1, Force 1|V, G, M|Courte|1 minute/niveau (T)
+Agrandissement de groupe|Transmutation|Ens/Mag 4|V, G, M|Courte|1 minute/niveau (T)
+Aliénation mentale|Enchantement (coercition) [mental]|Ens/Mag 7|V, G|Moyenne|Instantané
+Analyse d'enchantement|Divination|Bard 6, Ens/Mag 6|V, G, F|Courte|1 round/niveau (T)
+Ancre dimensionnelle|Abjuration|Ens/Mag 4, Prê 4|V, G|Moyenne|1 minute/niveau
+Animation des morts|Nécromancie [Mal]|Ens/Mag 4, Mort 3, Prê 3|V, G, M|Contact|Instantané
+Animation suspendue|Transmutation|Ens/Mag 8|V, G, M|Contact|Permanente
+Annihilation de mort-vivant|Nécromancie|Ens/Mag 6, Prê 6|V, G, M/FD|12 m de rayon|Instantané
+Annulation d'enchantement|Abjuration|Bard 4, Chance 5, Ens/Mag 5, Pal 4, Prê 5|V, G|Courte|Instantané
+Antidétection|Abjuration|Duperie 3, Ens/Mag 3, Rôd 4|V, G, M|Contact|1 heure/niveau
+Arme magique|Transmutation|Ens/Mag 1, Guerre 1, Pal 1, Prê 1|V, G, FD|Contact|1 minute/niveau
+Arme magique suprême|Transmutation|Ens/Mag 3, Pal 3, Prê 4|V, G, M/FD|Contact|1 minute/niveau
+
+Aspersion acide|Invocation (création) [acide]|Ens/Mag 0|V, G|Courte|Instantané
+Assassin imaginaire|Illusion (fantasme) [mental, terreur]|Ens/Mag 4|V, G|Moyenne|Instantané
+Attirance|Enchantement (coercition) [mental]|Dru 9, Ens/Mag 8|V, G, M|Courte|2 heures/niveau (T)
+Aura magique de Nystul|Illusion (hallucination)|Bard 1, Ens/Mag 1, Magie 1|V, G, F|Contact|1 jour/niveau (T)
+Aversion|Enchantement (coercition) [mental]|Dru 9, Ens/Mag 8|V, G, M/FD|Courte|2 heures/niveau (T)
+Baiser de la goule|Nécromancie|Ens/Mag 2|V, G, M|Contact|1d6+2 rounds
+Baiser du vampire|Nécromancie|Ens/Mag 3|V, G|Contact|Instantané/1 heure (voir description)
+
+# ── Coquille de l'édition française, corrigée en typographie seulement ───────
+# Le Manuel imprime « Durée : 1 minutes/niveau (T) » pour Lévitation (pluriel
+# fautif, vérifié à l'image). Le sens n'est pas touché, seule la faute l'est.
+Lévitation|Transmutation|Ens/Mag 2|V, G, F|Personnelle ou courte|1 minute/niveau (T)
+
+# ── Deux blocs de RENVOI, lus à l'image et complétés par leur sort de référence ──
+# Le Manuel n'imprime, pour ces blocs, que les lignes qui changent.
+# « Passage dans l'éther » (p. 269) : portée et durée imprimées ; aucune ligne
+#   Composantes — le bloc dit « semblable à forme éthérée », d'où V, G.
+# « Téléportation sans erreur » (p. 296) : seuls l'école et le niveau sont
+#   imprimés, le bloc dit « semblable à téléportation », d'où V et sa portée.
+Passage dans l'éther|Transmutation|Ens/Mag 9, Pré 9|V, G|Contact (voir description)|1 minute/niveau (T)
+Téléportation sans erreur|Invocation (téléportation)|Ens/Mag 7, Voyage 7|V|Personnelle et contact|Instantané
+
+# ── Les deux sorts RÉSERVÉS AU MAGICIEN ──────────────────────────────────────
+# Leur ligne « Niveau » porte « Mag N » et non « Ens/Mag N » : l'ensorceleur ne
+# prépare pas ses sorts, ces deux-là n'ont donc aucun sens pour lui. La liste
+# résumée le dit aussi (« Magiciens uniquement »). Vérifiés à l'image tous deux.
+Mémorisation de Rary|Transmutation|Mag 4|V, G, M, F|Personnelle|Instantané
+Remémoration de Mordenkainen|Transmutation|Mag 6|V, G|Personnelle|Instantané
+
+# AVANCEMENT : pages imprimées 196 à 200 lues (PDF 197 à 201) ; le reste du
+# chapitre (PDF 205 à 304) est dans mag-ch11-lot1.txt à mag-ch11-lot5.txt.
