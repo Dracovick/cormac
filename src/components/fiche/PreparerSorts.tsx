@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { preparerSorts, preparerSortsDivins } from '@/app/actions/character'
-import { getSortsSlotsParJour } from '@/lib/dnd35/classes'
+import { getEmplacementsNiveau } from '@/lib/dnd35/classes'
 import { LigneSort } from './LigneSort'
 
 const ARCANE    = ['Magicien', 'Ensorceleur', 'Barde']
@@ -45,8 +45,6 @@ export function PreparerSorts({ personnageId, classe, niveau, spells, availableS
     : isSponta
       ? `Sorts connus — ${classe} (lanceur spontané)`
       : `Étudier — Préparer les sorts (${classe})`
-  const slots = getSortsSlotsParJour(classe, niveau)
-
   // Source de la liste affichée dans la modale
   const listSpells: AvailableSpell[] = isDivin && availableSpells
     ? availableSpells
@@ -73,11 +71,9 @@ export function PreparerSorts({ personnageId, classe, niveau, spells, availableS
     setOpen(true)
   }
 
+  // Même calcul que la fiche et la page d'impression — voir getEmplacementsNiveau.
   function getSlotMax(niv: number): number {
-    if (classe === 'Paladin' || classe === 'Rôdeur') {
-      return niv === 0 ? 0 : (slots[niv - 1] ?? 0)
-    }
-    return slots[niv] ?? 0
+    return getEmplacementsNiveau(classe, niveau, niv)
   }
 
   function usedAtLevel(niv: number): number {

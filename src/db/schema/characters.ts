@@ -143,6 +143,22 @@ export const characterCurrency = pgTable('character_currency', {
   pm: numeric('pm', { precision: 10, scale: 2 }).default('0'),
 })
 
+// Gemmes du trésor. Volontairement SANS lien vers la table catalogue `gems` :
+// la valeur d'une gemme appartient au trésor d'un personnage précis (un rubis
+// vaut 50 po chez l'un, 500 po chez l'autre). Passer par le catalogue obligerait
+// à muter `gems.valeurBase` comme le code le fait déjà pour `magic_items`, ce
+// qui écraserait la gemme homonyme des autres personnages.
+export const characterGems = pgTable('character_gems', {
+  id: serial('id').primaryKey(),
+  personnageId: integer('personnage_id').notNull().references(() => characters.id),
+  nom: varchar('nom', { length: 200 }).notNull(),
+  quantite: integer('quantite').default(1),
+  valeur: numeric('valeur', { precision: 12, scale: 2 }).default('0'),
+  // Unité monétaire de la valeur : pp | po | pe | pa | pc | pm
+  unite: varchar('unite', { length: 4 }).default('po'),
+  notes: text('notes'),
+})
+
 export const characterLanguages = pgTable('character_languages', {
   id: serial('id').primaryKey(),
   personnageId: integer('personnage_id').notNull().references(() => characters.id),

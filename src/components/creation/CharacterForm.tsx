@@ -15,6 +15,7 @@ import { getBab } from '@/lib/dnd35/rules'
 import { WEAPONS_DND35, WEAPON_CATEGORIES, type WeaponTemplate } from '@/lib/dnd35/weapons'
 import { FEATS_DND35, CATEGORIES_PAR_CLASSE, verifierPrerequisDon, type FeatCategorie, type FeatDef } from '@/lib/dnd35/feats'
 import { NOMS_DOMAINES } from '@/lib/dnd35/domains'
+import { UNITES_MONNAIE, totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
 
 // ─── Styles ──────────────────────────────────────────────────────────────────
 const INP = 'bg-stone-800 border border-stone-700 rounded px-2 py-1.5 text-stone-100 text-sm focus:outline-none focus:border-amber-500 w-full'
@@ -43,7 +44,7 @@ export const DEFAULT_FORM: CharacterFormData = {
   deplacement: null, karma: 0,
   reflexesMagique: 0, vigueurMagique: 0, volonteMagique: 0,
   competences: COMPETENCES_DND35.map(c => ({ skillId: 0, nom: c.nom, caracteristique: c.caracteristique, rangs: 0, divers: 0 })),
-  dons: [], armes: [], armures: [], objetsMagiques: [], potions: [],
+  dons: [], armes: [], armures: [], objetsMagiques: [], potions: [], gemmes: [],
   pp: 0, po: 0, pe: 0, pa: 0, pc: 0, pm: 0,
   langues: [], sorts: [],
   historique: '', notes: '', compagnons: [],
@@ -667,6 +668,11 @@ function SectionEquipement({ data, update, derived }: { data: CharacterFormData;
   const newPot = () => update('potions', [...data.potions, { nom: '', effet: '', charges: 1 }])
   const delPot = (i: number) => update('potions', data.potions.filter((_, j) => j !== i))
   const setPot = (i: number, k: string, v: any) => { const a = [...data.potions]; (a[i] as any)[k] = v; update('potions', a) }
+  const gemmes = data.gemmes ?? []
+  const newGem = () => update('gemmes', [...gemmes, { nom: '', quantite: 1, valeur: 0, unite: 'po', notes: '' }])
+  const delGem = (i: number) => update('gemmes', gemmes.filter((_, j) => j !== i))
+  const setGem = (i: number, k: string, v: any) => { const a = [...gemmes]; (a[i] as any)[k] = v; update('gemmes', a) }
+  const totalGem = totalGemmes(gemmes)
   const addLang = () => { if (!newLang.trim()) return; update('langues', [...data.langues, newLang.trim()]); setNewLang('') }
 
   return (
@@ -817,6 +823,38 @@ function SectionEquipement({ data, update, derived }: { data: CharacterFormData;
               <span className="text-stone-600 text-xs text-center mt-0.5">{nom}</span>
             </div>
           ))}
+        </div>
+
+        {/* Gemmes */}
+        <div className="mt-5 pt-4 border-t border-stone-800/70">
+          <div className="text-amber-500 text-xs uppercase tracking-widest font-bold mb-3">Gemmes</div>
+          {gemmes.map((g, i) => (
+            <div key={i} className="grid grid-cols-2 sm:grid-cols-8 gap-2 mb-2 items-end bg-stone-800/30 rounded p-2">
+              <div className="sm:col-span-2"><label className={LBL}>Gemme</label><input className={INP} value={g.nom} onChange={e => setGem(i, 'nom', e.target.value)} placeholder="Rubis, améthyste…" /></div>
+              <div><label className={LBL}>Qté</label><input className={INP_NUM + ' w-full'} type="number" min={1} value={g.quantite} onChange={e => setGem(i, 'quantite', parseInt(e.target.value) || 1)} /></div>
+              <div><label className={LBL}>Valeur</label><input className={INP_NUM + ' w-full'} type="number" min={0} step="0.01" value={g.valeur} onChange={e => setGem(i, 'valeur', parseFloat(e.target.value) || 0)} /></div>
+              <div><label className={LBL}>Unité</label>
+                <select className={SEL} value={g.unite} onChange={e => setGem(i, 'unite', e.target.value)}>
+                  {UNITES_MONNAIE.map(u => <option key={u.code} value={u.code}>{u.label}</option>)}
+                </select>
+              </div>
+              <div className="sm:col-span-2"><label className={LBL}>Note</label><input className={INP} value={g.notes} onChange={e => setGem(i, 'notes', e.target.value)} placeholder="Taillée en étoile…" /></div>
+              <div className="flex items-end"><button onClick={() => delGem(i)} className={BTN_DEL + ' mb-2 ml-auto'}>✕</button></div>
+            </div>
+          ))}
+          <button onClick={newGem} className={BTN_ADD}><span className="text-xl">+</span> Ajouter une gemme</button>
+          {gemmes.length > 0 && (
+            <div className="mt-3 text-xs text-stone-400">
+              Valeur totale des gemmes :{' '}
+              <span className="text-amber-300 font-bold font-mono">{formatPo(totalGem.po)} po</span>
+              {totalGem.horsTotal.map(h => (
+                <span key={h.unite} className="text-amber-300 font-bold font-mono"> + {formatPo(h.total)} {uniteCourte(h.unite)}</span>
+              ))}
+              {totalGem.horsTotal.length > 0 && (
+                <span className="text-stone-600 italic"> — le mithral n&apos;a pas de taux de change, il reste à part.</span>
+              )}
+            </div>
+          )}
         </div>
       </div>
 

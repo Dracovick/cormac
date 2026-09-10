@@ -4,7 +4,7 @@ import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 
 export function charDataToForm(d: CharacterData): CharacterFormData {
   const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows,
-    skills, feats, weapons, armor, magicItems, potions, currency, languages, companions, spells } = d
+    skills, feats, weapons, armor, magicItems, potions, currency, gems, languages, companions, spells } = d
   const firstClass = classes[0]
 
   const competences = COMPETENCES_DND35.map(c => {
@@ -71,6 +71,11 @@ export function charDataToForm(d: CharacterData): CharacterFormData {
     potions: potions.map(p => ({
       nom: p.potion.nom, effet: p.potion.sortEffet ?? p.potion.description ?? '',
       charges: p.charPotion.chargesRestantes ?? 1,
+    })),
+    gemmes: gems.map(g => ({
+      nom: g.nom, quantite: g.quantite ?? 1,
+      valeur: parseFloat(g.valeur?.toString() ?? '0'),
+      unite: g.unite ?? 'po', notes: g.notes ?? '',
     })),
     pp: parseFloat(currency?.pp?.toString() ?? '0'), po: parseFloat(currency?.po?.toString() ?? '0'),
     pe: parseFloat(currency?.pe?.toString() ?? '0'), pa: parseFloat(currency?.pa?.toString() ?? '0'),

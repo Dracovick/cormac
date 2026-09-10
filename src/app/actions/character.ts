@@ -11,6 +11,7 @@ import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { getBab, getModifier, getMultiClassSave } from '@/lib/dnd35/rules'
 import { SORTS_DND35 } from '@/lib/dnd35/spells'
 import { SORTS_EFFETS_CA, SORTS_EFFETS_CARAC, SORTS_EFFETS_VISUELS, SORTS_EFFETS_SUIVI, valeurEffetSelonNiveau } from '@/lib/dnd35/spell-effects'
+import { UNITES_MONNAIE } from '@/lib/dnd35/monnaie'
 import { logJournal } from '@/lib/journal'
 import { normaliserNom } from '@/lib/noms'
 
@@ -46,6 +47,7 @@ export interface CharacterFormData {
   armures: { nom: string; type: string; bonusCA: number; maxDex: number; malusComp: number; bonusMagique: number }[]
   objetsMagiques: { nom: string; type: string; emplacement: string; bonus: string; description: string; charges: number }[]
   potions: { nom: string; effet: string; charges: number }[]
+  gemmes: { nom: string; quantite: number; valeur: number; unite: string; notes: string }[]
   pp: number; po: number; pe: number; pa: number; pc: number; pm: number
   langues: string[]
   sorts: { nom: string; niveau: number; ecole: string; nombrePrepare: number; classe?: string }[]
@@ -438,6 +440,22 @@ export async function saveCharacter(
     await db.update(schema.characterCurrency).set(currencyValues).where(eq(schema.characterCurrency.personnageId, charId))
   } else {
     await db.insert(schema.characterCurrency).values({ personnageId: charId, ...currencyValues })
+  }
+
+  // ── 15b. Gemmes ──
+  // Écrites directement dans character_gems, sans passer par le catalogue
+  // `gems` : la valeur d'une gemme appartient au trésor de CE personnage.
+  await db.delete(schema.characterGems).where(eq(schema.characterGems.personnageId, charId))
+  for (const gem of data.gemmes ?? []) {
+    if (!gem.nom.trim()) continue
+    await db.insert(schema.characterGems).values({
+      personnageId: charId,
+      nom: gem.nom.trim(),
+      quantite: gem.quantite > 0 ? gem.quantite : 1,
+      valeur: (gem.valeur ?? 0).toString(),
+      unite: UNITES_MONNAIE.some(u => u.code === gem.unite) ? gem.unite : 'po',
+      notes: gem.notes?.trim() || null,
+    })
   }
 
   // ── 16. Langues ──

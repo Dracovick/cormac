@@ -112,3 +112,46 @@ export function getSortsSlotsParJour(classe: string, niveau: number): number[] {
   if (!info?.lanceurSorts) return []
   return SLOTS_FULL_9[idx] ?? []
 }
+
+/**
+ * Emplacements par jour pour UN niveau de sort précis.
+ *
+ * Encapsule le décalage d'indice des demi-lanceurs : la table SLOTS_DEMI_4
+ * (Paladin / Rôdeur) est indexée sur les niveaux de sort 1 à 4, car ces classes
+ * n'ont pas d'oraisons. Sans ce décalage, un Paladin affiche les emplacements
+ * d'un niveau de sort trop haut.
+ *
+ * ⚠ Emplacements DE BASE uniquement, comme toute la chaîne d'affichage du
+ * Grimoire : hors bonus de caractéristique élevée, et hors emplacement de
+ * domaine du prêtre (+1 par niveau de sort ≥ 1), que le joueur gère lui-même.
+ *
+ * Source unique de vérité : utilisée par la fiche, la page d'impression et la
+ * modale de préparation (PreparerSorts), pour qu'elles ne divergent jamais.
+ */
+export function getEmplacementsNiveau(
+  classe: string,
+  niveauLanceur: number,
+  niveauSort: number,
+): number {
+  const slots = getSortsSlotsParJour(classe, niveauLanceur)
+  if (classe === 'Paladin' || classe === 'Rôdeur') {
+    return niveauSort === 0 ? 0 : (slots[niveauSort - 1] ?? 0)
+  }
+  return slots[niveauSort] ?? 0
+}
+
+/**
+ * Total des sorts préparés à un niveau de sort donné.
+ *
+ * ⚠ `est_prepare` est un COMPTEUR entier, pas un booléen : 0 = non préparé,
+ * 1 = préparé une fois, 2 = le même sort préparé dans deux emplacements.
+ * On SOMME donc les valeurs — compter les lignes donnerait un total faux.
+ */
+export function comptePreparations(
+  sorts: { niveau: number; estPrepare: number }[],
+  niveauSort: number,
+): number {
+  return sorts
+    .filter(s => s.niveau === niveauSort)
+    .reduce((somme, s) => somme + (s.estPrepare ?? 0), 0)
+}

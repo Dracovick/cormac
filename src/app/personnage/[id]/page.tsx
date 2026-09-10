@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getCharacter } from '@/lib/queries/character'
 import { DeleteButton } from '@/components/fiche/DeleteButton'
-import { getClasseInfo, getSortsSlotsParJour } from '@/lib/dnd35/classes'
+import { getClasseInfo, getSortsSlotsParJour, getEmplacementsNiveau, comptePreparations } from '@/lib/dnd35/classes'
 import { getMultiClassBab, xpPourNiveau, modSauvegarde } from '@/lib/dnd35/rules'
 import { getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
 import { getCapacitesPourPersonnage } from '@/lib/dnd35/class-features'
@@ -12,6 +12,7 @@ import { getDomaineInfo } from '@/lib/dnd35/domains'
 import { caracteristiqueDe } from '@/lib/dnd35/skills'
 import { getChargeCategorie, getChargeLimites } from '@/lib/dnd35/encumbrance'
 import { FEATS_DND35, verifierPrerequisDon } from '@/lib/dnd35/feats'
+import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
 
 export const dynamic = 'force-dynamic'
 import { Section } from '@/components/fiche/Section'
@@ -32,6 +33,7 @@ import { LigneSort } from '@/components/fiche/LigneSort'
 import { EffetsSorts } from '@/components/fiche/EffetsSorts'
 import { LiveAttaque } from '@/components/fiche/LiveAttaque'
 import { JournalDrawer } from '@/components/fiche/JournalDrawer'
+import { ButinDrawer } from '@/components/fiche/ButinDrawer'
 import { calculeBonusEffetsCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
 
 function modif(score: number) {
@@ -48,7 +50,14 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const data = await getCharacter(Number(id))
   if (!data) notFound()
 
-  const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, currency, languages, creatures, companions, spellEffects } = data
+  const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, currency, gems, languages, creatures, companions, spellEffects } = data
+
+  // Valeur du trésor en gemmes, convertie en po (mithral à part : aucun taux)
+  const totalGem = totalGemmes(gems.map(g => ({
+    quantite: g.quantite ?? 1,
+    valeur: parseFloat(g.valeur?.toString() ?? '0'),
+    unite: g.unite ?? 'po',
+  })))
 
   // Effets de sorts actifs : ceux qui touchent une caractéristique se propagent
   // dans tous les calculs (mods, CA, attaques, sauvegardes, compétences…)
@@ -341,9 +350,14 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
 
         {/* ── COMBAT ── */}
         <Section titre="Combat">
-          <div className="flex justify-between items-start gap-2 -mt-1 mb-2">
+          {/* Barre d'actions de table : Repos · Butin · Journal. flex-wrap pour qu'un
+              téléphone étroit renvoie le groupe à la ligne plutôt que de déborder. */}
+          <div className="flex flex-wrap justify-between items-start gap-2 -mt-1 mb-2">
             <NuitDeRepos personnageId={character.id} estLanceur={casterClasses.length > 0} />
-            <JournalDrawer personnageId={character.id} nomPersonnage={character.nom} />
+            <div className="flex items-center gap-2 shrink-0">
+              <ButinDrawer personnageId={character.id} nomPersonnage={character.nom} />
+              <JournalDrawer personnageId={character.id} nomPersonnage={character.nom} />
+            </div>
           </div>
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-4">
             <LiveHP personnageId={character.id} pvActuels={combatStats?.pvActuels ?? 0} pvMax={combatStats?.pvMax ?? 0} />
@@ -575,6 +589,19 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           const maxNiveau = divineAvailableSpells
             ? Math.max(...divineAvailableSpells.map(s => s.niveau), 0)
             : 9
+          // Compteur d'emplacements par niveau de sort.
+          // Le total préparé est la SOMME des estPrepare (un sort préparé deux fois
+          // vaut 2) — comptePreparations s'en charge. Le dénominateur vient de
+          // getEmplacementsNiveau, le même calcul que la modale 🙏 Prier / 📖 Étudier.
+          // La fiche est un composant serveur et depenseSort appelle revalidatePath :
+          // le compteur décroît donc tout seul dès qu'un sort est lancé.
+          const estSpontane = nomClasse === 'Ensorceleur' || nomClasse === 'Barde'
+          const aDomaine = Boolean(combatStats?.domaine1 || combatStats?.domaine2)
+          const compteurs = Array.from({ length: 10 }, (_, n) => ({
+            niveau: n,
+            prepares: comptePreparations(spellsMapped, n),
+            emplacements: getEmplacementsNiveau(nomClasse, niveauLanceur, n),
+          })).filter(c => c.emplacements > 0 || c.prepares > 0)
           return (
             <Section
               key={casterC.characterClass.id}
@@ -597,6 +624,46 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   <span className="text-red-500 text-xs">(armure portée)</span>
                 </div>
               )}
+              {/* Compteur d'emplacements : préparés restants / emplacements du jour */}
+              {compteurs.length > 0 && (
+                <div className="mb-3 p-2 bg-stone-900/60 rounded-lg border border-stone-700/40">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="text-stone-500 text-xs mr-1">
+                      {estSpontane ? 'Emplacements restants :' : 'Sorts préparés :'}
+                    </span>
+                    {compteurs.map(({ niveau: n, prepares, emplacements }) => {
+                      const epuise = prepares === 0 && emplacements > 0
+                      const depasse = prepares > emplacements
+                      return (
+                        <span
+                          key={n}
+                          title={
+                            depasse
+                              ? `Niveau ${n} : ${prepares} préparés pour ${emplacements} emplacements de base — le surplus vient d'une caractéristique élevée ou du domaine.`
+                              : `Niveau ${n} : ${prepares} sur ${emplacements} emplacements de base`
+                          }
+                          className={`text-xs px-2 py-0.5 rounded-full border ${
+                            depasse
+                              ? 'bg-violet-900/30 border-violet-700/50 text-violet-300'
+                              : epuise
+                                ? 'bg-stone-800/60 border-stone-700/50 text-stone-600'
+                                : 'bg-amber-900/30 border-amber-800/40 text-amber-300'
+                          }`}
+                        >
+                          <span className="text-stone-500">{n === 0 ? 'Oraisons ' : `Niv. ${n} `}</span>
+                          <span className="font-bold font-mono">{prepares}</span>
+                          <span className="opacity-60 font-mono">/{emplacements}</span>
+                        </span>
+                      )
+                    })}
+                  </div>
+                  <p className="text-stone-600 text-[11px] mt-1.5 leading-snug">
+                    Emplacements <strong>de base</strong> — hors bonus de caractéristique élevée
+                    {estDivin && aDomaine && <> et hors emplacement de domaine (+1 par niveau de sort ≥ 1, à gérer vous-même)</>}.
+                  </p>
+                </div>
+              )}
+
               {sortsClasse.length === 0 ? (
                 <>
                   <p className="text-stone-600 text-sm italic">
@@ -823,6 +890,10 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                       {item.description && (
                         <p className="text-stone-500 text-xs mt-0.5 truncate">{item.description}</p>
                       )}
+                      {/* Note propre à CE personnage (provenance du butin), comme pour les potions */}
+                      {charItem.notes && (
+                        <p className="text-amber-600 text-xs italic mt-0.5">{charItem.notes}</p>
+                      )}
                     </div>
                     {(charItem.chargesRestantes != null || item.chargesMax != null) && (
                       <LiveCharge
@@ -880,6 +951,38 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                       <div className="text-stone-500 text-xs font-semibold">{label}</div>
                       <div className="text-stone-600 text-xs">{nom}</div>
                     </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {gems.length > 0 && (
+              <div className="mb-4">
+                <div className="text-amber-500 text-xs uppercase tracking-wide mb-2">Gemmes</div>
+                <div className="space-y-1">
+                  {gems.map(g => {
+                    const val = parseFloat(g.valeur?.toString() ?? '0')
+                    const qte = g.quantite ?? 1
+                    return (
+                      <div key={g.id} className="flex items-baseline justify-between bg-stone-800/40 rounded px-2 py-1.5">
+                        <div>
+                          <span className="text-cyan-300 text-sm">{g.nom}</span>
+                          {qte > 1 && <span className="text-stone-500 text-xs ml-1">×{qte}</span>}
+                          {g.notes && <span className="text-stone-600 text-xs italic ml-2">{g.notes}</span>}
+                        </div>
+                        <span className="text-amber-300 text-sm font-mono shrink-0 ml-2">
+                          {formatPo(val)} {uniteCourte(g.unite ?? 'po')}
+                          {qte > 1 && <span className="text-stone-500 text-xs"> ch.</span>}
+                        </span>
+                      </div>
+                    )
+                  })}
+                </div>
+                <div className="text-right text-xs text-stone-400 mt-1.5">
+                  Total :{' '}
+                  <span className="text-amber-300 font-bold font-mono">{formatPo(totalGem.po)} po</span>
+                  {totalGem.horsTotal.map(h => (
+                    <span key={h.unite} className="text-amber-300 font-bold font-mono"> + {formatPo(h.total)} {uniteCourte(h.unite)}</span>
                   ))}
                 </div>
               </div>

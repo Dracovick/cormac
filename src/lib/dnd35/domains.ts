@@ -3,126 +3,184 @@ export interface DomaineInfo {
   pouvoir: string
   sorts: string[]  // 1 sort par niveau (index 0 = niv.1 ... index 8 = niv.9)
 }
-
-// Source : PHB D&D 3.5, p.183-187 (SRD)
+// ══ SOURCES ══════════════════════════════════════════════════════════════════
+// Toutes les pages citées ici ont été LUES à l'image (les PDF sont des scans
+// sans couche texte : pdftotext ne rend rien). Décalage constaté, à revérifier
+// pour tout nouvel ouvrage :
+//   • Manuel des Joueurs 3.5 (VF)  → page PDF = page du livre + 1
+//   • Les Royaumes Oubliés         → page PDF = page du livre + 1
+//   • Codex Divin                  → page PDF = page du livre (décalage NUL)
+// ⚠ Ces noms sont de l'affichage pur : aucune jointure ne les valide. Le LIVRE
+//   est l'arbitre des noms de sorts, jamais la table `spells` (orientée
+//   suppléments Faerûn, il lui manque des sorts du PHB).
 export const DOMAINES_DND35: DomaineInfo[] = [
+  // ─── Domaines du Manuel des Joueurs 3.5 (VF), chapitre 11, p.192-195 ───
+  // Vérifiés à l'image page par page le 2026-08-27. Les 22 domaines du PHB y sont.
   {
+    // PHB VF p.192
     nom: 'Air',
-    pouvoir: 'Renvoi des créatures à base de terre ou de pierre (comme renvoi morts-vivants, 3+mod CHA/jour).',
-    sorts: ['Appel de la foudre', 'Rafale de vent', 'Convocation de nuée', 'Dissipation de brouillard', 'Contrôle des vents', 'Tempête vengeresse', 'Maelström', 'Air glacial', 'Tempête de grêle'],
+    pouvoir: 'Renvoi ou destruction des créatures de la terre comme un prêtre bon avec les morts-vivants ; peut aussi intimider, contrôler ou augmenter le moral des créatures de l\'air comme un prêtre mauvais. 3 + mod CHA fois/jour (pouvoir surnaturel).',
+    sorts: ['Brume de dissimulation', 'Mur de vent', 'État gazeux', 'Marche dans les airs', 'Contrôle des vents', 'Éclair multiple', 'Contrôle du climat', 'Cyclone', 'Nuée d\'élémentaires (Air)'],
   },
   {
+    // PHB VF p.193 — le livre le nomme « domaine de la Faune ».
     nom: 'Animal',
-    pouvoir: 'Parler aux animaux 1 fois/jour (comme le sort). Compagnon animal (comme le rôdeur, niv. druide −3).',
-    sorts: ['Charme-animal', 'Empathie sauvage', 'Croissance animale', 'Localisation de créature', 'Communier avec la nature', 'Antinaturel', 'Festin de chair', 'Animal épique', 'Régression animale'],
+    pouvoir: 'Communication avec les animaux 1×/jour (pouvoir magique). Connaissances (nature) est une compétence de classe.',
+    sorts: ['Apaisement des animaux', 'Immobilisation d\'animal', 'Domination d\'animal', 'Convocation d\'alliés naturels IV', 'Communion avec la nature', 'Coquille antivie', 'Métamorphose animale', 'Convocation d\'alliés naturels VIII', 'Changement de forme'],
   },
   {
+    // PHB VF p.192
+    nom: 'Bien',
+    pouvoir: 'Lance les sorts du Bien avec un bonus de +1 au niveau de lanceur de sorts.',
+    sorts: ['Protection contre le Mal', 'Aide', 'Cercle magique contre le Mal', 'Châtiment sacré', 'Rejet du Mal', 'Barrière de lames', 'Parole sacrée', 'Aura sacrée', 'Convocation de monstres IX'],
+  },
+  {
+    // PHB VF p.192-193
     nom: 'Chaos',
-    pouvoir: '+1 niveau effectif pour lancer des sorts de type [Chaos].',
-    sorts: ['Protection contre la Loi', 'Résistance aux armes', 'Briser', 'Chaos rampant', 'Dispersion du droit', 'Animé le chaos', 'Bouclier du chaos', 'Manteau du chaos', 'Vague de chaos'],
+    pouvoir: 'Lance les sorts du Chaos avec un bonus de +1 au niveau de lanceur de sorts.',
+    sorts: ['Protection contre la Loi', 'Fracassement', 'Cercle magique contre la Loi', 'Marteau du Chaos', 'Rejet de la Loi', 'Animation d\'objets', 'Parole du Chaos', 'Manteau du Chaos', 'Convocation de monstres IX'],
   },
   {
+    // PHB VF p.192
+    nom: 'Chance',
+    pouvoir: '1×/jour, faire appel à sa bonne fortune : rejouer un jet de dés qu\'il vient d\'effectuer, avant que le MD ne dévoile l\'issue de la situation. On applique systématiquement le résultat du second lancer, même s\'il est moins favorable que le premier (pouvoir extraordinaire).',
+    sorts: ['Bouclier entropique', 'Aide', 'Protection contre les énergies destructives', 'Liberté de mouvement', 'Annulation d\'enchantement', 'Double illusoire', 'Renvoi des sorts', 'Moment de prescience', 'Miracle'],
+  },
+  {
+    // PHB VF p.193 — « domaine de la Connaissance ».
+    nom: 'Connaissance',
+    pouvoir: 'Lance les sorts de Divination avec un bonus de +1 au niveau de lanceur de sorts. Connaissances (sous toutes ses formes) est une compétence de classe.',
+    sorts: ['Détection des passages secrets', 'Détection de pensées', 'Clairaudience/clairvoyance', 'Divination', 'Vision lucide', 'Orientation', 'Mythes et légendes', 'Localisation suprême', 'Prémonition'],
+  },
+  {
+    // PHB VF p.193
     nom: 'Destruction',
-    pouvoir: 'Frappe destructrice : 1×/jour, toucher qui inflige 1 pt de dommage/niv + dégâts d\'arme normaux.',
-    sorts: ['Blessure légère', 'Déchirure', 'Contraction', 'Blessure grave', 'Implosion', 'Harm', 'Désintégration', 'Épée des ténèbres', 'Implosion'],
+    pouvoir: '1×/jour, châtiment : attaque de corps à corps accompagnée d\'un bonus de +4 au jet d\'attaque et d\'un bonus aux dégâts égal au niveau de prêtre (en cas de coup au but). L\'intention doit être déclarée avant de lancer le dé d\'attaque (pouvoir surnaturel).',
+    sorts: ['Blessure légère', 'Fracassement', 'Contagion', 'Blessure critique', 'Blessure légère de groupe', 'Mise à mal', 'Désintégration', 'Tremblement de terre', 'Implosion'],
   },
   {
+    // Entrée héritée, NON conforme au PHB : le domaine du livre s'appelle « Connaissance » (voir ci-dessus).
+    // Contenu laissé intact — sa suppression est une décision d'André.
     nom: 'Divination',
     pouvoir: 'Ajoute tous les sorts de Divination à la liste de classe. +2 aux tests de Psychologie.',
     sorts: ['Sagesse du détective', 'Augure', 'Clairvoyance', 'Divination', 'Communion', 'Vérité', 'Vision du futur', 'Vision', 'Foresight'],
   },
   {
+    // PHB VF p.193
     nom: 'Eau',
-    pouvoir: 'Renvoi des créatures à base de feu (comme renvoi morts-vivants, 3+mod CHA/jour).',
-    sorts: ['Nappe de brouillard', 'Respiration aquatique', 'Déluge', 'Contrôle de l\'eau', 'Marche sur l\'eau', 'Cône de froid', 'Inondation acide', 'Nuage empoisonné', 'Maelström'],
+    pouvoir: 'Renvoi ou destruction des créatures du feu comme un prêtre bon avec les morts-vivants ; peut aussi intimider, contrôler ou augmenter le moral des créatures de l\'eau comme un prêtre mauvais. 3 + mod CHA fois/jour (pouvoir surnaturel).',
+    sorts: ['Brume de dissimulation', 'Nappe de brouillard', 'Respiration aquatique', 'Contrôle de l\'eau', 'Tempête de grêle', 'Cône de froid', 'Brume acide', 'Flétrissure', 'Nuée d\'élémentaires (Eau)'],
   },
   {
+    // PHB VF p.193
     nom: 'Feu',
-    pouvoir: 'Renvoi des créatures à base d\'eau ou de glace. Résistance au feu 6.',
-    sorts: ['Dard enflammé', 'Torche', 'Boule de feu', 'Mur de feu', 'Bouclier de feu', 'Flammes sacrées', 'Détonation thermique', 'Incendie de feu', 'Tempête de feu'],
+    pouvoir: 'Renvoi ou destruction des créatures de l\'eau comme un prêtre bon avec les morts-vivants ; peut aussi intimider, contrôler ou augmenter le moral des créatures du feu comme un prêtre mauvais. 3 + mod CHA fois/jour (pouvoir surnaturel).',
+    sorts: ['Mains brûlantes', 'Flammes', 'Résistance aux énergies destructives', 'Mur de feu', 'Bouclier de feu', 'Germes de feu', 'Tempête de feu', 'Nuage incendiaire', 'Nuée d\'élémentaires (Feu)'],
   },
   {
-    nom: 'Guerre',
-    pouvoir: 'Maîtrise gratuite des armes de prédilection de la divinité (arme de guerre + maîtrise du bouclier).',
-    sorts: ['Bénédiction d\'arme', 'Arme spirituelle', 'Arme magique supérieure', 'Défense divine', 'Résistance à l\'énergie', 'Épée flamboyante', 'Arme de la foi', 'Arme bénie', 'Puissance martiale'],
+    // PHB VF p.194 — « Domaine de la Force ». Vérifié à l'image le 2026-08-27.
+    nom: 'Force',
+    pouvoir: '1×/jour, exploit physique : la valeur de Force augmente brusquement (bonus d\'altération égal au niveau de prêtre). Dure 1 round. S\'active au prix d\'une action libre.',
+    sorts: ['Agrandissement', 'Force de taureau', 'Panoplie magique', 'Immunité contre les sorts', 'Force du colosse', 'Peau de pierre', 'Poigne de Bigby', 'Poing de Bigby', 'Main broyeuse de Bigby'],
   },
   {
-    nom: 'Guérison',
-    pouvoir: 'Lancer des sorts de soin à +1 niveau effectif. Peut lancer Imposition des mains 1×/jour (3 pv/niv).',
-    sorts: ['Soins légers', 'Soins modérés', 'Soins importants', 'Soins graves', 'Soins critiques', 'Soins de groupe', 'Régénération', 'Retour de l\'au-delà', 'Résurrection totale'],
-  },
-  {
+    // Entrée héritée, absente du PHB (le domaine de la Gloire vient du Codex Divin — non vérifié au livre).
     nom: 'Gloire',
     pouvoir: 'Terreur sacrée : les morts-vivants de 5 DV ou moins fuient. Renvoi amélioré.',
     sorts: ['Prestidigitation divine', 'Reflet brillant', 'Sphère lumineuse', 'Bannière céleste', 'Rayonnement sacré', 'Halo de rayonnement', 'Lumière aveuglante', 'Soleil', 'Lumière du soleil'],
   },
   {
-    nom: 'Bien',
-    pouvoir: '+1 niveau effectif pour lancer des sorts de type [Bien].',
-    sorts: ['Protection contre le Mal', 'Aide', 'Cercle de protection contre le Mal', 'Sanctification du mal', 'Dispersion du mal', 'Arme bénie', 'Flamme sacrée', 'Aura du Bien', 'Bannissement'],
+    // PHB VF p.194
+    nom: 'Guerre',
+    pouvoir: 'Dons Maniement d\'une arme de guerre (si nécessaire) et Arme de prédilection, l\'arme étant celle de son dieu.',
+    sorts: ['Arme magique', 'Arme spirituelle', 'Panoplie magique', 'Puissance divine', 'Colonne de feu', 'Barrière de lames', 'Mot de pouvoir aveuglant', 'Mot de pouvoir étourdissant', 'Mot de pouvoir mortel'],
   },
   {
-    nom: 'Chance',
-    pouvoir: 'Joie 1×/jour (relance un dé, garde le meilleur résultat).',
-    sorts: ['Grâce', 'Aide', 'Protection contre les éléments', 'Liberté de mouvement', 'Héroïsme suprême', 'Joyau de vœu', 'Chance suprême', 'Protection divine', 'Miracle'],
+    // PHB VF p.194
+    nom: 'Guérison',
+    pouvoir: 'Lance les sorts de guérison avec un bonus de +1 au niveau de lanceur de sorts.',
+    sorts: ['Soins légers', 'Soins modérés', 'Soins importants', 'Soins intensifs', 'Soins légers de groupe', 'Guérison suprême', 'Régénération', 'Soins critiques de groupe', 'Guérison suprême de groupe'],
   },
   {
+    // PHB VF p.194
     nom: 'Loi',
-    pouvoir: '+1 niveau effectif pour lancer des sorts de type [Loi].',
-    sorts: ['Protection contre le Chaos', 'Calme des émotions', 'Mandats divins', 'Dictum', 'Ordre coercitif', 'Mur d\'ordre', 'Cloche d\'ordre', 'Bouclier de la Loi', 'Implantation de la Loi'],
+    pouvoir: 'Lance les sorts de la Loi avec un bonus de +1 au niveau de lanceur de sorts.',
+    sorts: ['Protection contre le Chaos', 'Apaisement des émotions', 'Cercle magique contre le Chaos', 'Courroux de l\'ordre', 'Rejet du Chaos', 'Immobilisation de monstre', 'Décret', 'Bouclier de la Loi', 'Convocation de monstres IX'],
   },
   {
+    // PHB VF p.194
     nom: 'Magie',
-    pouvoir: 'Utilise le niveau de prêtre pour les tests de niveau de lanceur contre la Dissipation.',
-    sorts: ['Détection de la magie', 'Identification', 'Dissipation de la magie', 'Contresort imbattable', 'Aura magique', 'Globe d\'invulnérabilité', 'Dissipation supérieure', 'Moment de prescience', 'Souhait'],
+    pouvoir: 'Utilise les parchemins, baguettes et autres objets activés par une fin d\'incantation ou par le potentiel magique de leur utilisateur comme un magicien de la moitié de son niveau (niveau 1 minimum). Si le PJ est aussi magicien, ce niveau « virtuel » s\'ajoute à son niveau de magicien.',
+    sorts: ['Aura indétectable de Nystul', 'Identification', 'Dissipation de la magie', 'Transfert de sorts', 'Résistance à la magie', 'Zone d\'antimagie', 'Renvoi des sorts', 'Protection contre les sorts', 'Disjonction de Mordenkainen'],
   },
   {
+    // PHB VF p.194-195
     nom: 'Mal',
-    pouvoir: '+1 niveau effectif pour lancer des sorts de type [Mal].',
-    sorts: ['Protection contre le Bien', 'Ténèbres', 'Magie néfaste', 'Cercle contre le Bien', 'Ombre maléfique', 'Création de morts-vivants', 'Désespoir d\'Evard', 'Aura maléfique', 'Châtiment divin'],
+    pouvoir: 'Lance les sorts du Mal avec un bonus de +1 au niveau de lanceur de sorts.',
+    sorts: ['Protection contre le Bien', 'Profanation', 'Cercle magique contre le Bien', 'Ténèbres maudites', 'Rejet du Bien', 'Création de mort-vivant', 'Blasphème', 'Aura maudite', 'Convocation de monstres IX'],
   },
   {
+    // PHB VF p.195 — attention : la caresse mortelle n'offre AUCUN jet de sauvegarde.
     nom: 'Mort',
-    pouvoir: 'Toucher mortel 1×/jour : tuer une créature (JS Vigueur DD 10+½niv+mod SAG). Dommages létaux sinon.',
-    sorts: ['Raison faussée', 'Rayon d\'affaiblissement', 'Mort simulée', 'Mort prématurée', 'Mort-vivant gardien', 'Création de morts-vivants', 'Destruction', 'Châtiment divin', 'Mort'],
+    pouvoir: '1×/jour, caresse mortelle : touche une créature vivante (attaque de contact) et jette 1d6 par niveau de prêtre. Si le total atteint ou dépasse les points de vie de la cible, elle meurt, sans jet de sauvegarde. Sinon elle n\'est pas affectée (pouvoir surnaturel).',
+    sorts: ['Frayeur', 'Mise à mort', 'Animation des morts', 'Protection contre la mort', 'Exécution', 'Création de mort-vivant', 'Destruction', 'Création de mort-vivant dominant', 'Plainte d\'outre-tombe'],
   },
   {
+    // Entrée héritée, absente du PHB (aucun « domaine de la Nature » aux p.192-195).
     nom: 'Nature',
     pouvoir: 'Connaît Empathie sauvage. Compagnon animal (comme druide niv−3). Parler aux animaux 1×/jour.',
     sorts: ['Résistance au feu/froid', 'Pied léger', 'Croissance de bois', 'Épines', 'Contrôle de l\'eau', 'Mur de fer', 'Animaux de service', 'Vermine de siège', 'Vent de nature'],
   },
   {
+    // PHB VF p.194 — le livre le nomme « domaine de la Flore ».
     nom: 'Plante',
-    pouvoir: 'Renvoi des créatures végétales (comme renvoi morts-vivants). Résistance aux poisons +2.',
-    sorts: ['Enchevêtrement', 'Croissance de bois', 'Épines', 'Commandement de plantes', 'Mur d\'épines', 'Contrôle des plantes', 'Animaux de service', 'Empoisonnement par la sève', 'Changement de nature'],
+    pouvoir: 'Intimider ou contrôler les créatures végétales comme un prêtre mauvais avec les morts-vivants, 3 + mod CHA fois/jour (pouvoir surnaturel). Connaissances (nature) est une compétence de classe.',
+    sorts: ['Enchevêtrement', 'Peau d\'écorce', 'Croissance végétale', 'Empire végétal', 'Mur d\'épines', 'Éloignement du bois', 'Animation des plantes', 'Contrôle des plantes', 'Grand tertre'],
   },
   {
+    // PHB VF p.195
     nom: 'Protection',
-    pouvoir: 'Bouclier protecteur 1×/jour : accorder resistance égale au niv à un allié pour 1 minute.',
-    sorts: ['Sanctuaire', 'Bouclier de la foi', 'Protection contre les éléments', 'Coche magique', 'Magie antimissile', 'Bouclier antimagie', 'Sphère de déflexion', 'Coupole protectrice', 'Globe protecteur'],
+    pouvoir: '1×/jour, protection divine sur une créature au choix : son prochain jet de sauvegarde reçoit un bonus de résistance égal au niveau de prêtre. Action simple, dure 1 heure ou jusqu\'à utilisation (pouvoir surnaturel).',
+    sorts: ['Sanctuaire', 'Protection d\'autrui', 'Protection contre les énergies destructives', 'Immunité contre les sorts', 'Résistance à la magie', 'Zone d\'antimagie', 'Champ de force', 'Esprit impénétrable', 'Sphère prismatique'],
   },
   {
+    // Entrée héritée, absente du PHB : le domaine de la Force (p.194) occupe cette place.
+    // Contenu laissé intact — sa suppression est une décision d'André.
     nom: 'Renforcement',
     pouvoir: '+1 bonus de force pendant 1 round/niv 1×/jour (commence la journée).',
-    sorts: ['Endurance du rhinocéros', 'Grâce du chat', 'Force du taureau', 'Peau de pierre', 'Vigueur d\'aigle', 'Amélioration suprême', 'Peau graniteuse', 'Croissance suprême', 'Magie noire'],
+    sorts: ['Endurance du rhinocéros', 'Grâce féline', 'Force du taureau', 'Peau de pierre', 'Vigueur d\'aigle', 'Amélioration suprême', 'Peau graniteuse', 'Croissance suprême', 'Magie noire'],
   },
   {
-    nom: 'Soleil',
-    pouvoir: 'Éclat du soleil 1×/jour : comme lumière aveuglante sur un mort-vivant adjacent.',
-    sorts: ['Lumière', 'Rayon ardent', 'Soleil aveuglant', 'Lumière du jour', 'Flammes sacrées', 'Rayon de soleil', 'Explosion solaire', 'Lumière incandescente', 'Prisme solaire'],
-  },
-  {
+    // PHB VF p.193 — le livre le nomme « domaine de la Duperie ».
     nom: 'Ruse',
-    pouvoir: 'Peut utiliser Escamotage et Discrétion comme compétences de classe. +2 aux compétences sociales.',
-    sorts: ['Déguisement', 'Invisibilité', 'Faux auguré', 'Confusion', 'Fausse vision', 'Voile', 'Simulation', 'Polymorplie à volonté', 'Insubstantialité'],
+    pouvoir: 'Bluff, Déguisement et Discrétion sont des compétences de classe.',
+    sorts: ['Déguisement', 'Invisibilité', 'Antidétection', 'Confusion', 'Leurre', 'Double illusoire', 'Écran', 'Métamorphose universelle', 'Arrêt du temps'],
   },
   {
+    // PHB VF p.195
+    nom: 'Soleil',
+    pouvoir: '1×/jour, renvoi suprême : une tentative de renvoi, d\'intimidation ou de contrôle des morts-vivants dont les créatures affectées sont automatiquement détruites.',
+    sorts: ['Endurance aux énergies destructives', 'Métal brûlant', 'Lumière brûlante', 'Bouclier de feu', 'Colonne de feu', 'Germes de feu', 'Rayon de soleil', 'Explosion de lumière', 'Sphère prismatique'],
+  },
+  {
+    // PHB VF p.195 — domaine absent de la liste jusqu'au 2026-08-27.
+    nom: 'Terre',
+    pouvoir: 'Renvoi ou destruction des créatures de l\'air comme un prêtre bon avec les morts-vivants ; peut aussi intimider, contrôler ou augmenter le moral des créatures de la terre comme un prêtre mauvais. 3 + mod CHA fois/jour (pouvoir surnaturel).',
+    sorts: ['Pierre magique', 'Ramollissement de la terre et de la pierre', 'Façonnage de la pierre', 'Pierres acérées', 'Mur de pierre', 'Peau de pierre', 'Tremblement de terre', 'Corps de fer', 'Nuée d\'élémentaires (Terre)'],
+  },
+  {
+    // PHB VF p.195
     nom: 'Voyage',
-    pouvoir: 'Liberté de mouvement pendant 1 round/niv par jour (dépensés librement). Déplacement augmenté de 3 m.',
-    sorts: ['Manteau de vent', 'Lévitation', 'Célérité', 'Liberté de mouvement', 'Téléportation', 'Trouver le chemin', 'Téléportation suprême', 'Déplacement éthéré', 'Marche planaire'],
+    pouvoir: 'Agit normalement même sous un effet magique restreignant ses mouvements : pouvoir extraordinaire semblable à liberté de mouvement, utilisable à volonté dans la limite d\'un total quotidien de 1 round par niveau. Sens de la nature est une compétence de classe.',
+    sorts: ['Repli expéditif', 'Localisation d\'objet', 'Vol', 'Porte dimensionnelle', 'Téléportation', 'Orientation', 'Téléportation suprême', 'Porte de phase', 'Projection astrale'],
   },
 
-  // ─── Domaines des Royaumes Oubliés (Univers, chapitre 2, p.62-66) ───
+  // ─── Domaines des Royaumes Oubliés (chapitre « La Magie », p.62 et suiv.) ───
+  // Page 62 lue à l'image le 2026-08-27 : Araignées, Artisanat, Cavernes, Charme,
+  // Commerce et Destin sont CONFORMES au livre (pouvoir et sorts). Le reste du bloc
+  // n'a pas encore été recoupé, mais l'échantillon est bon.
+  // ⚠ Ce chapitre redéfinit aussi des domaines du PHB (Air, Bien, Chance…) — il n'y
+  //   donne que la liste des dieux de Faerûn, pas de sorts. Le PHB reste l'arbitre.
   {
     nom: 'Araignées',
     pouvoir: 'Intimider ou contrôler les araignées comme un prêtre mauvais avec les morts-vivants (3 + mod CHA fois/jour).',
@@ -294,7 +352,10 @@ export const DOMAINES_DND35: DomaineInfo[] = [
     sorts: ['Graisse', 'Flèche acide de Melf', 'Empoisonnement', 'Rouille', 'Tentacules noirs d\'Evard', 'Transmutation de la pierre en boue', 'Destruction', 'Mot de pouvoir aveuglant', 'Implosion'],
   },
 
-  // ─── Domaines du Codex Divin (chapitre 7, p.140-145) ───
+  // ─── Domaines du Codex Divin (chapitre 7, p.140 et suiv. — décalage PDF NUL) ───
+  // Page 141 lue à l'image le 2026-08-27 : Communauté, Compétition, Convocation,
+  // Création et Domination sont CONFORMES au livre. Le reste du bloc n'a pas encore
+  // été recoupé, mais l'échantillon est bon.
   {
     nom: 'Célérité',
     pouvoir: '+3 m de déplacement au sol (perdu en armure ou charge intermédiaire/lourde). [Codex Divin]',

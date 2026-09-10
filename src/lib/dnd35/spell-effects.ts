@@ -69,6 +69,7 @@ export const SORTS_EFFETS_CA: EffetCACatalogue[] = [
 // Le bonus se propage partout : mod de carac, CA (DEX), attaques, sauvegardes, compétences…
 export const SORTS_EFFETS_CARAC: EffetCaracCatalogue[] = [
   { nom: 'Force de taureau',       carac: 'FOR', valeur: 4, typeBonus: 'amélioration', duree: '1 min/niveau', note: 'Attaque au corps à corps, dégâts, compétences de Force.' },
+  { nom: 'Grâce féline',          carac: 'DEX', valeur: 4, typeBonus: 'amélioration', duree: '1 min/niveau', note: 'CA (limitée par le max DEX de l\'armure), initiative, Réflexes, attaque à distance.' },
   { nom: 'Grâce du chat',          carac: 'DEX', valeur: 4, typeBonus: 'amélioration', duree: '1 min/niveau', note: 'CA (limitée par le max DEX de l\'armure), initiative, Réflexes, attaque à distance.' },
   { nom: 'Grâce du félin',         carac: 'DEX', valeur: 4, typeBonus: 'amélioration', duree: '1 min/niveau', note: 'CA (limitée par le max DEX de l\'armure), initiative, Réflexes, attaque à distance.' },
   { nom: 'Endurance de l\'ours',   carac: 'CON', valeur: 4, typeBonus: 'amélioration', duree: '1 min/niveau', note: 'Vigueur et Constitution. Les PV ne sont pas ajustés automatiquement (+2/niveau à gérer avec ✚).' },
@@ -111,7 +112,9 @@ export type EffetSuiviCatalogue = {
 export const SORTS_EFFETS_SUIVI: EffetSuiviCatalogue[] = [
   // Niveau 0
   { nom: 'Résistance',                     duree: '1 minute',        note: '+1 aux jets de sauvegarde.' },
+  { nom: 'Stimulant',                          duree: '1 minute',        note: '+1 point de vie temporaire.' },
   { nom: 'Vertu',                          duree: '1 minute',        note: '+1 point de vie temporaire.' },
+  { nom: 'Assistance divine',                        duree: '1 minute',        note: '+1 au prochain test de compétence ou jet d\'attaque.' },
   { nom: 'Guidage',                        duree: '1 minute',        note: '+1 au prochain test de compétence ou jet d\'attaque.' },
   { nom: 'Sauvegarde contre le feu',       duree: '10 min/niveau',   note: 'Réduit les dégâts de feu non magique.' },
   // Niveau 1
@@ -122,6 +125,7 @@ export const SORTS_EFFETS_SUIVI: EffetSuiviCatalogue[] = [
   { nom: 'Bénédiction',                    duree: '1 min/niveau',    note: '+1 attaques et JS contre la peur (vous et vos alliés à 15 m).' },
   // Niveau 2
   { nom: 'Image miroir',                   duree: '1 min/niveau',    note: '1d4+1 doubles illusoires — chaque attaque ratée en détruit un.' },
+  { nom: 'Résistance aux énergies destructives',        duree: '10 min/niveau',   note: 'Résistance 10 à un type d\'énergie choisi.' },
   { nom: 'Résistance aux énergies',        duree: '10 min/niveau',   note: 'Résistance 10 à un type d\'énergie choisi.' },
   { nom: 'Vision dans le noir',            duree: '1 h/niveau',      note: 'Vision dans le noir jusqu\'à 18 m.' },
   { nom: 'Sens de la nature',              duree: '1 min/niveau',    note: 'Perception animaux/plantes à 9 m, +4 aux tests d\'initiative.' },
@@ -132,6 +136,7 @@ export const SORTS_EFFETS_SUIVI: EffetSuiviCatalogue[] = [
   { nom: 'Forme gazeuse',                  duree: '2 min/niveau',    note: 'Corps gazeux : immunité à la plupart des attaques, déplacement 3 m.' },
   { nom: 'Respiration aquatique',          duree: '2 h/niveau',      note: 'Respire sous l\'eau comme à l\'air libre.' },
   { nom: 'Vision magique',                 duree: '1 min/niveau',    note: 'Voit les auras magiques, leurs écoles et intensités.' },
+  { nom: 'Protection contre les énergies destructives', duree: '10 min/niveau',   note: 'Absorbe jusqu\'à 12 points de dégâts/niveau d\'un type d\'énergie.' },
   { nom: 'Protection contre les énergies', duree: '10 min/niveau',   note: 'Absorbe jusqu\'à 12 points de dégâts/niveau d\'un type d\'énergie.' },
   { nom: 'Prière',                         duree: '1 round/niveau',  note: '+1 attaques/dégâts/comp./JS pour vous et vos alliés ; −1 pour les ennemis.' },
   // Niveau 4

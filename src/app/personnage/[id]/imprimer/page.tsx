@@ -1,11 +1,14 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getCharacter } from '@/lib/queries/character'
-import { getClasseInfo } from '@/lib/dnd35/classes'
+import { getClasseInfo, getEmplacementsNiveau, comptePreparations } from '@/lib/dnd35/classes'
+import { getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
 import { getRaceInfo } from '@/lib/dnd35/races'
 import { getModifier, getBab, xpPourNiveau, modSauvegarde } from '@/lib/dnd35/rules'
 import { getCompetenceRef, caracteristiqueDe } from '@/lib/dnd35/skills'
+import { getDomaineInfo } from '@/lib/dnd35/domains'
 import { PrintButton } from '@/components/fiche/PrintButton'
+import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
 
 export const dynamic = 'force-dynamic'
 
@@ -37,7 +40,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   if (!data) notFound()
 
   const { character, race, clan, classes, abilityScores, combatStats, savingThrows,
-    skills, feats, spells, weapons, armor, magicItems, potions, currency, languages, companions } = data
+    skills, feats, spells, weapons, armor, magicItems, potions, currency, gems, languages, companions } = data
 
   const firstClass = classes[0]
   const classeInfo = firstClass ? getClasseInfo(firstClass.classe.nom) : null
@@ -48,6 +51,28 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   // Classe lanceuse de sorts : n'importe laquelle des classes
   const casterClasses = classes.filter(c => getClasseInfo(c.classe.nom)?.lanceurSorts)
   const isSpellcaster = casterClasses.length > 0
+
+  // Compteur d'emplacements par classe lanceuse et par niveau de sort — même
+  // calcul que la fiche à l'écran (getEmplacementsNiveau / comptePreparations),
+  // pour que le papier et l'écran ne divergent pas. Figé à l'instant de l'impression.
+  const classeSortDefautNom = casterClasses[0]?.classe.nom ?? null
+  const emplacementsParClasse = casterClasses.map(c => {
+    const nomClasse = c.classe.nom
+    const niveauLanceur = getNiveauLanceurEffectif(
+      nomClasse,
+      classes.map(k => ({ classe: k.classe.nom, niveau: k.characterClass.niveau }))
+    ) || c.characterClass.niveau
+    // Les sorts sans classe attribuée appartiennent à la classe lanceuse par défaut
+    const sortsClasse = spells
+      .filter(s => s.charSpell.classe === nomClasse || (s.charSpell.classe == null && nomClasse === classeSortDefautNom))
+      .map(s => ({ niveau: s.charSpell.niveau ?? 0, estPrepare: s.charSpell.estPrepare ?? 0 }))
+    const compteurs = Array.from({ length: 10 }, (_, n) => ({
+      niveau: n,
+      prepares: comptePreparations(sortsClasse, n),
+      emplacements: getEmplacementsNiveau(nomClasse, niveauLanceur, n),
+    })).filter(x => x.emplacements > 0 || x.prepares > 0)
+    return { nomClasse, compteurs }
+  }).filter(x => x.compteurs.length > 0)
 
   // Totaux caractéristiques
   const forT = (abilityScores?.forBase ?? 10) + (abilityScores?.forMagique ?? 0) + (raceInfo?.bonusFor ?? 0)
@@ -98,6 +123,12 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
 
   const abilMods: Record<string, number> = { FOR: forMod, DEX: dexMod, CON: conMod, INT: intMod, SAG: sagMod, CHA: chaMod }
 
+  // Domaines divins — même source que la fiche à l'écran (combatStats.domaine1/2),
+  // pour que le papier et l'écran ne divergent pas.
+  const d1Info = combatStats?.domaine1 ? getDomaineInfo(combatStats.domaine1) : undefined
+  const d2Info = combatStats?.domaine2 ? getDomaineInfo(combatStats.domaine2) : undefined
+  const domaines = [d1Info, d2Info].filter((d): d is NonNullable<typeof d> => Boolean(d))
+
   // La fiche imprimée part des compétences DU PERSONNAGE, comme l'écran — et non
   // de la table 4–2. Celle-ci reste consultée pour ce qu'elle sait (caractéristique
   // officielle, compétence de classe), mais elle ne décide plus de ce qui s'imprime :
@@ -123,18 +154,30 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
     ? `${armurePortee.armor.nom}${armurePortee.charArmor.bonusMagique ? ` +${armurePortee.charArmor.bonusMagique}` : ''}`
     : '—'
 
+  const pp = parseFloat(currency?.pp?.toString() ?? '0')
   const po = parseFloat(currency?.po?.toString() ?? '0')
   const pa = parseFloat(currency?.pa?.toString() ?? '0')
   const pc = parseFloat(currency?.pc?.toString() ?? '0')
   const pe = parseFloat(currency?.pe?.toString() ?? '0')
   const pm = parseFloat(currency?.pm?.toString() ?? '0')
   const monnaieStr = [
+    pp > 0 ? `${pp} p.p.` : '',
     po > 0 ? `${po} p.o.` : '',
     pa > 0 ? `${pa} p.a.` : '',
     pc > 0 ? `${pc} p.c.` : '',
     pe > 0 ? `${pe} p.e.` : '',
     pm > 0 ? `${pm} p.m.` : '',
   ].filter(Boolean).join('  ')
+
+  // Gemmes du trésor + total converti en po (mithral à part : aucun taux)
+  const gemmes = gems.map(g => ({
+    nom: g.nom,
+    quantite: g.quantite ?? 1,
+    valeur: parseFloat(g.valeur?.toString() ?? '0'),
+    unite: g.unite ?? 'po',
+    notes: g.notes ?? '',
+  }))
+  const totalGem = totalGemmes(gemmes)
 
   const td = (content: React.ReactNode, style?: React.CSSProperties) => (
     <td style={{ border: '1px solid #000', padding: '2px 4px', fontSize: '8pt', ...style }}>{content}</td>
@@ -640,8 +683,27 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                 <div style={{ padding: '4px 6px', fontSize: '10pt' }}>{monnaieStr || '—'}</div>
               </td>
               <td style={{ border: '1px solid #000', width: '60%', verticalAlign: 'top' }}>
-                <div style={{ background: '#000', color: '#fff', fontWeight: 'bold', fontSize: '9pt', padding: '2px 6px', textTransform: 'uppercase', marginBottom: '4px' }}>Trésors</div>
-                <div style={{ padding: '4px 6px', minHeight: '60px' }}></div>
+                <div style={{ background: '#000', color: '#fff', fontWeight: 'bold', fontSize: '9pt', padding: '2px 6px', textTransform: 'uppercase', marginBottom: '4px' }}>Trésors — gemmes</div>
+                <div style={{ padding: '4px 6px', minHeight: '60px', fontSize: '9pt' }}>
+                  {gemmes.map((g, i) => (
+                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px dotted #ccc', padding: '1px 0' }}>
+                      <span>{g.nom}{g.quantite > 1 ? ` ×${g.quantite}` : ''}{g.notes ? ` — ${g.notes}` : ''}</span>
+                      <span style={{ fontWeight: 'bold', whiteSpace: 'nowrap', marginLeft: '8px' }}>
+                        {formatPo(g.valeur)} {uniteCourte(g.unite)}{g.quantite > 1 ? ' ch.' : ''}
+                      </span>
+                    </div>
+                  ))}
+                  {/* Lignes vides : le MJ inscrit à la main les trésors trouvés en séance */}
+                  {Array.from({ length: Math.max(0, 4 - gemmes.length) }).map((_, i) => (
+                    <div key={`gv-${i}`} style={{ borderBottom: '1px dotted #ccc', height: '14px' }}></div>
+                  ))}
+                  {gemmes.length > 0 && (
+                    <div style={{ textAlign: 'right', fontWeight: 'bold', marginTop: '3px' }}>
+                      Total : {formatPo(totalGem.po)} p.o.
+                      {totalGem.horsTotal.map(h => ` + ${formatPo(h.total)} ${uniteCourte(h.unite)}`).join('')}
+                    </div>
+                  )}
+                </div>
               </td>
             </tr>
           </tbody>
@@ -719,12 +781,12 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
           <table style={TABLE}>
             <thead>
               <tr style={{ background: '#000', color: '#fff' }}>
-                <td colSpan={4} style={{ padding: '4px 8px', fontWeight: 'bold', fontSize: '11pt', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                <td colSpan={3} style={{ padding: '4px 8px', fontWeight: 'bold', fontSize: '11pt', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
                   ✦ Sorts — {casterClasses.map(c => `${c.classe.nom} ${c.characterClass.niveau}`).join(' / ')}
                 </td>
               </tr>
               <tr>
-                <td colSpan={4} style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '8pt', background: '#f5f5f5', fontStyle: 'italic' }}>
+                <td colSpan={3} style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '8pt', background: '#f5f5f5', fontStyle: 'italic' }}>
                   {casterClasses.map(c => {
                     const ci = getClasseInfo(c.classe.nom)
                     const car = ci?.caracteristiqueSorts ?? '—'
@@ -733,11 +795,25 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                   }).join('   —   ')}
                 </td>
               </tr>
+              {emplacementsParClasse.length > 0 && (
+                <tr>
+                  <td colSpan={3} style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '8pt', background: '#fafafa' }}>
+                    {emplacementsParClasse.map(({ nomClasse, compteurs }) => (
+                      <div key={nomClasse} style={{ lineHeight: 1.4 }}>
+                        <b>Emplacements — {nomClasse} :</b>{' '}
+                        {compteurs.map(c => `${c.niveau === 0 ? 'Or.' : `niv.${c.niveau}`} ${c.prepares}/${c.emplacements}`).join('  ·  ')}
+                      </div>
+                    ))}
+                    <div style={{ fontSize: '7pt', color: '#777', fontStyle: 'italic' }}>
+                      Préparés / emplacements de base à l&apos;impression — hors bonus de caractéristique élevée et hors emplacement de domaine.
+                    </div>
+                  </td>
+                </tr>
+              )}
               <tr>
-                <td style={{ border: '1px solid #000', padding: '1px 4px', fontSize: '7pt', fontWeight: 'bold', background: '#eee', width: '6%', textAlign: 'center' }}>Niv.</td>
-                <td style={{ border: '1px solid #000', padding: '1px 4px', fontSize: '7pt', fontWeight: 'bold', background: '#eee', width: '28%' }}>Sort</td>
-                <td style={{ border: '1px solid #000', padding: '1px 4px', fontSize: '7pt', fontWeight: 'bold', background: '#eee', width: '14%', textAlign: 'center' }}>École</td>
-                <td style={{ border: '1px solid #000', padding: '1px 4px', fontSize: '7pt', fontWeight: 'bold', background: '#eee' }}>Description</td>
+                <td style={{ border: '1px solid #000', padding: '1px 4px', fontSize: '7pt', fontWeight: 'bold', background: '#eee', width: '8%', textAlign: 'center' }}>Niv.</td>
+                <td style={{ border: '1px solid #000', padding: '1px 4px', fontSize: '7pt', fontWeight: 'bold', background: '#eee', width: '62%' }}>Sort</td>
+                <td style={{ border: '1px solid #000', padding: '1px 4px', fontSize: '7pt', fontWeight: 'bold', background: '#eee', width: '30%', textAlign: 'center' }}>École</td>
               </tr>
             </thead>
             <tbody>
@@ -755,11 +831,8 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                     {charSpell.estConnu === 2 && <span style={{ fontSize: '7pt', color: '#888', marginLeft: '4px' }}>(perso.)</span>}
                     {casterClasses.length > 1 && charSpell.classe && <span style={{ fontSize: '7pt', color: '#888', marginLeft: '4px' }}>({charSpell.classe})</span>}
                   </td>
-                  <td style={{ border: '1px solid #ddd', padding: '2px 4px', fontSize: '8pt', color: '#555' }}>
+                  <td style={{ border: '1px solid #ddd', padding: '2px 4px', fontSize: '8pt', color: '#555', textAlign: 'center' }}>
                     {spell.ecole ?? ''}
-                  </td>
-                  <td style={{ border: '1px solid #ddd', padding: '2px 4px', fontSize: '8pt', color: '#333' }}>
-                    {spell.description ?? '—'}
                   </td>
                 </tr>
               )) : Array.from({ length: 30 }).map((_, i) => (
@@ -767,9 +840,46 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                   <td style={{ border: '1px solid #eee', height: '20px' }}></td>
                   <td style={{ border: '1px solid #eee' }}></td>
                   <td style={{ border: '1px solid #eee' }}></td>
-                  <td style={{ border: '1px solid #eee' }}></td>
                 </tr>
               ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* Domaines divins — pouvoir accordé + le sort de domaine de chaque niveau.
+          Hors du bloc isSpellcaster : la fiche écran les affiche dès que
+          combatStats.domaine1/2 est rempli, le papier fait pareil. */}
+      {domaines.length > 0 && (
+        <div style={{ paddingBottom: '0' }}>
+          <table style={TABLE}>
+            <thead>
+              <tr style={{ background: '#000', color: '#fff' }}>
+                <td colSpan={domaines.length} style={{ padding: '2px 6px', fontWeight: 'bold', fontSize: '9pt', textTransform: 'uppercase' }}>
+                  Domaines divins
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                {domaines.map((d, i) => (
+                  <td key={i} style={{ border: '1px solid #000', padding: '4px 6px', verticalAlign: 'top', width: `${Math.floor(100 / domaines.length)}%` }}>
+                    <div style={{ fontWeight: 'bold', fontSize: '10pt', marginBottom: '2px' }}>{d.nom}</div>
+                    <div style={{ fontSize: '8pt', marginBottom: '4px' }}>{d.pouvoir}</div>
+                    <div style={{ fontSize: '6pt', fontWeight: 'bold', textTransform: 'uppercase', color: '#555', marginBottom: '2px' }}>Sorts de domaine</div>
+                    {d.sorts.map((s, idx) => (
+                      <div key={idx} style={{ fontSize: '8pt', lineHeight: 1.4 }}>
+                        <span style={{ color: '#555', fontSize: '7pt' }}>Niv.{idx + 1}</span> {s}
+                      </div>
+                    ))}
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td colSpan={domaines.length} style={{ border: '1px solid #000', padding: '2px 6px', fontSize: '7pt', color: '#555', fontStyle: 'italic' }}>
+                  Emplacement de domaine : +1 sort par niveau de sort (1 et plus), réservé aux sorts de domaine — hors compteur ci-dessus, à gérer à la main.
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
