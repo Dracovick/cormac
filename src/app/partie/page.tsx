@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getJournalPartie, getEtatGroupe } from '@/app/actions/journal'
+import { getJournalPartie, getEtatGroupe, getDernierePartieAvant } from '@/app/actions/journal'
 import { journeeLudiqueCourante, dateLisible, jourDecale } from '@/lib/journal-format'
 import { PartieTimeline } from '@/components/partie/PartieTimeline'
 
@@ -12,7 +12,11 @@ export default async function PartiePage({ searchParams }: { searchParams: Promi
   const { date } = await searchParams
   const aujourdhui = journeeLudiqueCourante()
   const jour = date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : aujourdhui
-  const [entrees, etatGroupe] = await Promise.all([getJournalPartie(jour), getEtatGroupe(jour)])
+  const [entrees, etatGroupe, dernierePartie] = await Promise.all([
+    getJournalPartie(jour),
+    getEtatGroupe(jour),
+    getDernierePartieAvant(jour),
+  ])
 
   return (
     <div className="min-h-screen p-4 sm:p-8" style={{ backgroundColor: '#080608' }}>
@@ -44,6 +48,18 @@ export default async function PartiePage({ searchParams }: { searchParams: Promi
             className="text-stone-400 hover:text-amber-300 bg-stone-900/80 border border-stone-700 rounded px-2.5 py-1.5 text-sm transition-colors"
             title="Journée suivante"
           >›</Link>
+          {dernierePartie && (
+            <Link
+              href={`/partie?date=${dernierePartie}`}
+              className="text-amber-400 hover:text-amber-300 bg-amber-900/30 border border-amber-800/50 rounded px-2.5 py-1.5 text-sm transition-colors"
+              title="Sauter à la dernière soirée jouée avant celle-ci — idéal en début de séance"
+            >⏮ Dernière partie</Link>
+          )}
+          <Link
+            href="/partie/liste"
+            className="text-stone-400 hover:text-amber-300 bg-stone-900/80 border border-stone-700 rounded px-2.5 py-1.5 text-sm transition-colors"
+            title="La liste de toutes les soirées jouées"
+          >🗂 Parties</Link>
           <form action="/partie" className="flex items-center gap-1.5 ml-auto">
             <input
               type="date"

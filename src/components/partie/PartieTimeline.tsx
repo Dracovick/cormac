@@ -54,6 +54,8 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour }: Props) {
   }
 
   function supprimer(id: number) {
+    // Confirmation : à la table, un doigt qui glisse ne doit pas effacer une vraie entrée
+    if (!confirm('Effacer cette entrée du journal ?\n(la trace disparaît, mais l’action sur la fiche n’est pas annulée)')) return
     startTransition(async () => {
       await supprimerEntreePartie(id)
       router.refresh()
@@ -233,9 +235,10 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour }: Props) {
                 <div className="flex-1 h-px bg-amber-900/60" />
                 <span className="text-amber-500 text-xs font-semibold uppercase tracking-wide">{e.description}</span>
                 <div className="flex-1 h-px bg-amber-900/60" />
+                {/* Toujours visible : au survol seulement, le bouton n'existait pas sur tablette */}
                 <button
                   onClick={() => supprimer(e.id)}
-                  className="opacity-0 group-hover:opacity-100 text-stone-600 hover:text-red-400 text-xs transition-all shrink-0"
+                  className="text-stone-600 hover:text-red-400 active:text-red-400 text-xs transition-colors shrink-0 px-1.5 py-0.5"
                   title="Effacer ce marqueur"
                 >✕</button>
               </div>
@@ -258,7 +261,7 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour }: Props) {
               <span className={`flex-1 leading-snug whitespace-pre-wrap ${estNoteMJ ? 'text-amber-100/90 italic' : 'text-stone-300'}`}>{e.description}</span>
               <button
                 onClick={() => supprimer(e.id)}
-                className="opacity-0 group-hover:opacity-100 text-stone-600 hover:text-red-400 text-xs transition-all shrink-0 mt-0.5"
+                className="text-stone-600 hover:text-red-400 active:text-red-400 text-xs transition-colors shrink-0 mt-0.5 px-1.5 py-0.5"
                 title="Effacer cette entrée (n'annule pas l'action)"
               >✕</button>
             </div>

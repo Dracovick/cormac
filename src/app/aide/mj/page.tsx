@@ -114,7 +114,17 @@ export default async function AideMJ({ searchParams }: { searchParams: Promise<{
 
       <main className="max-w-3xl mx-auto px-4 py-8">
 
-        <div className="text-stone-500 text-xs uppercase tracking-widest mb-3">Chapitre 1</div>
+        <div className="text-stone-500 text-xs uppercase tracking-widest mb-3">Le Grimoire à la table</div>
+
+        <Section titre="📜 Le journal de partie — s'y retrouver">
+          <p>La page <span className="font-mono text-stone-300">/partie</span> est votre vue de table : la chronologie fusionnée de tous les personnages, la plus récente en haut, mise à jour en direct pendant la partie.</p>
+          <Row label="Parties précédentes">Le bouton <span className="bg-stone-800 border border-stone-600 text-stone-300 px-1.5 py-0.5 rounded text-xs">🗂 Parties</span> ouvre la liste de toutes les soirées jouées — une carte par partie avec la date, les personnages présents et les faits saillants (combats, XP distribuée, butin, notes). Un clic rouvre le journal complet de la soirée. Pas de date à retenir ni de calendrier à fouiller.</Row>
+          <Row label="Dernière partie">Le bouton <span className="bg-amber-900/30 border border-amber-800/50 text-amber-400 px-1.5 py-0.5 rounded text-xs">⏮ Dernière partie</span> saute directement à la dernière soirée jouée — parfait en début de séance, pour relire ce qui s&apos;est passé pendant que tout le monde s&apos;installe.</Row>
+          <Row label="Effacer une entrée">Le <span className="font-mono text-stone-500">✕</span> au bout de chaque ligne efface une entrée, après confirmation : un test, une erreur de saisie, un personnage qui ne faisait pas partie de l&apos;aventure. La trace disparaît du journal, mais l&apos;action sur la fiche n&apos;est <strong>pas annulée</strong> (les PV dépensés le restent). Quand toutes les entrées d&apos;un personnage sont effacées, il disparaît aussi des pastilles « À la table » et du tableau de PV.</Row>
+          <Tip>La journée ludique s&apos;étend de <strong>6 h à 6 h</strong>, heure du Québec : une soirée qui déborde après minuit reste une seule partie, dans la liste comme au journal.</Tip>
+        </Section>
+
+        <div className="text-stone-500 text-xs uppercase tracking-widest mb-3 mt-8">Chapitre 1</div>
 
         <Section titre="⭐ Les points d'expérience — le principe (GM p.36)">
           <p>Les points d'expérience quantifient les exploits des personnages : plus les monstres sont dangereux, plus les aventuriers gagnent de PX. Les personnages <strong>se partagent les PX conquis de haute lutte</strong> et gagnent un niveau chaque fois que leur total atteint un certain seuil.</p>

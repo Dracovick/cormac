@@ -2,10 +2,10 @@
 
 import { getDb } from '@/db'
 import * as schema from '@/db/schema'
-import { and, desc, eq, gt, gte, isNotNull, isNull, like, lt, or } from 'drizzle-orm'
+import { and, desc, eq, gt, gte, isNotNull, isNull, like, lt, or, sql } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { logJournal } from '@/lib/journal'
-import { decalageQuebec, COUPURE_JOURNEE_H } from '@/lib/journal-format'
+import { decalageQuebec, COUPURE_JOURNEE_H, TZ_QUEBEC } from '@/lib/journal-format'
 import { calcXpPenalite, xpPourNiveau } from '@/lib/dnd35/rules'
 import { getRaceInfo } from '@/lib/dnd35/races'
 
@@ -290,6 +290,70 @@ export async function supprimerEntreeJournal(id: number, personnageId: number) {
     )
   )
   revalidatePath(`/personnage/${personnageId}`)
+}
+
+// ─── Liste des parties précédentes : une carte par journée ludique jouée ─────
+// Le regroupement par journée ludique (6 h → 6 h, heure du Québec) se fait côté
+// SQL : la liste reste deux requêtes, même avec des années de campagne au journal.
+// sql.raw plutôt que des paramètres liés : l'expression doit être textuellement
+// identique dans le SELECT et le GROUP BY pour que Postgres l'accepte.
+function sqlJourneeLudique() {
+  return sql<string>`to_char((${schema.characterJournal.createdAt} at time zone '${sql.raw(TZ_QUEBEC)}') - interval '${sql.raw(String(COUPURE_JOURNEE_H))} hours', 'YYYY-MM-DD')`
+}
+
+export type ResumePartie = {
+  jour: string          // journée ludique AAAA-MM-JJ
+  nbEntrees: number
+  xpTotale: number      // XP distribuée ce soir-là
+  combats: number       // bilans de combat (🏆)
+  butins: number
+  repos: number         // nuits de repos
+  notes: number         // notes du MJ
+  personnages: string[] // personnages actifs, triés
+}
+
+export async function getListeParties(): Promise<ResumePartie[]> {
+  const db = getDb()
+  const jour = sqlJourneeLudique()
+  const [aggregats, actifs] = await Promise.all([
+    db.select({
+      jour,
+      nbEntrees: sql<number>`count(*)::int`,
+      xpTotale: sql<number>`coalesce(sum(${schema.characterJournal.valeur}) filter (where ${schema.characterJournal.type} = 'xp'), 0)::int`,
+      combats: sql<number>`(count(*) filter (where ${schema.characterJournal.type} = 'bilan'))::int`,
+      butins: sql<number>`(count(*) filter (where ${schema.characterJournal.type} = 'butin'))::int`,
+      repos: sql<number>`(count(*) filter (where ${schema.characterJournal.type} = 'repos'))::int`,
+      notes: sql<number>`(count(*) filter (where ${schema.characterJournal.type} = 'note' and ${schema.characterJournal.personnageId} is null))::int`,
+    })
+      .from(schema.characterJournal)
+      .groupBy(jour)
+      .orderBy(desc(jour)),
+    db.selectDistinct({ jour, nom: schema.characters.nom })
+      .from(schema.characterJournal)
+      .innerJoin(schema.characters, eq(schema.characterJournal.personnageId, schema.characters.id)),
+  ])
+  const parJour = new Map<string, string[]>()
+  for (const a of actifs) {
+    const liste = parJour.get(a.jour)
+    if (liste) liste.push(a.nom)
+    else parJour.set(a.jour, [a.nom])
+  }
+  return aggregats.map(a => ({
+    ...a,
+    personnages: (parJour.get(a.jour) ?? []).sort((x, y) => x.localeCompare(y, 'fr')),
+  }))
+}
+
+// ─── Dernière partie jouée avant une date (bouton « ⏮ Dernière partie ») ─────
+export async function getDernierePartieAvant(dateStr: string): Promise<string | null> {
+  const jour = sqlJourneeLudique()
+  const [r] = await getDb()
+    .select({ jour })
+    .from(schema.characterJournal)
+    .where(sql`${jour} < ${dateStr}`)
+    .orderBy(desc(jour))
+    .limit(1)
+  return r?.jour ?? null
 }
 
 // ─── Journal du MJ : tous les personnages d'une journée ludique ───────────────
