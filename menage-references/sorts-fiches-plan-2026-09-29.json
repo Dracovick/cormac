@@ -1,0 +1,179 @@
+[
+ {
+  "id": 707,
+  "nom": "Chant d'Enevahr",
+  "set": {
+   "composantes": "V, G",
+   "portee": "90 m",
+   "duree": "20 minutes"
+  },
+  "source": "catalogue"
+ },
+ {
+  "id": 709,
+  "nom": "Don d'alliance",
+  "set": {
+   "composantes": "V, G, PX",
+   "portee": "22,5 m",
+   "duree": "Permanente (T)"
+  },
+  "source": "catalogue"
+ },
+ {
+  "id": 708,
+  "nom": "Déplacement de montagne de Proctiv",
+  "set": {
+   "composantes": "V, G, PX",
+   "portee": "1,5 km",
+   "duree": "Permanente"
+  },
+  "source": "catalogue"
+ },
+ {
+  "id": 40,
+  "nom": "Globe d’invulnérabilité renforcée",
+  "set": {
+   "composantes": "V, G, M",
+   "portee": "3 m",
+   "duree": "1 round/niveau (T)"
+  },
+  "source": "catalogue"
+ },
+ {
+  "id": 710,
+  "nom": "Horrible armée de morts",
+  "set": {
+   "composantes": "V, G, PX",
+   "portee": "90 m",
+   "duree": "Instantané"
+  },
+  "source": "catalogue"
+ },
+ {
+  "id": 102,
+  "nom": "Hâte",
+  "set": {
+   "composantes": "V, S, M",
+   "portee": "Courte",
+   "duree": "1 round/niveau",
+   "description": "Un sujet/niv : +1 att, +1 CA, +1 jets de réflexes, +9 m déplacement, attaque supplémentaire."
+  },
+  "source": "catalogue"
+ },
+ {
+  "id": 88,
+  "nom": "Immunité aux énergies",
+  "set": {
+   "composantes": "V, S, DF",
+   "portee": "Contact",
+   "duree": "24 heures",
+   "description": "Immunité totale à un type d'énergie (froid, feu, acide, électricité, son)."
+  },
+  "source": "catalogue"
+ },
+ {
+  "id": 73,
+  "nom": "Injonction",
+  "set": {
+   "composantes": "V",
+   "portee": "Courte",
+   "duree": "1 round",
+   "description": "Ordonne à une créature d'approcher, lâcher, fuir, tomber ou s'arrêter."
+  },
+  "source": "catalogue"
+ },
+ {
+  "id": 712,
+  "nom": "Lueur glorieuse de renaissance",
+  "set": {
+   "composantes": "V, G, FD",
+   "portee": "30 m",
+   "duree": "Instantané"
+  },
+  "source": "catalogue"
+ },
+ {
+  "id": 711,
+  "nom": "Lueur étoilée du peuple",
+  "set": {
+   "composantes": "V, G",
+   "portee": "12 m",
+   "duree": "Instantané et 20 heures"
+  },
+  "source": "catalogue"
+ },
+ {
+  "id": 41,
+  "nom": "Métamorphose des autres",
+  "set": {
+   "composantes": "V, S, M",
+   "portee": "Moyen",
+   "duree": "Permanent",
+   "description": "Transforme la cible en pierre (JS Vigueur annule)."
+  },
+  "source": "catalogue"
+ },
+ {
+  "id": 95,
+  "nom": "Sauvegarde contre le feu",
+  "set": {
+   "composantes": "V, S, DF",
+   "portee": "Contact",
+   "duree": "10 min/niveau",
+   "description": "Réduit les dégâts de feu non magique."
+  },
+  "source": "catalogue"
+ },
+ {
+  "id": 62,
+  "nom": "Sens de la nature",
+  "set": {
+   "composantes": "V, S",
+   "portee": "Personnel",
+   "duree": "1 min/niveau",
+   "description": "Perception des animaux et plantes à 9 m. +4 aux tests d'Initiative."
+  },
+  "source": "catalogue"
+ },
+ {
+  "id": 61,
+  "nom": "Soin des animaux",
+  "set": {
+   "composantes": "V, S",
+   "portee": "Contact",
+   "duree": "Instantané",
+   "description": "Soigne 1d8+1/niv (max +5) PV à un animal."
+  },
+  "source": "catalogue"
+ },
+ {
+  "id": 90,
+  "nom": "Soins intensifs",
+  "set": {
+   "composantes": "V, S",
+   "portee": "Contact",
+   "duree": "Instantané"
+  },
+  "source": "catalogue"
+ },
+ {
+  "id": 85,
+  "nom": "Soins modérés",
+  "set": {
+   "composantes": "V, S",
+   "portee": "Contact",
+   "duree": "Instantané"
+  },
+  "source": "catalogue"
+ },
+ {
+  "id": 713,
+  "nom": "Vent tueur de Tolodine",
+  "set": {
+   "composantes": "V, PX",
+   "portee": "300 m",
+   "duree": "20 heures (T)"
+  },
+  "source": "catalogue"
+ }
+]

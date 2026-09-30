@@ -7,7 +7,7 @@ export const spells = pgTable('spells', {
   composantes: varchar('composantes', { length: 50 }),
   portee: varchar('portee', { length: 100 }),
   duree: varchar('duree', { length: 100 }),
-  zoneEffet: varchar('zone_effet', { length: 100 }),
+  zoneEffet: text('zone_effet'),
   jetDeSauvegarde: varchar('jet_de_sauvegarde', { length: 100 }),
   resistanceMagique: varchar('resistance_magique', { length: 50 }),
   description: text('description'),

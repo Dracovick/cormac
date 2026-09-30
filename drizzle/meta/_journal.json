@@ -29,6 +29,13 @@
       "when": 1788127245721,
       "tag": "0003_add_character_gems",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1790741118497,
+      "tag": "0004_zone_effet_text",
+      "breakpoints": true
     }
   ]
 }
