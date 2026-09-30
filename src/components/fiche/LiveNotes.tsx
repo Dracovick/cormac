@@ -31,7 +31,7 @@ export function LiveNotes({ personnageId, notes }: Props) {
           autoFocus
           rows={6}
           className="w-full bg-stone-800 border border-amber-700/50 focus:border-amber-500 rounded-lg px-3 py-2 text-stone-200 text-base sm:text-sm leading-relaxed resize-y focus:outline-none"
-          placeholder="Notes de partie, informations importantes, contacts..."
+          placeholder="Note générale — contacts, informations qui suivent le personnage d'une partie à l'autre..."
         />
         <div className="flex gap-2">
           <button

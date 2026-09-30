@@ -42,7 +42,7 @@ export default async function ListePartiesPage() {
               if (p.xpTotale > 0) saillants.push(`⭐ ${p.xpTotale.toLocaleString('fr-CA')} XP distribuée`)
               if (p.butins > 0) saillants.push(`💰 butin (${p.butins})`)
               if (p.repos > 0) saillants.push(`🌙 nuit de repos`)
-              if (p.notes > 0) saillants.push(`📝 ${p.notes} note${p.notes > 1 ? 's' : ''} du MJ`)
+              if (p.notes > 0) saillants.push(`📝 ${p.notes} note${p.notes > 1 ? 's' : ''}`)
               return (
                 <Link
                   key={p.jour}

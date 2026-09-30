@@ -258,20 +258,43 @@ export async function ajouterNoteMJ(texte: string) {
   revalidatePath('/partie')
 }
 
+// ─── Note d'aventure du joueur (✏️ dans le journal de la fiche) ──────────────
+// Signée du personnage et partagée : visible dans le journal de chaque fiche,
+// dans la vue du MJ et dans les faits saillants des parties précédentes.
+export async function ajouterNoteJoueur(personnageId: number, texte: string) {
+  const t = texte.trim().slice(0, 4000)
+  if (!t) return
+  await logJournal(personnageId, 'note', t)
+  revalidatePath(`/personnage/${personnageId}`)
+  revalidatePath('/partie')
+}
+
 // ─── Suppression d'une entrée depuis la vue du MJ (toute entrée) ─────────────
 export async function supprimerEntreePartie(id: number) {
   await getDb().delete(schema.characterJournal).where(eq(schema.characterJournal.id, id))
   revalidatePath('/partie')
 }
 
-// ─── Lecture du journal d'un personnage (+ marqueurs globaux de round) ────────
-export async function getJournal(personnageId: number, limite = 300): Promise<EntreeJournal[]> {
+// ─── Lecture du journal d'un personnage (+ marqueurs globaux + notes du groupe) ──
+// Les notes d'aventure des autres personnages sont incluses : elles sont partagées
+// par toute la table. Le nom du personnage permet de les signer à l'affichage.
+export async function getJournal(personnageId: number, limite = 300): Promise<EntreeJournalPartie[]> {
   return getDb()
-    .select()
+    .select({
+      id: schema.characterJournal.id,
+      personnageId: schema.characterJournal.personnageId,
+      type: schema.characterJournal.type,
+      description: schema.characterJournal.description,
+      valeur: schema.characterJournal.valeur,
+      createdAt: schema.characterJournal.createdAt,
+      nomPersonnage: schema.characters.nom,
+    })
     .from(schema.characterJournal)
+    .leftJoin(schema.characters, eq(schema.characterJournal.personnageId, schema.characters.id))
     .where(or(
       eq(schema.characterJournal.personnageId, personnageId),
-      isNull(schema.characterJournal.personnageId)
+      isNull(schema.characterJournal.personnageId),
+      eq(schema.characterJournal.type, 'note')
     ))
     .orderBy(desc(schema.characterJournal.id))
     .limit(limite)
@@ -308,7 +331,7 @@ export type ResumePartie = {
   combats: number       // bilans de combat (🏆)
   butins: number
   repos: number         // nuits de repos
-  notes: number         // notes du MJ
+  notes: number         // notes du MJ et notes d'aventure des joueurs
   personnages: string[] // personnages actifs, triés
 }
 
@@ -323,7 +346,7 @@ export async function getListeParties(): Promise<ResumePartie[]> {
       combats: sql<number>`(count(*) filter (where ${schema.characterJournal.type} = 'bilan'))::int`,
       butins: sql<number>`(count(*) filter (where ${schema.characterJournal.type} = 'butin'))::int`,
       repos: sql<number>`(count(*) filter (where ${schema.characterJournal.type} = 'repos'))::int`,
-      notes: sql<number>`(count(*) filter (where ${schema.characterJournal.type} = 'note' and ${schema.characterJournal.personnageId} is null))::int`,
+      notes: sql<number>`(count(*) filter (where ${schema.characterJournal.type} = 'note'))::int`,
     })
       .from(schema.characterJournal)
       .groupBy(jour)

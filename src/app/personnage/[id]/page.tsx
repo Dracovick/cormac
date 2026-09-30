@@ -1040,7 +1040,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
         )}
 
         {/* ── NOTES ── */}
-        <Section titre="Notes du joueur">
+        <Section titre="Note générale">
           <LiveNotes personnageId={character.id} notes={character.notes ?? ''} />
         </Section>
       </main>

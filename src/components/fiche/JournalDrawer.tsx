@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import Link from 'next/link'
-import { getJournal, supprimerEntreeJournal, type EntreeJournal } from '@/app/actions/journal'
+import { ajouterNoteJoueur, getJournal, supprimerEntreeJournal, type EntreeJournalPartie } from '@/app/actions/journal'
 import { journeeLudique, journeeLudiqueCourante, dateLisible, heureQuebec, iconeEntree } from '@/lib/journal-format'
 
 type Props = { personnageId: number; nomPersonnage: string }
@@ -11,7 +11,9 @@ type Props = { personnageId: number; nomPersonnage: string }
 // (écrites automatiquement par les boutons de la fiche) + marqueurs de round globaux.
 export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
   const [open, setOpen] = useState(false)
-  const [entrees, setEntrees] = useState<EntreeJournal[] | null>(null)
+  const [entrees, setEntrees] = useState<EntreeJournalPartie[] | null>(null)
+  const [noteOuverte, setNoteOuverte] = useState(false)
+  const [note, setNote] = useState('')
   const [isPending, startTransition] = useTransition()
 
   function charger() {
@@ -23,6 +25,18 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
   function ouvrir() {
     setOpen(true)
     charger()
+  }
+
+  // Note d'aventure du joueur : signée du personnage, partagée avec toute la table
+  function publierNote() {
+    const t = note.trim()
+    if (!t) return
+    setNote('')
+    setNoteOuverte(false)
+    startTransition(async () => {
+      await ajouterNoteJoueur(personnageId, t)
+      setEntrees(await getJournal(personnageId))
+    })
   }
 
   function supprimer(id: number) {
@@ -37,7 +51,7 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
   // Groupement par journée ludique, en antichronologique : la dernière action en haut,
   // pas besoin de scroller pendant la partie. Un marqueur de round fait alors office de
   // « plancher » : tout ce qui est au-dessus appartient à ce round.
-  const jours: { jour: string; items: EntreeJournal[] }[] = []
+  const jours: { jour: string; items: EntreeJournalPartie[] }[] = []
   for (const e of entrees ?? []) {
     const jour = journeeLudique(new Date(e.createdAt))
     let bloc = jours.find(j => j.jour === jour)
@@ -73,6 +87,11 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
               </div>
               <div className="flex items-center gap-2">
                 <button
+                  onClick={() => setNoteOuverte(v => !v)}
+                  className={`transition-colors text-sm px-1 ${noteOuverte ? 'text-amber-400' : 'text-stone-500 hover:text-amber-400'}`}
+                  title="Écrire une note d'aventure — partagée avec toute la table"
+                >✏️</button>
+                <button
                   onClick={charger}
                   disabled={isPending}
                   className="text-stone-500 hover:text-amber-400 transition-colors text-sm"
@@ -85,6 +104,39 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
                 >✕</button>
               </div>
             </div>
+
+            {/* Note d'aventure (✏️) : le joueur consigne un indice, un PNJ, une décision.
+                Datée et signée du personnage, elle est partagée avec toute la table. */}
+            {noteOuverte && (
+              <div className="px-4 py-3 border-b border-stone-700 shrink-0 bg-stone-800/40">
+                <textarea
+                  value={note}
+                  onChange={e => setNote(e.target.value)}
+                  onKeyDown={e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); publierNote() } }}
+                  autoFocus
+                  rows={3}
+                  maxLength={4000}
+                  placeholder="Note d'aventure — indice, PNJ rencontré, décision du groupe… (Ctrl+Entrée pour publier)"
+                  className="w-full bg-stone-900 border border-amber-700/50 focus:border-amber-500 rounded-lg px-3 py-2 text-stone-200 text-base sm:text-sm leading-snug resize-y focus:outline-none placeholder:text-stone-600"
+                />
+                <div className="flex items-center gap-2 mt-2">
+                  <button
+                    onClick={publierNote}
+                    disabled={!note.trim() || isPending}
+                    className="bg-amber-700 hover:bg-amber-600 disabled:opacity-40 text-white text-xs font-semibold px-4 py-1.5 rounded-lg transition-colors"
+                  >
+                    📝 Publier
+                  </button>
+                  <button
+                    onClick={() => { setNoteOuverte(false); setNote('') }}
+                    className="text-stone-500 hover:text-stone-300 text-xs px-3 py-1.5 transition-colors"
+                  >
+                    Annuler
+                  </button>
+                  <span className="ml-auto text-stone-600 text-xs">Visible par toute la table</span>
+                </div>
+              </div>
+            )}
 
             {/* Chronologie (les marqueurs de round sont gérés par le MJ depuis /partie) */}
             <div className="flex-1 overflow-y-auto px-4 py-3">
@@ -121,17 +173,29 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
                           )
                         }
                         const { icone, couleur } = iconeEntree(e.type, e.valeur)
-                        const estNoteMJ = (e.type === 'note' && e.personnageId == null) || e.type === 'bilan'
+                        // Notes (MJ ou joueur) et bilans : surlignés en ambre. Une note de
+                        // joueur est signée du nom de son personnage — elle vient peut-être
+                        // d'une autre fiche, puisque les notes sont partagées par la table.
+                        const estNote = e.type === 'note' || e.type === 'bilan'
+                        const noteJoueur = e.type === 'note' && e.personnageId != null
+                        // ✕ seulement sur ce que ce personnage a le droit d'effacer :
+                        // ses propres entrées et les marqueurs globaux — pas les notes des autres
+                        const effacable = e.personnageId == null || e.personnageId === personnageId
                         return (
-                          <div key={e.id} className={`flex items-start gap-2 text-sm group rounded px-1 py-0.5 hover:bg-stone-800/60 ${estNoteMJ ? 'bg-amber-950/30 border-l-2 border-amber-700/60' : ''}`}>
+                          <div key={e.id} className={`flex items-start gap-2 text-sm group rounded px-1 py-0.5 hover:bg-stone-800/60 ${estNote ? 'bg-amber-950/30 border-l-2 border-amber-700/60' : ''}`}>
                             <span className="text-stone-600 text-xs font-mono mt-0.5 shrink-0">{heureQuebec(new Date(e.createdAt))}</span>
                             <span className={`shrink-0 ${couleur}`}>{icone}</span>
-                            <span className={`flex-1 leading-snug whitespace-pre-wrap ${estNoteMJ ? 'text-amber-100/90 italic' : 'text-stone-300'}`}>{e.description}</span>
-                            <button
-                              onClick={() => supprimer(e.id)}
-                              className="text-stone-600 hover:text-red-400 active:text-red-400 text-xs transition-colors shrink-0 mt-0.5 px-1.5 py-0.5"
-                              title="Effacer cette entrée (n'annule pas l'action)"
-                            >✕</button>
+                            <span className={`flex-1 leading-snug whitespace-pre-wrap ${estNote ? 'text-amber-100/90 italic' : 'text-stone-300'}`}>
+                              {noteJoueur && <span className="not-italic font-semibold text-amber-300">{e.nomPersonnage ?? '?'} — </span>}
+                              {e.description}
+                            </span>
+                            {effacable && (
+                              <button
+                                onClick={() => supprimer(e.id)}
+                                className="text-stone-600 hover:text-red-400 active:text-red-400 text-xs transition-colors shrink-0 mt-0.5 px-1.5 py-0.5"
+                                title="Effacer cette entrée (n'annule pas l'action)"
+                              >✕</button>
+                            )}
                           </div>
                         )
                       })}
@@ -143,7 +207,7 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
 
             {/* Pied */}
             <div className="px-4 py-2.5 border-t border-stone-700 shrink-0 flex items-center justify-between">
-              <span className="text-stone-600 text-xs">Écrit automatiquement par la fiche</span>
+              <span className="text-stone-600 text-xs">Écrit par la fiche — ✏️ pour vos notes d&apos;aventure</span>
               <Link
                 href="/partie"
                 className="text-xs text-amber-500 hover:text-amber-300 transition-colors"

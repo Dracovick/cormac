@@ -245,9 +245,11 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour }: Props) {
             )
           }
           const { icone, couleur } = iconeEntree(e.type, e.valeur)
-          const estNoteMJ = (e.type === 'note' && e.personnageId == null) || e.type === 'bilan'
+          // Toutes les notes (MJ ou joueur) et les bilans sont surlignés en ambre;
+          // la pastille du personnage signe déjà les notes d'aventure des joueurs.
+          const estNote = e.type === 'note' || e.type === 'bilan'
           return (
-            <div key={e.id} className={`flex items-start gap-2 text-sm rounded px-1 py-0.5 group hover:bg-stone-800/60 ${estNoteMJ ? 'bg-amber-950/30 border-l-2 border-amber-700/60' : ''}`}>
+            <div key={e.id} className={`flex items-start gap-2 text-sm rounded px-1 py-0.5 group hover:bg-stone-800/60 ${estNote ? 'bg-amber-950/30 border-l-2 border-amber-700/60' : ''}`}>
               <span className="text-stone-600 text-xs font-mono mt-0.5 shrink-0 w-10">{heureQuebec(new Date(e.createdAt))}</span>
               {e.personnageId != null && (
                 <Link
@@ -258,7 +260,7 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour }: Props) {
                 </Link>
               )}
               <span className={`shrink-0 ${couleur}`}>{icone}</span>
-              <span className={`flex-1 leading-snug whitespace-pre-wrap ${estNoteMJ ? 'text-amber-100/90 italic' : 'text-stone-300'}`}>{e.description}</span>
+              <span className={`flex-1 leading-snug whitespace-pre-wrap ${estNote ? 'text-amber-100/90 italic' : 'text-stone-300'}`}>{e.description}</span>
               <button
                 onClick={() => supprimer(e.id)}
                 className="text-stone-600 hover:text-red-400 active:text-red-400 text-xs transition-colors shrink-0 mt-0.5 px-1.5 py-0.5"
