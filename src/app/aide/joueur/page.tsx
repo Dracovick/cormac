@@ -85,6 +85,17 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
           <Tip>Pour qu'un don s'applique à une arme précise, son nom dans la liste des dons doit inclure le nom exact de l'arme entre parenthèses — ex. <span className="font-mono">Arme de prédilection (arc long composite)</span>. La casse et les accents sont ignorés.</Tip>
         </Section>
 
+        <Section titre="🔍 « Pourquoi +7 ? » — le détail de chaque chiffre">
+          <p>Chaque grand chiffre de la fiche est <strong>touchable</strong> : un panneau s'ouvre et montre la <strong>décomposition complète du calcul</strong>, ligne par ligne, selon les règles 3.5. Vous lancez votre vrai d20 — la fiche vous dit exactement quoi additionner, et surtout <em>pourquoi</em>.</p>
+          <Row label="Classe d'armure">10 de base + armure + bouclier + DEX (plafonnée par l'armure, avec la valeur réelle en note) + armure naturelle + déflexion + divers + objets magiques (nommés un à un) + chaque sort actif par son nom.</Row>
+          <Row label="Initiative">Modificateur de DEX + bonus divers (qui inclut Science de l'initiative si le don est pris).</Row>
+          <Row label="Jets de sauvegarde">Base des classes + caractéristique (DEX pour Réflexes, CON pour Vigueur, SAG pour Volonté) + bonus magique.</Row>
+          <Row label="Attaques">Bonus de base (BAB) + FOR en mêlée ou DEX à distance. Quand le BAB atteint 6, une note rappelle la règle des attaques multiples (chacune à −5 de la précédente).</Row>
+          <Row label="Compétences">Touchez le total d'une compétence : rangs investis + caractéristique + divers + malus d'armure s'il s'applique.</Row>
+          <Row label="Fermer le panneau">Touchez n'importe où ailleurs, ou appuyez sur <kbd className="bg-stone-700 px-1 rounded">Échap</kbd>.</Row>
+          <Tip>Un liséré doré apparaît au survol des chiffres décomposables. Le panneau n'est pas un lanceur de dés : il explique le modificateur, le d20 reste dans votre main. C'est aussi la meilleure façon d'apprendre les règles — chaque ligne du calcul vient du Manuel des Joueurs.</Tip>
+        </Section>
+
         <Section titre="⚔️ Points de vie — suivi en temps réel">
           <p>Le bloc <strong className="text-amber-200">PV</strong> dans la section Combat affiche vos points de vie actuels sur vos points maximum (ex. <span className="font-mono text-green-400">18 / 26</span>) ainsi qu'une barre de couleur :</p>
           <ul className="list-disc list-inside space-y-1 pl-2">
@@ -165,6 +176,15 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
             <li>Dans les <strong>panneaux de préparation</strong>, une seule définition reste ouverte à la fois : ouvrir un sort referme le précédent, pour que la liste ne s'allonge pas indéfiniment.</li>
             <li>Un sort <strong>sans définition connue</strong> n'affiche aucun livre — c'est normal, et c'est le cas des sorts personnalisés, qui ont leur propre description éditable.</li>
             <li>La loupe 🔍 reste à côté du livre : elle cherche le sort sur le web, tandis que le livre montre la définition déjà enregistrée dans le Grimoire.</li>
+          </ul>
+
+          <p className="font-semibold text-stone-400 mt-3">Le DD — annoncer le jet de sauvegarde sans calculer</p>
+          <p>Chaque sort de la fiche affiche son <span className="text-cyan-600 font-medium">DD</span> (degré de difficulté du jet de sauvegarde), calculé automatiquement : <strong>10 + niveau du sort + modificateur de votre caractéristique d'incantation</strong> — INT pour le magicien, SAG pour le prêtre, le druide, le paladin et le rôdeur, CHA pour l'ensorceleur et le barde. Les sorts de domaine du prêtre affichent aussi le leur.</p>
+          <ul className="list-disc list-inside space-y-1 pl-2 mt-1">
+            <li>Vous lancez Boule de feu ? La ligne du sort dit <span className="text-cyan-600 font-mono text-xs">DD 17</span> : annoncez « Réflexes, DD 17 » et la cible lance <strong>son</strong> d20 — aucun calcul en pleine partie.</li>
+            <li>Survolez le DD pour voir le détail du calcul et, si le Grimoire la connaît, la <strong>nature du jet</strong> (Volonté annule, Réflexes 1/2 dégâts…). Quand elle est connue, elle apparaît aussi dans la définition du sort (📖) sous l'étiquette <span className="font-mono text-xs">JS :</span>.</li>
+            <li>Certains sorts n'appellent <strong>aucun jet de sauvegarde</strong> (Projectile magique, les soins sur un allié…) : leur DD s'affiche quand même, il est simplement sans objet.</li>
+            <li>Le DD suit vos <strong>sorts actifs</strong> : un Renard rusé (+4 INT) augmente le DD de tous les sorts du magicien pendant sa durée.</li>
           </ul>
 
           <p className="font-semibold text-stone-400 mt-3">Le compteur d'emplacements — voir d'un coup d'œil ce qu'il vous reste</p>

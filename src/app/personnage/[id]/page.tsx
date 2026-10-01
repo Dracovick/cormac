@@ -32,6 +32,7 @@ import { DescriptionSort } from '@/components/fiche/DescriptionSort'
 import { LigneSort } from '@/components/fiche/LigneSort'
 import { EffetsSorts } from '@/components/fiche/EffetsSorts'
 import { LiveAttaque } from '@/components/fiche/LiveAttaque'
+import { DetailBonus } from '@/components/fiche/DetailBonus'
 import { JournalDrawer } from '@/components/fiche/JournalDrawer'
 import { ButinDrawer } from '@/components/fiche/ButinDrawer'
 import { calculeBonusEffetsCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
@@ -79,6 +80,23 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const dexT = (abilityScores?.dexBase ?? 10) + (abilityScores?.dexMagique ?? 0) + (race?.bonusDex ?? 0) + effCarac.DEX
   const forMod = Math.floor((forT - 10) / 2)
   const dexMod = Math.floor((dexT - 10) / 2)
+  // Modificateurs d'incantation (DD des sorts = 10 + niveau du sort + mod. de la caractéristique)
+  const intT = (abilityScores?.intBase ?? 10) + (abilityScores?.intMagique ?? 0) + (race?.bonusInt ?? 0) + effCarac.INT
+  const sagT = (abilityScores?.sagBase ?? 10) + (abilityScores?.sagMagique ?? 0) + (race?.bonusSag ?? 0) + effCarac.SAG
+  const chaT = (abilityScores?.chaBase ?? 10) + (abilityScores?.chaMagique ?? 0) + (race?.bonusCha ?? 0) + effCarac.CHA
+  const intMod = Math.floor((intT - 10) / 2)
+  const sagMod = Math.floor((sagT - 10) / 2)
+  const chaMod = Math.floor((chaT - 10) / 2)
+  // Caractéristique d'incantation par classe (PHB 3.5)
+  const CARAC_INCANTATION: Record<string, { carac: 'INT' | 'SAG' | 'CHA'; mod: number }> = {
+    Magicien:    { carac: 'INT', mod: intMod },
+    Ensorceleur: { carac: 'CHA', mod: chaMod },
+    Barde:       { carac: 'CHA', mod: chaMod },
+    Prêtre:      { carac: 'SAG', mod: sagMod },
+    Druide:      { carac: 'SAG', mod: sagMod },
+    Paladin:     { carac: 'SAG', mod: sagMod },
+    Rôdeur:      { carac: 'SAG', mod: sagMod },
+  }
   const caMagique = magicItems.reduce((sum, { item }) => sum + (item.bonus ?? 0), 0)
   const caArmure = armor.reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
   const maxDex = armor.length > 0 ? Math.min(...armor.map(({ armor: a }) => a.maxDex ?? 10)) : 10
@@ -361,8 +379,33 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           </div>
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-4">
             <LiveHP personnageId={character.id} pvActuels={combatStats?.pvActuels ?? 0} pvMax={combatStats?.pvMax ?? 0} />
-            <StatBlock label="CA" value={caTotal} sub={`(armure +${caArmure} · DEX ${dexModCA >= 0 ? '+' : ''}${dexModCA}${caMagique ? ` · mag +${caMagique}` : ''}${bonusSortsCA ? ` · sorts ${bonusSortsCA > 0 ? '+' : ''}${bonusSortsCA}` : ''})`} />
-            <StatBlock label="Initiative" value={signedNum(initiativeTotal)} sub="DEX + divers + Science" />
+            <DetailBonus
+              titre="Classe d'armure"
+              base={10}
+              total={caTotal}
+              lignes={[
+                ...(bonusArmurePortee !== 0 ? [{ label: 'armure', valeur: bonusArmurePortee }] : []),
+                ...(bonusBouclierPorte !== 0 ? [{ label: 'bouclier', valeur: bonusBouclierPorte }] : []),
+                { label: 'DEX', valeur: dexModCA, note: dexMod > maxDex ? `plafonné par l'armure (max +${maxDex}, DEX réel ${signedNum(dexMod)})` : undefined },
+                ...((combatStats?.caNaturelle ?? 0) !== 0 ? [{ label: 'naturelle', valeur: combatStats!.caNaturelle! }] : []),
+                ...((combatStats?.caDeflexion ?? 0) !== 0 ? [{ label: 'déflexion', valeur: combatStats!.caDeflexion! }] : []),
+                ...((combatStats?.caDivers ?? 0) !== 0 ? [{ label: 'divers', valeur: combatStats!.caDivers! }] : []),
+                ...(caMagique !== 0 ? [{ label: 'objets magiques', valeur: caMagique, note: magicItems.filter(({ item }) => (item.bonus ?? 0) !== 0).map(({ item }) => `${item.nom} +${item.bonus}`).join(', ') }] : []),
+                ...contributionsCA.filter(c => c.effective !== 0).map(c => ({ label: `sort : ${c.nom}`, valeur: c.effective })),
+              ]}
+            >
+              <StatBlock label="CA" value={caTotal} sub={`(armure +${caArmure} · DEX ${dexModCA >= 0 ? '+' : ''}${dexModCA}${caMagique ? ` · mag +${caMagique}` : ''}${bonusSortsCA ? ` · sorts ${bonusSortsCA > 0 ? '+' : ''}${bonusSortsCA}` : ''})`} />
+            </DetailBonus>
+            <DetailBonus
+              titre="Initiative"
+              total={signedNum(initiativeTotal)}
+              lignes={[
+                { label: 'DEX', valeur: dexMod },
+                ...((combatStats?.initiativeBonus ?? 0) !== 0 ? [{ label: 'divers', valeur: combatStats!.initiativeBonus!, note: 'inclut Science de l’initiative si le don est pris' }] : []),
+              ]}
+            >
+              <StatBlock label="Initiative" value={signedNum(initiativeTotal)} sub="DEX + divers + Science" />
+            </DetailBonus>
             <StatBlock label="Déplacement" value={`${deplacement}m`} sub={bonusDepl > 0 ? `base ${baseDepl}m · sort +${bonusDepl}m` : deplacement !== baseDepl ? `base ${baseDepl}m, réduit armure` : undefined} />
             <StatBlock label="Karma" value={combatStats?.karma ?? 0} />
             <StatBlock label="Dé de vie" value={classes[0]?.classe.deVie ?? '—'} />
@@ -375,15 +418,26 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           {savingThrows && (
             <div className="grid grid-cols-3 gap-3 mb-4">
               {[
-                { label: 'Réflexes', base: savingThrows.reflexesBase, mod: dexMod, mag: savingThrows.reflexesMagique },
-                { label: 'Vigueur', base: savingThrows.vigueurBase, mod: modSauvegarde(abilityScores?.conBase, abilityScores?.conMagique, race?.bonusCon ?? 0, effCarac.CON), mag: savingThrows.vigueurMagique },
-                { label: 'Volonté', base: savingThrows.volonteBase, mod: modSauvegarde(abilityScores?.sagBase, abilityScores?.sagMagique, race?.bonusSag ?? 0, effCarac.SAG), mag: savingThrows.volonteMagique },
-              ].map(({ label, base, mod, mag }) => (
-                <div key={label} className="bg-stone-800/60 rounded p-3 text-center">
-                  <div className="text-amber-500 text-xs uppercase tracking-wide">{label}</div>
-                  <div className="text-white text-2xl font-bold">{signedNum((base ?? 0) + mod + (mag ?? 0))}</div>
-                  <div className="text-stone-500 text-xs">base {signedNum(base ?? 0)} · car. {signedNum(mod)}{(mag ?? 0) > 0 ? ` · mag. ${signedNum(mag ?? 0)}` : ''}</div>
-                </div>
+                { label: 'Réflexes', carac: 'DEX', base: savingThrows.reflexesBase, mod: dexMod, mag: savingThrows.reflexesMagique },
+                { label: 'Vigueur', carac: 'CON', base: savingThrows.vigueurBase, mod: modSauvegarde(abilityScores?.conBase, abilityScores?.conMagique, race?.bonusCon ?? 0, effCarac.CON), mag: savingThrows.vigueurMagique },
+                { label: 'Volonté', carac: 'SAG', base: savingThrows.volonteBase, mod: modSauvegarde(abilityScores?.sagBase, abilityScores?.sagMagique, race?.bonusSag ?? 0, effCarac.SAG), mag: savingThrows.volonteMagique },
+              ].map(({ label, carac, base, mod, mag }) => (
+                <DetailBonus
+                  key={label}
+                  titre={`Jet de ${label}`}
+                  total={signedNum((base ?? 0) + mod + (mag ?? 0))}
+                  lignes={[
+                    { label: 'base (classes)', valeur: base ?? 0 },
+                    { label: carac, valeur: mod },
+                    ...((mag ?? 0) !== 0 ? [{ label: 'magique', valeur: mag! }] : []),
+                  ]}
+                >
+                  <div className="bg-stone-800/60 rounded p-3 text-center">
+                    <div className="text-amber-500 text-xs uppercase tracking-wide">{label}</div>
+                    <div className="text-white text-2xl font-bold">{signedNum((base ?? 0) + mod + (mag ?? 0))}</div>
+                    <div className="text-stone-500 text-xs">base {signedNum(base ?? 0)} · car. {signedNum(mod)}{(mag ?? 0) > 0 ? ` · mag. ${signedNum(mag ?? 0)}` : ''}</div>
+                  </div>
+                </DetailBonus>
               ))}
             </div>
           )}
@@ -418,16 +472,34 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
 
           {/* Attaques */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-stone-800/60 rounded p-3">
-              <div className="text-amber-500 text-xs uppercase tracking-wide mb-1">Corps à corps</div>
-              <div className="text-white font-semibold">{attackSeq(bbaCorpsTotal, rawBabCorps)}</div>
-              <div className="text-stone-500 text-xs mt-0.5">BAB {rawBabCorps} + FOR {signedNum(forMod)}</div>
-            </div>
-            <div className="bg-stone-800/60 rounded p-3">
-              <div className="text-amber-500 text-xs uppercase tracking-wide mb-1">Projectiles</div>
-              <div className="text-white font-semibold">{attackSeq(bbaProjTotal, rawBabProj)}</div>
-              <div className="text-stone-500 text-xs mt-0.5">BAB {rawBabProj} + DEX {signedNum(dexMod)}</div>
-            </div>
+            <DetailBonus
+              titre="Attaque au corps à corps"
+              total={attackSeq(bbaCorpsTotal, rawBabCorps)}
+              lignes={[
+                { label: 'bonus de base (BAB)', valeur: rawBabCorps, note: rawBabCorps >= 6 ? 'BAB ≥ 6 : attaques multiples, chacune à −5 de la précédente' : undefined },
+                { label: 'FOR', valeur: forMod },
+              ]}
+            >
+              <div className="bg-stone-800/60 rounded p-3 text-left">
+                <div className="text-amber-500 text-xs uppercase tracking-wide mb-1">Corps à corps</div>
+                <div className="text-white font-semibold">{attackSeq(bbaCorpsTotal, rawBabCorps)}</div>
+                <div className="text-stone-500 text-xs mt-0.5">BAB {rawBabCorps} + FOR {signedNum(forMod)}</div>
+              </div>
+            </DetailBonus>
+            <DetailBonus
+              titre="Attaque à distance"
+              total={attackSeq(bbaProjTotal, rawBabProj)}
+              lignes={[
+                { label: 'bonus de base (BAB)', valeur: rawBabProj, note: rawBabProj >= 6 ? 'BAB ≥ 6 : attaques multiples, chacune à −5 de la précédente' : undefined },
+                { label: 'DEX', valeur: dexMod },
+              ]}
+            >
+              <div className="bg-stone-800/60 rounded p-3 text-left">
+                <div className="text-amber-500 text-xs uppercase tracking-wide mb-1">Projectiles</div>
+                <div className="text-white font-semibold">{attackSeq(bbaProjTotal, rawBabProj)}</div>
+                <div className="text-stone-500 text-xs mt-0.5">BAB {rawBabProj} + DEX {signedNum(dexMod)}</div>
+              </div>
+            </DetailBonus>
           </div>
         </Section>
 
@@ -575,6 +647,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
               s.spell.composantes || ref?.composantes,
               s.spell.portee || ref?.portee,
               s.spell.duree || ref?.duree,
+              s.spell.jetDeSauvegarde ? `JS : ${s.spell.jetDeSauvegarde}` : null,
             ].filter(Boolean).join(' · ')
             return {
               charSpellId: s.charSpell.id,
@@ -596,6 +669,8 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           // La fiche est un composant serveur et depenseSort appelle revalidatePath :
           // le compteur décroît donc tout seul dès qu'un sort est lancé.
           const estSpontane = nomClasse === 'Ensorceleur' || nomClasse === 'Barde'
+          // DD des sorts de cette classe : 10 + niveau du sort + mod. de la caractéristique d'incantation
+          const inc = CARAC_INCANTATION[nomClasse]
           const aDomaine = Boolean(combatStats?.domaine1 || combatStats?.domaine2)
           const compteurs = Array.from({ length: 10 }, (_, n) => ({
             niveau: n,
@@ -687,7 +762,9 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                             const comp = spell.composantes || sortRef?.composantes || null
                             const port = spell.portee || sortRef?.portee || null
                             const dur = spell.duree || sortRef?.duree || null
-                            const meta = [comp, port, dur].filter(Boolean).join(' · ')
+                            const js = spell.jetDeSauvegarde || null
+                            const dd = inc ? 10 + n + inc.mod : null
+                            const meta = [comp, port, dur, js ? `JS : ${js}` : null].filter(Boolean).join(' · ')
                             return (
                               <LigneSort
                                 key={charSpell.id}
@@ -703,6 +780,14 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                                       </>
                                     )}
                                     {spell.ecole && <span className="text-stone-600 text-xs">· {spell.ecole}</span>}
+                                    {dd !== null && inc && (
+                                      <span
+                                        className="text-cyan-600 text-xs font-medium whitespace-nowrap"
+                                        title={`Degré de difficulté du jet de sauvegarde : 10 + niveau du sort (${n}) + mod. ${inc.carac} (${signedNum(inc.mod)})${js ? ` — JS : ${js}` : ''}. Certains sorts n'appellent aucun jet de sauvegarde.`}
+                                      >
+                                        · DD {dd}
+                                      </span>
+                                    )}
                                     {!isCustom && (
                                       <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(spell.nom)}`} target="_blank" rel="noopener noreferrer" title="Chercher ce sort sur le web" className="text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
                                     )}
@@ -762,7 +847,19 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-stone-500 text-xs">{charSkill.rangsInvestis} rangs</span>
-                        <span className={`font-bold w-8 text-right ${hasArmorMalus ? 'text-red-400' : 'text-amber-300'}`}>{signedNum(total)}</span>
+                        <DetailBonus
+                          inline
+                          titre={skill.nom}
+                          total={signedNum(total)}
+                          lignes={[
+                            { label: 'rangs investis', valeur: charSkill.rangsInvestis ?? 0 },
+                            { label: caracSkill, valeur: caracMod },
+                            ...((charSkill.modifDivers ?? 0) !== 0 ? [{ label: 'divers', valeur: charSkill.modifDivers! }] : []),
+                            ...(hasArmorMalus ? [{ label: 'malus d’armure', valeur: -malusArmure }] : []),
+                          ]}
+                        >
+                          <span className={`font-bold w-8 text-right inline-block ${hasArmorMalus ? 'text-red-400' : 'text-amber-300'}`}>{signedNum(total)}</span>
+                        </DetailBonus>
                       </div>
                     </div>
                   )
@@ -849,6 +946,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                       <div key={idx} className="flex items-baseline gap-1.5">
                         <span className="text-amber-700 text-xs shrink-0">Niv.{idx + 1}</span>
                         <span className="text-stone-300 text-xs">{s}</span>
+                        <span
+                          className="text-cyan-600 text-xs shrink-0"
+                          title={`DD du jet de sauvegarde : 10 + niveau du sort (${idx + 1}) + mod. SAG (${signedNum(sagMod)})`}
+                        >
+                          DD {10 + (idx + 1) + sagMod}
+                        </span>
                       </div>
                     ))}
                   </div>
