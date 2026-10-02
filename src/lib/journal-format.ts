@@ -60,6 +60,16 @@ export function iconeEntree(type: string, valeur: number | null): { icone: strin
     case 'bilan':   return { icone: '🏆', couleur: 'text-amber-300' }
     case 'xp':      return { icone: '⭐', couleur: 'text-yellow-300' }
     case 'butin':   return { icone: '💰', couleur: 'text-amber-200' }
+    case 'photo':   return { icone: '📷', couleur: 'text-sky-300' }
     default:        return { icone: '📝', couleur: 'text-stone-300' }
   }
+}
+
+// Une entrée « photo » stocke l'URL du cliché sur la première ligne et la légende
+// (optionnelle) sur les suivantes — lisible telle quelle en base.
+export function lirePhoto(description: string): { url: string; legende: string | null } {
+  const saut = description.indexOf('\n')
+  if (saut === -1) return { url: description, legende: null }
+  const legende = description.slice(saut + 1).trim()
+  return { url: description.slice(0, saut), legende: legende || null }
 }

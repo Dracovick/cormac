@@ -4,8 +4,9 @@ import { useEffect, useMemo, useState, useTransition } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ajouterNoteMJ, marquerRound, supprimerEntreePartie, type EntreeJournalPartie, type EtatPersonnage } from '@/app/actions/journal'
-import { heureQuebec, iconeEntree } from '@/lib/journal-format'
+import { heureQuebec, iconeEntree, lirePhoto } from '@/lib/journal-format'
 import { DistribuerXp } from '@/components/partie/DistribuerXp'
+import { PhotoPartie } from '@/components/partie/PhotoPartie'
 
 type Props = { entrees: EntreeJournalPartie[]; etatGroupe: EtatPersonnage[]; enDirect: boolean; jour: string }
 
@@ -145,6 +146,9 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour }: Props) {
         📝 Noter
       </button>
       </div>
+      <div className="mt-2">
+        <PhotoPartie />
+      </div>
     </div>
   )
 
@@ -240,6 +244,27 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour }: Props) {
                   onClick={() => supprimer(e.id)}
                   className="text-stone-600 hover:text-red-400 active:text-red-400 text-xs transition-colors shrink-0 px-1.5 py-0.5"
                   title="Effacer ce marqueur"
+                >✕</button>
+              </div>
+            )
+          }
+          if (e.type === 'photo') {
+            const { url, legende } = lirePhoto(e.description)
+            return (
+              <div key={e.id} className="flex items-start gap-2 text-sm rounded px-1 py-1.5 group hover:bg-stone-800/60">
+                <span className="text-stone-600 text-xs font-mono mt-0.5 shrink-0 w-10">{heureQuebec(new Date(e.createdAt))}</span>
+                <span className="shrink-0 text-sky-300">📷</span>
+                <div className="flex-1">
+                  <a href={url} target="_blank" rel="noopener noreferrer" title="Ouvrir la photo en grand">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={url} alt={legende ?? 'Photo de la table'} className="max-h-80 rounded border border-stone-700 hover:border-sky-700 transition-colors" loading="lazy" />
+                  </a>
+                  {legende && <div className="text-stone-400 text-xs italic mt-1">{legende}</div>}
+                </div>
+                <button
+                  onClick={() => supprimer(e.id)}
+                  className="text-stone-600 hover:text-red-400 active:text-red-400 text-xs transition-colors shrink-0 mt-0.5 px-1.5 py-0.5"
+                  title="Effacer cette photo du journal"
                 >✕</button>
               </div>
             )

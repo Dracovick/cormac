@@ -258,6 +258,16 @@ export async function ajouterNoteMJ(texte: string) {
   revalidatePath('/partie')
 }
 
+// ─── Photo de la table (globale : la map de jeu en fin de partie) ────────────
+// L'image est déjà téléversée sur Vercel Blob par /api/upload-photo-partie;
+// ici on n'inscrit que l'entrée de journal : URL en première ligne, légende ensuite.
+export async function ajouterPhotoMJ(url: string, legende?: string) {
+  if (!/^https:\/\//.test(url)) return
+  const l = (legende ?? '').trim().slice(0, 500)
+  await logJournal(null, 'photo', l ? `${url}\n${l}` : url)
+  revalidatePath('/partie')
+}
+
 // ─── Note d'aventure du joueur (✏️ dans le journal de la fiche) ──────────────
 // Signée du personnage et partagée : visible dans le journal de chaque fiche,
 // dans la vue du MJ et dans les faits saillants des parties précédentes.
@@ -332,6 +342,7 @@ export type ResumePartie = {
   butins: number
   repos: number         // nuits de repos
   notes: number         // notes du MJ et notes d'aventure des joueurs
+  photos: number        // photos de la table (📷 map de jeu)
   personnages: string[] // personnages actifs, triés
 }
 
@@ -347,6 +358,7 @@ export async function getListeParties(): Promise<ResumePartie[]> {
       butins: sql<number>`(count(*) filter (where ${schema.characterJournal.type} = 'butin'))::int`,
       repos: sql<number>`(count(*) filter (where ${schema.characterJournal.type} = 'repos'))::int`,
       notes: sql<number>`(count(*) filter (where ${schema.characterJournal.type} = 'note'))::int`,
+      photos: sql<number>`(count(*) filter (where ${schema.characterJournal.type} = 'photo'))::int`,
     })
       .from(schema.characterJournal)
       .groupBy(jour)

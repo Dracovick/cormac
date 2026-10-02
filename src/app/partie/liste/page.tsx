@@ -43,6 +43,7 @@ export default async function ListePartiesPage() {
               if (p.butins > 0) saillants.push(`💰 butin (${p.butins})`)
               if (p.repos > 0) saillants.push(`🌙 nuit de repos`)
               if (p.notes > 0) saillants.push(`📝 ${p.notes} note${p.notes > 1 ? 's' : ''}`)
+              if (p.photos > 0) saillants.push(`📷 ${p.photos} photo${p.photos > 1 ? 's' : ''}`)
               return (
                 <Link
                   key={p.jour}

@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import { ajouterNoteJoueur, getJournal, supprimerEntreeJournal, type EntreeJournalPartie } from '@/app/actions/journal'
-import { journeeLudique, journeeLudiqueCourante, dateLisible, heureQuebec, iconeEntree } from '@/lib/journal-format'
+import { journeeLudique, journeeLudiqueCourante, dateLisible, heureQuebec, iconeEntree, lirePhoto } from '@/lib/journal-format'
 
 type Props = { personnageId: number; nomPersonnage: string }
 
@@ -169,6 +169,24 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
                                 className="text-stone-600 hover:text-red-400 active:text-red-400 text-xs transition-colors px-1.5 py-0.5"
                                 title="Effacer ce marqueur"
                               >✕</button>
+                            </div>
+                          )
+                        }
+                        if (e.type === 'photo') {
+                          // Photo de la table (prise par le MJ depuis /partie) — partagée
+                          // avec toute la table, comme les marqueurs de round.
+                          const { url, legende } = lirePhoto(e.description)
+                          return (
+                            <div key={e.id} className="flex items-start gap-2 text-sm group rounded px-1 py-1.5 hover:bg-stone-800/60">
+                              <span className="text-stone-600 text-xs font-mono mt-0.5 shrink-0">{heureQuebec(new Date(e.createdAt))}</span>
+                              <span className="shrink-0 text-sky-300">📷</span>
+                              <div className="flex-1">
+                                <a href={url} target="_blank" rel="noopener noreferrer" title="Ouvrir la photo en grand">
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                  <img src={url} alt={legende ?? 'Photo de la table'} className="max-h-48 rounded border border-stone-700 hover:border-sky-700 transition-colors" loading="lazy" />
+                                </a>
+                                {legende && <div className="text-stone-400 text-xs italic mt-1">{legende}</div>}
+                              </div>
                             </div>
                           )
                         }
