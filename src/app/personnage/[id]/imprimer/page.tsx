@@ -7,6 +7,7 @@ import { getRaceInfo } from '@/lib/dnd35/races'
 import { getModifier, getBab, xpPourNiveau, modSauvegarde } from '@/lib/dnd35/rules'
 import { getCompetenceRef, caracteristiqueDe } from '@/lib/dnd35/skills'
 import { getDomaineInfo } from '@/lib/dnd35/domains'
+import { getFeatPassiveBonuses, sommeBonus } from '@/lib/dnd35/feat-bonuses'
 import { PrintButton } from '@/components/fiche/PrintButton'
 import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
 
@@ -109,17 +110,20 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   const vigBase = savingThrows?.vigueurBase ?? (saveBonnes.includes('vigueur') ? 2 + Math.floor(niveau / 2) : Math.floor(niveau / 3))
   const refBase = savingThrows?.reflexesBase ?? (saveBonnes.includes('reflexes') ? 2 + Math.floor(niveau / 2) : Math.floor(niveau / 3))
   const volBase = savingThrows?.volonteBase ?? (saveBonnes.includes('volonte') ? 2 + Math.floor(niveau / 2) : Math.floor(niveau / 3))
-  // Mêmes modificateurs que la fiche à l'écran — bonus racial compris (voir modSauvegarde).
-  const vigT = vigBase + modSauvegarde(abilityScores?.conBase, abilityScores?.conMagique, raceInfo?.bonusCon ?? 0) + (savingThrows?.vigueurMagique ?? 0)
-  const refT = refBase + modSauvegarde(abilityScores?.dexBase, abilityScores?.dexMagique, raceInfo?.bonusDex ?? 0) + (savingThrows?.reflexesMagique ?? 0)
-  const volT = volBase + modSauvegarde(abilityScores?.sagBase, abilityScores?.sagMagique, raceInfo?.bonusSag ?? 0) + (savingThrows?.volonteMagique ?? 0)
+  // Mêmes modificateurs que la fiche à l'écran — bonus racial compris (voir modSauvegarde),
+  // et mêmes bonus de dons (Science de l'initiative, Volonté de fer…) pour que le papier
+  // et l'écran ne divergent pas.
+  const donsPassifs = getFeatPassiveBonuses(feats.map(f => f.feat.nom))
+  const vigT = vigBase + modSauvegarde(abilityScores?.conBase, abilityScores?.conMagique, raceInfo?.bonusCon ?? 0) + (savingThrows?.vigueurMagique ?? 0) + sommeBonus(donsPassifs.vigueur)
+  const refT = refBase + modSauvegarde(abilityScores?.dexBase, abilityScores?.dexMagique, raceInfo?.bonusDex ?? 0) + (savingThrows?.reflexesMagique ?? 0) + sommeBonus(donsPassifs.reflexes)
+  const volT = volBase + modSauvegarde(abilityScores?.sagBase, abilityScores?.sagMagique, raceInfo?.bonusSag ?? 0) + (savingThrows?.volonteMagique ?? 0) + sommeBonus(donsPassifs.volonte)
 
   const caArmure = armor.reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
   const caMagique = magicItems.reduce((sum, { item }) => sum + (item.bonus ?? 0), 0)
   const maxDex = armor.length > 0 ? Math.min(...armor.map(({ armor: a }) => a.maxDex ?? 10)) : 10
   const dexModCA = Math.min(dexMod, maxDex)
   const caTotal = 10 + dexModCA + caArmure + (combatStats?.caNaturelle ?? 0) + (combatStats?.caDeflexion ?? 0) + (combatStats?.caDivers ?? 0) + caMagique
-  const initT = dexMod + (combatStats?.initiativeBonus ?? 0)
+  const initT = dexMod + (combatStats?.initiativeBonus ?? 0) + sommeBonus(donsPassifs.initiative)
 
   const abilMods: Record<string, number> = { FOR: forMod, DEX: dexMod, CON: conMod, INT: intMod, SAG: sagMod, CHA: chaMod }
 
@@ -137,7 +141,10 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   const skillsData = skills.map(({ skill, charSkill }) => {
     const ref = getCompetenceRef(skill.nom)
     const rangs = charSkill.rangsInvestis ?? 0
-    const divers = charSkill.modifDivers ?? 0
+    // Le +2 de Vigilance s'imprime dans la colonne « divers » : les colonnes du papier
+    // doivent toujours s'additionner au total.
+    const diversDons = sommeBonus(donsPassifs.competences.filter(d => d.skillNoms.includes(skill.nom)).map(d => d.item))
+    const divers = (charSkill.modifDivers ?? 0) + diversDons
     const caracteristique = caracteristiqueDe(skill.nom, skill.caracteristique)
     const abilMod = abilMods[caracteristique] ?? 0
     const total = abilMod + rangs + divers

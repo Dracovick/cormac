@@ -364,7 +364,7 @@ function SectionCombat({ data, update, derived }: { data: CharacterFormData; upd
             <div><label className={LBL}>Bonus divers</label><input className={INP_NUM + ' w-full'} type="number" value={data.initiativeBonus} onChange={e => update('initiativeBonus', parseInt(e.target.value) || 0)} /></div>
             <div><label className={LBL}>Total</label><div className={AUTO + ' text-xl text-white py-1.5'}>{fm(derived.initiativeTotal)}</div></div>
           </div>
-          <div className="mt-1 text-stone-500 text-xs">DEX({fm(derived.dexMod)}) + divers({data.initiativeBonus})</div>
+          <div className="mt-1 text-stone-500 text-xs">DEX({fm(derived.dexMod)}) + divers({data.initiativeBonus}) — sans Science de l'initiative : la fiche ajoute le +4 du don elle-même</div>
         </div>
         <div className={CARD}>
           <div className={SEC_H}>Bonus de Base à l'Attaque</div>

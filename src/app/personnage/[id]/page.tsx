@@ -7,7 +7,7 @@ import { getMultiClassBab, xpPourNiveau, modSauvegarde } from '@/lib/dnd35/rules
 import { getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
 import { getCapacitesPourPersonnage } from '@/lib/dnd35/class-features'
 import { SORTS_DND35, type ClasseSortKey } from '@/lib/dnd35/spells'
-import { getFeatWeaponBonuses, getFeatDescription } from '@/lib/dnd35/feat-bonuses'
+import { getFeatWeaponBonuses, getFeatDescription, getFeatPassiveBonuses, sommeBonus } from '@/lib/dnd35/feat-bonuses'
 import { getDomaineInfo } from '@/lib/dnd35/domains'
 import { caracteristiqueDe } from '@/lib/dnd35/skills'
 import { getChargeCategorie, getChargeLimites } from '@/lib/dnd35/encumbrance'
@@ -132,7 +132,10 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const caTotal = (combatStats
     ? 10 + caArmure + (combatStats.caNaturelle ?? 0) + (combatStats.caDeflexion ?? 0) + (combatStats.caDivers ?? 0) + dexModCA + caMagique
     : 10) + bonusSortsCA
-  const initiativeTotal = combatStats ? dexMod + (combatStats.initiativeBonus ?? 0) : 0
+  // Bonus passifs des dons (Science de l'initiative, Volonté de fer, Vigilance…) —
+  // comptés automatiquement : le champ « divers » ne doit PAS les contenir en plus.
+  const donsPassifs = getFeatPassiveBonuses(feats.map(f => f.feat.nom))
+  const initiativeTotal = (combatStats ? dexMod + (combatStats.initiativeBonus ?? 0) : dexMod) + sommeBonus(donsPassifs.initiative)
 
   // Déplacement auto : utilise l'armure.deplacement si renseigné, sinon détecte armure lourde
   // + bonus des sorts actifs (ex. Repli expéditif +9 m)
@@ -181,8 +184,9 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const conT = (abilityScores?.conBase ?? 10) + (abilityScores?.conMagique ?? 0) + (race?.bonusCon ?? 0) + effCarac.CON
   const conMod = Math.floor((conT - 10) / 2)
   const primaryDe = classes[0] ? (getClasseInfo(classes[0].classe.nom)?.de ?? 6) : 6
-  const pvAttenduMax = niveauTotal > 0 ? niveauTotal * (primaryDe + conMod) : 0
-  const pvAttenduMin = niveauTotal > 0 ? Math.max(niveauTotal, niveauTotal * (1 + conMod)) : 0
+  const pvDons = sommeBonus(donsPassifs.pv) // Robustesse +3 : élargit la plage attendue
+  const pvAttenduMax = niveauTotal > 0 ? niveauTotal * (primaryDe + conMod) + pvDons : 0
+  const pvAttenduMin = niveauTotal > 0 ? Math.max(niveauTotal, niveauTotal * (1 + conMod)) + pvDons : 0
 
   // Encombrement simplifié (PHB 3.5, p.162) — armes + armures uniquement
   const poidsTotal = [
@@ -417,6 +421,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                 ...((combatStats?.caDivers ?? 0) !== 0 ? [{ label: 'divers', valeur: combatStats!.caDivers! }] : []),
                 ...(caMagique !== 0 ? [{ label: 'objets magiques', valeur: caMagique, note: magicItems.filter(({ item }) => (item.bonus ?? 0) !== 0).map(({ item }) => `${item.nom} +${item.bonus}`).join(', ') }] : []),
                 ...contributionsCA.filter(c => c.effective !== 0).map(c => ({ label: `sort : ${c.nom}`, valeur: c.effective })),
+                ...donsPassifs.caConditionnelle.map(b => ({ label: b.label, valeur: b.value, conditionnel: true, note: b.conditional })),
               ]}
             >
               <StatBlock label="CA" value={caTotal} sub={`(armure +${caArmure} · DEX ${dexModCA >= 0 ? '+' : ''}${dexModCA}${caMagique ? ` · mag +${caMagique}` : ''}${bonusSortsCA ? ` · sorts ${bonusSortsCA > 0 ? '+' : ''}${bonusSortsCA}` : ''})`} />
@@ -426,10 +431,11 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
               total={signedNum(initiativeTotal)}
               lignes={[
                 { label: 'DEX', valeur: dexMod },
-                ...((combatStats?.initiativeBonus ?? 0) !== 0 ? [{ label: 'divers', valeur: combatStats!.initiativeBonus!, note: 'inclut Science de l’initiative si le don est pris' }] : []),
+                ...donsPassifs.initiative.map(b => ({ label: b.label, valeur: b.value })),
+                ...((combatStats?.initiativeBonus ?? 0) !== 0 ? [{ label: 'divers', valeur: combatStats!.initiativeBonus!, note: 'objets et bonus hors dons (ex. heaume) — les dons sont déjà comptés au-dessus' }] : []),
               ]}
             >
-              <StatBlock label="Initiative" value={signedNum(initiativeTotal)} sub="DEX + divers + Science" />
+              <StatBlock label="Initiative" value={signedNum(initiativeTotal)} sub={donsPassifs.initiative.length > 0 ? 'DEX + don + divers' : 'DEX + divers'} />
             </DetailBonus>
             <StatBlock label="Déplacement" value={`${deplacement}m`} sub={bonusDepl > 0 ? `base ${baseDepl}m · sort +${bonusDepl}m` : deplacement !== baseDepl ? `base ${baseDepl}m, réduit armure` : undefined} />
             <StatBlock label="Karma" value={combatStats?.karma ?? 0} />
@@ -443,34 +449,38 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           {savingThrows && (
             <div className="grid grid-cols-3 gap-3 mb-4">
               {[
-                { label: 'Réflexes', carac: 'DEX', base: savingThrows.reflexesBase, mod: dexMod, mag: savingThrows.reflexesMagique },
-                { label: 'Vigueur', carac: 'CON', base: savingThrows.vigueurBase, mod: modSauvegarde(abilityScores?.conBase, abilityScores?.conMagique, race?.bonusCon ?? 0, effCarac.CON), mag: savingThrows.vigueurMagique },
-                { label: 'Volonté', carac: 'SAG', base: savingThrows.volonteBase, mod: modSauvegarde(abilityScores?.sagBase, abilityScores?.sagMagique, race?.bonusSag ?? 0, effCarac.SAG), mag: savingThrows.volonteMagique },
-              ].map(({ label, carac, base, mod, mag }) => (
+                { label: 'Réflexes', carac: 'DEX', base: savingThrows.reflexesBase, mod: dexMod, mag: savingThrows.reflexesMagique, dons: donsPassifs.reflexes },
+                { label: 'Vigueur', carac: 'CON', base: savingThrows.vigueurBase, mod: modSauvegarde(abilityScores?.conBase, abilityScores?.conMagique, race?.bonusCon ?? 0, effCarac.CON), mag: savingThrows.vigueurMagique, dons: donsPassifs.vigueur },
+                { label: 'Volonté', carac: 'SAG', base: savingThrows.volonteBase, mod: modSauvegarde(abilityScores?.sagBase, abilityScores?.sagMagique, race?.bonusSag ?? 0, effCarac.SAG), mag: savingThrows.volonteMagique, dons: donsPassifs.volonte },
+              ].map(({ label, carac, base, mod, mag, dons }) => {
+                const totalJS = (base ?? 0) + mod + (mag ?? 0) + sommeBonus(dons)
+                return (
                 <DetailBonus
                   key={label}
                   titre={`Jet de ${label}`}
-                  total={signedNum((base ?? 0) + mod + (mag ?? 0))}
+                  total={signedNum(totalJS)}
                   lignes={[
                     { label: 'base (classes)', valeur: base ?? 0 },
                     { label: carac, valeur: mod },
+                    ...dons.map(b => ({ label: b.label, valeur: b.value })),
                     ...((mag ?? 0) !== 0 ? [{ label: 'magique', valeur: mag! }] : []),
                   ]}
                 >
                   <div className="bg-stone-800/60 rounded p-3 text-center">
                     <div className="text-amber-500 text-xs uppercase tracking-wide">{label}</div>
-                    <div className="text-white text-2xl font-bold">{signedNum((base ?? 0) + mod + (mag ?? 0))}</div>
-                    <div className="text-stone-500 text-xs">base {signedNum(base ?? 0)} · car. {signedNum(mod)}{(mag ?? 0) > 0 ? ` · mag. ${signedNum(mag ?? 0)}` : ''}</div>
+                    <div className="text-white text-2xl font-bold">{signedNum(totalJS)}</div>
+                    <div className="text-stone-500 text-xs">base {signedNum(base ?? 0)} · car. {signedNum(mod)}{sommeBonus(dons) > 0 ? ` · don ${signedNum(sommeBonus(dons))}` : ''}{(mag ?? 0) > 0 ? ` · mag. ${signedNum(mag ?? 0)}` : ''}</div>
                   </div>
                 </DetailBonus>
-              ))}
+                )
+              })}
             </div>
           )}
 
           {/* PV attendus */}
           {niveauTotal > 0 && pvAttenduMin > 0 && (
             <div className="text-stone-600 text-xs mb-3">
-              PV attendus niv.{niveauTotal} (d{primaryDe}{conMod >= 0 ? `+${conMod}` : conMod}/niv.) :
+              PV attendus niv.{niveauTotal} (d{primaryDe}{conMod >= 0 ? `+${conMod}` : conMod}/niv.{pvDons > 0 ? ` · Robustesse +${pvDons}` : ''}) :
               <span className="text-stone-500"> {pvAttenduMin}–{pvAttenduMax}</span>
               {combatStats?.pvMax != null && combatStats.pvMax < pvAttenduMin && (
                 <span className="text-amber-600 ml-1">⚠ sous la normale</span>
@@ -884,7 +894,8 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   const caracSkill = caracteristiqueDe(skill.nom, skill.caracteristique)
                   const caracMod = carac[caracSkill as keyof typeof carac] ?? 0
                   const hasArmorMalus = malusArmure > 0 && COMPETENCES_MALUS_ARMURE.includes(skill.nom)
-                  const total = (charSkill.rangsInvestis ?? 0) + caracMod + (charSkill.modifDivers ?? 0) - (hasArmorMalus ? malusArmure : 0)
+                  const donsComp = donsPassifs.competences.filter(d => d.skillNoms.includes(skill.nom)).map(d => d.item)
+                  const total = (charSkill.rangsInvestis ?? 0) + caracMod + (charSkill.modifDivers ?? 0) + sommeBonus(donsComp) - (hasArmorMalus ? malusArmure : 0)
                   return (
                     <div key={skill.id} className="flex items-center justify-between py-1 border-b border-stone-800 last:border-0">
                       <div>
@@ -902,6 +913,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                           lignes={[
                             { label: 'rangs investis', valeur: charSkill.rangsInvestis ?? 0 },
                             { label: caracSkill, valeur: caracMod },
+                            ...donsComp.map(b => ({ label: b.label, valeur: b.value })),
                             ...((charSkill.modifDivers ?? 0) !== 0 ? [{ label: 'divers', valeur: charSkill.modifDivers! }] : []),
                             ...(hasArmorMalus ? [{ label: 'malus d’armure', valeur: -malusArmure }] : []),
                           ]}
