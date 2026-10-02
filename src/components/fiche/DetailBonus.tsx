@@ -12,8 +12,10 @@ export type LigneDetail = {
 type Props = {
   /** Titre du panneau (ex. « Classe d'armure ») */
   titre: string
-  /** Première ligne non signée (ex. 10 de base pour la CA) */
-  base?: number
+  /** Première ligne non signée (ex. 10 de base pour la CA, « 1d8 » pour des dégâts) */
+  base?: number | string
+  /** Libellé de la première ligne (défaut : « base ») */
+  baseLabel?: string
   /** Chaque contribution au total, dans l'ordre d'affichage */
   lignes: LigneDetail[]
   /** Total affiché au bas du panneau (séquence d'attaque possible : chaîne) */
@@ -33,7 +35,7 @@ function signe(n: number) {
  * la décomposition complète du calcul (règles D&D 3.5). Le panneau ne lance
  * rien : le joueur lance son dé, la fiche lui dit quoi additionner.
  */
-export function DetailBonus({ titre, base, lignes, total, inline, children }: Props) {
+export function DetailBonus({ titre, base, baseLabel, lignes, total, inline, children }: Props) {
   const [ouvert, setOuvert] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -75,7 +77,7 @@ export function DetailBonus({ titre, base, lignes, total, inline, children }: Pr
           <div className="space-y-1">
             {base !== undefined && (
               <div className="flex items-baseline justify-between text-xs">
-                <span className="text-stone-400">base</span>
+                <span className="text-stone-400">{baseLabel ?? 'base'}</span>
                 <span className="text-stone-200 font-mono">{base}</span>
               </div>
             )}

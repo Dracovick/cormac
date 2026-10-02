@@ -36,6 +36,8 @@ import { DetailBonus } from '@/components/fiche/DetailBonus'
 import { JournalDrawer } from '@/components/fiche/JournalDrawer'
 import { ButinDrawer } from '@/components/fiche/ButinDrawer'
 import { calculeBonusEffetsCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
+import { getDb } from '@/db'
+import { spells as spellsTable } from '@/db/schema/spells'
 
 function modif(score: number) {
   const m = Math.floor((score - 10) / 2)
@@ -44,6 +46,19 @@ function modif(score: number) {
 
 function signedNum(n: number) {
   return n >= 0 ? `+${n}` : `${n}`
+}
+
+// « aucun » (y compris « aucun (objet) », « aucun (voir description) »…) :
+// le sort n'appelle aucun jet de sauvegarde, donc pas de DD à afficher.
+// Mais « aucun ou Volonté, annule » garde son DD : une partie de l'effet se sauvegarde.
+function sansJetDeSauvegarde(js: string | null | undefined): boolean {
+  if (!js) return false
+  const n = js.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+  return n.includes('aucun') && !/reflexes|vigueur|volonte/.test(n)
+}
+
+function normNomSort(nom: string): string {
+  return nom.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[’´`]/g, "'").toLowerCase().trim()
 }
 
 export default async function FichePersonnage({ params }: { params: Promise<{ id: string }> }) {
@@ -180,6 +195,16 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   // Domaines du prêtre/druide
   const d1Info = combatStats?.domaine1 ? getDomaineInfo(combatStats.domaine1) : undefined
   const d2Info = combatStats?.domaine2 ? getDomaineInfo(combatStats.domaine2) : undefined
+  // Jet de sauvegarde des sorts de domaine : la liste vient du statique (domains.ts),
+  // qui ne connaît pas le JS — on le cherche dans la table spells par nom normalisé
+  // pour masquer le DD des sorts qui n'en appellent aucun (ex. Arme spirituelle).
+  const jsParNomSort = new Map<string, string>()
+  if (d1Info || d2Info) {
+    const tous = await getDb().select({ nom: spellsTable.nom, js: spellsTable.jetDeSauvegarde }).from(spellsTable)
+    for (const s of tous) {
+      if (s.js) jsParNomSort.set(normNomSort(s.nom), s.js)
+    }
+  }
 
   // Pour les multi-classés : afficher les options de prochain niveau
   const optsNiveauSuivant = classes.map(c => `${c.classe.nom} ${c.characterClass.niveau + 1}`)
@@ -531,34 +556,49 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                     ? Math.min(forMod, coteDeForce)
                     : isComposite ? forMod : 0
                 const totalDmgMod   = wpnBonus + munitionsBonus + abilityDmgMod + featDmgBonus
+                const deArme        = weapon.degats ?? '—'
                 const dmgStr        = totalDmgMod === 0
-                  ? weapon.degats
-                  : `${weapon.degats}${totalDmgMod > 0 ? '+' : ''}${totalDmgMod}`
+                  ? deArme
+                  : `${deArme}${totalDmgMod > 0 ? '+' : ''}${totalDmgMod}`
 
                 // Nom affiché : (Force +N) pour la côte, +N pour la magie
                 const nomDisplay = weapon.nom
                   + (coteDeForce !== null ? ` (Force +${coteDeForce})` : '')
                   + (wpnBonus > 0 ? ` +${wpnBonus}` : '')
 
-                const atkBreakdown = [
-                  { label: 'BAB',                    value: rawBab },
-                  { label: isRanged ? 'DEX' : 'FOR', value: isRanged ? dexMod : forMod },
-                  ...(wpnBonus > 0       ? [{ label: 'mag.',  value: wpnBonus }]       : []),
-                  ...(munitionsBonus > 0 ? [{ label: 'fl.',   value: munitionsBonus }] : []),
-                  ...attackItems,
-                ].filter(b => b.value !== 0)
-
-                const dmgBreakdown = [
-                  ...(wpnBonus > 0        ? [{ label: 'mag.',                          value: wpnBonus }]       : []),
-                  ...(munitionsBonus > 0  ? [{ label: 'fl.',                           value: munitionsBonus }] : []),
-                  ...(abilityDmgMod !== 0 ? [{ label: isRanged ? 'FOR(arc)' : 'FOR',   value: abilityDmgMod }] : []),
-                  ...damageItems,
-                ].filter(b => b.value !== 0)
-
-                const hasConditional = [...attackItems, ...damageItems].some(b => b.conditional)
-                const fmtItem = (b: { label: string; value: number; conditional?: string }) =>
-                  `${b.label} ${b.value >= 0 ? '+' : ''}${b.value}${b.conditional ? '*' : ''}`
-                const showBreakdown = atkBreakdown.length > 0 || dmgBreakdown.length > 0
+                // Décomposition « Pourquoi +9/+5? » — mêmes termes que le calcul
+                // du total juste dessous (attackSeq et dmgStr).
+                const LABELS_DONS: Record<string, string> = {
+                  'Préd.': 'don : Arme de prédilection',
+                  'Maîtr. sup.': 'don : Maîtrise martiale sup.',
+                  'Spéc.': 'don : Spécialisation martiale',
+                  'Spéc. sup.': 'don : Spécialisation sup.',
+                  'TBP': 'don : Tir à bout portant',
+                }
+                const ligneDon = (b: { label: string; value: number; conditional?: string }) => ({
+                  label: LABELS_DONS[b.label] ?? b.label,
+                  valeur: b.value,
+                  note: b.conditional ? `seulement à ${b.conditional}` : undefined,
+                })
+                const atkLignes = [
+                  { label: 'bonus de base (BAB)', valeur: rawBab, note: rawBab >= 6 ? 'BAB ≥ 6 : attaques multiples — la séquence vient du BAB seul (−5 chacune), tous les bonus s’appliquent à chaque attaque' : undefined },
+                  { label: isRanged ? 'DEX' : 'FOR', valeur: isRanged ? dexMod : forMod },
+                  ...(wpnBonus > 0       ? [{ label: 'arme magique',       valeur: wpnBonus }]       : []),
+                  ...(munitionsBonus > 0 ? [{ label: 'munitions magiques', valeur: munitionsBonus }] : []),
+                  ...attackItems.map(ligneDon),
+                ]
+                const dmgLignes = [
+                  ...(abilityDmgMod !== 0 ? [{
+                    label: isRanged ? 'FOR (arc composite)' : 'FOR',
+                    valeur: abilityDmgMod,
+                    note: coteDeForce !== null && forMod > coteDeForce
+                      ? `FOR ${signedNum(forMod)} plafonnée par la côte de Force de l'arc (max +${coteDeForce})`
+                      : undefined,
+                  }] : []),
+                  ...(wpnBonus > 0       ? [{ label: 'arme magique',       valeur: wpnBonus }]       : []),
+                  ...(munitionsBonus > 0 ? [{ label: 'munitions magiques', valeur: munitionsBonus }] : []),
+                  ...damageItems.map(ligneDon),
+                ]
 
                 return (
                   <div key={charWeapon.id} className="bg-stone-800/60 rounded p-3">
@@ -569,27 +609,32 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                             {nomDisplay}
                           </span>
                           <span className="text-stone-500 text-xs">Att.</span>
-                          <span className="text-amber-300 font-bold text-sm">
-                            {attackSeq(bbaTotal + featAtkBonus + munitionsBonus, rawBab, wpnBonus)}
-                          </span>
+                          <DetailBonus
+                            titre={`Attaque — ${nomDisplay}`}
+                            total={attackSeq(bbaTotal + featAtkBonus + munitionsBonus, rawBab, wpnBonus)}
+                            lignes={atkLignes}
+                            inline
+                          >
+                            <span className="text-amber-300 font-bold text-sm">
+                              {attackSeq(bbaTotal + featAtkBonus + munitionsBonus, rawBab, wpnBonus)}
+                            </span>
+                          </DetailBonus>
                         </div>
                         <div className="text-stone-400 text-xs mt-1 space-x-3">
-                          <span>Dégâts : <span className="text-amber-300">{dmgStr}</span></span>
+                          <DetailBonus
+                            titre={`Dégâts — ${nomDisplay}`}
+                            base={deArme}
+                            baseLabel="dé de l'arme"
+                            total={dmgStr}
+                            lignes={dmgLignes}
+                            inline
+                          >
+                            <span>Dégâts : <span className="text-amber-300">{dmgStr}</span></span>
+                          </DetailBonus>
                           <span>Critique : <span className="text-amber-300">{weapon.critiqueMin}-20 ×{weapon.critiqueMult}</span></span>
                           {weapon.portee && <span>Portée : <span className="text-amber-300">{weapon.portee}m</span></span>}
                           <span>Type : {weapon.typeDegats}</span>
                         </div>
-                        {showBreakdown && (
-                          <div className="text-stone-500 text-xs mt-1.5 leading-relaxed">
-                            {atkBreakdown.length > 0 && (
-                              <><span className="text-stone-600">att. :</span> {atkBreakdown.map(fmtItem).join(', ')}</>
-                            )}
-                            {dmgBreakdown.length > 0 && (
-                              <> · <span className="text-stone-600">dég. :</span> {dmgBreakdown.map(fmtItem).join(', ')}</>
-                            )}
-                            {hasConditional && <span className="text-stone-600"> — *≤9m</span>}
-                          </div>
-                        )}
                       </div>
                       <LiveAttaque personnageId={character.id} nomArme={nomDisplay} />
                     </div>
@@ -763,7 +808,10 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                             const port = spell.portee || sortRef?.portee || null
                             const dur = spell.duree || sortRef?.duree || null
                             const js = spell.jetDeSauvegarde || null
-                            const dd = inc ? 10 + n + inc.mod : null
+                            // Pas de DD quand la fiche dit « aucun » jet de sauvegarde
+                            // (ex. Projectile magique). Champ vide = fiche pas encore
+                            // relevée : on affiche, avec la nuance dans l'infobulle.
+                            const dd = inc && !sansJetDeSauvegarde(js) ? 10 + n + inc.mod : null
                             const meta = [comp, port, dur, js ? `JS : ${js}` : null].filter(Boolean).join(' · ')
                             return (
                               <LigneSort
@@ -783,7 +831,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                                     {dd !== null && inc && (
                                       <span
                                         className="text-cyan-600 text-xs font-medium whitespace-nowrap"
-                                        title={`Degré de difficulté du jet de sauvegarde : 10 + niveau du sort (${n}) + mod. ${inc.carac} (${signedNum(inc.mod)})${js ? ` — JS : ${js}` : ''}. Certains sorts n'appellent aucun jet de sauvegarde.`}
+                                        title={`Degré de difficulté du jet de sauvegarde : 10 + niveau du sort (${n}) + mod. ${inc.carac} (${signedNum(inc.mod)})${js ? ` — JS : ${js}` : `. Fiche du sort pas encore relevée : si elle n'appelle aucun jet de sauvegarde, ce DD ne sert pas.`}`}
                                       >
                                         · DD {dd}
                                       </span>
@@ -942,18 +990,23 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   <p className="text-stone-400 text-xs mb-2 leading-relaxed">{d.pouvoir}</p>
                   <div className="text-stone-600 text-xs uppercase tracking-widest mb-1">Sorts de domaine</div>
                   <div className="space-y-0.5">
-                    {d.sorts.map((s, idx) => (
-                      <div key={idx} className="flex items-baseline gap-1.5">
-                        <span className="text-amber-700 text-xs shrink-0">Niv.{idx + 1}</span>
-                        <span className="text-stone-300 text-xs">{s}</span>
-                        <span
-                          className="text-cyan-600 text-xs shrink-0"
-                          title={`DD du jet de sauvegarde : 10 + niveau du sort (${idx + 1}) + mod. SAG (${signedNum(sagMod)})`}
-                        >
-                          DD {10 + (idx + 1) + sagMod}
-                        </span>
-                      </div>
-                    ))}
+                    {d.sorts.map((s, idx) => {
+                      const jsDomaine = jsParNomSort.get(normNomSort(s)) ?? null
+                      return (
+                        <div key={idx} className="flex items-baseline gap-1.5">
+                          <span className="text-amber-700 text-xs shrink-0">Niv.{idx + 1}</span>
+                          <span className="text-stone-300 text-xs">{s}</span>
+                          {!sansJetDeSauvegarde(jsDomaine) && (
+                            <span
+                              className="text-cyan-600 text-xs shrink-0"
+                              title={`DD du jet de sauvegarde : 10 + niveau du sort (${idx + 1}) + mod. SAG (${signedNum(sagMod)})${jsDomaine ? ` — JS : ${jsDomaine}` : ''}`}
+                            >
+                              DD {10 + (idx + 1) + sagMod}
+                            </span>
+                          )}
+                        </div>
+                      )
+                    })}
                   </div>
                 </div>
               ))}

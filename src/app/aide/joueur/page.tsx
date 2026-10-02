@@ -91,6 +91,8 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
           <Row label="Initiative">Modificateur de DEX + bonus divers (qui inclut Science de l'initiative si le don est pris).</Row>
           <Row label="Jets de sauvegarde">Base des classes + caractéristique (DEX pour Réflexes, CON pour Vigueur, SAG pour Volonté) + bonus magique.</Row>
           <Row label="Attaques">Bonus de base (BAB) + FOR en mêlée ou DEX à distance. Quand le BAB atteint 6, une note rappelle la règle des attaques multiples (chacune à −5 de la précédente).</Row>
+          <Row label="Armes — attaque">Touchez le <span className="text-amber-300 font-mono text-xs">+9/+5</span> d'une arme : BAB (avec la règle des attaques multiples en note — la séquence vient du BAB seul, tous les bonus s'appliquent à chaque attaque) + FOR ou DEX + arme magique + munitions magiques + dons (Arme de prédilection, Tir à bout portant…).</Row>
+          <Row label="Armes — dégâts">Touchez les dégâts : dé de l'arme + FOR (plafonnée par la côte de Force sur un arc composite, absente sur les autres armes à distance) + magie + dons. Les bonus conditionnels (Tir à bout portant à 9 m ou moins) portent leur condition en note.</Row>
           <Row label="Compétences">Touchez le total d'une compétence : rangs investis + caractéristique + divers + malus d'armure s'il s'applique.</Row>
           <Row label="Fermer le panneau">Touchez n'importe où ailleurs, ou appuyez sur <kbd className="bg-stone-700 px-1 rounded">Échap</kbd>.</Row>
           <Tip>Un liséré doré apparaît au survol des chiffres décomposables. Le panneau n'est pas un lanceur de dés : il explique le modificateur, le d20 reste dans votre main. C'est aussi la meilleure façon d'apprendre les règles — chaque ligne du calcul vient du Manuel des Joueurs.</Tip>
@@ -183,7 +185,7 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
           <ul className="list-disc list-inside space-y-1 pl-2 mt-1">
             <li>Vous lancez Boule de feu ? La ligne du sort dit <span className="text-cyan-600 font-mono text-xs">DD 17</span> : annoncez « Réflexes, DD 17 » et la cible lance <strong>son</strong> d20 — aucun calcul en pleine partie.</li>
             <li>Survolez le DD pour voir le détail du calcul et, si le Grimoire la connaît, la <strong>nature du jet</strong> (Volonté annule, Réflexes 1/2 dégâts…). Quand elle est connue, elle apparaît aussi dans la définition du sort (📖) sous l'étiquette <span className="font-mono text-xs">JS :</span>.</li>
-            <li>Certains sorts n'appellent <strong>aucun jet de sauvegarde</strong> (Projectile magique, les soins sur un allié…) : leur DD s'affiche quand même, il est simplement sans objet.</li>
+            <li>Certains sorts n'appellent <strong>aucun jet de sauvegarde</strong> (Projectile magique, les soins sur un allié…) : quand la fiche du sort le dit, le Grimoire <strong>n'affiche pas de DD</strong>. Si un DD apparaît sur un sort dont la fiche n'est pas encore relevée (le champ JS est vide), l'infobulle le précise — fiez-vous à la description du sort.</li>
             <li>Le DD suit vos <strong>sorts actifs</strong> : un Renard rusé (+4 INT) augmente le DD de tous les sorts du magicien pendant sa durée.</li>
           </ul>
 
