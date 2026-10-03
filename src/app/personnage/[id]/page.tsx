@@ -33,6 +33,7 @@ import { LigneSort } from '@/components/fiche/LigneSort'
 import { EffetsSorts } from '@/components/fiche/EffetsSorts'
 import { LiveAttaque } from '@/components/fiche/LiveAttaque'
 import { DetailBonus } from '@/components/fiche/DetailBonus'
+import { AjouterXp } from '@/components/fiche/AjouterXp'
 import { JournalDrawer } from '@/components/fiche/JournalDrawer'
 import { ButinDrawer } from '@/components/fiche/ButinDrawer'
 import { calculeBonusEffetsCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
@@ -338,6 +339,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                     style={{ width: xpProchain > 0 ? `${Math.min(100, ((character.xp ?? 0) / xpProchain) * 100)}%` : '100%' }}
                   />
                 </div>
+                <AjouterXp personnageId={character.id} xp={character.xp ?? 0} niveauTotal={niveauTotal} />
               </div>
 
               {/* Portrait */}

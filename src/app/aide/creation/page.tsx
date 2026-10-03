@@ -229,7 +229,7 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
 
           <p className="font-semibold text-stone-400 mt-4">Progression des XP en D&D 3.5</p>
           <p>Un personnage multi-classé n'a <strong>qu'un seul total d'XP</strong>, partagé entre toutes ses classes. Les seuils de niveau sont basés sur le <em>niveau total</em> du personnage (somme de tous ses niveaux). Quand le seuil est atteint, le joueur choisit dans quelle classe placer le nouveau niveau.</p>
-          <p className="mt-1">Lors de chaque session de jeu, mettez à jour l'<strong>XP total</strong> dans ce formulaire. La fiche affiche automatiquement les options de prochain niveau, par exemple :</p>
+          <p className="mt-1">En cours de partie, ajoutez l&apos;XP reçue directement depuis la fiche (bouton <strong>⭐ Ajouter de l&apos;XP</strong> sous la barre de progression — voir le Guide du joueur). Le champ <strong>XP</strong> de ce formulaire sert à <em>remplacer</em> le total, par exemple pour corriger une erreur de saisie. La fiche affiche automatiquement les options de prochain niveau, par exemple :</p>
           <div className="bg-stone-800/50 rounded p-2 mt-1 font-mono text-xs text-stone-400">
             → Fighter 4 ou Wizard 3
           </div>

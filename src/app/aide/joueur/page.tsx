@@ -404,7 +404,8 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
         <Section titre="📊 Progression en XP">
           <p>La barre de progression d'XP en haut de la fiche indique votre avancement vers le prochain niveau. Le seuil est calculé automatiquement selon les règles D&D 3.5, à partir de votre <strong>niveau total</strong> (somme de tous vos niveaux de classe).</p>
           <Row label="Jeu épique — aucun plafond">Il n'existe <strong>aucun niveau maximum</strong> en D&D 3.5. La fiche affiche le seuil du prochain niveau <em>au-delà du niveau 20</em> comme en deçà : un Magicien 16 / Cryptomancière 8 (niveau total 24) voit « Prochain niveau : 300 000 XP ». Les seuils 21 à 30 sont ceux du <em>Epic Level Handbook</em> (table 1-2, p. 7); au-delà, la même formule se prolonge indéfiniment — le livre l'autorise explicitement (encadré « No Limits », p. 6).</Row>
-          <Row label="Mettre à jour les XP">Allez dans <strong>Modifier</strong> → onglet <strong>Identité</strong> → champ <strong>XP</strong>.</Row>
+          <Row label="Ajouter l'XP reçue">Sous la barre de progression, le bouton <strong>⭐ Ajouter de l&apos;XP</strong> ouvre un petit champ : inscrivez le montant que le MJ vous annonce et confirmez. L&apos;aperçu montre le nouveau total avant d&apos;ajouter — et 🎉 si un seuil de niveau est franchi. L&apos;ajout s&apos;inscrit automatiquement au <strong>journal 📜</strong>, comme la distribution faite par le MJ.</Row>
+          <Row label="Corriger le total">Pour <em>remplacer</em> le total (erreur de saisie) plutôt que d&apos;ajouter : <strong>Modifier</strong> → onglet <strong>Identité</strong> → champ <strong>XP</strong>.</Row>
 
           <p className="font-semibold text-stone-400 mt-3">Seuils de niveau en D&D 3.5</p>
           <div className="grid grid-cols-4 sm:grid-cols-5 gap-1 mt-1 text-xs text-center">
