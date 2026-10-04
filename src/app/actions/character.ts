@@ -580,7 +580,10 @@ export async function saveCharacter(
 // ─── Delete character ─────────────────────────────────────────────────────────
 export async function deleteCharacter(personnageId: number): Promise<void> {
   const db = getDb()
-  await Promise.all([
+  // Un seul batch atomique — et TOUTES les tables qui portent un personnage_id :
+  // oublier une table (gemmes, effets de sorts, journal…) fait échouer le delete
+  // final sur sa contrainte et laisse un personnage squelette insupprimable.
+  await db.batch([
     db.delete(schema.characterAbilityScores).where(eq(schema.characterAbilityScores.personnageId, personnageId)),
     db.delete(schema.characterCombatStats).where(eq(schema.characterCombatStats.personnageId, personnageId)),
     db.delete(schema.characterSavingThrows).where(eq(schema.characterSavingThrows.personnageId, personnageId)),
@@ -592,13 +595,16 @@ export async function deleteCharacter(personnageId: number): Promise<void> {
     db.delete(schema.characterMagicItems).where(eq(schema.characterMagicItems.personnageId, personnageId)),
     db.delete(schema.characterPotions).where(eq(schema.characterPotions.personnageId, personnageId)),
     db.delete(schema.characterCurrency).where(eq(schema.characterCurrency.personnageId, personnageId)),
+    db.delete(schema.characterGems).where(eq(schema.characterGems.personnageId, personnageId)),
     db.delete(schema.characterLanguages).where(eq(schema.characterLanguages.personnageId, personnageId)),
     db.delete(schema.characterSpells).where(eq(schema.characterSpells.personnageId, personnageId)),
+    db.delete(schema.characterSpellEffects).where(eq(schema.characterSpellEffects.personnageId, personnageId)),
     db.delete(schema.characterCreatures).where(eq(schema.characterCreatures.personnageId, personnageId)),
     db.delete(schema.characterCompanions).where(eq(schema.characterCompanions.personnageId, personnageId)),
     db.delete(schema.characterNotes).where(eq(schema.characterNotes.personnageId, personnageId)),
+    db.delete(schema.characterJournal).where(eq(schema.characterJournal.personnageId, personnageId)),
+    db.delete(schema.characters).where(eq(schema.characters.id, personnageId)),
   ])
-  await db.delete(schema.characters).where(eq(schema.characters.id, personnageId))
   revalidatePath('/')
   redirect('/')
 }
