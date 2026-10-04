@@ -423,6 +423,13 @@ export async function saveCharacter(
       { tous: () => db.select({ id: schema.potions.id, nom: schema.potions.nom }).from(schema.potions),
         nom: pot.nom.trim(), table: 'potions', creees: referencesCreees }
     )
+    // La potion existait peut-être déjà sans effet noté : l'effet saisi la complète.
+    // On ne remplace jamais un effet déjà en place — la référence est partagée.
+    if (pot.effet?.trim()) {
+      await db.update(schema.potions)
+        .set({ sortEffet: pot.effet.trim() })
+        .where(and(eq(schema.potions.id, potionId), isNull(schema.potions.sortEffet)))
+    }
     await db.insert(schema.characterPotions).values({
       personnageId: charId, potionId,
       chargesRestantes: pot.charges ?? 1,

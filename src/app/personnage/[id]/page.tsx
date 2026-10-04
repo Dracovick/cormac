@@ -1111,6 +1111,9 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   <div key={charPotion.id} className="flex items-start justify-between bg-stone-800/40 rounded p-2">
                     <div>
                       <span className="text-green-300 text-sm">{potion.nom}</span>
+                      {potion.sortEffet && (
+                        <p className="text-stone-400 text-xs mt-0.5">{potion.sortEffet}</p>
+                      )}
                       {potion.description && (
                         <p className="text-stone-500 text-xs mt-0.5">{potion.description}</p>
                       )}
