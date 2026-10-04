@@ -7,6 +7,14 @@ type Props = { personnageId: number; pvActuels: number; pvMax: number }
 
 export function LiveHP({ personnageId, pvActuels, pvMax }: Props) {
   const [current, setCurrent] = useState(pvActuels)
+  // Resynchronise quand le serveur change les PV hors de ce composant (montée de
+  // niveau, nuit de repos, autre appareil) — sinon l'affichage reste figé sur la
+  // valeur du premier rendu jusqu'à un rechargement complet de la page.
+  const [pvProp, setPvProp] = useState(pvActuels)
+  if (pvActuels !== pvProp) {
+    setPvProp(pvActuels)
+    setCurrent(pvActuels)
+  }
   const [mode, setMode] = useState<'degats' | 'soins' | null>(null)
   const [amount, setAmount] = useState('')
   const [isPending, startTransition] = useTransition()
