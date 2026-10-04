@@ -35,6 +35,7 @@ import { EffetsSorts } from '@/components/fiche/EffetsSorts'
 import { LiveAttaque } from '@/components/fiche/LiveAttaque'
 import { DetailBonus } from '@/components/fiche/DetailBonus'
 import { AjouterXp } from '@/components/fiche/AjouterXp'
+import { MonterNiveau } from '@/components/fiche/MonterNiveau'
 import { JournalDrawer } from '@/components/fiche/JournalDrawer'
 import { ButinDrawer } from '@/components/fiche/ButinDrawer'
 import { calculeBonusEffetsCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
@@ -181,6 +182,10 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   // Math.max(1, …) : un personnage sans classe compte comme niveau 1, exactement
   // comme sur la fiche imprimée — sinon le papier et l'écran divergeraient.
   const xpProchain = xpPourNiveau(Math.max(1, niveauTotal) + 1)
+  // Niveau que l'XP justifie (table 3-2 du Manuel) : si plus haut que le niveau
+  // joué, la fiche propose la montée — la boucle s'arrête d'elle-même, sans plafond.
+  let niveauXp = Math.max(1, niveauTotal)
+  while (xpPourNiveau(niveauXp + 1) <= (character.xp ?? 0)) niveauXp++
 
   // PV attendus : plage selon dé de vie et CON (après niveauTotal)
   const conT = (abilityScores?.conBase ?? 10) + (abilityScores?.conMagique ?? 0) + (race?.bonusCon ?? 0) + effCarac.CON
@@ -343,6 +348,20 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   />
                 </div>
                 <AjouterXp personnageId={character.id} xp={character.xp ?? 0} niveauTotal={niveauTotal} />
+                {niveauXp > niveauTotal && niveauTotal > 0 && (
+                  <MonterNiveau
+                    personnageId={character.id}
+                    niveauCible={niveauTotal + 1}
+                    niveauXp={niveauXp}
+                    conMod={conMod}
+                    classes={classes.map(c => ({
+                      id: c.characterClass.id,
+                      nom: c.classe.nom,
+                      niveau: c.characterClass.niveau,
+                      de: getClasseInfo(c.classe.nom)?.de ?? 6,
+                    }))}
+                  />
+                )}
               </div>
 
               {/* Portrait */}

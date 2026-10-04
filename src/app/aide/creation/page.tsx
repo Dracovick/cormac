@@ -233,6 +233,7 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           <div className="bg-stone-800/50 rounded p-2 mt-1 font-mono text-xs text-stone-400">
             → Fighter 4 ou Wizard 3
           </div>
+          <p className="mt-2">Quand le seuil est franchi, la fiche propose la montée directement : bouton <strong>🎉 Niveau N atteint — 🆙 Monter de niveau</strong> sous la barre de progression. Le joueur choisit sa classe, lance son dé de vie et inscrit les PV gagnés — le niveau et les PV se mettent à jour, le reste suit (BBA, sauvegardes, emplacements de sorts). Revenez ensuite dans ce formulaire pour les <strong>points de compétence</strong>, un éventuel <strong>don</strong> (niveaux 3, 6, 9…) ou le <strong>+1 de caractéristique</strong> (niveaux 4, 8, 12…). Pour prendre une <strong>nouvelle classe</strong> (multi-classage), passez par <strong>+ Ajouter une classe</strong> ici même.</p>
 
           <p className="font-semibold text-stone-400 mt-4">Pénalité d'XP multi-classes</p>
           <p>Si l'écart entre vos niveaux de classe dépasse 1 (en ignorant la classe préférée raciale), vous perdez <strong>20 % des XP gagnés par classe en retard</strong>. Ce calcul s'effectue automatiquement dans cet onglet.</p>

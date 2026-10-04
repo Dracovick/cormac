@@ -8,7 +8,7 @@ import { redirect } from 'next/navigation'
 import { CLASSES_DND35, getClasseInfo } from '@/lib/dnd35/classes'
 import { RACES_DND35, getRaceInfo } from '@/lib/dnd35/races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
-import { getBab, getModifier, getMultiClassSave } from '@/lib/dnd35/rules'
+import { getBab, getModifier, getMultiClassSave, xpPourNiveau } from '@/lib/dnd35/rules'
 import { SORTS_DND35 } from '@/lib/dnd35/spells'
 import { SORTS_EFFETS_CA, SORTS_EFFETS_CARAC, SORTS_EFFETS_VISUELS, SORTS_EFFETS_SUIVI, valeurEffetSelonNiveau } from '@/lib/dnd35/spell-effects'
 import { UNITES_MONNAIE } from '@/lib/dnd35/monnaie'
@@ -563,6 +563,70 @@ export async function updatePvActuels(personnageId: number, pvActuels: number) {
       delta)
   }
   revalidatePath(`/personnage/${personnageId}`)
+}
+
+// Montée de niveau quand l'XP a franchi le seuil (Manuel des Joueurs, table 3-2).
+// Le joueur choisit sa classe avec le MJ et lance son dé de vie à la table — l'app
+// ne lance aucun dé : elle reçoit le résultat et tient le registre. BAB, sauvegardes,
+// emplacements de sorts et capacités de classe suivent d'eux-mêmes, car la fiche les
+// calcule depuis le niveau. Points de compétence, dons et caractéristiques restent
+// des choix à inscrire via ✏️ Modifier.
+export async function monterNiveau(
+  personnageId: number,
+  characterClassId: number,
+  pvGagnes: number
+): Promise<{ niveauCible: number; classeNom: string } | null> {
+  if (!Number.isInteger(pvGagnes) || pvGagnes < 1 || pvGagnes > 100) return null
+  const db = getDb()
+  const [perso] = await db
+    .select({ xp: schema.characters.xp })
+    .from(schema.characters)
+    .where(eq(schema.characters.id, personnageId))
+  if (!perso) return null
+
+  const cls = await db
+    .select({
+      id: schema.characterClasses.id,
+      niveau: schema.characterClasses.niveau,
+      nom: schema.classes.nom,
+    })
+    .from(schema.characterClasses)
+    .innerJoin(schema.classes, eq(schema.classes.id, schema.characterClasses.classeId))
+    .where(eq(schema.characterClasses.personnageId, personnageId))
+  const choisie = cls.find(c => c.id === characterClassId)
+  if (!choisie) return null
+
+  // Garde serveur : l'XP doit réellement justifier le niveau visé
+  const niveauTotal = cls.reduce((s, c) => s + c.niveau, 0)
+  const niveauCible = niveauTotal + 1
+  if ((perso.xp ?? 0) < xpPourNiveau(niveauCible)) return null
+
+  await db.update(schema.characterClasses)
+    .set({ niveau: choisie.niveau + 1 })
+    .where(eq(schema.characterClasses.id, characterClassId))
+
+  // Les PV du nouveau dé de vie s'ajoutent au maximum ET aux PV actuels
+  const [stats] = await db
+    .select({ pvMax: schema.characterCombatStats.pvMax, pvActuels: schema.characterCombatStats.pvActuels })
+    .from(schema.characterCombatStats)
+    .where(eq(schema.characterCombatStats.personnageId, personnageId))
+  if (stats) {
+    await db.update(schema.characterCombatStats)
+      .set({ pvMax: (stats.pvMax ?? 0) + pvGagnes, pvActuels: (stats.pvActuels ?? 0) + pvGagnes })
+      .where(eq(schema.characterCombatStats.personnageId, personnageId))
+  }
+  await db.update(schema.characters)
+    .set({ updatedAt: new Date() })
+    .where(eq(schema.characters.id, personnageId))
+
+  await logJournal(personnageId, 'niveau',
+    `🆙 Passe au niveau ${niveauCible} — ${choisie.nom} ${choisie.niveau + 1}, +${pvGagnes} PV (maximum ${(stats?.pvMax ?? 0) + pvGagnes})`,
+    niveauCible)
+
+  revalidatePath(`/personnage/${personnageId}`)
+  revalidatePath('/partie')
+  revalidatePath('/')
+  return { niveauCible, classeNom: choisie.nom }
 }
 
 export type ResultatNuitDeRepos =
