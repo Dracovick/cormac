@@ -1158,6 +1158,12 @@ export function CharacterForm({ personnageId, initialData }: { personnageId?: nu
 
   function handleSubmit() {
     if (!data.nom.trim()) { setError('Le nom du personnage est obligatoire.'); return }
+    // Une potion sans nom serait silencieusement perdue à la sauvegarde — le
+    // placeholder « Potion de soins » du champ Nom peut passer pour une valeur déjà entrée.
+    if (data.potions.some(p => !p.nom.trim() && p.effet.trim())) {
+      setError('Une potion a un effet mais pas de nom : écrivez son nom (le texte pâle dans le champ n’est qu’un exemple), ou retirez la ligne avec ✕.')
+      return
+    }
     setError(null)
     startTransition(async () => {
       try {
