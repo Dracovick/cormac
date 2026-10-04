@@ -90,8 +90,10 @@ function calcDerived(data: CharacterFormData) {
   return {
     forT, dexT, conT, intT, sagT, chaT, forMod, dexMod, conMod, intMod, sagMod, chaMod,
     bbaBase,
-    bbaCorps: data.bbaCorpsOverride ?? (bbaBase + forMod),
-    bbaProjectiles: data.bbaProjectilesOverride ?? (bbaBase + dexMod),
+    // L'override saisi remplace le BBA de BASE — FOR/DEX s'ajoutent toujours,
+    // exactement comme sur la fiche (qui lit la base stockée et ajoute le mod).
+    bbaCorps: (data.bbaCorpsOverride ?? bbaBase) + forMod,
+    bbaProjectiles: (data.bbaProjectilesOverride ?? bbaBase) + dexMod,
     vigBase, vigTotal: vigBase + conMod + data.vigueurMagique,
     refBase, refTotal: refBase + dexMod + data.reflexesMagique,
     volBase, volTotal: volBase + sagMod + data.volonteMagique,
@@ -375,7 +377,7 @@ function SectionCombat({ data, update, derived }: { data: CharacterFormData; upd
                 <input className={INP_NUM + ' flex-1'} type="number" placeholder="auto" value={data.bbaCorpsOverride ?? ''} onChange={e => update('bbaCorpsOverride', e.target.value ? parseInt(e.target.value) : null)} />
                 <div className={AUTO + ' shrink-0'}>{fm(derived.bbaCorps)}</div>
               </div>
-              <div className="text-stone-600 text-xs mt-0.5">BBA base {derived.bbaBase} + FOR({fm(derived.forMod)})</div>
+              <div className="text-stone-600 text-xs mt-0.5">BBA base {derived.bbaBase} + FOR({fm(derived.forMod)}) — saisir remplace la base, FOR s'ajoute toujours</div>
             </div>
             <div>
               <label className={LBL}>Projectiles {isAutoProj && <span className="text-amber-600">(auto)</span>}</label>
@@ -383,7 +385,7 @@ function SectionCombat({ data, update, derived }: { data: CharacterFormData; upd
                 <input className={INP_NUM + ' flex-1'} type="number" placeholder="auto" value={data.bbaProjectilesOverride ?? ''} onChange={e => update('bbaProjectilesOverride', e.target.value ? parseInt(e.target.value) : null)} />
                 <div className={AUTO + ' shrink-0'}>{fm(derived.bbaProjectiles)}</div>
               </div>
-              <div className="text-stone-600 text-xs mt-0.5">BBA base {derived.bbaBase} + DEX({fm(derived.dexMod)})</div>
+              <div className="text-stone-600 text-xs mt-0.5">BBA base {derived.bbaBase} + DEX({fm(derived.dexMod)}) — saisir remplace la base, DEX s'ajoute toujours</div>
             </div>
           </div>
         </div>
@@ -1158,10 +1160,18 @@ export function CharacterForm({ personnageId, initialData }: { personnageId?: nu
 
   function handleSubmit() {
     if (!data.nom.trim()) { setError('Le nom du personnage est obligatoire.'); return }
-    // Une potion sans nom serait silencieusement perdue à la sauvegarde — le
-    // placeholder « Potion de soins » du champ Nom peut passer pour une valeur déjà entrée.
-    if (data.potions.some(p => !p.nom.trim() && p.effet.trim())) {
-      setError('Une potion a un effet mais pas de nom : écrivez son nom (le texte pâle dans le champ n’est qu’un exemple), ou retirez la ligne avec ✕.')
+    // Une ligne sans nom serait silencieusement perdue à la sauvegarde — le texte
+    // pâle du champ Nom (« Potion de soins », « Épée longue »…) peut passer pour
+    // une valeur déjà entrée. Le garde-fou couvre toutes les collections.
+    const sansNom: string[] = []
+    if (data.armes.some(a => !a.nom.trim())) sansNom.push('une arme')
+    if (data.armures.some(a => !a.nom.trim())) sansNom.push('une armure')
+    if (data.objetsMagiques.some(o => !o.nom.trim())) sansNom.push('un objet magique')
+    if (data.potions.some(p => !p.nom.trim())) sansNom.push('une potion')
+    if ((data.gemmes ?? []).some(g => !g.nom.trim())) sansNom.push('une gemme')
+    if (data.compagnons.some(c => !c.nom.trim())) sansNom.push('un compagnon')
+    if (sansNom.length > 0) {
+      setError(`Ligne sans nom : ${sansNom.join(', ')}. Écrivez le nom (le texte pâle dans le champ n’est qu’un exemple), ou retirez la ligne avec ✕.`)
       return
     }
     setError(null)

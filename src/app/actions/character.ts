@@ -3,12 +3,13 @@
 import { getDb } from '@/db'
 import * as schema from '@/db/schema'
 import { eq, and, ne, or, isNull } from 'drizzle-orm'
+import type { BatchItem } from 'drizzle-orm/batch'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { CLASSES_DND35, getClasseInfo } from '@/lib/dnd35/classes'
 import { RACES_DND35, getRaceInfo } from '@/lib/dnd35/races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
-import { getBab, getModifier, getMultiClassSave, xpPourNiveau } from '@/lib/dnd35/rules'
+import { getBab, getMultiClassSave, xpPourNiveau } from '@/lib/dnd35/rules'
 import { SORTS_DND35 } from '@/lib/dnd35/spells'
 import { SORTS_EFFETS_CA, SORTS_EFFETS_CARAC, SORTS_EFFETS_VISUELS, SORTS_EFFETS_SUIVI, valeurEffetSelonNiveau } from '@/lib/dnd35/spell-effects'
 import { UNITES_MONNAIE } from '@/lib/dnd35/monnaie'
@@ -197,11 +198,18 @@ export async function saveCharacter(
 
   let charId: number
   if (personnageId) {
-    await db.update(schema.characters).set({ ...charValues, updatedAt: new Date() }).where(eq(schema.characters.id, personnageId))
     charId = personnageId
   } else {
     const [created] = await db.insert(schema.characters).values(charValues).returning({ id: schema.characters.id })
     charId = created.id
+  }
+
+  // Toutes les écritures sur les tables du personnage s'accumulent ici puis partent
+  // en un seul db.batch — une transaction côté Neon. Une erreur à mi-chemin ne peut
+  // plus laisser une section supprimée sans sa réinsertion : tout passe ou rien.
+  const ecritures: BatchItem<'pg'>[] = []
+  if (personnageId) {
+    ecritures.push(db.update(schema.characters).set({ ...charValues, updatedAt: new Date() }).where(eq(schema.characters.id, personnageId)))
   }
 
   // ── 5. Caractéristiques ──
@@ -216,20 +224,21 @@ export async function saveCharacter(
   const existingScores = await db.select({ id: schema.characterAbilityScores.id })
     .from(schema.characterAbilityScores).where(eq(schema.characterAbilityScores.personnageId, charId)).limit(1)
   if (existingScores.length > 0) {
-    await db.update(schema.characterAbilityScores).set(scores).where(eq(schema.characterAbilityScores.personnageId, charId))
+    ecritures.push(db.update(schema.characterAbilityScores).set(scores).where(eq(schema.characterAbilityScores.personnageId, charId)))
   } else {
-    await db.insert(schema.characterAbilityScores).values({ personnageId: charId, ...scores })
+    ecritures.push(db.insert(schema.characterAbilityScores).values({ personnageId: charId, ...scores }))
   }
 
   // ── 6. Stats de combat ──
-  const forTotal = data.forBase + data.forMagique + (raceInfo?.bonusFor ?? 0)
-  const dexTotal = data.dexBase + data.dexMagique + (raceInfo?.bonusDex ?? 0)
+  // Le BBA stocké est le bonus de BASE, sans modificateur de caractéristique : la
+  // fiche ajoute elle-même FOR (corps à corps) et DEX (projectiles). Stocker base+FOR
+  // ici ferait compter le modificateur deux fois à l'affichage.
   const bbaBase = allClasses.reduce((sum, c) => {
     const info = getClasseInfo(c.classe)
     return sum + (info ? getBab(info.bab, c.niveau) : 0)
   }, 0)
-  const bbaCorps = data.bbaCorpsOverride ?? (bbaBase + getModifier(forTotal))
-  const bbaProjectiles = data.bbaProjectilesOverride ?? (bbaBase + getModifier(dexTotal))
+  const bbaCorps = data.bbaCorpsOverride ?? bbaBase
+  const bbaProjectiles = data.bbaProjectilesOverride ?? bbaBase
   const deplacementFinal = data.deplacement ?? (raceInfo?.deplacement ?? 9)
 
   const combatValues = {
@@ -244,9 +253,9 @@ export async function saveCharacter(
   const existingCombat = await db.select({ id: schema.characterCombatStats.id })
     .from(schema.characterCombatStats).where(eq(schema.characterCombatStats.personnageId, charId)).limit(1)
   if (existingCombat.length > 0) {
-    await db.update(schema.characterCombatStats).set(combatValues).where(eq(schema.characterCombatStats.personnageId, charId))
+    ecritures.push(db.update(schema.characterCombatStats).set(combatValues).where(eq(schema.characterCombatStats.personnageId, charId)))
   } else {
-    await db.insert(schema.characterCombatStats).values({ personnageId: charId, ...combatValues })
+    ecritures.push(db.insert(schema.characterCombatStats).values({ personnageId: charId, ...combatValues }))
   }
 
   // ── 7. Jets de sauvegarde — multi-classe ──
@@ -265,13 +274,13 @@ export async function saveCharacter(
   const existingSaves = await db.select({ id: schema.characterSavingThrows.id })
     .from(schema.characterSavingThrows).where(eq(schema.characterSavingThrows.personnageId, charId)).limit(1)
   if (existingSaves.length > 0) {
-    await db.update(schema.characterSavingThrows).set(saveValues).where(eq(schema.characterSavingThrows.personnageId, charId))
+    ecritures.push(db.update(schema.characterSavingThrows).set(saveValues).where(eq(schema.characterSavingThrows.personnageId, charId)))
   } else {
-    await db.insert(schema.characterSavingThrows).values({ personnageId: charId, ...saveValues })
+    ecritures.push(db.insert(schema.characterSavingThrows).values({ personnageId: charId, ...saveValues }))
   }
 
   // ── 8. Classes du personnage (multi-classe) ──
-  await db.delete(schema.characterClasses).where(eq(schema.characterClasses.personnageId, charId))
+  ecritures.push(db.delete(schema.characterClasses).where(eq(schema.characterClasses.personnageId, charId)))
   for (const c of allClasses) {
     if (!c.classe) continue
     const cInfo = getClasseInfo(c.classe)
@@ -290,11 +299,11 @@ export async function saveCharacter(
       { tous: () => db.select({ id: schema.classes.id, nom: schema.classes.nom }).from(schema.classes),
         nom: c.classe, table: 'classes', creees: referencesCreees }
     )
-    await db.insert(schema.characterClasses).values({ personnageId: charId, classeId: cId, niveau: c.niveau })
+    ecritures.push(db.insert(schema.characterClasses).values({ personnageId: charId, classeId: cId, niveau: c.niveau }))
   }
 
   // ── 9. Compétences ──
-  await db.delete(schema.characterSkills).where(eq(schema.characterSkills.personnageId, charId))
+  ecritures.push(db.delete(schema.characterSkills).where(eq(schema.characterSkills.personnageId, charId)))
   for (const comp of data.competences) {
     if ((comp.rangs ?? 0) === 0 && (comp.divers ?? 0) === 0) continue
     let skillId = comp.skillId > 0 ? comp.skillId : 0
@@ -312,15 +321,15 @@ export async function saveCharacter(
         nom: comp.nom, table: 'skills', creees: referencesCreees }
     )
     }
-    await db.insert(schema.characterSkills).values({
+    ecritures.push(db.insert(schema.characterSkills).values({
       personnageId: charId, skillId,
       rangsInvestis: comp.rangs ?? 0,
       modifDivers: comp.divers ?? 0,
-    })
+    }))
   }
 
   // ── 10. Dons ──
-  await db.delete(schema.characterFeats).where(eq(schema.characterFeats.personnageId, charId))
+  ecritures.push(db.delete(schema.characterFeats).where(eq(schema.characterFeats.personnageId, charId)))
   for (const featNom of data.dons) {
     if (!featNom.trim()) continue
     const featId = await findOrCreateByNom(
@@ -330,11 +339,11 @@ export async function saveCharacter(
       { tous: () => db.select({ id: schema.feats.id, nom: schema.feats.nom }).from(schema.feats),
         nom: featNom.trim(), table: 'feats', creees: referencesCreees }
     )
-    await db.insert(schema.characterFeats).values({ personnageId: charId, featId })
+    ecritures.push(db.insert(schema.characterFeats).values({ personnageId: charId, featId }))
   }
 
   // ── 11. Armes ──
-  await db.delete(schema.characterWeapons).where(eq(schema.characterWeapons.personnageId, charId))
+  ecritures.push(db.delete(schema.characterWeapons).where(eq(schema.characterWeapons.personnageId, charId)))
   for (const arme of data.armes) {
     if (!arme.nom.trim()) continue
     const critMatch = arme.crit.match(/(\d+)(?:-20)?\/[×x](\d+)/)
@@ -353,17 +362,27 @@ export async function saveCharacter(
       { tous: () => db.select({ id: schema.weapons.id, nom: schema.weapons.nom }).from(schema.weapons),
         nom: arme.nom.trim(), table: 'weapons', creees: referencesCreees }
     )
-    await db.insert(schema.characterWeapons).values({
+    // La saisie fait foi — même principe que l'effet des potions : un champ rempli
+    // met à jour la référence partagée, un champ vide ne détruit rien.
+    const majArme: Partial<typeof schema.weapons.$inferInsert> = {}
+    if (arme.degats?.trim()) majArme.degats = arme.degats.trim()
+    if (critMatch) { majArme.critiqueMin = critiqueMin; majArme.critiqueMult = critiqueMult }
+    if (arme.typeDegats?.trim()) majArme.typeDegats = arme.typeDegats.trim()
+    if (arme.portee?.trim()) majArme.portee = porteeNum
+    if (Object.keys(majArme).length > 0) {
+      ecritures.push(db.update(schema.weapons).set(majArme).where(eq(schema.weapons.id, armeId)))
+    }
+    ecritures.push(db.insert(schema.characterWeapons).values({
       personnageId: charId, armeId,
       bonusMagique: arme.bonusMagique ?? 0,
       coteDeForce: arme.coteDeForce ?? null,
       bonusMunitions: arme.bonusMunitions ?? null,
       quantite: arme.quantite ?? 1,
-    })
+    }))
   }
 
   // ── 12. Armure ──
-  await db.delete(schema.characterArmor).where(eq(schema.characterArmor.personnageId, charId))
+  ecritures.push(db.delete(schema.characterArmor).where(eq(schema.characterArmor.personnageId, charId)))
   for (const armure of data.armures) {
     if (!armure.nom.trim()) continue
     const armureId = await findOrCreateByNom(
@@ -378,14 +397,27 @@ export async function saveCharacter(
       { tous: () => db.select({ id: schema.armor.id, nom: schema.armor.nom }).from(schema.armor),
         nom: armure.nom.trim(), table: 'armor', creees: referencesCreees }
     )
-    await db.insert(schema.characterArmor).values({
+    // La saisie fait foi. Le bonus CA sert de sentinelle : à 0, la ligne n'a pas été
+    // remplie (aucune armure réelle ne protège de 0) — on ne touche pas la référence.
+    // Au formulaire, maxDex 10 signifie « sans limite » : en base, c'est null.
+    const majArmure: Partial<typeof schema.armor.$inferInsert> = {}
+    if (armure.type?.trim()) majArmure.type = armure.type.trim()
+    if ((armure.bonusCA ?? 0) > 0) {
+      majArmure.bonusArmure = armure.bonusCA
+      majArmure.maxDex = armure.maxDex === 10 ? null : (armure.maxDex ?? null)
+      majArmure.malusCompetence = armure.malusComp ?? 0
+    }
+    if (Object.keys(majArmure).length > 0) {
+      ecritures.push(db.update(schema.armor).set(majArmure).where(eq(schema.armor.id, armureId)))
+    }
+    ecritures.push(db.insert(schema.characterArmor).values({
       personnageId: charId, armureId,
       bonusMagique: armure.bonusMagique ?? 0,
-    })
+    }))
   }
 
   // ── 13. Objets magiques ──
-  await db.delete(schema.characterMagicItems).where(eq(schema.characterMagicItems.personnageId, charId))
+  ecritures.push(db.delete(schema.characterMagicItems).where(eq(schema.characterMagicItems.personnageId, charId)))
   for (const obj of data.objetsMagiques) {
     if (!obj.nom.trim()) continue
     const bonusInt = parseInt(obj.bonus) || null
@@ -402,16 +434,25 @@ export async function saveCharacter(
       { tous: () => db.select({ id: schema.magicItems.id, nom: schema.magicItems.nom }).from(schema.magicItems),
         nom: obj.nom.trim(), table: 'magicItems', creees: referencesCreees }
     )
-    await db.update(schema.magicItems).set({ bonus: bonusInt }).where(eq(schema.magicItems.id, objetId))
-    await db.insert(schema.characterMagicItems).values({
+    // La saisie fait foi — un champ rempli met à jour la référence partagée, un
+    // champ vide ne détruit rien (l'ancien update inconditionnel du bonus écrasait
+    // la valeur avec null dès que le champ était laissé vide).
+    const majObjet: Partial<typeof schema.magicItems.$inferInsert> = {}
+    if (obj.type?.trim()) majObjet.type = obj.type.trim()
+    if (obj.bonus?.trim() && bonusInt !== null) majObjet.bonus = bonusInt
+    if (obj.description?.trim()) majObjet.description = obj.description.trim()
+    if (Object.keys(majObjet).length > 0) {
+      ecritures.push(db.update(schema.magicItems).set(majObjet).where(eq(schema.magicItems.id, objetId)))
+    }
+    ecritures.push(db.insert(schema.characterMagicItems).values({
       personnageId: charId, objetId,
       emplacement: obj.emplacement || null,
       chargesRestantes: obj.charges > 0 ? obj.charges : null,
-    })
+    }))
   }
 
   // ── 14. Potions ──
-  await db.delete(schema.characterPotions).where(eq(schema.characterPotions.personnageId, charId))
+  ecritures.push(db.delete(schema.characterPotions).where(eq(schema.characterPotions.personnageId, charId)))
   for (const pot of data.potions) {
     if (!pot.nom.trim()) continue
     const potionId = await findOrCreateByNom(
@@ -426,14 +467,14 @@ export async function saveCharacter(
     // L'effet saisi au formulaire fait foi : il met à jour la référence partagée
     // (tous les personnages qui portent cette potion voient le nouvel effet).
     if (pot.effet?.trim()) {
-      await db.update(schema.potions)
+      ecritures.push(db.update(schema.potions)
         .set({ sortEffet: pot.effet.trim() })
-        .where(and(eq(schema.potions.id, potionId), or(isNull(schema.potions.sortEffet), ne(schema.potions.sortEffet, pot.effet.trim()))))
+        .where(and(eq(schema.potions.id, potionId), or(isNull(schema.potions.sortEffet), ne(schema.potions.sortEffet, pot.effet.trim())))))
     }
-    await db.insert(schema.characterPotions).values({
+    ecritures.push(db.insert(schema.characterPotions).values({
       personnageId: charId, potionId,
       chargesRestantes: pot.charges ?? 1,
-    })
+    }))
   }
 
   // ── 15. Trésor ──
@@ -444,29 +485,29 @@ export async function saveCharacter(
   const existingCurrency = await db.select({ id: schema.characterCurrency.id })
     .from(schema.characterCurrency).where(eq(schema.characterCurrency.personnageId, charId)).limit(1)
   if (existingCurrency.length > 0) {
-    await db.update(schema.characterCurrency).set(currencyValues).where(eq(schema.characterCurrency.personnageId, charId))
+    ecritures.push(db.update(schema.characterCurrency).set(currencyValues).where(eq(schema.characterCurrency.personnageId, charId)))
   } else {
-    await db.insert(schema.characterCurrency).values({ personnageId: charId, ...currencyValues })
+    ecritures.push(db.insert(schema.characterCurrency).values({ personnageId: charId, ...currencyValues }))
   }
 
   // ── 15b. Gemmes ──
   // Écrites directement dans character_gems, sans passer par le catalogue
   // `gems` : la valeur d'une gemme appartient au trésor de CE personnage.
-  await db.delete(schema.characterGems).where(eq(schema.characterGems.personnageId, charId))
+  ecritures.push(db.delete(schema.characterGems).where(eq(schema.characterGems.personnageId, charId)))
   for (const gem of data.gemmes ?? []) {
     if (!gem.nom.trim()) continue
-    await db.insert(schema.characterGems).values({
+    ecritures.push(db.insert(schema.characterGems).values({
       personnageId: charId,
       nom: gem.nom.trim(),
       quantite: gem.quantite > 0 ? gem.quantite : 1,
       valeur: (gem.valeur ?? 0).toString(),
       unite: UNITES_MONNAIE.some(u => u.code === gem.unite) ? gem.unite : 'po',
       notes: gem.notes?.trim() || null,
-    })
+    }))
   }
 
   // ── 16. Langues ──
-  await db.delete(schema.characterLanguages).where(eq(schema.characterLanguages.personnageId, charId))
+  ecritures.push(db.delete(schema.characterLanguages).where(eq(schema.characterLanguages.personnageId, charId)))
   for (const langNom of data.langues) {
     if (!langNom.trim()) continue
     const langueId = await findOrCreateByNom(
@@ -476,11 +517,19 @@ export async function saveCharacter(
       { tous: () => db.select({ id: schema.languages.id, nom: schema.languages.nom }).from(schema.languages),
         nom: langNom.trim(), table: 'languages', creees: referencesCreees }
     )
-    await db.insert(schema.characterLanguages).values({ personnageId: charId, langueId })
+    ecritures.push(db.insert(schema.characterLanguages).values({ personnageId: charId, langueId }))
   }
 
   // ── 17. Sorts ──
-  await db.delete(schema.characterSpells).where(eq(schema.characterSpells.personnageId, charId))
+  // Préserver le statut des sorts personnalisés (estConnu=2, ajoutés via ➕) : la
+  // réécriture ne doit pas les rétrograder en sorts ordinaires, sinon ils seraient
+  // balayés à la prochaine préparation de sorts.
+  const sortsExistants = personnageId
+    ? await db.select({ sortId: schema.characterSpells.sortId, estConnu: schema.characterSpells.estConnu })
+        .from(schema.characterSpells).where(eq(schema.characterSpells.personnageId, charId))
+    : []
+  const statutSort = new Map(sortsExistants.map(r => [r.sortId, r.estConnu]))
+  ecritures.push(db.delete(schema.characterSpells).where(eq(schema.characterSpells.personnageId, charId)))
   for (const sort of data.sorts) {
     if (!sort.nom.trim()) continue
     const sortRef = SORTS_DND35.find(s => s.nom === sort.nom.trim())
@@ -497,25 +546,30 @@ export async function saveCharacter(
       { tous: () => db.select({ id: schema.spells.id, nom: schema.spells.nom }).from(schema.spells),
         nom: sort.nom.trim(), table: 'spells' }
     )
-    await db.insert(schema.characterSpells).values({
+    ecritures.push(db.insert(schema.characterSpells).values({
       personnageId: charId, sortId,
       niveau: sort.niveau || null,
-      estConnu: 1,
+      estConnu: statutSort.get(sortId) ?? 1,
       estPrepare: sort.nombrePrepare ?? 0,
       classe: sort.classe || null,
-    })
+    }))
   }
 
   // ── 18. Compagnons ──
-  await db.delete(schema.characterCompanions).where(eq(schema.characterCompanions.personnageId, charId))
+  ecritures.push(db.delete(schema.characterCompanions).where(eq(schema.characterCompanions.personnageId, charId)))
   for (const comp of data.compagnons) {
     if (!comp.nom.trim()) continue
-    await db.insert(schema.characterCompanions).values({
+    ecritures.push(db.insert(schema.characterCompanions).values({
       personnageId: charId,
       nom: comp.nom.trim(), race: comp.race || null,
       classe: comp.classe || null, joueur: comp.joueur || null,
       notes: comp.notes || null,
-    })
+    }))
+  }
+
+  // ── 19. Écriture atomique ──
+  if (ecritures.length > 0) {
+    await db.batch(ecritures as [BatchItem<'pg'>, ...BatchItem<'pg'>[]])
   }
 
   revalidatePath('/')
@@ -612,14 +666,33 @@ export async function monterNiveau(
     .set({ niveau: choisie.niveau + 1 })
     .where(eq(schema.characterClasses.id, characterClassId))
 
-  // Les PV du nouveau dé de vie s'ajoutent au maximum ET aux PV actuels
+  // Les PV du nouveau dé de vie s'ajoutent au maximum ET aux PV actuels.
+  // Le BBA de base stocké suit la montée : +delta selon la progression de la classe
+  // choisie (table 3-1 du Manuel). Une valeur stockée à 0 signifie « calcul auto »
+  // sur la fiche — on n'y touche pas, l'auto suit le niveau de lui-même.
+  const infoClasse = getClasseInfo(choisie.nom)
+  const deltaBab = infoClasse
+    ? getBab(infoClasse.bab, choisie.niveau + 1) - getBab(infoClasse.bab, choisie.niveau)
+    : 0
   const [stats] = await db
-    .select({ pvMax: schema.characterCombatStats.pvMax, pvActuels: schema.characterCombatStats.pvActuels })
+    .select({
+      pvMax: schema.characterCombatStats.pvMax,
+      pvActuels: schema.characterCombatStats.pvActuels,
+      bbaCorpsACorps: schema.characterCombatStats.bbaCorpsACorps,
+      bbaProjectiles: schema.characterCombatStats.bbaProjectiles,
+    })
     .from(schema.characterCombatStats)
     .where(eq(schema.characterCombatStats.personnageId, personnageId))
   if (stats) {
     await db.update(schema.characterCombatStats)
-      .set({ pvMax: (stats.pvMax ?? 0) + pvGagnes, pvActuels: (stats.pvActuels ?? 0) + pvGagnes })
+      .set({
+        pvMax: (stats.pvMax ?? 0) + pvGagnes,
+        pvActuels: (stats.pvActuels ?? 0) + pvGagnes,
+        ...(deltaBab > 0 && (stats.bbaCorpsACorps ?? 0) > 0
+          ? { bbaCorpsACorps: (stats.bbaCorpsACorps ?? 0) + deltaBab } : {}),
+        ...(deltaBab > 0 && (stats.bbaProjectiles ?? 0) > 0
+          ? { bbaProjectiles: (stats.bbaProjectiles ?? 0) + deltaBab } : {}),
+      })
       .where(eq(schema.characterCombatStats.personnageId, personnageId))
   }
   await db.update(schema.characters)

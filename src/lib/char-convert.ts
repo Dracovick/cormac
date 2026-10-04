@@ -1,6 +1,8 @@
 import type { CharacterFormData } from '@/app/actions/character'
 import type { CharacterData } from '@/lib/queries/character'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
+import { getClasseInfo } from '@/lib/dnd35/classes'
+import { getBab } from '@/lib/dnd35/rules'
 
 export function charDataToForm(d: CharacterData): CharacterFormData {
   const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows,
@@ -40,8 +42,25 @@ export function charDataToForm(d: CharacterData): CharacterFormData {
     caNaturelle: combatStats?.caNaturelle ?? 0, caDeflexion: combatStats?.caDeflexion ?? 0,
     caDivers: combatStats?.caDivers ?? 0, initiativeBonus: combatStats?.initiativeBonus ?? 0,
     domaine1: combatStats?.domaine1 || '', domaine2: combatStats?.domaine2 || '',
-    bbaCorpsOverride: combatStats?.bbaCorpsACorps ?? null,
-    bbaProjectilesOverride: combatStats?.bbaProjectiles ?? null,
+    // Le BBA stocké n'est un vrai override que s'il diffère du calcul automatique.
+    // Recharger la valeur auto comme override la figerait pour toujours : le BAB ne
+    // suivrait plus jamais les montées de niveau ni les changements de classe.
+    bbaCorpsOverride: (() => {
+      const bbaBase = classes.reduce((s, c) => {
+        const i = getClasseInfo(c.classe.nom)
+        return s + (i ? getBab(i.bab, c.characterClass.niveau) : 0)
+      }, 0)
+      const stocke = combatStats?.bbaCorpsACorps ?? 0
+      return stocke > 0 && stocke !== bbaBase ? stocke : null
+    })(),
+    bbaProjectilesOverride: (() => {
+      const bbaBase = classes.reduce((s, c) => {
+        const i = getClasseInfo(c.classe.nom)
+        return s + (i ? getBab(i.bab, c.characterClass.niveau) : 0)
+      }, 0)
+      const stocke = combatStats?.bbaProjectiles ?? 0
+      return stocke > 0 && stocke !== bbaBase ? stocke : null
+    })(),
     deplacement: combatStats?.deplacement ?? null, karma: combatStats?.karma ?? 0,
     reflexesMagique: savingThrows?.reflexesMagique ?? 0,
     vigueurMagique: savingThrows?.vigueurMagique ?? 0,

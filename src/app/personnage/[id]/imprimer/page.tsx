@@ -91,8 +91,9 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
     const info = getClasseInfo(c.classe.nom)
     return sum + (info ? getBab(info.bab, c.characterClass.niveau) : 0)
   }, 0)
-  const rawBabCorps = combatStats?.bbaCorpsACorps ?? bbaBase
-  const rawBabProj  = combatStats?.bbaProjectiles  ?? rawBabCorps
+  // || et non ?? : un BBA stocké à 0 signifie « calcul auto », comme sur la fiche à l'écran
+  const rawBabCorps = combatStats?.bbaCorpsACorps || bbaBase
+  const rawBabProj  = combatStats?.bbaProjectiles  || rawBabCorps
   const bbaCorps = rawBabCorps + forMod
   const bbaProj  = rawBabProj  + dexMod
 
