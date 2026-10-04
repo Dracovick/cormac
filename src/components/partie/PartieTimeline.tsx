@@ -3,12 +3,14 @@
 import { useEffect, useMemo, useState, useTransition } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { ajouterNoteMJ, marquerRound, supprimerEntreePartie, type EntreeJournalPartie, type EtatPersonnage } from '@/app/actions/journal'
+import { ajouterNoteMJ, supprimerEntreePartie, type EntreeJournalPartie, type EtatPersonnage } from '@/app/actions/journal'
+import { type CombatActif } from '@/app/actions/combat'
 import { heureQuebec, iconeEntree, lirePhoto } from '@/lib/journal-format'
+import { CombatTracker } from '@/components/partie/CombatTracker'
 import { DistribuerXp } from '@/components/partie/DistribuerXp'
 import { PhotoPartie } from '@/components/partie/PhotoPartie'
 
-type Props = { entrees: EntreeJournalPartie[]; etatGroupe: EtatPersonnage[]; enDirect: boolean; jour: string }
+type Props = { entrees: EntreeJournalPartie[]; etatGroupe: EtatPersonnage[]; enDirect: boolean; jour: string; combat: CombatActif | null }
 
 // Couleurs des badges de personnage (attribuées par ordre d'apparition dans la journée)
 const COULEURS = [
@@ -24,7 +26,7 @@ const COULEURS = [
 
 // Chronologie fusionnée de la table : les personnages actifs de la journée sont détectés
 // automatiquement ; le MJ peut en masquer d'un clic sur leur pastille.
-export function PartieTimeline({ entrees, etatGroupe, enDirect, jour }: Props) {
+export function PartieTimeline({ entrees, etatGroupe, enDirect, jour, combat }: Props) {
   const router = useRouter()
   const [note, setNote] = useState('')
   const [isPending, startTransition] = useTransition()
@@ -63,13 +65,6 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour }: Props) {
     })
   }
 
-  function round(action: 'debut' | 'suivant' | 'fin') {
-    startTransition(async () => {
-      await marquerRound(action)
-      router.refresh()
-    })
-  }
-
   // Personnages actifs de la journée, dans l'ordre de leur première action
   const personnages = useMemo(() => {
     const vus = new Map<number, { id: number; nom: string; nb: number }>()
@@ -102,27 +97,7 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour }: Props) {
   // Entrée = saut de ligne, Ctrl+Entrée = publier (idéal pour le résumé de fin de partie).
   const formNote = (
     <div className="mb-4">
-      <div className="flex flex-wrap items-center gap-2 mb-2">
-        <span className="text-stone-600 text-xs uppercase tracking-wide">Combat :</span>
-        <button
-          onClick={() => round('debut')}
-          disabled={isPending}
-          className="text-xs bg-red-900/40 hover:bg-red-800/60 text-red-400 hover:text-red-300 rounded px-2 py-1 transition-colors"
-          title="Marque le début d'un combat (round 1) — visible sur toutes les fiches"
-        >⚔ Combat !</button>
-        <button
-          onClick={() => round('suivant')}
-          disabled={isPending}
-          className="text-xs bg-amber-900/40 hover:bg-amber-800/60 text-amber-400 hover:text-amber-300 rounded px-2 py-1 transition-colors"
-          title="Passe au round suivant"
-        >▶ Round suivant</button>
-        <button
-          onClick={() => round('fin')}
-          disabled={isPending}
-          className="text-xs bg-stone-800 hover:bg-stone-700 text-stone-400 hover:text-stone-200 rounded px-2 py-1 transition-colors"
-          title="Marque la fin du combat"
-        >🕊 Fin</button>
-      </div>
+      <CombatTracker combat={combat} jour={jour} />
       <DistribuerXp jour={jour} />
       <div className="flex gap-2 items-end">
       <textarea

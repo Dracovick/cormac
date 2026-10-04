@@ -25,6 +25,7 @@ import { LiveSort } from '@/components/fiche/LiveSort'
 import { LivePotion } from '@/components/fiche/LivePotion'
 import { LiveCharge } from '@/components/fiche/LiveCharge'
 import { LiveNotes } from '@/components/fiche/LiveNotes'
+import { InitiativeEnCours } from '@/components/fiche/InitiativeEnCours'
 import { PreparerSorts } from '@/components/fiche/PreparerSorts'
 import { AjouterSort } from '@/components/fiche/AjouterSort'
 import { SupprimerSort } from '@/components/fiche/SupprimerSort'
@@ -258,6 +259,8 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
 
   return (
     <div className="min-h-screen bg-stone-950 text-stone-100">
+      {/* Bandeau d'initiative : visible seulement quand le MJ mène un combat où ce personnage figure */}
+      <InitiativeEnCours personnageId={Number(id)} />
       {/* ── EN-TÊTE ── */}
       <header className="bg-gradient-to-b from-stone-900 to-stone-950 border-b border-amber-900/40 py-8 px-6">
         <div className="max-w-5xl mx-auto mb-4 flex flex-wrap items-center justify-between gap-y-2">

@@ -126,6 +126,17 @@ export default async function AideMJ({ searchParams }: { searchParams: Promise<{
           <Tip>La journée ludique s&apos;étend de <strong>6 h à 6 h</strong>, heure du Québec : une soirée qui déborde après minuit reste une seule partie, dans la liste comme au journal.</Tip>
         </Section>
 
+        <Section titre="🎲 L'ordre d'initiative — mener un combat">
+          <p>Le bouton <span className="bg-red-900/40 border border-red-800/50 text-red-400 px-1.5 py-0.5 rounded text-xs">⚔ Lancer un combat</span> (ligne « Combat ») tient l&apos;ordre du tour à votre place. L&apos;app ne lance <strong>aucun dé</strong> : chacun lance son vrai d20 à la table, vous entrez les résultats bruts — le modificateur d&apos;initiative de chaque fiche (DEX, Science de l&apos;initiative, divers) s&apos;ajoute tout seul.</p>
+          <Row label="Préparer">Le panneau propose les personnages déjà actifs ce soir-là (« + Montrer tous » pour les autres). Entrez le d20 de ceux qui combattent — <strong>un personnage sans jet ne participe pas</strong>. Vos adversaires s&apos;ajoutent à la volée : un nom (« Squelettes ×4 » pour un groupe qui agit d&apos;un bloc), leur modificateur, leur jet. Puis ⚔ Lancer le combat.</Row>
+          <Row label="Mener le tour">L&apos;ordre s&apos;affiche trié (total décroissant; à égalité, le meilleur modificateur agit en premier — PHB 3.5). Le marqueur <span className="text-amber-300 font-mono">▶</span> montre à qui c&apos;est le tour; <span className="bg-amber-900/40 border border-amber-800/50 text-amber-300 px-1.5 py-0.5 rounded text-xs">▶ Tour suivant</span> fait avancer. En bout de liste, on repart en haut et le round monte — le numéro s&apos;inscrit dans la chronique, bien utile pour les sorts à durée en rounds.</Row>
+          <Row label="Pris au dépourvu">Le badge <span className="text-sky-400 border border-sky-900/60 rounded px-1 text-[10px] uppercase">dépourvu</span> marque qui n&apos;a pas encore agi : pas de bonus de DEX à la CA, et la fenêtre des attaques sournoises (PHB 3.5). Il s&apos;éteint au premier tour joué.</Row>
+          <Row label="Retarder, ajuster">Les flèches <span className="font-mono text-stone-400">↑↓</span> déplacent un combattant d&apos;un rang. Descendre le combattant courant = <strong>retarder</strong> : le tour passe au suivant et il agira plus bas pour le reste du combat. Une <span className="text-amber-500">⚠</span> signale une égalité parfaite — départagez d&apos;un jet et ajustez.</Row>
+          <Row label="Renforts et pertes">Le bouton <strong>+ Ajouter</strong> insère un arrivant en plein combat, au rang de son initiative. Le <span className="font-mono text-stone-500">✕</span> retire un combattant hors d&apos;état (le tour en cours ne change pas de main).</Row>
+          <Row label="Fin et bilan">🕊 Fin du combat ferme l&apos;ordre et inscrit le <strong>🏆 bilan automatique</strong> dans la chronique (rounds, dégâts, sorts — comme avant). Le combat survit à un onglet fermé ou un iPad endormi : rouvrez /partie, l&apos;ordre est toujours là. Vos joueurs voient l&apos;ordre en lecture seule sur leur fiche, avec « c&apos;est ton tour ! » le moment venu.</Row>
+          <Tip>L&apos;ordre d&apos;initiative complet s&apos;inscrit aussi en note dans la chronique au lancement — la trace reste après la partie.</Tip>
+        </Section>
+
         <div className="text-stone-500 text-xs uppercase tracking-widest mb-3 mt-8">Chapitre 1</div>
 
         <Section titre="⭐ Les points d'expérience — le principe (GM p.36)">
@@ -213,7 +224,7 @@ export default async function AideMJ({ searchParams }: { searchParams: Promise<{
         <Section titre="🎲 Dans le Grimoire : le bouton ⭐ Distribuer l'XP">
           <p>Une fois le total de la rencontre (ou de la soirée) établi avec les règles ci-dessus, la page <span className="font-mono text-stone-300">/partie</span> fait le reste :</p>
           <ol className="list-decimal list-inside space-y-1.5 pl-1">
-            <li>Cliquez <span className="bg-yellow-900/30 text-yellow-400 px-1.5 py-0.5 rounded text-xs">⭐ Distribuer l&apos;XP</span> (ligne « Récompense », sous les boutons de combat).</li>
+            <li>Cliquez <span className="bg-yellow-900/30 text-yellow-400 px-1.5 py-0.5 rounded text-xs">⭐ Distribuer l&apos;XP</span> (ligne « Récompense », sous le bouton de combat).</li>
             <li>Entrez le <strong>total d'XP de la rencontre</strong> — le Grimoire le répartit également entre les personnages cochés. Les personnages <strong>actifs de la journée</strong> sont pré-cochés; ajoutez les autres (joueurs sur papier, fiche non touchée) via le menu « + Ajouter un personnage ».</li>
             <li>La <strong>pénalité multi-classes est déduite automatiquement</strong> (−20 % par classe en retard de 2+ niveaux sur la plus haute, classe de prédilection raciale exempte — badge rouge <span className="text-red-400 font-mono">−20 %</span> sur les personnages concernés).</li>
             <li>Ajustez chaque part à la main au besoin : récompense d'interprétation, objectif personnel, personnage absent d'un combat… (Attention : modifier le total ou cocher/décocher recalcule toutes les parts.)</li>
