@@ -545,7 +545,7 @@ export function ButinDrawer({
 
             {/* Pied */}
             <div className="px-4 py-2.5 border-t border-stone-700 shrink-0 text-stone-600 text-xs leading-snug">
-              <kbd className="bg-stone-800 border border-stone-700 rounded px-1">Entrée</kbd> ajoute ·{' '}
+              <kbd className="bg-stone-800 border border-stone-700 rounded px-1">Entrée</kbd> choisit la suggestion, puis ajoute ·{' '}
               <kbd className="bg-stone-800 border border-stone-700 rounded px-1">Échap</kbd> ferme. Chaque ajout s&apos;inscrit
               au 📜 journal de partie.
             </div>
