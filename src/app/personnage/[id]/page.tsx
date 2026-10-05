@@ -1105,8 +1105,23 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
 
         {/* ── POTIONS + MONNAIE ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {potions.length > 0 && (
-            <Section titre="Potions">
+          {/* Toujours affichée, même sans potion : le ➕ de l'en-tête permet d'en
+              ajouter en pleine partie sans passer par ✏️ Modifier. */}
+          <Section
+            titre="Potions"
+            action={
+              <ButinDrawer
+                personnageId={character.id}
+                nomPersonnage={character.nom}
+                potionsCatalogue={potionsCatalogue}
+                ongletInitial="potion"
+                varianteBouton="section"
+                libelleBouton="➕ Ajouter une potion"
+                titleBouton="Ajouter une potion sans quitter la fiche — recherche dans le Grimoire ou création maison"
+              />
+            }
+          >
+            {potions.length > 0 ? (
               <div className="space-y-2">
                 {potions.map(({ potion, charPotion }) => (
                   <div key={charPotion.id} className="flex items-start justify-between bg-stone-800/40 rounded p-2">
@@ -1126,8 +1141,10 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   </div>
                 ))}
               </div>
-            </Section>
-          )}
+            ) : (
+              <p className="text-stone-600 text-xs">Aucune potion en poche — le ➕ ci-dessus en ajoute une sans quitter la fiche.</p>
+            )}
+          </Section>
 
           <Section titre="Trésor & Compagnons">
             {currency && (

@@ -265,7 +265,8 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
           <p>Dans la section <strong className="text-amber-200">Potions</strong>, le nombre de gorgées restantes est un bouton vert cliquable.</p>
           <Row label="Boire une gorgée">Cliquez directement sur le nombre affiché en vert. Il diminue de 1.</Row>
           <Row label="Potion épuisée">Quand il ne reste plus de gorgées, la case affiche <span className="text-stone-600 italic">épuisée</span>.</Row>
-          <Tip>En pleine partie, une potion trouvée s&apos;ajoute d&apos;un geste par <span className="bg-amber-900/50 border border-amber-700/70 text-amber-200 px-1.5 py-0.5 rounded text-xs">💰 Butin</span> → onglet 🧪 Potions : les doses s&apos;additionnent à ce que vous avez déjà. Pour réapprovisionner autrement (achat, fabrication) ou corriger une quantité, allez dans <strong>Modifier</strong> → onglet <strong>Équipement</strong>.</Tip>
+          <Row label="➕ Ajouter une potion">Le bouton <span className="bg-stone-800 border border-stone-700 text-stone-400 px-1.5 py-0.5 rounded text-xs">➕ Ajouter une potion</span>, dans l&apos;en-tête de la section Potions, ouvre directement le panneau d&apos;ajout — sans passer par la page Modifier. Le champ Nom cherche dans le Grimoire au fil de la frappe (coquilles pardonnées) et la ligne ➕ Créer permet toujours une potion maison. La section reste visible même quand vous n&apos;avez aucune potion, justement pour ce bouton.</Row>
+          <Tip>Même résultat par <span className="bg-amber-900/50 border border-amber-700/70 text-amber-200 px-1.5 py-0.5 rounded text-xs">💰 Butin</span> → onglet 🧪 Potions : les doses s&apos;additionnent à ce que vous avez déjà. Pour réapprovisionner autrement (achat, fabrication) ou corriger une quantité, allez dans <strong>Modifier</strong> → onglet <strong>Équipement</strong>.</Tip>
         </Section>
 
         <Section titre="🔮 Objets magiques — dépenser des charges">

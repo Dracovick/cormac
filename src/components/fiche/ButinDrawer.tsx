@@ -6,7 +6,17 @@ import type { PotionRef } from '@/app/actions/character'
 import { UNITES_MONNAIE } from '@/lib/dnd35/monnaie'
 import { ChampRechercheNom } from '@/components/ChampRechercheNom'
 
-type Props = { personnageId: number; nomPersonnage: string; potionsCatalogue?: PotionRef[] }
+type Props = {
+  personnageId: number
+  nomPersonnage: string
+  potionsCatalogue?: PotionRef[]
+  /** Onglet affiché à l'ouverture — le bouton de la section Potions ouvre directement sur 'potion'. */
+  ongletInitial?: TypeButin
+  libelleBouton?: string
+  titleBouton?: string
+  /** 'tresor' = bouton ambre de la barre d'actions; 'section' = bouton discret d'en-tête de section. */
+  varianteBouton?: 'tresor' | 'section'
+}
 
 const ONGLETS: { code: TypeButin; libelle: string; icone: string }[] = [
   { code: 'monnaie', libelle: 'Monnaie', icone: '🪙' },
@@ -56,9 +66,17 @@ function Etiquette({ children }: { children: React.ReactNode }) {
  * partie, avec la note (« coffre du gobelin ») pour retrouver plus tard où le
  * trésor a été trouvé.
  */
-export function ButinDrawer({ personnageId, nomPersonnage, potionsCatalogue = [] }: Props) {
+export function ButinDrawer({
+  personnageId,
+  nomPersonnage,
+  potionsCatalogue = [],
+  ongletInitial = 'monnaie',
+  libelleBouton = '💰 Butin',
+  titleBouton = 'Encaisser un trésor trouvé en partie — monnaie, gemmes, potions, objets magiques, armes',
+  varianteBouton = 'tresor',
+}: Props) {
   const [open, setOpen] = useState(false)
-  const [onglet, setOnglet] = useState<TypeButin>('monnaie')
+  const [onglet, setOnglet] = useState<TypeButin>(ongletInitial)
   const [v, setV] = useState(VIDE)
   const [message, setMessage] = useState<string | null>(null)
   const [avis, setAvis] = useState<string | null>(null)
@@ -207,10 +225,14 @@ export function ButinDrawer({ personnageId, nomPersonnage, potionsCatalogue = []
     <>
       <button
         onClick={() => setOpen(true)}
-        className="text-xs bg-amber-900/50 hover:bg-amber-800/70 border border-amber-700/70 text-amber-200 hover:text-amber-100 rounded px-2 py-1 min-h-[32px] transition-colors whitespace-nowrap cursor-pointer"
-        title="Encaisser un trésor trouvé en partie — monnaie, gemmes, potions, objets magiques, armes"
+        className={
+          varianteBouton === 'section'
+            ? 'inline-flex items-center gap-1.5 text-xs bg-stone-800 hover:bg-stone-700 border border-stone-700 hover:border-amber-600/50 text-stone-400 hover:text-amber-300 px-2.5 py-1 rounded-lg transition-all cursor-pointer whitespace-nowrap'
+            : 'text-xs bg-amber-900/50 hover:bg-amber-800/70 border border-amber-700/70 text-amber-200 hover:text-amber-100 rounded px-2 py-1 min-h-[32px] transition-colors whitespace-nowrap cursor-pointer'
+        }
+        title={titleBouton}
       >
-        💰 Butin
+        {libelleBouton}
       </button>
 
       {open && (
