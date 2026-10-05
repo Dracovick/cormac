@@ -23,6 +23,7 @@ import { LiveHP } from '@/components/fiche/LiveHP'
 import { NuitDeRepos } from '@/components/fiche/NuitDeRepos'
 import { LiveSort } from '@/components/fiche/LiveSort'
 import { LivePotion } from '@/components/fiche/LivePotion'
+import { JeterPotion } from '@/components/fiche/JeterPotion'
 import { LiveCharge } from '@/components/fiche/LiveCharge'
 import { LiveNotes } from '@/components/fiche/LiveNotes'
 import { InitiativeEnCours } from '@/components/fiche/InitiativeEnCours'
@@ -1137,7 +1138,10 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                         <p className="text-amber-600 text-xs italic mt-0.5">{charPotion.notes}</p>
                       )}
                     </div>
-                    <LivePotion charPotionId={charPotion.id} personnageId={character.id} chargesRestantes={charPotion.chargesRestantes ?? 1} />
+                    <div className="flex items-start gap-1">
+                      <LivePotion charPotionId={charPotion.id} personnageId={character.id} chargesRestantes={charPotion.chargesRestantes ?? 1} />
+                      <JeterPotion charPotionId={charPotion.id} personnageId={character.id} nomPotion={potion.nom} chargesRestantes={charPotion.chargesRestantes ?? 1} />
+                    </div>
                   </div>
                 ))}
               </div>

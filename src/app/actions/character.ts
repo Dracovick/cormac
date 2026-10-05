@@ -859,6 +859,27 @@ export async function depensePotion(charPotionId: number, personnageId: number) 
   revalidatePath(`/personnage/${personnageId}`)
 }
 
+export async function jeterPotion(charPotionId: number, personnageId: number) {
+  // Ancré sur (id, personnageId) : impossible de jeter la potion d'un autre personnage
+  const filtre = and(
+    eq(schema.characterPotions.id, charPotionId),
+    eq(schema.characterPotions.personnageId, personnageId)
+  )
+  const [row] = await getDb()
+    .select({ nomPotion: schema.potions.nom, chargesRestantes: schema.characterPotions.chargesRestantes })
+    .from(schema.characterPotions)
+    .innerJoin(schema.potions, eq(schema.characterPotions.potionId, schema.potions.id))
+    .where(filtre)
+  if (!row) return
+  await getDb().delete(schema.characterPotions).where(filtre)
+  const charges = row.chargesRestantes ?? 1
+  await logJournal(personnageId, 'potion',
+    charges > 0
+      ? `Se débarrasse de « ${row.nomPotion} » (${charges} ${charges > 1 ? 'gorgées' : 'gorgée'} au moment du geste)`
+      : `Jette la fiole vide de « ${row.nomPotion} »`)
+  revalidatePath(`/personnage/${personnageId}`)
+}
+
 export async function preparerSorts(personnageId: number, preparations: { charSpellId: number; estPrepare: number }[]) {
   const db = getDb()
   await Promise.all(
