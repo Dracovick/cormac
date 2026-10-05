@@ -45,7 +45,18 @@ export function ChampRechercheNom({ value, onChange, onPick, catalogue, placehol
         onChange={e => { onChange(e.target.value); setOuvert(true) }}
         onFocus={() => setOuvert(true)}
         onBlur={() => setOuvert(false)}
-        onKeyDown={e => { if (e.key === 'Escape' && actif) { e.stopPropagation(); setOuvert(false) } }}
+        onKeyDown={e => {
+          if (e.key === 'Escape' && actif) { e.stopPropagation(); setOuvert(false) }
+          // Entrée pendant que la liste est ouverte ne doit JAMAIS soumettre le
+          // formulaire : c'est ce qui créait des potions à moitié tapées
+          // (« héro », « forme » du 2026-10-05). Premier Entrée : choisir la
+          // première suggestion (ou assumer la création); second Entrée : soumettre.
+          if (e.key === 'Enter' && actif && (suggestions.length > 0 || offreCreation)) {
+            e.preventDefault()
+            if (suggestions.length > 0) onPick(suggestions[0])
+            setOuvert(false)
+          }
+        }}
         placeholder={placeholder}
         className={className}
         autoComplete="off"

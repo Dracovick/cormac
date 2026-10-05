@@ -13,6 +13,11 @@
 export const ANCIENS_NOMS: Record<string, string[]> = {
   'Potion de soins importants': ['Potion de grands soins', 'Grand Soin', 'Guérison majeure'],
   'Potion de soins': ['Potion de soins légers'],
+  // Le Guide du Maître (table 7-28, p. 263) nomme la potion « État gazeux »,
+  // mais à la table on dit « forme gazeuse » — les deux doivent la trouver.
+  "Potion d'état gazeux": ['Forme gazeuse', 'Potion de forme gazeuse'],
+  // Le sort s'appelle Rapidité en VF 3.5, mais le réflexe « hâte » a la vie dure.
+  'Potion de rapidité': ['Hâte', 'Potion de hâte'],
 }
 
 export function aliasPour(nomOfficiel: string): string[] {
