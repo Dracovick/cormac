@@ -2,9 +2,11 @@
 
 import { useEffect, useRef, useState, useTransition } from 'react'
 import { ajouterButin, type TypeButin } from '@/app/actions/butin'
+import type { PotionRef } from '@/app/actions/character'
 import { UNITES_MONNAIE } from '@/lib/dnd35/monnaie'
+import { ChampRechercheNom } from '@/components/ChampRechercheNom'
 
-type Props = { personnageId: number; nomPersonnage: string }
+type Props = { personnageId: number; nomPersonnage: string; potionsCatalogue?: PotionRef[] }
 
 const ONGLETS: { code: TypeButin; libelle: string; icone: string }[] = [
   { code: 'monnaie', libelle: 'Monnaie', icone: '🪙' },
@@ -54,7 +56,7 @@ function Etiquette({ children }: { children: React.ReactNode }) {
  * partie, avec la note (« coffre du gobelin ») pour retrouver plus tard où le
  * trésor a été trouvé.
  */
-export function ButinDrawer({ personnageId, nomPersonnage }: Props) {
+export function ButinDrawer({ personnageId, nomPersonnage, potionsCatalogue = [] }: Props) {
   const [open, setOpen] = useState(false)
   const [onglet, setOnglet] = useState<TypeButin>('monnaie')
   const [v, setV] = useState(VIDE)
@@ -345,13 +347,24 @@ export function ButinDrawer({ personnageId, nomPersonnage }: Props) {
                 <>
                   <label>
                     <Etiquette>Nom</Etiquette>
-                    <input
-                      ref={premierChamp}
-                      type="text"
+                    <ChampRechercheNom
+                      inputRef={premierChamp}
                       value={v.potNom}
-                      onChange={e => maj('potNom', e.target.value)}
-                      placeholder="Potion de soins légers"
+                      onChange={texte => maj('potNom', texte)}
+                      onPick={s => {
+                        // Réutiliser la fiche du Grimoire : nom, effet et doses d'un coup.
+                        const ref = potionsCatalogue.find(r => r.nom === s.nom)
+                        setV(prev => ({
+                          ...prev,
+                          potNom: s.nom,
+                          potEffet: ref?.effet ?? prev.potEffet,
+                          potDoses: String(ref?.chargesMax ?? 1),
+                        }))
+                      }}
+                      catalogue={potionsCatalogue.map(r => ({ nom: r.nom, detail: r.effet, alias: r.alias }))}
+                      placeholder="Rechercher ou créer…"
                       className={CHAMP}
+                      typeLabel="potion"
                     />
                   </label>
                   <div className="flex gap-2">

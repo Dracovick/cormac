@@ -1,10 +1,11 @@
 'use client'
 
-import { useState, useTransition, useCallback } from 'react'
+import { useState, useTransition, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import type { CharacterFormData } from '@/app/actions/character'
-import { saveCharacter } from '@/app/actions/character'
+import type { CharacterFormData, PotionRef } from '@/app/actions/character'
+import { saveCharacter, getPotionsCatalogue } from '@/app/actions/character'
+import { ChampRechercheNom } from '@/components/ChampRechercheNom'
 import { getModifier, formatMod, ALIGNEMENTS, calcXpPenalite } from '@/lib/dnd35/rules'
 import { CLASSES_DND35, getClasseInfo, getSortsSlotsParJour } from '@/lib/dnd35/classes'
 import { PRESTIGE_CLASSES, getPrestigeInfo, getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
@@ -637,7 +638,7 @@ function SectionDons({ data, update }: { data: CharacterFormData; update: Upd })
 }
 
 // ─── Section: Équipement ─────────────────────────────────────────────────────
-function SectionEquipement({ data, update, derived }: { data: CharacterFormData; update: Upd; derived: Derived }) {
+function SectionEquipement({ data, update, derived, potionsCatalogue }: { data: CharacterFormData; update: Upd; derived: Derived; potionsCatalogue: PotionRef[] }) {
   const [newLang, setNewLang] = useState('')
   // Track which weapon rows are in custom-name mode (nom doesn't match any template)
   const [customRows, setCustomRows] = useState<Set<number>>(() => new Set(
@@ -670,6 +671,13 @@ function SectionEquipement({ data, update, derived }: { data: CharacterFormData;
   const newPot = () => update('potions', [...data.potions, { nom: '', effet: '', charges: 1 }])
   const delPot = (i: number) => update('potions', data.potions.filter((_, j) => j !== i))
   const setPot = (i: number, k: string, v: any) => { const a = [...data.potions]; (a[i] as any)[k] = v; update('potions', a) }
+  // Choisir une suggestion = réutiliser la fiche du Grimoire : nom, effet et
+  // gorgées se remplissent d'un coup (l'effet reste modifiable ensuite).
+  const pickPot = (i: number, ref: PotionRef) => {
+    const a = [...data.potions]
+    a[i] = { ...a[i], nom: ref.nom, effet: ref.effet ?? '', charges: ref.chargesMax ?? 1 }
+    update('potions', a)
+  }
   const gemmes = data.gemmes ?? []
   const newGem = () => update('gemmes', [...gemmes, { nom: '', quantite: 1, valeur: 0, unite: 'po', notes: '' }])
   const delGem = (i: number) => update('gemmes', gemmes.filter((_, j) => j !== i))
@@ -799,7 +807,7 @@ function SectionEquipement({ data, update, derived }: { data: CharacterFormData;
         <div className={SEC_H}>Potions &amp; Parchemins</div>
         {data.potions.map((p, i) => (
           <div key={i} className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2 items-end bg-stone-800/30 rounded p-2">
-            <div><label className={LBL}>Nom</label><input className={INP} value={p.nom} onChange={e => setPot(i, 'nom', e.target.value)} placeholder="Potion de soins" /></div>
+            <div><label className={LBL}>Nom</label><ChampRechercheNom value={p.nom} onChange={v => setPot(i, 'nom', v)} onPick={s => { const ref = potionsCatalogue.find(r => r.nom === s.nom); if (ref) pickPot(i, ref) }} catalogue={potionsCatalogue.map(r => ({ nom: r.nom, detail: r.effet, alias: r.alias }))} placeholder="Rechercher ou créer…" className={INP} typeLabel="potion" /></div>
             <div className="sm:col-span-2"><label className={LBL}>Effet</label><input className={INP} value={p.effet} onChange={e => setPot(i, 'effet', e.target.value)} placeholder="Soins modérés (2d8+5)" /></div>
             <div className="flex items-end gap-1"><div className="flex-1"><label className={LBL}>Charges</label><input className={INP_NUM + ' w-full'} type="number" min={1} value={p.charges} onChange={e => setPot(i, 'charges', parseInt(e.target.value) || 1)} /></div><button onClick={() => delPot(i)} className={BTN_DEL + ' mb-2'}>✕</button></div>
           </div>
@@ -1123,8 +1131,15 @@ const NOMS_TABLES: Record<string, string> = {
   magicItems: 'objet magique', potions: 'potion', languages: 'langue', spells: 'sort',
 }
 
-export function CharacterForm({ personnageId, initialData }: { personnageId?: number; initialData?: CharacterFormData }) {
+export function CharacterForm({ personnageId, initialData, potionsCatalogue }: { personnageId?: number; initialData?: CharacterFormData; potionsCatalogue?: PotionRef[] }) {
   const [data, setData] = useState<CharacterFormData>(initialData ?? DEFAULT_FORM)
+  // Catalogue des potions pour le champ à suggestions. Les pages serveur le
+  // passent en prop; la page « générer » (client) le laisse vide et on le
+  // charge ici, une seule fois.
+  const [potionsCat, setPotionsCat] = useState<PotionRef[]>(potionsCatalogue ?? [])
+  useEffect(() => {
+    if (!potionsCatalogue) getPotionsCatalogue().then(setPotionsCat).catch(() => {})
+  }, [potionsCatalogue])
   const [tab, setTab] = useState('identite')
   const [error, setError] = useState<string | null>(null)
   // Références créées faute d'avoir été reconnues : on les montre avant de quitter la page.
@@ -1262,7 +1277,7 @@ export function CharacterForm({ personnageId, initialData }: { personnageId?: nu
         {tab === 'combat' && <SectionCombat data={data} update={update} derived={derived} />}
         {tab === 'competences' && <SectionCompetences data={data} update={update} derived={derived} />}
         {tab === 'dons' && <SectionDons data={data} update={update} />}
-        {tab === 'equipement' && <SectionEquipement data={data} update={update} derived={derived} />}
+        {tab === 'equipement' && <SectionEquipement data={data} update={update} derived={derived} potionsCatalogue={potionsCat} />}
         {tab === 'sorts' && derived.lanceurSorts && <SectionSorts data={data} update={update} derived={derived} />}
         {tab === 'notes' && <SectionNotes data={data} update={update} />}
 

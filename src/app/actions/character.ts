@@ -15,6 +15,7 @@ import { SORTS_EFFETS_CA, SORTS_EFFETS_CARAC, SORTS_EFFETS_VISUELS, SORTS_EFFETS
 import { UNITES_MONNAIE } from '@/lib/dnd35/monnaie'
 import { logJournal } from '@/lib/journal'
 import { normaliserNom } from '@/lib/noms'
+import { aliasPour } from '@/lib/dnd35/anciens-noms'
 
 // ─── Type exported for the form component ───────────────────────────────────
 export interface CharacterFormData {
@@ -1022,4 +1023,19 @@ export async function depenseChargeObjet(charItemId: number, personnageId: numbe
   await logJournal(personnageId, 'charge',
     `Utilise « ${row.nomObjet} » (${newVal} ${newVal > 1 ? 'charges restantes' : 'charge restante'})`)
   revalidatePath(`/personnage/${personnageId}`)
+}
+
+// ─── Catalogue des potions pour les champs à suggestions ────────────────────
+// Chargé côté serveur par les pages, ou en secours par le formulaire lui-même
+// (page « générer », rendue côté client). La recherche se fait ensuite dans le
+// navigateur : aucun appel réseau à la frappe.
+export type PotionRef = { nom: string; effet: string | null; chargesMax: number | null; alias: string[] }
+
+export async function getPotionsCatalogue(): Promise<PotionRef[]> {
+  const rows = await getDb()
+    .select({ nom: schema.potions.nom, effet: schema.potions.sortEffet, chargesMax: schema.potions.chargesMax })
+    .from(schema.potions)
+  return rows
+    .map(r => ({ ...r, alias: aliasPour(r.nom) }))
+    .sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
 }

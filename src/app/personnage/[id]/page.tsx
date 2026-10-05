@@ -38,6 +38,7 @@ import { AjouterXp } from '@/components/fiche/AjouterXp'
 import { MonterNiveau } from '@/components/fiche/MonterNiveau'
 import { JournalDrawer } from '@/components/fiche/JournalDrawer'
 import { ButinDrawer } from '@/components/fiche/ButinDrawer'
+import { getPotionsCatalogue } from '@/app/actions/character'
 import { calculeBonusEffetsCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
 import { getDb } from '@/db'
 import { spells as spellsTable } from '@/db/schema/spells'
@@ -66,7 +67,7 @@ function normNomSort(nom: string): string {
 
 export default async function FichePersonnage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  const data = await getCharacter(Number(id))
+  const [data, potionsCatalogue] = await Promise.all([getCharacter(Number(id)), getPotionsCatalogue()])
   if (!data) notFound()
 
   const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, currency, gems, languages, creatures, companions, spellEffects } = data
@@ -426,7 +427,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           <div className="flex flex-wrap justify-between items-start gap-2 -mt-1 mb-2">
             <NuitDeRepos personnageId={character.id} estLanceur={casterClasses.length > 0} />
             <div className="flex items-center gap-2 shrink-0">
-              <ButinDrawer personnageId={character.id} nomPersonnage={character.nom} />
+              <ButinDrawer personnageId={character.id} nomPersonnage={character.nom} potionsCatalogue={potionsCatalogue} />
               <JournalDrawer personnageId={character.id} nomPersonnage={character.nom} />
             </div>
           </div>

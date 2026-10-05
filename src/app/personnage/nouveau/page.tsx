@@ -1,5 +1,9 @@
 import { CharacterForm } from '@/components/creation/CharacterForm'
+import { getPotionsCatalogue } from '@/app/actions/character'
 
-export default function NouveauPersonnage() {
-  return <CharacterForm />
+export const dynamic = 'force-dynamic'
+
+export default async function NouveauPersonnage() {
+  const potionsCatalogue = await getPotionsCatalogue()
+  return <CharacterForm potionsCatalogue={potionsCatalogue} />
 }
