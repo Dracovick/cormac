@@ -24,6 +24,8 @@ export type EntreeIndex = {
   alias?: string[]
   /** Clé de filtre du rayon : école pour les sorts, type pour les objets magiques. */
   groupe?: string
+  /** Classes qui lancent le sort (rayon Sorts seulement) — pour le filtre par classe. */
+  classes?: string[]
 }
 
 export type BibliothequeIndex = {
@@ -119,11 +121,13 @@ export async function getBibliothequeIndex(): Promise<BibliothequeIndex> {
 
   return {
     sorts: sorts.map(s => {
-      const niveauxStr = formatNiveaux(niveaux.get(s.id) ?? [])
+      const niveauxSort = niveaux.get(s.id) ?? []
+      const classesSort = [...new Set(niveauxSort.map(n => n.classe))]
       return {
         id: s.id, nom: s.nom,
-        detail: [s.ecole, niveauxStr].filter(Boolean).join(' — '),
+        detail: [s.ecole, formatNiveaux(niveauxSort)].filter(Boolean).join(' — '),
         groupe: s.ecole ?? undefined,
+        classes: classesSort.length ? classesSort : undefined,
       }
     }),
     potions: potions.map(p => ({

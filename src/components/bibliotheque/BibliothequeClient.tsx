@@ -18,6 +18,18 @@ const RAYONS: { cle: RayonCle; slug: RayonSlug; label: string; icone: string; fi
 
 type Trouvaille = EntreeIndex & { slug: RayonSlug; icone: string; rayonLabel: string }
 
+/** Partage des classes du Grimoire entre magie profane et magie divine (règle 3.5). */
+const CLASSES_PROFANES = new Set(['Assassin', 'Barde', 'Ensorceleur', 'Magicien'])
+const CLASSES_DIVINES = new Set(['Blackguard', 'Druide', 'Paladin', 'Prêtre', 'Rôdeur'])
+
+function passeFiltreClasse(e: EntreeIndex, classe: string): boolean {
+  if (!classe) return true
+  const classes = e.classes ?? []
+  if (classe === 'profane') return classes.some(c => CLASSES_PROFANES.has(c))
+  if (classe === 'divine') return classes.some(c => CLASSES_DIVINES.has(c))
+  return classes.includes(classe)
+}
+
 function LigneEntree({ href, nom, detail, badge }: { href: string; nom: string; detail: string; badge?: string }) {
   return (
     <Link
@@ -46,15 +58,18 @@ export function BibliothequeClient({ index }: { index: BibliothequeIndex }) {
   const [q, setQ] = useState('')
   const [rayon, setRayon] = useState<RayonCle>('sorts')
   const [filtre, setFiltre] = useState('')
+  const [classe, setClasse] = useState('')
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const q0 = params.get('q')
     const r0 = params.get('rayon')
     const f0 = params.get('filtre')
+    const c0 = params.get('classe')
     if (q0) setQ(q0)
     if (r0 && RAYONS.some(r => r.cle === r0)) setRayon(r0 as RayonCle)
     if (f0) setFiltre(f0)
+    if (c0) setClasse(c0)
   }, [])
 
   useEffect(() => {
@@ -62,9 +77,10 @@ export function BibliothequeClient({ index }: { index: BibliothequeIndex }) {
     if (q) params.set('q', q)
     if (rayon !== 'sorts') params.set('rayon', rayon)
     if (filtre) params.set('filtre', filtre)
+    if (classe) params.set('classe', classe)
     const suffixe = params.toString()
     window.history.replaceState(null, '', suffixe ? `?${suffixe}` : window.location.pathname)
-  }, [q, rayon, filtre])
+  }, [q, rayon, filtre, classe])
 
   const tout: Trouvaille[] = useMemo(
     () => RAYONS.flatMap(r => index[r.cle].map(e => ({ ...e, slug: r.slug, icone: r.icone, rayonLabel: r.label }))),
@@ -79,7 +95,13 @@ export function BibliothequeClient({ index }: { index: BibliothequeIndex }) {
   const groupes = rayonActif.filtreLabel
     ? [...new Set(entreesRayon.map(e => e.groupe).filter((g): g is string => !!g))].sort((a, b) => a.localeCompare(b, 'fr'))
     : []
-  const entreesAffichees = filtre ? entreesRayon.filter(e => e.groupe === filtre) : entreesRayon
+  const classesPresentes = rayon === 'sorts'
+    ? [...new Set(entreesRayon.flatMap(e => e.classes ?? []))].sort((a, b) => a.localeCompare(b, 'fr'))
+    : []
+  const entreesAffichees = entreesRayon.filter(
+    e => (!filtre || e.groupe === filtre) && passeFiltreClasse(e, classe),
+  )
+  const sansClasse = classe ? entreesRayon.filter(e => !e.classes?.length).length : 0
 
   return (
     <div>
@@ -117,7 +139,7 @@ export function BibliothequeClient({ index }: { index: BibliothequeIndex }) {
               <button
                 key={r.cle}
                 type="button"
-                onClick={() => { setRayon(r.cle); setFiltre('') }}
+                onClick={() => { setRayon(r.cle); setFiltre(''); setClasse('') }}
                 className={`px-3 py-1.5 rounded-lg text-sm border transition-colors ${
                   rayon === r.cle
                     ? 'bg-amber-900/40 border-amber-700/60 text-amber-300'
@@ -130,17 +152,40 @@ export function BibliothequeClient({ index }: { index: BibliothequeIndex }) {
             ))}
           </div>
 
-          {groupes.length > 1 && (
-            <select
-              value={filtre}
-              onChange={e => setFiltre(e.target.value)}
-              className="mb-3 bg-stone-900 border border-stone-700 rounded-lg px-3 py-1.5 text-stone-300 text-sm outline-none focus:border-amber-600"
-            >
-              <option value="">{rayonActif.filtreLabel}</option>
-              {groupes.map(g => (
-                <option key={g} value={g}>{g}</option>
-              ))}
-            </select>
+          {(groupes.length > 1 || classesPresentes.length > 0) && (
+            <div className="flex flex-wrap items-center gap-2 mb-3">
+              {groupes.length > 1 && (
+                <select
+                  value={filtre}
+                  onChange={e => setFiltre(e.target.value)}
+                  className="bg-stone-900 border border-stone-700 rounded-lg px-3 py-1.5 text-stone-300 text-sm outline-none focus:border-amber-600"
+                >
+                  <option value="">{rayonActif.filtreLabel}</option>
+                  {groupes.map(g => (
+                    <option key={g} value={g}>{g}</option>
+                  ))}
+                </select>
+              )}
+              {classesPresentes.length > 0 && (
+                <select
+                  value={classe}
+                  onChange={e => setClasse(e.target.value)}
+                  className="bg-stone-900 border border-stone-700 rounded-lg px-3 py-1.5 text-stone-300 text-sm outline-none focus:border-amber-600"
+                >
+                  <option value="">Toutes les classes</option>
+                  <option value="profane">🜏 Magie profane</option>
+                  <option value="divine">✠ Magie divine</option>
+                  {classesPresentes.map(c => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              )}
+              {sansClasse > 0 && (
+                <span className="text-stone-600 text-xs">
+                  {sansClasse} sorts aux classes pas encore relevées sont masqués par ce filtre
+                </span>
+              )}
+            </div>
           )}
 
           <div className="bg-stone-900/60 border border-stone-800 rounded-xl overflow-hidden">
