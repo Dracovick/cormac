@@ -319,6 +319,15 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
           <Row label="Cliquer dessus">Ouvre une recherche Google ciblée sur <strong>regles-donjons-dragons.com</strong>, le site de référence des règles D&D 3.5 en français. S'ouvre dans un nouvel onglet.</Row>
         </Section>
 
+        <Section titre="📚 La Grande Bibliothèque — consulter tout le savoir du Grimoire">
+          <p>Depuis la page d'accueil, <strong className="text-amber-200">La Grande Bibliothèque</strong> ouvre la consultation libre de tous les catalogues du Grimoire : sorts, potions, objets magiques (bâtons, baguettes, anneaux, reliques…), armes, armures et dons — chacun avec sa fiche descriptive.</p>
+          <Row label="Recherche globale">La barre du haut fouille tous les rayons d'un coup, avec la même tolérance que le champ potions : accents ignorés, pluriels et coquilles pardonnés, vieux noms de table reconnus (« forme gazeuse » trouve la Potion d'état gazeux).</Row>
+          <Row label="Rayons et filtres">Sans recherche, on feuillette rayon par rayon — les sorts se filtrent par école, les objets magiques par type.</Row>
+          <Row label="Liens croisés">La fiche d'une potion pointe vers le sort qu'elle embouteille, et la fiche d'un sort liste ses potions.</Row>
+          <Row label="Lecture seule">La Bibliothèque ne modifie rien : elle n'ajoute rien aux fiches de personnages et ne touche pas à l'inventaire. Pour acquérir un objet, passez par 💰 Butin ou ➕ Ajouter une potion sur la fiche.</Row>
+          <Tip>Certaines fiches des suppléments sont encore incomplètes (portée, durée ou description manquantes) : le relevé des livres se poursuit, la Bibliothèque s'enrichit au fur et à mesure.</Tip>
+        </Section>
+
         <Section titre="🛡️ Armure — CA, malus et déplacement automatiques">
           <p>Toutes les règles liées aux armures portées sont calculées automatiquement depuis la liste d'équipement du personnage.</p>
           <Row label="CA automatique">Le bonus CA de chaque armure s'additionne au modificateur de DEX (plafonné par le Max DEX de l'armure), plus naturelle/déflexion/divers/magique. Retirez une armure de l'équipement et la CA recalcule immédiatement.</Row>
