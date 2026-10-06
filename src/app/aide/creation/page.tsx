@@ -290,6 +290,11 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           <Tip>La ponctuation, elle, compte&nbsp;: <em>Connaissances (mystères)</em> et <em>Connaissances (nature)</em> restent deux compétences distinctes, tout comme <em>Artisanat (armes)</em> et <em>Artisanat (armures)</em>. Si le bandeau signale une création que vous n'attendiez pas, c'est presque toujours une variante d'un nom qui existe déjà : corrigez-la plutôt que de la garder.</Tip>
         </Section>
 
+        <Section titre="📚 La Grande Bibliothèque — vérifier une référence avant de la saisir">
+          <p>Avant de taper le nom d'un sort, d'une arme, d'un objet magique ou d'un don, <strong className="text-amber-200">La Grande Bibliothèque</strong> (depuis la page d'accueil) permet de retrouver l'orthographe officielle et la fiche complète de chaque référence du Grimoire — sorts par école, objets magiques par type, potions avec leur effet.</p>
+          <Tip>Saisir le nom exact tel qu'il apparaît dans la Bibliothèque évite de créer une variante en double — le bandeau des nouvelles références reste votre filet, mais autant viser juste du premier coup.</Tip>
+        </Section>
+
         <Section titre="⚔️ Malus d'armure sur les compétences">
 
           <p>Certaines armures imposent un <strong>malus de compétence</strong> (Armor Check Penalty) qui s'applique automatiquement sur la fiche joueur aux compétences physiques suivantes :</p>
