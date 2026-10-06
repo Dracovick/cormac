@@ -30,6 +30,23 @@ function passeFiltreClasse(e: EntreeIndex, classe: string): boolean {
   return classes.includes(classe)
 }
 
+/**
+ * Niveau du sort au sens du filtre actif : le niveau de la classe choisie,
+ * ou le plus bas parmi les classes retenues (profane, divine, ou toutes).
+ * null = classes pas encore relevées, le tri les range à la fin.
+ */
+function niveauEffectif(e: EntreeIndex, classe: string): number | null {
+  if (!e.niveaux) return null
+  let plusBas: number | null = null
+  for (const [c, n] of Object.entries(e.niveaux)) {
+    if (classe === 'profane' && !CLASSES_PROFANES.has(c)) continue
+    if (classe === 'divine' && !CLASSES_DIVINES.has(c)) continue
+    if (classe && classe !== 'profane' && classe !== 'divine' && c !== classe) continue
+    if (plusBas === null || n < plusBas) plusBas = n
+  }
+  return plusBas
+}
+
 function LigneEntree({ href, nom, detail, badge }: { href: string; nom: string; detail: string; badge?: string }) {
   return (
     <Link
@@ -59,6 +76,7 @@ export function BibliothequeClient({ index }: { index: BibliothequeIndex }) {
   const [rayon, setRayon] = useState<RayonCle>('sorts')
   const [filtre, setFiltre] = useState('')
   const [classe, setClasse] = useState('')
+  const [tri, setTri] = useState<'alpha' | 'niveau'>('alpha')
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -70,6 +88,7 @@ export function BibliothequeClient({ index }: { index: BibliothequeIndex }) {
     if (r0 && RAYONS.some(r => r.cle === r0)) setRayon(r0 as RayonCle)
     if (f0) setFiltre(f0)
     if (c0) setClasse(c0)
+    if (params.get('tri') === 'niveau') setTri('niveau')
   }, [])
 
   useEffect(() => {
@@ -78,9 +97,10 @@ export function BibliothequeClient({ index }: { index: BibliothequeIndex }) {
     if (rayon !== 'sorts') params.set('rayon', rayon)
     if (filtre) params.set('filtre', filtre)
     if (classe) params.set('classe', classe)
+    if (tri === 'niveau') params.set('tri', 'niveau')
     const suffixe = params.toString()
     window.history.replaceState(null, '', suffixe ? `?${suffixe}` : window.location.pathname)
-  }, [q, rayon, filtre, classe])
+  }, [q, rayon, filtre, classe, tri])
 
   const tout: Trouvaille[] = useMemo(
     () => RAYONS.flatMap(r => index[r.cle].map(e => ({ ...e, slug: r.slug, icone: r.icone, rayonLabel: r.label }))),
@@ -98,9 +118,20 @@ export function BibliothequeClient({ index }: { index: BibliothequeIndex }) {
   const classesPresentes = rayon === 'sorts'
     ? [...new Set(entreesRayon.flatMap(e => e.classes ?? []))].sort((a, b) => a.localeCompare(b, 'fr'))
     : []
-  const entreesAffichees = entreesRayon.filter(
+  const filtrees = entreesRayon.filter(
     e => (!filtre || e.groupe === filtre) && passeFiltreClasse(e, classe),
   )
+  const triParNiveau = rayon === 'sorts' && tri === 'niveau'
+  const entreesAffichees = triParNiveau
+    ? [...filtrees].sort((a, b) => {
+        const na = niveauEffectif(a, classe)
+        const nb = niveauEffectif(b, classe)
+        if (na === nb) return 0 // tri stable : l'ordre alphabétique du serveur survit dans chaque niveau
+        if (na === null) return 1
+        if (nb === null) return -1
+        return na - nb
+      })
+    : filtrees
   const sansClasse = classe ? entreesRayon.filter(e => !e.classes?.length).length : 0
 
   return (
@@ -139,7 +170,7 @@ export function BibliothequeClient({ index }: { index: BibliothequeIndex }) {
               <button
                 key={r.cle}
                 type="button"
-                onClick={() => { setRayon(r.cle); setFiltre(''); setClasse('') }}
+                onClick={() => { setRayon(r.cle); setFiltre(''); setClasse(''); setTri('alpha') }}
                 className={`px-3 py-1.5 rounded-lg text-sm border transition-colors ${
                   rayon === r.cle
                     ? 'bg-amber-900/40 border-amber-700/60 text-amber-300'
@@ -180,6 +211,19 @@ export function BibliothequeClient({ index }: { index: BibliothequeIndex }) {
                   ))}
                 </select>
               )}
+              {rayon === 'sorts' && (
+                <button
+                  type="button"
+                  onClick={() => setTri(t => (t === 'niveau' ? 'alpha' : 'niveau'))}
+                  className={`px-3 py-1.5 rounded-lg text-sm border transition-colors ${
+                    tri === 'niveau'
+                      ? 'bg-amber-900/40 border-amber-700/60 text-amber-300'
+                      : 'bg-stone-900/50 border-stone-700/40 text-stone-400 hover:text-amber-300 hover:border-amber-700/40'
+                  }`}
+                >
+                  🔢 {tri === 'niveau' ? 'Trié par niveau' : 'Trier par niveau'}
+                </button>
+              )}
               {sansClasse > 0 && (
                 <span className="text-stone-600 text-xs">
                   {sansClasse} sorts aux classes pas encore relevées sont masqués par ce filtre
@@ -191,6 +235,21 @@ export function BibliothequeClient({ index }: { index: BibliothequeIndex }) {
           <div className="bg-stone-900/60 border border-stone-800 rounded-xl overflow-hidden">
             {entreesAffichees.length === 0 ? (
               <p className="px-4 py-6 text-stone-500 text-sm text-center">Ce rayon est encore vide.</p>
+            ) : triParNiveau ? (
+              entreesAffichees.map((e, i) => {
+                const n = niveauEffectif(e, classe)
+                const precedent = i > 0 ? niveauEffectif(entreesAffichees[i - 1], classe) : undefined
+                return (
+                  <div key={e.id} className="last:[&>a]:border-b-0">
+                    {n !== precedent && (
+                      <div className="px-3 py-1.5 bg-stone-800/60 border-b border-stone-800/70 text-amber-400/80 text-xs font-semibold tracking-wide uppercase">
+                        {n === null ? 'Classes pas encore relevées' : `Niveau ${n}`}
+                      </div>
+                    )}
+                    <LigneEntree href={`/bibliotheque/${rayonActif.slug}/${e.id}`} nom={e.nom} detail={e.detail} />
+                  </div>
+                )
+              })
             ) : (
               entreesAffichees.map(e => (
                 <LigneEntree key={e.id} href={`/bibliotheque/${rayonActif.slug}/${e.id}`} nom={e.nom} detail={e.detail} />

@@ -26,6 +26,8 @@ export type EntreeIndex = {
   groupe?: string
   /** Classes qui lancent le sort (rayon Sorts seulement) — pour le filtre par classe. */
   classes?: string[]
+  /** Niveau du sort pour chaque classe (rayon Sorts seulement) — pour le tri par niveau. */
+  niveaux?: Record<string, number>
 }
 
 export type BibliothequeIndex = {
@@ -123,11 +125,17 @@ export async function getBibliothequeIndex(): Promise<BibliothequeIndex> {
     sorts: sorts.map(s => {
       const niveauxSort = niveaux.get(s.id) ?? []
       const classesSort = [...new Set(niveauxSort.map(n => n.classe))]
+      const niveauParClasse: Record<string, number> = {}
+      for (const n of niveauxSort) {
+        const deja = niveauParClasse[n.classe]
+        if (deja === undefined || n.niveau < deja) niveauParClasse[n.classe] = n.niveau
+      }
       return {
         id: s.id, nom: s.nom,
         detail: [s.ecole, formatNiveaux(niveauxSort)].filter(Boolean).join(' — '),
         groupe: s.ecole ?? undefined,
         classes: classesSort.length ? classesSort : undefined,
+        niveaux: classesSort.length ? niveauParClasse : undefined,
       }
     }),
     potions: potions.map(p => ({
