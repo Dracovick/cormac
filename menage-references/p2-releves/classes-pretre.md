@@ -1,0 +1,243 @@
+<!--
+Relevé : LISTE DES SORTS DE PRÊTRE — Manuel des Joueurs 3.5 VF, chapitre 11.
+Pages lues : pages imprimées 190, 191 et 192 (rendues en haute résolution depuis
+X:\Claude-Tools\pdf-tools\chunks\MJ_p151-200.pdf, pages 40-42 du morceau, fichiers de travail MJ_191 à MJ_193).
+Note : les JPG MJ_184.jpg à MJ_188.jpg du dossier pages\ sont des vignettes décoratives
+extraites par erreur (48×64 à 368×128 px), illisibles — la liste de prêtre n'y est pas.
+Compte de sorts par niveau :
+  Niveau 0 : 12 | Niveau 1 : 25 | Niveau 2 : 32 | Niveau 3 : 31 | Niveau 4 : 23
+  Niveau 5 : 24 | Niveau 6 : 25 | Niveau 7 : 18 | Niveau 8 : 17 | Niveau 9 : 11
+  Total : 218
+Arrêt au titre « DOMAINES DE PRÊTRE » (page 192) — domaines non relevés.
+L'ordre imprimé est reproduit tel quel (deux écarts d'ordre alphabétique dans l'original).
+-->
+
+## CLASSE: Prêtre
+### Niveau 0
+- Assistance divine
+- Blessure superficielle
+- Création d'eau
+- Détection de la magie
+- Détection du poison
+- Lecture de la magie
+- Lumière
+- Purification de nourriture et d'eau
+- Réparation
+- Résistance
+- Soins superficiels
+- Stimulant
+### Niveau 1
+- Anathème
+- Arme magique
+- Bénédiction
+- Imprécation
+- Bénédiction de l'eau
+- Blessure légère
+- Bouclier de la foi
+- Bouclier entropique
+- Brume de dissimulation
+- Compréhension des langages
+- Convocation de monstres I
+- Détection de la Loi/du Bien/du Chaos/du Mal
+- Détection des morts-vivants
+- Endurance aux énergies destructives
+- Faveur divine
+- Frayeur
+- Injonction
+- Invisibilité pour les morts-vivants
+- Malédiction de l'eau
+- Perception de la mort
+- Pierre magique
+- Protection contre la Loi/le Bien/le Chaos/le Mal
+- Regain d'assurance
+- Sanctuaire
+- Soins légers
+### Niveau 2
+- Aide
+- Alignement indétectable
+- Apaisement des émotions
+- Arme alignée
+- Arme spirituelle
+- Augure
+- Blessure modérée
+- Cacophonie
+- Consécration
+- Convocation de monstres II
+- Délivrance de la paralysie
+- Détection des pièges
+- Discours captivant
+- Endurance de l'ours
+- Force de taureau
+- Fracassement
+- Immobilisation de personne
+- Mise à mort
+- Préservation des morts
+- Profanation
+- Protection d'autrui
+- Ralentissement du poison
+- Rapport
+- Réparation intégrale
+- Résistance aux énergies destructives
+- Restauration partielle
+- Sagesse du hibou
+- Silence
+- Soins modérés
+- Splendeur de l'aigle
+- Ténèbres
+- Zone de vérité
+### Niveau 3
+- Animation des morts
+- Blessure grave
+- Cécité/surdité
+- Cercle magique contre la Loi/le Bien/le Chaos/le Mal
+- Communication avec les morts
+- Contagion
+- Convocation de monstres III
+- Création de nourriture et d'eau
+- Délivrance des malédictions
+- Dissimulation d'objet
+- Dissipation de la magie
+- Façonnage de la pierre
+- Flamme éternelle
+- Fusion dans la pierre
+- Glyphe de garde
+- Guérison de la cécité/surdité
+- Guérison des maladies
+- Localisation d'objet
+- Lumière du jour
+- Lumière brûlante
+- Main du berger
+- Malédiction
+- Marche sur l'onde
+- Mur de vent
+- Négation de l'invisibilité
+- Panoplie magique
+- Prière
+- Protection contre les énergies destructives
+- Respiration aquatique
+- Soins importants
+- Ténèbres profondes
+### Niveau 4
+- Allié d'outreplan
+- Ancre dimensionnelle
+- Arme magique suprême
+- Blessure critique
+- Communication à distance
+- Contrôle de l'eau
+- Convocation de monstres IV
+- Détection du mensonge
+- Divination
+- Don des langues
+- Empoisonnement
+- Immunité contre les sorts
+- Liberté de mouvement
+- Marche dans les airs
+- Neutralisation du poison
+- Protection contre la mort
+- Puissance divine
+- Renvoi
+- Répulsif
+- Restauration
+- Soins intensifs
+- Transfert de sorts
+- Vermine géante
+### Niveau 5
+- Annulation d'enchantement
+- Arme destructrice
+- Blessure légère de groupe
+- Changement de plan
+- Colonne de feu
+- Communion
+- Convocation de monstres V
+- Exécution
+- Fléau d'insectes
+- Force du colosse
+- Injonction suprême
+- Marque de la justice
+- Mur de pierre
+- Pénitence
+- Rappel à la vie
+- Rejet de la Loi/du Bien/du Chaos/du Mal
+- Résistance à la magie
+- Sanctification
+- Sanctification maléfique
+- Scrutation
+- Soins légers de groupe
+- Symbole de douleur
+- Symbole de sommeil
+- Vision lucide
+### Niveau 6
+- Allié majeur d'outreplan
+- Animation d'objets
+- Bannissement
+- Barrière de lames
+- Blessure modérée de groupe
+- Convocation de monstres VI
+- Coquille antivie
+- Création de mort-vivant
+- Dissipation suprême
+- Endurance de l'ours de groupe
+- Festin des héros
+- Force de taureau de groupe
+- Glyphe de garde suprême
+- Guérison suprême
+- Interdiction
+- Mise à mal
+- Mot de rappel
+- Orientation
+- Quête
+- Sagesse du hibou de groupe
+- Soins modérés de groupe
+- Splendeur de l'aigle de groupe
+- Symbole de terreur
+- Symbole de persuasion
+- Vent divin
+### Niveau 7
+- Blasphème
+- Blessure importante de groupe
+- Champ de force
+- Contrôle du climat
+- Convocation de monstres VII
+- Décret
+- Destruction
+- Forme éthérée
+- Parole du Chaos
+- Parole sacrée
+- Refuge
+- Régénération
+- Restauration suprême
+- Résurrection
+- Scrutation suprême
+- Soins importants de groupe
+- Symbole d'étourdissement
+- Symbole de faiblesse
+### Niveau 8
+- Allié suprême d'outreplan
+- Aura maudite
+- Aura sacrée
+- Blessure critique de groupe
+- Bouclier de la Loi
+- Convocation de monstres VIII
+- Création de mort-vivant dominant
+- Immunité contre les sorts suprême
+- Localisation suprême
+- Manteau du Chaos
+- Soins critiques de groupe
+- Symbole d'aliénation mentale
+- Symbole de mort
+- Tempête de feu
+- Tremblement de terre
+- Verrou dimensionnel
+- Zone d'antimagie
+### Niveau 9
+- Absorption d'énergie
+- Capture d'âme
+- Convocation de monstres IX
+- Guérison suprême de groupe
+- Implosion
+- Miracle
+- Passage dans l'éther
+- Portail
+- Projection astrale
+- Résurrection suprême
+- Tempête vengeresse

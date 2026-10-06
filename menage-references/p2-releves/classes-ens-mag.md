@@ -1,0 +1,396 @@
+# Relevé — Sorts d'ensorceleur et de magicien (Manuel des Joueurs 3.5 VF, chap. 11)
+
+Source lue : `X:\Claude-Tools\pdf-tools\chunks\MJ_p151-200.pdf`, pages PDF 36 à 40 = pages 185 à 189 du livre.
+(Les vignettes `pages\MJ_192.jpg` à `MJ_198.jpg` sont des miniatures 192×240 px illisibles — remplacées par le PDF pleine résolution.)
+La liste commence page 185 (« SORTS D'ENSORCELEUR OU DE MAGICIEN ») et se termine page 189, juste avant « SORTS DE PALADIN ».
+
+Compte par niveau : N0 = 19, N1 = 39, N2 = 51, N3 = 42, N4 = 41, N5 = 43, N6 = 43, N7 = 35, N8 = 35, N9 = 24. Total = 372.
+
+Anomalies :
+- Niveau 2 : « Endurance » (1d4+1 pts de Constitution) est imprimé EN PLUS d'« Endurance de l'ours » — reliquat probable de la 3.0 dans la VF; relevé tel qu'imprimé.
+- « Contrôle des morts-vivants » apparaît à l'identique aux niveaux 2 et 7 (deux sorts distincts portant le même nom imprimé).
+- Niveau 9 : le titre imprimé semble porter la coquille « Immobilisation de montre de groupe »; relevé « Immobilisation de monstre de groupe » d'après la description.
+
+## CLASSE: Ensorceleur/Magicien
+### Niveau 0
+- Résistance
+- Détection de la magie
+- Détection du poison
+- Lecture de la magie
+- Hébétement
+- Illumination
+- Lumière
+- Lumières dansantes
+- Rayon de givre
+- Son imaginaire
+- Aspersion acide
+- Destruction de mort-vivant
+- Fatigue
+- Manipulation à distance
+- Message
+- Ouverture/fermeture
+- Réparation
+- Prestidigitation
+- Signature magique
+### Niveau 1
+- Alarme
+- Bouclier
+- Endurance aux énergies destructives
+- Protection contre la Loi/le Bien/le Chaos/le Mal
+- Verrouillage
+- Compréhension des langages
+- Coup au but
+- Détection des morts-vivants
+- Détection des passages secrets
+- Identification
+- Charme-personne
+- Hypnose
+- Sommeil
+- Décharge électrique
+- Disque flottant de Tenser
+- Mains brûlantes
+- Projectile magique
+- Aura magique de Nystul
+- Couleurs dansantes
+- Déguisement
+- Image silencieuse
+- Ventriloquie
+- Armure de mage
+- Brume de dissimulation
+- Convocation de monstres I
+- Graisse
+- Monture
+- Serviteur invisible
+- Contact glacial
+- Frayeur
+- Rayon affaiblissant
+- Agrandissement
+- Arme magique
+- Corde animée
+- Effacement
+- Feuille morte
+- Rapetissement
+- Repli expéditif
+- Saut
+### Niveau 2
+- Dissimulation d'objet
+- Protection contre les projectiles
+- Résistance aux énergies destructives
+- Verrou du mage
+- Détection de l'invisibilité
+- Détection de pensées
+- Localisation d'objet
+- Fou rire de Tasha
+- Hébétement de monstre
+- Idiotie
+- Bourrasque
+- Flamme éternelle
+- Fracassement
+- Rayon ardent
+- Sphère de feu
+- Ténèbres
+- Bouche magique
+- Détection faussée
+- Flou
+- Image imparfaite
+- Image miroir
+- Invisibilité
+- Lueurs hypnotiques
+- Piège de Léomund
+- Convocation de monstres II
+- Flèche acide de Melf
+- Nappe de brouillard
+- Nuée grouillante
+- Poussière scintillante
+- Toile d'araignée
+- Baiser de la goule
+- Cécité/surdité
+- Contrôle des morts-vivants
+- Effroi
+- Main spectrale
+- Simulacre de vie
+- Corde enchantée
+- Déblocage
+- Endurance
+- Endurance de l'ours
+- Force de taureau
+- Grâce féline
+- Lévitation
+- Modification d'apparence
+- Pattes d'araignée
+- Pyrotechnie
+- Ruse du renard
+- Sagesse du hibou
+- Splendeur de l'aigle
+- Vent de murmures
+- Vision dans le noir
+### Niveau 3
+- Antidétection
+- Cercle magique contre la Loi/le Bien/le Chaos/le Mal
+- Dissipation de la magie
+- Protection contre les énergies destructives
+- Runes explosives
+- Clairaudience/clairvoyance
+- Don des langues
+- Vision magique
+- Héroïsme
+- Immobilisation de personne
+- Rage
+- Sommeil profond
+- Suggestion
+- Abri de Léomund
+- Boule de feu
+- Éclair
+- Lumière du jour
+- Mur de vent
+- Déplacement
+- Image accomplie
+- Sphère d'invisibilité
+- Texte illusoire
+- Convocation de monstres III
+- Coursier fantôme
+- Flèches enflammées
+- Nuage nauséabond
+- Sceau du serpent
+- Tempête de neige
+- Baiser du vampire
+- Immobilisation de morts-vivants
+- Préservation des morts
+- Rayon d'épuisement
+- Affûtage
+- Arme magique suprême
+- Clignotement
+- État gazeux
+- Lenteur
+- Page secrète
+- Rapidité
+- Réduction d'objet
+- Respiration aquatique
+- Vol
+### Niveau 4
+- Ancre dimensionnelle
+- Délivrance des malédictions
+- Globe d'invulnérabilité partielle
+- Peau de pierre
+- Piège à feu
+- Détection de la scrutation
+- Localisation de créature
+- Œil du mage
+- Scrutation
+- Charme-monstre
+- Confusion
+- Désespoir foudroyant
+- Mission
+- Bouclier de feu
+- Cri
+- Mur de feu
+- Mur de glace
+- Sphère d'isolement d'Otiluke
+- Tempête de grêle
+- Assassin imaginaire
+- Convocation d'ombres
+- Invisibilité suprême
+- Lueur d'arc-en-ciel
+- Mur illusoire
+- Terrain hallucinatoire
+- Brouillard dense
+- Convocation de monstres IV
+- Création mineure
+- Porte dimensionnelle
+- Refuge de Léomund
+- Tentacules noirs d'Evard
+- Animation des morts
+- Contagion
+- Énergie négative
+- Malédiction
+- Terreur
+- Agrandissement de groupe
+- Façonnage de la pierre
+- Mémorisation de Rary
+- Métamorphose
+- Rapetissement de groupe
+### Niveau 5
+- Annulation d'enchantement
+- Renvoi
+- Sanctuaire de Mordenkainen
+- Contact avec les plans
+- Lien télépathique de Rary
+- Œil indiscret
+- Brume mentale
+- Débilité
+- Domination
+- Immobilisation de monstre
+- Symbole de sommeil
+- Communication à distance
+- Cône de froid
+- Main interposée de Bigby
+- Mur de force
+- Cauchemar
+- Faux-semblant
+- Image prédéterminée
+- Leurre
+- Magie des ombres
+- Mirage
+- Songe
+- Brume mortelle
+- Chien de garde de Mordenkainen
+- Coffre secret de Léomund
+- Contrat
+- Convocation de monstres V
+- Création majeure
+- Mur de pierre
+- Téléportation
+- Possession
+- Flétrissure végétale
+- Symbole de douleur
+- Vagues de fatigue
+- Croissance animale
+- Fabrication
+- Métamorphose funeste
+- Passe-muraille
+- Télékinésie
+- Transmutation de la boue en pierre
+- Transmutation de la pierre en boue
+- Vol supérieur
+- Permanence
+### Niveau 6
+- Champ de force
+- Défense magique
+- Dissipation suprême
+- Globe d'invulnérabilité renforcée
+- Zone d'antimagie
+- Analyse d'enchantement
+- Mythes et légendes
+- Vision lucide
+- Héroïsme suprême
+- Quête
+- Suggestion de groupe
+- Symbole de persuasion
+- Éclair multiple
+- Main impérieuse de Bigby
+- Prévoyance
+- Sphère glaciale d'Otiluke
+- Double illusoire
+- Image permanente
+- Image programmée
+- Traversée des ombres
+- Voile
+- Brume acide
+- Contrat intermédiaire
+- Convocation de monstres VI
+- Mur de fer
+- Annihilation de mort-vivant
+- Cercle de mort
+- Création de mort-vivant
+- Mauvais œil
+- Symbole de terreur
+- Contrôle de l'eau
+- Désintégration
+- Endurance de l'ours de groupe
+- Force de taureau de groupe
+- Grâce féline de groupe
+- Glissement de terrain
+- Pétrification
+- Remémoration de Mordenkainen
+- Ruse du renard de groupe
+- Sagesse du hibou de groupe
+- Splendeur de l'aigle de groupe
+- Transformation de Tenser
+- Transmutation de la pierre en chair
+### Niveau 7
+- Bannissement
+- Dissimulation suprême
+- Renvoi des sorts
+- Scrutation suprême
+- Vision magique suprême
+- Vision mystique
+- Aliénation mentale
+- Immobilisation de personne de groupe
+- Mot de pouvoir aveuglant
+- Symbole d'étourdissement
+- Boule de feu à retardement
+- Cage de force
+- Épée de Mordenkainen
+- Poigne de Bigby
+- Rayons prismatiques
+- Convocation d'ombres suprême
+- Invisibilité de groupe
+- Projection d'image
+- Simulacre
+- Changement de plan
+- Convocation de monstres VII
+- Invocation instantanée de Drawmij
+- Manoir somptueux de Mordenkainen
+- Porte de phase
+- Téléportation d'objet
+- Téléportation suprême
+- Contrôle des morts-vivants
+- Doigt de mort
+- Symbole de faiblesse
+- Vagues d'épuisement
+- Contrôle du climat
+- Forme éthérée
+- Inversion de la gravité
+- Statue
+- Souhait limité
+### Niveau 8
+- Esprit impénétrable
+- Mur prismatique
+- Protection contre les sorts
+- Verrou dimensionnel
+- Œil indiscret suprême
+- Localisation suprême
+- Moment de prescience
+- Attirance
+- Aversion
+- Charme-monstre de groupe
+- Danse irrésistible d'Otto
+- Entrave
+- Exigence
+- Mot de pouvoir étourdissant
+- Symbole d'aliénation mentale
+- Cri suprême
+- Explosion de lumière
+- Poing de Bigby
+- Rayon polaire
+- Sphère téléguidée d'Otiluke
+- Écran
+- Magie des ombres suprême
+- Motif scintillant
+- Contrat suprême
+- Convocation de monstres VIII
+- Dédale
+- Nuage incendiaire
+- Séquestration
+- Clone
+- Création de mort-vivant dominant
+- Flétrissure
+- Symbole de mort
+- Animation suspendue
+- Corps de fer
+- Métamorphose universelle
+### Niveau 9
+- Délivrance
+- Disjonction de Mordenkainen
+- Emprisonnement
+- Sphère prismatique
+- Prémonition
+- Domination universelle
+- Immobilisation de monstre de groupe
+- Mot de pouvoir mortel
+- Main broyeuse de Bigby
+- Nuée de météores
+- Reflets d'ombre
+- Ennemi subconscient
+- Cercle de téléportation
+- Convocation de monstres IX
+- Portail
+- Refuge
+- Absorption d'énergie
+- Capture d'âme
+- Plainte d'outre-tombe
+- Projection astrale
+- Arrêt du temps
+- Changement de forme
+- Passage dans l'éther
+- Souhait

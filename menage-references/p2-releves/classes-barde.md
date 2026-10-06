@@ -1,0 +1,182 @@
+<!--
+Relevé : liste des sorts de barde — Manuel des Joueurs 3.5 VF, chapitre 11.
+Pages lues : pages imprimées 181 à 183 du livre (pages 182 à 184 du PDF
+X:\Claude-Tools\cormac\Livres de jeu en PDF\Manuel_Des_Joueurs3.5.pdf, re-rendues en PNG —
+les JPG MJ_183.jpg et MJ_184.jpg de pdf-tools\pages sont des vignettes inexploitables).
+La liste de barde se termine au titre « SORTS DE DRUIDE » (ordre alphabétique VF),
+pas « SORTS DE PRÊTRE ».
+Compte de sorts par niveau : N0=16, N1=26, N2=35, N3=30, N4=21, N5=16, N6=20. Total=164.
+-->
+
+## CLASSE: Barde
+### Niveau 0
+- Berceuse
+- Convocation d'instrument
+- Détection de la magie
+- Hébétement
+- Illumination
+- Lecture de la magie
+- Lumière
+- Lumières dansantes
+- Manipulation à distance
+- Message
+- Ouverture/fermeture
+- Prestidigitation
+- Réparation
+- Repérage
+- Résistance
+- Son imaginaire
+### Niveau 1
+- Alarme
+- Alignement indétectable
+- Aura magique de Nystul
+- Bouche magique
+- Charme-personne
+- Compréhension des langages
+- Confusion mineure
+- Convocation de monstres I
+- Corde animée
+- Déguisement
+- Détection des passages secrets
+- Dissimulation d'objet
+- Effacement
+- Feuille morte
+- Fou rire de Tasha
+- Frayeur
+- Graisse
+- Hypnose
+- Identification
+- Image silencieuse
+- Regain d'assurance
+- Repli expéditif
+- Serviteur invisible
+- Soins légers
+- Sommeil
+- Ventriloquie
+### Niveau 2
+- Apaisement des émotions
+- Cacophonie
+- Cécité/surdité
+- Convocation de monstres II
+- Détection de pensées
+- Détection faussée
+- Discours captivant
+- Don des langues
+- Effroi
+- Flou
+- Fracassement
+- Grâce féline
+- Hébétement de monstre
+- Héroïsme
+- Hypnose des animaux
+- Image imparfaite
+- Image miroir
+- Immobilisation de personne
+- Invisibilité
+- Localisation d'objet
+- Lueurs hypnotiques
+- Messager animal
+- Modification d'apparence
+- Nuée grouillante
+- Poussière scintillante
+- Pyrotechnie
+- Rage
+- Ralentissement du poison
+- Ruse du renard
+- Silence
+- Soins modérés
+- Splendeur de l'aigle
+- Suggestion
+- Ténèbres
+- Vent de murmures
+### Niveau 3
+- Abri de Léomund
+- Bagou
+- Charme-monstre
+- Clairaudience/clairvoyance
+- Clignotement
+- Communication avec les animaux
+- Confusion
+- Convocation de monstres III
+- Coursier fantôme
+- Délivrance des malédictions
+- Déplacement
+- Désespoir foudroyant
+- Détection de l'invisibilité
+- Dissipation de la magie
+- Espoir
+- État gazeux
+- Image accomplie
+- Lenteur
+- Lumière du jour
+- Manipulation des sons
+- Mission
+- Page secrète
+- Rapidité
+- Sceau du serpent
+- Scrutation
+- Soins importants
+- Sommeil profond
+- Sphère d'invisibilité
+- Terreur
+- Texte illusoire
+### Niveau 4
+- Annulation d'enchantement
+- Communication avec les plantes
+- Convocation d'ombres
+- Convocation de monstres IV
+- Cri
+- Détection de la scrutation
+- Domination
+- Immobilisation de monstre
+- Invisibilité suprême
+- Liberté de mouvement
+- Localisation de créature
+- Lueur d'arc-en-ciel
+- Modification de mémoire
+- Mythes et légendes
+- Neutralisation du poison
+- Porte dimensionnelle
+- Refuge de Léomund
+- Répulsif
+- Soins intensifs
+- Terrain hallucinatoire
+- Zone de silence
+### Niveau 5
+- Brume mentale
+- Cauchemar
+- Chant de discorde
+- Convocation de monstres V
+- Dissipation suprême
+- Double illusoire
+- Faux-semblant
+- Héroïsme
+- Image prédéterminée
+- Leurre
+- Magie des ombres
+- Mirage
+- Soins légers de groupe
+- Songe
+- Suggestion de groupe
+- Traversée des ombres
+### Niveau 6
+- Analyse d'enchantement
+- Animation d'objets
+- Charme-monstre
+- Convocation de monstres VI
+- Cri suprême
+- Danse irrésistible d'Otto
+- Festin des héros
+- Grâce féline de groupe
+- Image permanente
+- Image programmée
+- Mauvais œil
+- Orientation
+- Projection d'image
+- Quête
+- Résonance
+- Ruse du renard
+- Scrutation suprême
+- Soins modérés de groupe
+- Splendeur de l'aigle de groupe
+- Voile
