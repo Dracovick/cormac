@@ -327,7 +327,7 @@ export default async function AideJoueur({ searchParams }: { searchParams: Promi
           <Row label="Trier par niveau">Au rayon Sorts, le bouton <strong>🔢 Trier par niveau</strong> remplace l'ordre alphabétique par un classement du niveau 0 au niveau 9, avec un en-tête par niveau. Combiné au filtre de classe, le niveau affiché est celui de la classe choisie : « Prêtre » + tri par niveau donne la liste de sorts du prêtre dans l'ordre de sa progression. Recliquer revient à l'alphabétique.</Row>
           <Row label="Liens croisés">La fiche d'une potion pointe vers le sort qu'elle embouteille, et la fiche d'un sort liste ses potions.</Row>
           <Row label="Lecture seule">La Bibliothèque ne modifie rien : elle n'ajoute rien aux fiches de personnages et ne touche pas à l'inventaire. Pour acquérir un objet, passez par 💰 Butin ou ➕ Ajouter une potion sur la fiche.</Row>
-          <Tip>Certaines fiches des suppléments sont encore incomplètes (portée, durée ou description manquantes) : le relevé des livres se poursuit, la Bibliothèque s'enrichit au fur et à mesure.</Tip>
+          <Tip>Certaines fiches sont encore incomplètes (portée, durée ou description manquantes) — c'est le cas de sorts des suppléments et des sorts du Manuel des Joueurs récemment ajoutés avec leur nom et leurs niveaux de classe. Le relevé des livres se poursuit, la Bibliothèque s'enrichit au fur et à mesure.</Tip>
         </Section>
 
         <Section titre="🛡️ Armure — CA, malus et déplacement automatiques">
