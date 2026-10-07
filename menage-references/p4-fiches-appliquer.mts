@@ -37,20 +37,10 @@ const ALIAS: Record<string, string> = {
   // p. 205 titre « Blessure grave de groupe », Prê 7 ; liste de prêtre niveau 7
   // « Blessure importante de groupe ».
   'blessure grave de groupe': 'Blessure importante de groupe',
-  // Les quatre sorts d'alignement : la liste de classe les regroupe sur une ligne,
-  // le corps du chapitre leur donne une fiche chacun. La base porte l'entrée groupée.
-  'cercle magique contre la loi': 'Cercle magique contre la Loi/le Bien/le Chaos/le Mal',
-  'cercle magique contre le bien': 'Cercle magique contre la Loi/le Bien/le Chaos/le Mal',
-  'detection de la loi': 'Détection de la Loi/du Bien/du Chaos/du Mal',
-  'detection du bien': 'Détection de la Loi/du Bien/du Chaos/du Mal',
-  'detection du chaos': 'Détection de la Loi/du Bien/du Chaos/du Mal',
-  'protection contre la loi': 'Protection contre la Loi/le Bien/le Chaos/le Mal',
-  'protection contre le bien': 'Protection contre la Loi/le Bien/le Chaos/le Mal',
-  'rejet de la loi': 'Rejet de la Loi/du Bien/du Chaos/du Mal',
-  'rejet du bien': 'Rejet de la Loi/du Bien/du Chaos/du Mal',
+  // Les quatre familles d'alignement ont été éclatées en 16 sorts distincts le
+  // 2026-10-07 (GO d'André, script p5-eclater-alignement.mts) : chaque version du
+  // livre a désormais sa propre ligne et se retrouve par son nom. Plus d'alias ici.
 }
-// Entrées groupées : la fiche écrite est celle d'une seule version — on le dit.
-const GROUPEES = new Set(Object.values(ALIAS).filter(n => n.includes('/')))
 
 // Remarques du copiste ajoutées en queue de description, par nom relevé.
 const NOTES: Record<string, string> = {
@@ -120,10 +110,6 @@ for (const e of uniques) {
   let desc = e.description?.trim().replace(/^\[Résumé[^\]]*\]\s*/u, '') || null
   if (desc && e.temps && !/^1 action simple$/i.test(e.temps.trim()))
     desc = `*Temps d'incantation : ${e.temps.trim()}.*\n\n${desc}`
-  if (desc && GROUPEES.has(s.nom))
-    desc = `*Le Manuel décrit ce sort en quatre versions (Loi, Bien, Chaos, Mal), identiques au mot d'alignement près. Texte ci-dessous : version « ${e.nom} ».*
-
-${desc}`
   if (desc && NOTES[clef]) desc = `${desc}
 
 ${NOTES[clef]}`
