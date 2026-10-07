@@ -36,6 +36,10 @@ const RENVOIS = [
   /\bfonctionne\s+sur\s+le\s+même\s+principe\s+que\s+(.+?)\s*(?:,|\.|$)/i,
   /\bfonctionne\s+sur\s+le\s+même\s+principe\s+qu['’]\s*(.+?)\s*(?:,|\.|$)/i,
   /\bfonctionne\s+comme\s+(.+?)\s*(?:,|\.|$)/i,
+  // Forme courte des résumés d'origine : « Comme résurgence, mais affecte plusieurs
+  // cibles. » Ancrée en tête pour écarter « Comme son nom l'indique… » — et de toute
+  // façon la cible doit se résoudre à un sort existant pour que quoi que ce soit bouge.
+  /^Comme\s+(.+?)\s*(?:,|\.|$)/i,
 ]
 
 // Un champ n'est propagé que si la phrase de renvoi ne le nomme pas.
