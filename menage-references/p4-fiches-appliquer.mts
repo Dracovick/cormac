@@ -97,7 +97,11 @@ const borne = (v: string, max: number) => v.length <= max ? v : v.slice(0, max -
 const sansLibelle = (v: string | null | undefined) => {
   const t = v?.trim()
   if (!t) return null
-  const nettoye = t.replace(/^(cibles?|effets?|zone d['’]effet|cible,? effet ou zone d['’]effet)\s*:\s*/i, '').trim()
+  // Le livre combine librement les libellés : « Cible ou zone d'effet », « Cibles ou
+  // effet », « Cible/effet »… — on les retire tous (même règle que p4-zones-nettoyer).
+  const MOT = String.raw`(?:cibles?|effets?|zone\s+d['’]effet)`
+  const libelle = new RegExp(String.raw`^${MOT}(?:\s*(?:ou|/|,)\s*${MOT})*\s*:\s*`, 'i')
+  const nettoye = t.replace(libelle, '').trim()
   return nettoye || null
 }
 
