@@ -150,12 +150,38 @@ const dejaEnBase: string[] = []
 const aSemer: { nom: string; niveaux: Niveau[]; norm: string }[] = []
 const suspects: { nom: string; proches: string[]; niveaux: Niveau[] }[] = []
 
+// GO d'André le 2026-10-07 (DM, « GO les 8 ») : les huit noms que la garde avait
+// retenus au premier passage sont des sorts DISTINCTS de leur voisin en base —
+// chaque voisin est un autre sort réel, le plus souvent tiré d'un supplément.
+// Portrait de chaque cas envoyé à André le 2026-10-06 avant la décision.
+const EXEMPTES = new Set([
+  'reperage',            // ↔ Dépeçage [132]
+  'rage',                // ↔ Nage [285]
+  'mur de pierre',       // ↔ Cœur de pierre [358]
+  'mur de fer',          // ↔ Mur de feu [13]
+  'rayons prismatiques', // ↔ Rayon prismatique [341]  (un « s » d'écart, les deux réels)
+  'entrave',             // ↔ Entrain [421]
+  'bouclier de la loi',  // ↔ Bouclier de la foi [74]
+  'collet',              // ↔ Colle [406]
+].map(normaliser))
+const exemptesVues = new Set<string>()
+
 for (const [clef, entree] of parNom) {
   if (normExistants.has(clef)) { dejaEnBase.push(entree.nom); continue }
   const proches = suspectsDe(entree.nom, existants)
-  if (proches.length) { suspects.push({ nom: entree.nom, proches, niveaux: entree.niveaux }); continue }
+  if (proches.length && !EXEMPTES.has(clef)) { suspects.push({ nom: entree.nom, proches, niveaux: entree.niveaux }); continue }
+  if (proches.length) exemptesVues.add(clef)
   aSemer.push({ ...entree, norm: clef })
 }
+
+// Garde-fou : une exemption qui ne correspond à aucun nom retenu est une faute de
+// frappe silencieuse — on refuse de semer plutôt que d'en oublier un.
+const manquantes = [...EXEMPTES].filter(e => !exemptesVues.has(e))
+if (manquantes.length) {
+  console.error(`✖ exemptions sans effet (nom introuvable ou non retenu par la garde) : ${manquantes.join(', ')}`)
+  process.exit(1)
+}
+console.log(`Exemptions appliquées (GO d'André) : ${exemptesVues.size}/8`)
 
 const pairesInternes: string[] = []
 for (let i = 0; i < aSemer.length; i++)

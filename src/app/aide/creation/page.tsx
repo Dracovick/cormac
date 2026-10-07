@@ -293,6 +293,7 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
         <Section titre="📚 La Grande Bibliothèque — vérifier une référence avant de la saisir">
           <p>Avant de taper le nom d'un sort, d'une arme, d'un objet magique ou d'un don, <strong className="text-amber-200">La Grande Bibliothèque</strong> (depuis la page d'accueil) permet de retrouver l'orthographe officielle et la fiche complète de chaque référence du Grimoire — sorts par école ou par classe (magie profane, divine, ou une classe précise) et triables par niveau, objets magiques par type, potions avec leur effet.</p>
           <Tip>Saisir le nom exact tel qu'il apparaît dans la Bibliothèque évite de créer une variante en double — le bandeau des nouvelles références reste votre filet, mais autant viser juste du premier coup.</Tip>
+          <Tip>Les sorts du Manuel des Joueurs affichent maintenant leur fiche complète (portée, durée, jet de sauvegarde, texte des règles) : de quoi vérifier qu'un sort convient au personnage avant de l'inscrire à sa liste.</Tip>
         </Section>
 
         <Section titre="⚔️ Malus d'armure sur les compétences">

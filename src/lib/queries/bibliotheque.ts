@@ -136,6 +136,7 @@ export async function getBibliothequeIndex(): Promise<BibliothequeIndex> {
         groupe: s.ecole ?? undefined,
         classes: classesSort.length ? classesSort : undefined,
         niveaux: classesSort.length ? niveauParClasse : undefined,
+        alias: aliasPour(s.nom),
       }
     }),
     potions: potions.map(p => ({

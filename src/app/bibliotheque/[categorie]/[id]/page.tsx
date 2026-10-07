@@ -24,6 +24,19 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
   )
 }
 
+function Italiques({ texte }: { texte: string }) {
+  const parts = texte.split(/\*([^*\n]+)\*/g)
+  return <>{parts.map((p, i) => (i % 2 === 1 ? <em key={i}>{p}</em> : p))}</>
+}
+
+function Inline({ texte }: { texte: string }) {
+  const parts = texte.split(/\*\*([^*\n]+)\*\*/g)
+  return <>{parts.map((p, i) => (i % 2 === 1 ? <strong key={i} className="text-stone-200">{p}</strong> : <Italiques key={i} texte={p} />))}</>
+}
+
+// Ligne séparatrice markdown de table : | --- | :--- | etc.
+const estSeparatrice = (l: string) => /^[\s|:-]+$/.test(l) && l.includes('-')
+
 function Description({ texte }: { texte: string | null }) {
   if (!texte || texte.trim().length === 0) {
     return (
@@ -32,7 +45,38 @@ function Description({ texte }: { texte: string | null }) {
       </p>
     )
   }
-  return <p className="text-stone-300 text-sm leading-relaxed whitespace-pre-line mt-4">{texte}</p>
+  // Les descriptions relevées portent un markdown léger : *italique*, **gras**,
+  // et des tableaux « | … | … | ». Tout le reste est du texte à sauts de ligne.
+  const blocs: Array<{ table: boolean, lignes: string[] }> = []
+  for (const l of texte.split('\n')) {
+    const table = l.trim().startsWith('|')
+    const dernier = blocs[blocs.length - 1]
+    if (dernier && dernier.table === table) dernier.lignes.push(l)
+    else blocs.push({ table, lignes: [l] })
+  }
+  return (
+    <div className="mt-4">
+      {blocs.map((b, i) =>
+        b.table ? (
+          <table key={i} className="my-3 text-sm border-collapse">
+            <tbody>
+              {b.lignes.filter(l => !estSeparatrice(l.trim())).map((l, j) => (
+                <tr key={j} className={j === 0 ? 'text-stone-400 border-b border-stone-700' : 'text-stone-300 border-b border-stone-800/60'}>
+                  {l.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map((c, k) => (
+                    <td key={k} className="py-1 pr-4 align-top"><Inline texte={c.trim()} /></td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p key={i} className="text-stone-300 text-sm leading-relaxed whitespace-pre-line">
+            <Inline texte={b.lignes.join('\n')} />
+          </p>
+        )
+      )}
+    </div>
+  )
 }
 
 function nomDe(fiche: FicheBibliotheque): string {
