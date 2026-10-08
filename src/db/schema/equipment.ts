@@ -23,6 +23,11 @@ export const weapons = pgTable('weapons', {
   // Seul le catalogue est publié à la Bibliothèque. Voir drizzle/0006.
   estCatalogue: boolean('est_catalogue').notNull().default(false),
   famille: varchar('famille', { length: 60 }),
+  // Pour une ligne d'inventaire : l'entrée de catalogue qui porte les règles de
+  // l'arme (« Dague +2 (mêlée) » → Dague). NULL pour les lignes qui ne sont pas
+  // des armes du Manuel — attaques de créature, pouvoirs, notes de fiche. Le
+  // lien est une référence : il ne remplace aucune valeur saisie. Voir drizzle/0007.
+  catalogueId: integer('catalogue_id'),
 })
 
 export const armor = pgTable('armor', {

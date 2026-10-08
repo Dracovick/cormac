@@ -602,6 +602,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   + (coteDeForce !== null ? ` (Force +${coteDeForce})` : '')
                   + (wpnBonus > 0 ? ` +${wpnBonus}` : '')
 
+                // Fiche de la Bibliothèque à ouvrir pour cette arme : son entrée
+                // de catalogue si la ligne y est rattachée, elle-même si c'est
+                // déjà une entrée de catalogue, rien sinon (attaque de créature,
+                // arme de supplément, ligne trop imprécise pour être identifiée).
+                const ficheArmeId = weapon.catalogueId ?? (weapon.estCatalogue ? weapon.id : null)
+
                 // Décomposition « Pourquoi +9/+5? » — mêmes termes que le calcul
                 // du total juste dessous (attackSeq et dmgStr).
                 const LABELS_DONS: Record<string, string> = {
@@ -644,6 +650,18 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                           <span className="text-white font-semibold">
                             {nomDisplay}
                           </span>
+                          {/* Règles officielles de l'arme. Une ligne d'inventaire
+                              rattachée pointe vers son entrée de catalogue; une
+                              entrée de catalogue pointe vers elle-même. */}
+                          {ficheArmeId !== null && (
+                            <Link
+                              href={`/bibliotheque/arme/${ficheArmeId}`}
+                              title="Lire les règles de cette arme au Manuel"
+                              className="text-stone-500 hover:text-amber-300 text-xs"
+                            >
+                              📖
+                            </Link>
+                          )}
                           <span className="text-stone-500 text-xs">Att.</span>
                           <DetailBonus
                             titre={`Attaque — ${nomDisplay}`}
