@@ -8,116 +8,830 @@
     "cumulatif": "note 3 : peut être choisi plusieurs fois, effets cumulatifs."
   },
   "dons": [
-    { "nom": "Affinité magique", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les tests d'Art de la magie et d'Utilisation d'objet magique" },
-    { "nom": "Amélioration des créatures convoquées", "type": "General", "parent": null, "conditions": "École renforcée (invocation)", "avantage": "Les créatures convoquées ont +4 en For et en Con" },
-    { "nom": "Arme de prédilection", "type": "General", "parent": null, "conditions": "Maniement de l'arme choisie, bonus de base à l'attaque de +1", "avantage": "Bonus de +1 sur les jets d'attaque avec l'arme choisie", "guerrier": true, "multiple": true },
-    { "nom": "Arme de prédilection supérieure", "type": "General", "parent": "Arme de prédilection", "conditions": "Arme de prédilection (même arme), guerrier de niveau 8", "avantage": "Bonus de +1 sur les jets d'attaque avec l'arme choisie", "guerrier": true, "multiple": true },
-    { "nom": "Spécialisation martiale", "type": "General", "parent": "Arme de prédilection", "conditions": "Arme de prédilection (même arme), guerrier de niveau 4", "avantage": "Bonus de +2 sur les jets de dégâts avec l'arme choisie", "guerrier": true, "multiple": true },
-    { "nom": "Spécialisation martiale supérieure", "type": "General", "parent": "Spécialisation martiale", "conditions": "Arme de prédilection (même arme), Arme de prédilection supérieure (même arme), Spécialisation martiale (même arme), guerrier de niveau 12", "avantage": "Bonus de +2 sur les jets de dégâts avec l'arme choisie", "guerrier": true, "multiple": true },
-    { "nom": "Arme en main", "type": "General", "parent": null, "conditions": "Bonus de base à l'attaque de +1", "avantage": "Dégainer une arme est une action libre", "guerrier": true },
-    { "nom": "Athlétisme", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les tests d'Escalade et de Natation" },
-    { "nom": "Attaque en finesse", "type": "General", "parent": null, "conditions": "Bonus de base à l'attaque de +1", "avantage": "Permet d'appliquer le bonus de Dex (plutôt que de For) sur les jets d'attaque de certaines armes", "guerrier": true },
-    { "nom": "Attaque en puissance", "type": "General", "parent": null, "conditions": "For 13", "avantage": "Permet d'échanger un malus à l'attaque contre un bonus aux dégâts", "guerrier": true },
-    { "nom": "Enchaînement", "type": "General", "parent": "Attaque en puissance", "conditions": "Attaque en puissance", "avantage": "Offre une attaque supplémentaire lorsqu'on abat un adversaire", "guerrier": true },
-    { "nom": "Succession d'enchaînements", "type": "General", "parent": "Enchaînement", "conditions": "Attaque en puissance, Enchaînement, bonus à l'attaque de +4", "avantage": "Aucune limite au nombre d'enchaînements par round", "guerrier": true },
-    { "nom": "Science de la bousculade", "type": "General", "parent": "Attaque en puissance", "conditions": "Attaque en puissance", "avantage": "Bonus de +4 sur les tentatives de bousculade ; pas d'attaque d'opportunité", "guerrier": true },
-    { "nom": "Science du renversement", "type": "General", "parent": "Attaque en puissance", "conditions": "Attaque en puissance", "avantage": "Bonus de +4 sur les tentatives de renversement ; pas d'attaque d'opportunité", "guerrier": true },
-    { "nom": "Science de la destruction", "type": "General", "parent": "Attaque en puissance", "conditions": "Attaque en puissance", "avantage": "Bonus de +4 sur les tentatives de destruction ; pas d'attaque d'opportunité", "guerrier": true },
-    { "nom": "Attaques réflexes", "type": "General", "parent": null, "conditions": null, "avantage": "Permet de porter plus d'une attaque d'opportunité par round", "guerrier": true },
-    { "nom": "Autonomie", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les tests de Premiers secours et de Survie" },
-    { "nom": "Combat à deux armes", "type": "General", "parent": null, "conditions": "Dex 15", "avantage": "Réduit de 2 points les malus du combat à deux armes", "guerrier": true },
-    { "nom": "Défense à deux armes", "type": "General", "parent": "Combat à deux armes", "conditions": "Combat à deux armes", "avantage": "L'arme secondaire octroie un bonus de bouclier de +1 à la CA", "guerrier": true },
-    { "nom": "Science du combat à deux armes", "type": "General", "parent": "Combat à deux armes", "conditions": "Dex 17, Combat à deux armes, bonus de base à l'attaque de +6", "avantage": "Permet une deuxième attaque avec l'arme secondaire", "guerrier": true },
-    { "nom": "Maîtrise du combat à deux armes", "type": "General", "parent": "Science du combat à deux armes", "conditions": "Dex 19, Combat à deux armes, Science du combat à deux armes, bonus de base à l'attaque de +11", "avantage": "Permet une troisième attaque avec l'arme secondaire", "guerrier": true },
-    { "nom": "Combat en aveugle", "type": "General", "parent": null, "conditions": null, "avantage": "Deux chances de passer un camouflage", "guerrier": true },
-    { "nom": "Combat monté", "type": "General", "parent": null, "conditions": "Degré de maîtrise de 1 en Équitation", "avantage": "Permet d'annuler un coup sur sa monture grâce à un test d'Équitation", "guerrier": true },
-    { "nom": "Attaque au galop", "type": "General", "parent": "Combat monté", "conditions": "Combat monté", "avantage": "Permet de se déplacer avant et après une charge montée", "guerrier": true },
-    { "nom": "Charge dévastatrice", "type": "General", "parent": "Attaque au galop", "conditions": "Combat monté, Attaque au galop", "avantage": "Double les dégâts d'une charge montée", "guerrier": true },
-    { "nom": "Piétinement", "type": "General", "parent": "Combat monté", "conditions": "Combat monté", "avantage": "Le défenseur ne peut choisir d'éviter un renversement", "guerrier": true },
-    { "nom": "Tir monté", "type": "General", "parent": "Combat monté", "conditions": "Combat monté", "avantage": "Réduit de moitié les malus sur le tir monté", "guerrier": true },
-    { "nom": "Course", "type": "General", "parent": null, "conditions": null, "avantage": "Permet de courir à cinq fois sa vitesse de déplacement ; bonus de +4 sur les Saut avec élan" },
-    { "nom": "Discret", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les tests de Déplacement silencieux et Discrétion" },
-    { "nom": "Dispense de composantes matérielles", "type": "General", "parent": null, "conditions": null, "avantage": "Permet de lancer ses sorts sans composante matérielle" },
-    { "nom": "Doigts de fée", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les tests d'Escamotage et de Maîtrise des cordes" },
-    { "nom": "École renforcée", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +1 aux DD des jets de sauvegarde contre les sorts de l'école choisie", "multiple": true },
-    { "nom": "École supérieure", "type": "General", "parent": "École renforcée", "conditions": "École renforcée (même école)", "avantage": "Bonus de +1 aux DD des jets de sauvegarde contre les sorts de l'école choisie", "multiple": true },
-    { "nom": "Efficacité des sorts accrue", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les tests de niveau de lanceur de sorts pour passer une RM" },
-    { "nom": "Efficacité des sorts supérieure", "type": "General", "parent": "Efficacité des sorts accrue", "conditions": "Efficacité des sorts accrue", "avantage": "Bonus de +2 sur les tests de niveau de lanceur de sorts pour passer une RM" },
-    { "nom": "Emprise sur les morts-vivants", "type": "General", "parent": null, "conditions": null, "avantage": "4 tentatives de renvoi ou d'intimidation supplémentaires par jour", "cumulatif": true },
-    { "nom": "Endurance", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +4 sur certains tests et jets de sauvegarde" },
-    { "nom": "Dur à cuire", "type": "General", "parent": "Endurance", "conditions": "Endurance", "avantage": "Permet de rester conscient entre −1 et −9 pv" },
-    { "nom": "Esquive", "type": "General", "parent": null, "conditions": "Dex 13", "avantage": "Bonus d'esquive de +1 contre un seul adversaire", "guerrier": true },
-    { "nom": "Souplesse du serpent", "type": "General", "parent": "Esquive", "conditions": "Esquive", "avantage": "Bonus d'esquive de +4 contre certaines attaques d'opportunité", "guerrier": true },
-    { "nom": "Attaque éclair", "type": "General", "parent": "Souplesse du serpent", "conditions": "Souplesse du serpent, bonus de base à l'attaque +4", "avantage": "Permet de se déplacer avant et après une attaque au corps à corps", "guerrier": true },
-    { "nom": "Expertise du combat", "type": "General", "parent": null, "conditions": "Int 13", "avantage": "Permet d'échanger un malus à l'attaque contre un bonus à la CA (5 points max.)", "guerrier": true },
-    { "nom": "Attaque en rotation", "type": "General", "parent": "Expertise du combat", "conditions": "Dex 13, Attaque éclair, Esquive, Expertise du combat, Souplesse du serpent, bonus de base à l'attaque de +4", "avantage": "Permet une attaque au corps à corps contre tous les ennemis à portée", "guerrier": true },
-    { "nom": "Science de la feinte", "type": "General", "parent": "Expertise du combat", "conditions": "Expertise du combat", "avantage": "Permet d'effectuer une feinte par une action de mouvement", "guerrier": true },
-    { "nom": "Science du croc-en-jambe", "type": "General", "parent": "Expertise du combat", "conditions": "Expertise du combat", "avantage": "Bonus de +4 sur les tentatives de croc-en-jambe ; pas d'attaque d'opportunité", "guerrier": true },
-    { "nom": "Science du désarmement", "type": "General", "parent": "Expertise du combat", "conditions": "Expertise du combat", "avantage": "Bonus de +4 sur les tentatives de désarmement ; pas d'attaque d'opportunité", "guerrier": true },
-    { "nom": "Fin limier", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les tests de Fouille et de Renseignement" },
-    { "nom": "Fourberie", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les tests de Contrefaçon et de Déguisement" },
-    { "nom": "Fraternité animale", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les tests de Dressage et d'Équitation" },
-    { "nom": "Funambule", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les tests d'Équilibre et d'Évasion" },
-    { "nom": "Incantation animale", "type": "General", "parent": null, "conditions": "Sag 13, aptitude de forme animale", "avantage": "Permet de lancer des sorts sous forme animale" },
-    { "nom": "Magie de guerre", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +4 sur les tests de Concentration lors d'une incantation sur la défensive" },
-    { "nom": "Maîtrise des sorts", "type": "General", "parent": null, "conditions": "Magicien de niveau 1", "avantage": "Permet de préparer les sorts choisis sans grimoire", "multiple": true },
-    { "nom": "Maniement d'une arme de guerre", "type": "General", "parent": null, "conditions": null, "avantage": "Annule le malus à l'attaque pour l'arme de guerre choisie", "multiple": true },
-    { "nom": "Maniement d'une arme exotique", "type": "General", "parent": null, "conditions": "Bonus de base à l'attaque de +1", "avantage": "Annule le malus à l'attaque pour l'arme exotique choisie", "guerrier": true, "multiple": true },
-    { "nom": "Maniement des armes courantes", "type": "General", "parent": null, "conditions": null, "avantage": "Annule le malus à l'attaque pour toutes les armes courantes" },
-    { "nom": "Maniement des boucliers", "type": "General", "parent": null, "conditions": null, "avantage": "Annule le malus d'armure sur les jets d'attaque" },
-    { "nom": "Maniement du pavois", "type": "General", "parent": "Maniement des boucliers", "conditions": "Maniement des boucliers", "avantage": "Annule le malus d'armure sur les jets d'attaque" },
-    { "nom": "Science du coup de bouclier", "type": "General", "parent": "Maniement des boucliers", "conditions": "Maniement des boucliers", "avantage": "Un bouclier utilisé pour attaquer conserve son bonus à la CA", "guerrier": true },
-    { "nom": "Méticuleux", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les tests d'Évaluation et de Décryptage" },
-    { "nom": "Négociation", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les tests de Diplomatie et de Psychologie" },
-    { "nom": "Persuasion", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les tests de Bluff et d'Intimidation" },
-    { "nom": "Pistage", "type": "General", "parent": null, "conditions": null, "avantage": "Permet d'utiliser Survie pour pister" },
-    { "nom": "Port des armures légères", "type": "General", "parent": null, "conditions": null, "avantage": "Annule le malus d'armure sur les jets d'attaque" },
-    { "nom": "Port des armures intermédiaires", "type": "General", "parent": "Port des armures légères", "conditions": "Port des armures légères", "avantage": "Annule le malus d'armure sur les jets d'attaque" },
-    { "nom": "Port des armures lourdes", "type": "General", "parent": "Port des armures intermédiaires", "conditions": "Port des armures intermédiaires", "avantage": "Annule le malus d'armure sur les jets d'attaque" },
-    { "nom": "Prestige", "type": "General", "parent": null, "conditions": "Niveau de personnage de 6", "avantage": "Attire des compagnons d'armes et des suivants" },
-    { "nom": "Rechargement rapide", "type": "General", "parent": null, "conditions": "Maniement de l'arbalète choisie", "avantage": "Recharger l'arbalète choisie est plus rapide", "guerrier": true, "multiple": true },
-    { "nom": "Réflexes surhumains", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les jets de Réflexes" },
-    { "nom": "Robustesse", "type": "General", "parent": null, "conditions": null, "avantage": "+3 points de vie", "cumulatif": true },
-    { "nom": "Savoir-faire mécanique", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les tests de Crochetage et de Désamorçage/sabotage" },
-    { "nom": "Science de l'initiative", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +4 sur les tests d'Initiative", "guerrier": true },
-    { "nom": "Science du combat à mains nues", "type": "General", "parent": null, "conditions": null, "avantage": "Permet d'être considéré armé même à mains nues", "guerrier": true },
-    { "nom": "Coup étourdissant", "type": "General", "parent": "Science du combat à mains nues", "conditions": "Dex 13, Sag 13, Science du combat à mains nues, bonus de base à l'attaque de +8", "avantage": "Permet d'étourdir lors d'attaques à mains nues", "guerrier": true },
-    { "nom": "Parade de projectiles", "type": "General", "parent": "Science du combat à mains nues", "conditions": "Dex 13, Science du combat à mains nues", "avantage": "Permet de parer une attaque à distance par round", "guerrier": true },
-    { "nom": "Interception de projectiles", "type": "General", "parent": "Parade de projectiles", "conditions": "Dex 15, Parade de projectile, Science du combat à mains nues", "avantage": "Permet d'attraper les projectiles parés", "guerrier": true },
-    { "nom": "Science de la lutte", "type": "General", "parent": "Science du combat à mains nues", "conditions": "Dex 13, Science du combat à mains nues", "avantage": "Bonus de +4 sur les tests de lutte ; pas d'attaque d'opportunité", "guerrier": true },
-    { "nom": "Science du contresort", "type": "General", "parent": null, "conditions": null, "avantage": "Transforme tout sort de la même école en contresort" },
-    { "nom": "Science du critique", "type": "General", "parent": null, "conditions": "Maniement de l'arme choisie, bonus de base à l'attaque de +8", "avantage": "Double la zone de critique possible de l'arme", "guerrier": true, "multiple": true },
-    { "nom": "Science du renvoi", "type": "General", "parent": null, "conditions": "Aptitude de renvoi ou d'intimidation de créatures", "avantage": "Bonus de +1 au niveau pour le renvoi ou l'intimidation" },
-    { "nom": "Talent", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +3 sur les tests de la compétence choisie", "multiple": true },
-    { "nom": "Tir à bout portant", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +1 sur les jets d'attaque à distance et de dégâts à 9 mètres ou moins", "guerrier": true },
-    { "nom": "Tir de loin", "type": "General", "parent": "Tir à bout portant", "conditions": "Tir à bout portant", "avantage": "Augmente le facteur de portée de 50% ou 100%", "guerrier": true },
-    { "nom": "Tir de précision", "type": "General", "parent": "Tir à bout portant", "conditions": "Tir à bout portant", "avantage": "Annule le malus de −4 lors d'un tir dans un corps à corps", "guerrier": true },
-    { "nom": "Science du tir de précision", "type": "General", "parent": "Tir de précision", "conditions": "Dex 19, Tir à bout portant, Tir de précision, bonus de base à l'attaque de +11", "avantage": "Les attaques à distance ignorent tout abri ou camouflage s'il n'est pas total", "guerrier": true },
-    { "nom": "Tir en mouvement", "type": "General", "parent": "Tir à bout portant", "conditions": "Dex 13, Esquive, Souplesse du serpent, Tir à bout portant, bonus de base à l'attaque de +4", "avantage": "Permet de se déplacer avant et après une attaque à distance", "guerrier": true },
-    { "nom": "Tir rapide", "type": "General", "parent": "Tir à bout portant", "conditions": "Dex 13, Tir à bout portant", "avantage": "Une attaque à distance supplémentaire par round", "guerrier": true },
-    { "nom": "Feu nourri", "type": "General", "parent": "Tir rapide", "conditions": "Dex 17, Tir à bout portant, Tir rapide, bonus de base à l'attaque de +6", "avantage": "Permet de tirer deux flèches ou plus simultanément", "guerrier": true },
-    { "nom": "Vigilance", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les tests de Détection et de Perception auditive" },
-    { "nom": "Vigueur surhumaine", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les jets de Vigueur" },
-    { "nom": "Volonté de fer", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les jets de Volonté" },
-    { "nom": "Voltigeur", "type": "General", "parent": null, "conditions": null, "avantage": "Bonus de +2 sur les tests d'Acrobatie et de Saut" },
-
-    { "nom": "Création d'anneaux magiques", "type": "Creation", "parent": null, "conditions": "Niveau de lanceur de sorts de 12", "avantage": "Permet de fabriquer des anneaux magiques" },
-    { "nom": "Création d'armes et armures magiques", "type": "Creation", "parent": null, "conditions": "Niveau de lanceur de sorts de 5", "avantage": "Permet de fabriquer des armes, des boucliers et des armures magiques" },
-    { "nom": "Création d'objets merveilleux", "type": "Creation", "parent": null, "conditions": "Niveau de lanceur de sorts de 3", "avantage": "Permet de fabriquer des objets merveilleux" },
-    { "nom": "Création de baguettes magiques", "type": "Creation", "parent": null, "conditions": "Niveau de lanceur de sorts de 5", "avantage": "Permet de fabriquer des baguettes magiques" },
-    { "nom": "Création de bâtons magiques", "type": "Creation", "parent": null, "conditions": "Niveau de lanceur de sorts de 12", "avantage": "Permet de fabriquer des bâtons magiques" },
-    { "nom": "Création de sceptres magiques", "type": "Creation", "parent": null, "conditions": "Niveau de lanceur de sorts de 9", "avantage": "Permet de fabriquer des sceptres magiques" },
-    { "nom": "Écriture de parchemins", "type": "Creation", "parent": null, "conditions": "Niveau de lanceur de sorts de 1", "avantage": "Permet de fabriquer des parchemins" },
-    { "nom": "Préparation de potions", "type": "Creation", "parent": null, "conditions": "Niveau de lanceur de sorts de 3", "avantage": "Permet de fabriquer des potions" },
-
-    { "nom": "Augmentation d'intensité", "type": "Metamagie", "parent": null, "conditions": null, "avantage": "Augmente le niveau effectif du sort" },
-    { "nom": "Extension d'effet", "type": "Metamagie", "parent": null, "conditions": null, "avantage": "Augmente les variables numériques et aléatoires du sort de 50%" },
-    { "nom": "Extension de durée", "type": "Metamagie", "parent": null, "conditions": null, "avantage": "Double la durée du sort" },
-    { "nom": "Extension de portée", "type": "Metamagie", "parent": null, "conditions": null, "avantage": "Double la portée du sort" },
-    { "nom": "Extension de zone d'effet", "type": "Metamagie", "parent": null, "conditions": null, "avantage": "Double les dimensions de la zone d'effet du sort" },
-    { "nom": "Incantation rapide", "type": "Metamagie", "parent": null, "conditions": null, "avantage": "Lancer le sort est une action libre" },
-    { "nom": "Incantation silencieuse", "type": "Metamagie", "parent": null, "conditions": null, "avantage": "Permet de lancer le sort sans composante verbale" },
-    { "nom": "Incantation statique", "type": "Metamagie", "parent": null, "conditions": null, "avantage": "Permet de lancer le sort sans composante gestuelle" },
-    { "nom": "Quintessence des sorts", "type": "Metamagie", "parent": null, "conditions": null, "avantage": "Maximise les variables numériques et aléatoires du sort" }
+    {
+      "nom": "Affinité magique",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les tests d'Art de la magie et d'Utilisation d'objet magique"
+    },
+    {
+      "nom": "Amélioration des créatures convoquées",
+      "type": "General",
+      "parent": null,
+      "conditions": "École renforcée (invocation)",
+      "avantage": "Les créatures convoquées ont +4 en For et en Con"
+    },
+    {
+      "nom": "Arme de prédilection",
+      "type": "General",
+      "parent": null,
+      "conditions": "Maniement de l'arme choisie, bonus de base à l'attaque de +1",
+      "avantage": "Bonus de +1 sur les jets d'attaque avec l'arme choisie",
+      "guerrier": true,
+      "multiple": true
+    },
+    {
+      "nom": "Arme de prédilection supérieure",
+      "type": "General",
+      "parent": "Arme de prédilection",
+      "conditions": "Arme de prédilection (même arme), guerrier de niveau 8",
+      "avantage": "Bonus de +1 sur les jets d'attaque avec l'arme choisie",
+      "guerrier": true,
+      "multiple": true
+    },
+    {
+      "nom": "Spécialisation martiale",
+      "type": "General",
+      "parent": "Arme de prédilection",
+      "conditions": "Arme de prédilection (même arme), guerrier de niveau 4",
+      "avantage": "Bonus de +2 sur les jets de dégâts avec l'arme choisie",
+      "guerrier": true,
+      "multiple": true
+    },
+    {
+      "nom": "Spécialisation martiale supérieure",
+      "type": "General",
+      "parent": "Spécialisation martiale",
+      "conditions": "Arme de prédilection (même arme), Arme de prédilection supérieure (même arme), Spécialisation martiale (même arme), guerrier de niveau 12",
+      "avantage": "Bonus de +2 sur les jets de dégâts avec l'arme choisie",
+      "guerrier": true,
+      "multiple": true
+    },
+    {
+      "nom": "Arme en main",
+      "type": "General",
+      "parent": null,
+      "conditions": "Bonus de base à l'attaque de +1",
+      "avantage": "Dégainer une arme est une action libre",
+      "guerrier": true
+    },
+    {
+      "nom": "Athlétisme",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les tests d'Escalade et de Natation"
+    },
+    {
+      "nom": "Attaque en finesse",
+      "type": "General",
+      "parent": null,
+      "conditions": "Bonus de base à l'attaque de +1",
+      "avantage": "Permet d'appliquer le bonus de Dex (plutôt que de For) sur les jets d'attaque de certaines armes",
+      "guerrier": true
+    },
+    {
+      "nom": "Attaque en puissance",
+      "type": "General",
+      "parent": null,
+      "conditions": "For 13",
+      "avantage": "Permet d'échanger un malus à l'attaque contre un bonus aux dégâts",
+      "guerrier": true
+    },
+    {
+      "nom": "Enchaînement",
+      "type": "General",
+      "parent": "Attaque en puissance",
+      "conditions": "Attaque en puissance",
+      "avantage": "Offre une attaque supplémentaire lorsqu'on abat un adversaire",
+      "guerrier": true
+    },
+    {
+      "nom": "Succession d'enchaînements",
+      "type": "General",
+      "parent": "Enchaînement",
+      "conditions": "Attaque en puissance, Enchaînement, bonus à l'attaque de +4",
+      "avantage": "Aucune limite au nombre d'enchaînements par round",
+      "guerrier": true
+    },
+    {
+      "nom": "Science de la bousculade",
+      "type": "General",
+      "parent": "Attaque en puissance",
+      "conditions": "Attaque en puissance",
+      "avantage": "Bonus de +4 sur les tentatives de bousculade ; pas d'attaque d'opportunité",
+      "guerrier": true
+    },
+    {
+      "nom": "Science du renversement",
+      "type": "General",
+      "parent": "Attaque en puissance",
+      "conditions": "Attaque en puissance",
+      "avantage": "Bonus de +4 sur les tentatives de renversement ; pas d'attaque d'opportunité",
+      "guerrier": true
+    },
+    {
+      "nom": "Science de la destruction",
+      "type": "General",
+      "parent": "Attaque en puissance",
+      "conditions": "Attaque en puissance",
+      "avantage": "Bonus de +4 sur les tentatives de destruction ; pas d'attaque d'opportunité",
+      "guerrier": true
+    },
+    {
+      "nom": "Attaques réflexes",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Permet de porter plus d'une attaque d'opportunité par round",
+      "guerrier": true
+    },
+    {
+      "nom": "Autonome",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les tests de Premiers secours et de Survie"
+    },
+    {
+      "nom": "Combat à deux armes",
+      "type": "General",
+      "parent": null,
+      "conditions": "Dex 15",
+      "avantage": "Réduit de 2 points les malus du combat à deux armes",
+      "guerrier": true
+    },
+    {
+      "nom": "Défense à deux armes",
+      "type": "General",
+      "parent": "Combat à deux armes",
+      "conditions": "Combat à deux armes",
+      "avantage": "L'arme secondaire octroie un bonus de bouclier de +1 à la CA",
+      "guerrier": true
+    },
+    {
+      "nom": "Science du combat à deux armes",
+      "type": "General",
+      "parent": "Combat à deux armes",
+      "conditions": "Dex 17, Combat à deux armes, bonus de base à l'attaque de +6",
+      "avantage": "Permet une deuxième attaque avec l'arme secondaire",
+      "guerrier": true
+    },
+    {
+      "nom": "Maîtrise du combat à deux armes",
+      "type": "General",
+      "parent": "Science du combat à deux armes",
+      "conditions": "Dex 19, Combat à deux armes, Science du combat à deux armes, bonus de base à l'attaque de +11",
+      "avantage": "Permet une troisième attaque avec l'arme secondaire",
+      "guerrier": true
+    },
+    {
+      "nom": "Combat en aveugle",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Deux chances de passer un camouflage",
+      "guerrier": true
+    },
+    {
+      "nom": "Combat monté",
+      "type": "General",
+      "parent": null,
+      "conditions": "Degré de maîtrise de 1 en Équitation",
+      "avantage": "Permet d'annuler un coup sur sa monture grâce à un test d'Équitation",
+      "guerrier": true
+    },
+    {
+      "nom": "Attaque au galop",
+      "type": "General",
+      "parent": "Combat monté",
+      "conditions": "Combat monté",
+      "avantage": "Permet de se déplacer avant et après une charge montée",
+      "guerrier": true
+    },
+    {
+      "nom": "Charge dévastatrice",
+      "type": "General",
+      "parent": "Attaque au galop",
+      "conditions": "Combat monté, Attaque au galop",
+      "avantage": "Double les dégâts d'une charge montée",
+      "guerrier": true
+    },
+    {
+      "nom": "Piétinement",
+      "type": "General",
+      "parent": "Combat monté",
+      "conditions": "Combat monté",
+      "avantage": "Le défenseur ne peut choisir d'éviter un renversement",
+      "guerrier": true
+    },
+    {
+      "nom": "Tir monté",
+      "type": "General",
+      "parent": "Combat monté",
+      "conditions": "Combat monté",
+      "avantage": "Réduit de moitié les malus sur le tir monté",
+      "guerrier": true
+    },
+    {
+      "nom": "Course",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Permet de courir à cinq fois sa vitesse de déplacement ; bonus de +4 sur les Saut avec élan"
+    },
+    {
+      "nom": "Discret",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les tests de Déplacement silencieux et Discrétion"
+    },
+    {
+      "nom": "Dispense de composantes matérielles",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Permet de lancer ses sorts sans composante matérielle"
+    },
+    {
+      "nom": "Doigts de fée",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les tests d'Escamotage et de Maîtrise des cordes"
+    },
+    {
+      "nom": "École renforcée",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +1 aux DD des jets de sauvegarde contre les sorts de l'école choisie",
+      "multiple": true
+    },
+    {
+      "nom": "École supérieure",
+      "type": "General",
+      "parent": "École renforcée",
+      "conditions": "École renforcée (même école)",
+      "avantage": "Bonus de +1 aux DD des jets de sauvegarde contre les sorts de l'école choisie",
+      "multiple": true
+    },
+    {
+      "nom": "Efficacité des sorts accrue",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les tests de niveau de lanceur de sorts pour passer une RM"
+    },
+    {
+      "nom": "Efficacité des sorts supérieure",
+      "type": "General",
+      "parent": "Efficacité des sorts accrue",
+      "conditions": "Efficacité des sorts accrue",
+      "avantage": "Bonus de +2 sur les tests de niveau de lanceur de sorts pour passer une RM"
+    },
+    {
+      "nom": "Emprise sur les morts-vivants",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "4 tentatives de renvoi ou d'intimidation supplémentaires par jour",
+      "cumulatif": true
+    },
+    {
+      "nom": "Endurance",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +4 sur certains tests et jets de sauvegarde"
+    },
+    {
+      "nom": "Dur à cuire",
+      "type": "General",
+      "parent": "Endurance",
+      "conditions": "Endurance",
+      "avantage": "Permet de rester conscient entre −1 et −9 pv"
+    },
+    {
+      "nom": "Esquive",
+      "type": "General",
+      "parent": null,
+      "conditions": "Dex 13",
+      "avantage": "Bonus d'esquive de +1 contre un seul adversaire",
+      "guerrier": true
+    },
+    {
+      "nom": "Souplesse du serpent",
+      "type": "General",
+      "parent": "Esquive",
+      "conditions": "Esquive",
+      "avantage": "Bonus d'esquive de +4 contre certaines attaques d'opportunité",
+      "guerrier": true
+    },
+    {
+      "nom": "Attaque éclair",
+      "type": "General",
+      "parent": "Souplesse du serpent",
+      "conditions": "Souplesse du serpent, bonus de base à l'attaque +4",
+      "avantage": "Permet de se déplacer avant et après une attaque au corps à corps",
+      "guerrier": true
+    },
+    {
+      "nom": "Expertise du combat",
+      "type": "General",
+      "parent": null,
+      "conditions": "Int 13",
+      "avantage": "Permet d'échanger un malus à l'attaque contre un bonus à la CA (5 points max.)",
+      "guerrier": true
+    },
+    {
+      "nom": "Attaque en rotation",
+      "type": "General",
+      "parent": "Expertise du combat",
+      "conditions": "Dex 13, Attaque éclair, Esquive, Expertise du combat, Souplesse du serpent, bonus de base à l'attaque de +4",
+      "avantage": "Permet une attaque au corps à corps contre tous les ennemis à portée",
+      "guerrier": true
+    },
+    {
+      "nom": "Science de la feinte",
+      "type": "General",
+      "parent": "Expertise du combat",
+      "conditions": "Expertise du combat",
+      "avantage": "Permet d'effectuer une feinte par une action de mouvement",
+      "guerrier": true
+    },
+    {
+      "nom": "Science du croc-en-jambe",
+      "type": "General",
+      "parent": "Expertise du combat",
+      "conditions": "Expertise du combat",
+      "avantage": "Bonus de +4 sur les tentatives de croc-en-jambe ; pas d'attaque d'opportunité",
+      "guerrier": true
+    },
+    {
+      "nom": "Science du désarmement",
+      "type": "General",
+      "parent": "Expertise du combat",
+      "conditions": "Expertise du combat",
+      "avantage": "Bonus de +4 sur les tentatives de désarmement ; pas d'attaque d'opportunité",
+      "guerrier": true
+    },
+    {
+      "nom": "Fin limier",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les tests de Fouille et de Renseignement"
+    },
+    {
+      "nom": "Fourberie",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les tests de Contrefaçon et de Déguisement"
+    },
+    {
+      "nom": "Fraternité animale",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les tests de Dressage et d'Équitation"
+    },
+    {
+      "nom": "Funambule",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les tests d'Équilibre et d'Évasion"
+    },
+    {
+      "nom": "Incantation animale",
+      "type": "General",
+      "parent": null,
+      "conditions": "Sag 13, aptitude de forme animale",
+      "avantage": "Permet de lancer des sorts sous forme animale"
+    },
+    {
+      "nom": "Magie de guerre",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +4 sur les tests de Concentration lors d'une incantation sur la défensive"
+    },
+    {
+      "nom": "Maîtrise des sorts",
+      "type": "General",
+      "parent": null,
+      "conditions": "Magicien de niveau 1",
+      "avantage": "Permet de préparer les sorts choisis sans grimoire",
+      "multiple": true
+    },
+    {
+      "nom": "Maniement d'une arme de guerre",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Annule le malus à l'attaque pour l'arme de guerre choisie",
+      "multiple": true
+    },
+    {
+      "nom": "Maniement d'une arme exotique",
+      "type": "General",
+      "parent": null,
+      "conditions": "Bonus de base à l'attaque de +1",
+      "avantage": "Annule le malus à l'attaque pour l'arme exotique choisie",
+      "guerrier": true,
+      "multiple": true
+    },
+    {
+      "nom": "Maniement des armes courantes",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Annule le malus à l'attaque pour toutes les armes courantes"
+    },
+    {
+      "nom": "Maniement des boucliers",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Annule le malus d'armure sur les jets d'attaque"
+    },
+    {
+      "nom": "Maniement du pavois",
+      "type": "General",
+      "parent": "Maniement des boucliers",
+      "conditions": "Maniement des boucliers",
+      "avantage": "Annule le malus d'armure sur les jets d'attaque"
+    },
+    {
+      "nom": "Science du coup de bouclier",
+      "type": "General",
+      "parent": "Maniement des boucliers",
+      "conditions": "Maniement des boucliers",
+      "avantage": "Un bouclier utilisé pour attaquer conserve son bonus à la CA",
+      "guerrier": true
+    },
+    {
+      "nom": "Méticuleux",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les tests d'Évaluation et de Décryptage"
+    },
+    {
+      "nom": "Négociation",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les tests de Diplomatie et de Psychologie"
+    },
+    {
+      "nom": "Persuasion",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les tests de Bluff et d'Intimidation"
+    },
+    {
+      "nom": "Pistage",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Permet d'utiliser Survie pour pister"
+    },
+    {
+      "nom": "Port des armures légères",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Annule le malus d'armure sur les jets d'attaque"
+    },
+    {
+      "nom": "Port des armures intermédiaires",
+      "type": "General",
+      "parent": "Port des armures légères",
+      "conditions": "Port des armures légères",
+      "avantage": "Annule le malus d'armure sur les jets d'attaque"
+    },
+    {
+      "nom": "Port des armures lourdes",
+      "type": "General",
+      "parent": "Port des armures intermédiaires",
+      "conditions": "Port des armures intermédiaires",
+      "avantage": "Annule le malus d'armure sur les jets d'attaque"
+    },
+    {
+      "nom": "Prestige",
+      "type": "General",
+      "parent": null,
+      "conditions": "Niveau de personnage de 6",
+      "avantage": "Attire des compagnons d'armes et des suivants"
+    },
+    {
+      "nom": "Rechargement rapide",
+      "type": "General",
+      "parent": null,
+      "conditions": "Maniement de l'arbalète choisie",
+      "avantage": "Recharger l'arbalète choisie est plus rapide",
+      "guerrier": true,
+      "multiple": true
+    },
+    {
+      "nom": "Réflexes surhumains",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les jets de Réflexes"
+    },
+    {
+      "nom": "Robustesse",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "+3 points de vie",
+      "cumulatif": true
+    },
+    {
+      "nom": "Savoir-faire mécanique",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les tests de Crochetage et de Désamorçage/sabotage"
+    },
+    {
+      "nom": "Science de l'initiative",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +4 sur les tests d'Initiative",
+      "guerrier": true
+    },
+    {
+      "nom": "Science du combat à mains nues",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Permet d'être considéré armé même à mains nues",
+      "guerrier": true
+    },
+    {
+      "nom": "Coup étourdissant",
+      "type": "General",
+      "parent": "Science du combat à mains nues",
+      "conditions": "Dex 13, Sag 13, Science du combat à mains nues, bonus de base à l'attaque de +8",
+      "avantage": "Permet d'étourdir lors d'attaques à mains nues",
+      "guerrier": true
+    },
+    {
+      "nom": "Parade de projectiles",
+      "type": "General",
+      "parent": "Science du combat à mains nues",
+      "conditions": "Dex 13, Science du combat à mains nues",
+      "avantage": "Permet de parer une attaque à distance par round",
+      "guerrier": true
+    },
+    {
+      "nom": "Interception de projectiles",
+      "type": "General",
+      "parent": "Parade de projectiles",
+      "conditions": "Dex 15, Parade de projectile, Science du combat à mains nues",
+      "avantage": "Permet d'attraper les projectiles parés",
+      "guerrier": true
+    },
+    {
+      "nom": "Science de la lutte",
+      "type": "General",
+      "parent": "Science du combat à mains nues",
+      "conditions": "Dex 13, Science du combat à mains nues",
+      "avantage": "Bonus de +4 sur les tests de lutte ; pas d'attaque d'opportunité",
+      "guerrier": true
+    },
+    {
+      "nom": "Science du contresort",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Transforme tout sort de la même école en contresort"
+    },
+    {
+      "nom": "Science du critique",
+      "type": "General",
+      "parent": null,
+      "conditions": "Maniement de l'arme choisie, bonus de base à l'attaque de +8",
+      "avantage": "Double la zone de critique possible de l'arme",
+      "guerrier": true,
+      "multiple": true
+    },
+    {
+      "nom": "Science du renvoi",
+      "type": "General",
+      "parent": null,
+      "conditions": "Aptitude de renvoi ou d'intimidation de créatures",
+      "avantage": "Bonus de +1 au niveau pour le renvoi ou l'intimidation"
+    },
+    {
+      "nom": "Talent",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +3 sur les tests de la compétence choisie",
+      "multiple": true
+    },
+    {
+      "nom": "Tir à bout portant",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +1 sur les jets d'attaque à distance et de dégâts à 9 mètres ou moins",
+      "guerrier": true
+    },
+    {
+      "nom": "Tir de loin",
+      "type": "General",
+      "parent": "Tir à bout portant",
+      "conditions": "Tir à bout portant",
+      "avantage": "Augmente le facteur de portée de 50% ou 100%",
+      "guerrier": true
+    },
+    {
+      "nom": "Tir de précision",
+      "type": "General",
+      "parent": "Tir à bout portant",
+      "conditions": "Tir à bout portant",
+      "avantage": "Annule le malus de −4 lors d'un tir dans un corps à corps",
+      "guerrier": true
+    },
+    {
+      "nom": "Science du tir de précision",
+      "type": "General",
+      "parent": "Tir de précision",
+      "conditions": "Dex 19, Tir à bout portant, Tir de précision, bonus de base à l'attaque de +11",
+      "avantage": "Les attaques à distance ignorent tout abri ou camouflage s'il n'est pas total",
+      "guerrier": true
+    },
+    {
+      "nom": "Tir en mouvement",
+      "type": "General",
+      "parent": "Tir à bout portant",
+      "conditions": "Dex 13, Esquive, Souplesse du serpent, Tir à bout portant, bonus de base à l'attaque de +4",
+      "avantage": "Permet de se déplacer avant et après une attaque à distance",
+      "guerrier": true
+    },
+    {
+      "nom": "Tir rapide",
+      "type": "General",
+      "parent": "Tir à bout portant",
+      "conditions": "Dex 13, Tir à bout portant",
+      "avantage": "Une attaque à distance supplémentaire par round",
+      "guerrier": true
+    },
+    {
+      "nom": "Feu nourri",
+      "type": "General",
+      "parent": "Tir rapide",
+      "conditions": "Dex 17, Tir à bout portant, Tir rapide, bonus de base à l'attaque de +6",
+      "avantage": "Permet de tirer deux flèches ou plus simultanément",
+      "guerrier": true
+    },
+    {
+      "nom": "Vigilance",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les tests de Détection et de Perception auditive"
+    },
+    {
+      "nom": "Vigueur surhumaine",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les jets de Vigueur"
+    },
+    {
+      "nom": "Volonté de fer",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les jets de Volonté"
+    },
+    {
+      "nom": "Voltigeur",
+      "type": "General",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Bonus de +2 sur les tests d'Acrobatie et de Saut"
+    },
+    {
+      "nom": "Création d'anneaux magiques",
+      "type": "Creation",
+      "parent": null,
+      "conditions": "Niveau de lanceur de sorts de 12",
+      "avantage": "Permet de fabriquer des anneaux magiques"
+    },
+    {
+      "nom": "Création d'armes et armures magiques",
+      "type": "Creation",
+      "parent": null,
+      "conditions": "Niveau de lanceur de sorts de 5",
+      "avantage": "Permet de fabriquer des armes, des boucliers et des armures magiques"
+    },
+    {
+      "nom": "Création d'objets merveilleux",
+      "type": "Creation",
+      "parent": null,
+      "conditions": "Niveau de lanceur de sorts de 3",
+      "avantage": "Permet de fabriquer des objets merveilleux"
+    },
+    {
+      "nom": "Création de baguettes magiques",
+      "type": "Creation",
+      "parent": null,
+      "conditions": "Niveau de lanceur de sorts de 5",
+      "avantage": "Permet de fabriquer des baguettes magiques"
+    },
+    {
+      "nom": "Création de bâtons magiques",
+      "type": "Creation",
+      "parent": null,
+      "conditions": "Niveau de lanceur de sorts de 12",
+      "avantage": "Permet de fabriquer des bâtons magiques"
+    },
+    {
+      "nom": "Création de sceptres magiques",
+      "type": "Creation",
+      "parent": null,
+      "conditions": "Niveau de lanceur de sorts de 9",
+      "avantage": "Permet de fabriquer des sceptres magiques"
+    },
+    {
+      "nom": "Écriture de parchemins",
+      "type": "Creation",
+      "parent": null,
+      "conditions": "Niveau de lanceur de sorts de 1",
+      "avantage": "Permet de fabriquer des parchemins"
+    },
+    {
+      "nom": "Préparation de potions",
+      "type": "Creation",
+      "parent": null,
+      "conditions": "Niveau de lanceur de sorts de 3",
+      "avantage": "Permet de fabriquer des potions"
+    },
+    {
+      "nom": "Augmentation d'intensité",
+      "type": "Metamagie",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Augmente le niveau effectif du sort"
+    },
+    {
+      "nom": "Extension d'effet",
+      "type": "Metamagie",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Augmente les variables numériques et aléatoires du sort de 50%"
+    },
+    {
+      "nom": "Extension de durée",
+      "type": "Metamagie",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Double la durée du sort"
+    },
+    {
+      "nom": "Extension de portée",
+      "type": "Metamagie",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Double la portée du sort"
+    },
+    {
+      "nom": "Extension de zone d'effet",
+      "type": "Metamagie",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Double les dimensions de la zone d'effet du sort"
+    },
+    {
+      "nom": "Incantation rapide",
+      "type": "Metamagie",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Lancer le sort est une action libre"
+    },
+    {
+      "nom": "Incantation silencieuse",
+      "type": "Metamagie",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Permet de lancer le sort sans composante verbale"
+    },
+    {
+      "nom": "Incantation statique",
+      "type": "Metamagie",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Permet de lancer le sort sans composante gestuelle"
+    },
+    {
+      "nom": "Quintessence des sorts",
+      "type": "Metamagie",
+      "parent": null,
+      "conditions": null,
+      "avantage": "Maximise les variables numériques et aléatoires du sort"
+    }
   ]
 }

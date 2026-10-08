@@ -1,0 +1,767 @@
+{
+  "dons": [
+    {
+      "nom": "Affinité magique",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage est doué pour la magie.",
+      "description": "Le personnage est doué pour la magie.\n\n**Avantage.** Le personnage obtient un bonus de +2 sur tous ses tests d’Art de la magie et d’Utilisation des objets magiques.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Amélioration des créatures convoquées",
+      "type": "général",
+      "conditions": "École renforcée (invocation)",
+      "accroche": "Les créatures convoquées par le personnage sont plus puissantes que la moyenne.",
+      "description": "Les créatures convoquées par le personnage sont plus puissantes que la moyenne.\n\n**Condition.** École renforcée (invocation).\n**Avantage.** Toutes les créatures que le personnage convoque grâce à un sort de convocation quelconque obtiennent un bonus d’altération de +4 en Force et en Constitution pendant la durée du sort qui les a convoquées.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Arme de prédilection",
+      "type": "général",
+      "conditions": "Maniement de l’arme choisie, bonus de base à l’attaque de +1",
+      "accroche": "Le personnage est particulièrement doué pour manier une certaine arme, comme par exemple la grande hache.",
+      "description": "Le personnage est particulièrement doué pour manier une certaine arme, comme par exemple la grande hache.\n\nLe personnage choisit une arme. Il peut aussi choisir les attaques à mains nues, la lutte ou les rayons.\n**Conditions.** Maniement de l’arme choisie, bonus de base à l’attaque de +1.\n**Avantage.** Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise son arme de prédilection.\n**Spécial.** Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.\nUn guerrier peut choisir Arme de prédilection en tant que don supplémentaire. Un guerrier ne peut se choisir le don Spécialisation martiale que pour une de ses armes de prédilection.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Arme de prédilection supérieure",
+      "type": "général",
+      "conditions": "Maniement de l’arme choisie, Arme de prédilection pour l’arme choisie, guerrier de niveau 8",
+      "accroche": "Le personnage est beaucoup plus efficace encore lorsqu'il utilise une arme pour laquelle il possède déjà le don Arme de prédilection.",
+      "description": "Le personnage est beaucoup plus efficace encore lorsqu'il utilise une arme pour laquelle il possède déjà le don Arme de prédilection.\n\nLe personnage choisit une arme pour laquelle il possède le don Arme de prédilection. Il peut aussi choisir les attaques à mains nues ou la lutte.\n**Conditions.** Maniement de l’arme choisie, Arme de prédilection pour l’arme choisie, guerrier de niveau 8.\n**Avantage.** Le personnage bénéficie d’un bonus de +1 à tous ses jets d’attaque lorsqu’il utilise l’arme choisie. Ce bonus se cumule avec tous les autres bonus aux jets d’attaque, y compris celui du don Arme de prédilection.\n**Spécial.** Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.\nUn guerrier peut choisir Arme de prédilection supérieure en tant que don supplémentaire. Un guerrier ne peut choisir le don Spécialisation martiale supérieure que pour l’une de ses armes de prédilection supérieures.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Arme en main",
+      "type": "général",
+      "conditions": "Bonus de base à l’attaque de +1",
+      "accroche": "Le personnage est capable de dégainer son arme à la vitesse de l'éclair.",
+      "description": "Le personnage est capable de dégainer son arme à la vitesse de l'éclair.\n\n**Condition.** Bonus de base à l’attaque de +1.\n**Avantage.** Le personnage peut dégainer une arme par une action libre. Il peut aussi dégainer une arme dissimulée (voir la compétence Escamotage) par une action de mouvement.\nGrâce à ce don, un personnage qui combat à l’aide d’armes de jet bénéficie de son nombre d’attaques entier (ces armes fonctionnent alors plus ou moins comme les arcs).\n**Normal.** Sans ce don, dégainer une arme nécessite une action de mouvement, ou, pour les personnages dont le bonus de base à l’attaque est au moins égal à +1, une action libre combinée à un déplacement. Sans ce don, dégainer une arme dissimulée nécessite une action simple.\n**Spécial.** Un guerrier peut choisir Arme en main en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Athlétisme",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage a un talent pour les activités sportives.",
+      "description": "Le personnage a un talent pour les activités sportives.\n\n**Avantage.** Le personnage obtient un bonus de +2 sur tous ses tests d’Escalade et de Natation.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Attaque au galop",
+      "type": "général",
+      "conditions": "Degré de maîtrise de 1 en Équitation, Combat monté",
+      "accroche": "Le personnage sait combattre sur sa monture lancée au galop.",
+      "description": "Le personnage sait combattre sur sa monture lancée au galop.\n\n**Conditions.** Degré de maîtrise de 1 en Équitation, Combat monté.\n**Avantage.** Lorsqu’un personnage lance une charge à cheval (ou toute autre monture), il peut se déplacer et attaquer comme lors d’une charge normale, puis se déplacer de nouveau en poursuivant son mouvement (en ligne droite). Son mouvement total au cours du round ne peut pas dépasser le double de sa vitesse de déplacement monté. Le mouvement du personnage et de sa monture ne provoque alors pas d’attaque d’opportunité de la part de l’adversaire qu’ils chargent.\n**Spécial.** Un guerrier peut choisir Attaque au galop en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Attaque éclair",
+      "type": "général",
+      "conditions": "Dex 13, Esquive, Souplesse du serpent, bonus de base à l’attaque de +4",
+      "accroche": "Le personnage combat en faisant preuve d'une mobilité qui déroute ses adversaires.",
+      "description": "Le personnage combat en faisant preuve d'une mobilité qui déroute ses adversaires.\n\n**Conditions.** Dex 13, Esquive, Souplesse du serpent, bonus de base à l’attaque de +4.\n**Avantage.** Lorsque le personnage entreprend une action d’attaque à l’aide d’une arme de corps à corps, il peut se déplacer avant et après avoir frappé, à condition que son mouvement total reste dans les limites de sa vitesse de déplacement. L’ensemble de ce déplacement ne provoque pas d’attaque d’opportunité de la part de la cible de son attaque, mais d’autres créatures peuvent éventuellement porter des attaques d’opportunité selon les cas. Il est impossible d’utiliser ce don en armure lourde.\nPour bénéficier des avantages d’une attaque éclair, le personnage doit se déplacer d’au moins 1,50 mètre à la fois avant et après avoir porté son attaque.\n**Spécial.** Un guerrier peut choisir Attaque éclair en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Attaque en finesse",
+      "type": "général",
+      "conditions": "Bonus de base à l’attaque de +1",
+      "accroche": "Le personnage est particulièrement exercé au maniement des armes faisant autant appel à la Dextérité qu'à la Force.",
+      "description": "Le personnage est particulièrement exercé au maniement des armes faisant autant appel à la Dextérité qu'à la Force.\n\n**Condition.** Bonus de base à l’attaque de +1.\n**Avantage.** Lorsqu’il utilise une arme légère, une rapière, un fouet ou une chaîne cloutée (et que cette arme est destinée à une créature de sa catégorie de taille), le personnage peut choisir d’appliquer son bonus de Dextérité à ses jets d’attaque plutôt que celui de Force. Si le personnage utilise un bouclier, le malus d’armure aux tests imposé par ce dernier s’applique aux jets d’attaque.\n**Spécial.** Un guerrier peut choisir Attaque en finesse en tant que don supplémentaire.\nLes armes naturelles sont toujours considérées comme étant des armes légères.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Attaque en puissance",
+      "type": "général",
+      "conditions": "For 13",
+      "accroche": "L'aventurier porte des coups terribles au corps à corps.",
+      "description": "L'aventurier porte des coups terribles au corps à corps.\n\n**Condition.** For 13.\n**Avantage.** Pendant son tour de jeu et avant d’effectuer ses jets d’attaque, le personnage peut choisir un nombre, qu’il applique en tant que malus à tous ses jets d’attaque au corps à corps et en tant que bonus à tous ses jets de dégâts au corps à corps. La valeur choisie ne peut dépasser son bonus de base à l’attaque. Les modificateurs aux jets d’attaque et aux dégâts s’appliquent jusqu’au prochain tour de jeu du personnage.\n**Spécial.** Si le personnage attaque à l’aide d’une arme à deux mains ou d’une arme à une main tenue à deux mains, il ajoute le double du nombre choisi à ses jets de dégâts. Les armes légères (à l’exception des attaques à mains nues ou des armes naturelles) ne peuvent bénéficier du bonus aux dégâts d’une attaque en puissance, mais le malus sur les jets d’attaque s’applique tout de même. (On considère habituellement une arme double comme une arme à une main couplée à une arme légère. Un personnage qui n’utilise qu’une des deux têtes d’une arme double peut la considérer comme une arme à deux mains en ce qui concerne une attaque en puissance.)\nUn guerrier peut choisir Attaque en puissance en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Attaque en rotation",
+      "type": "général",
+      "conditions": "Int 13, Dex 13, Attaque éclair, Esquive, Expertise du combat, Souplesse du serpent, bonus de base à l’attaque de +4",
+      "accroche": "Le personnage peut frapper tous les adversaires qui l'entourent en tournant rapidement sur lui-même.",
+      "description": "Le personnage peut frapper tous les adversaires qui l'entourent en tournant rapidement sur lui-même.\n\n**Conditions.** Int 13, Dex 13, Attaque éclair, Esquive, Expertise du combat, Souplesse du serpent, bonus de base à l’attaque de +4.\n**Avantage.** Lors d’une action d’attaque à outrance, le personnage peut sacrifier ses attaques normales pour porter à la place une attaque de corps à corps avec son bonus de base maximal à l’attaque contre chacun de ses adversaires dans sa zone de contrôle.\nUn personnage qui effectue une attaque en rotation sacrifie aussi toutes les attaques supplémentaires dont il bénéficie habituellement, quelle que soit leur origine (comme le don Enchaînement ou le sort rapidité).\n**Spécial.** Un guerrier peut choisir Attaque en rotation en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Attaques réflexes",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage réagit à la vitesse de l'éclair lorsque ses adversaires baissent leur garde.",
+      "description": "Le personnage réagit à la vitesse de l'éclair lorsque ses adversaires baissent leur garde.\n\n**Avantage.** Chaque round, le personnage a droit un nombre d’attaques d’opportunité supplémentaires égal à son bonus de Dextérité. Il ne peut pas porter plus d’une attaque d’opportunité par opportunité.\nLe personnage peut exécuter des attaques d’opportunité même s’il est pris au dépourvu.\n**Normal.** Un personnage ne possédant pas ce don n’a droit qu’à une attaque d’opportunité par round et ne peut pas la placer s’il est pris au dépourvu.\n**Spécial.** Ce don ne permet pas à un roublard d’utiliser son pouvoir spécial d’opportunisme plus d’une fois par round.\nUn guerrier peut choisir Attaques réflexes en tant que don supplémentaire.\nUn moine peut choisir Attaques réflexes en tant que don supplémentaire au niveau 2.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Augmentation d’intensité",
+      "type": "métamagie",
+      "conditions": null,
+      "accroche": "Le personnage peut lancer ses sorts comme s'ils étaient d'un niveau supérieur.",
+      "description": "Le personnage peut lancer ses sorts comme s'ils étaient d'un niveau supérieur.\n\n**Avantage.** Ce don permet d'amplifier l’intensité du sort choisi en augmentant son niveau effectif (d’un ou plusieurs niveaux sans toutefois dépasser le 9e). Contrairement aux autres dons de métamagie, il accroît réellement le niveau du sort modifié. Toutes les propriétés du sort dépendantes de son niveau (telles que le DD de son jet de sauvegarde et sa capacité à traverser un globe d’invulnérabilité partielle) sont calculées en fonction de son nouveau niveau, choisi par le personnage. Un sort à intensité augmentée nécessite un emplacement de sort de son nouveau niveau effectif.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Autonome",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage sait se débrouiller seul dans les situations et les environnements dangereux.",
+      "description": "Le personnage sait se débrouiller seul dans les situations et les environnements dangereux.\n\n**Avantage.** Le personnage obtient un bonus de +2 sur tous ses tests de Premiers secours et de Survie.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Charge dévastatrice",
+      "type": "général",
+      "conditions": "Degré de maîtrise de 1 en Équitation, Combat monté, Attaque au galop",
+      "accroche": "Le personnage est particulièrement redoutable lorsqu'il charge à cheval (ou toute autre monture).",
+      "description": "Le personnage est particulièrement redoutable lorsqu'il charge à cheval (ou toute autre monture).\n\n**Conditions.** Degré de maîtrise de 1 en Équitation, Combat monté, Attaque au galop.\n**Avantage.** Quand le personnage conduit une charge à cheval (ou toute autre monture), les dégâts qu’il cause sont doublés s’il utilise une arme de corps à corps (ou triplés s’il s’agit d’une lance d’arçon).\n**Spécial.** Un guerrier peut choisir Charge dévastatrice en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Combat à deux armes",
+      "type": "général",
+      "conditions": "Dex 15",
+      "accroche": "L'aventurier sait mieux se battre avec une arme dans chaque main grâce à son agilité et son entraînement.",
+      "description": "L'aventurier sait mieux se battre avec une arme dans chaque main grâce à son agilité et son entraînement.\n\n**Condition.** Dex 15.\n**Avantage.** Le personnage subit des malus moins importants lorsqu’il combat avec deux armes. Le malus sur la main principale est réduit de 2 points et le malus sur la main secondaire est réduit de 6 points.\n**Normal.** Voir Combat à deux armes et la Table : malus liés au combat à deux armes.\n**Spécial.** Un guerrier peut choisir Combat à deux armes en tant que don supplémentaire.\nUn rôdeur de niveau 2 ne portant aucune armure ou une armure légère et ayant choisi le style de combat à deux armes peut se battre comme s’il possédait ce don, même s’il n’en remplit pas les conditions.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Combat en aveugle",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage sait se battre sans avoir besoin de voir ses adversaires.",
+      "description": "Le personnage sait se battre sans avoir besoin de voir ses adversaires.\n\n**Avantage.** Lors d’un combat au corps à corps, chaque fois que le personnage rate son adversaire en raison du camouflage de ce dernier, il peut jeter une nouvelle fois 1d100 afin de voir s’il touche (voir Camouflage).\nUn assaillant invisible ne bénéficie d’aucun avantage offensif contre le personnage. Autrement dit, ce dernier ne perd pas son bonus de Dextérité à la CA et son adversaire n’a pas droit au bonus habituel de +2 des créatures invisibles. Un assaillant invisible conserve cependant ses avantages pour les attaques à distance.\nEn cas de mauvaises conditions de visibilité, la vitesse de déplacement du personnage est deux fois moins réduite que la normale. Dans l’obscurité, il progresse donc à 75 % de sa vitesse de déplacement normale, au lieu de 50 % pour les autres créatures.\n**Normal.** Les aventuriers n’ayant pas ce don subissent les handicaps habituels contre les adversaires invisibles et en cas de mauvaise visibilité ou d’obscurité.\n**Spécial.** Ce don n’est d’aucune utilité contre un personnage affecté par le sort clignotement.\nUn guerrier peut choisir Combat en aveugle en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Combat monté",
+      "type": "général",
+      "conditions": "Degré de maîtrise de 1 en Équitation",
+      "accroche": "Le personnage sait combattre sur le dos d'une monture.",
+      "description": "Le personnage sait combattre sur le dos d'une monture.\n\n**Condition.** Degré de maîtrise de 1 en Équitation.\n**Avantage.** Lorsque sa monture est frappée au combat (dans la limite d’une fois par round), le personnage peut tenter d’annuler le coup en réussissant un test d’Équitation. C’est une réaction, pas une action. Le coup est annulé à condition que le test de compétence du personnage soit supérieur au jet d’attaque de l’adversaire. (Le test d’Équitation devient en quelque sorte la CA de la monture).\n**Spécial.** Un guerrier peut choisir Combat monté en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Coup étourdissant",
+      "type": "général",
+      "conditions": "Dex 13, Sag 13, Science du combat à mains nues, bonus de base à l’attaque de +8",
+      "accroche": "Le personnage sait où se trouvent les points faibles de ses adversaires.",
+      "description": "Le personnage sait où se trouvent les points faibles de ses adversaires.\n\n**Conditions.** Dex 13, Sag 13, Science du combat à mains nues, bonus de base à l’attaque de +8.\n**Avantage.** Le joueur doit annoncer que son personnage donne un coup étourdissant avant d’effectuer son jet d’attaque (en cas d’échec, l’utilisation du don est donc perdue). Si son attaque à mains nues porte, son adversaire subit les dégâts normaux et doit réussir un jet de Vigueur (DD 10 + modificateur de Sagesse du personnage + 1/2 niveau du personnage) pour éviter d’être étourdi pendant 1 round (soit jusqu’au début du prochain tour de jeu du personnage). Un individu étourdi est incapable d’agir, perd son bonus de Dextérité à la CA et subit un malus de –2 à la classe d’armure. Chaque jour, le personnage peut tenter un nombre de coups étourdissants égal à un quart de son niveau global, dans la limite d’un par round. Les créatures artificielles, les morts-vivants, les plantes et les vases, ainsi que les créatures intangibles et les créatures immunisées contre les coups critiques ne peuvent être étourdies.\n**Spécial.** Un moine peut choisir Coup étourdissant en tant que don supplémentaire au niveau 1, même s’il n’en remplit pas les conditions. Un moine qui possède ce don peut tenter un coup étourdissant un nombre de fois par jour égal à son niveau de moine, plus un quart des niveaux qu’il possède dans d’autres classes que moine.\nUn guerrier peut choisir Coup étourdissant en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Course",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage est particulièrement rapide.",
+      "description": "Le personnage est particulièrement rapide.\n\n**Avantage.** Lorsqu’il court, l’aventurier couvre une distance égale à cinq fois sa vitesse de déplacement normale (s’il ne porte aucune armure ou une armure légère et qu’il transporte un poids léger ou moins) ou quatre fois sa vitesse de déplacement (s’il porte une armure intermédiaire ou lourde ou s’il transporte un poids intermédiaire ou lourd). Lorsqu’il exécute un saut avec élan (voir la compétence Saut), il bénéficie d’un bonus de +4 sur son test de Saut. Enfin, le personnage conserve son bonus de Dextérité à la CA lorsqu’il court.\n**Normal.** On court habituellement à quatre fois sa vitesse de déplacement (si l’on ne porte ni une armure lourde, ni une charge lourde) ou trois fois sa vitesse de déplacement (si l’on porte une armure lourde ou une charge lourde), et l’on perd son bonus de Dextérité à la CA pendant une course.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Création d’anneaux magiques",
+      "type": "création d’objets",
+      "conditions": "Niveau 12 de lanceur de sorts",
+      "accroche": "Le personnage peut fabriquer des anneaux magiques ayant des effets variés.",
+      "description": "Le personnage peut fabriquer des anneaux magiques ayant des effets variés.\n\n**Condition.** Niveau 12 de lanceur de sorts.\n**Avantage.** Le personnage peut créer n’importe quel anneau magique, du moment qu’il satisfait aux conditions. Le processus de fabrication prend 1 jour par tranche de 1000 po du prix de base de l’objet. Le personnage doit sacrifier un nombre de points d’expérience égal à 1/25e du prix de base de l’anneau et acheter les matières premières nécessaires (pour une valeur totale de la moitié du prix de base).\nLe personnage peut également réparer un anneau cassé s’il remplit les conditions de création de ce type d’anneau. La procédure à suivre est la même, mais tous les chiffres sont réduits de moitié (deux fois moins de temps, de PX et de matières premières).\nCertains anneaux s’accompagnent d’un coût supplémentaire, mentionné dans leur description. Le personnage doit acquitter ce surcoût s’il veut pouvoir fabriquer (ou réparer) l’anneau en question.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Création d’armes et armures magiques",
+      "type": "création d’objets",
+      "conditions": "Niveau 5 de lanceur de sorts",
+      "accroche": "Le personnage est capable de fabriquer armes, armures et boucliers magiques.",
+      "description": "Le personnage est capable de fabriquer armes, armures et boucliers magiques.\n\n**Condition.** Niveau 5 de lanceur de sorts.\n**Avantage.** Le personnage peut créer n’importe quel bouclier, arme ou armure magiques, du moment qu’il satisfait aux conditions. Le processus de fabrication prend 1 jour par tranche de 1000 po du prix de base des altérations à apporter à l’objet. Le personnage doit sacrifier un nombre de points d’expérience égal à 1/25e du prix de base de ces altérations et acheter les matières premières nécessaires (pour une valeur totale de la moitié du prix de base).\nL’arme, armure ou bouclier devant être enchanté doit nécessairement être un objet de maître (son coût n’est pas inclus dans le total précédent).\nLe personnage peut également réparer armes, armures ou boucliers cassés s’il remplit les conditions de création de ce type d’objet. La procédure à suivre est la même, mais tous les chiffres sont réduits de moitié (deux fois moins de temps, de PX et de matières premières).\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Création d’objets merveilleux",
+      "type": "création d’objets",
+      "conditions": "Niveau 3 de lanceur de sorts",
+      "accroche": "Le personnage sait fabriquer n'importe quel objet merveilleux, de la boule de cristal au tapis volant.",
+      "description": "Le personnage sait fabriquer n'importe quel objet merveilleux, de la boule de cristal au tapis volant.\n\n**Condition.** Niveau 3 de lanceur de sorts.\n**Avantage.** Le personnage peut créer n’importe quel objet merveilleux, du moment qu’il satisfait aux conditions. Le processus de fabrication prend 1 jour par tranche de 1000 po du prix de base de l’objet. Le personnage doit sacrifier un nombre de points d’expérience égal à 1/25e du prix de base de l’objet et acheter les matières premières nécessaires (pour une valeur totale de la moitié du prix de base).\nLe personnage peut également réparer un objet magique cassé s’il remplit les conditions de création de ce type d’objet. La procédure à suivre est la même, mais tous les chiffres sont réduits de moitié (deux fois moins de temps, de PX et de matières premières).\nCertains objets merveilleux s’accompagnent d’un coût supplémentaire, mentionné dans leur description. Ce surcoût vient en plus du prix de base. Le personnage doit s’en acquitter s’il veut pouvoir fabriquer (ou réparer) l’objet en question.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Création de baguettes magiques",
+      "type": "création d’objets",
+      "conditions": "Niveau 5 de lanceur de sorts",
+      "accroche": "Le personnage sait fabriquer des baguettes magiques, des objets qui lancent les sorts que leur créateur a stockés à l'intérieur.",
+      "description": "Le personnage sait fabriquer des baguettes magiques, des objets qui lancent les sorts que leur créateur a stockés à l'intérieur.\n\n**Condition.** Niveau 5 de lanceur de sorts.\n**Avantage.** Le personnage peut créer une baguette stockant n’importe quel sort du 4e niveau maximum. Le processus de fabrication prend 1 jour par tranche de 1000 po du prix de base de l’objet (le prix de base d’une baguette étant de 750 po  son niveau de lanceur de sorts  niveau du sort que l’objet contient). Le personnage doit payer un nombre de points d’expérience égal à 1/25e du prix de base de la baguette et acheter les matières premières nécessaires (pour une valeur totale de la moitié du prix de base). Une baguette nouvellement créée contient 50 charges.\nUne baguette dont le sort stocké nécessite une composante matérielle coûteuse ou un sacrifice en termes de points d’expérience exige une dépense supplémentaire. En plus du prix de base indiqué ci-dessus, le personnage doit acquitter cinquante fois le prix exigé par le sort (et, le cas échéant, sacrifier cinquante fois les PX correspondants).\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Création de bâtons magiques",
+      "type": "création d’objets",
+      "conditions": "Niveau 12 de lanceur de sorts",
+      "accroche": "Le personnage peut fabriquer des bâtons magiques, dont les effets sont très variés.",
+      "description": "Le personnage peut fabriquer des bâtons magiques, dont les effets sont très variés.\n\n**Condition.** Niveau 12 de lanceur de sorts.\n**Avantage.** Le personnage peut créer n’importe quel bâton, du moment qu’il satisfait aux conditions. Le processus de fabrication prend 1 jour par tranche de 1000 po du prix de base de l’objet. Le personnage doit sacrifier un nombre de points d’expérience égal à 1/25e du prix de base du bâton et acheter les matières premières nécessaires (pour une valeur totale de la moitié du prix de base). Un bâton nouvellement créé contient 50 charges.\nCertains bâtons exigent un coût supplémentaire en termes de composantes matérielles et/ou de points d’expérience, comme mentionné dans leur description. Dans ce cas, ce surcoût vient s’ajouter au prix de base de l’objet.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Création de sceptres magiques",
+      "type": "création d’objets",
+      "conditions": "Niveau 9 de lanceur de sorts",
+      "accroche": "Le personnage peut fabriquer des sceptres magiques, qui ont des effets extrêmement variés.",
+      "description": "Le personnage peut fabriquer des sceptres magiques, qui ont des effets extrêmement variés.\n\n**Condition.** Niveau 9 de lanceur de sorts.\n**Avantage.** Le personnage peut créer n’importe quel sceptre, du moment qu’il satisfait aux conditions. Le processus de fabrication prend 1 jour par tranche de 1000 po du prix de base de l’objet. Le personnage doit sacrifier un nombre de points d’expérience égal à 1/25e du prix de base du sceptre et acheter les matières premières nécessaires (pour une valeur totale de la moitié du prix de base).\nCertains sceptres exigent un coût supplémentaire en termes de composantes matérielles et/ou de points d’expérience, comme mentionné dans leur description. Dans ce cas, ce surcoût vient s’ajouter au prix de base de l’objet.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Défense à deux armes",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le style de combat à deux armes du personnage met autant l'accent sur la défense que sur l'attaque.",
+      "description": "Le style de combat à deux armes du personnage met autant l'accent sur la défense que sur l'attaque.\n\n**Avantage.** Lorsqu’il tient une arme double ou deux armes (sans compter les armes naturelles ou les attaques à mains nues), le personnage bénéficie d’un bonus de bouclier de +1 à la classe d’armure.\nLors d’une action de d’attaque sur la défensive ou de défense totale, ce bonus de bouclier passe à +2.\n**Spécial.** Un guerrier peut choisir Défense à deux armes en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Discret",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage sait passer inaperçu.",
+      "description": "Le personnage sait passer inaperçu.\n\n**Avantage.** Le personnage obtient un bonus de +2 sur tous ses tests de Déplacement silencieux et de Discrétion.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Dispense de composantes matérielles",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage peut lancer des sorts sans se reposer sur des composantes matérielles.",
+      "description": "Le personnage peut lancer des sorts sans se reposer sur des composantes matérielles.\n\n**Avantage.** Le personnage peut lancer les sorts nécessitant une composante matérielle coûtant 1 po ou moins sans utiliser cette composante. (L’incantation provoque tout de même des attaques d’opportunité.) Le personnage doit fournir normalement les composantes matérielles dont le prix est supérieur à 1 po.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Doigts de fée",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage a une exceptionnelle habileté manuelle.",
+      "description": "Le personnage a une exceptionnelle habileté manuelle.\n\n**Avantage.** Le personnage obtient un bonus de +2 sur tous ses tests d’Escamotage et de Maîtrise des cordes.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Dur à cuire",
+      "type": "général",
+      "conditions": "Endurance",
+      "accroche": "Grâce à son obstination, le personnage reste conscient même lorsqu'il reçoit des coups qui devraient l'abattre.",
+      "description": "Grâce à son obstination, le personnage reste conscient même lorsqu'il reçoit des coups qui devraient l'abattre.\n\n**Condition.** Endurance.\n**Avantage.** Lorsque le total de points de vie du personnage est compris entre –1 et –9, il se stabilise automatiquement. Le joueur n’a pas à lancer 1d100 chaque round pour savoir si son personnage perd 1 point de vie.\nLorsque le total de points de vie du personnage est négatif, il peut choisir de se considérer comme hors de combat plutôt que mourant. Le joueur doit prendre cette décision dès que son personnage atteint un total de points de vie négatif (même si cela arrive en dehors de son tour de jeu). Si le personnage ne choisit pas cette option, il tombe aussitôt inconscient.\nLorsqu’il utilise ce don, le personnage peut effectuer soit un déplacement simple, soit une action simple lors de son tour de jeu (mais pas les deux). Il est incapable d’accomplir une action complexe. Effectuer une action de mouvement n’aggrave pas ses blessures, mais s’il entreprend une action simple (ou toute autre action fatigante, y compris certaines actions libres comme lancer un sort à incantation rapide), le personnage subit 1 point de dégâts aussitôt après avoir accompli son action. Le personnage meurt immédiatement si son total de points de vie atteint –10.\n**Normal.** Un personnage ne possédant pas ce don suit les règles habituelles et devient mourant et inconscient lorsque son total de points de vie est compris entre –1 et –9.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "École renforcée",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage choisit une école de magie, par exemple celle des illusions. Tous ses sorts appartenant à cette école voient aussitôt leur efficacité augmentée.",
+      "description": "Le personnage choisit une école de magie, par exemple celle des illusions. Tous ses sorts appartenant à cette école voient aussitôt leur efficacité augmentée.\n\n**Avantage.** Le DD des jets de sauvegarde contre tous les sorts de l’école choisie lancés par le personnage augmente de +1.\n**Spécial.** Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle école de magie.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "École supérieure",
+      "type": "général",
+      "conditions": "École renforcée pour l’école choisie",
+      "accroche": "Le personnage choisit une école de magie pour laquelle il possède déjà le don École renforcée. Ses sorts appartenant à cette école sont encore plus puissants.",
+      "description": "Le personnage choisit une école de magie pour laquelle il possède déjà le don École renforcée. Ses sorts appartenant à cette école sont encore plus puissants.\n\n**Condition.** École renforcée pour l’école choisie.\n**Avantage.** Le degré de difficulté (DD) des jets de sauvegarde contre les sorts de l’école choisie lancés par le personnage augmente de +1. Ce bonus se cumule avec celui d’École renforcée.\n**Spécial.** Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle école de magie.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Écriture de parchemins",
+      "type": "création d’objets",
+      "conditions": "Niveau 1 de lanceur de sorts",
+      "accroche": "Le personnage peut rédiger des parchemins magiques, à partir desquels lui ou d'autres lanceurs de sorts pourront utiliser les incantations écrites.",
+      "description": "Le personnage peut rédiger des parchemins magiques, à partir desquels lui ou d'autres lanceurs de sorts pourront utiliser les incantations écrites.\n\n**Condition.** Niveau 1 de lanceur de sorts.\n**Avantage.** Le personnage peut écrire un parchemin à partir de tout sort qu’il connaît, ce qui lui prend 1 jour par tranche de 1000 po du prix de base. Le prix de base d’un parchemin est de 25 po  son niveau de lanceur de sorts  niveau du sort reproduit. Le personnage doit sacrifier un nombre de points d’expérience égal à 1/25e du prix de base du parchemin et acheter les matières premières nécessaires (pour une valeur totale de la moitié du prix de base).\nUn parchemin dont le sort nécessite une composante matérielle coûteuse ou un sacrifice en termes de points d’expérience exige une dépense supplémentaire. En plus du prix de base indiqué ci-dessus, le personnage doit acquitter le prix exigé par le sort (et, le cas échéant, sacrifier les PX correspondants).\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Efficacité des sorts accrue",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Les sorts du personnage sont particulièrement redoutables et plus efficaces contre la résistance à la magie adverse.",
+      "description": "Les sorts du personnage sont particulièrement redoutables et plus efficaces contre la résistance à la magie adverse.\n\n**Avantage.** Le personnage bénéficie d’un bonus de +2 à son test de niveau de lanceur de sorts (1d20 + niveau de lanceur de sorts) lorsqu’il s’agit de vaincre la résistance à la magie d’une cible.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Efficacité des sorts supérieure",
+      "type": "général",
+      "conditions": "Efficacité des sorts accrue",
+      "accroche": "Les sorts du personnage sont encore plus redoutables et encore plus efficaces contre la résistance à la magie adverse.",
+      "description": "Les sorts du personnage sont encore plus redoutables et encore plus efficaces contre la résistance à la magie adverse.\n\n**Condition.** Efficacité des sorts accrue.\n**Avantage.** Le personnage obtient un bonus de +2 sur les tests de niveau de lanceur de sorts (1d20 + niveau de lanceur de sorts) effectués pour vaincre la résistance à la magie d’une créature. Ce bonus se cumule avec celui d’Efficacité des sorts accrue.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Emprise sur les morts-vivants",
+      "type": "général",
+      "conditions": "Aptitude de renvoi ou d’intimidation de créatures",
+      "accroche": "Le personnage peut employer ses pouvoirs de renvoi ou d'intimidation de créatures un plus grand nombre de fois par jour.",
+      "description": "Le personnage peut employer ses pouvoirs de renvoi ou d'intimidation de créatures un plus grand nombre de fois par jour.\n\n**Condition.** Aptitude de renvoi ou d’intimidation de créatures.\n**Avantage.** À chaque fois qu’il choisit ce don, le personnage acquiert quatre utilisations quotidiennes supplémentaires de son pouvoir de renvoi ou d’intimidation de créatures.\nSi le personnage peut renvoyer ou intimider plus d’un type de créature (comme un prêtre d’alignement bon ayant accès au pouvoir accordé du domaine du Feu, qui peut repousser les morts-vivants et les créatures du Feu, et intimider les créatures de l’Eau), il peut utiliser chacun de ses pouvoirs de renvoi et d’intimidation quatre fois de plus par jour.\n**Normal.** Sans ce don, un personnage peut habituellement repousser ou intimider les morts-vivants (ou d’autres créatures) un nombre de fois par jour égal à 3 + son modificateur de Charisme.\n**Spécial.** Ce don peut être pris plusieurs fois. Ses effets sont cumulatifs. Chaque fois que le personnage obtient ce don, tous ses pouvoirs de renvoi et d’intimidation sont utilisables quatre fois de plus par jour.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Enchaînement",
+      "type": "général",
+      "conditions": "For 13, Attaque en puissance",
+      "accroche": "Le personnage porte de terribles enchaînements de coups.",
+      "description": "Le personnage porte de terribles enchaînements de coups.\n\n**Conditions.** For 13, Attaque en puissance.\n**Avantage.** Si le personnage inflige suffisamment de dégâts à son adversaire pour l’abattre (généralement en l’amenant à moins de 0 pv ou en le tuant), il peut porter immédiatement une attaque de corps à corps supplémentaire contre un autre ennemi de son choix à portée. Il ne peut pas faire un pas de placement avant de tenter cette nouvelle attaque. Une attaque d’enchaînement doit absolument être portée avec l’arme qui a porté le coup décisif, et bénéficie du même bonus à l’attaque. On ne peut faire appel à ce don qu’une seule fois par round.\n**Spécial.** Un guerrier peut choisir Enchaînement en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Endurance",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage est doté d'une résistance physique hors du commun.",
+      "description": "Le personnage est doté d'une résistance physique hors du commun.\n\n**Avantage.** Le personnage bénéficie d’un bonus de +4 sur chacun des tests et jets de sauvegarde suivants : les test de Natation joués pour résister à des dégâts temporaires, les tests de Constitution joués pour continuer à courir, les tests de Constitution joués pour éviter les dégâts non-létaux infligés par une marche forcée, les tests de Constitution joués pour retenir sa respiration, les tests de Constitution joués pour éviter les dégâts non-létaux infligés par la famine ou la soif, les jets de Vigueur joués pour éviter les dégâts non-létaux infligés par les climats chauds ou froids, ainsi que les jets de Vigueur joués pour résister aux dégâts infligés par l’asphyxie. De plus, le personnage peut dormir en armure légère ou intermédiaire sans se réveiller fatigué le lendemain.\n**Normal.** Un personnage ne possédant pas ce don qui dort en armure intermédiaire ou lourde est automatiquement fatigué le lendemain.\n**Spécial.** Un rôdeur reçoit automatiquement ce don au niveau 3 en tant que don supplémentaire. Il n’a pas à le choisir.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Esquive",
+      "type": "général",
+      "conditions": "Dex 13",
+      "accroche": "L'aventurier est expert dans l'art d'éviter les coups.",
+      "description": "L'aventurier est expert dans l'art d'éviter les coups.\n\n**Condition.** Dex 13.\n**Avantage.** Au cours de son tour de jeu, le personnage choisit un adversaire. Il bénéficie aussitôt d’un bonus d’esquive de +1 à la CA contre les attaques portées par cet adversaire.\nIl perd automatiquement ce bonus s’il se trouve dans une situation lui faisant perdre son bonus de Dextérité à la CA. Contrairement à la plupart des types de bonus, le bonus d’esquive se cumule avec lui-même (il peut par exemple s’ajouter à celui dont les nains bénéficient naturellement contre les géants).\n**Spécial.** Un guerrier peut choisir Esquive en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Expertise du combat",
+      "type": "général",
+      "conditions": "Int 13",
+      "accroche": null,
+      "description": "Le personnage est aussi doué pour attaquer que pour se défendre.\n**Condition.** Int 13.\n**Avantage.** Lorsqu’il utilise l’action d’attaque (ou d’attaque à outrance) au corps à corps, le personnage peut choisir un nombre, qu’il applique en tant que malus aux jets d’attaque et en tant que bonus d’esquive à la classe d’armure. La valeur choisie ne peut être supérieure ni à 5, ni à son bonus de base à l’attaque. Les modificateurs au jet d’attaque et à la CA durent jusqu’au prochain tour de jeu du personnage.\n**Normal.** Un personnage ne possédant pas ce don peut combattre défensivement lors d’une action d’attaque ou d’attaque à outrance, ce qui lui donne un malus de –4 aux jets d’attaque et un bonus d’esquive à la CA de +2 seulement.\n**Spécial.** Un guerrier peut choisir Expertise du combat en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Extension d’effet",
+      "type": "métamagie",
+      "conditions": null,
+      "accroche": "Le personnage est capable de lancer des sorts plus puissants que la moyenne.",
+      "description": "Le personnage est capable de lancer des sorts plus puissants que la moyenne.\n\n**Avantage.** Tous les effets numériques et aléatoires d’un sort à effet étendu augmentent de 50%. Ce sort pourra ainsi causer davantage de dégâts, soigner plus de points de vie, affecter des cibles supplémentaires, etc. Les jets de sauvegarde et les jets opposés (comme celui que l’on joue en cas de dissipation de la magie) ne sont pas affectés, pas plus que les sorts sans variable numérique et aléatoire. Un sort à effet étendu nécessite un emplacement de sort de deux niveaux de plus que son niveau réel.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Extension de durée",
+      "type": "métamagie",
+      "conditions": null,
+      "accroche": "Le personnage est capable de lancer des sorts qui durent plus longtemps que la moyenne.",
+      "description": "Le personnage est capable de lancer des sorts qui durent plus longtemps que la moyenne.\n\n**Avantage.** Un sort à durée étendue dure deux fois plus longtemps qu’indiqué dans sa description. Les sorts permanents, instantanés, ou dont la durée dépend de la concentration du personnage ne sont pas concernés. Un sort à durée étendue nécessite un emplacement de sort d’un niveau de plus que son niveau réel.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Extension de portée",
+      "type": "métamagie",
+      "conditions": null,
+      "accroche": "Le personnage est capable de lancer des sorts qui vont plus loin que les autres.",
+      "description": "Le personnage est capable de lancer des sorts qui vont plus loin que les autres.\n\n**Avantage.** Le personnage peut altérer un sort dont la portée est courte, moyenne ou longue afin d’en doubler cette dernière. Une fois étendue, une portée courte devient alors égale à 15 mètres + 1,50 mètre/niveau, une portée moyenne à 60 mètres + 6 mètres/niveau et une portée longue à 240 mètres + 24 mètres/niveau. Un sort à portée étendue nécessite un emplacement de sort d’un niveau de plus que son niveau réel.\nLes sorts dont la portée ne s’exprime pas par une mesure physique ou dont la portée n’est ni courte, ni moyenne, ni longue, ne peuvent être affectés par ce don.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Extension de zone d’effet",
+      "type": "métamagie",
+      "conditions": null,
+      "accroche": "Le personnage peut étendre la zone d'effet de ses sorts.",
+      "description": "Le personnage peut étendre la zone d'effet de ses sorts.\n\n**Avantage.** Le personnage peut altérer un sort dont la zone d’effet est une émanation, une étendue, une ligne ou un rayonnement afin d’augmenter la surface couverte. Toutes les données numériques déterminant la surface de la zone d’effet augmentent de +100%. Un sort à zone d’effet étendue nécessite un emplacement de sort de trois niveaux de plus que son niveau réel.\nLes sorts dont la zone d’effet n’est pas d’un des quatre types précédents, ou qui ne sont pas définis par une zone d’effet, ne peuvent être affectés par ce don.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Feu nourri",
+      "type": "général",
+      "conditions": "Dex 17, Tir à bout portant, Tir rapide, bonus de base à l’attaque +6",
+      "accroche": "Le personnage peut tirer plusieurs flèches simultanément sur une cible proche.",
+      "description": "Le personnage peut tirer plusieurs flèches simultanément sur une cible proche.\n\n**Condition.** Dex 17, Tir à bout portant, Tir rapide, bonus de base à l’attaque +6.\n**Avantage.** Au prix d’une action simple, le personnage peut tirer deux flèches sur un adversaire unique situé à 9 mètres ou moins. Le personnage effectue un seul jet d’attaque (avec un malus de –4) qui s’applique aux deux flèches. Les flèches infligent des dégâts normaux (voir Spécial pour les exceptions).\nSi son bonus de base à l’attaque est au moins de +11, le personnage peut choisir de tirer trois flèches d’un coup au lieu de deux, mais avec un malus de –6 au lieu de –4. À partir d’un bonus de base à l’attaque de +16, il peut aussi tirer quatre flèches, avec un malus de –8.\nUne éventuelle réduction des dégâts ou résistance s’applique séparément sur chaque flèche tirée.\n**Spécial.** Quel que soit le nombre de flèches que tire le personnage, on n’applique d’éventuels dégâts relevant de la précision (comme une attaque sournoise) qu’une seule fois. En cas de coup critique, une seule des flèches inflige des dégâts accrus (au choix du joueur) et toutes les autres infligent des dégâts normaux.\nUn guerrier peut choisir Feu nourri en tant que don supplémentaire.\nUn rôdeur de niveau 6 ne portant aucune armure ou une armure légère et ayant choisi le style de combat à distance peut se battre comme s’il possédait ce don, même s’il n’en remplit pas les conditions.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Fin limier",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage est particulièrement doué pour obtenir des informations.",
+      "description": "Le personnage est particulièrement doué pour obtenir des informations.\n\n**Avantage.** Le personnage obtient un bonus de +2 sur tous ses tests de Fouille et de Renseignement.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Fourberie",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage est doué pour travestir la vérité.",
+      "description": "Le personnage est doué pour travestir la vérité.\n\n**Avantage.** Le personnage obtient un bonus de +2 sur tous ses tests de Contrefaçon et de Déguisement.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Fraternité animale",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage s'entend bien avec les animaux.",
+      "description": "Le personnage s'entend bien avec les animaux.\n\n**Avantage.** Le personnage obtient un bonus de +2 sur tous ses tests de Dressage et d’Équitation.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Funambule",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage est particulièrement souple et toujours d'aplomb.",
+      "description": "Le personnage est particulièrement souple et toujours d'aplomb.\n\n**Avantage.** Le personnage obtient un bonus de +2 sur tous ses tests d’Équilibre et d’Évasion.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Incantation animale",
+      "type": "général",
+      "conditions": "Sag 13, aptitude de forme animale",
+      "accroche": "Le personnage peut lancer des sorts sous forme animale.",
+      "description": "Le personnage peut lancer des sorts sous forme animale.\n\n**Conditions.** Sag 13, aptitude de forme animale.\n**Avantage.** Le personnage peut exécuter les composantes verbales et gestuelles des sorts lorsqu’il est sous forme animale. Il est aussi possible d’utiliser des composantes matérielles ou des focaliseurs en possession du personnage, même si ceux-ci sont fondus dans sa forme actuelle. Ce don ne permet pas d’utiliser des objets magiques qu’un animal ne pourrait pas utiliser normalement, pas plus qu’il ne permet de parler sous forme animale.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Incantation rapide",
+      "type": "métamagie",
+      "conditions": null,
+      "accroche": "Le personnage peut lancer des sorts en une fraction de seconde.",
+      "description": "Le personnage peut lancer des sorts en une fraction de seconde.\n\n**Avantage.** L’incantation du sort ne demande qu’une action libre et le personnage peut se livrer à une autre action (et même jeter un second sort !) au cours du même round. Il n’est possible de lancer qu’un sort à incantation rapide par round. Si le temps d’incantation du sort est supérieur à un round, il est impossible de l’accélérer avec ce don. Un sort à incantation rapide nécessite un emplacement de sort de quatre niveaux de plus que son niveau réel. Lancer un sort à incantation rapide ne provoque pas d’attaque d’opportunité.\n**Spécial.** Ce don ne peut être appliqué à un sort lancé de façon spontanée (ce qui inclut les sorts d’ensorceleurs et de bardes, ainsi que les sorts de druides et de prêtres lancés spontanément), puisque l’application d’un don métamagique à un sort lancé spontanément allonge son temps d’incantation pour en faire une action complexe.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Incantation silencieuse",
+      "type": "métamagie",
+      "conditions": null,
+      "accroche": "Le personnage sait lancer des sorts sans prononcer le moindre mot.",
+      "description": "Le personnage sait lancer des sorts sans prononcer le moindre mot.\n\n**Avantage.** Un sort à incantation silencieuse se lance sans composante verbale. Les sorts sans composante verbale ne sont pas affectés. Un sort à incantation silencieuse nécessite un emplacement de sort d’un niveau de plus que son niveau réel.\n**Spécial.** Les sorts de barde ne peuvent pas bénéficier de ce don de métamagie.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Incantation statique",
+      "type": "métamagie",
+      "conditions": null,
+      "accroche": "Le personnage peut lancer des sorts sans faire le moindre geste.",
+      "description": "Le personnage peut lancer des sorts sans faire le moindre geste.\n\n**Avantage.** Un sort à incantation statique se lance sans composante gestuelle. Les sorts sans composante gestuelle ne sont pas affectés. Un sort à incantation statique nécessite un emplacement de sort d’un niveau de plus que son niveau réel.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Interception de projectiles",
+      "type": "général",
+      "conditions": "Dex 15, Parade de projectile, Science du combat à mains nues",
+      "accroche": "Le personnage sait intercepter les flèches, ainsi que les carreaux d'arbalètes, les lances et tout autre projectile ou arme de jet.",
+      "description": "Le personnage sait intercepter les flèches, ainsi que les carreaux d'arbalètes, les lances et tout autre projectile ou arme de jet.\n\n**Conditions.** Dex 15, Parade de projectile, Science du combat à mains nues.\n**Avantage.** Lorsqu’il utilise le don Parade de projectiles, le personnage peut intercepter l’arme au lieu de simplement le dévier. Les armes de jet, comme les lances ou les haches de lancer, peuvent être relancées immédiatement (même si ce n’est pas le tour de jeu du personnage), ou conservées pour un usage ultérieur.\nIl faut au moins une main libre pour utiliser ce don.\n**Spécial.** Un guerrier peut choisir Interception de projectiles en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Magie de guerre",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage est passé maître dans l'art de jeter ses sorts au combat.",
+      "description": "Le personnage est passé maître dans l'art de jeter ses sorts au combat.\n\n**Avantage.** Le personnage bénéficie d’un bonus de +4 à ses tests de Concentration lorsqu’il tente de lancer un sort sur la défensive, ou lorsqu’il tente de lancer un sort alors qu’il est agrippé ou immobilisé en situation de lutte.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Maîtrise des sorts",
+      "type": "général",
+      "conditions": "Magicien de niveau 1",
+      "accroche": "Le personnage connaît si intimement une sélection de sorts qu'il peut les préparer sans se référer à son grimoire.",
+      "description": "Le personnage connaît si intimement une sélection de sorts qu'il peut les préparer sans se référer à son grimoire.\n\n**Condition.** Magicien de niveau 1.\n**Avantage.** Chaque fois que le personnage obtient ce don, il peut sélectionner un nombre de sorts égal à son modificateur d’Intelligence parmi les sorts de magicien qu’il connaît déjà. Il peut alors préparer les sorts sélectionnés sans compulser son grimoire profane.\n**Normal.** Un magicien qui ne possède pas ce don doit utiliser un grimoire pour préparer tous ses sorts, à l’exception de lecture de la magie.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Maîtrise du combat à deux armes",
+      "type": "général",
+      "conditions": "Dex 19, Combat à deux armes, Science du combat à deux armes, bonus de base à l’attaque de +11",
+      "accroche": "Le personnage est un maître du combat à deux armes.",
+      "description": "Le personnage est un maître du combat à deux armes.\n\n**Conditions.** Dex 19, Combat à deux armes, Science du combat à deux armes, bonus de base à l’attaque de +11.\n**Avantage.** Le personnage obtient une troisième attaque avec son arme secondaire, mais avec un malus de –10.\n**Spécial.** Un guerrier peut choisir Maîtrise du combat à deux armes en tant que don supplémentaire.\nUn rôdeur de niveau 11 ne portant aucune armure ou une armure légère et ayant choisi le style de combat à deux armes peut se battre comme s’il possédait ce don, même s’il n’en remplit pas les conditions.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Maniement d’une arme de guerre",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage choisit une arme de guerre, comme l'arc long, et se forme à son maniement. Ce don permet d'augmenter le nombre d'armes que le personnage sait manier, sans se limiter à ce que sa classe lui propose.",
+      "description": "Le personnage choisit une arme de guerre, comme l'arc long, et se forme à son maniement. Ce don permet d'augmenter le nombre d'armes que le personnage sait manier, sans se limiter à ce que sa classe lui propose.\n\nLe personnage choisit une arme de guerre.\n**Avantage.** Lorsqu’il utilise l’arme de guerre choisie, le personnage joue ses jets d’attaque normalement.\n**Normal.** Quiconque combat avec une arme sans être formé à son maniement subit un malus de –4 aux jets d’attaque.\n**Spécial.** Barbares, guerriers, paladins et rôdeurs sont formés au maniement de toutes les armes de guerre. Ils n’ont pas besoin de choisir ce don.\nCe don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme de guerre.\nUn prêtre choisissant le domaine de la Guerre acquiert gratuitement le don Maniement d’arme de guerre relatif à l’arme de prédilection de son dieu, à condition que celle-ci soit une arme de guerre. Il n’a pas besoin de choisir ce don.\nUn magicien ou un ensorceleur sous l’effet du sort transformation martiale est considéré comme formé au maniement de toutes les armes de guerre pendant la durée du sort.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Maniement d’une arme exotique",
+      "type": "général",
+      "conditions": "Bonus de base à l’attaque de +1 (ainsi que For 13 pour l’épée bâtarde et la hache de guerre naine)",
+      "accroche": "Le personnage choisit une arme exotique, comme le fléau double, et se forme à son maniement.",
+      "description": "Le personnage choisit une arme exotique, comme le fléau double, et se forme à son maniement.\n\nLe personnage choisit une arme exotique.\n**Condition.** Bonus de base à l’attaque de +1 (ainsi que For 13 pour l’épée bâtarde et la hache de guerre naine).\n**Avantage.** Lorsqu’il utilise l’arme exotique choisie, le personnage joue ses jets d’attaque normalement.\n**Normal.** Quiconque combat avec une arme sans être formé à son maniement subit un malus de –4 aux jets d’attaque.\n**Spécial.** Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme exotique.\nLe maniement de l’épée bâtarde ou de la hache de guerre naine a pour condition supplémentaire une Force de 13+.\n**Spécial.** Un guerrier peut choisir Maniement d’une arme exotique en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Maniement des armes courantes",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage sait se battre avec n'importe quelle arme courante.",
+      "description": "Le personnage sait se battre avec n'importe quelle arme courante.\n\n**Avantage.** Lorsqu’il utilise une arme courante, le personnage joue ses jets d’attaque normalement.\n**Normal.** Quiconque combat avec une arme sans être formé à son maniement subit un malus de –4 aux jets d’attaque.\n**Spécial.** Druides, magiciens et moines exceptés, tous les personnages sont formés au maniement de la totalité des armes courantes. Ils n’ont pas besoin de choisir ce don.\nUn magicien ou un ensorceleur sous l’effet du sort transformation martiale est considéré comme formé au maniement de toutes les armes courantes pendant la durée du sort.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Maniement des boucliers",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage sait se servir des écus, des rondaches et des targes.",
+      "description": "Le personnage sait se servir des écus, des rondaches et des targes.\n\n**Avantage.** Lorsque le personnage utilise un bouclier (autre qu’un pavois) au combat, il ne subit que les malus habituels.\n**Normal.** Le malus d’armure aux tests qu’impose un bouclier au port duquel on n’est pas formé s’applique aux jets d’attaque et à tous les tests de caractéristique ou de compétence associées à la Force ou à la Dextérité.\n**Spécial.** Barbares, bardes, druides, guerriers, paladins, prêtres et rôdeurs bénéficient automatiquement de ce don. Ils n’ont pas besoin de le choisir.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Maniement du pavois",
+      "type": "général",
+      "conditions": "Maniement des boucliers",
+      "accroche": null,
+      "description": "Le personnage sait se servir des pavois.\n**Condition.** Maniement des boucliers.\n**Avantage.** Lorsque le personnage utilise un pavois au combat, il ne subit que les malus habituels.\n**Normal.** Le malus d’armure aux tests qu’impose un bouclier au port duquel on n’est pas formé s’applique aux jets d’attaque et à tous les tests de caractéristique ou de compétence associées à la Force ou à la Dextérité.\n**Spécial.** Les guerriers obtiennent automatiquement Maniement du pavois en tant que don supplémentaire. Ils n’ont pas besoin de le choisir.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Méticuleux",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage est particulièrement attentif aux petits détails qui pourraient échapper à d'autres que lui.",
+      "description": "Le personnage est particulièrement attentif aux petits détails qui pourraient échapper à d'autres que lui.\n\n**Avantage.** Le personnage obtient un bonus de +2 sur tous ses tests de Déchiffrage et d’Évaluation.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Négociation",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage sait évaluer et altérer l'aptitude de ses interlocuteurs.",
+      "description": "Le personnage sait évaluer et altérer l'aptitude de ses interlocuteurs.\n\n**Avantage.** Le personnage obtient un bonus de +2 sur tous ses tests de Diplomatie et de Psychologie.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Parade de projectiles",
+      "type": "général",
+      "conditions": "Dex 13, Science du combat à mains nues",
+      "accroche": "Le personnage peut dévier flèches, carreaux d'arbalète et autres projectiles ou armes de jet.",
+      "description": "Le personnage peut dévier flèches, carreaux d'arbalète et autres projectiles ou armes de jet.\n\n**Conditions.** Dex 13, Science du combat à mains nues.\n**Avantage.** Le personnage doit avoir au moins une main libre pour faire appel à ce don. Une fois par round, lorsqu’une arme à distance devrait le toucher, il peut la dévier à l’ultime seconde et ne subir aucun dégâts. Le personnage doit être conscient de l’attaque. Il ne doit pas être pris au dépourvu. Le geste extrêmement rapide qu’il effectue ne compte pas comme une action. Il est impossible de parer les projectiles massifs, comme un rocher lancé par un géant, et les attaques à distance générées par des sorts, comme une flèche acide de Melf.\n**Spécial.** Un moine peut choisir Parade de projectiles en tant que don supplémentaire au niveau 2, même s’il n’en remplit pas les conditions.\nUn guerrier peut choisir Parade de projectiles en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Persuasion",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage a un talent pour obtenir ce qu'il veut, d'une façon ou d'une autre.",
+      "description": "Le personnage a un talent pour obtenir ce qu'il veut, d'une façon ou d'une autre.\n\n**Avantage.** Le personnage obtient un bonus de +2 sur tous ses tests de Bluff et d’Intimidation.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Piétinement",
+      "type": "général",
+      "conditions": "Degré de maîtrise de 1 en Équitation, Combat monté",
+      "accroche": "L'aventurier sait pousser sa monture à piétiner ses adversaires.",
+      "description": "L'aventurier sait pousser sa monture à piétiner ses adversaires.\n\n**Conditions.** Degré de maîtrise de 1 en Équitation, Combat monté.\n**Avantage.** Lors d’une tentative de renversement monté, la cible du personnage ne peut choisir de l’éviter. La monture du personnage peut porter un coup de sabot contre un adversaire renversé, en bénéficiant du bonus habituel au jet d’attaque de +4 contre les créatures à terre.\n**Spécial.** Un guerrier peut choisir Piétinement en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Pistage",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage peut suivre la piste de la plupart des créatures sur la quasi-totalité des types de terrain.",
+      "description": "Le personnage peut suivre la piste de la plupart des créatures sur la quasi-totalité des types de terrain.\n\n**Avantage.** Il faut réussir un test de Survie pour trouver des traces ou les suivre pendant 1,5 kilomètre. Un nouveau test est nécessaire lorsque la piste devient plus difficile à suivre, comme par exemple quand d’autres traces la coupent ou quand elle se scinde en deux.\nTant qu’il piste, le personnage avance à la moitié de sa vitesse de déplacement. Il peut avancer de sa vitesse de déplacement avec un malus aux tests de compétence de –5, ou au double de sa vitesse de déplacement avec un malus de –20 aux tests de compétence. Le DD dépend du sol et des conditions en vigueur, selon la table suivante :\n\n| Sol | DD de Survie | Sol | DD de Survie |\n| Très mou | 5 | Ferme | 15 |\n| Mou | 10 | Dur | 20 |\n\nSol très mou. Toute surface montrant des empreintes profondes et particulièrement lisibles (neige, boue, épaisse couche de poussière, etc.).\nSol mou. Toute surface assez élastique pour s’enfoncer sous le poids d’un individu, mais plus résistante que la précédente. Les traces y sont nombreuses mais peu profondes.\nSol ferme. La plupart des sols en extérieur (pelouse, champ, bois, etc.) et les surfaces molles ou extrêmement sales à l’intérieur (épais tapis, sol crasseux, etc.). La créature suivie peut laisser quelques traces (brindilles cassées, touffes de poils, etc.), mais les empreintes, elles, sont extrêmement rares.\nSol dur. Toute surface n’imprimant pas la moindre empreinte (roche naturelle, plancher en pierre, etc.). La plupart des lits de cours d’eau entrent dans cette catégorie, car les traces laissées sont généralement effacées par le courant. La créature suivie ne peut laisser que quelques indices de son passage (cailloux déplacés, marques de griffures, etc.).\nDe nombreux modificateurs pouvant s’appliquer au test de Survie sont présentes ci-dessous :\n\n| Conditions en vigueur | Modificateur au DD |\n| Par 3 créatures faisant partie du groupe pisté | –1 |\n| Taille des créatures traquées : 1 |\n| Infime (I) | +8 |\n| Minuscule (Min) | +4 |\n| Très petite (TP) | +2 |\n| Petite (P) | +1 |\n| Moyenne (M) | 0 |\n| Grande (G) | –1 |\n| Très grande (TG) | –2 |\n| Gigantesque (Gig) | –4 |\n| Colossale (C) | –8 |\n| Par tranche de 24 heures écoulées depuis que la piste a été laissée | +1 |\n| Par heure de pluie depuis que la piste a été laissée | +1 |\n| Chute de neige depuis que la piste a été laissée | +10 |\n| Mauvaise visibilité : 2 |\n| Ciel nocturne couvert ou nuit sans lune | +6 |\n| Clair de lune | +3 |\n| Brouillard ou précipitations (pluie, neige, etc.) | +3 |\n| La cible masque sa piste (ce qui réduit sa vitesse de déplacement de moitié) | +5 |\n1 Si le groupe est composé de créatures de tailles diverses, on prend seulement en compte la taille la plus importante.\n2 Ces facteurs ne s’additionnent pas ; seul le plus important est pris en compte.\n\nSi le personnage rate son test de Survie, il peut réessayer après 1 heure (en extérieur) ou 10 minutes (à l’intérieur), moment qu’il passe à essayer de retrouver la piste.\n**Normal.** Un personnage n’ayant pas ce don peut trouver des traces à l’aide de la compétence Survie, mais il ne peut les suivre que si le DD de la tâche est de 10 ou moins. Il est aussi possible d’utiliser la compétence Fouille pour trouver des empreintes ou un autre indice du passage d’une créatures en utilisant les DD indiqués ci-dessus, mais cette compétence ne peut servir à suivre une piste, même si elle a été découverte par ailleurs.\n**Spécial.** Les rôdeurs bénéficient automatiquement de Pistage en tant que don supplémentaire. Ils n’ont pas besoin de le choisir.\nCe don ne permet pas de trouver ou de suivre la piste d’un individu sous l’effet du sort passage sans trace.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Port des armures intermédiaires",
+      "type": "général",
+      "conditions": "Port des armures légères",
+      "accroche": "Le personnage est habitué à porter une armure intermédiaire.",
+      "description": "Le personnage est habitué à porter une armure intermédiaire.\n\n**Condition.** Port des armures légères.\n**Avantage.** Voir Port des armures légères.\n**Normal.** Voir Port des armures légères.\n**Spécial.** Barbares, druides, guerriers, paladins et prêtres obtiennent automatiquement Port des armures intermédiaires en tant que don supplémentaire. Ils n’ont pas besoin de le choisir.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Port des armures légères",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage est habitué à porter une armure légère.",
+      "description": "Le personnage est habitué à porter une armure légère.\n\n**Avantage.** Lorsqu’un personnage est formé au port d’une armure, le malus d’armures aux tests associés à celle-ci ne s’applique qu’aux tests d’Acrobaties, Déplacement silencieux, Discrétion, Équilibre, Escalade, Escamotage, Évasion et Saut.\n**Normal.** Le malus d’armure aux tests qu’impose une armure au port duquel on n’est pas formé s’applique aux jets d’attaque et à tous les tests de caractéristique ou de compétence associées à la Force ou à la Dextérité.\n**Spécial.** Toutes les classes de personnages à l’exception des ensorceleurs, magiciens et moines obtiennent automatiquement Port des armures légères en tant que don supplémentaire. Ils n’ont pas besoin de le choisir.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Port des armures lourdes",
+      "type": "général",
+      "conditions": "Port des armures légères, Port des armures intermédiaires",
+      "accroche": "Le personnage est habitué à porter une armure lourde.",
+      "description": "Le personnage est habitué à porter une armure lourde.\n\n**Condition.** Port des armures légères, Port des armures intermédiaires.\n**Avantage.** Voir Port des armures légères.\n**Normal.** Voir Port des armures légères.\n**Spécial.** Guerriers, paladins et prêtres obtiennent automatiquement Maniement d’armure lourde en tant que don supplémentaire. Ils n’ont pas besoin de le choisir.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Préparation de potions",
+      "type": "création d’objets",
+      "conditions": "Niveau 3 de lanceur de sorts",
+      "accroche": "Le personnage est capable de concocter des potions et huiles, qui reproduisent l'effet des sorts.",
+      "description": "Le personnage est capable de concocter des potions et huiles, qui reproduisent l'effet des sorts.\n\n**Condition.** Niveau 3 de lanceur de sorts.\n**Avantage.** Le personnage peut créer une potion reproduisant les effets de n’importe quel sort du 3e niveau maximum. La préparation demande 1 jour. C’est à ce moment que l’aventurier décide du niveau de lanceur de sorts de la potion, qui doit être compris entre le niveau minimum permettant de lancer le sort correspondant et le niveau de lanceur de sorts actuel du personnage. Le prix de base d’une potion est de 50 po  son niveau de lanceur de sorts  niveau du sort reproduit. Le personnage doit sacrifier un nombre de points d’expérience égal à 1/25e du prix de base de la potion et acheter les matières premières nécessaires (pour une valeur totale de la moitié du prix de base indiqué).\nLorsque le personnage prépare la potion, il fait tous les choix qui devraient normalement lui revenir au moment de l’incantation. Quiconque boit la potion devient le sujet du sort.\nUne potion dont le sort stocké nécessite une composante matérielle coûteuse ou un prix en points d’expérience exige une dépense supplémentaire. En plus du coût de base indiqué ci-dessus, le personnage doit acquitter le prix exigé par le sort (et, le cas échéant, sacrifier les PX correspondants).\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Prestige",
+      "type": "général",
+      "conditions": "Niveau global de 6",
+      "accroche": "Le personnage est un meneur né, qui sait se faire obéir. Il a fait le nécessaire pour recruter des compagnons d'armes et des suivants.",
+      "description": "Le personnage est un meneur né, qui sait se faire obéir. Il a fait le nécessaire pour recruter des compagnons d'armes et des suivants.\n\n**Condition.** Niveau global de 6.\n**Avantage.** Ce don permet au personnage de s’attirer les services de compagnons d’armes et de suivants qui l’assistent de leur mieux. Voir la table ci-dessous pour connaître le type de compagnons d’armes et le nombre de suivants sur lesquels l’aventurier peut compter.\nModificateurs de Prestige. Plusieurs facteurs sont susceptibles d’affecter la valeur de Prestige d’un personnage, qui n’est alors plus égale à celle de base (niveau de personnage + modificateur de Cha). La réputation d’un personnage (du moins, du point de vue du compagnon d’armes ou du suivant qu’il tente d’attirer) augmente ou réduit sa valeur de Prestige :\n\n|  |  | Nombre de suivants par niveau |\n| Valeur de Prestige | Niveau des compagnons d’armes | 1 | 2 | 3 | 4 | 5 | 6 |\n| 1 ou moins | — | — | — | — | — | — | — |\n| 2 | 1 | — | — | — | — | — | — |\n| 3 | 2 | — | — | — | — | — | — |\n| 4 | 3 | — | — | — | — | — | — |\n| 5 | 3 | — | — | — | — | — | — |\n| 6 | 4 | — | — | — | — | — | — |\n| 7 | 5 | — | — | — | — | — | — |\n| 8 | 5 | — | — | — | — | — | — |\n| 9 | 6 | — | — | — | — | — | — |\n| 10 | 7 | 5 | — | — | — | — | — |\n| 11 | 7 | 6 | — | — | — | — | — |\n| 12 | 8 | 8 | — | — | — | — | — |\n| 13 | 9 | 10 | 1 | — | — | — | — |\n| 14 | 10 | 15 | 1 | — | — | — | — |\n| 15 | 10 | 20 | 2 | 1 | — | — | — |\n| 16 | 11 | 25 | 2 | 1 | — | — | — |\n| 17 | 12 | 30 | 3 | 1 | 1 | — | — |\n| 18 | 12 | 35 | 3 | 1 | 1 | — | — |\n| 19 | 13 | 40 | 4 | 2 | 1 | 1 | — |\n| 20 | 14 | 50 | 5 | 3 | 2 | 1 | — |\n| 21 | 15 | 60 | 6 | 3 | 2 | 1 | 1 |\n| 22 | 15 | 75 | 7 | 4 | 2 | 2 | 1 |\n| 23 | 16 | 90 | 9 | 5 | 3 | 2 | 1 |\n| 24 | 17 | 110 | 11 | 6 | 3 | 2 | 1 |\n| 25+ | 17 | 135 | 13 | 7 | 4 | 2 | 2 |\n\nValeur de Prestige. La valeur de Prestige du personnage est égale à son niveau plus son modificateur de Charisme. La table propose des valeurs de Prestige extrêmement basses (uniquement possibles avec un important malus de Charisme), mais l’aventurier doit au moins avoir atteint le niveau 6 pour acquérir ce don et avoir la possibilité de s’attirer les services de son premier compagnon d’armes. Des facteurs extérieurs peuvent modifier la valeur de Prestige, comme indiqué ci-dessous.\nNiveau des compagnons d’armes. Le personnage peut s’attirer les services de compagnons d’armes de ce niveau ou moins. À noter que, quelle que soit la valeur de Prestige de l’aventurier, le niveau de ses compagnons d’armes doit toujours être inférieur au sien de deux niveaux au moins. Par exemple, un paladin de niveau 6 et bénéficiant d’un bonus de +3 en Charisme ne pourra recruter qu’un compagnon d’armes de niveau 4 ou moins. Le compagnon d’armes doit être équipé conformément à son niveau.\nNombre de suivants par niveau. Le personnage peut diriger un total de suivants ne dépassant pas le nombre indiqué. Par exemple, un aventurier ayant 14 en Prestige peut être entouré d’un maximum de 15 suivants de niveau 1 et d’un suivant de niveau 2.\n\n| Le personnage a la réputation d’être | Modificateur |\n| Un grand homme | +2 |\n| Juste et généreux | +1 |\n| Doté d’un pouvoir spécial | +1 |\n| Accablé par les échecs multiples | –1 |\n| Hautain | –1 |\n| Cruel | –2 |\n\nD’autres modificateurs s’appliquent quand un personnage tente d’attirer un compagnon d’armes.\n\n| Le personnage | Modificateur |\n| A un familier, destrier de paladin ou compagnon animal | –2 |\n| Recrute un compagnon d’armes d’un alignement autre que le sien | –1 |\n| A déjà causé la mort d’un compagnon d’armes | –2* |\n* Par compagnon d’armes tué à cause du PJ.\n\nLes suivants n’ont pas les mêmes propriétés que les compagnons d’armes. quand le personnage tente d’attirer un nouveau suivant, utilisez les modificateurs ci-dessous.\n\n| Le personnage | Modificateur |\n| Possède une place forte, une base d’opérations, une guilde, etc. | +2 |\n| Voyage beaucoup | –1 |\n| A déjà causé la mort d’autres suivants | –1 |\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Quintessence des sorts",
+      "type": "métamagie",
+      "conditions": null,
+      "accroche": "Le personnage sait tirer la quintessence de ses sorts.",
+      "description": "Le personnage sait tirer la quintessence de ses sorts.\n\n**Avantage.** Tous les effets numériques et aléatoires de la quintessence d’un sort prennent automatiquement leur valeur maximale, tant en termes de points de dégâts causés que de points de vie rendus, de cibles affectées, etc. Les jets de sauvegarde et les jets opposés (comme celui que l’on joue en cas de dissipation de la magie) ne sont pas affectés, pas plus que les sorts sans données numériques et aléatoires. La quintessence d’un sort nécessite un emplacement de sort de trois niveaux de plus que son niveau réel.\nDans le cas de la quintessence d’un sort à effet étendu, les deux effets s’appliquent séparément sur le sort d’origine. L’effet total est la somme du résultat maximum et de la moitié du résultat lancé normalement. Ainsi, une quintessence de boule de feu à effet étendu lancée par un magicien de niveau 15 inflige jusqu’à 60 + (10d6/2) points de dégâts.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Rechargement rapide",
+      "type": "général",
+      "conditions": "Maniement de l’arme choisie",
+      "accroche": "Le personnage choisit une arme à projectiles (arbalète de poing, légère ou lourde ou fronde), qu'il peut recharger plus rapidement que la normale.",
+      "description": "Le personnage choisit une arme à projectiles (arbalète de poing, légère ou lourde ou fronde), qu'il peut recharger plus rapidement que la normale.\n\nLe personnage choisit une arme à projectiles (arbalète de poing, arbalète légère, arbalète lourde, fronde).\n**Condition.** Maniement de l’arme choisie.\n**Avantage.** Le temps nécessaire pour que le personnage recharge son arme est réduit à une action libre (pour une arbalète de poing, une arbalète légère ou une fronde) ou une action de mouvement (pour une arbalète lourde). Recharger une arme à projectiles provoque tout de même une attaque d’opportunité.\nUn personnage qui possède ce don pour une arbalète de poing, une arbalète légère ou une fronde peut tirer plusieurs fois par round lors d’une attaque à outrance, comme s’il utilisait un arc.\n**Normal.** Un personnage ne possédant pas ce don a besoin d’une action de mouvement pour recharger une arbalète de poing, une arbalète légère ou une fronde et une action complexe pour recharger une arbalète lourde.\n**Spécial.** Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à un nouveau type d’arme à projectiles.\nUn guerrier peut choisir Rechargement rapide en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Réflexes surhumains",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Les réflexes de l'aventurier sont supérieurs à la normale.",
+      "description": "Les réflexes de l'aventurier sont supérieurs à la normale.\n\n**Avantage.** Le personnage bénéficie d’un bonus de +2 aux jets de Réflexes.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Robustesse",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage est plus robuste que la normale.",
+      "description": "Le personnage est plus robuste que la normale.\n\n**Avantage.** Le personnage gagne 3 points de vie supplémentaires.\n**Spécial.** Ce don peut être pris plusieurs fois. Ses effets sont cumulatifs.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Savoir-faire mécanique",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage est doué pour manipuler de petits objets délicats.",
+      "description": "Le personnage est doué pour manipuler de petits objets délicats.\n\n**Avantage.** Le personnage obtient un bonus de +2 sur tous ses tests de Crochetage et de Désamorçage/sabotage.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Science de la destruction",
+      "type": "général",
+      "conditions": "For 13, Attaque en puissance",
+      "accroche": "L'aventurier sait comment détruire les objets que tiennent en mains ses adversaires, y compris les armes et les boucliers.",
+      "description": "L'aventurier sait comment détruire les objets que tiennent en mains ses adversaires, y compris les armes et les boucliers.\n\n**Conditions.** For 13, Attaque en puissance.\n**Avantage.** Lorsque le personnage tente de détruire un objet tenu ou porté par un adversaire (comme une arme ou un bouclier), il ne s’expose pas à une attaque d’opportunité.\nDe plus, le personnage bénéficie d’un bonus de +4 sur les jets d’attaque contre les objets tenus ou portés par un adversaire.\n**Normal.** Un personnage qui ne possède pas ce don provoque une attaque d’opportunité quand il frappe un objet tenu ou porté par une autre personne.\n**Spécial.** Un guerrier peut choisir Science de la destruction en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Science de l’initiative",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage réagit plus rapidement que la plupart des gens.",
+      "description": "Le personnage réagit plus rapidement que la plupart des gens.\n\n**Avantage.** Le personnage bénéficie d’un bonus de +4 au test d’initiative.\n**Spécial.** Un guerrier peut choisir Science de l’initiative en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Science de la bousculade",
+      "type": "général",
+      "conditions": "For 13, Attaque en puissance",
+      "accroche": "Le personnage sait comment repousser ses adversaires avec un maximum d'efficacité.",
+      "description": "Le personnage sait comment repousser ses adversaires avec un maximum d'efficacité.\n\n**Conditions.** For 13, Attaque en puissance.\n**Avantage.** Le personnage peut tenter une bousculade sans provoquer d’attaque d’opportunité de la part de la cible. Le personnage bénéficie de plus d’un bonus de +4 sur le test de Force opposé effectué pour repousser sa cible.\n**Spécial.** Un guerrier peut choisir Science de la bousculade en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Science de la feinte",
+      "type": "général",
+      "conditions": "Int 13, Expertise du combat",
+      "accroche": "Lorsqu'il combat, le personnage sait bien tromper son adversaire sur ses intentions.",
+      "description": "Lorsqu'il combat, le personnage sait bien tromper son adversaire sur ses intentions.\n\n**Conditions.** Int 13, Expertise du combat.\n**Avantage.** Le personnage peut effectuer un test de Bluff pour tenter une feinte par une action de mouvement.\n**Normal.** Une feinte de combat est habituellement une action simple.\n**Spécial.** Un guerrier peut choisir Science de la feinte en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Science de la lutte",
+      "type": "général",
+      "conditions": "Dex 13, Science du combat à mains nues",
+      "accroche": "Le personnage est un lutteur compétent.",
+      "description": "Le personnage est un lutteur compétent.\n\n**Conditions.** Dex 13, Science du combat à mains nues.\n**Avantage.** Le personnage ne provoque pas d’attaque d’opportunité lors de l’attaque de contact nécessaire pour engager une lutte. Il bénéficie de plus d’un bonus de +4 sur les tests de lutte, qui que soit l’initiateur de la lutte.\n**Normal.** L’attaque de contact débutant une lutte provoque habituellement une attaque d’opportunité.\n**Spécial.** Un guerrier peut choisir Science de la lutte en tant que don supplémentaire.\nUn moine peut choisir Science de la lutte en tant que don supplémentaire au niveau 1, même s’il n’en remplit pas les conditions.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Science du combat à deux armes",
+      "type": "général",
+      "conditions": "Dex 17, Combat à deux armes, bonus de base à l’attaque de +6",
+      "accroche": "Le personnage est passé maître dans l'art de combattre à deux armes.",
+      "description": "Le personnage est passé maître dans l'art de combattre à deux armes.\n\n**Conditions.** Dex 17, Combat à deux armes, bonus de base à l’attaque de +6.\n**Avantage.** Lorsque le personnage combat avec deux armes, il peut porter deux attaques supplémentaires à l’aide de son arme secondaire au lieu d’une seule. Cependant, cette deuxième attaque secondaire subit un malus de –5 au jet d’attaque.\n**Normal.** Sans ce don, l’arme secondaire ne permet de porter qu’une seule attaque supplémentaire par round.\n**Spécial.** Un guerrier peut choisir Science du combat à deux armes en tant que don supplémentaire.\nUn rôdeur de niveau 6 ne portant aucune armure ou une armure légère et ayant choisi le style de combat à deux armes peut se battre comme s’il possédait ce don, même s’il n’en remplit pas les conditions.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Science du combat à mains nues",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage est un expert du combat à mains nues.",
+      "description": "Le personnage est un expert du combat à mains nues.\n\n**Avantage.** Le personnage est considéré comme armé même quand il n’a pas d’arme. Cela signifie que le fait d’attaquer à mains nues un adversaire armé ne provoque pas d’attaque d’opportunité. De plus, le personnage a droit à une attaque d’opportunité chaque fois qu’on l’attaque à mains nues.\nEnfin, les attaques à mains nues du personnage peuvent infliger des dégâts létaux ou non-létaux, à sa discrétion.\n**Normal.** Sans ce don, un personnage se battant à mains nues est considéré comme étant désarmé et ne peut infliger que des dégâts non-létaux avec ce type d’attaque.\n**Spécial.** Les moines obtiennent automatiquement Science du combat à mains nues en tant que don supplémentaire au niveau 1. Ils n’ont pas besoin de le choisir.\nUn guerrier peut choisir Science du combat à mains nues en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Science du contresort",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Les nuances de la magie n'ont aucun secret pour le personnage, qui peut contrer les sorts de ses adversaires avec une grande habileté.",
+      "description": "Les nuances de la magie n'ont aucun secret pour le personnage, qui peut contrer les sorts de ses adversaires avec une grande habileté.\n\n**Avantage.** Lorsque le personnage tente de contrer un sort, il peut utiliser n’importe quel sort de la même école et d’au moins un niveau de sort supérieur à la place du sort d’origine.\n**Normal.** Un lanceur de sorts qui ne possède pas ce don ne peut contrer un sort qu’en utilisant exactement le sort d’origine ou un sort indiquant spécifiquement qu’il peut être utilisé comme contresort.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Science du coup de bouclier",
+      "type": "général",
+      "conditions": "Maniement des boucliers",
+      "accroche": "Le personnage sait donner des coups de bouclier tout en continuant à l'utiliser pour se défendre.",
+      "description": "Le personnage sait donner des coups de bouclier tout en continuant à l'utiliser pour se défendre.\n\n**Condition.** Maniement des boucliers.\n**Avantage.** Lorsque le personnage donne un coup de bouclier, il peut tout de même appliquer le bonus de bouclier de celui-ci à sa classe d’armure.\n**Normal.** Sans ce don, un personnage qui donne un coup de bouclier perd le bonus de bouclier à la CA du bouclier jusqu’à son prochain tour de jeu.\n**Spécial.** Un guerrier peut choisir Science du coup de bouclier en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Science du critique",
+      "type": "général",
+      "conditions": "Maniement de l’arme choisie, bonus de base à l’attaque de +8",
+      "accroche": "Le personnage choisit une arme, telle que l'épée longue ou la grande hache, dont il se servira avec une efficacité décuplée.",
+      "description": "Le personnage choisit une arme, telle que l'épée longue ou la grande hache, dont il se servira avec une efficacité décuplée.\n\n**Conditions.** Maniement de l’arme choisie, bonus de base à l’attaque de +8.\n**Avantage.** La zone de critique possible de l’arme choisie est doublée. Par exemple, une épée longue peut normalement obtenir une possibilité de coup critique sur un résultat de 19–20 au dé (2 nombres). Avec ce don, la zone de critique possible de cette arme passe à 17–20 (4 nombres).\n**Spécial.** Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.\nLes effets de ce don ne se cumulent pas avec tout autre effet étendant la zone de critique possible d’une arme (tel que le sort affutage).\nUn guerrier peut choisir Science du critique en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Science du croc-en-jambe",
+      "type": "général",
+      "conditions": "Int 13, Expertise du combat",
+      "accroche": "Le personnage a été formé à faire trébucher ses adversaires et à mettre leur vulnérabilité passagère à profit pour les attaquer.",
+      "description": "Le personnage a été formé à faire trébucher ses adversaires et à mettre leur vulnérabilité passagère à profit pour les attaquer.\n\n**Conditions.** Int 13, Expertise du combat.\n**Avantage.** Le personnage ne provoque pas d’attaque d’opportunité lorsqu’il tente de faire un croc-en-jambe à mains nues. De plus, il bénéficie d’un bonus de +4 sur le test de Force visant à faire tomber son adversaire.\nSi le personnage parvient à faire un croc-en-jambe au corps à corps, il peut automatiquement porter une attaque à son adversaire, comme s’il n’avait pas utilisé son attaque pour tenter le croc-en-jambe.\n**Normal.** Sans ce don, tenter un croc-en-jambe à mains nues provoque une attaque d’opportunité.\n**Spécial.** Un guerrier peut choisir Science du croc-en-jambe en tant que don supplémentaire.\nUn moine peut choisir Science du croc-en-jambe en tant que don supplémentaire au niveau 6, même s’il n’en remplit pas les conditions.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Science du désarmement",
+      "type": "général",
+      "conditions": "Int 13, Expertise du combat",
+      "accroche": "Le personnage sait comment désarmer ses adversaires.",
+      "description": "Le personnage sait comment désarmer ses adversaires.\n\n**Conditions.** Int 13, Expertise du combat.\n**Avantage.** Le personnage ne provoque pas d’attaque d’opportunité quand il tente de désarmer son ennemi, et ce dernier n’a aucune chance de le désarmer en retour. Le personnage bénéficie de plus d’un bonus de +4 sur le jet d’attaque opposé visant à désarmer son adversaire.\n**Normal.** Voir les règles permettant de désarmer son adversaire.\n**Spécial.** Un guerrier peut choisir Science du désarmement en tant que don supplémentaire.\nUn moine peut choisir Science du désarmement en tant que don supplémentaire au niveau 6, même s’il n’en remplit pas les conditions.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Science du renversement",
+      "type": "général",
+      "conditions": "For 13, Attaque en puissance",
+      "accroche": "Le personnage est doué pour renverser ses adversaires.",
+      "description": "Le personnage est doué pour renverser ses adversaires.\n\n**Conditions.** For 13, Attaque en puissance.\n**Avantage.** Lorsque le personnage tente un renversement, sa cible ne peut choisir de l’éviter. Le personnage bénéficie de plus d’un bonus de +4 sur le test de Force opposé effectué pour envoyer sa cible à terre.\n**Normal.** Sans ce don, la cible d’un renversement peut choisir d’éviter ou de bloquer son agresseur.\n**Spécial.** Un guerrier peut choisir Science du renversement en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Science du renvoi",
+      "type": "général",
+      "conditions": "Aptitude de renvoi ou d’intimidation de créatures",
+      "accroche": "Les renvois du personnage sont particulièrement efficaces.",
+      "description": "Les renvois du personnage sont particulièrement efficaces.\n\n**Conditions.** Aptitude de renvoi ou d’intimidation de créatures.\n**Avantage.** Le personnage peut utiliser son pouvoir de renvoi ou d’intimidation avec un bonus de +1 au niveau de la classe qui lui offre cette aptitude.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Science du tir de précision",
+      "type": "général",
+      "conditions": "Dex 19, Tir à bout portant, Tir de précision, bonus de base à l’attaque de+11",
+      "accroche": "Les attaques à distance du personnage ignorent les effets des abris ou du camouflage.",
+      "description": "Les attaques à distance du personnage ignorent les effets des abris ou du camouflage.\n\n**Conditions.** Dex 19, Tir à bout portant, Tir de précision, bonus de base à l’attaque de+11.\n**Avantage.** Les attaques à distance du personnage ignorent le bonus à la classe d’armure dont bénéficient les créatures derrière un abri autre que total, ainsi que la chance d’échec lié à un camouflage autre que total. Un abri total ou un camouflage total conservent leurs effets habituels.\nDe plus, quand le personnage tire ou lance une arme à distance sur un adversaire agrippé en situation de lutte, il frappe automatiquement l’adversaire visé.\n**Normal.** Voir les règles concernant les abris et le camouflage. Sans ce don, un personnage qui tire ou lance une arme à distance sur un adversaire agrippé en situation de lutte, il doit déterminer aléatoirement lequel des combattants agrippés est effectivement atteint.\n**Spécial.** Un guerrier peut choisir Science du tir de précision en tant que don supplémentaire.\nUn rôdeur de niveau 11 ne portant aucune armure ou une armure légère et ayant choisi le style de combat à distance peut se battre comme s’il possédait ce don, même s’il n’en remplit pas les conditions.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Souplesse du serpent",
+      "type": "général",
+      "conditions": "Dex 13, Esquive",
+      "accroche": "L'aventurier sait se faufiler entre ses adversaires et éviter les coups.",
+      "description": "L'aventurier sait se faufiler entre ses adversaires et éviter les coups.\n\n**Conditions.** Dex 13, Esquive.\n**Avantage.** Le personnage bénéficie d’un bonus d’esquive de +4 à la CA contre les attaques d’opportunité provoquées lorsqu’il se déplace dans un espace contrôlé (ou lorsqu’il en sort). Il perd automatiquement ce bonus s’il se trouve dans une situation lui faisant perdre son bonus de Dextérité à la CA. Contrairement à la plupart des types de bonus, le bonus d’esquive est cumulatif (il peut par exemple s’ajouter à celui dont les nains bénéficient naturellement contre les géants).\n**Spécial.** Un guerrier peut choisir Souplesse du serpent en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Spécialisation martiale",
+      "type": "général",
+      "conditions": "Maniement de l’arme choisie, Arme de prédilection pour l’arme choisie, guerrier de niveau 4",
+      "accroche": "Le personnage choisit une arme, telle que la grande hache, pour laquelle il possède le don Arme de prédilection. Les coups portés à l'aide de cette arme sont plus dangereux.",
+      "description": "Le personnage choisit une arme, telle que la grande hache, pour laquelle il possède le don Arme de prédilection. Les coups portés à l'aide de cette arme sont plus dangereux.\n\nLe personnage choisit une arme pour laquelle il possède le don Arme de prédilection. Il peut aussi choisir les attaques à mains nues ou la lutte.\n**Conditions.** Maniement de l’arme choisie, Arme de prédilection pour l’arme choisie, guerrier de niveau 4.\n**Avantage.** Le personnage obtient un bonus de +2 sur les jets de dégâts de l’arme choisie.\n**Spécial.** Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.\nUn guerrier peut choisir Spécialisation martiale en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Spécialisation martiale supérieure",
+      "type": "général",
+      "conditions": "Maniement de l’arme choisie, Arme de prédilection pour l’arme choisie, Arme de prédilection supérieure pour l’arme choisie, Spécialisation martiale pour l’arme choisie, guerrier de niveau 12",
+      "accroche": "Le personnage choisit une arme, telle que la grande hache, pour laquelle il possède les dons Spécialisation martiale et Arme de prédilection supérieure. Cette arme inflige encore plus de dégâts.",
+      "description": "Le personnage choisit une arme, telle que la grande hache, pour laquelle il possède les dons Spécialisation martiale et Arme de prédilection supérieure. Cette arme inflige encore plus de dégâts.\n\nLe personnage choisit une arme pour laquelle il possède les dons Spécialisation martiale et Arme de prédilection supérieure. Il peut aussi choisir les attaques à mains nues ou la lutte.\n**Conditions.** Maniement de l’arme choisie, Arme de prédilection pour l’arme choisie, Arme de prédilection supérieure pour l’arme choisie, Spécialisation martiale pour l’arme choisie, guerrier de niveau 12.\n**Avantage.** Le personnage obtient un bonus de +2 sur les jets de dégâts de l’arme choisie. Ce bonus se cumule avec tous les autres bonus aux jets de dégâts, y compris celui du don Spécialisation martiale.\n**Spécial.** Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle arme.\nUn guerrier peut choisir Spécialisation martiale supérieure en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Succession d’enchaînements",
+      "type": "général",
+      "conditions": "For 13, Attaque en puissance, Enchaînement, bonus de base à l’attaque de +4",
+      "accroche": "Le personnage enchaîne ses coups avec une telle efficacité qu'il peut multiplier les attaques à l'infini.",
+      "description": "Le personnage enchaîne ses coups avec une telle efficacité qu'il peut multiplier les attaques à l'infini.\n\n**Conditions.** For 13, Attaque en puissance, Enchaînement, bonus de base à l’attaque de +4.\n**Avantage.** Ce don fonctionne comme Enchaînement, mais sans aucune limite au nombre d’attaques d’enchaînement que le personnage peut effectuer par round. Chaque fois qu’il abat un de ses adversaires, le personnage a droit à une attaque supplémentaire contre une autre cible.\n**Spécial.** Un guerrier peut choisir Succession d’enchaînements en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Talent",
+      "type": "général",
+      "conditions": null,
+      "accroche": "L'aventurier choisit une compétence, telle que Déplacement silencieux. Il est particulièrement doué pour l'utiliser.",
+      "description": "L'aventurier choisit une compétence, telle que Déplacement silencieux. Il est particulièrement doué pour l'utiliser.\n\n**Avantage.** Le personnage bénéficie d’un bonus de +3 à tous les tests concernant la compétence choisie.\n**Spécial.** Ce don peut être choisi plusieurs fois, mais ses effets ne se cumulent pas. Il s’applique à chaque fois à une nouvelle compétence.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Tir à bout portant",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Une arme à distance à la main, le personnage est particulièrement redoutable à bout portant.",
+      "description": "Une arme à distance à la main, le personnage est particulièrement redoutable à bout portant.\n\n**Avantage.** Le personnage bénéficie d’un bonus de +1 aux jets d’attaque et de dégâts avec n’importe quelle arme à distance, à condition que sa cible soit distante de 9 mètres ou moins.\n**Spécial.** Un guerrier peut choisir Tir à bout portant en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Tir de loin",
+      "type": "général",
+      "conditions": "Tir à bout portant",
+      "accroche": "L'aventurier peut tirer très loin avec une arme à distance.",
+      "description": "L'aventurier peut tirer très loin avec une arme à distance.\n\n**Condition.** Tir à bout portant.\n**Avantage.** Si le personnage utilise une arme à projectiles, par exemple un arc, son facteur de portée augmente de 50% (multipliez-le par 1,5). S’il utilise une arme de jet, le facteur de portée est doublé.\n**Spécial.** Un guerrier peut choisir Tir de loin en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Tir de précision",
+      "type": "général",
+      "conditions": "Tir à bout portant",
+      "accroche": "Le personnage est particulièrement doué pour tirer au meilleur moment possible.",
+      "description": "Le personnage est particulièrement doué pour tirer au meilleur moment possible.\n\n**Condition.** Tir à bout portant.\n**Avantage.** Le personnage peut tirer sur un adversaire impliqué dans un combat au corps à corps sans subir le malus habituel de –4 sur son jet d’attaque.\n**Spécial.** Un guerrier peut choisir Tir de précision en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Tir en mouvement",
+      "type": "général",
+      "conditions": "Dex 13, Esquive, Souplesse du serpent, Tir à bout portant, bonus de base à l’attaque de +4",
+      "accroche": "Le personnage est passé maître dans l'application des méthodes de guérilla.",
+      "description": "Le personnage est passé maître dans l'application des méthodes de guérilla.\n\n**Conditions.** Dex 13, Esquive, Souplesse du serpent, Tir à bout portant, bonus de base à l’attaque de +4.\n**Avantage.** Lorsqu’il entreprend une action d’attaque avec une arme à distance, le personnage peut se déplacer avant et après son attaque, du moment que le total de la distance parcourue durant le round ne dépasse pas sa vitesse de déplacement.\n**Spécial.** Un guerrier peut choisir Tir en mouvement en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Tir monté",
+      "type": "général",
+      "conditions": "Degré de maîtrise de 1 en Équitation, Combat monté",
+      "accroche": "L'aventurier sait utiliser des armes à distance à dos de monture.",
+      "description": "L'aventurier sait utiliser des armes à distance à dos de monture.\n\n**Conditions.** Degré de maîtrise de 1 en Équitation, Combat monté.\n**Avantage.** Le malus subi normalement quand on utilise une arme à distance à dos de monture est divisé par deux : –2 au lieu de –4 si la monture effectue un déplacement double, et –4 au lieu de –8 si elle court.\n**Spécial.** Un guerrier peut choisir Tir monté en tant que don supplémentaire.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Tir rapide",
+      "type": "général",
+      "conditions": "Dex 13, Tir à bout portant",
+      "accroche": "Le personnage utilise ses armes à distance à une cadence stupéfiante.",
+      "description": "Le personnage utilise ses armes à distance à une cadence stupéfiante.\n\n**Conditions.** Dex 13, Tir à bout portant.\n**Avantage.** Lorsqu’il entreprend une action d’attaque à outrance avec une arme à distance, le personnage a droit à une attaque supplémentaire. Cette attaque se fait avec son bonus de base à l’attaque maximal, mais toutes les attaques du round subissent un malus de –2 (l’attaque supplémentaire y compris).\n**Spécial.** Un guerrier peut choisir Tir rapide en tant que don supplémentaire.\nUn rôdeur de niveau 2 ne portant aucune armure ou une armure légère et ayant choisi le style de combat à distance peut se battre comme s’il possédait ce don, même s’il n’en remplit pas les conditions.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Vigilance",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Les sens du personnage sont particulièrement affûtés.",
+      "description": "Les sens du personnage sont particulièrement affûtés.\n\n**Avantage.** Le personnage bénéficie d’un bonus de +2 sur tous ses tests de Détection et de Perception auditive.\n**Spécial.** Le maître d’un familier bénéficie automatiquement des effets de ce don tant que son familier se trouve assez près de lui pour qu’il puisse le toucher en tendant le bras.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Vigueur surhumaine",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage est plus résistant que la normale.",
+      "description": "Le personnage est plus résistant que la normale.\n\n**Avantage.** Le personnage bénéficie d’un bonus de +2 à tous ses jets de Vigueur.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Volonté de fer",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage est doté d'une volonté à toute épreuve.",
+      "description": "Le personnage est doté d'une volonté à toute épreuve.\n\n**Avantage.** Le personnage bénéficie d’un bonus de +2 à tous ses jets de Volonté\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    },
+    {
+      "nom": "Voltigeur",
+      "type": "général",
+      "conditions": null,
+      "accroche": "Le personnage possède une bonne détente et une excellente coordination.",
+      "description": "Le personnage possède une bonne détente et une excellente coordination.\n\n**Avantage.** Le personnage obtient un bonus de +2 sur tous ses tests d’Acrobaties et de Saut.\n\n*[Document de Référence du Système 3.5, version française — chapitre des dons]*"
+    }
+  ]
+}
