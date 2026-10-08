@@ -18,6 +18,16 @@ CE QUI N'Y EST PAS — la licence libre couvre la règle, pas la prose :
   - les renvois de page (« voir page 39 ») et les parenthèses de renvoi au
     Guide du Maître.
 
+LE MANUEL SE CONTREDIT SUR UN NIVEAU, et le croisement l'a sorti :
+  Préparation de potions — la table 5-1 (p. 91) écrit « Niveau de lanceur de
+  sorts de 6 », la fiche du chapitre (p. 99) « Niveau 3 de lanceur de sorts ».
+  Le SRD dit 3 lui aussi : deux attestations contre une, 3 est la bonne, et
+  c'est ce que la base porte déjà. Rien touché — arbitrage du MJ à consigner.
+  ⚠ Au passage : MON relevé de la table avait écrit 3 là où elle imprime 6.
+  Une faute qui tombait juste, mais une faute. Avec « Autonomie » pour
+  « Autonome », cela fait DEUX erreurs dans mon relevé de la table 5-1 —
+  c'est le croisement avec le chapitre qui les a l'une et l'autre révélées.
+
 DEUX COQUILLES DU MANUEL que le SRD corrige, signalées à André sans trancher :
   - Coup étourdissant : le Manuel écrit « modificateur de Sagesse du MOINE »
     alors que le don n'est pas réservé au moine; le SRD dit « du personnage ».
