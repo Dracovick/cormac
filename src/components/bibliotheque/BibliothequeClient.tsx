@@ -247,13 +247,13 @@ export function BibliothequeClient({ index }: { index: BibliothequeIndex }) {
                         {n === null ? 'Classes pas encore relevées' : `Niveau ${n}`}
                       </div>
                     )}
-                    <LigneEntree href={`/bibliotheque/${rayonActif.slug}/${e.id}`} nom={e.nom} detail={e.detail} />
+                    <LigneEntree href={`/bibliotheque/${rayonActif.slug}/${e.id}`} nom={e.nom} detail={e.detail} badge={e.campagne ? '🗃️' : undefined} />
                   </div>
                 )
               })
             ) : (
               entreesAffichees.map(e => (
-                <LigneEntree key={e.id} href={`/bibliotheque/${rayonActif.slug}/${e.id}`} nom={e.nom} detail={e.detail} />
+                <LigneEntree key={e.id} href={`/bibliotheque/${rayonActif.slug}/${e.id}`} nom={e.nom} detail={e.detail} badge={e.campagne ? '🗃️' : undefined} />
               ))
             )}
           </div>

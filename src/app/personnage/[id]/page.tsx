@@ -1143,7 +1143,10 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                     <div className="flex-1 min-w-0">
                       <span className="text-purple-300 text-sm font-medium">{item.nom}</span>
                       <Link
-                        href={`/bibliotheque/objet/${item.id}?from=/personnage/${id}`}
+                        /* Une ligne d'inventaire rattachée ouvre la RÈGLE du livre
+                           (« Ring of counterspelling » → anneau de contresort),
+                           pas sa propre ligne. Même patron que les armes. */
+                        href={`/bibliotheque/objet/${item.catalogueId ?? item.id}?from=/personnage/${id}`}
                         title="Lire la fiche de cet objet magique"
                         className="ml-1.5 text-stone-500 hover:text-amber-300 text-xs"
                       >

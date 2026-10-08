@@ -63,6 +63,14 @@ export const magicItems = pgTable('magic_items', {
   prix: numeric('prix', { precision: 10, scale: 2 }),
   description: text('description'),
   chargesMax: integer('charges_max'),
+  // true = entrée de référence relevée dans un livre (chapitre 7 du Guide du
+  // Maître, reliques, objets de Faerûn). false = ligne d'inventaire importée
+  // de FileMaker (« 75 flèches », « Ring of nine lives », pièces de campagne).
+  // Voir drizzle/0010.
+  estCatalogue: boolean('est_catalogue').notNull().default(false),
+  // Pour une ligne d'inventaire : l'entrée de catalogue qui porte ses règles.
+  // NULL quand la ligne n'a pas d'équivalent au livre — ce n'est pas un trou.
+  catalogueId: integer('catalogue_id'),
 })
 
 export const potions = pgTable('potions', {

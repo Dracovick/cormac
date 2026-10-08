@@ -158,8 +158,19 @@ function Contenu({ fiche, qs }: { fiche: FicheBibliotheque; qs: string }) {
             {fiche.objet.niveauLanceur !== null && <Row label="Niveau de lanceur">{fiche.objet.niveauLanceur}</Row>}
             {fiche.objet.chargesMax !== null && <Row label="Charges">{fiche.objet.chargesMax}</Row>}
             {fiche.prixAffiche && <Row label="Prix">{fiche.prixAffiche}</Row>}
+            {!fiche.objet.estCatalogue && (
+              <Row label="Provenance">🗃️ Ligne de fiche de personnage — pas une entrée des livres</Row>
+            )}
           </div>
           <Description texte={fiche.objet.description} />
+          {fiche.regleLiee && (
+            <div className="mt-5 pt-4 border-t border-stone-800">
+              <p className="text-stone-500 text-xs mb-2">La règle du livre :</p>
+              <Link href={`/bibliotheque/objet/${fiche.regleLiee.id}${qs}`} className="block text-amber-300 hover:text-amber-200 text-sm py-0.5">
+                ↪ {fiche.regleLiee.nom}
+              </Link>
+            </div>
+          )}
         </>
       )
     case 'arme':

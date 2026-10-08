@@ -1,0 +1,324 @@
+{
+  "_lisez_moi": [
+    "Les 41 lignes de `magic_items` sans description, tranchées une par une le 2026-10-08.",
+    "AUCUNE n'est une entrée de livre restée vide : les 671 entrées semées des livres (ids 73-276 et 279-745) ont toutes leur fiche.",
+    "Les 41 sont toutes dans les 74 lignes de la saisie FileMaker d'André (ids 1-72, 277, 278).",
+    "",
+    "Quatre verdicts possibles :",
+    "  adoptee  = c'est un objet du Guide du Maître que le semis du 2026-10-06 avait sauté (quasi-doublon mis en attente).",
+    "             On ÉCRIT sa fiche du livre et on la marque entrée de catalogue. Le nom d'André est conservé.",
+    "  renvoi   = l'entrée officielle existe déjà au catalogue : on pose catalogue_id et on écrit le renvoi.",
+    "  campagne = pièce de la campagne d'André, absente des livres. Fiche = ce qu'on sait + la règle de sa catégorie.",
+    "  inventaire = ligne d'inventaire (quantité, potion, arme, munition) qui n'est pas une entrée de règle.",
+    "",
+    "Source des textes de règle : SRD 3.5 français (dépôt orey/DD-3e, DRS 23 à 27), la traduction officielle VF.",
+    "⚠ Le script ne remplit QUE le vide et refuse d'écrire si le nom en base a changé depuis ce relevé."
+  ],
+  "verdicts": [
+    {
+      "id": 42,
+      "nom": "Anneau de protection +3",
+      "verdict": "adoptee",
+      "est_catalogue": true,
+      "type": "Anneau",
+      "aura_magique": "Abjuration modérée",
+      "niveau_lanceur": 5,
+      "prix": "18000.00",
+      "description": "Cet anneau confère une protection magique permanente, sous la forme d'un bonus de parade à la CA pouvant aller de +1 à +5, selon le modèle. Ce modèle-ci confère un bonus de parade de +3 à la CA.\n\nConditions de création : Création d'anneaux magiques, bouclier de la foi, niveau de lanceur de sorts égal à trois fois le bonus de l'anneau (ou plus).",
+      "motif": "Le modèle +3 de la série du Guide du Maître (2 000 / 8 000 / 18 000 / 32 000 / 50 000 po). Le semis du 2026-10-06 a créé les modèles +4 et +5 mais pas celui-ci, parce que cette ligne portait déjà le nom exact. Elle devient l'entrée de catalogue du modèle +3."
+    },
+    {
+      "id": 56,
+      "nom": "Cape chauve-souris",
+      "verdict": "adoptee",
+      "est_catalogue": true,
+      "type": "Objet merveilleux",
+      "aura_magique": "Transmutation modérée",
+      "niveau_lanceur": 7,
+      "prix": "26000.00",
+      "description": "Confectionnée dans un tissu noir ou marron foncé, cette cape confère un bonus de circonstances de +5 aux tests de Discrétion. Son porteur peut également se pendre au plafond la tête en bas, à la manière des chauves-souris.\n\nEn attrapant les bords de la cape, le personnage a aussi la possibilité de voler avec une bonne manœuvrabilité (voir le sort vol). S'il le désire, il peut se transformer en chauve-souris commune, auquel cas il vole à la vitesse de cette dernière (toutes ses possessions sont également transformées). Quelle que soit l'option choisie (métamorphose ou non), le personnage ne peut voler que dans l'obscurité : soit de nuit, soit sous terre, dans un environnement dénué de lumière. Chacun des modes de vol est utilisable pendant un maximum de 7 minutes d'affilée, mais au terme de chaque période d'utilisation, la cape ne peut plus servir pour voler pendant une durée au moins égale.\n\nConditions de création : Création d'objets merveilleux, vol, métamorphose. Poids 500 g.\n\n*Le Guide du Maître la nomme « cape de la chauve-souris ».*",
+      "motif": "C'est bien la cape de la chauve-souris du Guide du Maître (26 000 po). Elle faisait partie des 4 quasi-doublons que le semis du 2026-10-06 avait laissés de côté en attendant une décision de renommage — d'où sa fiche restée vide. Le nom d'André est conservé, la règle est celle du livre."
+    },
+    {
+      "id": 278,
+      "nom": "Bâtonnet de boule de feu",
+      "verdict": "adoptee",
+      "est_catalogue": true,
+      "type": "Baguette",
+      "aura_magique": "Évocation modérée",
+      "niveau_lanceur": 5,
+      "prix": "11250.00",
+      "description": "Baguette contenant le sort boule de feu (sort du 3e niveau, NLS 5) : 5d6 points de dégâts de feu dans une sphère de 6 m de rayon, à 120 m de portée. Chaque charge dépensée permet de lancer le sort une fois.\n\nC'est le modèle de base de la table des baguettes. Le Guide du Maître donne aussi des modèles de niveau 6 (13 500 po), 8 (18 000 po) et 10 (22 500 po), qui infligent respectivement 6d6, 8d6 et 10d6.\n\nRègle des baguettes : une baguette neuve contient 50 charges ; une baguette déchargée ne sert plus à rien. L'activer est une action simple ne provoquant pas d'attaque d'opportunité. Il faut la tenir en main et la pointer vers la cible ou la zone à affecter.\n\n*Le Guide du Maître la nomme « baguette de boule de feu ».*",
+      "motif": "Les 5d6 et la portée que porte la fiche de Cormac donnent le modèle de base, NLS 5 — celui que le semis du 2026-10-06 avait sauté (quatrième quasi-doublon mis en attente). Les 5 charges saisies par André sont son état de jeu, pas la règle : je n'y touche pas."
+    },
+    {
+      "id": 51,
+      "nom": "Ring of spell storing (10 niv)",
+      "verdict": "renvoi",
+      "catalogue_id": 316,
+      "description": "↪ Même pièce que l'**anneau de stockage de sorts majeurs** du Guide du Maître — le nom est resté en anglais sur la fiche.\n\nIl contient jusqu'à 10 niveaux de sorts que son porteur peut lancer normalement : comme l'anneau de stockage de sorts mineurs, mais le total passe de 3 à 10 niveaux. Le niveau de lanceur auquel un sort fait effet est celui du personnage qui l'a placé dans l'anneau. N'importe qui peut ensuite l'utiliser. Un pratiquant de la magie peut se servir d'un parchemin pour y placer un sort.\n\nÉvocation puissante ; NLS 17 ; 200 000 po.",
+      "motif": "Les 10 niveaux saisis entre parenthèses désignent le modèle « majeurs » sans ambiguïté : le mineur en stocke 3, le normal 5, le majeur 10."
+    },
+    {
+      "id": 57,
+      "nom": "Ring of counterspelling",
+      "verdict": "renvoi",
+      "catalogue_id": 293,
+      "description": "↪ Même pièce que l'**anneau de contresort** du Guide du Maître — le nom est resté en anglais sur la fiche.\n\nDe prime abord, cet anneau pourrait passer pour un anneau à sorts. En réalité, s'il est en effet possible d'y emmagasiner un sort du 1er au 6e niveau, le sort ne peut pas être lancé par la suite. Par contre, si le même sort prend un jour le porteur de l'anneau pour cible, il est automatiquement contré, sans que le personnage n'ait à le décider (il ne lui en coûte aucune action). Une fois utilisé sous forme de contresort, le sort contenu dans l'anneau disparaît et il devient possible d'en placer un autre (ou le même) dans l'objet.\n\nÉvocation modérée ; NLS 11 ; 4 000 po.",
+      "motif": "Traduction directe et sans concurrent : counterspelling = contresort."
+    },
+    {
+      "id": 49,
+      "nom": "Wand of polymorph self",
+      "verdict": "renvoi",
+      "catalogue_id": 435,
+      "description": "↪ Correspond à la **baguette de métamorphose** du Guide du Maître : 50 charges du sort métamorphose (sort du 4e niveau, NLS 7), 21 000 po.\n\n⚠ Le nom vient de la 3.0, où *polymorph self* et *polymorph other* étaient deux sorts distincts. La 3.5 les a fondus en un seul sort, **métamorphose**, qui vise une créature volontaire — y compris le lanceur lui-même. C'est donc cette baguette-là, mais son texte de 3.0 ne s'applique plus tel quel.\n\nRègle des baguettes : 50 charges à la création, une charge par incantation, action simple pour l'activer.",
+      "motif": "Il n'existe pas de baguette de « métamorphose partielle » en 3.5 : le sort n'existe plus sous ce nom. La seule pièce correspondante est la baguette de métamorphose."
+    },
+    {
+      "id": 34,
+      "nom": "Parchemin d'identification",
+      "verdict": "campagne",
+      "description": "Parchemin portant le sort **identification** — voir sa fiche au rayon 📜 Sorts.\n\nRègle des parchemins : un sort transcrit sur le papier, utilisable une seule et unique fois ; les symboles s'effacent dès qu'on les lit.\n\n**Déchiffrer** d'abord : test d'Art de la magie (DD 20 + niveau du sort) ou *lecture de la magie*. Le lecteur n'a besoin ni des composantes matérielles ni du focaliseur — le scribe s'en est chargé.\n\n**Trois conditions** pour activer : bon type de magie (profane ou divin), sort sur la liste de sa classe, caractéristique d'incantation suffisante. En dessous du niveau de lanceur du parchemin, test de niveau de lanceur (DD = NLS du parchemin + 1).\n\n*Le Guide du Maître ne donne pas une entrée par parchemin : il donne la règle, et le sort fait le reste. Le prix dépend du niveau du sort et du niveau de lanceur du scribe.*",
+      "motif": "Le sort identification existe au Grimoire. La fiche renvoie au sort plutôt que de recopier ses effets : une seule source de vérité."
+    },
+    {
+      "id": 35,
+      "nom": "Parchemin de téléportation",
+      "verdict": "campagne",
+      "description": "Parchemin portant le sort **téléportation** — voir sa fiche au rayon 📜 Sorts.\n\nRègle des parchemins : un sort transcrit sur le papier, utilisable une seule fois ; les symboles s'effacent à la lecture. Déchiffrer d'abord (Art de la magie DD 20 + niveau du sort, ou *lecture de la magie*). Ni composante matérielle ni focaliseur à fournir.\n\n⚠ Le **niveau de lanceur du parchemin** décide de la distance franchissable et du poids transporté. Sauf volonté contraire du scribe, il vaut le niveau minimal pour lancer le sort — soit le double du niveau du sort moins 1, c'est-à-dire **9** pour téléportation (sort du 5e niveau). À préciser par le MJ si la question se pose en jeu.",
+      "motif": "Le sort téléportation existe au Grimoire. La règle du niveau de lanceur par défaut (deux fois le niveau du sort moins 1) est celle du livre : elle donne un chiffre utilisable à la table plutôt qu'un « à préciser » vide."
+    },
+    {
+      "id": 37,
+      "nom": "Parchemin résurrection",
+      "verdict": "campagne",
+      "description": "Parchemin portant le sort **résurrection** — voir sa fiche au rayon 📜 Sorts.\n\nRègle des parchemins : un parchemin est un sort transcrit sur le papier, utilisable une seule et unique fois ; les symboles magiques s'effacent dès qu'on les lit.\n\n**Déchiffrer** le texte d'abord : test d'Art de la magie (DD 20 + niveau du sort) ou sort *lecture de la magie*. Déchiffrer n'active pas la magie, et peut se faire à l'avance.\n\n✅ Le lecteur **n'a pas besoin des composantes matérielles ni du focaliseur** : le créateur du parchemin s'en est occupé en l'écrivant. Pour résurrection, la poudre de diamant à 10 000 po a donc déjà été payée par le scribe.\n\n**Trois conditions** pour activer : le sort doit être du bon type (profane ou divin), être sur la liste de sa classe, et le personnage doit avoir la valeur suffisante dans la caractéristique d'incantation. Si son niveau de lanceur est inférieur à celui du parchemin, il doit réussir un test de niveau de lanceur (DD = NLS du parchemin + 1), sinon un jet de Sagesse (DD 5) pour éviter un incident. Un 1 naturel est toujours un échec.",
+      "motif": "Le sort résurrection existe au Grimoire. ATTENTION : j'avais d'abord écrit l'inverse de la règle (« le parchemin ne dispense pas de la composante ») ; le livre dit explicitement que le créateur s'est chargé de cette partie. Corrigé avant écriture — la différence vaut 10 000 po de diamant à la table."
+    },
+    {
+      "id": 33,
+      "nom": "Parchemin Aura Infernal",
+      "verdict": "campagne",
+      "description": "Parchemin de la campagne. Aucun sort nommé « aura infernale » ne figure au Manuel des Joueurs ni dans les suppléments relevés au Grimoire : c'est une pièce écrite par le MJ.\n\nRègle des parchemins : un parchemin est un sort transcrit sur le papier, utilisable une seule et unique fois ; les symboles magiques s'effacent au fur et à mesure qu'on les lit. L'activation est très proche de l'incantation d'un sort.\n\n*Son effet est à la discrétion du MJ.*",
+      "motif": "Cherché au rayon Sorts (1 221 entrées) et dans les listes de classe : aucun sort de ce nom. Je ne lui invente pas d'effet."
+    },
+    {
+      "id": 23,
+      "nom": "Baguette d'inertie",
+      "verdict": "campagne",
+      "description": "Baguette de la campagne. Aucun sort nommé « inertie » n'existe en 3.5.\n\nRègle des baguettes : une baguette est un mince bout de bois contenant un sort unique du 4e niveau ou moins. Toute baguette nouvellement créée contient 50 charges, et chaque charge dépensée permet de lancer le sort une fois. Une baguette déchargée ne sert plus à rien. L'activer est une action simple ne provoquant pas d'attaque d'opportunité : il faut la tenir en main et la pointer vers la cible ou la zone à affecter. On peut s'en servir même agrippé en situation de lutte.\n\n⚠ Piste laissée au MJ : « inertie » est une ancienne traduction de *slow*. La table des baguettes du Guide du Maître donne une **baguette de lenteur** à 11 250 po (sort du 3e niveau, NLS 5). Rien ne le prouve ici — c'est au MJ de trancher.",
+      "motif": "Portée par deux lanceurs de sorts (DracoVick, Phyllin Thoddin). Le rapprochement avec la baguette de lenteur est une piste, pas un verdict : je ne l'écris pas comme une règle."
+    },
+    {
+      "id": 25,
+      "nom": "Baguette détection ennemis",
+      "verdict": "campagne",
+      "description": "Baguette de la campagne. Aucun sort de « détection des ennemis » ne figure en 3.5 — les sorts de détection du Manuel visent la magie, l'invisibilité, un alignement, les passages secrets, les pièges, la faune et la flore, mais jamais « les ennemis ».\n\nRègle des baguettes : un mince bout de bois contenant un sort unique du 4e niveau ou moins, 50 charges à la création, une charge par incantation. L'activer est une action simple ne provoquant pas d'attaque d'opportunité.\n\n*Son effet exact est à la discrétion du MJ.*",
+      "motif": "La notion d'« ennemi » n'est pas une catégorie que la magie 3.5 peut lire — seul l'alignement ou le type de créature l'est. Pièce de MJ."
+    },
+    {
+      "id": 30,
+      "nom": "Ardoise d'identification",
+      "verdict": "campagne",
+      "description": "Objet de la campagne. Le Guide du Maître n'a pas d'« ardoise » : l'identification d'un objet magique y passe par les sorts **identification** et **analyse d'enchantement**.\n\nPour un objet à mot de commande, le livre donne aussi une voie par les compétences : un test de **Connaissances (histoire)** ou **Connaissances (mystères)** réussi contre un DD de **30** trouve le mot lui-même ; en cas d'échec, un second test (DD 25) peut fournir un indice utile. Les deux sorts ci-dessus donnent le mot de commande directement.\n\n*Le fonctionnement de l'ardoise est à la discrétion du MJ.*",
+      "motif": "Portée par DracoVick (Magicien 16) et Gimli. ATTENTION : j'avais écrit « test d'Art de la magie DD 15 + niveau de lanceur » ; c'est la règle de lecture d'une aura sous *détection de la magie*, pas celle de l'identification. Les DD 30 et 25 des Connaissances sont ceux du livre."
+    },
+    {
+      "id": 40,
+      "nom": "Plume de copie",
+      "verdict": "campagne",
+      "description": "Objet de la campagne. Le Guide du Maître n'a pas de plume de copie — ses plumes sont les six **plumes de Quaal** (ancre, arbre, bateau cygne, éventail, fouet, oiseau), qui n'ont rien à voir.\n\nLa copie d'un sort dans un grimoire est réglée par le Manuel des Joueurs, sans objet magique : il faut un test d'Art de la magie (DD 15 + niveau du sort), du temps et de l'encre spéciale (100 po par niveau de sort).\n\n*Son fonctionnement est à la discrétion du MJ.*",
+      "motif": "Portée par deux magiciens (DracoVick 16, Chath Restoun 14) : c'est manifestement un outil de copie de grimoire. Je donne la règle qu'elle abrège sans décider ce qu'elle fait gagner."
+    },
+    {
+      "id": 43,
+      "nom": "Rabit's foot",
+      "verdict": "campagne",
+      "description": "Objet de la campagne, sous un nom anglais (*rabbit's foot*, la patte de lapin porte-bonheur). Aucune pièce de ce nom au Guide du Maître.\n\n👀 L'objet de chance du livre est la **pierre porte-bonheur** : un morceau d'agate grossièrement poli qui confère à son propriétaire un bonus de chance de +1 à tous ses jets de sauvegarde et à ses tests de compétences et de caractéristiques (Évocation faible ; NLS 5 ; 20 000 po). Si la patte de lapin est cette pièce-là, le MJ peut renvoyer à sa fiche.\n\n*Son effet est à la discrétion du MJ.*",
+      "motif": "Portée par Camla (Ensorceleur 16). ATTENTION : j'avais cité une « pierre de chance » et une « lame de chance » ; ni l'une ni l'autre n'existe. Le livre dit « pierre porte-bonheur », et son bonus est un bonus de chance, pas de résistance. Vérifié avant écriture."
+    },
+    {
+      "id": 61,
+      "nom": "Catspaw",
+      "verdict": "campagne",
+      "description": "Objet de la campagne, sous un nom anglais. Aucune pièce nommée *catspaw* au Guide du Maître.\n\n*Son effet est à la discrétion du MJ.*",
+      "motif": "Portée par Picasso (Elfe Roublard 5). Cherché au catalogue (745 entrées) et dans le SRD français : rien. Je n'invente pas."
+    },
+    {
+      "id": 62,
+      "nom": "Ring of nine lives",
+      "verdict": "campagne",
+      "description": "Anneau de la campagne, sous un nom anglais. Il n'existe pas d'anneau « aux neuf vies » au Guide du Maître.\n\n⚠ Ne pas le confondre avec l'**épée des neuf vies** du livre (23 057 po), qui absorbe l'énergie vitale de ses victimes neuf fois avant de redevenir une épée longue +2 — c'est une arme, pas un anneau.\n\nRègle des anneaux : un personnage ne peut porter que deux anneaux magiques à la fois ; un troisième ne fonctionne pas. Leur poids n'est jamais pris en compte.\n\n*Son effet est à la discrétion du MJ.*",
+      "motif": "Le seul « neuf vies » du livre est une épée. Le rapprochement serait faux : le porteur est Zaïd, Druide 10, et la ligne est un anneau."
+    },
+    {
+      "id": 54,
+      "nom": "Disque Obsibien miroir",
+      "verdict": "campagne",
+      "description": "Objet de la campagne. Aucune pièce de ce nom au Guide du Maître.\n\n*Son effet est à la discrétion du MJ.*",
+      "motif": "Portée par Telian Fore (Guerrier 6 / Roublard 4). « Obsibien » n'est ni au livre ni au catalogue ; je ne corrige pas l'orthographe d'un objet de MJ ni ne lui prête l'effet d'un autre objet."
+    },
+    {
+      "id": 52,
+      "nom": "Anneau  de jade +2",
+      "verdict": "campagne",
+      "description": "Anneau de la campagne. Aucun « anneau de jade » au Guide du Maître.\n\n👀 La fiche porte déjà un **Anneau de jade** (entrée distincte), décrit par le MJ comme « protection +2 et protection contre le feu ». Les deux lignes désignent très probablement le même objet — c'est une fusion à trancher par le MJ, pas par le scribe.\n\nRègle des anneaux : on ne peut porter que deux anneaux magiques à la fois ; un troisième ne fonctionne pas.",
+      "motif": "Portée par Rham (Rôdeur 18). Le doublon avec l'autre ligne est signalé, pas appliqué : fusionner supprime une ligne et repointe un porteur."
+    },
+    {
+      "id": 71,
+      "nom": "Amulette de protection +3",
+      "verdict": "campagne",
+      "description": "Amulette de la campagne. ⚠ Il n'existe pas d'« amulette de protection » au Guide du Maître, et deux pièces officielles pourraient porter ce nom chez un prêtre :\n\n- l'**amulette d'armure naturelle +3** (bonus d'altération de +3 à l'armure naturelle, 18 000 po) ;\n- la **cape de résistance +3** (bonus de résistance de +3 à tous les jets de sauvegarde, 9 000 po, vérifié au livre) — mais c'est une cape, pas une amulette.\n\nLe bonus de +3 ne dit pas lequel des deux : le premier protège la CA, le second les jets de sauvegarde. C'est une décision de MJ.\n\n*Portée au cou par Krugg Cœur-Flamboyant.*",
+      "motif": "Deux candidats officiels incompatibles. Choisir aurait changé soit la CA soit les jets de sauvegarde d'un personnage joué : je pose la question au lieu d'y répondre."
+    },
+    {
+      "id": 72,
+      "nom": "Anneaux protection +2",
+      "verdict": "campagne",
+      "description": "Anneau de protection +2 : bonus de parade de +2 à la CA. C'est le modèle +2 de la série du Guide du Maître (8 000 po ; Abjuration modérée ; NLS 5).\n\n👀 La fiche porte déjà une entrée **Anneau de protection +2** : ces deux lignes désignent la même pièce du livre. Fusion à trancher par le MJ.\n\nRègle des anneaux : on ne peut porter que deux anneaux magiques à la fois ; un troisième ne fonctionne pas. Le bonus de parade s'applique aussi contre les attaques de contact et compte même lorsque le porteur est pris au dépourvu.",
+      "motif": "La règle du modèle +2 est celle du livre et elle est sûre. Le doublon avec l'autre ligne est signalé, pas appliqué."
+    },
+    {
+      "id": 55,
+      "nom": "Gants de dextérité",
+      "verdict": "campagne",
+      "description": "**Gants de Dextérité** du Guide du Maître : ces gants de cuir souple extrêmement moulants permettent de manipuler les objets les plus délicats. De plus, ils améliorent la Dextérité de leur porteur, sous la forme d'un bonus d'altération variable s'appliquant à cette caractéristique. **Il faut porter les deux gants** pour profiter de ce bonus.\n\nTransmutation modérée ; NLS 8 ; Création d'objets merveilleux, grâce féline.\n\n⚠ Le livre en donne trois modèles : **+2** (4 000 po), **+4** (16 000 po) et **+6** (36 000 po). La fiche ne dit pas lequel. Le bonus est à préciser par le MJ — c'est 2, 4 ou 6 points de Dextérité sur un personnage joué, donc la CA, l'initiative et les jets de Réflexes.\n\n*La fiche porte par ailleurs une entrée distincte « Gantelets de dextérité +2 » : peut-être la même pièce.*",
+      "motif": "L'objet est au livre sans aucun doute, mais le modèle n'est pas saisi. J'écris la règle commune aux trois modèles et je laisse le bonus au MJ : le rattacher d'office au moins cher aurait été une invention chiffrée."
+    },
+    {
+      "id": 58,
+      "nom": "Bastard sword +3",
+      "verdict": "inventaire",
+      "description": "🗃️ Ligne d'inventaire : une **épée bâtarde +3**, sous son nom anglais. Ce n'est pas un objet merveilleux — sa place est le rayon ⚔ Armes (*Épée bâtarde* : arme de guerre à deux mains, 1d10, critique 19-20 ; maniable à une main avec le don Maniement d'une arme exotique).\n\nRègle des armes magiques : le bonus d'altération varie de +1 à +5 et s'ajoute aux jets d'attaque **et** de dégâts. Toutes les armes magiques sont des armes de maître, mais le bonus de maître ne s'ajoute pas au bonus d'altération. Aucune arme ne peut dépasser un bonus total de +10 (altération plus équivalences de propriétés).",
+      "motif": "Portée par Gwendoline (Guerrier 12). Une arme magique n'a pas de fiche d'objet merveilleux : elle se décrit par son bonus et ses propriétés. Je donne la règle et je renvoie au bon rayon."
+    },
+    {
+      "id": 59,
+      "nom": "Dagger +4, returning",
+      "verdict": "inventaire",
+      "description": "🗃️ Ligne d'inventaire : une **dague +4 boomerang**, sous son nom anglais (*returning* = boomerang en VF 3.5). Sa place est le rayon ⚔ Armes (*Dague* : arme courante légère, 1d4, critique 19-20, 3 m de portée au lancer).\n\nPropriété **boomerang** (livre) : cette propriété ne peut être placée que sur des armes de jet. Après avoir été lancée, une arme boomerang vole automatiquement jusque dans la main de son propriétaire. Elle arrive juste avant le prochain tour de jeu du lanceur, qui peut donc la relancer sans attendre. L'attraper en vol est une action libre ; si le personnage ne peut pas l'attraper ou s'il s'est déplacé après avoir tiré, l'arme tombe à ses pieds.\n\nUne propriété spéciale compte comme des points de bonus pour le prix, mais ne modifie ni l'attaque ni les dégâts.",
+      "motif": "Portée par Ivanhoé (Prêtre 12). « returning » a une traduction officielle exacte en 3.5 — boomerang —, et le Grimoire l'emploie déjà (la Flèche rapace est décrite « flèche +3 boomerang »)."
+    },
+    {
+      "id": 60,
+      "nom": "Arc long +3",
+      "verdict": "inventaire",
+      "description": "🗃️ Ligne d'inventaire : un **arc long +3**. Sa place est le rayon ⚔ Armes (*Arc long* : arme de guerre à distance, 1d8, critique ×3, 30 m de facteur de portée).\n\nRègle des armes magiques : le bonus d'altération de +1 à +5 s'ajoute aux jets d'attaque et de dégâts. ⚠ Sur un arc, le bonus d'altération de l'arc et celui des flèches ne se cumulent pas : on applique le meilleur des deux.",
+      "motif": "Portée par Élianne (Elfe Druide 5). ⚠ Le druide n'est pas compétent avec l'arc long (ses armes de prédilection excluent les armes de guerre) : à vérifier par le MJ, mais ce n'est pas une affaire de fiche d'objet."
+    },
+    {
+      "id": 50,
+      "nom": "Arrows +2 (9)",
+      "verdict": "inventaire",
+      "description": "🗃️ Ligne d'inventaire : **neuf flèches +2**, sous leur nom anglais. Leur place est le rayon ⚔ Armes (*Flèches (20)*).\n\nRègle des munitions magiques : les munitions sont vendues et créées par lots de 50 au livre. Le bonus d'altération s'ajoute à l'attaque et aux dégâts, mais ⚠ une munition magique est **détruite** quand elle touche (à moins d'une propriété qui l'épargne), et son bonus ne se cumule pas avec celui de l'arc : on garde le meilleur des deux.",
+      "motif": "Portée par Elora Vlaardoen. Le « (9) » est un décompte de fiche, pas une entrée de règle."
+    },
+    {
+      "id": 53,
+      "nom": "Dague avec lumière continuel",
+      "verdict": "inventaire",
+      "description": "🗃️ Ligne d'inventaire : une dague portant un sort de lumière permanent. « Lumière continuelle » est l'ancien nom du sort **flamme éternelle** de la 3.5 — voir sa fiche au rayon 📜 Sorts.\n\nFlamme éternelle crée une flamme immobile et permanente, aussi lumineuse qu'une torche, qui ne consomme pas d'oxygène et ne produit pas de chaleur. Elle ne s'éteint ni dans l'eau ni au vent, mais une dissipation de la magie la supprime. Composante matérielle : de la poussière de rubis valant 50 po.\n\nLa dague elle-même est au rayon ⚔ Armes (*Dague* : 1d4, critique 19-20, 3 m de portée au lancer).",
+      "motif": "Portée par Zébulon Haute-pierre (Magicien 17). « Lumière continuelle » n'existe pas au catalogue des sorts ; flamme éternelle est sa traduction 3.5 et le Grimoire la porte."
+    },
+    {
+      "id": 44,
+      "nom": "Last shot bow of neverending arrows +3 (elf only)",
+      "verdict": "campagne",
+      "description": "Arc de la campagne, sous un nom anglais. Il n'existe pas d'arc « à flèches sans fin » au Guide du Maître.\n\n⚠ Ne pas le confondre avec l'**arc du long serment** (*oathbow*, 25 600 po), le seul arc long composite elfique du livre : celui-là ne crée pas de flèches, il récompense un serment prononcé à voix haute contre une cible désignée.\n\nLa clause « elf only » (réservé aux elfes) n'est pas un mécanisme du livre : la 3.5 réserve des objets par alignement ou par classe, jamais par race. C'est une règle maison du MJ.\n\n*Son fonctionnement est à la discrétion du MJ.*",
+      "motif": "Portée par L'vethian (Illithid Roublard 12 / Magicien 8) — qui n'est pas un elfe, ce qui mérite à soi seul l'œil du MJ. Rien au livre ne correspond."
+    },
+    {
+      "id": 45,
+      "nom": "Arrow antimagic (1)",
+      "verdict": "campagne",
+      "description": "Flèche de la campagne, sous un nom anglais. Le Guide du Maître n'a pas de flèche antimagie.\n\nSes flèches spécifiques sont : la **flèche endormante** (flèche +1 blanche, dégâts non-létaux et jet de Volonté DD 11 pour ne pas dormir 5 minutes, 132 po), la **flèche mortelle** (flèche +1 mortelle pour un type de créature, jet de Vigueur DD 20 ou mort instantanée) et quelques flèches de supplément déjà au Grimoire (flèche rapace, flèches de soins).\n\n*Son effet est à la discrétion du MJ.*",
+      "motif": "Portée par Surya (Moine 13), 0 charge restante. Je nomme les flèches que le livre possède réellement : si l'une d'elles est ce que le MJ voulait, il la retrouvera."
+    },
+    {
+      "id": 46,
+      "nom": "Arrow of blinding (1)",
+      "verdict": "campagne",
+      "description": "Flèche de la campagne, sous un nom anglais (*flèche aveuglante*). Le Guide du Maître n'en a pas.\n\nSes flèches spécifiques sont la **flèche endormante** et la **flèche mortelle**. Aucune propriété d'arme du livre n'aveugle : pour cet effet, la 3.5 passe par les sorts *cécité/surdité* et *lumière brûlante*.\n\n*Son effet est à la discrétion du MJ.*",
+      "motif": "Portée par William Pilsener (Roublard 11), 0 charge restante. ATTENTION : j'avais cité une propriété « éclat lumineux » qui n'est dans aucune des deux tables de propriétés du livre ; retirée."
+    },
+    {
+      "id": 47,
+      "nom": "Arrow of distance (1)",
+      "verdict": "campagne",
+      "description": "Flèche de la campagne, sous un nom anglais (*arrow of distance*). Le Guide du Maître n'a pas de flèche de ce nom, mais il a la propriété d'arme à distance **longue portée** : « une arme de longue portée double son facteur de portée » (bonus de +1 au prix). C'est très probablement de cela qu'il s'agit — mais c'est au MJ de le dire, une propriété d'arme n'étant pas une flèche spécifique.\n\nToute arme portant une propriété spéciale doit avoir au moins un bonus d'altération de +1.",
+      "motif": "Portée par Ferazel (Prêtre 17), 0 charge restante. Le nom VF exact est « longue portée » (vérifié dans la table des propriétés spéciales des armes à distance) — j'avais écrit « portée doublée »."
+    },
+    {
+      "id": 48,
+      "nom": "Arrow of ice (1)",
+      "verdict": "campagne",
+      "description": "Flèche de la campagne, sous un nom anglais (*flèche de glace*). Le Guide du Maître n'en a pas.\n\nPour des dégâts de froid, le livre a deux propriétés d'arme : **froid** (+1d6 points de dégâts de froid, bonus de +1 au prix) et **froid intense** (+1d10 supplémentaires sur un coup critique confirmé, bonus de +2). ⚠ La propriété *boomerang* est réservée aux armes de jet : elle ne peut pas aller sur une flèche.\n\n*Son effet est à la discrétion du MJ.*",
+      "motif": "Portée par Gaïa (Druide 8). Les noms VF exacts sont « froid » et « froid intense » (j'avais écrit « glaciale »), relevés dans les deux tables de propriétés spéciales."
+    },
+    {
+      "id": 63,
+      "nom": "75 flèches",
+      "verdict": "inventaire",
+      "description": "🗃️ Ligne d'inventaire : un décompte de munitions ordinaires, pas un objet magique. Les flèches sont au rayon ⚔ Armes (*Flèches (20)* : 1 po le lot de 20, 1,5 kg).\n\nCette ligne est restée dans la liste des objets magiques en venant de l'ancienne fiche FileMaker.",
+      "motif": "Portée par Sornë Verca. Rien à relever dans un livre : 75 flèches ordinaires."
+    },
+    {
+      "id": 69,
+      "nom": "6 flèches poison",
+      "verdict": "inventaire",
+      "description": "🗃️ Ligne d'inventaire : six flèches empoisonnées. Ce n'est pas un objet magique — le poison est un consommable, réglé par le chapitre 8 du Guide du Maître (table des poisons : prix, DD du jet de Vigueur, dégâts initiaux et secondaires).\n\n⚠ Appliquer un poison sur une arme expose à se piquer soi-même sur un jet d'attaque raté de 1. Le poison d'une munition est perdu quand elle touche.\n\nLes flèches elles-mêmes sont au rayon ⚔ Armes (*Flèches (20)*).",
+      "motif": "Portée par Éloban (Guerrier 5). Le poison n'est pas magique et son type n'est pas saisi : je donne la règle qui s'applique en jeu."
+    },
+    {
+      "id": 64,
+      "nom": "2 potions de grands soins",
+      "verdict": "inventaire",
+      "description": "🗃️ Ligne d'inventaire : deux fioles. Sa place est la section 🧪 Potions de la fiche, pas la liste des objets magiques — le Grimoire tient un catalogue de 85 potions depuis le 2026-10-05.\n\n« Grands soins » est l'ancien nom de la **Potion de soins importants** : elle rend **3d8+5** points de vie (sort du 3e niveau, NLS 5), 750 po. Taper « grand soin » dans la recherche mène désormais à sa fiche.",
+      "motif": "Portée par Delgar des Monts de Fer. ATTENTION : j'avais écrit 2d8+3, qui sont les points de la potion de soins *modérés* ; soins importants rend 3d8 + 1 par niveau de lanceur, soit 3d8+5 au niveau de lanceur minimal de 5. Recoupé avec la table des potions du Guide du Maître (750 po)."
+    },
+    {
+      "id": 277,
+      "nom": "Potion de grands soins",
+      "verdict": "inventaire",
+      "description": "🗃️ Ligne d'inventaire : une fiole rangée à la ceinture. Sa place est la section 🧪 Potions de la fiche, pas la liste des objets magiques.\n\n« Grands soins » est l'ancien nom de la **Potion de soins importants** (2d8+3 points de vie, 750 po), qui figure au catalogue des potions avec sa fiche complète.",
+      "motif": "Portée par Krugg Cœur-Flamboyant, 3 charges restantes. Doublon de côté : Krugg porte déjà une Potion de soins importants dans la table des potions — à vérifier par le MJ."
+    },
+    {
+      "id": 65,
+      "nom": "2 potions de soins",
+      "verdict": "inventaire",
+      "description": "🗃️ Ligne d'inventaire : deux fioles. Sa place est la section 🧪 Potions de la fiche.\n\n⚠ « Potions de soins » sans précision ne dit pas lequel des **trois** modèles : **soins légers** (1d8+1, 50 po), **soins modérés** (2d8+3, 300 po) ou **soins importants** (3d8+5, 750 po). À préciser par le MJ — l'écart va de 1d8+1 à 3d8+5 points de vie.\n\n*Il n'existe pas de potion de soins intensifs : une potion ne peut contenir qu'un sort du 3e niveau ou moins, et soins intensifs est du 4e.*",
+      "motif": "Portée par Dragar Thunderhammer (Guerrier 4). ATTENTION : j'avais listé quatre modèles dont un impossible ; la limite du 3e niveau interdit la potion de soins intensifs, et la table des potions du Guide du Maître s'arrête bien aux soins importants."
+    },
+    {
+      "id": 66,
+      "nom": "2 potion d'invisibilité",
+      "verdict": "inventaire",
+      "description": "🗃️ Ligne d'inventaire : deux fioles. Sa place est la section 🧪 Potions de la fiche — la **Potion d'invisibilité** figure au catalogue des potions (sort du 2e niveau, NLS 3, 300 po, 3 minutes d'invisibilité).\n\nRègle de la potion : la boire est une action simple qui provoque une attaque d'opportunité. Elle agit sur celui qui la boit, au niveau de lanceur inscrit sur la fiole.",
+      "motif": "Portée par Maxalla Trigostas (Prêtre 3). La potion existe au catalogue sous son nom officiel : la ligne est un doublon d'inventaire."
+    },
+    {
+      "id": 70,
+      "nom": "1 parchemin soins modérés",
+      "verdict": "inventaire",
+      "description": "🗃️ Ligne d'inventaire : un parchemin portant le sort **soins modérés** (2d8 + 1 point par niveau de lanceur, maximum +10) — voir sa fiche au rayon 📜 Sorts.\n\nRègle des parchemins : un sort transcrit sur le papier, utilisable une seule et unique fois. Déchiffrer d'abord (Art de la magie DD 20 + niveau du sort, ou *lecture de la magie*).\n\n⚠ **Trois conditions** pour l'activer, et la deuxième est contraignante ici : le sort doit être **sur la liste de sa classe**. Soins modérés est un sort de barde, de druide, de paladin et de prêtre — **pas d'ensorceleur**. Le porteur de cette ligne est Ensorceleur 2 : il ne peut pas lire ce parchemin, sauf avec le don *Utilisation d'objets magiques*. Ce n'est pas une potion.",
+      "motif": "Portée par Peren Holimion (Ensorceleur 2). La condition « le sort doit appartenir à la liste des sorts de la classe du personnage » est explicite au livre et elle tombe sur ce personnage : l'information vaut d'être écrite."
+    },
+    {
+      "id": 67,
+      "nom": "2 capes grises",
+      "verdict": "inventaire",
+      "description": "🗃️ Ligne d'inventaire : deux capes, sans effet saisi.\n\n👀 Piste laissée au MJ : la **cape d'elfe** du Guide du Maître est décrite comme « une cape de tissu gris » et confère un bonus d'aptitude de +5 aux tests de Discrétion (2 500 po). Le porteur de cette ligne est un elfe. Rien ne le prouve — c'est au MJ de dire si ces capes grises sont des capes d'elfe ou de simples vêtements.",
+      "motif": "Portée par Radriel Wyrdlore (Elfe Magicien 3 / Guerrier 1). La ressemblance « cape grise / cape d'elfe » est séduisante et c'est précisément pourquoi je ne la décide pas : deux capes ordinaires portent le même nom."
+    },
+    {
+      "id": 68,
+      "nom": "1 cape noire",
+      "verdict": "inventaire",
+      "description": "🗃️ Ligne d'inventaire : une cape, sans effet saisi. Aucune « cape noire » au Guide du Maître.\n\n*S'il s'agit d'une pièce magique, son effet est à la discrétion du MJ.*",
+      "motif": "Portée par Sabin Gazonvert (Ensorceleur 4). Une cape noire peut être un simple vêtement ; rien dans la ligne ne dit le contraire."
+    }
+  ]
+}

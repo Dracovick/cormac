@@ -29,6 +29,9 @@ export type EntreeIndex = {
   classes?: string[]
   /** Niveau du sort pour chaque classe (rayon Sorts seulement) — pour le tri par niveau. */
   niveaux?: Record<string, number>
+  /** true = ligne d'inventaire de la campagne, pas une règle relevée dans un
+   *  livre (rayon Objets magiques seulement). Marquée 🗃️ dans la liste. */
+  campagne?: boolean
 }
 
 export type BibliothequeIndex = {
@@ -109,9 +112,15 @@ export async function getBibliothequeIndex(): Promise<BibliothequeIndex> {
     niveauxParSort(),
     db.select({ id: schema.potions.id, nom: schema.potions.nom, sortEffet: schema.potions.sortEffet })
       .from(schema.potions).orderBy(schema.potions.nom),
+    // Le rayon publie les 745 lignes, mais `estCatalogue` dit lesquelles sont
+    // des règles relevées dans un livre (674) et lesquelles sont des lignes
+    // d'inventaire de la campagne (71 : « 75 flèches », « Catspaw », les
+    // parchemins et baguettes écrits par le MJ). Contrairement aux armes et aux
+    // dons, rien n'est retiré du rayon : ces lignes portent les notes du MJ,
+    // qui sont de la matière de jeu. Voir drizzle/0010.
     db.select({
       id: schema.magicItems.id, nom: schema.magicItems.nom, type: schema.magicItems.type,
-      prix: schema.magicItems.prix,
+      prix: schema.magicItems.prix, estCatalogue: schema.magicItems.estCatalogue,
     }).from(schema.magicItems).orderBy(schema.magicItems.nom),
     // Seul le catalogue du Manuel est publié : la table porte aussi les lignes
     // d'inventaire des personnages ("Longbow +3, rapid shot"), qui n'ont rien
@@ -163,6 +172,7 @@ export async function getBibliothequeIndex(): Promise<BibliothequeIndex> {
       id: o.id, nom: o.nom,
       detail: [o.type, formatPrix(o.prix)].filter(Boolean).join(' · '),
       groupe: groupeObjet(o.type),
+      campagne: !o.estCatalogue || undefined,
     })),
     armes: armes.map(a => ({
       id: a.id, nom: a.nom,
@@ -216,7 +226,14 @@ export type FichePotion = {
   potion: typeof schema.potions.$inferSelect
   sortLie: { id: number; nom: string } | null
 }
-export type FicheObjet = { categorie: 'objet'; objet: typeof schema.magicItems.$inferSelect; prixAffiche: string | null }
+export type FicheObjet = {
+  categorie: 'objet'
+  objet: typeof schema.magicItems.$inferSelect
+  prixAffiche: string | null
+  /** L'entrée de catalogue qui porte les règles, quand la ligne est une ligne
+   *  d'inventaire rattachée (« Ring of counterspelling » → anneau de contresort). */
+  regleLiee: { id: number; nom: string } | null
+}
 export type FicheArme = {
   categorie: 'arme'
   arme: typeof schema.weapons.$inferSelect
@@ -265,7 +282,13 @@ export async function getFicheBibliotheque(categorie: RayonSlug, id: number): Pr
   if (categorie === 'objet') {
     const [objet] = await db.select().from(schema.magicItems).where(eq(schema.magicItems.id, id))
     if (!objet) return null
-    return { categorie, objet, prixAffiche: formatPrix(objet.prix) }
+    let regleLiee: { id: number; nom: string } | null = null
+    if (objet.catalogueId != null) {
+      const [regle] = await db.select({ id: schema.magicItems.id, nom: schema.magicItems.nom })
+        .from(schema.magicItems).where(eq(schema.magicItems.id, objet.catalogueId))
+      regleLiee = regle ?? null
+    }
+    return { categorie, objet, prixAffiche: formatPrix(objet.prix), regleLiee }
   }
 
   if (categorie === 'arme') {
