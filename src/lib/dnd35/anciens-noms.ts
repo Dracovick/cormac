@@ -34,6 +34,12 @@ export const ANCIENS_NOMS: Record<string, string[]> = {
   'Élu des morts-vivants': ['Maître des morts-vivants'],   // p. 110 et p. 90
   'Orbite du crâne': ['Orbite de crâne'],                  // p. 114
   'Vision aveugle (sort)': ['Vision aveugle'],             // p. 118
+
+  // ── Compétences : noms de la saisie FileMaker que la 3.5 ne connaît pas.
+  // « Connaissance de la magie » a été fusionnée dans « Art de la magie »
+  // le 2026-10-08 sur décision d'André — la ligne n'existe plus en base, mais
+  // les joueurs qui la tapent doivent arriver à la bonne fiche de règles.
+  'Art de la magie': ['Connaissance de la magie'],
 }
 
 export function aliasPour(nomOfficiel: string): string[] {

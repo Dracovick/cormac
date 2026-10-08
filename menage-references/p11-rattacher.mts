@@ -39,7 +39,10 @@ const A_LA_MAIN: Record<string, { vers: string; motif: string }> = {
   'Monture': { vers: 'Équitation', motif: "même compétence (Ride) sous un autre nom de table" },
   'Religion': { vers: 'Connaissances', motif: "« Religion » seule désigne Connaissances (religion)" },
   'Connaissance astronomie': { vers: 'Connaissances', motif: 'domaine de Connaissances hors Manuel — la règle des Connaissances s\'applique' },
-  'Connaissance de la magie': { vers: 'Connaissances', motif: 'domaine de Connaissances hors Manuel — proche de Connaissances (mystères)' },
+  // 'Connaissance de la magie' : RETIRÉE le 2026-10-08. André a tranché
+  // autrement que mon rattachement — ce n'était pas un domaine de
+  // Connaissances mais « Art de la magie », et la ligne a été FUSIONNÉE
+  // (supprimée, porteurs repointés). Voir p13-fusion-art-de-la-magie.mts.
   'Connaissance des monstres': { vers: 'Connaissances', motif: 'domaine de Connaissances hors Manuel' },
   'Connaissance des nains': { vers: 'Connaissances', motif: 'domaine de Connaissances hors Manuel' },
   'Connaissance du commerce': { vers: 'Connaissances', motif: 'domaine de Connaissances hors Manuel' },

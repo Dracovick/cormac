@@ -189,6 +189,9 @@ export async function getBibliothequeIndex(): Promise<BibliothequeIndex> {
       // La caractéristique est ce qui range une compétence dans la tête d'un
       // joueur : « qu'est-ce que je lance sur ma Dextérité ? »
       groupe: LIBELLE_CARAC[c.caracteristique] ?? c.caracteristique,
+      // Une compétence fusionnée a disparu de la base, pas des habitudes :
+      // « Connaissance de la magie » doit mener à « Art de la magie ».
+      alias: aliasPour(c.nom),
     })),
   }
 }

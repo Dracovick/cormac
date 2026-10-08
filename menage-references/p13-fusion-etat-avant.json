@@ -1,0 +1,214 @@
+{
+ "source": {
+  "id": 20,
+  "nom": "Connaissance de la magie",
+  "est_catalogue": false
+ },
+ "cible": {
+  "id": 164,
+  "nom": "Art de la magie",
+  "est_catalogue": true
+ },
+ "lignes": [
+  {
+   "id": 1340,
+   "personnage_id": 4,
+   "perso": "DracoVick Von Drag",
+   "skill_id": 20,
+   "rangs_investis": 10,
+   "modif_divers": 0
+  },
+  {
+   "id": 1336,
+   "personnage_id": 4,
+   "perso": "DracoVick Von Drag",
+   "skill_id": 164,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 408,
+   "personnage_id": 23,
+   "perso": "Zack",
+   "skill_id": 164,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 418,
+   "personnage_id": 28,
+   "perso": "Nayla Brisenocturne",
+   "skill_id": 164,
+   "rangs_investis": 12,
+   "modif_divers": 0
+  },
+  {
+   "id": 524,
+   "personnage_id": 42,
+   "perso": "Ferazel",
+   "skill_id": 164,
+   "rangs_investis": 7,
+   "modif_divers": 0
+  },
+  {
+   "id": 1103,
+   "personnage_id": 43,
+   "perso": "Gaïa",
+   "skill_id": 164,
+   "rangs_investis": 5,
+   "modif_divers": 0
+  },
+  {
+   "id": 985,
+   "personnage_id": 45,
+   "perso": "Elora Vlaardoen",
+   "skill_id": 164,
+   "rangs_investis": 19,
+   "modif_divers": 0
+  },
+  {
+   "id": 564,
+   "personnage_id": 46,
+   "perso": "Garret Blanche Pierre",
+   "skill_id": 164,
+   "rangs_investis": 5,
+   "modif_divers": 3
+  },
+  {
+   "id": 1179,
+   "personnage_id": 50,
+   "perso": "Zébulon Haute-pierre",
+   "skill_id": 20,
+   "rangs_investis": 17,
+   "modif_divers": 1
+  },
+  {
+   "id": 1181,
+   "personnage_id": 50,
+   "perso": "Zébulon Haute-pierre",
+   "skill_id": 164,
+   "rangs_investis": 17,
+   "modif_divers": 1
+  },
+  {
+   "id": 616,
+   "personnage_id": 51,
+   "perso": "Chath Restoun",
+   "skill_id": 164,
+   "rangs_investis": 15,
+   "modif_divers": 0
+  },
+  {
+   "id": 639,
+   "personnage_id": 54,
+   "perso": "Phyllin Thoddin",
+   "skill_id": 164,
+   "rangs_investis": 0,
+   "modif_divers": 8
+  },
+  {
+   "id": 644,
+   "personnage_id": 55,
+   "perso": "Gorm",
+   "skill_id": 164,
+   "rangs_investis": 3,
+   "modif_divers": 8
+  },
+  {
+   "id": 654,
+   "personnage_id": 56,
+   "perso": "Tellian Fore",
+   "skill_id": 164,
+   "rangs_investis": 5,
+   "modif_divers": 8
+  },
+  {
+   "id": 709,
+   "personnage_id": 60,
+   "perso": "Vallin Tefferti",
+   "skill_id": 20,
+   "rangs_investis": 12,
+   "modif_divers": 0
+  },
+  {
+   "id": 717,
+   "personnage_id": 61,
+   "perso": "Elrannel M'Lachel",
+   "skill_id": 164,
+   "rangs_investis": 11,
+   "modif_divers": 0
+  },
+  {
+   "id": 723,
+   "personnage_id": 62,
+   "perso": "Legolas",
+   "skill_id": 20,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 728,
+   "personnage_id": 62,
+   "perso": "Legolas",
+   "skill_id": 164,
+   "rangs_investis": 3,
+   "modif_divers": 0
+  },
+  {
+   "id": 737,
+   "personnage_id": 64,
+   "perso": "Willarth",
+   "skill_id": 20,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 739,
+   "personnage_id": 64,
+   "perso": "Willarth",
+   "skill_id": 164,
+   "rangs_investis": 8,
+   "modif_divers": 0
+  },
+  {
+   "id": 746,
+   "personnage_id": 66,
+   "perso": "Ivanhoé",
+   "skill_id": 164,
+   "rangs_investis": 12,
+   "modif_divers": 0
+  },
+  {
+   "id": 907,
+   "personnage_id": 70,
+   "perso": "Drakara",
+   "skill_id": 164,
+   "rangs_investis": 17,
+   "modif_divers": 0
+  },
+  {
+   "id": 805,
+   "personnage_id": 76,
+   "perso": "Radriel Wyrdlore",
+   "skill_id": 20,
+   "rangs_investis": 4,
+   "modif_divers": 0
+  },
+  {
+   "id": 835,
+   "personnage_id": 79,
+   "perso": "Peren Holimion",
+   "skill_id": 20,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  },
+  {
+   "id": 834,
+   "personnage_id": 79,
+   "perso": "Peren Holimion",
+   "skill_id": 164,
+   "rangs_investis": 2,
+   "modif_divers": 0
+  }
+ ]
+}

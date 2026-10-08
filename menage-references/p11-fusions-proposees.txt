@@ -53,9 +53,14 @@ B. LE MÊME DOMAINE SOUS DEUX NOMS
   [ 65] Religion                      1 porteur   →  [181] Connaissances (religion)   7 porteurs
         « Religion » seule désigne le même domaine.
 
-  [ 20] Connaissance de la magie      7 porteurs  →  [ 10] Connaissances (mystères)  11 porteurs
-        Knowledge (arcana). ⚠ À confirmer : « magie » pourrait aussi vouloir
-        dire Art de la magie chez certains de vos joueurs.
+  [ 20] Connaissance de la magie      7 porteurs  →  [164] Art de la magie
+        ✅ FAITE le 2026-10-08. Ma proposition visait Connaissances (mystères);
+        ANDRÉ A TRANCHÉ pour Art de la magie — « Change seulement Connaissance
+        de la magie pour Art de la Magie chez les personnages ». Le doute que
+        j'avais noté ci-dessous était le bon : c'était bien Art de la magie.
+        5 des 7 porteurs avaient DÉJÀ les deux lignes; rangs retenus = le
+        maximum des deux (seul Zébulon divergeait, 15 → 17). Art de la magie
+        passe de 18 à 20 porteurs. Voir p13-fusion-art-de-la-magie.mts.
 
   Les autres « Connaissance X » au singulier (astronomie, des monstres, des
   nains, du commerce, langues anciennes, et « connaissance des femmes ») sont
