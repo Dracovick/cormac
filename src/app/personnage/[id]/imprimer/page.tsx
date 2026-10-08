@@ -9,6 +9,7 @@ import { getCompetenceRef, caracteristiqueDe } from '@/lib/dnd35/skills'
 import { getDomaineInfo } from '@/lib/dnd35/domains'
 import { getFeatPassiveBonuses, sommeBonus } from '@/lib/dnd35/feat-bonuses'
 import { formatCritique } from '@/lib/dnd35/critique'
+import { estArmeADistance } from '@/lib/dnd35/weapons'
 import { PrintButton } from '@/components/fiche/PrintButton'
 import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
 
@@ -545,7 +546,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
           <tbody>
             {weapons.length > 0 ? weapons.map((w, i) => {
               const wpnBonus = w.charWeapon.bonusMagique ?? 0
-              const isRanged = w.weapon.portee != null
+              const isRanged = estArmeADistance(w.weapon.famille, w.weapon.portee)
               const rawBab   = isRanged ? rawBabProj : rawBabCorps
               const bbaTotal = isRanged ? bbaProj    : bbaCorps
               const bbaStr   = atkSeq(bbaTotal, rawBab, wpnBonus)

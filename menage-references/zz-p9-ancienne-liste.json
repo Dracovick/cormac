@@ -1,0 +1,332 @@
+[
+ {
+  "nom": "Gourdin",
+  "degats": "1d6",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Dague",
+  "degats": "1d4",
+  "crit": "19-20/×2"
+ },
+ {
+  "nom": "Dague (lancée)",
+  "degats": "1d4",
+  "crit": "19-20/×2"
+ },
+ {
+  "nom": "Faucille",
+  "degats": "1d6",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Gantelet",
+  "degats": "1d3",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Gantelet clouté",
+  "degats": "1d4",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Matraque",
+  "degats": "1d6",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Masse légère",
+  "degats": "1d6",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Masse lourde",
+  "degats": "1d8",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Morgenstern",
+  "degats": "1d8",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Lance courte",
+  "degats": "1d6",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Bâton de combat",
+  "degats": "1d6",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Lance",
+  "degats": "1d8",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Lance longue",
+  "degats": "1d8",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Arbalète légère",
+  "degats": "1d8",
+  "crit": "19-20/×2"
+ },
+ {
+  "nom": "Arbalète lourde",
+  "degats": "1d10",
+  "crit": "19-20/×2"
+ },
+ {
+  "nom": "Dard",
+  "degats": "1d4",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Fronde",
+  "degats": "1d4",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Javeline",
+  "degats": "1d6",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Hachette",
+  "degats": "1d6",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Hachette (lancée)",
+  "degats": "1d6",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Kukri",
+  "degats": "1d4",
+  "crit": "18-20/×2"
+ },
+ {
+  "nom": "Marteau léger",
+  "degats": "1d4",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Marteau léger (lancé)",
+  "degats": "1d4",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Pic léger",
+  "degats": "1d4",
+  "crit": "20-20/×4"
+ },
+ {
+  "nom": "Épée courte",
+  "degats": "1d6",
+  "crit": "19-20/×2"
+ },
+ {
+  "nom": "Hache de bataille",
+  "degats": "1d8",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Fléau",
+  "degats": "1d8",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Épée longue",
+  "degats": "1d8",
+  "crit": "19-20/×2"
+ },
+ {
+  "nom": "Pic lourd",
+  "degats": "1d6",
+  "crit": "20-20/×4"
+ },
+ {
+  "nom": "Rapière",
+  "degats": "1d6",
+  "crit": "18-20/×2"
+ },
+ {
+  "nom": "Cimeterre",
+  "degats": "1d6",
+  "crit": "18-20/×2"
+ },
+ {
+  "nom": "Trident",
+  "degats": "1d8",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Marteau de guerre",
+  "degats": "1d8",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Fauchon",
+  "degats": "2d4",
+  "crit": "18-20/×2"
+ },
+ {
+  "nom": "Glaive",
+  "degats": "1d10",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Grande hache",
+  "degats": "1d12",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Grand gourdin",
+  "degats": "1d10",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Épée à deux mains",
+  "degats": "2d6",
+  "crit": "19-20/×2"
+ },
+ {
+  "nom": "Guisarme",
+  "degats": "2d4",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Hallebarde",
+  "degats": "1d10",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Fléau lourd",
+  "degats": "1d10",
+  "crit": "19-20/×2"
+ },
+ {
+  "nom": "Lance de cavalerie",
+  "degats": "1d8",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Ranseur",
+  "degats": "2d4",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Faux de guerre",
+  "degats": "2d4",
+  "crit": "20-20/×4"
+ },
+ {
+  "nom": "Arc court",
+  "degats": "1d6",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Arc long",
+  "degats": "1d8",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Arc court composite",
+  "degats": "1d6",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Arc long composite",
+  "degats": "1d8",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Kama",
+  "degats": "1d6",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Nunchaku",
+  "degats": "1d6",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Sai",
+  "degats": "1d4",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Siangham",
+  "degats": "1d6",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Épée bâtarde",
+  "degats": "1d10",
+  "crit": "19-20/×2"
+ },
+ {
+  "nom": "Hache de guerre naine",
+  "degats": "1d10",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Fouet",
+  "degats": "1d3",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Épée à deux lames",
+  "degats": "1d8/1d8",
+  "crit": "19-20/×2"
+ },
+ {
+  "nom": "Double hache orque",
+  "degats": "1d8/1d8",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Chaîne cloutée",
+  "degats": "2d4",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Hallebarde naine",
+  "degats": "1d8/1d6",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Marteau-crochet gnome",
+  "degats": "1d6/1d4",
+  "crit": "20-20/×3"
+ },
+ {
+  "nom": "Arbalète de poing",
+  "degats": "1d4",
+  "crit": "19-20/×2"
+ },
+ {
+  "nom": "Arbalète légère à répétition",
+  "degats": "1d8",
+  "crit": "19-20/×2"
+ },
+ {
+  "nom": "Arbalète lourde à répétition",
+  "degats": "1d10",
+  "crit": "19-20/×2"
+ },
+ {
+  "nom": "Shuriken",
+  "degats": "1d2",
+  "crit": "20-20/×2"
+ },
+ {
+  "nom": "Bolas",
+  "degats": "1d4",
+  "crit": "20-20/×2"
+ }
+]

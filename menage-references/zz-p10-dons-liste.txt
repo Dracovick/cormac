@@ -1,0 +1,477 @@
+[234]	1	(+1 jet svgarde)
+[382]	1	+1 détection, fouille et perseption
+[43]	1	+2 DEX, -2 CON, +2 vs enchantment (ex.: Hold), +2 Listen/Spot/Search,
+[136]	1	+2 J.S. Enchantement
+[380]	1	+2 jet sauvegarde école enchantement _race
+[407]	1	+3 jet de sauvegarde contre poison
+[328]	1	+8 racial bonus to Spot, Search, Listen and Sense Motive
+[231]	1	- Métamorphose, Peau de pierre
+[132]	1	--------------------------------
+[138]	1	---------------------------------
+[57]	1	--Dracologiste du 8 ième Cercle --
+[143]	1	1   Specialisation in abjuration without penalties
+[58]	1	1) specialisation in evocation without penalties
+[217]	1	1- Tir à bout portant
+[338]	1	1st Favored Enemy
+[299]	0	1st Favored Enemy : Beasts (+3 compétences et dégâts versus)
+[113]	1	1st level feat: Weapon focus (dagger)
+[144]	1	2   Glyphs of Matter (niv 1) 82%, 3x jour (or, acier, pierre) _ _ _
+[59]	1	2) Protection from Dragons
+[218]	1	2- Tir rapide
+[339]	1	2nd Favored Enemy
+[300]	0	2nd Favored Enemy : Undeads (+2 compétences et dégâts versus)
+[145]	1	3   bonus Spell Mastery feat for spells of abjuration school
+[60]	1	3) Bonus Maîtrise des sorts pour l'école "évocation"
+[219]	1	3- Tir de précision (peut tirer en corps à corps)
+[340]	1	3rd Favored Enemy
+[301]	0	3rd Favored Enemy : Aberrations (+1 compétences et dégâts versus)
+[114]	1	3rd level feat: Weapon finesse (dagger)
+[146]	1	4   Glyphs of Life (niv 3), 72%, 2x jour (rapaces, félins) _ _
+[61]	1	4) Dragon Tooth, Eye, Paw, Scale, Dragon Wing
+[220]	1	4- Arme de prédilection (arc +1)
+[147]	1	5   Enlarge Spell, Extend Spell, Silent Spell, Still Spell feats no longer increase spell level for abjuration spells
+[62]	1	5) Extension de durée, Extention de portée, Incantation silencieuse, Still Spell feats no longer increase spell level for evocation spells
+[221]	1	5- Science de l'initiative (+4)
+[148]	1	6   Glyphs of Power (niv 5),  62%, 1x jour (16d6 électricité) _
+[63]	1	6) Dragon Breath
+[115]	1	6th level feat: Improved critical (dagger)
+[149]	1	7   Empower Spell, Heighten Spell feats no longer increase spell level for abjuration spells
+[64]	1	7) Augmentation d'intensité, Heighten Spell feats no longer increase spell level for evocation spells
+[156]	1	8   Glyphs of Magic (niv 7), 52%, 1x semaine - rune of lightning bolt
+[65]	1	8) Dragon Might
+[116]	1	9th level feat: Quick Draw (free action)
+[222]	1	=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+[33]	2	Alertness
+[273]	1	Alertness (+2 listen  and Spot)
+[141]	2	Ambidexterie
+[359]	1	Animate Trees (SP)
+[169]	1	Appel familier
+[470]	1	Arme de prédilection (Morgenstern)
+[23]	1	Arme de prédilection (arc long composite)
+[5]	0	Arme de prédilection (arc long)
+[479]	1	Arme de prédilection (hache de guerre naine)
+[384]	1	Arme de prédilection +1
+[125]	3	Arme en main
+[444]	1	Arme focus (Marteau de guerre)
+[442]	1	Art de la pierre (+2 détection des pièges)
+[9]	1	Art magique
+[343]	1	Ash Cloud (SU)
+[308]	0	Ash Cloud (SU) : breathing creatures within 5 ft. radius save Fortitude (DC 15 + 1 per previous check) or begin coughing and choking (1d6 non lethal damage).
+[48]	2	Attaque en puissance
+[452]	1	Attaque ressort (déplacement avant et après l'attaque)
+[49]	1	Attaque sournoise (+8d6)
+[377]	2	Attaque sournoise 7d6
+[151]	1	Attaque éclair (déplacement + attaque + déplacement)
+[447]	1	Attaque étourdissante (1x jour - Jet de vigueur DD 14)
+[450]	1	Attaques en furie (2 attaques à -2, full round)
+[68]	1	Aura of despair (ennemies -2 sur saves)
+[336]	2	BONUS THRALL
+[246]	0	BONUS THRALL : Iron Will (+2 sur jet de sauvegarde Volonté)
+[239]	0	BONUS THRALL : Toughness (+3 pv)
+[142]	1	BONUS: QUICK DRAW avec arc magique si j'utilise les flèches magiques +0
+[389]	1	BONUS: SPELL PENETRATION avec robe magique
+[155]	1	Bonus de sagesse ajouter à la CA
+[329]	1	Bonus feat (human)
+[112]	0	Bonus feat (human) : Shield proficiency (no armor check penalty)
+[50]	1	Botte secrète (rapière)
+[330]	1	CLASS
+[202]	1	CLASS - Associates
+[198]	1	CLASS - Aura of courage (+4 save versus fear for all friends)
+[201]	1	CLASS - Code of conduct
+[195]	1	CLASS - Detect Aura of Evil (at will)
+[197]	1	CLASS - Divine grace (add charisma bonus to saving throws)
+[196]	1	CLASS - Lay on hands
+[199]	1	CLASS - Smite Evil  (1x jour ajouter 1 point de dégât par niveau, + bonus charisma au jet d'attaque)
+[200]	1	CLASS - Turn Undead
+[118]	0	CLASS :  Spontaneous Casting (remplacer un sort étudié par un sort de guérison)
+[117]	0	CLASS : Turn Undead
+[31]	1	Combat Reflexes
+[367]	1	Combat aveugle
+[214]	1	Combat casting
+[371]	1	Combat monté (cheval)
+[140]	1	Combat à 2 armes  JdA -4 à chaque main
+[21]	1	Combat à deux armes
+[453]	1	Combat à deux armes (2 attaques à -4 chacune)
+[446]	1	Combat à mains nues amélioré
+[70]	2	Command undead
+[175]	1	Corps de Diamant (immune to poison)
+[309]	1	Creature within Ash cloud receive 20% concealment, including the backbone itself
+[443]	1	Critique amélioré
+[227]	1	Création arme et armure magique
+[16]	1	Création d'armes et armures magiques
+[46]	1	Création d'armes t armures magiques
+[47]	1	Création de bâton magiques
+[17]	1	Création de bâtons magiques
+[362]	1	DOMAIN
+[331]	1	DOMAIN FEAT
+[121]	0	DOMAIN FEAT : Weapon focus (longsword)
+[120]	1	DOMAIN FEAT: Martial weapon (longsword)
+[119]	1	DOMAIN FEAT: Protective Ward (bonus +17 sur prochain jet de sauvegarde, 1 x jour pendant 1 h)
+[417]	1	DON BONUS
+[420]	1	DON BONUS Niv 1
+[421]	1	DON BONUS Niv 2
+[424]	1	DON DE DÉPART
+[423]	1	DON DÉPART
+[413]	1	DON INITIAL
+[419]	1	DON INITIAL (HUMAIN)
+[415]	1	DON INITIAL: Weapon Focus (hache de guerre)
+[416]	1	DON Niv 1
+[426]	1	DON Niv 3
+[465]	1	DON Niv 4
+[425]	1	DON Niveau 1
+[427]	2	DON Niveau 3 :
+[412]	1	DON RACE
+[302]	1	Damage reduction (SU)  5/magic
+[275]	1	Darkvision 60 feet, long arms (reach 10 feet)
+[262]	2	Darkvision 60 ft
+[277]	1	Deflect Spells
+[279]	1	Deflect Spells (once per round, 4th level spells)
+[263]	1	Deflect Spells with Batlleaxe (all 2nd level spells)
+[67]	1	Detect Good
+[40]	1	Detect secret doors 5' (Search DD20)
+[215]	1	Dodge
+[383]	1	Domaines chance et chaos
+[459]	1	Don  niveau 1: Attaque sournoise +1d6
+[462]	1	Don Niveau 3: Absence de traces
+[437]	1	Don de race voit 2 = plus loin qu'humain condition faible éclairage
+[395]	1	Don de race: +2 jet sauvegarde sort et effets enchantement
+[393]	2	Don de race: +2 jet sauvegarde sorts et effets école enchantement
+[396]	1	Don de race: Droit à jet de de fouille si moins de 1,5 m de porte ou passage cachés
+[454]	1	Don de race: Jet de fouille automatique pour passe secret à - de 1,5 m
+[391]	1	Don de race: Jet de fouille si passe à moins de 1,5 mètre de porte ou passage secret
+[390]	1	Don de race: Voit deux fois plus loin que humain dans le noir
+[392]	1	Don de race: immunisté sort et effet magique sommeil
+[436]	1	Don de race: immunité sort type sommeil
+[394]	1	Don de race: immunité type sort et effets sommeil
+[397]	1	Don de race: voit deux plus plus loin que humain dans pénombre
+[455]	1	Don initial: Arme en main
+[399]	1	Don initial: Sens de l'initiative
+[456]	1	Don niv 1 Ambidextrie
+[457]	1	Don niv 2 Arme de prédilection (épée longue) +1 à l'attaque
+[434]	1	Don niveau 1: Compagnon animal
+[398]	1	Don niveau 1: Instinct naturel
+[435]	1	Don niveau 2: Déplacement facilité
+[460]	1	Don niveau 2: Esquive totale
+[458]	1	Don niveau 4 Science du critique double probabilité coup critique épée longue
+[463]	1	Don niveau 4: Résistance appel nature
+[464]	1	Don niveau 5
+[466]	1	Don niveau 5: attaque sournoise 3d6
+[445]	1	Dégainage rapide
+[387]	1	Efficacité de sorts accru +2 niveau
+[271]	1	Empower Spell (+2 spell slot)  x1.5 degats
+[88]	1	Empower spell
+[79]	1	Empower spell (x1.5)
+[83]	1	Empower spells
+[385]	1	Emprise sur les morts vivants +4 quatre tentatives de renvois par jour
+[27]	1	Emprise sur les morts-Vivants
+[366]	1	Endurance (+4 vigueur)
+[181]	1	Ennemi Jure N02: Morts vivants (+2)
+[182]	1	Ennemi juré N03: Démons (+1)
+[180]	1	Ennemi juré No1 Géants (+3)
+[174]	1	Envol du héron (p.74)
+[378]	1	Esprit fuyant
+[20]	3	Esquive
+[152]	1	Esquive (+1 CA contre un adversaire choisi)
+[448]	1	Esquive (aucun dégâts si jet de réflexe réussi)
+[166]	2	Esquive instinctive
+[51]	2	Esquive instinctive (+2 contre les pièges)
+[461]	1	Esquive instinctive (bonus Dex CA +  attaque sournoise 2d6
+[150]	3	Esquive surnaturelle
+[52]	2	Esquive totale
+[98]	1	Evasion (if reflex save succeeds, no damage)
+[73]	1	Exotic weapon (bastard)
+[284]	1	Expertise (peut diminuer attack de -5 pour ajourer +5 à la CA
+[213]	1	Extract
+[358]	1	FEAT
+[326]	0	FEAT : Silent Spell
+[327]	0	FEAT : Still Spell
+[123]	1	FEAT Niv 3: Silent Spell (+1 niveau)
+[124]	1	FEAT Niv 6: Empower Spell (+1 niveau)
+[178]	1	FEAT Niv 9: Improved ctritical (17 à 20)
+[122]	1	FEAT Niv1: Extra Turning (3+ cha mod. + 4 = 6 fois par jour)
+[357]	1	FEATS
+[325]	0	FEATS : Plants Control,  Plant Defiance
+[256]	2	Fast Healing (EX) => Heals 1 point of damage each round
+[341]	1	Fiery Death (SU)
+[303]	0	Fiery Death (SU) :  when 0 hp, explodes as a fireball 1d6 x 13 HD to all within 20 ft. (Reflex DC 15 save half)
+[344]	1	Fiery Touch (SU)
+[310]	0	Fiery Touch (SU) : at will, any metal object touched is affected by Heat Metal (CL13).  Will save DC 26 to avoid effect.
+[474]	1	Frappe précise
+[469]	1	Grande résistance
+[285]	1	Great Fortitude +2 save
+[32]	1	Hold The Line
+[42]	1	Immune against sleep
+[258]	2	Immunities (EX) =>  Immune to mind affecting effects, poison, charm, sleep, paralysis and stunning
+[317]	1	Immunity to cold, electricity, polymorph, mind-affecting spells, and all forms of venom.  immune to critical damage (undead traits)
+[135]	1	Immunité au sorts et effets magique de type: Sommeil
+[439]	1	Immunité contre les sorts de sommeil
+[260]	1	Improved Critical (battle axe)
+[127]	1	Improved Critical (épée à 2 mains)
+[250]	1	Improved Evasion
+[108]	1	Improved Evasion (if Reflex save succeed, no damage, else half damage)
+[235]	1	Improved Initiative (+4)
+[337]	1	Improved critical
+[75]	2	Improved critical (bastard)
+[91]	1	Improved critical (bow)
+[101]	1	Improved critical (dagger)
+[280]	1	Improved critical (greataxe)
+[81]	2	Improved critical (mace)
+[297]	0	Improved critical : Elven longblade (double threat range)
+[286]	1	Improved disarm  (pas d'attaque d'opportunité quand disarm)
+[100]	1	Improved evasion  (if  reflex save fails, half damage)
+[212]	1	Improved grab
+[92]	1	Improved initiative
+[82]	3	Improved initiative +4
+[266]	1	Improved initiative +5
+[441]	1	Incantation sans gestuelle
+[18]	3	Incantation silencieuse
+[228]	1	Incantation silencieuse (1 niveau supérieur)
+[19]	1	Incantation statique
+[368]	2	Initiative améliorée
+[440]	1	Invocation d'un familier
+[278]	1	Iron Will (+2 will save)
+[287]	1	Iron will +2 save
+[345]	1	L1
+[311]	0	L1 : ELEMENTAL SPELL FOCUS (DC 15 + spell level pour tous les sorts élémentaires)
+[349]	1	L12
+[315]	0	L12 : QUICKEN SPELL (+4 spell slots)
+[39]	1	L12: MAXIMIZE SPELL (+3 spell slots)
+[350]	1	L15
+[316]	0	L15 : MAXIMIZE SPELL (+3 spell slots)
+[35]	1	L1: STIL SPELL (cast without gestures)+1 spell slot
+[346]	1	L3
+[312]	0	L3 : SILENT SPELL (incanter sans paroles) (+1 spell slots)
+[36]	1	L3: POINT BLANK (+1 attack and damage with ranged weaponds)
+[347]	1	L6
+[313]	0	L6 : EMPOWER SPELL (+2 spell slots)
+[37]	1	L6: RAPID SHOT (extra attack with ranged weapons)
+[348]	1	L9
+[314]	0	L9 : SPELL PENETRATION (+2 versus Spell resistance)
+[38]	1	L9: WEAPON FOCUS (+1 attack roll with bow)
+[71]	1	Lay on hands
+[288]	1	Leadership (voir DMG)
+[248]	1	Lightning Reflexes (+4 init)
+[241]	1	Ligthning reflexes
+[240]	1	Lowlight vision
+[255]	2	Mage's Sight (SP) => Continual Detec Magic with eerie blue eyes
+[254]	2	Magical puissance (EX) => casts all spell and use spell like abilities at +2 CL
+[259]	2	Magical resistance (EX) => receive a spell resistance of 20
+[225]	1	Maniement des armes courantes
+[468]	1	Maniement des armes de guerre
+[84]	1	Maximize spells
+[230]	1	Maîtrise des sorts (5): Boule de feu, Dissipation de la magie, image miroir,
+[188]	1	Maîtrise des sorts (p. 39) rappel deux sorts par jour
+[7]	1	Maîtrise des sorts (Évocation)
+[471]	1	Maîtrise martiale supérieure (Morgenstern)
+[8]	1	Maîtrise supérieure (Évocation)
+[351]	1	Mind Spells (EX)
+[318]	0	Mind Spells (EX) :  Silent and Still spell feats do not require higher slots
+[210]	1	Mind blast (SP) - cone 60 feet,  Will DC 17 or stunned for 3d4 rnds
+[76]	1	Mobility (+4 AC)
+[289]	1	Mobilité +4 AC
+[28]	1	Mounted Combat
+[332]	2	NIV01 (bonus)
+[207]	0	NIV01 (bonus) : BREW POTION
+[160]	0	NIV01 (bonus) : SCRIBE SCROLL
+[159]	0	NIV01 (bonus) : SUMMON FAMILIAR
+[204]	1	NIV01 (race): POINT BLANK (+1 dégâts et attaque à distance)
+[158]	1	NIV01 (race): SILENT SPELL (incanter sans paroles) (+1 spell slots)
+[157]	1	NIV01 (start): EXTEND SPELL (augmenter la durée d'un sort) (+1 spell slots)
+[203]	1	NIV01 (start): SPELL MASTERY (apprendre 4 sorts par coeur)
+[161]	2	NIV03 (general): STILL SPELL (incanter sans gestes) (+1 spell slots)
+[162]	2	NIV05 (class): EMPOWER SPELL (+2 spell slots)
+[163]	1	NIV06 (general): HEIGHTEN SPELL (pour augmenter le niveau du sort)
+[205]	1	NIV06 (general): IMPROVED CRITICAL (crossbow)
+[177]	2	NIV09 (general): SPELL PENETRATION (+2 versus Spell resistance)
+[189]	1	NIV1 - Weapon focus: warhammer
+[206]	1	NIV10 (class): SPELL MASTERY (apprendre 4 sorts par coeur)
+[184]	1	NIV10 (class): SPELL MASTERY (apprendre sorts par coeur)
+[333]	2	NIV12 (general)
+[185]	0	NIV12 (general) : MAXIMIZE SPELL (+3 spell slots)
+[208]	0	NIV12 (general) : RAPID SHOT (extra attaque avec arabalète)
+[194]	1	NIV12 - Toughness
+[334]	1	NIV15 (class)
+[186]	0	NIV15 (class) : QUICKEN SPELL (+4 spell slots)
+[431]	1	NIV15 (general)
+[335]	1	NIV3 - Improved critical
+[191]	0	NIV3 - Improved critical : warhammer
+[192]	1	NIV6 - Improved initiative
+[193]	1	NIV9 - Power attack
+[352]	1	Nature Sense
+[319]	0	Nature Sense : Identify plants and animal with perfect accuracy
+[41]	1	Nightvision (1.5 vision normale)
+[363]	1	Niv 1
+[388]	1	Niv 2
+[128]	1	Niv 2 Déplacement facilité
+[129]	1	Niv 3 Absence de traces
+[364]	2	Niv 4
+[130]	1	Niv 4 Résistance appel Nature
+[131]	1	Niv 5-6-7 Forme Animale 3/jour Niv 8 F. animale taille G
+[281]	1	Noble Blood (bous)
+[236]	1	Noble blood
+[29]	1	Pack Attack
+[154]	1	Parade de projectiles
+[449]	1	Parade de projectiles (1x par round, Jet de réflexes DD20)
+[245]	1	Parry Arrow
+[276]	1	Parry Arrows (with GreatAxe)
+[176]	1	Pas chassé (porte dimensionnelle - spell-like ability)
+[167]	1	Pas pris en tenaille
+[137]	1	Peut utiliser Objets magiques elfiques comme un elfe.
+[179]	1	Pistage
+[153]	1	Plénitude du corps (soins):  _____/ 28  en banque
+[265]	1	Point Blank
+[429]	1	Point Blank (Niveau 1)
+[89]	1	Point blank shot
+[104]	1	Point blank shot +1 to hit missile
+[294]	1	Pointblank Shot (+1 attack avec l'arc si moins de 30 pieds)
+[133]	1	Pouvoir de Demi-Elfe (page 14):
+[11]	1	Pouvoirs raciaux elfes
+[96]	2	Power attack
+[74]	1	Power attack (max 18/13)
+[14]	2	Préparation de potions
+[478]	1	Présence draconique
+[211]	1	Psionics
+[477]	1	Puissance draconique
+[172]	1	Pureté physique (immunisé contre maladies)
+[102]	1	Quick draw
+[264]	1	Quickdraw
+[293]	1	Quickdraw (Dégaine comme action simple)
+[272]	1	Quicken Spell (+1 sort par round, +4 spell slot)
+[268]	1	Quicken Spell (+4 spell slot)  free action
+[13]	3	Quintessence des sorts
+[229]	1	Quintessence des sorts (3 niveaux supérieurs)
+[190]	1	RACE - Improved bull rush
+[365]	2	RACE: lowlight vision, immune to sleep, +2 save vs. enchantment, +1 listen/search/spot
+[282]	1	Racial reputation (dwarf)
+[30]	1	Rank Fighting
+[430]	1	Rapid shot (Niveau 3)
+[105]	1	Rapid shot +1 attaque bonus  -2 to hit
+[295]	1	Rapidshot  (1 extra ranged attack per round, all with -2 penalty)
+[77]	2	Rebuke undead
+[467]	1	Renvoie des morts vivants
+[414]	1	Repousser les morts vivants
+[257]	2	Resilient (EX) => 1d6 less damage from sneak attacks and half damage from critical hits
+[353]	1	Resist Nature Lure
+[320]	0	Resist Nature Lure : +4 WILL save versus feys
+[473]	3	Robustesse
+[249]	1	Rogue abilties :
+[223]	1	Roulé-boulé (évite de tomber à 0)
+[451]	1	Réflexes surnaturels (+2  sur les jets de réflexe)
+[34]	1	Résistance au feu (+5)
+[476]	1	Résistance draconique
+[54]	1	Santé divine
+[6]	7	Science de l'initiative
+[139]	1	Science du Critique Cimettre 15-20
+[183]	1	Science du combat à deux armes
+[55]	1	Science du critique (arbalète)
+[433]	1	Science du critique (katana)
+[56]	1	Science du critique (rapière)
+[386]	1	Science du critique +2 sur dé 20
+[173]	1	Science du croc en jambe (p.86)
+[472]	1	Science du renvoi
+[373]	1	Scribe scroll (bonus)
+[170]	1	Sens du critique épée courte
+[342]	1	Sense Heat (EX)
+[304]	0	Sense Heat (EX) : sense any source of heat warmer than the surrounding room within 30 feet (to see warm blooded creatures, even when invisible).
+[270]	1	Silent Spell (+1 spell slot)
+[242]	1	Silent Spell (1 spell slot)
+[90]	1	Silent spell
+[374]	1	Silent spell (niveau 3)
+[85]	1	Silent spells
+[237]	1	Skill Focus (+2 diplomacy)
+[283]	1	Skill focus (diplomacy)
+[66]	1	Smite Good +12 Dégâts vs good (2 x jour)
+[69]	1	Sneak attack +3d6
+[252]	1	Sneak attack +5d6
+[93]	2	Sneak attack +6d6
+[10]	1	Sort accéléré
+[233]	1	Sorts permanents sur Zébulon: Détection invisibilité, Détection magie, Résistance
+[475]	1	Souffle draconique
+[106]	2	Souplesse du serpent
+[165]	1	Souplesse serpent
+[292]	1	Spell Penetration +2 versus other (from Robe)
+[267]	1	Spell penetration (+2 pour percer la résistance des autres)
+[372]	1	Spell penetration (niveau 1)
+[232]	1	Spell penetration +2
+[354]	1	Spontaneous Casting
+[321]	0	Spontaneous Casting : ability to replace domain spell by Summon nature's ally of the equivalent level
+[22]	1	Spécialisation martiale (arc long composite)
+[4]	0	Spécialisation martiale (arc long)
+[480]	1	Spécialisation martiale (hache de guerre naine)
+[370]	1	Spécialiste de l'arc
+[369]	1	Spécialiste de l'épée
+[269]	1	Still Spell  (+1 spell slot)
+[243]	1	Still Spell (1 spell slot)
+[87]	1	Still spell
+[375]	1	Still spell (niveau 5 extra)
+[86]	1	Still spells
+[44]	1	Summon familiar (Giant Magpie). Grant Alertness within arm reach.
+[376]	1	Summon familiar (bonus)
+[305]	1	Summoning Stone Power
+[171]	1	Sérénité
+[355]	1	Tainted Sight (SP)
+[322]	0	Tainted Sight (SP) : Can view the scar influenced area with Clairaudience/Clairvoyance at will
+[360]	1	Thousand Faces
+[253]	2	Thrall of Coot qualities :
+[361]	1	Timeless Body
+[3]	1	Tir de précision
+[2]	1	Tir rapide
+[1]	1	Tir à bout portant
+[24]	1	Tir à bout portant (Arc long composite)
+[298]	1	Track (Pour suivre les traces d'une créature)
+[306]	2	Turn Resistance +4
+[209]	1	Télépathie 100'
+[99]	1	Uncanny Dodge
+[251]	1	Uncanny Dodge  (bonus de Dex permanent sur CA même si flat footed)
+[111]	1	Uncanny dodge (+1 against save reflex traps)
+[109]	1	Uncanny dodge (Dex bonus always apply to AC)
+[110]	1	Uncanny dodge (can't be flanked)
+[307]	1	Undead Traits
+[126]	3	Use higher spell slots to cast lower level spells
+[25]	3	Vigilance
+[428]	1	Vigilance (Familier)
+[107]	1	Vigilence
+[224]	1	Vision 1200"
+[438]	1	Vision dans le noir
+[134]	2	Vision nocturne
+[422]	1	Vision nocturne (Low-light Vision)
+[381]	1	Vision nocturne 2X+ humain_race
+[15]	1	Volonté de fer
+[45]	1	Volonté de fer (+2 Volonté)
+[247]	1	Weapon Finesse (peut utiliser le bonus de Dex sur jets d'attaque)
+[274]	1	Weapon Focus (great axe)
+[291]	1	Weapon Specialization (rapier)
+[95]	2	Weapon finesse (dagger)
+[78]	1	Weapon finesse (mace)
+[97]	1	Weapon finesse (rapier)
+[216]	1	Weapon finesse (tentacle)
+[103]	1	Weapon focus (bastard)
+[72]	1	Weapon focus (bastard) +1
+[244]	1	Weapon focus (batlleaxe) +2 attack rolls
+[94]	2	Weapon focus (dagger)
+[80]	2	Weapon focus (mace) +1
+[290]	1	Weapon focus (rapier)
+[296]	1	Weapon focus:  Elven longsword (+1 attack - déjà inclus)
+[261]	1	Weapon specialization (battleaxe) +3 damage
+[323]	1	Wild Empathy (can communicate with plants)
+[356]	1	Wild Shape (Black Bear) 6/day
+[324]	0	Wild Shape (Black Bear) 6/day : Regains hit point as if rested for full day
+[410]	1	arme de prédilection: grande hache
+[164]	1	botte secrète
+[408]	1	botte secrète (lame secrète)
+[404]	1	coup mortel
+[403]	1	dégainement rapide
+[402]	1	ennemi juré (demi-elfe) +1
+[401]	1	ennemi juré (humain) +1
+[411]	1	esquive instinctive (AC DEX)
+[406]	1	esquive total
+[405]	1	poison
+[409]	1	talent
+[400]	1	vigueur surhumaine
+[432]	1	À venir... NIV 18 (general):  BREW POTION
+[187]	1	Âme de diamand (résistance à la magie 23)
+[226]	1	École renforcé: a joute +2 au DD jet sauvegarde école évocation
+[12]	1	Écriture de parchemins
+[418]	1	Écriture des parchemins
+[168]	1	Écriture parchemin
+[53]	1	Équivoque (15% + 2%/niv) = 45%

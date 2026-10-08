@@ -12,6 +12,7 @@ import { getDomaineInfo } from '@/lib/dnd35/domains'
 import { caracteristiqueDe } from '@/lib/dnd35/skills'
 import { getChargeCategorie, getChargeLimites } from '@/lib/dnd35/encumbrance'
 import { formatCritique } from '@/lib/dnd35/critique'
+import { estArmeADistance } from '@/lib/dnd35/weapons'
 import { FEATS_DND35, verifierPrerequisDon } from '@/lib/dnd35/feats'
 import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
 
@@ -570,7 +571,9 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           <Section titre="Armes">
             <div className="space-y-3">
               {weapons.map(({ weapon, charWeapon }) => {
-                const isRanged   = weapon.portee != null
+                // La famille tranche, pas la portée : la dague se lance à 3 m
+                // sans cesser d'être une arme de contact. Voir estArmeADistance.
+                const isRanged   = estArmeADistance(weapon.famille, weapon.portee)
                 const rawBab     = isRanged ? rawBabProj : rawBabCorps
                 const bbaTotal   = isRanged ? bbaProjTotal : bbaCorpsTotal
                 const wpnBonus   = charWeapon.bonusMagique ?? 0

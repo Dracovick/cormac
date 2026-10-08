@@ -7,7 +7,8 @@
  * RÈGLES DU SCRIPT
  *  - Il n'écrit QUE la colonne catalogue_id. Aucun nom, dégât, critique,
  *    portée ou poids d'une ligne d'inventaire n'est touché : « la saisie fait foi ».
- *  - Il n'écrit que les verdicts 'sure' et 'de'. Les 'trancher' attendent André,
+ *  - Il n'écrit que les verdicts 'sure', 'de' et 'arbitre'. Les 'trancher' attendent
+ *    André,
  *    les 'non' restent à NULL — c'est leur état correct, pas un trou.
  *  - Garde-fou de dérive : chaque ligne est relue en base et son nom doit
  *    correspondre EXACTEMENT à celui inscrit dans la table. Si la ligne a été
@@ -27,7 +28,7 @@ import fs from 'fs'
 const sql = neon(fs.readFileSync('X:/Claude-Tools/cormac/.env.local', 'utf8').match(/DATABASE_URL=(.+)/)![1].trim())
 const ECRIRE = process.argv.includes('--ecrire')
 
-type Lien = { id: number; nom: string; cible: string | null; verdict: 'sure' | 'de' | 'trancher' | 'non'; motif?: string }
+type Lien = { id: number; nom: string; cible: string | null; verdict: 'sure' | 'de' | 'arbitre' | 'trancher' | 'non'; motif?: string }
 const table: Lien[] = JSON.parse(
   fs.readFileSync('X:/Claude-Tools/cormac/menage-references/p8-rattachement.json', 'utf8')
 ).liens
@@ -75,6 +76,8 @@ let deja = 0, ignores = 0
 
 for (const l of table) {
   if (l.verdict === 'non' || l.verdict === 'trancher') { ignores++; continue }
+  // 'arbitre' : les 10 lignes que la table laissait à André, tranchées le
+  // 2026-10-08 sur son GO, motif écrit dans la table (p9-trancher-dix.mjs).
 
   const w = parId.get(l.id)
   if (!w) { refus.push(`[${l.id}] « ${l.nom} » : introuvable en base`); continue }
@@ -104,7 +107,7 @@ for (const [cible, membres] of parCible) {
   console.log(`\n→ ${cible}  (${membres.length} ligne${membres.length > 1 ? 's' : ''})`)
   for (const m of membres) {
     console.log(`   ${ECRIRE ? '✓' : '·'} [${m.id}] ${m.nom}${m.porteurs ? `  — ${m.porteurs} porteur·s` : ''}`)
-    if (m.motif) console.log(`        ↳ ${m.verdict === 'de' ? 'tranché par le dé : ' : ''}${m.motif}`)
+    if (m.motif) console.log(`        ↳ ${m.verdict === 'de' ? 'tranché par le dé : ' : m.verdict === 'arbitre' ? 'arbitré : ' : ''}${m.motif}`)
   }
 }
 

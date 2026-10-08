@@ -13,8 +13,8 @@ import { RACES_DND35, getRaceInfo } from '@/lib/dnd35/races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { sortsByClasseEtNiveau, niveauxMaxForClasse, type ClasseSortKey, type SortDnD } from '@/lib/dnd35/spells'
 import { getBab } from '@/lib/dnd35/rules'
-import { WEAPONS_DND35, WEAPON_CATEGORIES, type WeaponTemplate } from '@/lib/dnd35/weapons'
-import { normaliserCritique } from '@/lib/dnd35/critique'
+import { WEAPONS_DND35, WEAPON_CATEGORIES, WEAPON_CATEGORIE_LIBELLE, type WeaponTemplate } from '@/lib/dnd35/weapons'
+import { formatCritique } from '@/lib/dnd35/critique'
 import { FEATS_DND35, CATEGORIES_PAR_CLASSE, verifierPrerequisDon, type FeatCategorie, type FeatDef } from '@/lib/dnd35/feats'
 import { NOMS_DOMAINES } from '@/lib/dnd35/domains'
 import { UNITES_MONNAIE, totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
@@ -530,8 +530,9 @@ function SectionDons({ data, update }: { data: CharacterFormData; update: Upd })
   const weaponOptions: { groupe: string; noms: string[] }[] = [
     ...WEAPON_CATEGORIES.map(cat => ({
       groupe: cat,
-      noms: WEAPONS_DND35.filter(w => w.categorie === cat).map(w => w.nom),
+      noms: WEAPONS_DND35.filter(w => w.categorie === cat && !w.modeLancer).map(w => w.nom),
     })).filter(g => g.noms.length > 0),
+    { groupe: 'Modes de lancer', noms: WEAPONS_DND35.filter(w => w.modeLancer).map(w => w.nom) },
     ...(customWeaponNames.length > 0 ? [{ groupe: 'Personnalisées', noms: customWeaponNames }] : []),
   ]
   const allWeaponNames = weaponOptions.flatMap(g => g.noms)
@@ -660,7 +661,7 @@ function SectionEquipement({ data, update, derived, potionsCatalogue }: { data: 
   const selectArmeTemplate = (i: number, t: WeaponTemplate) => {
     setCustomRows(prev => { const s = new Set(prev); s.delete(i); return s })
     const a = [...data.armes]
-    a[i] = { ...a[i], nom: t.nom, degats: t.degats, crit: normaliserCritique(t.crit), typeDegats: t.typeDegats, portee: t.portee }
+    a[i] = { ...a[i], nom: t.nom, degats: t.degats ?? '', crit: t.critMin != null ? formatCritique(t.critMin, t.critMult) : '', typeDegats: t.typeDegats, portee: t.portee }
     update('armes', a)
   }
   const newArmure = () => update('armures', [...data.armures, { nom: '', type: 'Légère', bonusCA: 0, maxDex: 10, malusComp: 0, bonusMagique: 0 }])
@@ -718,12 +719,19 @@ function SectionEquipement({ data, update, derived, potionsCatalogue }: { data: 
                       }}>
                         <option value="">— Choisir une arme —</option>
                         {WEAPON_CATEGORIES.map(cat => (
-                          <optgroup key={cat} label={`Armes ${cat === 'Courante' ? 'courantes' : cat === 'Guerre' ? 'de guerre' : 'exotiques'}`}>
-                            {WEAPONS_DND35.filter(w => w.categorie === cat).map(w => (
+                          <optgroup key={cat} label={WEAPON_CATEGORIE_LIBELLE[cat]}>
+                            {WEAPONS_DND35.filter(w => w.categorie === cat && !w.modeLancer).map(w => (
                               <option key={w.nom} value={w.nom}>{w.nom}</option>
                             ))}
                           </optgroup>
                         ))}
+                        {/* Même arme du Manuel, autre mode d'attaque : c'est la
+                            portée qui fait calculer l'attaque au BBA de projectiles. */}
+                        <optgroup label="Modes de lancer">
+                          {WEAPONS_DND35.filter(w => w.modeLancer).map(w => (
+                            <option key={w.nom} value={w.nom}>{w.nom}</option>
+                          ))}
+                        </optgroup>
                         <option value="__custom__">— Arme personnalisée —</option>
                       </select>
                       {isCustom && (
