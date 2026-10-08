@@ -24,6 +24,10 @@ export const ANCIENS_NOMS: Record<string, string[]> = {
   // la base porte le nom de la liste, la table dit souvent l'autre. Vérifié à l'image.
   'Téléportation suprême': ['Téléportation sans erreur'],          // p. 296
   'Blessure importante de groupe': ['Blessure grave de groupe'],   // p. 205
+
+  // Même cas dans Les Maîtres de la Nature : le chapitre 6 titre la fiche
+  // « Invulnérabilité aux énergies destructives » (p. 90), la base porte « contre les ».
+  'Invulnérabilité contre les énergies destructives': ['Invulnérabilité aux énergies destructives'],
 }
 
 export function aliasPour(nomOfficiel: string): string[] {
