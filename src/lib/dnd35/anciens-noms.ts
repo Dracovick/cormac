@@ -28,6 +28,12 @@ export const ANCIENS_NOMS: Record<string, string[]> = {
   // Même cas dans Les Maîtres de la Nature : le chapitre 6 titre la fiche
   // « Invulnérabilité aux énergies destructives » (p. 90), la base porte « contre les ».
   'Invulnérabilité contre les énergies destructives': ['Invulnérabilité aux énergies destructives'],
+
+  // Manuel des Joueurs de Faerûn, chapitre 3 : le livre nomme ces sorts autrement
+  // que la base. Vérifié à l'image (fiche ET liste de classe).
+  'Élu des morts-vivants': ['Maître des morts-vivants'],   // p. 110 et p. 90
+  'Orbite du crâne': ['Orbite de crâne'],                  // p. 114
+  'Vision aveugle (sort)': ['Vision aveugle'],             // p. 118
 }
 
 export function aliasPour(nomOfficiel: string): string[] {
