@@ -46,6 +46,12 @@ export const classSkillList = pgTable('class_skill_list', {
   id: serial('id').primaryKey(),
   classeId: integer('classe_id').notNull().references(() => classes.id),
   skillId: integer('skill_id').notNull(),
+  // Le livre écrit les listes en prose, et certaines entrées sont
+  // SPÉCIALISÉES : le prêtre a « Connaissances (religion) », pas toutes les
+  // Connaissances. Sans cette précision, on lui rendrait de classe une
+  // Connaissances (nature) qu'il n'obtient qu'avec le domaine de la Faune ou
+  // de la Flore. Voir drizzle/0009.
+  precision: varchar('precision', { length: 80 }),
 })
 
 export const gods = pgTable('gods', {

@@ -1,6 +1,13 @@
 import { getDb } from '@/db'
 import { eq } from 'drizzle-orm'
+import { alias } from 'drizzle-orm/pg-core'
 import * as schema from '@/db/schema'
+
+// `skills` porte deux populations : le catalogue du Manuel et les lignes de
+// fiche importées de FileMaker. « Artisanat (serrurerie) » est une ligne de
+// fiche rattachée à l'entrée de catalogue « Artisanat », qui porte ses règles
+// — et le malus d'armure aux tests. Ce self-join ramène la mère avec la ligne.
+const skillCatalogue = alias(schema.skills, 'skill_catalogue')
 
 export async function getCharacter(id: number) {
   const [character] = await getDb()
@@ -34,9 +41,10 @@ export async function getCharacter(id: number) {
       .where(eq(schema.characterSavingThrows.personnageId, id))
       .then(r => r[0]),
 
-    getDb().select({ charSkill: schema.characterSkills, skill: schema.skills })
+    getDb().select({ charSkill: schema.characterSkills, skill: schema.skills, catalogue: skillCatalogue })
       .from(schema.characterSkills)
       .innerJoin(schema.skills, eq(schema.characterSkills.skillId, schema.skills.id))
+      .leftJoin(skillCatalogue, eq(schema.skills.catalogueId, skillCatalogue.id))
       .where(eq(schema.characterSkills.personnageId, id))
       .orderBy(schema.skills.nom),
 

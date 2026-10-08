@@ -1,0 +1,454 @@
+Document de Référence du Système
+Ce document est du contenu ludique libre [Open Game Content], et son utilisation publique est permise selon les termes de la licence ludique libre [Open Game License] v1.0a.
+Les classes (suite)
+
+Magicien
+Alignement. Au choix.
+Dés de vie. d4.
+
+Compétences de classe
+Les compétences du magicien (et la caractéristique dont chacune dépend) sont : Art de la magie (Int), Artisanat (Int), Concentration (Con), Connaissances (au choix, chaque compétence devant être prise séparément) (Int), Décryptage  (Int) et Profession (Sag).
+Points de compétence au niveau 1 : (2 + modificateur d’Int)  4
+Points de compétence à chaque niveau additionnel : 2 + modificateur d’Int
+
+Table : le magicien
+||||||Nombre de sorts par jour|
+Niveau|Bonus de base à l’attaque|Bonus de base de Réflexes|Bonus de base de Vigueur|Bonus de base de Volonté|Spécial|0 |1er|2e|3e|4e|5e|6e|7e|8e|9e|
+1|+0|+0|+0|+2|Appel de familier, écriture de parchemins|3|1|—|—|—|—|—|—|—|—|
+2|+1|+0|+0|+3|—|4|2|—|—|—|—|—|—|—|—|
+3|+1|+1|+1|+3|—|4|2|1|—|—|—|—|—|—|—|
+4|+2|+1|+1|+4|—|4|3|2|—|—|—|—|—|—|—|
+5|+2|+1|+1|+4|Don supplémentaire|4|3|2|1|—|—|—|—|—|—|
+6|+3|+2|+2|+5|—|4|3|3|2|—|—|—|—|—|—|
+7|+3|+2|+2|+5|—|4|4|3|2|1|—|—|—|—|—|
+8|+4|+2|+2|+6|—|4|4|3|3|2|—|—|—|—|—|
+9|+4|+3|+3|+6|—|4|4|4|3|2|1|—|—|—|—|
+10|+5|+3|+3|+7|Don supplémentaire|4|4|4|3|3|2|—|—|—|—|
+11|+5|+3|+3|+7|—|4|4|4|4|3|2|1|—|—|—|
+12|+6/+1|+4|+4|+8|—|4|4|4|4|3|3|2|—|—|—|
+13|+6/+1|+4|+4|+8|—|4|4|4|4|4|3|2|1|—|—|
+14|+7/+2|+4|+4|+9|—|4|4|4|4|4|3|3|2|—|—|
+15|+7/+2|+5|+5|+9|Don supplémentaire|4|4|4|4|4|4|3|2|1|—|
+16|+8/+3|+5|+5|+10|—|4|4|4|4|4|4|3|3|2|—|
+17|+8/+3|+5|+5|+10|—|4|4|4|4|4|4|4|3|2|1|
+18|+9/+4|+6|+6|+11|—|4|4|4|4|4|4|4|3|3|2|
+19|+9/+4|+6|+6|+11|—|4|4|4|4|4|4|4|4|3|3|
+20|+10/+5|+6|+6|+12|Don supplémentaire|4|4|4|4|4|4|4|4|4|4|
+
+Particularités de la classe
+Voici les particularités et aptitudes de la classe de magicien :
+Armes et armures. Le magicien est formé au maniement de l’arbalète (légère et lourde), du bâton, de la dague et du gourdin. Il n’est formé ni au maniement des boucliers ni au port des armures. En effet, l’armure restreint ses mouvements et risque de faire échouer ses sorts à composante gestuelle.
+Sorts. Un magicien peut lancer des sorts profanes (du même type que ceux des bardes et des ensorceleurs) appartenant à la liste de sorts d’ensorceleur et de magicien. Un magicien doit choisir et préparer ses sorts à l’avance (voir plus loin).
+L’Intelligence est la caractéristique primordiale des sorts de magicien. Pour apprendre ou lancer un sort, un magicien doit avoir une valeur d’Intelligence au moins égale à 10 + le niveau du sort (soit Int 10 pour les sorts de niveau 0, Int 11 pour ceux du 1er niveau et ainsi de suite). Le DD des jets de sauvegarde contre ses sorts est égal à 10 + le niveau du sort + le modificateur d’Intelligence du magicien.
+Comme les autres lanceurs de sorts, le magicien ne peut lancer qu’un nombre de sorts donné de chaque niveau chaque jour. Son quota de sorts quotidiens est indiqué sur la Table : le magicien. De plus, il reçoit des sorts en bonus si sa valeur d’Intelligence est suffisamment élevée (voir la Table : modificateurs de caractéristiques et sorts en bonus).
+Contrairement au barde ou à l’ensorceleur, le magicien n’est pas limité quant au nombre de sorts qu’il peut connaître. Il doit cependant choisir et préparer ses sorts en avance en étudiant son grimoire profane pendant une heure, après une bonne nuit de sommeil. Pendant qu’il étudie, le magicien choisit quels sorts il va préparer pour la journée.
+Langues supplémentaires. Le magicien peut apprendre le draconien à la place d’une des langues supplémentaires autorisées par sa race.
+Appel de familier. Le magicien peut appeler un familier de la même manière que l’ensorceleur. Voir la description de cette aptitude d’ensorceleur et le passage sur les familiers, ci-dessus.
+Écriture de parchemins. Un magicien de niveau 1 acquiert automatiquement le don supplémentaire Écriture de parchemins.
+Dons supplémentaires. Au niveau 5 et tous les 5 niveaux suivants (10, 15, 20), le magicien gagne un don supplémentaire. Ce don doit obligatoirement être un don de métamagie, un don de création d’objet ou Maîtrise des sorts. Le magicien doit satisfaire à toutes les conditions requises pour chaque don, y compris le niveau de lanceur de sorts minimal.
+Ces dons viennent en plus de ceux que tout personnage gagne aux niveaux 3, 6, etc. (voir la Table : expérience et avantages liés au niveau). Ces dons peuvent être choisis sur l’ensemble de la liste, ils n’ont pas besoin d’être des dons de métamagie ou de création d’objets.
+Grimoire. Le magicien doit compulser son grimoire chaque jour afin de préparer les sorts qu’il souhaite utiliser. Il est incapable de préparer un sort qui ne se trouve pas dans son grimoire, exception faite de lecture de la magie, que tout magicien peut préparer de mémoire.
+Le personnage commence sa carrière avec un grimoire contenant tous les sorts du niveau 0 (sauf ceux appartenant à une école interdite, s’il est spécialisé) plus trois du 1er niveau, choisis par le joueur. On y ajoute un nouveau sort du 1er niveau par point de bonus du modificateur d’Intelligence du personnage (voir Table : modificateur de caractéristique et sorts en bonus), qui est encore choisi par le joueur. Chaque fois que le personnage gagne un niveau de magicien, il ajoute deux nouveaux sorts dans son grimoire, ces sorts devant automatiquement être d’un niveau auquel il a accès (en considérant son niveau nouvellement augmenté). À n’importe quel moment, le personnage peut également recopier des sorts trouvées dans le grimoire d’un autre magicien.
+
+École de prédilection
+On appelle école une famille de sorts regroupés par thème, par exemple les illusions ou la nécromancie. Il en existe huit. Tout magicien qui le souhaite peut choisir une école de prédilection (voir ci-dessous), ce qui lui permet de lancer des sorts supplémentaires. Dans le même temps, certaines écoles lui sont interdites, car incompatibles avec celle qu’il a choisie. Le magicien obtient en fait une maîtrise exceptionnelle d’une école de magie en négligeant l’étude d’autres écoles.
+Chaque jour, un magicien spécialiste peut préparer un sort supplémentaire de son école pour chaque niveau de sort auquel il a accès. Dans le même temps, il bénéficie d’un bonus de +2 aux tests d’Art de la magie visant à apprendre les sorts de son école.
+C’est au niveau 1 que le magicien choisit ou non de se spécialiser et, si oui, pour quelle école. Le personnage doit alors choisir deux autres écoles de magie qui lui seront interdites (à moins qu’il ne choisisse la Divination, voir ci-dessous). Par exemple, un spécialiste de l’Invocation peut choisir d’abandonner l’Enchantement et la Nécromancie, ou l’Évocation et la Transmutation. Un magicien ne peut jamais choisir la Divination en tant qu’école interdite. Le personnage ne peut pas apprendre les sorts d’une école interdite, et il ne peut même pas les lancer à partir de baguettes ou de parchemins. Il est impossible de changer de spécialisation ou d’école interdite après avoir fait son choix.
+Les huit écoles de magie profane sont les suivantes : Abjuration, Divination, Enchantement, Évocation, Illusion, Invocation, Nécromancie et Transmutation. Les sorts qui n’entrent dans aucune de ces catégories sont dits universels.
+Abjuration. Tous les sorts qui protègent, bloquent ou bannissent. Un magicien spécialisé dans cette école se nomme un abjurateur.
+Divination. Les sorts qui révèlent des informations. Le spécialiste se nomme un devin. Contrairement aux autres écoles, il doit choisir une seule école interdite.
+Enchantement. Les sorts qui confèrent une faculté au sujet ou qui permettent au magicien de contrôler un autre être vivant. Le spécialiste est appelé enchanteur.
+Évocation. Tous les sorts qui manipulent l’énergie ou qui créent quelque chose à partir de rien. Le spécialiste est appelé un évocateur.
+Illusion. Les sorts qui modifient les perceptions ou créent de fausses images. Un spécialiste de l’illusion est un illusionniste.
+Invocation. Tous les sorts qui amènent créatures ou objets à proximité du magicien. Un spécialiste de l’invocation est un invocateur.
+Nécromancie. Les sorts qui manipulent, créent ou détruisent la vie et l’énergie vitale. Les nécromanciens sont les spécialistes de la nécromancie.
+Transmutation. Les sorts qui transforment physiquement le sujet ou qui modifient une ou plusieurs de ses facultés. Le spécialiste se nomme transmutateur.
+Universel. Il ne s’agit pas là d’une école, mais d’une catégorie de sorts que tous les magiciens peuvent apprendre. On ne peut pas choisir la magie universelle comme école de prédilection ni comme école interdite. Seuls quelques sorts appartiennent à cette école.
+
+Moine
+Alignement. Loyal.
+Dés de vie. d8.
+
+Compétences de classe
+Les compétences du moine (et la caractéristique dont chacune dépend) sont : Acrobaties (Dex), Artisanat (Int), Concentration (Con), Connaissances (mystères) (Int), Connaissances (religion) (Int), Déplacement silencieux (Dex), Détection (Sag), Diplomatie (Cha), Discrétion (Dex), Équilibre (Dex), Escalade (For), Évasion (Dex), Natation (For), Perception auditive (Sag), Profession (Sag), Psychologie (Sag), Représentation (Cha) et Saut (For).
+Points de compétence au niveau 1 : (4 + modificateur d’Int)  4
+Points de compétence à chaque niveau additionnel : 4 + modificateur d’Int
+
+Table : le moine
+Niveau|Bonus de base à l’attaque|Bonus de base de Réflexes|Bonus de base de Vigueur|Bonus de base de Volonté|Spécial|Bonus à l’attaque (déluge de coup)|Dégâts à mains nues1|Bonus à la CA|Déplacement accéléré|
+1|+0|+2|+2|+2|Combat à mains nues, déluge de coups, don supplémentaire|–2/–2|1d6|+0|+0 m|
+2|+1|+3|+3|+3|Don supplémentaire, esquive totale|–1/–1|1d6|+0|+0 m|
+3|+2|+3|+3|+3|Sérénité|+0/+0|1d6|+0|+3 m|
+4|+3|+4|+4|+4|Frappe ki (magie), chute ralentie (6 m)|+1/+1|1d8|+0|+3 m|
+5|+3|+4|+4|+4|Pureté physique|+2/+2|1d8|+1|+3 m|
+6|+4|+5|+5|+5|Chute ralentie (9 m), don supplémentaire|+3/+3|1d8|+1|+6 m|
+7|+5|+5|+5|+5|Plénitude physique|+4/+4|1d8|+1|+6 m|
+8|+6/+1|+6|+6|+6|Chute ralentie (12 m)|+5/+5/+0|1d10|+1|+6 m|
+9|+6/+1|+6|+6|+6|Esquive extraordinaire|+6/+6/+1|1d10|+1|+9 m|
+10|+7/+2|+7|+7|+7|Chute ralentie (15 m), frappe ki (Loi)|+7/+7/+2|1d10|+2|+9 m|
+11|+8/+3|+7|+7|+7|Corps de diamant, déluge supérieur|+8/+8/+8/+3|1d10|+2|+9 m|
+12|+9/+4|+8|+8|+8|Chute ralentie (18 m), pas chassé|+9/+9/+9/+4|2d6|+2|+12 m|
+13|+9/+4|+8|+8|+8|Âme de diamant|+9/+9/+9/+4|2d6|+2|+12 m|
+14|+10/+5|+9|+9|+9|Chute ralentie (21 m)|+10/+10/+10/+5|2d6|+2|+12 m|
+15|+11/+6/+1|+9|+9|+9|Paume vibratoire|+11/+11/+11/+6/+1|2d6|+3|+15 m|
+16|+12/+7/+2|+10|+10|+10|Chute ralentie (24 m), frappe ki (adamantium)|+12/+12/+12/+7/+2|2d8|+3|+15 m|
+17|+12/+7/+2|+10|+10|+10|Éternelle jeunesse, langues du soleil et de la lune|+12/+12/+12/+7/+2|2d8|+3|+15 m|
+18|+13/+8/+3|+11|+11|+11|Chute ralentie (27 m)|+13/+13/+13/+8/+3|2d8|+3|+18 m|
+19|+14/+9/+4|+11|+11|+11|Désertion de l’âme|+14/+14/+14/+9/+4|2d8|+3|+18 m|
+20|+15/+10/+5|+12|+12|+12|Chute ralentie (illimitée), perfection de l’être|+15/+15/+15/+10/+5|2d10|+4|+18 m|
+1 Cette valeur concerne les moines de taille M. Voir la Table : dégâts à mains nues des moines de taille P et G.
+
+Particularités de la classe
+Voici les particularités et aptitudes de la classe de moine :
+Armes et armures. Le moine est formé au maniement des armes suivantes : arbalète légère ou lourde, bâton, dague, fronde, gourdin, hachette, javelot, kama, nunchaku, sai, shuriken et siangham. Le moine n’est formé ni au maniement des boucliers ni au port des armures. De fait, tous les talents du moine nécessitent une grande liberté de mouvement. S’il porte une armure ou un bouclier, ou s’il transporte une charge intermédiaire ou lourde, un moine perd ses bonus à la CA, ainsi que ses aptitudes de déplacement accéléré et de déluge de coup.
+Bonus à la CA (Ext). Un moine sait esquiver les coups et son “ sixième sens ” lui permet même d’éviter les attaques qui devraient normalement le surprendre. Tant qu’il ne porte pas d’armure et n’est pas encombré, un moine ajoute son bonus de Sagesse (s’il en a un) à sa CA. De plus, il obtient un bonus de +1 à la CA au niveau 5, qui augmente de +1 tous les 5 niveaux suivants (+2 au niveau 10, +3 au niveau 15 et +4 au niveau 20).
+Ces bonus à la CA s’appliquent même contre les attaques de contact ou lorsque le moine est pris au dépourvu. Il ne les perd que s’il est incapable de se mouvoir ou sans défense et lorsqu’il porte une armure ou un bouclier, ou s’il transporte une charge intermédiaire ou lourde.
+Déluge de coups (Ext). Un moine sans armure et non-encombré peut porter une attaque supplémentaire en sacrifiant une partie de sa précision. Il le fait en appliquant son bonus le plus élevé, mais toutes les attaques qu’il tente au cours du round subissent un malus de –2 (y compris l’attaque supplémentaire). Les modificateurs à l’attaque (tenant compte seulement du bonus de base à l’attaque et du déluge de coups) sont indiqués dans la colonne “ bonus à l’attaque (déluge de coups) ” de la Table : le moine. Le malus dure pendant 1 round entier, ce qui signifie qu’il affecte également les attaques d’opportunité que le moine pourrait porter avant son prochain tour de jeu. Quand un moine atteint le niveau 5, le malus est réduit à –1, et il disparaît à partir du niveau 9. Un déluge de coups ne peut se tenter que lors d’une action d’attaque à outrance.
+Le personnage ne peut utiliser cette aptitude qu’à mains nues ou à l’aide d’une arme de moine (bâton, kama, nunchaku, sai, shuriken ou siangham). Un moine qui frappe à mains nues et avec une arme de moine peut utiliser les deux de façon interchangeable au cours du même round, selon ses besoins. Par exemple, au niveau 6 de moine, Ambre peut porter deux attaques lors d’un déluge de coup et elle pourrait utiliser ses poings pour la première (avec un bonus à l’attaque de +3) et son kama pour la seconde (avec un bonus à l’attaque de +3). Lorsqu’un moine utilise une arme de moine au cours d’un déluge de coups, il applique son bonus de Force (et pas 0,5 fois ou 1,5 fois son bonus de Force) aux jets de dégâts pour toutes ses attaques réussies, qu’elles soient portée à l’aide d’une arme tenue à une ou deux mains. Un moine ne peut utiliser aucune autre arme que des armes de moine au cours d’un déluge de coups.
+Dans le cas d’un bâton, chaque tête compte comme une arme distincte pour l’aptitude de déluge de coups. Bien qu’un bâton requière habituellement deux mains pour être manié, un moine peut tout de même mélanger des attaques à coups de bâton et à mains nues au cours d’un déluge de coups (à condition d’avoir assez d’attaques dans sa séquence). Par exemple, un moine de niveau 8 pourrait faire deux attaques avec un bâton (une avec chaque tête) avec un bonus à l’attaque de +5 et une attaque à mains nues avec un bonus à l’attaque de +0. Il pourrait aussi faire une attaque de bâton et une attaque à mains nues avec un bonus à l’attaque de +5 et une attaque avec l’autre tête du bâton avec un bonus à l’attaque de +0. Par contre, un moine tenant un bâton ne peut utiliser d’autres armes en même temps.
+Combat à mains nues. Le moine s’entraîne longuement à se battre à mains nues, ce qui lui confère d’énormes avantages dans ce genre de situation. Un moine de niveau 1 reçoit le don Science du combat à mains nues en tant que don supplémentaire. Ses attaques peuvent venir de ses poings, mais aussi des pieds, des coudes ou des genoux. Cela signifie qu’un moine peut même porter des attaques “ à mains nues ” alors que ses deux mains sont occupées à porter quelque chose. De plus, la notion d’attaque secondaire de main non-directrice n’a pas de sens quand il se bat à mains nues. Un moine bénéficie donc toujours de son bonus de Force entier sur les jets de dégâts à mains nues.
+En règle générale, les attaques à mains nues du moine infligent des dégâts létaux, mais le moine peut choisir d’infliger des dégâts non-létaux s’il le souhaite et ceci sans malus sur son jet d’attaque. Ce même choix lui est offert en situation de lutte.
+L’attaque à mains nues du moine est considérée à la fois comme une arme manufacturée et une arme naturelle pour les sorts et effets qui altèrent ou améliorent ces deux types d’armes (comme les sorts morsure magique et arme magique).
+Les attaques à mains nues d’un moine infligent plus de dégâts que la normale, comme indiqué sur la Table : le moine. Les dégâts de cette table concernent uniquement les moines de taille M. Les moines de taille P infligent des dégâts moins importants, tandis que ceux de taille G infligent des dégâts plus élevés, selon la table suivante.
+
+Table : dégâts à mains nues des moines de taille P et G
+Niveau|Dégâts (taille P)|Dégâts (taille G)|
+1–3|1d4|1d8|
+4–7|1d6|2d6|
+8–11|1d8|2d8|
+12–15|1d10|3d6|
+16–19|2d6|3d8|
+20|2d8|4d8|
+
+Dons supplémentaires. Au niveau 1, un moine peut choisir soit Coup étourdissant, soit Science de la lutte en tant que don supplémentaire. Au niveau 2, il peut choisir soit Attaques réflexes, soit Parade de projectiles en tant que don supplémentaire. Au niveau 6, il peut choisir soit Science du croc-en-jambe, soit Science du désarmement en tant que don supplémentaire. Un moine n’a pas besoin de remplir les conditions d’un don pour le choisir en tant que don supplémentaire.
+Esquive totale (Ext). L’agilité presque surhumaine d’un moine de niveau 2 lui permet d’éviter les attaques magiques ou inhabituelles. S’il réussit son jet de Réflexes contre une attaque dont les dégâts sont normalement réduits de moitié en cas de jet de Réflexes réussi (comme c’est le cas pour une boule de feu ou le souffle enflammé d’un dragon rouge), il l’évite totalement et ne subit pas le moindre dégât. Un moine portant une armure intermédiaire ou lourde, ou qui se trouve sans défense (parce qu’il est inconscient ou paralysé, par exemple) perd les avantages de d’esquive totale.
+Déplacement accéléré (Ext). À partir du niveau 3, un moine obtient un bonus d’altération à sa vitesse de déplacement, comme indiqué sur la Table : le moine. Il perd ce bonus s’il porte une armure (même légère), un bouclier ou une charge intermédiaire ou lourde.
+Sérénité (Ext). Un moine de niveau 3 bénéficie d’un bonus de +2 aux jets de sauvegarde contre les sorts et effets de l’école des enchantements. Son entraînement et les techniques de méditation qu’il applique lui permettent de mieux résister aux agressions mentales.
+Frappe ki (Sur). Au niveau 4, le moine peut utiliser son ki lorsqu’il combat à mains nues. Ses attaques à mains nues sont considérées comme des armes magiques pour ce qui est d’ignorer la réduction des dégâts des créatures. La puissance de la frappe ki du personnage augmente avec le niveau. Au niveau 10, les attaques à mains nues du moine sont considérées comme des armes de la Loi, uniquement pour ce qui est d’ignorer la réduction des dégâts des créatures. Enfin, les attaques à mains nues d’un moine de niveau 16 sont considérées comme des armes en adamatium pour ce qui est d’ignorer la réduction des dégâts des créatures et la solidité des objets.
+Chute ralentie (Ext). Au niveau 4, et pour peu qu’il puisse atteindre une paroi en tendant le bras, le moine peut l’utiliser pour freiner sa chute. À l’arrivée, les dégâts sont calculés comme si la hauteur de chute était raccourcie de 6 mètres (–2d6 points de dégâts). Cette faculté augmente en fonction du niveau, à tel point que, au niveau 20, le personnage en bénéficie quelle que soit la hauteur de chute (voir la colonne “ Spécial ” de la Table : le moine pour les valeurs exactes).
+Pureté physique (Ext). Au niveau 5, le moine est capable de contrôler parfaitement son système immunitaire, ce qui le protège des maladies, sauf celles qui sont d’origine magique ou surnaturelle (telles que la lycanthropie et la putréfaction transmise par les momies).
+Plénitude physique (Sur). Dès le niveau 7, le personnage est capable de se soigner. Ce pouvoir lui permet, chaque jour, de récupérer un nombre de points de vie égal au double de son niveau (tous d’un coup, ou en autant de fois qu’il le souhaite, au choix). Cette aptitude est un pouvoir surnaturel.
+Esquive extraordinaire (Ext). Au niveau 9, l’esquive totale du moine s’améliore encore. Les dégâts infligés par une attaque telle qu’une boule de feu ou un souffle de dragon rouge sont réduits de moitié même s’il rate son jet de Réflexes (s’il le réussit, il l’esquive totalement). Un moine qui se trouve sans défense (parce qu’il est inconscient ou paralysé, par exemple) perd les avantages de l’esquive extraordinaire.
+Corps de diamant (Sur). Au niveau 11, le moine acquiert un tel contrôle de son métabolisme qu’il devient immunisé contre tous les types de poison.
+Déluge supérieur (Ext). Un moine de niveau 11 atteint la maîtrise totale de son aptitude de déluge de coup. En plus de son attaque supplémentaire, il obtient une deuxième attaque à son bonus de base à l’attaque maximal.
+Pas chassé (Sur). À partir du niveau 12, une fois par jour et en effectuant un simple pas de côté, le personnage peut se déplacer instantanément comme à l’aide du sort porte dimensionnelle. Son niveau de lanceur de sorts est égal à la moitié de son niveau de moine.
+Âme de diamant (Ext). Au niveau 13, le moine acquiert une résistance à la magie égale à son niveau de moine actuel + 10. Pour pouvoir l’affecter à l’aide d’un sort, son adversaire doit effectuer un test de niveau de lanceur de sorts (1d20 + son niveau de lanceur de sorts) et obtenir un résultat égal ou supérieur à la RM du moine.
+Paume vibratoire (Sur). Dès le niveau 15, le moine peut utiliser cette redoutable attaque lui permettant de transmettre des vibrations fatales à sa cible, qui peuvent devenir fatales si et quand il le désire. Le personnage peut se servir de la paume vibratoire une fois par semaine, et il doit l’annoncer avant de jouer son jet d’attaque. Les créatures artificielles, les morts-vivants, les plantes et les vases, ainsi que les créatures intangibles et celles qui sont immunisées contre les coups critiques ne sont pas affectés par ce pouvoir. Si le coup porte et si l’adversaire est blessé, les vibrations sont transmises avec succès au corps de la victime. À partir de ce moment, le moine peut décider de la tuer à tout instant (les vibrations durent pendant 1 jour par niveau du moine). Dès qu’il prend cette décision (ce qui lui demande une action libre), la cible doit effectuer un jet de Vigueur (DD 10 + 1/2 du niveau du moine + modificateur de Sagesse du moine). En cas d’échec, elle meurt. Si elle réussit, les vibrations cessent et elle ne risque plus rien (même si elle peut de nouveau être attaquée par la paume vibratoire).
+Éternelle jeunesse (Ext). À partir du niveau 17, le moine ne subit plus les malus sur les valeurs de caractéristiques dus au vieillissement et devient immunisé contre les attaques provoquant un vieillissement accéléré. Les malus qu’il aurait pu subir avant d’atteindre ce niveau ne sont pas effacés pour autant. Le personnage continue de vieillir et en tire tous les bénéfices en termes de bonus. Il meurt toujours de vieillesse lorsque son heure est venue.
+Langues du soleil et de la lune (Ext). Un moine ayant atteint le niveau 17 est capable de communiquer avec toutes les créatures vivantes.
+Désertion de l’âme (Sur). Au niveau 19, le personnage peut prendre une forme éthérée pendant 1 round par niveau de moine et par jour, comme s’il utilisait le sort passage dans l’éther. Il peut le faire à plusieurs reprises au cours d’une même journée, tant que la durée d’utilisation totale (en rounds) ne dépasse pas son niveau de moine.
+Perfection de l’être. Au niveau 20, le moine atteint un tel contrôle de soi qu’il devient une entité magique. À partir de cet instant, il n’est plus considéré comme un humanoïde, mais comme un Extérieur (autrement dit, un être natif d’un autre plan) pour ce qui est des sorts et des effets magiques. Par exemple, un sort comme charme-personne n’a plus le moindre effet sur lui. Dans le même temps, il gagne une réduction des dégâts de 10/magie, ce qui signifie qu’il ignore (ou plutôt qu’il régénère instantanément) les 10 premiers points de dégâts infligés par chaque attaque des armes non-magiques ou des armes naturelles d’une créature qui ne dispose pas du même pouvoir. À noter que, contrairement aux autres Extérieurs, le moine peut toujours être ramené à la vie s’il vient à décéder.
+
+Anciens moines
+Un moine cessant d’être loyal ne peut plus progresser en niveaux dans cette classe, mais il conserve les pouvoirs acquis jusque-là.
+Comme tout le monde, le moine peut être multiclassé, mais il doit s’accommoder d’une restriction que ne connaissent pas les autres personnages (paladin excepté) : s’il change de classe ou s’il gagne un niveau dans une classe qu’il possédait avant de devenir moine, il ne pourra plus jamais améliorer son niveau de moine (il conserve toutefois les pouvoirs acquis jusque-là).
+
+Paladin
+Alignement. Loyal bon.
+Dés de vie. d10.
+
+Compétences de classe
+Les compétences du paladin (et la caractéristique dont chacune dépend) sont : Artisanat (Int), Concentration (Con), Connaissances (noblesse et royauté) (Int), Connaissances (religion) (Int), Diplomatie (Cha), Dressage (Cha), Équitation (Dex), Premiers secours (Sag), Profession (Int) et Psychologie (Sag).
+Points de compétence au niveau 1 : (2 + modificateur d’Int)  4
+Points de compétence à chaque niveau additionnel : 2 + modificateur d’Int
+
+Table : le paladin
+||||||Nombre de sorts par jour|
+Niveau|Bonus de base à l’attaque|Bonus de base de Réflexes|Bonus de base de Vigueur|Bonus de base de Volonté|Spécial|1er|2e|3e|4e|
+1|+1|+0|+2|+0|Aura de Bien, châtiment du Mal (1/jour), détection du Mal|—|—|—|—|
+2|+2|+0|+3|+0|Grâce divine, imposition des mains|—|—|—|—|
+3|+3|+1|+3|+1|Aura de bravoure, santé divine|—|—|—|—|
+4|+4|+1|+4|+1|Renvoi des morts-vivants|0|—|—|—|
+5|+5|+1|+4|+1|Châtiment du Mal (2/jour), destrier de paladin|0|—|—|—|
+6|+6/+1|+2|+5|+2|Guérison des maladies (1/semaine)|1|—|—|—|
+7|+7/+2|+2|+5|+2|—|1|—|—|—|
+8|+8/+3|+2|+6|+2|—|1|0|—|—|
+9|+9/+4|+3|+6|+3|Guérison des maladies (2/semaine)|1|0|—|—|
+10|+10/+5|+3|+7|+3|Châtiment du Mal (3/jour)|1|1|—|—|
+11|+11/+6/+1|+3|+7|+3|—|1|1|0|—|
+12|+12/+7/+2|+4|+8|+4|Guérison des maladies (3/semaine)|1|1|1|—|
+13|+13/+8/+3|+4|+8|+4|—|1|1|1|—|
+14|+14/+9/+4|+4|+9|+4|—|2|1|1|0|
+15|+15/+10/+5|+5|+9|+5|Châtiment du Mal (4/jour), guérison des maladies (4/semaine)|2|1|1|1|
+16|+16/+11/+6/+1|+5|+10|+5|—|2|2|1|1|
+17|+17/+12/+7/+2|+5|+10|+5|—|2|2|2|1|
+18|+18/+13/+8/+3|+6|+11|+6|Guérison des maladies (5/semaine)|3|2|2|1|
+19|+19/+14/+9/+4|+6|+11|+6|—|3|3|3|2|
+20|+20/+15/+10/+5|+6|+12|+6|Châtiment du Mal (5/jour)|3|3|3|3|
+
+Particularités de la classe
+Voici les particularités et aptitudes de la classe de paladin :
+Armes et armures. Le paladin est formé au maniement des armes courantes, des armes de guerre et des boucliers (à l’exception des pavois). Il est également formé au port de toutes les armures (légères, intermédiaires et lourdes).
+Aura de Bien (Ext). Un paladin génère une puissante aura de Bien (voir le sort détection du Mal), égale à son niveau de paladin et identique à l’aura d’un prêtre d’un dieu d’alignement bon.
+Châtiment du Mal. Une fois par jour, un paladin peut tenter de châtier une créature maléfique avec une attaque de corps à corps normale. Dans ce cas, il ajoute son bonus de Charisme (s’il en a un) au jet d’attaque et inflige 1 point de dégâts supplémentaire par niveau de paladin. Par exemple, un paladin de niveau 13 armé d’une épée longue infligera 1d8+13 points de dégâts (plus tous les autres modificateurs, comme ceux de Force, de magie, etc.). Si le personnage utilise accidentellement cette faculté contre une créature qui n’est pas d’alignement mauvais, le châtiment n’a aucun effet, mais il est tout de même dépensé.
+Au niveau 5, et tous les 5 niveaux suivants, le paladin obtient une utilisation quotidienne supplémentaire de son pouvoir de châtiment du Mal (soit 2 au niveau 5, 3 au niveau 10, 4 au niveau 15 et 5 au niveau 20).
+Détection du Mal (Mag). Un paladin peut utiliser à volonté une détection du Mal, reproduisant les effets du sort.
+Grâce divine (Sur). Un paladin de niveau 2 ou plus bénéficie d’un bonus à tous ses jets de sauvegarde égal à son bonus de Charisme (s’il en a un).
+Imposition des mains (Sur). À partir du niveau 2, un paladin dont la valeur de Charisme est au moins de 12 peut refermer ses blessures ou celles de ses camarades d’un simple contact. Chaque jour, il peut restaurer un nombre de points de vie égal à son niveau  son bonus de Charisme. Le paladin a la possibilité de répartir ses soins entre autant de patients qu’il le souhaite (il n’a pas besoin d’utiliser tout son pouvoir curatif d’un seul coup). L’utilisation d’imposition des mains nécessite une action simple.
+Le paladin peut également utiliser tout ou partie de ce pouvoir pour infliger des dégâts aux morts-vivants. Cela nécessite une attaque de contact au corps à corps, qui ne provoque pas d’attaque d’opportunité. Le paladin décide du nombre de points de dégâts qu'il souhaite lui infliger seulement une fois qu’il a touché son adversaire.
+Aura de bravoure (Sur). Un paladin de niveau 3 est immunisé contre la terreur (magique ou non). Dans le même temps, tous ses alliés situés à 3 mètres ou moins bénéficient d’un bonus de moral de +4 aux jets de sauvegarde contre tous les effets de terreur. Cette aptitude fonctionne tant que le paladin est conscient, mais pas s’il est inconscient ou mort.
+Santé divine (Sur). Un paladin de niveau 3 est immunisé contre toutes les maladies, y compris celles qui sont d’origine magique ou surnaturelle, comme la lycanthropie et la putréfaction transmise par les momies.
+Renvoi des morts-vivants (Sur). Lorsque le paladin atteint le niveau 4, il acquiert le pouvoir de renvoi des morts-vivants. Chaque jour, il peut s’en servir un nombre de fois égal à 3 + son modificateur de Charisme. Il repousse les morts-vivants comme un prêtre ayant trois niveaux de moins que lui.
+Sorts. Dès le niveau 4, un paladin peut lancer un petit nombre de sorts divins (du même type que ceux des druides, prêtres et rôdeurs) appartenant à la liste de sorts de sa classe. Un paladin doit choisir et préparer ses sorts à l’avance.
+La Sagesse est la caractéristique primordiale des sorts de paladin. Pour préparer ou lancer un sort, un paladin doit avoir une valeur de Sagesse au moins égale à 10 + le niveau du sort (soit Sag 11 pour les sorts du 1er niveau, Sag 12 pour ceux du 2e niveau et ainsi de suite). Le DD des jets de sauvegarde contre ses sorts est égal à 10 + le niveau du sort + le modificateur de Sagesse du paladin.
+Comme les autres lanceurs de sorts, le paladin ne peut lancer qu’un nombre de sorts donné de chaque niveau chaque jour. Son quota de sorts quotidiens est indiqué sur la Table : le paladin. De plus, il reçoit des sorts en bonus si sa valeur de Sagesse est suffisamment élevée (voir la Table : modificateurs de caractéristiques et sorts en bonus). Quand la Table : le paladin indique que le paladin peut lancer “ 0 ” sort d’un niveau de sort par jour (par exemple, les sorts de 1er niveau pour un paladin de niveau 4), il ne peut lancer que les sorts en bonus pour ce niveau que peut lui accorder une Sagesse élevée. Les paladins ne bénéficient pas de sorts de domaines ou de pouvoirs accordés, contrairement aux prêtres.
+Un paladin prépare et lance ses sorts comme un prêtre, si ce n’est qu’il est incapable de transformer spontanément ses sorts en sorts de soins ou de blessure. Un paladin peut lancer tous les sorts de la liste des sorts de paladin, à condition de pouvoir lancer des sorts de ce niveau, mais il doit choisir quels sort préparer au cours de sa méditation quotidienne.
+Jusqu’au niveau 3, le paladin n’a pas de niveau de lanceur de sorts. À partir du niveau 4, son niveau de lanceur de sorts est égal à la moitié de son niveau de paladin.
+Destrier de paladin (Mag). Dès qu’il a atteint le niveau 5, le personnage peut appeler un destrier intelligent, puissant et loyal qui l’épaule dans son combat permanent contre le Mal (voir plus loin). Cette monture est généralement un destrier lourd (pour un paladin de taille M) et un poney de guerre (pour un paladin de taille P).
+Une fois par jour, et par une action complexe, le paladin peut appeler auprès de lui son destrier depuis les royaumes célestes où il réside. Le destrier apparaît immédiatement à côté du paladin et reste sur ce plan pendant 2 heures par niveau du paladin. Celui-ci peut cependant le renvoyer à tout moment par une action libre. Le paladin convoque toujours la même créature lors de chaque appel, mais il peut la libérer de son service (par exemple, si elle est devenue trop vieille pour l’assister dans sa croisade). Quand la monture apparaît, elle est en pleine santé, quels que soient les dégâts qu’elle ait pu subir lors de sa dernière apparition. Elle conserve son équipement d’un appel à l’autre (y compris la barde, la selle, les fontes et ainsi de suite). Appeler ce destrier est un pouvoir de type invocation (appel).
+Si le destrier vient à mourir, il disparaît immédiatement, laissant son équipement derrière lui. Le personnage est incapable d’appeler un autre destrier pendant trente jours (mais il récupère immédiatement cette capacité s’il obtient entre temps un nouveau niveau de paladin), et ce même si la monture est rappelée à la vie d’une façon ou d’une autre. Pendant cette période de trente jours, le paladin subit un malus de –1 aux jets d’attaque et de dégâts d’armes.
+Guérison des maladies (Mag). À partir du niveau 6, le paladin peut lancer guérison des maladies (comme le sort du même nom) une fois par semaine. Tous les 3 niveaux suivants, il dispose d’une utilisation hebdomadaire supplémentaire (2 par semaine au niveau 6, 3 au niveau 9, etc.).
+Code de conduite. Le paladin est obligatoirement loyal bon. S’il commet sciemment un acte maléfique, il perd aussitôt son statut et ses pouvoirs. De plus, son code de conduite l’oblige à respecter l’autorité légitime, à se comporter de façon honorable (c’est-à-dire à ne pas mentir, tricher, utiliser le poison, etc.), à aider les gens dans le besoin (à condition qu’ils ne cherchent pas à utiliser le paladin dans un but chaotique ou maléfique), et à châtier ceux qui menacent ou maltraitent les innocents.
+Compagnons. Le paladin peut faire partie d’un groupe réunissant des personnages d’alignement bon ou neutre, mais il ne s’associera jamais avec quelqu’un qu’il sait malfaisant. De même, il ne peut pas rester en compagnie de quelqu’un qui bafoue sans cesse son code de conduite. Enfin, il ne peut louer les services d’hommes d’armes que si ces derniers sont bons et loyaux.
+
+Anciens paladins
+Un paladin changeant d’alignement, commettant sciemment un acte maléfique ou bafouant son code de conduite perd son statut, ses sorts, ses pouvoirs et son destrier (mais pas sa formation au maniement des armes et au ports des armures). Il est alors incapable de progresser en niveaux dans cette classe. Il récupère son statut et ses capacités s’il fait acte de contrition (voir le sort pénitence).
+Comme tout le monde, le paladin peut être multiclassé, mais il doit s’accommoder d’une restriction que ne connaissent pas les autres personnages (moine excepté) : s’il change de classe ou s’il gagne un niveau dans une classe qu’il possédait avant de devenir paladin, il ne pourra plus jamais améliorer son niveau de paladin (il conserve toutefois les pouvoirs acquis jusque-là). La voie du paladin requiert une grande constance. Quand on s’y engage, il faut laisser toutes les autres carrières de côté. Et si jamais l’on en dévie, il devient impossible de la retrouver.
+
+Le destrier du paladin
+Un destrier de paladin possède des pouvoirs et des caractéristiques bien supérieurs aux animaux de la même espèce. La monture usuelle pour un paladin de taille M est un destrier lourd et pour un paladin de taille P, ce sera un poney de guerre (tous deux sont détaillés ci-dessous). On peut éventuellement accepter un autre type de monture, comme par exemple un chien de selle (pour un paladin halfelin) ou un grand requin (si la campagne se déroule dans un milieu aquatique). Pour tous les effets qui tiennent compte du type d’une créature, il est considéré comme une créature magique plutôt qu’un animal. (Il reste néanmoins intrinsèquement un animal, et ses dés de vie, son bonus de base à l’attaque et aux sauvegardes, ses points de compétences et ses dons ne sont pas affectés.)
+
+Niveau du paladin |DV sup.|Aj. d’armure naturelle|Aj. de Force|Int|Spécial|
+5–7|+2|+4|+1|6|Esquive extraordinaire, lien télépathique, transfert d’effet magique, transfert de jet de sauvegarde|
+8–10|+4|+6|+2|7|Vitesse supérieure|
+11–14|+6|+8|+3|8|Injonction|
+15–20|+8|+10|+4|9|Résistance à la magie|
+
+Profil des destriers de paladin. Utilisez le profil fourni pour l’animal correspondant, en faisant les modifications suivantes.
+DV sup. La monture obtient des dés de vie supplémentaires (des d8), qui sont ajoutés à ses points de vie (avec le modificateur de Constitution habituel). Cette augmentation de dés de vie influe aussi sur ses bonus de base à l’attaque et aux sauvegardes. Son bonus de base à l’attaque est moyen (comme un prêtre), ses bonus de base de Réflexes et de Vigueur sont élevés et celui de Volonté est faible. (Voir la Table : bonus de base à l’attaque et aux sauvegardes, en considérant un niveau égal à ses dés de vie.) Les DV supplémentaires d’un destrier de paladin lui donnent aussi des points de compétence et des dons, selon la méthode d’évolution normale des monstres.
+Aj. d’armure naturelle. L’ajustement indiqué vient s’ajouter au bonus d’armure naturelle à la CA existant de la monture. Il représente la résistance surnaturelle du destrier de paladin.
+Aj. de Force. Ajoutez ce bonus à la valeur de Force de la monture.
+Int. La valeur d’Intelligence du destrier.
+Esquive surnaturelle (Ext). Si le destrier est pris pour cible par une attaque autorisant un jet de Réflexes pour réduire de moitié les dégâts occasionnés, il l’évite totalement en cas de jet de sauvegarde réussi et même s’il le rate, l’attaque ne lui inflige que demi-dégâts.
+Lien télépathique (Sur). Le paladin bénéficie d’un lien télépathique avec son destrier tant que celui-ci est à moins de 1,5 kilomètre. Il ne voit pas par les yeux de sa monture mais peut communiquer télépathiquement avec elle. Notez que même les montures intelligentes voient le monde d’une façon bien différente de celle des humains ; les incompréhensions sont donc toujours possibles.
+En raison du lien unissant le destrier à son maître, celui-ci a le même rapport que sa monture à un lieu ou à un objet, comme un maître avec son familier.
+Transfert d’effet magique. Si le paladin le souhaite, tout sort (mais pas un pouvoir magique) qu’il lance sur lui-même peut également affecter son destrier. Ce dernier doit se trouver à moins de 1,50 mètre de distance au moment de l’incantation. Si le sort a une durée autre qu’instantanée, il cesse d’affecter la monture si celle-ci s’éloigne de son maître de plus de 1,50 mètre. Dans ce cas, l’effet du sort ne reprend pas même si le destrier revient à côté du paladin. De plus, le personnage peut lancer directement sur sa monture tout sort à portée personnelle (il a alors une portée de contact) au lieu de le lancer sur lui-même. Ce transfert d’effet magique est permis même si, en temps normal, le sort ne devrait pas affecter une entité du type du destrier (créature magique).
+Transfert de jet de sauvegarde. Le destrier peut utiliser son bonus de base aux sauvegardes ou celui de son maître, en prenant chaque fois le plus avantageux des deux. La monture applique ses propres modificateurs de caractéristiques aux jets de sauvegarde et elle n’obtient pas tout autre bonus sur les jets de sauvegarde dont pourrait bénéficier son maître (comme ceux d’un objet magique ou d’un don).
+Vitesse supérieure (Ext). La vitesse de déplacement du destrier augmente de +3 mètres.
+Injonction (Mag). Une fois par jour tous les deux niveaux du paladin, sa monture peut utiliser ce pouvoir contre toutes les créatures d’une espèce voisine de la sienne (pour les destriers et poneys de guerre, cela signifie tous les chevaux, poneys, ânes et mulets) ayant moins de DV qu’elle. L’effet est le même que celui du sort de même nom, mais le destrier doit réussir un test de Concentration (DD 21) pour y faire appel si son maître se trouve en selle et au combat. En cas d’échec, le pouvoir ne fonctionne pas, mais la tentative est tout de même décomptée du quota quotidien. Les cibles ont droit à un jet de Volonté (DD 10 + 1/2 du niveau du paladin + le modificateur de Charisme du paladin) pour annuler l’effet.
+Résistance à la magie (Ext). La résistance à la magie de la monture est égale au niveau du paladin + 5. Si un ennemi tente d’affecter le destrier avec un sort, il doit effectuer un test de niveau de lanceur de sorts (1d20 + niveau de lanceur de sorts) et obtenir un résultat au moins égal à la résistance à la magie du destrier.
+
+Prêtre
+Alignement. L’alignement d’un prêtre doit se trouver à un “ cran ” maximum de celui de son dieu (c’est-à-dire qu’il doit être différent au plus d’une étape sur l’axe bien-mal ou l’axe loi-chaos). Les prêtres ne peuvent être d’alignement neutre que si leur dieu l’est aussi.
+Dés de vie. d8.
+
+Compétences de classe
+Les compétences du prêtre (et la caractéristique dont chacune dépend) sont : Art de la magie (Int), Artisanat (Int), Concentration (Con), Connaissances (histoire) (Int), Connaissances (mystères) (Int), Connaissances (plans) (Int), Connaissances (religion) (Int), Diplomatie (Cha), Premiers secours (Sag) et Profession (Sag).
+Domaines et compétences de classe. Un prêtre qui choisit le domaine de la Faune ou de la Flore ajoute la compétence Connaissances (nature) (Int) à la liste précédente. Un prêtre qui choisit le domaine de la Connaissance ajoute toutes les formes de Connaissances (Int) à cette liste. Un prêtre qui choisit le domaine du Voyage ajoute la compétence Survie (Sag) à cette liste. Un prêtre qui choisit le domaine de la Duperie ajoute les compétences Bluff (Cha), Déguisement (Cha) et Discrétion (Dex) à cette liste. Voir Dieux, domaines et sorts de domaines, ci-dessous pour plus d'informations.
+Points de compétence au niveau 1 : (2 + modificateur d’Int)  4
+Points de compétence à chaque niveau additionnel : 2 + modificateur d’Int
+
+Table : le prêtre
+||||||Nombre de sorts par jour|
+Niveau|Bonus de base à l’attaque|Bonus de base de Réflexes|Bonus de base de Vigueur|Bonus de base de Volonté|Spécial|0 |1er|2e|3e|4e|5e|6e|7e|8e|9e|
+1|+0|+0|+2|+2|Renvoi ou intimidation des morts-vivants|3|1+1|—|—|—|—|—|—|—|—|
+||||||||||||||||
+2|+1|+0|+3|+3|—|4|2+1|—|—|—|—|—|—|—|—|
+3|+2|+1|+3|+3|—|4|2+1|1+1|—|—|—|—|—|—|—|
+4|+3|+1|+4|+4|—|5|3+1|2+1|—|—|—|—|—|—|—|
+5|+3|+1|+4|+4|—|5|3+1|2+1|1+1|—|—|—|—|—|—|
+6|+4|+2|+5|+5|—|5|3+1|3+1|2+1|—|—|—|—|—|—|
+7|+5|+2|+5|+5|—|6|4+1|3+1|2+1|1+1|—|—|—|—|—|
+8|+6/+1|+2|+6|+6|—|6|4+1|3+1|3+1|2+1|—|—|—|—|—|
+9|+6/+1|+3|+6|+6|—|6|4+1|4+1|3+1|2+1|1+1|—|—|—|—|
+10|+7/+2|+3|+7|+7|—|6|4+1|4+1|3+1|3+1|2+1|—|—|—|—|
+11|+8/+3|+3|+7|+7|—|6|5+1|4+1|4+1|3+1|2+1|1+1|—|—|—|
+12|+9/+4|+4|+8|+8|—|6|5+1|4+1|4+1|3+1|3+1|2+1|—|—|—|
+13|+9/+4|+4|+8|+8|—|6|5+1|5+1|4+1|4+1|3+1|2+1|1+1|—|—|
+14|+10/+5|+4|+9|+9|—|6|5+1|5+1|4+1|4+1|3+1|3+1|2+1|—|—|
+15|+11/+6/+1|+5|+9|+9|—|6|5+1|5+1|5+1|4+1|4+1|3+1|2+1|1+1|—|
+16|+12/+7/+2|+5|+10|+10|—|6|5+1|5+1|5+1|4+1|4+1|3+1|3+1|2+1|—|
+17|+12/+7/+2|+5|+10|+10|—|6|5+1|5+1|5+1|5+1|4+1|4+1|3+1|2+1|1+1|
+18|+13/+8/+3|+6|+11|+11|—|6|5+1|5+1|5+1|5+1|4+1|4+1|3+1|3+1|2+1|
+19|+14/+9/+4|+6|+11|+11|—|6|5+1|5+1|5+1|5+1|5+1|4+1|4+1|3+1|3+1|
+20|+15/+10/+5|+6|+12|+12|—|6|5+1|5+1|5+1|5+1|5+1|4+1|4+1|4+1|4+1|
+* En plus de ses sorts quotidiens, le prêtre a droit à un sort de domaine par niveau de sort entre le 1er et le 9e, indiqué par le “ +1 ” après chaque chiffre. Les sorts de domaine viennent en plus des sorts en bonus dus à une Sagesse élevée.
+
+Particularités de la classe
+Voici les particularités et aptitudes de la classe de prêtre :
+Armes et armures. Le prêtre est formé au maniement des armes courantes ainsi que des boucliers (à l’exception des pavois). Il est formé au port de toutes les armures (légères, intermédiaires et lourdes).
+Un prêtre qui choisit le domaine de la Guerre reçoit gratuitement le don Arme de prédilection pour l’arme de son dieu, ainsi que le don Maniement d’une arme de guerre nécessaire si l’arme appartient à cette catégorie.
+Aura (Ext). Un prêtre d’un dieu bon, chaotique, loyal ou mauvais génère une puissante aura correspondant à l’alignement de son dieu (pour plus de détails voir le sort détection du Mal). Les prêtres qui ne vénèrent pas un dieu spécifique, mais choisissent le domaine du Bien, du Chaos, de la Loi ou du Mal possèdent une aura similaire de l’alignement correspondant.
+Sorts. Un prêtre peut lancer des sorts divins (du même type que ceux des druides, paladins et rôdeurs) appartenant à la liste de sorts de sa classe. Cependant, son alignement peut l’empêcher de lancer certains sorts opposés à sa morale ou à son éthique, voir la section Sorts du Bien, du Chaos, de la Loi et du Mal, ci-dessous. Un prêtre doit choisir et préparer ses sorts à l’avance (voir plus loin).
+La Sagesse est la caractéristique primordiale des sorts de prêtre. Pour préparer ou lancer un sort, un prêtre doit avoir une valeur de Sagesse au moins égale à 10 + le niveau du sort (soit Sag 10 pour les sorts de niveau 0, Sag 11 pour ceux du 1er niveau et ainsi de suite). Le DD des jets de sauvegarde contre ses sorts est égal à 10 + le niveau du sort + le modificateur de Sagesse du prêtre.
+Comme les autres lanceurs de sorts, le prêtre ne peut lancer qu’un nombre de sorts donné de chaque niveau chaque jour. Son quota de sorts quotidiens est indiqué sur la Table : le prêtre. De plus, il reçoit des sorts en bonus si sa valeur de Sagesse est suffisamment élevée (voir la Table : modificateurs de caractéristiques et sorts en bonus). Un prêtre reçoit aussi un sort de domaine en bonus à chaque niveau de sort (à l’exception du niveau 0). Cet emplacement de sort est réservé aux sorts des listes de ses deux domaines (voir Dieux, domaines et sorts de domaines pour plus de détails).
+Le prêtre ne trouve pas ses sorts dans les livres ou les parchemins, pas plus qu’il ne les prépare en les étudiant. Au lieu de cela, il médite et prie, puis son dieu lui envoie directement les sorts demandés (s’il ne vénère aucun dieu, c’est sa foi qui lui permet d’obtenir ses pouvoirs). Pour recevoir l’inspiration divine, le prêtre passe une heure entière à se recueillir à un moment choisi de la journée. Il s’agit généralement de l’aube ou à midi pour les prêtres bons, et du crépuscule ou à minuit pour leurs homologues mauvais. Le temps passé à dormir n’a aucun effet sur la préparation des sorts. Un prêtre peut lancer tous les sorts de la liste des sorts de prêtre, à condition de pouvoir lancer des sorts de ce niveau, mais il doit choisir quels sorts préparer au cours de sa méditation quotidienne.
+Dieux, domaines et sorts de domaines. Le dieu du prêtre a une influence sur son alignement, les sorts qu’il peut lancer, ses valeurs et la manière dont les autres le perçoivent. Un prêtre peut choisir deux domaines dans la liste proposée. Vous ne pouvez choisir un domaine associé à un alignement (Bien, Chaos, Loi et Mal) que s’il correspond à l’un des aspects de l’alignement de votre personnage.
+Un prêtre peut choisir de ne servir aucun dieu en particulier. Si votre prêtre ne vénère pas un dieu en particulier, sélectionnez tout de même deux domaines représentant ses choix profonds. Les restrictions concernant l’alignement s’appliquent toujours.
+Chaque domaine propose un pouvoir accordé, ainsi qu’un sort par niveau à partir du 1er. Le prêtre a systématiquement droit aux pouvoirs accordés par les deux domaines choisis. Dans le même temps, il peut, chaque jour, préparer un sort de domaine par niveau (sur les deux qui lui sont offerts). Si un sort de domaine n’apparaît pas sur la liste générale des sorts de prêtre, le personnage ne peut le préparer qu’en tant que sort de domaine.
+Incantation spontanée. Un prêtre bon (ou un prêtre neutre servant un dieu d’alignement bon) peut canaliser l’énergie réservée pour un sort afin de la transformer spontanément en un sort de guérison qu’il n’avait pas préparé à l’avance. Pour ce faire, il lui suffit de “ sacrifier ” l’un des sorts qu’il a préparés (et qui ne soit pas un sort de domaine) pour pouvoir lancer à la place un sort de soins de niveau égal ou inférieur. On appelle sort de soins tout sort ayant “ soins ” dans son intitulé. Par exemple, un prêtre bon ayant préparé injonction (sort du 1er niveau) peut choisir de le remplacer spontanément par soins légers (également du 1er niveau). Les prêtres des dieux bons sont tellement habitués à manipuler l’énergie positive que cette pratique ne leur demande aucun effort particulier.
+En revanche, un prêtre mauvais (ou un prêtre neutre fidèle à un dieu maléfique) ne peut convertir ses sorts en sorts de soins, mais peut obtenir des sorts de blessure (c’est-à-dire tout sort ayant “ blessure ” dans son intitulé). Cela s’explique par le fait que ces prêtres sont extrêmement doués pour canaliser l’énergie négative.
+Un prêtre qui n’est ni bon ni mauvais et dont le dieu n’est lui aussi ni bon ni mauvais peut choisir de transformer ses sorts en sorts de soins ou de blessure (au choix du joueur), selon que le personnage se sent plus apte à canaliser l’énergie positive ou négative. Ce choix doit être fait en début de carrière, et il est irrévocable. C’est également cette décision qui détermine si le prêtre sera capable de repousser les morts-vivants ou de les intimider (voir ci-dessous).
+Sorts du Bien, du Chaos, de la Loi et du Mal. Un prêtre ne peut pas lancer de sort associé à un alignement opposé au sien ou à celui de son dieu (s’il en sert un). Par exemple, un prêtre bon (ou un prêtre neutre servant un dieu bon) ne peut pas jeter de sort du Mal. L’alignement d’un sort est indiqué par les registres Bien, Chaos, Loi et Mal dans son descriptif.
+Renvoi ou intimidation des morts-vivants (Sur). Un prêtre, quel que soit son alignement, a le pouvoir d’affecter les morts-vivants tels que les squelettes, zombis, fantômes et autres vampires en canalisant le pouvoir de la foi à travers son symbole sacré (ou impie).
+Un prêtre bon (ou un prêtre neutre vénérant un dieu bon) a la faculté de repousser et de détruire les morts-vivants. Un prêtre mauvais (ou un prêtre neutre servant un dieu mauvais) peut au contraire intimider et contrôler les morts-vivants, en les forçant à s’incliner devant son pouvoir. Le prêtre neutre d’un dieu neutre doit choisir s’il affecte les morts-vivants comme un prêtre bon ou comme un prêtre mauvais. Ce choix est irrévocable et détermine également si le prêtre peut transformer spontanément ses sorts en sorts de soins ou de blessure (voir ci-dessus).
+Chaque jour, un prêtre peut tenter de repousser ou d’intimider les morts-vivants un nombre de fois égal à 3 + modificateur de Charisme. Un prêtre ayant atteint un degré de maîtrise de 5 ou plus en Connaissances (religion) obtient un bonus de +2 sur les tests de renvoi ou d’intimidation des morts-vivants.
+Langues supplémentaires. La liste des langues supplémentaires que le prêtre peut apprendre en plus de celles que lui autorise sa race comprend l’abyssal, le céleste et l’infernal. Il s’agit, respectivement, de la langue des Extérieurs d’alignement chaotique mauvais, bon, et loyal mauvais.
+
+Anciens prêtres
+Un prêtre bafouant ouvertement le code de conduite imposé par son dieu (en allant à l’encontre des préceptes qu’il est censé enseigner) perd immédiatement tous ses sorts et ses aptitudes de classe, à l’exception de la formation au maniement des armes simples, des boucliers et du port des armures. Il ne peut plus gagner le moindre niveau de prêtre tant qu’il n’a pas fait acte de contrition (voir le sort pénitence).
+
+Rôdeur
+Alignement. Au choix.
+Dés de vie. d8.
+
+Compétences de classe
+Les compétences du rôdeur (et la caractéristique dont chacune dépend) sont : Artisanat (Int), Concentration (Con), Connaissances (exploration souterraine) (Int), Connaissances (géographie) (Int), Connaissances (nature) (Int), Déplacement silencieux (Dex), Détection (Sag), Discrétion (Dex), Dressage (Cha), Équitation (Dex), Escalade (For), Fouille (Int), Maîtrise des cordes (Dex), Natation (For), Perception auditive (Sag), Premiers secours (Sag), Profession (Sag), Saut (For) et Survie (Sag).
+Points de compétence au niveau 1 : (6 + modificateur d’Int)  4
+Points de compétence à chaque niveau additionnel : 6 + modificateur d’Int
+
+Table : le rôdeur
+	||||||Nombre de sorts par jour|
+Niveau|Bonus de base à l’attaque|Bonus de base de Réflexes|Bonus de base de Vigueur|Bonus de base de Volonté|Spécial|1er|2e|3e|4e|
+1|+1|+2|+2|+0|Empathie sauvage, 1er ennemi juré, pistage|—|—|—|—|
+2|+2|+3|+3|+0|Style de combat|—|—|—|—|
+3|+3|+3|+3|+1|Endurance|—|—|—|—|
+4|+4|+4|+4|+1|Compagnon animal|0|—|—|—|
+5|+5|+4|+4|+1|2e ennemi juré|0|—|—|—|
+6|+6/+1|+5|+5|+2|Science du style de combat|1|—|—|—|
+7|+7/+2|+5|+5|+2|Déplacement facilité|1|—|—|—|
+8|+8/+3|+6|+6|+2|Pistage accéléré|1|0|—|—|
+9|+9/+4|+6|+6|+3|Esquive totale|1|0|—|—|
+10|+10/+5|+7|+7|+3|3e ennemi juré|1|1|—|—|
+11|+11/+6/+1|+7|+7|+3|Maîtrise du style de combat|1|1|0|—|
+12|+12/+7/+2|+8|+8|+4|—|1|1|1|—|
+13|+13/+8/+3|+8|+8|+4|Camouflage|1|1|1|—|
+14|+14/+9/+4|+9|+9|+4|—|2|1|1|0|
+15|+15/+10/+5|+9|+9|+5|4e ennemi juré|2|1|1|1|
+16|+16/+11/+6/+1|+10|+10|+5|—|2|2|1|1|
+17|+17/+12/+7/+2|+10|+10|+5|Discrétion totale|2|2|2|1|
+18|+18/+13/+8/+3|+11|+11|+6|—|3|2|2|1|
+19|+19/+14/+9/+4|+11|+11|+6|—|3|3|3|2|
+20|+20/+15/+10/+5|+12|+12|+6|5e ennemi juré|3|3|3|3|
+
+Particularités de la classe
+Voici les particularités et aptitudes de la classe de rôdeur :
+Armes et armures. Le rôdeur est formé au maniement des armes courantes, des armes de guerre, ainsi que des boucliers (à l’exception des pavois). Il est formé au port des armures légères.
+Empathie sauvage (Ext). Un rôdeur peut ajuster son comportement, son langage et ses expressions corporelles pour améliorer l’attitude d’un animal (comme un ours ou un varan). Cette aptitude suit les mêmes règles que les tests de Diplomatie joués pour modifier l’attitude d’une personne. Le résultat d’un test d’empathie sauvage est déterminé par 1d20 + le niveau du rôdeur + le modificateur de Charisme du rôdeur. L’attitude initiale des animaux domestiques est l’indifférence, tandis que les animaux sauvages sont généralement inamicaux.
+Pour utiliser d’empathie sauvage, le rôdeur et l’animal doivent être en mesure de se voir et de l’étudier l’un l’autre, ce qui signifie qu’ils doivent se trouver à moins de 9 mètres de distance dans des conditions normales. Il faut en moyenne une minute pour influencer un animal de cette façon, mais comme pour la diplomatie, cela peut parfois prendre plus longtemps ou être plus rapide.
+Cette aptitude peut aussi servir à un rôdeur pour influencer une créature magique dont la valeur d’Intelligence est de 1 ou 2 (comme un basilic ou un girallon), avec cependant un malus de –4 sur son test.
+Ennemis jurés (Ext). Au niveau 1, le rôdeur choisit un type de créatures de la Table : ennemis jurés du rôdeur. Pour avoir longuement étudié ses ennemis jurés et pour s’être exercé encore et encore aux techniques permettant de les vaincre, il bénéficie d’un bonus de +2 aux tests de Bluff, Détection, Perception auditive, Psychologie et Survie lorsqu’il les utilise contre des créatures de ce type. Il bénéficie également d’un bonus de +2 sur les jets de dégâts d’armes contre ces créatures.
+Au niveau 5 et tous les cinq niveaux par la suite (c’est-à-dire aux niveaux 10, 15 et 20), le rôdeur peut choisir un nouvel ennemi juré sur la Table : ennemis jurés du rôdeur. De plus, il peut augmenter de +2 le bonus dont il bénéficie contre l’un de ses ennemis jurés (y compris celui qu’il vient de choisir s’il le désire). Par exemple, un rôdeur de niveau 5 a deux ennemis jurés, un contre lequel il a un bonus de +4 sur les tests de Bluff, Détection, Perception auditive, Psychologie et Survie et les jets de dégâts d’arme et un autre pour lequel le bonus n’est que de +2. Au niveau 10, le même rôdeur a trois ennemis jurés et il peut augmenter son bonus contre l’un d’eux de +2. Ses bonus seront alors soit de +4, +4 et +2, soit de +6, +2 et +2.
+Lorsqu’un rôdeur choisit les Extérieurs ou les humanoïdes comme ennemi juré, il doit aussi choisir un sous-type associé, comme l’indique la table. Si une créature appartient à deux sous-types d’ennemi juré (par exemple, les démons sont à la fois du sous-type Chaos et Mal), les bonus ne se cumulent pas, le rôdeur ne profite que du plus élevé des deux.
+
+Table : ennemis jurés du rôdeur
+Type (sous-type) |Type (sous-type)|
+Aberration|Géant|
+Animal|Humanoïde (aquatique)|
+Créature artificielle|Humanoïde (elfe)|
+Créature magique|Humanoïde (gnoll)|
+Dragon|Humanoïde (gnome)|
+Élémentaire|Humanoïde (goblinoïde)|
+Extérieur (Air)|Humanoïde (halfelin)|
+Extérieur (Bien)|Humanoïde (humain)|
+Extérieur (Chaos)|Humanoïde (nain)|
+Extérieur (Eau)|Humanoïde (orque)|
+Extérieur (Feu)|Humanoïde (reptilien)|
+Extérieur (Loi)|Humanoïde monstrueux|
+Extérieur (Mal)|Mort-vivant|
+Extérieur (natif)|Plante|
+Extérieur (Terre)|Vase|
+Fée|Vermine|
+
+Pistage. Le rôdeur reçoit gratuitement le don Pistage en tant que don supplémentaire.
+Style de combat (Ext). Au niveau 2, un rôdeur doit choisir entre le style de combat à deux armes et le style de combat à distance. Ce choix détermine quelques aptitudes de classe, mais ne limite en rien le rôdeur pour le choix de ses dons ou de ses pouvoirs spéciaux.
+Si le rôdeur choisit le combat à deux armes, il peut se battre comme s’il possédait le don Combat à deux armes, même s’il n’en remplit pas les conditions.
+Si le rôdeur choisit le combat à distance, il peut se battre comme s’il possédait le don Tir rapide, même s’il n’en remplit pas les conditions.
+Le rôdeur ne doit porter aucune armure ou seulement une armure légère pour bénéficier de son style de combat. Il en perd tous les avantages s’il porte une arme intermédiaire ou lourde.
+Endurance. Un rôdeur de niveau 3 reçoit gratuitement le don Endurance en tant que don supplémentaire.
+Compagnon animal (Ext). À partir du niveau 4, un rôdeur peut avoir un compagnon animal choisi dans la liste suivante : aigle, blaireau, chameau, cheval (léger ou lourd), chien de selle, chien, chouette, faucon, loup, poney, rat sanguinaire et serpent venimeux (petit ou de taille moyenne). Si la campagne se déroule entièrement ou partiellement dans un milieu aquatique, on peut ajouter les animaux suivant à cette liste : calmar, marsouin et requin de taille moyenne. Un compagnon animal suit loyalement le personnage au cours de ses aventures au mieux de ses capacités. (Par exemple, une créature aquatique ne peut suivre un rôdeur sur terre et ne peut être choisi par un rôdeur n’habitant pas un milieu aquatique qu’avec des circonstances extraordinaire.) En tous cas, le rôle du compagnon animal est celui d’une monture, d’une sentinelle, d’un éclaireur ou d’un animal de chasse, mais pas celui d’un protecteur.
+Cet aptitude fonctionne exactement comme celle de druide du même nom si ce n’est que le niveau de druide effectif du personnage n’est que la moitié de son niveau de rôdeur. Un rôdeur peut choisir un compagnon animal hors-norme, au même titre qu’un druide, mais encore avec un niveau effectif divisé par deux. Comme pour un druide, un rôdeur ne peut choisir un compagnon animal qui réduirait son niveau de druide effectif à 0 ou moins.
+Sorts. Dès le niveau 4, un rôdeur peut lancer un petit nombre de sorts divins (du même type que ceux des druides, paladins et prêtres) appartenant à la liste de sorts de sa classe. Un rôdeur doit choisir et préparer ses sorts à l’avance (voir ci-dessous).
+La Sagesse est la caractéristique primordiale des sorts de rôdeur. Pour préparer ou lancer un sort, un rôdeur doit avoir une valeur de Sagesse au moins égale à 10 + le niveau du sort (soit Sag 11 pour les sorts du 1er niveau, Sag 12 pour ceux du 2e niveau et ainsi de suite). Le DD des jets de sauvegarde contre ses sorts est égal à 10 + le niveau du sort + le modificateur de Sagesse du rôdeur.
+Comme les autres lanceurs de sorts, le rôdeur ne peut lancer qu’un nombre de sorts donné de chaque niveau chaque jour. Son quota de sorts quotidiens est indiqué sur la Table : le rôdeur. De plus, il reçoit des sorts en bonus si sa valeur de Sagesse est suffisamment élevée (voir la Table : modificateurs de caractéristiques et sorts en bonus). Quand la Table : le rôdeur indique que le rôdeur peut lancer “ 0 ” sort d’un niveau de sort par jour (par exemple, les sorts de 1er niveau pour un rôdeur de niveau 4), il ne peut lancer que les sorts en bonus pour ce niveau que peut lui accorder une Sagesse élevée. Les rôdeurs ne bénéficient pas de sorts de domaines ou de pouvoirs accordés, contrairement aux prêtres.
+Un rôdeur prépare et lance ses sorts comme un prêtre, si ce n’est qu’il est incapable de transformer spontanément ses sorts en sorts de soins ou de blessure. Un rôdeur peut lancer tous les sorts de la liste des sorts de rôdeur, à condition de pouvoir lancer des sorts de ce niveau, mais il doit choisir quels sorts préparer au cours de sa méditation quotidienne.
+Jusqu’au niveau 3, le rôdeur n’a pas de niveau de lanceur de sorts. À partir du niveau 4, son niveau de lanceur de sorts est égal à la moitié de son niveau de rôdeur.
+Science du style de combat (Ext). Au niveau 6, le rôdeur progresse dans son style de combat (à deux armes ou à distance). S’il a choisi le style de combat à deux armes au niveau 2, il peut maintenant se battre comme s’il possédait le don Science du combat à deux armes, même s’il n’en remplit pas les conditions.
+S’il a choisi le style de combat à distance au niveau 2, il peut maintenant se battre comme s’il possédait le don Feu nourri, même s’il n’en remplit pas les conditions.
+Comme précédemment, le rôdeur ne doit porter aucune armure ou seulement une armure légère pour bénéficier de son style de combat. Il en perd tous les avantages s’il porte une arme intermédiaire ou lourde.
+Déplacement facilité (Ext). Un rôdeur de niveau 7 se déplace sans la moindre gêne dans toutes sortes de taillis, y compris les fourrés, les buissons (même épineux) et les autres zones de végétation dense. Il progresse normalement et ne subit aucun dégât. À noter toutefois que la végétation enchantée de manière à restreindre le mouvement continue de l’affecter.
+Pistage accéléré (Ext). Un rôdeur de niveau 8 peut se déplacer à sa vitesse habituelle lorsqu’il suit une piste, sans subir le malus de –5 sur ses tests de Survie. Il ne subit qu’un malus de –10 (au lieu de –20) sur ses tests de Survie lorsqu’il se déplace au double de sa vitesse lorsqu’il suit une piste.
+Esquive totale (Ext). L’agilité presque surhumaine d’un rôdeur de niveau 9 lui permet d’éviter les attaques magiques ou inhabituelles. S’il réussit son jet de Réflexes contre une attaque dont les dégâts sont normalement réduits de moitié en cas de jet de Réflexes réussi (comme c’est le cas pour une boule de feu ou le souffle enflammé d’un dragon rouge), il l’évite totalement et ne subit pas le moindre dégât. Un rôdeur portant une armure intermédiaire ou lourde, ou qui se trouve sans défense (parce qu’il est inconscient ou paralysé, par exemple) perd les avantages de d’esquive totale.
+Maîtrise du style de combat (Ext). Au niveau 11, le rôdeur maîtrise totalement son style de combat (à deux armes ou à distance). S’il a choisi le style de combat à deux armes au niveau 2, il peut maintenant se battre comme s’il possédait le don Maîtrise du combat à deux armes, même s’il n’en remplit pas les conditions.
+S’il a choisi le style de combat à distance au niveau 2, il peut maintenant se battre comme s’il possédait le don Science du tir de précision, même s’il n’en remplit pas les conditions.
+Comme précédemment, le rôdeur ne doit porter aucune armure ou seulement une armure légère pour bénéficier de son style de combat. Il en perd tous les avantages s’il porte une arme intermédiaire ou lourde.
+Camouflage (Ext). Un rôdeur de niveau 13 ou plus peut utiliser la compétence Discrétion même s’il ne bénéficie pas d’un abri ou de camouflage, à condition de se trouver sur un terrain de type naturel.
+Discrétion totale (Ext). Un rôdeur de niveau 17 ou plus se trouvant sur un terrain de type naturel peut utiliser la compétence Discrétion même s’il est actuellement observé.
+
+Roublard
+Alignement. Au choix.
+Dés de vie. d6.
+
+Compétences de classe
+Les compétences du roublard (et la caractéristique dont chacune dépend) sont : Acrobaties (Dex), Artisanat (Int), Bluff (Cha), Connaissances (folklore local) (Int), Contrefaçon (Int), Crochetage (Dex), Décryptage (Int), Déguisement (Cha), Déplacement silencieux (Dex), Désamorçage/sabotage (Int), Détection (Sag), Diplomatie (Cha), Discrétion (Dex), Équilibre (Dex), Escalade (For), Escamotage (Dex), Estimation (Int), Évasion (Dex), Fouille (Int), Intimidation (Cha), Maîtrise des cordes (Dex), Natation (For), Perception auditive (Sag), Profession (Sag), Psychologie (Sag), Renseignements (Cha), Représentation (Cha), Saut (For) et Utilisation d’objets magiques (Cha).
+Points de compétence au niveau 1 : (8 + modificateur d’Int)  4
+Points de compétence à chaque niveau additionnel : 8 + modificateur d’Int
+
+Table : le roublard
+Niveau|Bonus de base à l’attaque|Bonus de base de Réflexes|Bonus de base de Vigueur|Bonus de base de Volonté|Spécial|
+1|+0|+2|+0|+0|Attaque sournoise (+1d6), recherche des pièges|
+2|+1|+3|+0|+0|Esquive totale|
+3|+2|+3|+1|+1|Attaque sournoise (+2d6), sens des pièges (+1)|
+4|+3|+4|+1|+1|Esquive instinctive|
+5|+3|+4|+1|+1|Attaque sournoise (+3d6)|
+6|+4|+5|+2|+2|Sens des pièges (+2)|
+7|+5|+5|+2|+2|Attaque sournoise (+4d6)|
+8|+6/+1|+6|+2|+2|Esquive instinctive supérieure|
+9|+6/+1|+6|+3|+3|Attaque sournoise (+5d6), sens des pièges (+3)|
+10|+7/+2|+7|+3|+3|Pouvoir spécial|
+11|+8/+3|+7|+3|+3|Attaque sournoise (+6d6)|
+12|+9/+4|+8|+4|+4|Sens des pièges (+4)|
+13|+9/+4|+8|+4|+4|Attaque sournoise (+7d6), pouvoir spécial|
+14|+10/+5|+9|+4|+4|—|
+15|+11/+6/+1|+9|+5|+5|Attaque sournoise (+8d6), sens des pièges (+5)|
+16|+12/+7/+2|+10|+5|+5|Pouvoir spécial|
+17|+12/+7/+2|+10|+5|+5|Attaque sournoise (+9d6)|
+18|+13/+8/+3|+11|+6|+6|Sens des pièges (+6)|
+19|+14/+9/+4|+11|+6|+6|Attaque sournoise (+10d6), pouvoir spécial|
+20|+15/+10/+5|+12|+6|+6|—|
+
+Particularités de la classe
+Voici les particularités et aptitudes de la classe de roublard :
+Armes et armures. Le roublard est formé au maniement de toutes les armes courantes, ainsi que celui de l’arbalète de poing, l’arc court (normal et composite), l’épée courte, la matraque et la rapière. Il est également formé au port des armures légères mais pas au maniement des boucliers.
+Attaque sournoise. Lorsqu’un roublard attaque son adversaire dans une situation où ce dernier est incapable de se défendre efficacement, il peut lui infliger des dégâts supplémentaires en touchant un point sensible. C’est-à-dire qu’il inflige des dégâts supplémentaires si sa cible se trouve dans un cas de figure lui ôtant son bonus de Dextérité à la CA (qu’elle en ait un ou pas) ou qu’elle est prise en tenaille par le roublard et un compagnon. Les dégâts supplémentaires se montent à 1d6 points au niveau 1, et ils augmentent de 1d6 points de plus tous les niveaux impairs. Si le roublard obtient un coup critique sur une attaque sournoise, ces dégâts supplémentaires ne sont pas multipliés (voir la Table : modificateurs au jet d’attaque, et la Table : modificateurs à la CA, pour avoir la liste des situations de combat où un individu perd son bonus de Dextérité à la CA).
+Une attaque à distance ne peut se transformer en attaque sournoise que si la cible se trouve à 9 mètres ou moins ; au-delà, le roublard ne peut pas faire preuve d’une précision suffisante. (Notez qu’il est impossible de prendre en tenaille à l’aide d’une arme à distance.)
+Pour peu qu’il utilise une matraque ou qu’il frappe à mains nues, le personnage peut également porter une attaque sournoise infligeant des dégâts non-létaux. Il ne peut pas choisir cette option avec une arme occasionnant des dégâts létaux (même à –4 au jet d’attaque), car une telle utilisation est contraire à l’attaque sournoise (qui l’oblige justement à tirer la quintessence de son arme, et non à retenir son coup).
+Le roublard ne peut tenter une attaque sournoise que contre un adversaire dont il peut toucher les organes vitaux, ce qui n’est pas le cas des créatures artificielles, des morts-vivants, des plantes ou des vases, ainsi que des créatures intangibles ou immunisées contre les coups critiques. Le personnage doit voir sa cible et être capable d’atteindre l’organe vital qu’il vise. Il ne peut pas tenter d’attaque sournoise si son adversaire bénéficie d’un camouflage ou si grand que le personnage ne peut toucher ses organes vitaux.
+Recherche des pièges. Seul un roublard peut utiliser la compétence Fouille pour localiser les pièges assortis d’un DD supérieur à 20. Les pièges non magiques mais particulièrement complexes ont un DD au moins égal à 20. Quant aux pièges magiques, leur DD est égal à 25 + niveau du sort entrant dans leur conception.
+De même, seul un roublard peut utiliser la compétence Désamorçage/ sabotage pour désarmer les pièges magiques qu’il a repérés. Là encore, un piège magique a généralement un DD de 25 + niveau du sort entrant dans sa conception.
+Si le personnage obtient au moins 10 points de plus que le DD indiqué à son test de Désamorçage/sabotage, il étudie le piège avec tant de rigueur qu’il a la possibilité de le franchir avec ses compagnons sans le déclencher.
+Esquive totale (Ext). L’agilité presque surhumaine d’un roublard de niveau 2 lui permet d’éviter les attaques magiques ou inhabituelles. S’il réussit son jet de Réflexes contre une attaque dont les dégâts sont normalement réduits de moitié en cas de jet de Réflexes réussi (comme c’est le cas pour une boule de feu ou le souffle enflammé d’un dragon rouge), il l’évite totalement et ne subit pas le moindre dégât. Un roublard portant une armure intermédiaire ou lourde, ou qui se trouve sans défense (parce qu’il est inconscient ou paralysé, par exemple) perd les avantages de d’esquive totale.
+Sens des pièges (Ext). À partir du niveau 3, le roublard acquiert un sens intuitif lui permettant d’éviter les dangers des pièges, ce qui se traduit par un bonus de +1 aux jets de Réflexes effectués pour éviter les pièges et un bonus d’esquive de +1 à la CA contre les attaques déclenchées par des pièges. Ces bonus augmentent de +1 tous les 3 niveaux de roublard supplémentaires (+2 au niveau 6, +3 au niveau 9, +4 au niveau 12, +5 au niveau 15 et +6 au niveau 18). Les bonus de sens des pièges de plusieurs classes se cumulent entre eux.
+Esquive instinctive. Dès le niveau 4, le roublard peut réagir instinctivement avant même que ses sens ne décèlent une menace. Il conserve son bonus de Dextérité à la CA même s’il est pris au dépourvu ou attaqué par un adversaire invisible (il perd toujours ce bonus s’il est immobilisé).
+Si un roublard possède déjà cette aptitude grâce à une autre classe (comme dans le cas d’un roublard possédant au moins 2 niveaux de barbare), il obtient l’esquive instinctive supérieure (voir ci-dessous) au lieu de l’esquive instinctive.
+Esquive instinctive supérieure (Ext). Au niveau 8, le roublard ne peut plus être pris en tenaille, car il pare les assauts de ses adversaires avec autant d’aisance que s’ils venaient tous de la même direction. Les autres roublards ne peuvent plus lui porter des attaques sournoises en le prenant en tenaille, à moins d’avoir au moins 4 niveaux de roublard de plus que le personnage n’en a lui-même.
+Si un personnage possède déjà l’aptitude d’esquive instinctive grâce à une autre classe, il obtient l’esquive instinctive supérieure dès le niveau 4 de roublard et les niveaux des différentes classes proposant cette aptitude se cumulent pour déterminer le niveau de roublard nécessaire pour le prendre en tenaille.
+Pouvoirs spéciaux. Au niveau 10, puis tous les 3 niveaux suivant (soit 13, 16 et 19), le roublard obtient un pouvoir spécial qu’il choisit sur la liste suivante :
+Attaque handicapante (Ext). Un roublard possédant ce pouvoir peut porter des attaques sournoises tellement précises que ses coups handicapent ses adversaires. Un adversaire blessé par une attaque sournoise portée par le roublard subit un affaiblissement temporaire de 2 points de Force. Les points perdus de la sorte reviennent au rythme de 1 par jour.
+Esprit fuyant (Ext). Ce pouvoir représente l’aisance avec laquelle de nombreux roublards parviennent à échapper aux effets magiques cherchant à les contrôler. Chaque fois que le personnage est pris pour cible par un sort ou effet de l’école des enchantements et qu’il rate son jet de sauvegarde, il peut en tenter un second 1 round plus tard (avec le même DD). Il n’a droit qu’a une deuxième chance par attaque.
+Esquive extraordinaire (Ext). Ce pouvoir ressemble à esquive totale, mais l’agilité du roublard lui permet d’échapper au danger avec encore plus d’aisance, et les dégâts infligés par une attaque telle qu’une boule de feu ou un souffle de dragon rouge sont réduits de moitié même s’il rate son jet de Réflexes (s’il le réussit, il l’esquive totalement). Un roublard qui se trouve sans défense (parce qu’il est inconscient ou paralysé, par exemple) perd les avantages de l’esquive extraordinaire.
+Maîtrise des compétences. Le roublard est tellement sûr de lui qu’il peut utiliser ses compétences sans trembler dans les cas extrêmes. Il sélectionne un nombre de compétences égal à 3 + son modificateur d’Intelligence. Chaque fois qu’il se sert de l’une d’elles, il peut faire 10 même en situation de stress ou lorsqu’il est distrait. Il peut prendre ce pouvoir spécial à plusieurs reprises, en choisissant à chaque fois de nouvelles compétences.
+Opportunisme (Ext). Une fois par round, le roublard peut tenter une attaque d’opportunité contre une créature venant juste d’être touchée par un autre personnage. Cette attaque prend la place de celle à laquelle il a droit lors du round. Même si le personnage a pris le don Attaques réflexes, il ne peut pas faire appel à ce pouvoir spécial plus d’une fois par round.
+Roulé-boulé (Ext). Le roublard peut accompagner les coups mortels et ainsi encaisser moins de dégâts. Une fois par jour, alors qu’il vient d’être touché par une attaque qui le ferait tomber à 0 pv ou moins (mais pas s’il est victime d’un sort ou d’un pouvoir spécial), il peut tenter d’exécuter un roulé-boulé afin de réduire la violence du coup. Il effectue un jet de Réflexes (DD = points de dégâts encaissés) et, en cas de succès, les dégâts qu’il devait encaisser sont réduits de moitié. Pour tenter cette manœuvre désespérée, il doit voir venir l’attaque et pouvoir réagir (c’est impossible s’il se retrouve dans une situation où il perd son bonus de Dextérité à la CA). Comme ce type d’attaque n’autorise pas un jet de Réflexes pour demi-dégâts, le pouvoir d’esquive totale du roublard ne lui est d’aucune utilité dans un tel cas de figure.
+Don. Un roublard peut choisir un don supplémentaire plutôt qu’un pouvoir spécial.
+
+Personnages multiclassés
+Au fil des niveaux, un personnage peut ajouter de nouvelles classes à celle qu’il a choisie en début de carrière, faisant de lui un personnage multiclassé. Les pouvoirs et aptitudes de toutes ses classes s’additionnent, ce qui lui permet de se diversifier, mais aux dépens de sa classe d’origine.
+
+Multiclassage et niveau
+En règle générale, les attributs d’un personnage multiclassé sont la somme de ceux que lui procure l’ensemble de ses classes.
+Niveau. On appelle “ niveau global ” la somme des niveaux d’un personnage multiclassé. (L’expression “ personnage de niveau 1 ” concerne le niveau global.) Le niveau global sert pour déterminer l’acquisition de nouveaux dons et l’augmentation des valeurs de caractéristique (voir la Table : expérience et avantages liés au niveau).
+Le “ niveau de classe ” indique sa progression dans une classe donnée. (L’expression “ barde de niveau 1 ” concerne le niveau de classe.) Pour les personnages monoclassés (i.e. ne possédant qu’une seule classe), le niveau global est égal au niveau de classe.
+Points de vie. Un personnage qui monte un niveau d’une de ses classes obtient les points de vie associés, qui s’ajoutent à son total précédent.
+Bonus de base à l’attaque. On ajoute les bonus de base à l’attaque de chaque classe pour obtenir le bonus de base total. Si le résultat est supérieur ou égal à +6, l’aventurier a droit à plusieurs attaques par round. Pour en connaître le nombre et le bonus de chacune, consultez la Table : bonus de base à l’attaque et aux sauvegardes.
+Jets de sauvegarde. Pour chaque catégorie de sauvegarde, on ajoute les bonus de base de chaque classe pour obtenir le bonus de base total.
+Compétences. Si une compétence est une compétence de classe pour au moins une des classes d’un personnage multiclassé, alors son degré de maîtrise maximal pour cette compétence est égal à son niveau global +3.
+Si une compétence est une compétence hors classe pour toutes les classes d’un personnage, alors son degré de maîtrise maximal pour cette compétence est égal à la moitié du calcul précédent (sans arrondir).
+Aptitudes de classe. Un personnage multiclassé acquiert toutes les aptitudes de ses différentes classes, ainsi que les handicaps qui les accompagnent. (Exception : un aventurier décidant de prendre un niveau de barbare ne devient pas subitement illettré.) Notez toutefois que certaines aptitudes d’une classe sont plus ou moins compatibles avec les compétences ou aptitudes d’une autre classe.
+Dans le cas particulier du renvoi ou de l’intimidation des morts-vivants, les prêtres et les paladins ont le même pouvoir. Lorsqu’il atteint le niveau 4 de paladin, un paladin/prêtre a un niveau de prêtre effectif égal à son niveau de prêtre + son niveau de paladin –3.
+Dans le cas particulier de l’esquive instinctive, les barbares expérimentés et les roublards expérimentés ont le même pouvoir. Lorsqu’un barbare/roublard acquiert cette aptitude une deuxième fois (grâce à sa seconde classe), il obtient l’esquive instinctive supérieure, à condition de ne pas déjà en bénéficier. Les niveaux de barbares et de roublards se cumulent entre eux pour déterminer le niveau de roublard nécessaire pour prendre le personnage en tenaille.
+Dans le cas particulier de l’appel de familier, l’ensorceleur et le magicien ont le même pouvoir. Un magicien/ensorceleur additionne ses deux niveaux pour déterminer la CA, l’Intelligence et les pouvoirs spéciaux de son familier.
+Dons. Un personnage multiclassé acquiert un nouveau don chaque fois que son niveau global atteint un multiple de trois, et ce sans considération du niveau qu’il a atteint dans chaque classe individuellement.
+Augmentation de caractéristiques. Un personnage multiclassé gagne 1 point de caractéristique chaque fois que son niveau global atteint un multiple de quatre, et ce sans considération du niveau qu’il a atteint dans chaque classe individuellement.
+Sorts. L’aventurier cumule les sorts dus à toutes ses classes de pratiquant de la magie. Ainsi, un rôdeur/druide suffisamment expérimenté peut préparer le sort protection contre les énergies destructives dans chacune de ses classes. Comme la durée de ce sort dépend du niveau de classe, le joueur doit indiquer si son personnage le prépare et le lance en tant que rôdeur ou que druide.
+

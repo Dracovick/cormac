@@ -5,7 +5,7 @@ import { getNomPersonnage } from '@/lib/queries/character'
 
 export const dynamic = 'force-dynamic'
 
-const SLUGS: RayonSlug[] = ['sort', 'potion', 'objet', 'arme', 'armure', 'don']
+const SLUGS: RayonSlug[] = ['sort', 'potion', 'objet', 'arme', 'armure', 'don', 'competence']
 
 const EN_TETE: Record<RayonSlug, { icone: string; rayon: string }> = {
   sort: { icone: '✨', rayon: 'Sorts' },
@@ -14,6 +14,7 @@ const EN_TETE: Record<RayonSlug, { icone: string; rayon: string }> = {
   arme: { icone: '⚔️', rayon: 'Armes' },
   armure: { icone: '🛡️', rayon: 'Armures' },
   don: { icone: '🎯', rayon: 'Dons' },
+  competence: { icone: '🎓', rayon: 'Compétences' },
 }
 
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
@@ -88,6 +89,7 @@ function nomDe(fiche: FicheBibliotheque): string {
     case 'arme': return fiche.arme.nom
     case 'armure': return fiche.armure.nom
     case 'don': return fiche.don.nom
+    case 'competence': return fiche.competence.nom
   }
 }
 
@@ -206,6 +208,29 @@ function Contenu({ fiche, qs }: { fiche: FicheBibliotheque; qs: string }) {
             {fiche.don.effetMecanique && <Row label="Avantage">{fiche.don.effetMecanique}</Row>}
           </div>
           <Description texte={fiche.don.description} />
+        </>
+      )
+    case 'competence':
+      return (
+        <>
+          <div className="space-y-2">
+            <Row label="Caractéristique">{fiche.caracteristique}</Row>
+            <Row label="Formation nécessaire">{fiche.competence.formationRequise ? 'Oui' : 'Non'}</Row>
+            <Row label="Malus d'armure aux tests">{fiche.competence.malusArmure ? 'Oui' : 'Non'}</Row>
+            {fiche.classesDeClasse.length > 0 && (
+              <Row label="Compétence de classe pour">
+                {fiche.classesDeClasse
+                  .map(c => (c.precision ? `${c.nom} (${c.precision})` : c.nom))
+                  .join(' · ')}
+              </Row>
+            )}
+          </div>
+          <Description texte={fiche.competence.description} />
+          {fiche.classesDeClasse.length > 0 && (
+            <p className="text-stone-500 text-xs mt-4">
+              Degré de maîtrise maximal : niveau global + 3 pour ces classes, la moitié pour les autres.
+            </p>
+          )}
         </>
       )
   }

@@ -1,0 +1,111 @@
+FUSIONS DE COMPÉTENCES PROPOSÉES — RIEN N'EST APPLIQUÉ
+=======================================================
+Établi le 2026-10-08. Aucune ligne de ce document n'a été écrite en base.
+
+Une FUSION supprime une ligne de `skills` et repointe ses porteurs vers une
+autre. C'est destructif et c'est une décision de MJ : deux noms voisins peuvent
+désigner la même compétence sous deux éditions, ou deux compétences que votre
+table distingue volontairement.
+
+Ce qui est DÉJÀ fait et qui ne détruit rien : le RATTACHEMENT. 38 lignes
+pointent vers l'entrée de catalogue qui porte leurs règles, sans changer ni
+leur nom ni leurs rangs. Le 📖 de la fiche les ouvre déjà. Si vous ne fusionnez
+jamais, tout continue de fonctionner.
+
+Ce que la fusion apporterait en plus : un seul nom par compétence sur toutes
+les fiches, et des rangs additionnés quand un personnage porte les deux.
+
+
+A. LES VESTIGES DE LA 3.0 — la 3.5 a renommé ou fondu la compétence
+-------------------------------------------------------------------
+  [160] Dissimulation                 4 porteurs  →  [ 31] Discrétion        17 porteurs
+        Hide, renommée Discrétion en 3.5. ⚠ 1 personnage pourrait porter les
+        DEUX lignes : vérifier avant d'additionner les rangs.
+
+  [ 17] Alchimie                     10 porteurs  →  Artisanat (alchimie)
+        Compétence à part en 3.0; la 3.5 en a fait une spécialisation
+        d'Artisanat. ⚠ Il n'existe PAS de ligne « Artisanat (alchimie) » en
+        base : la fusion demanderait de la créer.
+
+  [166] Empathie avec les animaux     4 porteurs  →  [ 98] Dressage           3 porteurs
+        Animal Empathy, fondue dans Handle Animal en 3.5.
+
+  [ 96] Sens de l'orientation         6 porteurs  →  [  9] Survie            10 porteurs
+        Intuit Direction, fondue dans Survival en 3.5.
+
+  [189] Monture                       1 porteur   →  [  4] Équitation         9 porteurs
+        Même compétence (Ride) sous un autre nom de table.
+
+  [ 60] Lecture sur les lèvres        2 porteurs  →  [  2] Détection         37 porteurs
+        Read Lips. La 3.5 en a fait un USAGE de Détection (Manuel p. 74, DD 15).
+        ⚠ Fusionner ferait perdre la distinction : un personnage avec 5 rangs
+        en Lecture sur les lèvres et 0 en Détection n'a pas 5 rangs de Détection.
+        Rattachée, pas fusionnée — et c'est peut-être le bon état final.
+
+  [ 27] Scrutation                    7 porteurs  →  AUCUNE CIBLE
+        Scry, SUPPRIMÉE en 3.5 : l'effet est passé dans les sorts eux-mêmes.
+        Rien vers quoi fusionner. Garder la ligne (elle dit quelque chose de
+        vrai sur une vieille fiche) ou la retirer des 7 fiches : votre appel.
+
+
+B. LE MÊME DOMAINE SOUS DEUX NOMS
+----------------------------------
+  [ 65] Religion                      1 porteur   →  [181] Connaissances (religion)   7 porteurs
+        « Religion » seule désigne le même domaine.
+
+  [ 20] Connaissance de la magie      7 porteurs  →  [ 10] Connaissances (mystères)  11 porteurs
+        Knowledge (arcana). ⚠ À confirmer : « magie » pourrait aussi vouloir
+        dire Art de la magie chez certains de vos joueurs.
+
+  Les autres « Connaissance X » au singulier (astronomie, des monstres, des
+  nains, du commerce, langues anciennes, et « connaissance des femmes ») sont
+  des domaines MAISON : aucun n'est au Manuel, aucune fusion n'est proposée.
+  Ils sont rattachés à Connaissances, dont ils suivent la règle.
+
+
+C. LES NOTES DE FICHE DÉGUISÉES EN COMPÉTENCE
+----------------------------------------------
+  [ 92] Heal (2 pv x jour x niv.)     1 porteur
+  [182] Premiers soins (2 pv x jour x niv.)  1 porteur
+        Ce sont des décomptes de soins notés dans la colonne des compétences,
+        pas des compétences. Leur contenu appartient plutôt à une note de
+        fiche. Fusionner vers [191] Premiers secours ferait perdre le décompte.
+
+  [169] Premier soins animaux         1 porteur
+        Compétence maison. Le Manuel soigne les animaux avec Premiers secours
+        tout court. À rapprocher ou à garder distincte : votre table.
+
+
+D. CE QUI N'EST PAS UNE COMPÉTENCE — ne jamais fusionner
+---------------------------------------------------------
+  [ 29] Volonté              1 porteur   un JET DE SAUVEGARDE
+  [178] Stabilité            1 porteur   trait racial nain
+  [ 61] Langage secret       3 porteurs  capacité de classe du druide
+  [163] Aura magique         1 porteur   un sort
+  [ 28] Variante de sort     2 porteurs
+  [107] Spellflash           2 porteurs
+  [ 13] Magie divine         3 porteurs
+  [183] Ingénierie magique   2 porteurs
+  [ 86] Prédiction           1 porteur
+  [117] Don artistique       1 porteur
+  [115] Jeux                 1 porteur
+  [188] Fabrication          1 porteur
+  [ 24] Équitation Dragon    1 porteur
+
+        Ces lignes portent une information vraie sur une fiche, mais elles ne
+        sont pas des compétences du Manuel. Elles n'ont pas de 📖, et ce n'est
+        pas un trou : c'est un verdict. La question à trancher n'est pas « vers
+        quoi les fusionner » mais « est-ce qu'elles restent dans la colonne des
+        compétences ».
+
+
+MÉTHODE PROPOSÉE SI VOUS DONNEZ SUITE
+--------------------------------------
+Une fusion à la fois, avec pour chacune :
+  1. la liste des personnages touchés et leurs rangs, avant écriture;
+  2. le traitement des doubles porteurs (qui a les deux lignes ?) — additionner
+     les rangs, garder le plus haut, ou vous demander cas par cas;
+  3. un script rejouable qui refuse d'écrire si la base a changé entre-temps.
+
+C'est exactement ce qui a été fait pour les potions en octobre (4 orthographes
+de « Grand Soin » fondues en une seule, 13 références finales, 0 orphelin).

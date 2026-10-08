@@ -128,7 +128,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   // Risque d'échec arcanique cumulé (s'additionnent si plusieurs armures)
   const risqueEchecTotal = armor.reduce((sum, { armor: a }) => sum + (a.risqueEchecMagique ?? 0), 0)
   // Compétences pénalisées par le malus d'armure (PHB 3.5)
-  const COMPETENCES_MALUS_ARMURE = ['Acrobaties', 'Discrétion', 'Déplacement silencieux', 'Escalade', 'Évasion', 'Natation', 'Saut', 'Escamotage']
+  // Le malus d'armure aux tests vient maintenant de la colonne skills.malus_armure,
+  // relevée au Manuel (9 compétences sur 36). La liste écrite ici à la main en
+  // oubliait une : Équilibre. Une spécialisation prend le malus de sa mère au
+  // catalogue — « Artisanat (serrurerie) » suit Artisanat.
+  const aMalusArmure = (s: { malusArmure?: boolean | null }, cat: { malusArmure?: boolean | null } | null) =>
+    Boolean(s.malusArmure || cat?.malusArmure)
   // Effets de sorts actifs sur la CA (activés/retirés par le joueur) — cumul PHB 3.5
   const estBouclier = (t: string | null) => (t ?? '').toLowerCase().includes('bouclier')
   const bonusArmurePortee = armor
@@ -930,7 +935,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           {skills.length > 0 && (
             <Section titre="Compétences">
               <div className="space-y-1">
-                {skills.map(({ skill, charSkill }) => {
+                {skills.map(({ skill, charSkill, catalogue }) => {
                   const carac = abilityScores
                     ? { FOR: Math.floor((((abilityScores.forBase ?? 10) + (abilityScores.forMagique ?? 0) + effCarac.FOR) - 10) / 2),
                         DEX: Math.floor((((abilityScores.dexBase ?? 10) + (abilityScores.dexMagique ?? 0) + effCarac.DEX) - 10) / 2),
@@ -941,13 +946,27 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                     : { FOR: 0, DEX: 0, CON: 0, INT: 0, SAG: 0, CHA: 0 }
                   const caracSkill = caracteristiqueDe(skill.nom, skill.caracteristique)
                   const caracMod = carac[caracSkill as keyof typeof carac] ?? 0
-                  const hasArmorMalus = malusArmure > 0 && COMPETENCES_MALUS_ARMURE.includes(skill.nom)
+                  const hasArmorMalus = malusArmure > 0 && aMalusArmure(skill, catalogue)
+                  // Le 📖 ouvre la règle : l'entrée de catalogue si la ligne en
+                  // est une, sinon celle à laquelle elle est rattachée. NULL sur
+                  // « Volonté » (un jet de sauvegarde) et « Scrutation »
+                  // (supprimée en 3.5) — ce n'est pas un trou, c'est un verdict.
+                  const ficheRegles = skill.estCatalogue ? skill.id : skill.catalogueId
                   const donsComp = donsPassifs.competences.filter(d => d.skillNoms.includes(skill.nom)).map(d => d.item)
                   const total = (charSkill.rangsInvestis ?? 0) + caracMod + (charSkill.modifDivers ?? 0) + sommeBonus(donsComp) - (hasArmorMalus ? malusArmure : 0)
                   return (
                     <div key={skill.id} className="flex items-center justify-between py-1 border-b border-stone-800 last:border-0">
                       <div>
                         <span className="text-stone-200 text-sm">{skill.nom}</span>
+                        {ficheRegles && (
+                          <Link
+                            href={`/bibliotheque/competence/${ficheRegles}?from=/personnage/${id}`}
+                            title="Lire la fiche de cette compétence"
+                            className="ml-1.5 text-stone-500 hover:text-amber-300 text-xs"
+                          >
+                            📖
+                          </Link>
+                        )}
                         <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(skill.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="ml-1.5 text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
                         <span className="text-stone-500 text-xs ml-2">({caracSkill})</span>
                         {hasArmorMalus && <span className="text-red-500 text-xs ml-1" title={`Malus armure −${malusArmure}`}>−{malusArmure}⚔</span>}

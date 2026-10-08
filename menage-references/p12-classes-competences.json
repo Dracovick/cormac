@@ -1,0 +1,819 @@
+{
+  "classes": {
+    "Barbare": {
+      "competences": [
+        {
+          "nom": "Artisanat",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Dressage",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Équitation",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Escalade",
+          "precision": null,
+          "caracteristique": "For"
+        },
+        {
+          "nom": "Intimidation",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Natation",
+          "precision": null,
+          "caracteristique": "For"
+        },
+        {
+          "nom": "Perception auditive",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Saut",
+          "precision": null,
+          "caracteristique": "For"
+        },
+        {
+          "nom": "Survie",
+          "precision": null,
+          "caracteristique": "Sag"
+        }
+      ],
+      "pointsNiveau1": 4
+    },
+    "Barde": {
+      "competences": [
+        {
+          "nom": "Acrobaties",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Art de la magie",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Artisanat",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Bluff",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Concentration",
+          "precision": null,
+          "caracteristique": "Con"
+        },
+        {
+          "nom": "Connaissances",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Décryptage",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Déguisement",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Déplacement silencieux",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Diplomatie",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Discrétion",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Équilibre",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Escalade",
+          "precision": null,
+          "caracteristique": "For"
+        },
+        {
+          "nom": "Escamotage",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Estimation",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Évasion",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Langue",
+          "precision": null,
+          "caracteristique": "aucune"
+        },
+        {
+          "nom": "Natation",
+          "precision": null,
+          "caracteristique": "For"
+        },
+        {
+          "nom": "Perception auditive",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Profession",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Psychologie",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Renseignements",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Représentation",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Saut",
+          "precision": null,
+          "caracteristique": "For"
+        },
+        {
+          "nom": "Utilisation d’objets magiques",
+          "precision": null,
+          "caracteristique": "Cha"
+        }
+      ],
+      "pointsNiveau1": 6
+    },
+    "Druide": {
+      "competences": [
+        {
+          "nom": "Art de la magie",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Artisanat",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Concentration",
+          "precision": null,
+          "caracteristique": "Con"
+        },
+        {
+          "nom": "Connaissances",
+          "precision": "nature",
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Détection",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Diplomatie",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Dressage",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Équitation",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Natation",
+          "precision": null,
+          "caracteristique": "For"
+        },
+        {
+          "nom": "Perception auditive",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Premiers secours",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Profession",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Survie",
+          "precision": null,
+          "caracteristique": "Sag"
+        }
+      ],
+      "pointsNiveau1": 4
+    },
+    "Ensorceleur": {
+      "competences": [
+        {
+          "nom": "Art de la magie",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Artisanat",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Bluff",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Concentration",
+          "precision": null,
+          "caracteristique": "Con"
+        },
+        {
+          "nom": "Connaissances",
+          "precision": "mystères",
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Profession",
+          "precision": null,
+          "caracteristique": "Sag"
+        }
+      ],
+      "pointsNiveau1": 2
+    },
+    "Guerrier": {
+      "competences": [
+        {
+          "nom": "Artisanat",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Dressage",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Équitation",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Escalade",
+          "precision": null,
+          "caracteristique": "For"
+        },
+        {
+          "nom": "Intimidation",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Natation",
+          "precision": null,
+          "caracteristique": "For"
+        },
+        {
+          "nom": "Saut",
+          "precision": null,
+          "caracteristique": "For"
+        }
+      ],
+      "pointsNiveau1": 2
+    },
+    "Magicien": {
+      "competences": [
+        {
+          "nom": "Art de la magie",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Artisanat",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Concentration",
+          "precision": null,
+          "caracteristique": "Con"
+        },
+        {
+          "nom": "Connaissances",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Décryptage",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Profession",
+          "precision": null,
+          "caracteristique": "Sag"
+        }
+      ],
+      "pointsNiveau1": 2
+    },
+    "Moine": {
+      "competences": [
+        {
+          "nom": "Acrobaties",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Artisanat",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Concentration",
+          "precision": null,
+          "caracteristique": "Con"
+        },
+        {
+          "nom": "Connaissances",
+          "precision": "mystères",
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Connaissances",
+          "precision": "religion",
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Déplacement silencieux",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Détection",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Diplomatie",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Discrétion",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Équilibre",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Escalade",
+          "precision": null,
+          "caracteristique": "For"
+        },
+        {
+          "nom": "Évasion",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Natation",
+          "precision": null,
+          "caracteristique": "For"
+        },
+        {
+          "nom": "Perception auditive",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Profession",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Psychologie",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Représentation",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Saut",
+          "precision": null,
+          "caracteristique": "For"
+        }
+      ],
+      "pointsNiveau1": 4
+    },
+    "Paladin": {
+      "competences": [
+        {
+          "nom": "Artisanat",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Concentration",
+          "precision": null,
+          "caracteristique": "Con"
+        },
+        {
+          "nom": "Connaissances",
+          "precision": "noblesse et royauté",
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Connaissances",
+          "precision": "religion",
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Diplomatie",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Dressage",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Équitation",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Premiers secours",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Profession",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Psychologie",
+          "precision": null,
+          "caracteristique": "Sag"
+        }
+      ],
+      "pointsNiveau1": 2
+    },
+    "Prêtre": {
+      "competences": [
+        {
+          "nom": "Art de la magie",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Artisanat",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Concentration",
+          "precision": null,
+          "caracteristique": "Con"
+        },
+        {
+          "nom": "Connaissances",
+          "precision": "histoire",
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Connaissances",
+          "precision": "mystères",
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Connaissances",
+          "precision": "plans",
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Connaissances",
+          "precision": "religion",
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Diplomatie",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Premiers secours",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Profession",
+          "precision": null,
+          "caracteristique": "Sag"
+        }
+      ],
+      "pointsNiveau1": 2
+    },
+    "Rôdeur": {
+      "competences": [
+        {
+          "nom": "Artisanat",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Concentration",
+          "precision": null,
+          "caracteristique": "Con"
+        },
+        {
+          "nom": "Connaissances",
+          "precision": "exploration souterraine",
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Connaissances",
+          "precision": "géographie",
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Connaissances",
+          "precision": "nature",
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Déplacement silencieux",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Détection",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Discrétion",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Dressage",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Équitation",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Escalade",
+          "precision": null,
+          "caracteristique": "For"
+        },
+        {
+          "nom": "Fouille",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Maîtrise des cordes",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Natation",
+          "precision": null,
+          "caracteristique": "For"
+        },
+        {
+          "nom": "Perception auditive",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Premiers secours",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Profession",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Saut",
+          "precision": null,
+          "caracteristique": "For"
+        },
+        {
+          "nom": "Survie",
+          "precision": null,
+          "caracteristique": "Sag"
+        }
+      ],
+      "pointsNiveau1": 6
+    },
+    "Roublard": {
+      "competences": [
+        {
+          "nom": "Acrobaties",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Artisanat",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Bluff",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Connaissances",
+          "precision": "folklore local",
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Contrefaçon",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Crochetage",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Décryptage",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Déguisement",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Déplacement silencieux",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Désamorçage/sabotage",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Détection",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Diplomatie",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Discrétion",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Équilibre",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Escalade",
+          "precision": null,
+          "caracteristique": "For"
+        },
+        {
+          "nom": "Escamotage",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Estimation",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Évasion",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Fouille",
+          "precision": null,
+          "caracteristique": "Int"
+        },
+        {
+          "nom": "Intimidation",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Maîtrise des cordes",
+          "precision": null,
+          "caracteristique": "Dex"
+        },
+        {
+          "nom": "Natation",
+          "precision": null,
+          "caracteristique": "For"
+        },
+        {
+          "nom": "Perception auditive",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Profession",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Psychologie",
+          "precision": null,
+          "caracteristique": "Sag"
+        },
+        {
+          "nom": "Renseignements",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Représentation",
+          "precision": null,
+          "caracteristique": "Cha"
+        },
+        {
+          "nom": "Saut",
+          "precision": null,
+          "caracteristique": "For"
+        },
+        {
+          "nom": "Utilisation d’objets magiques",
+          "precision": null,
+          "caracteristique": "Cha"
+        }
+      ],
+      "pointsNiveau1": 8
+    }
+  }
+}

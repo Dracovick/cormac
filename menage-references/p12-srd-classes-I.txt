@@ -1,0 +1,466 @@
+Document de Référence du Système
+Ce document est du contenu ludique libre [Open Game Content], et son utilisation publique est permise selon les termes de la licence ludique libre [Open Game License] v1.0a.
+Les classes
+
+Barbare
+Alignement. Tout sauf loyal.
+Dés de vie. d12.
+
+Compétences de classe
+Les compétences du barbare (et la caractéristique dont dépend chacune) sont : Artisanat (Int), Dressage (Cha), Équitation (Dex), Escalade (For), Intimidation (Cha), Natation (For), Perception auditive (Sag), Saut (For) et Survie (Sag).
+Points de compétence au niveau 1 : (4 + modificateur d’Int)  4
+Points de compétence à chaque niveau additionnel : 4 + modificateur d’Int
+
+Table : le barbare
+Niveau|Bonus de base à l’attaque|Bonus de base de Réflexes|Bonus de base de Vigueur|Bonus de 
+base de Volonté|Spécial|
+1|+1|+0|+2|+0|Déplacement accéléré, illettrisme, rage (1/jour)|
+2|+2|+0|+3|+0|Esquive instinctive|
+3|+3|+1|+3|+1|Sens des pièges (+1)|
+4|+4|+1|+4|+1|Rage (2/jour)|
+5|+5|+1|+4|+1|Esquive instinctive supérieure|
+6|+6/+1|+2|+5|+2|Sens des pièges (+2)|
+7|+7/+2|+2|+5|+2|Réduction des dégâts (1/–)|
+8|+8/+3|+2|+6|+2|Rage (3/jour)|
+9|+9/+4|+3|+6|+3|Sens des pièges (+3)|
+10|+10/+5|+3|+7|+3|Réduction des dégâts (2/–)|
+11|+11/+6/+1|+3|+7|+3|Rage de grand berserker|
+12|+12/+7/+2|+4|+8|+4|Rage (4/jour), sens des pièges (+4)|
+13|+13/+8/+3|+4|+8|+4|Réduction des dégâts (3/–)|
+14|+14/+9/+4|+4|+9|+4|Volonté indomptable|
+15|+15/+10/+5|+5|+9|+5|Sens des pièges (+5)|
+16|+16/+11/+6/+1|+5|+10|+5|Rage (5/jour), réduction des dégâts (4/–)|
+17|+17/+12/+7/+2|+5|+10|+5|Rage sans fatigue|
+18|+18/+13/+8/+3|+6|+11|+6|Sens des pièges (+6)|
+19|+19/+14/+9/+4|+6|+11|+6|Réduction des dégâts (5/–)|
+20|+20/+15/+10/+5|+6|+12|+6|Rage (6/jour), rage de maître berserker|
+
+Particularités de la classe
+Voici les particularités et aptitudes de la classe de barbare :
+Armes et armures. Le barbare est formé au maniement de toutes les armes courantes, des armes de guerre et des boucliers (à l’exception des pavois). Il est également formé au port des armures légères et intermédiaires.
+Déplacement accéléré (Ext). La vitesse de déplacement au sol d’un barbare est supérieure de +3 mètres à la norme de sa race. Ce bonus ne s’applique que s’il ne porte pas d’armure lourde ou de charge lourde. On applique le bonus avant les modificateurs dus à une armure ou une charge importante. Par exemple, un barbare humain a une vitesse de déplacement de 12 mètres, au lieu de 9 mètres, s’il ne porte pas d’armure ou une armure légère. S’il porte une armure intermédiaire, sa vitesse passe à 9 mètres. Un barbare halfelin a une vitesse de 9 mètres, au lieu de 6 mètres, lorsqu’il ne porte pas d’armure ou un armure légère. Lorsqu’il porte une armure intermédiaire (ou qu’il porte une charge intermédiaire), sa vitesse passe à 6 mètres.
+Illettrisme. Les barbares sont les seuls aventuriers qui ne sachent pas automatiquement lire et écrire. Ils peuvent dépenser 2 points de compétence pour apprendre d’un coup à lire et écrire toutes les langues qu’ils parlent.
+Un barbare qui prend un niveau dans une autre classe apprend en même temps à lire. Un personnage d’une autre classe ne devient pas illettré s’il prend un niveau de barbare.
+Rage de berserker (Ext). Un barbare peut entrer dans une rage destructrice un certain nombre de fois par jour. Dans cet état, il devient incroyablement plus fort et plus résistant, mais son mépris du danger l’empêche de se défendre efficacement. Il gagne temporairement un bonus de +4 en Force, un bonus de +4 en Constitution ainsi qu’un bonus de moral de +2 aux jets de Volonté, mais subit dans le même temps un malus de –2 à la classe d’armure.
+Cette augmentation de Constitution lui confère 2 points de vie supplémentaires par niveau global, mais ces points de vie disparaissent immédiatement lorsque sa valeur de Constitution retombe à son niveau normal (ils ne disparaissent pas en premier, contrairement aux points de vie temporaires). Au cours de sa rage, un barbare est incapable d’utiliser les compétences associées à la Dextérité, l’Intelligence ou le Charisme (à l’exception d’Équilibre, Équitation, Évasion et Intimidation), la compétence Concentration ou les aptitudes exigeant un minimum de patience ou de concentration, ainsi que lancer des sorts ou activer des objets magiques à mot de commande, à potentiel magique (comme les baguettes) ou à fin d’incantation (comme les parchemins). Il peut se servir de tous ses dons, à l’exception d’Expertise du combat et des dons de création d’objets ou de métamagie.
+Une crise de rage dure 3 rounds + modificateur de Constitution (c’est la valeur augmentée de 4 points qui est prise en compte pour ce calcul). S’il le souhaite, le personnage peut y mettre un terme prématurément. Quand le taux d’adrénaline retombe, le barbare perd les modificateurs de la rage et devient fatigué (malus de –2 en Force et en Dextérité, incapable de charger ou de courir) jusqu’à la fin de la rencontre (à moins qu’il ait atteint le niveau 17, auquel cas ce handicap ne le concerne plus).
+Un barbare ne peut devenir enragé qu’une fois par rencontre. Au niveau 1, il peut utiliser sa rage de berserker une fois par jour. Au niveau 4 et pour chaque 4 niveaux après cela, il gagne une utilisation quotidienne supplémentaire (jusqu’à un maximum de 6 fois par jour au niveau 20). La transformation ne demande aucune action, mais le personnage ne peut s’y livrer que durant son tour de jeu, pas en réponse à l’action d’un autre. Il lui est par exemple impossible d’entrer dans une rage folle pour bénéficier des points de vie supplémentaires lorsqu’il reçoit une blessure (pour que les pv additionnels lui soient utiles, il lui faut anticiper le risque et faire appel à son aptitude avant que l’adversaire ne frappe).
+Esquive instinctive (Ext). Dès le niveau 2, le barbare peut réagir instinctivement avant même que ses sens ne décèlent une menace. Il conserve son bonus de Dextérité à la CA même s’il est pris au dépourvu ou attaqué par un adversaire invisible (il perd toujours ce bonus s’il est immobilisé).
+Si un barbare possède déjà cette aptitude grâce à une autre classe (comme dans le cas d’un barbare possédant au moins 4 niveaux de roublard), il obtient l’esquive instinctive supérieure (voir ci-dessous) au lieu de l’esquive instinctive.
+Sens des pièges (Ext). À partir du niveau 3, le barbare acquiert un sens intuitif lui permettant d’éviter les dangers des pièges, ce qui se traduit par un bonus de +1 aux jets de Réflexes effectués pour éviter les pièges et un bonus d’esquive de +1 à la CA contre les attaques déclenchées par des pièges. Ces bonus augmentent de +1 tous les 3 niveaux de barbare supplémentaires (niveaux 6, 9, 12, 15 et 18). Les bonus de sens des pièges de plusieurs classes se cumulent entre eux.
+Esquive instinctive supérieure (Ext). Au niveau 5, le barbare ne peut plus être pris en tenaille, car il pare les assauts de ses adversaires avec autant d’aisance que s’ils venaient tous de la même direction. Les roublards ne peuvent plus lui porter des attaques sournoises en le prenant en tenaille, à moins d’avoir au moins 4 niveaux de roublard de plus que le personnage n’a de niveaux de barbare.
+Si un personnage possède déjà l’aptitude d’esquive instinctive grâce à une autre classe, il obtient l’esquive instinctive supérieure dès le niveau 2 de barbare et les niveaux des différentes classes proposant cette aptitude se cumulent pour déterminer le niveau de roublard nécessaire pour le prendre en tenaille.
+Réduction des dégâts (Ext). À partir du niveau 7, la résistance du barbare lui permet d’ignorer une partie des dégâts infligés par les coups qu’il encaisse. Chaque fois que le personnage est frappé par une arme ou une attaque naturelle, les dégâts qu’il subit sont diminués de 1 point. Au niveau 10, puis tous les 3 niveaux de barbare suivants (niveaux 13, 16 et 19), cette réduction des dégâts augmente d’un point. Ce pouvoir peut amener les dégâts d’une attaque à 0, mais pas en dessous.
+Rage de grand berserker (Ext). À partir du niveau 11, la rage de berserker confère au barbare un bonus de +6 en Force et en Constitution, ainsi qu’un bonus de moral de +3 aux jets de Volonté. Le malus à la CA reste de –2.
+Volonté indomptable (Ext). À partir du niveau 14, un barbare obtient pendant sa rage un bonus de +4 sur ses jets de Volonté joués pour résister aux sorts de l’école des enchantements. Ce bonus se cumule avec les autres modificateurs, y compris le bonus de moral sur les jets de Volonté qu’il reçoit pendant sa rage.
+Rage sans fatigue (Ext). Au niveau 17 et au-delà, un barbare n’est plus fatigué au terme de sa rage de berserker.
+Rage de maître berserker (Ext). Au niveau 20, la rage de berserker confère au barbare un bonus de +8 en Force et en Constitution, ainsi qu’un bonus de moral de +4 aux jets de Volonté. Le malus à la CA reste de –2.
+
+Anciens barbares
+Un barbare devenant loyal perd l’aptitude de rage de berserker et est incapable de progresser en niveau en tant que barbare. Il conserve toutefois ses autres aptitudes de classe (déplacement accéléré, esquive instinctive, réduction des dégâts et sens des pièges).
+
+Barde
+Alignement. Tout sauf loyal.
+Dés de vie. d6.
+
+Compétences de classe
+Les compétences du barde (et la caractéristique dont chacune dépend) sont : Acrobaties (Dex), Art de la magie (Int), Artisanat (Int), Bluff (Cha), Concentration (Con), Connaissances (au choix, chaque compétence devant être prise séparément) (Int), Décryptage (Int), Déguisement (Cha), Déplacement silencieux (Dex), Diplomatie (Cha), Discrétion (Dex), Équilibre (Dex), Escalade (For), Escamotage (Dex), Estimation (Int), Évasion (Dex), Langue (aucune), Natation (For), Perception auditive (Sag), Profession (Sag), Psychologie (Sag), Renseignements (Cha), Représentation (Cha), Saut (For) et Utilisation d’objets magiques (Cha).
+Points de compétence au niveau 1 : (6 + modificateur d’Int)  4
+Points de compétence à chaque niveau additionnel : 6 + modificateur d’Int
+
+Table : le barde
+||||||Nombre de sorts par jour|
+Niveau|Bonus de base à l’attaque|Bonus de base de Réflexes|Bonus de base de Vigueur|Bonus de base de Volonté|Spécial|0 |1er|2e|3e|4e|5e|6e|
+1|+0|+2|+0|+2|Contre-chant, fascination, inspiration vaillante (+1), musique de barde, savoir bardique|2|—|—|—|—|—|—|
+2|+1|+3|+0|+3|—|3|0|—|—|—|—|—|
+3|+2|+3|+1|+3|Inspiration talentueuse|3|1|—|—|—|—|—|
+4|+3|+4|+1|+4|—|3|2|0|—|—|—|—|
+5|+3|+4|+1|+4|—|3|3|1|—|—|—|—|
+6|+4|+5|+2|+5|Suggestion|3|3|2|—|—|—|—|
+7|+5|+5|+2|+5|—|3|3|2|0|—|—|—|
+8|+6/+1|+6|+2|+6|Inspiration vaillante (+2)|3|3|3|1|—|—|—|
+9|+6/+1|+6|+3|+6|Inspiration héroïque|3|3|3|2|—|—|—|
+10|+7/+2|+7|+3|+7|—|3|3|3|2|0|—|—|
+11|+8/+3|+7|+3|+7|—|3|3|3|3|1|—|—|
+12|+9/+4|+8|+4|+8|Chant de liberté|3|3|3|3|2|—|—|
+13|+9/+4|+8|+4|+8|—|3|3|3|3|2|0|—|
+14|+10/+5|+9|+4|+9|Inspiration vaillante (+3)|4|3|3|3|3|1|—|
+15|+11/+6/+1|+9|+5|+9|Inspiration intrépide|4|4|3|3|3|2|—|
+16|+12/+7/+2|+10|+5|+10|—|4|4|4|3|3|2|0|
+17|+12/+7/+2|+10|+5|+10|—|4|4|4|4|3|3|1|
+18|+13/+8/+3|+11|+6|+11|Suggestion de groupe|4|4|4|4|4|3|2|
+19|+14/+9/+4|+11|+6|+11|—|4|4|4|4|4|4|3|
+20|+15/+10/+5|+12|+6|+12|Inspiration vaillante (+4)|4|4|4|4|4|4|4|
+
+Table : sorts connus par le barde
+|Nombre de sorts connus|
+Niveau|0 |1er|2e|3e|4e|5e|6e|
+1|4|—|—|—|—|—|—|
+2|5|21|—|—|—|—|—|
+3|6|3|—|—|—|—|—|
+4|6|3|21|—|—|—|—|
+5|6|4|3|—|—|—|—|
+6|6|4|3|—|—|—|—|
+7|6|4|4|21|—|—|—|
+8|6|4|4|3|—|—|—|
+9|6|4|4|3|—|—|—|
+10|6|4|4|4|21|—|—|
+11|6|4|4|4|3|—|—|
+12|6|4|4|4|3|—|—|
+13|6|4|4|4|4|21|—|
+14|6|4|4|4|4|3|—|
+15|6|4|4|4|4|3|—|
+16|6|5|4|4|4|4|21|
+17|6|5|5|4|4|4|3|
+18|6|5|5|5|4|4|3|
+19|6|5|5|5|5|4|4|
+20|6|5|5|5|5|5|4|
+1 À condition que le barde ait une valeur de Charisme suffisamment élevée pour bénéficier d’un sort en bonus de ce niveau.
+
+Particularités de la classe
+Voici les particularités et aptitudes de la classe de barde :
+Armes et armures. Le barde est formé au maniement de toutes les armes courantes et des arcs courts, épées courtes, épées longues, fouets, matraques et rapières, ainsi que des boucliers (à l’exception des pavois). Il est également formé au port des armures légères.
+Puisque les composantes gestuelles nécessaires à l’incantation des sorts de barde sont relativement simples, le port d’une armure légère n’entraîne pas de risque d’échec des sorts profanes. Cependant, un barde qui porte une armure intermédiaire ou lourde, ou qui utilise un bouclier, s’expose au risque d’échec habituel pour les sorts à composante gestuelle (qui constituent la majorité des sorts). De plus, cette aptitude ne profite qu’aux sorts de barde. Les sorts d’ensorceleur ou de magicien d’un personnage multiclassé sont affectés normalement par les armures, même légères.
+Sorts. Un barde peut lancer des sorts profanes (du même type que ceux des ensorceleurs et des magiciens) appartenant à la liste de sorts de sa classe. Il les lance sans avoir à les préparer à l’avance, à l'inverse des prêtres et des magiciens (voir ci-dessous). Tous les sorts de bardes s’accompagnent d’une composante verbale (qui peut prendre la forme d’une chanson, d’un poème ou d’un air de musique).
+Le Charisme est la caractéristique primordiale des sorts de barde. Pour apprendre ou lancer un sort, un barde doit avoir une valeur de Charisme au moins égale à 10 + le niveau du sort (soit Cha 10 pour les sorts de niveau 0, Cha 11 pour ceux du 1er niveau et ainsi de suite). Le DD des jets de sauvegarde contre ses sorts est égal à 10 + le niveau du sort + le modificateur de Charisme du barde.
+Comme les autres lanceurs de sorts, le barde ne peut lancer qu’un nombre de sorts donné de chaque niveau chaque jour. Son quota de sorts quotidiens est indiqué sur la Table : le barde. De plus, il reçoit des sorts en bonus si sa valeur de Charisme est suffisamment élevée (voir la Table : modificateurs de caractéristiques et sorts en bonus). Quand la Table : le barde indique que le barde peut lancer “ 0 ” sort d’un niveau de sort par jour (par exemple, les sorts de 1er niveau pour un barde de niveau 1), il ne peut lancer que les sorts en bonus pour ce niveau que peut lui accorder une valeur de Charisme élevée.
+Le répertoire de sorts d’un barde est très limité. Il commence sa carrière en connaissant seulement quatre sorts du niveau 0 (également appelés tours de magie) au choix du joueur. Lors de la plupart des passages de niveau, un barde apprend un ou plusieurs sorts supplémentaires, comme indiqué par la Table : sorts connus par le barde. (Contrairement au quota de sorts quotidiens, le nombre de sorts connus par un barde n’est pas modifié par son éventuel bonus de Charisme ; les chiffres de la Table : sorts connus par le barde sont fixes.)
+Lorsqu’il atteint le niveau 5, et tous les 3 niveaux de barde après cela (niveaux 8, 11, etc.), un barde peut choisir d’apprendre un nouveau sort à la place de l’un de ceux qu’il connaît déjà. Le barde “ oublie ” alors un sort au profit d’un autre. Le niveau du nouveau sort doit être identique à celui du sort oublié, et ce niveau doit être inférieur de 2 niveaux au plus haut niveau de sorts accessibles au personnage. Un barde ne peut échanger qu’un seul sort à chaque fois, et doit choisir s’il procède à un échange en même temps qu’il apprend de nouveaux sorts lors du passage de niveau.
+Comme indiqué ci-dessus, un barde n’a pas besoin de préparer ses sorts à l’avance. Il peut lancer n’importe lequel des sorts de son répertoire à n’importe quel moment, à condition de ne pas avoir épuisé son quota de sorts de ce niveau pour la journée.
+Savoir bardique. Un barde acquiert de nombreuses connaissances au cours de ses voyages et au contact de ses confrères. Chaque fois qu’il faut déterminer s’il détient des informations importantes au sujet d’un objet légendaire, des notables ou des sites connus de la région, il effectue un test spécial de savoir bardique, soit 1d20 + son niveau de barde + son modificateur d’Intelligence. (Si le barde possède un degré de maîtrise de 5 ou plus en Connaissances (histoire), il obtient un bonus de +2 sur ce test.)
+Le savoir bardique ne révèle jamais les pouvoirs spécifiques d’un objet, mais il peut donner des indications quant à sa fonction. Le personnage n’a pas la possibilité de faire 10 ou de faire 20, ce type de connaissances étant extrêmement aléatoire. On détermine le degré de difficulté du test en se référant à la table suivante.
+
+DD|Type d’information|
+10|Courante, ou du moins connue par une minorité conséquente d’habitants de la région.|
+20|Peu courante ; connue par quelques personnes seulement.|
+25|Rare ; connue par une poignée d’individus seulement et difficile à obtenir.|
+30|Extrêmement rare ; ignorée de tous, ou presque (éventuellement oubliée par ceux qui la détenaient, ou connue de gens qui ignorent sa signification).|
+
+Musique de barde. Une fois par jour et par niveau, le barde peut faire appel à ses chants ou poèmes pour produire des effets magiques sur ceux qui l’entourent (généralement lui y compris, s’il le désire). Bien que tous ces pouvoirs soient réunis sous l’appellation de “ musique de barde ” et que leur description mentionne le chant et des instruments de musique, le personnage peut les utiliser en chantant, en sifflant, en jouant d’un instrument, etc. Chaque pouvoir impose un minimum sur le niveau du barde et sur son degré de maîtrise en Représentation. Si un barde ne possède pas le degré de maîtrise requis pour au moins une forme de la compétence Représentation, il ne peut utiliser ce pouvoir de musique de barde tant qu’il n’a pas progressé dans son art.
+Activer un effet de musique de barde est une action simple. Certains pouvoirs de musique de barde nécessitent de conserver sa concentration, ce qui signifie que le barde doit effectuer une action simple chaque round pour maintenir l’effet de sa musique. Lorsqu’un barde utilise sa musique, même pour un pouvoir qui ne nécessite aucune concentration, il ne peut plus lancer de sorts, activer des objets à fin d’incantation (comme les parchemins), à potentiel magique (comme les baguettes) ou à mot de commande. Un barde sourd a 20 % de chances d’échouer quand il tente de faire appel à sa musique (ce pourcentage est le même que celui d’un personnage sourd essayant de lancer un sort). Même en cas d’échec, l’utilisation de son pouvoir est décomptée de son quota quotidien.
+Contre-chant (Sur). Un barde ayant atteint un degré de maîtrise de 3 ou plus dans une forme de Représentation peut utiliser sa voix ou sa musique pour contrer les sorts à base de son (mais pas ceux dont l’unique aspect sonore est une simple composante verbale). Chaque round que dure son contre-chant, il joue un test de Représentation. Toute créature se trouvant à 9 mètres ou moins de lui (y compris le barde lui-même) peut utiliser le test de Représentation du barde à la place de son propre jet de sauvegarde si elle est prise pour cible par une attaque magique de son ou de langage (comme cacophonie ou injonction). La créature effectue son jet de sauvegarde normalement et prend le plus avantageux des deux résultats. Toute créature qui se trouve à portée du contre-chant et qui subit les effets durables d’une attaque magique de son ou de langage a droit à un nouveau jet de sauvegarde, pour lequel elle ne peut utiliser que le résultat du test de Représentation du barde. Contre-chant est sans effet sur les attaques qui n’autorisent pas de jets de sauvegarde. Le barde peut maintenir un contre-chant pendant 10 rounds.
+Fascination (Mag). Avec un degré de maîtrise de 3 ou plus dans une forme de Représentation, le barde peut fasciner une ou plusieurs créatures grâce à sa musique ou sa poésie. Celles-ci doivent le voir et l’entendre, lui prêter attention et se trouver à 27 mètres ou moins de lui,. Le barde doit lui aussi voir sa cible. Un combat proche ou un danger manifeste empêche le fonctionnement de ce pouvoir. Une utilisation de ce pouvoir permet d’affecter une seule créature au niveau un de barde et une créature supplémentaire par trois niveaux de barde au-delà de 1 (soit deux au niveau 4, trois au niveau 7 et ainsi de suite).
+Pour utiliser son pouvoir de fascination, le barde effectue un test de Représentation dont le résultat sert de DD aux jets de Volonté pour résister à l’effet. Si une cible réussit son jet de sauvegarde, elle n’est pas affectée et, de plus, le barde ne peut pas réessayer de la fasciner avant un délai de 24 heures. En cas d’échec au jet de sauvegarde, la cible s’assied, écoute attentivement le chant et ne prend plus aucune autre action tant que le barde continue à jouer et à se concentrer (pendant un maximum de 1 round par niveau du barde). Tant qu’elle est fascinée, elle subit un malus de –4 à ses tests de compétence joués de façon réactive, comme Détection et de Perception auditive. Toute menace potentielle (comme l’approche d’un ennemi dans son dos) oblige le barde à un nouveau test de Représentation et autorise la cible à un second jet de sauvegarde. Si la menace est manifeste (comme le fait de lancer un sort, de dégainer son arme, etc.), le charme est automatiquement rompu. Fascination est un effet mental de type enchantement (charme).
+Inspiration vaillante (Sur). Un barde ayant atteint un degré de maîtrise de 3 ou plus dans une forme de Représentation peut utiliser son répertoire musical pour susciter la bravoure chez ses alliés (y compris lui-même), les protéger de la peur et améliorer leurs compétences martiales. Pour en bénéficier, un personnage doit pouvoir entendre le barde chanter. L’effet dure tant que l’allié entend le barde chanter ou jouer de la musique, et pendant 5 rounds par la suite. La bravoure qu’il procure à ses compagnons prend la forme d’un bonus de moral de +1 aux jets de sauvegarde contre les effets de charme et de terreur, et d’un bonus de moral de +1 aux jets d’attaque et de dégâts des armes. Ces bonus augmentent de +1 au niveau 8 et tous les 6 niveaux de barde suivants (+2 au niveau 8, +3 au niveau 14 et +4 au niveau 20). L’inspiration vaillante est un pouvoir mental.
+Inspiration talentueuse (Sur). Un barde de niveau 3 ayant atteint un degré de maîtrise de 6 dans une forme de Représentation peut utiliser sa musique ou sa poésie pour aider un allié à mener à bien une tâche spécifique. Le compagnon du barde doit le voir, l’entendre et se trouver à 9 mètres ou moins de lui. Le barde doit également voir le sujet. En fonction de la tâche que ce dernier souhaite accomplir, le barde peut l’encourager, l’aider à se concentrer, etc. Le personnage affecté bénéficie d’un bonus d’aptitude de +2 à ses tests de compétence (uniquement pour ce qui concerne la compétence choisie) tant qu’il entend la musique du barde. Cette aptitude n’est pas toujours utilisable (il serait par exemple stupide de chanter pour aider un roublard à… se déplacer en silence !). L’effet dure tant que le barde se concentre, jusqu’à un maximum de 2 minutes. Un barde ne peut utiliser cet effet sur lui-même. L’inspiration talentueuse est un pouvoir mental.
+Suggestion (Mag). Un barde de niveau 6 ayant atteint un degré de maîtrise de 9 dans une forme de Représentation peut faire une suggestion (comme le sort du même nom) à une créature qu’il vient de fasciner (voir ci-dessus). L’utilisation de suggestion ne rompt pas la concentration du barde sur sa fascination et n’autorise pas la cible à effectuer un nouveau jet de sauvegarde contre la fascination. La suggestion n’est pas décomptée du nombre d’utilisations quotidiennes de ses aptitudes musicales. Un jet de Volonté réussi (DD 10 + 1/2 du niveau du barde + le modificateur de Charisme du barde) annule cet effet. La suggestion affecte une seule créature (mais voir suggestion de groupe, plus bas). Suggestion est un pouvoir mental de langage et de type enchantement (coercition).
+Inspiration héroïque (Sur). Un barde de niveau 9 ayant atteint un degré de maîtrise de 12 ou plus dans une forme de Représentation peut faire appel à ses chants ou poèmes pour inspirer l’héroïsme chez un allié distant de 9 mètres ou moins (ou lui-même) et améliorer ses talents de combattant. Il peut inspirer de la sorte une personne supplémentaire tous les trois niveaux au-dessus du niveau 9 (deux au niveau 12, trois au niveau 15, quatre au niveau 18). Pour recevoir l’inspiration, l’allié doit entendre le chant du barde. Les effets durent tant que le sujet entend chanter le barde, et pendant 5 rounds par la suite. La créature inspirée à l’héroïsme bénéficie de 2 dés de vie de bonus (des d10), du nombre de points de vie temporaires correspondant (on applique normalement le modificateur de Constitution), d’un bonus d’aptitude de +2 aux jets d’attaque et d’un bonus d’aptitude de +1 aux jets de Vigueur. Les dés de vie de bonus comptent comme des dés de vie normaux pour ce qui est de déterminer l’effet de sorts tels que sommeil. L’inspiration héroïque est un pouvoir mental.
+Chant de liberté (Mag). Un barde de niveau 12 ayant atteint un degré de maîtrise de 15 dans une forme de Représentation peut utiliser sa musique ou sa poésie pour créer un effet semblable au sort annulation d’enchantement, à un niveau de lanceur de sorts égal au niveau du barde. Le barde doit se concentrer et jouer de la musique sans interruption pendant une minute. Il peut affecter une seul cible distante de 9 mètres ou moins. Il ne peut utiliser un chant de liberté sur lui-même.
+Inspiration intrépide (Sur). Un barde de niveau 15 ayant atteint un degré de maîtrise de 18 ou plus dans une forme de Représentation peut faire appel à ses chants ou poèmes pour inspirer un allié distant de 9 mètres ou moins (ou lui-même) et en faire un combattant intrépide, capable de se battre bravement même lorsque tout espoir semble perdu. Il peut inspirer de la sorte une personne supplémentaire tous les trois niveaux au-dessus du niveau 15 (deux au niveau 18). Pour recevoir l’inspiration, l’allié doit entendre le chant du barde pendant un round entier. La créature inspirée à l’intrépidité bénéficie d’un bonus de moral de +4 sur les jets de sauvegarde et d’un bonus d’esquive de +4 à la CA. Les effets durent tant que le sujet entend chanter le barde, et pendant 5 rounds par la suite. L’inspiration intrépide est un pouvoir mental.
+Suggestion de groupe (Mag). Ce pouvoir fonctionne comme suggestion, ci-dessus, excepté qu’un barde de niveau 18 ayant atteint un degré de maîtrise de 21 dans une forme de Représentation peut faire une suggestion simultanée à un nombre quelconque de créatures qu’il vient de fasciner (voir ci-dessus). Suggestion de groupe est un pouvoir mental de langage et de type enchantement (coercition).
+
+Anciens bardes
+Un barde devenu loyal ne peut plus gagner de niveaux de barde mais conserve tous les pouvoirs acquis jusque-là.
+
+Druide
+Alignement. Chaotique neutre, loyal neutre, Neutre bon, neutre mauvais ou neutre.
+Dés de vie. d8.
+
+Compétences de classe
+Les compétences du druide (et la caractéristique dont chacune dépend) sont : Art de la magie (Int), Artisanat (Int), Concentration (Con), Connaissances (nature) (Int), Détection (Sag), Diplomatie (Cha), Dressage (Cha), Équitation (Dex), Natation (For), Perception auditive (Sag), Premiers secours (Sag), Profession (Sag) et Survie (Sag).
+Points de compétence au niveau 1 : (4 + modificateur d’Int)  4
+Points de compétence à chaque niveau additionnel : 4 + modificateur d’Int
+
+Table : le druide
+||||||Nombre de sorts par jour|
+Niveau|Bonus de base à l’attaque|Bonus de base de Réflexes|Bonus de base de Vigueur|Bonus de base de Volonté|Spécial|0 |1er|2e|3e|4e|5e|6e|7e|8e|9e|
+1|+0|+0|+2|+2|Compagnon animal, empathie sauvage, instinct naturel|3|1|—|—|—|—|—|—|—|—|
+2|+1|+0|+3|+3|Déplacement facilité|4|2|—|—|—|—|—|—|—|—|
+3|+2|+1|+3|+3|Absence de traces|4|2|1|—|—|—|—|—|—|—|
+4|+3|+1|+4|+4|Résistance à l’appel de la nature|5|3|2|—|—|—|—|—|—|—|
+5|+3|+1|+4|+4|Forme animale (1/jour)|5|3|2|1|—|—|—|—|—|—|
+6|+4|+2|+5|+5|Forme animale (2/jour)|5|3|3|2|—|—|—|—|—|—|
+7|+5|+2|+5|+5|Forme animale (3/jour)|6|4|3|2|1|—|—|—|—|—|
+8|+6/+1|+2|+6|+6|Forme animale (taille G)|6|4|3|3|2|—|—|—|—|—|
+9|+6/+1|+3|+6|+6|Immunité contre le venin|6|4|4|3|2|1|—|—|—|—|
+10|+7/+2|+3|+7|+7|Forme animale (4/jour)|6|4|4|3|3|2|—|—|—|—|
+11|+8/+3|+3|+7|+7|Forme animale (taille TP)|6|5|4|4|3|2|1|—|—|—|
+12|+9/+4|+4|+8|+8|Forme animale (plantes)|6|5|4|4|3|3|2|—|—|—|
+13|+9/+4|+4|+8|+8|Mille visages|6|5|5|4|4|3|2|1|—|—|
+14|+10/+5|+4|+9|+9|Forme animale (5/jour)|6|5|5|4|4|3|3|2|—|—|
+15|+11/+6/+1|+5|+9|+9|Éternelle jeunesse, forme animale (taille TG)|6|5|5|5|4|4|3|2|1|—|
+16|+12/+7/+2|+5|+10|+10|Forme animale (élémentaire, 1/jour)|6|5|5|5|4|4|3|3|2|—|
+17|+12/+7/+2|+5|+10|+10|—|6|5|5|5|5|4|4|3|2|1|
+18|+13/+8/+3|+6|+11|+11|Forme animale (6/jour, élémentaire 2/jour)|6|5|5|5|5|4|4|3|3|2|
+19|+14/+9/+4|+6|+11|+11|—|6|5|5|5|5|5|4|4|3|3|
+20|+15/+10/+5|+6|+12|+12|Forme animale (élémentaire 3/jour, élémentaire de taille TG)|6|5|5|5|5|5|4|4|4|4|
+
+Particularités de la classe
+Voici les particularités et aptitudes de la classe de druide :
+Armes et armures. Le druide est formé au maniement des armes suivantes : bâton, cimeterre, dague, dard, épieu, fronde, gourdin, lance et serpe. Il sait également utiliser toutes les attaques naturelles (griffes, morsure et ainsi de suite) des formes animales qu’il est capable de revêtir (voir l’aptitude forme animale, ci-dessous). Il est formé au port des armures légères et intermédiaires, mais sa foi lui interdit les armures métalliques (il est donc limité à l’armure de cuir, de peau ou matelassée). (Un druide peut librement utiliser des armures en bois ayant acquis la dureté de l’acier grâce  au sort bois de fer). De même, il est formé au maniement des boucliers (à l’exception des pavois) mais ne peut utiliser que ceux en bois.
+Un druide portant une armure ou un bouclier qui lui sont interdits perd l’accès à ses sorts de druides et à tous ses pouvoirs surnaturels ou magiques tant qu’il porte l’objet en question et pendant les 24 heures suivantes.
+Sorts. Un druide peut lancer des sorts divins (du même type que ceux des paladins, prêtres et rôdeurs) appartenant à la liste de sorts de sa classe. Cependant, son alignement peut l’empêcher de lancer certains sorts opposés à sa morale ou à son éthique, voir la section Sorts du Bien, du Chaos, de la Loi et du Mal, ci-dessous. Un druide doit choisir et préparer ses sorts à l’avance (voir plus loin).
+La Sagesse est la caractéristique primordiale des sorts de druide. Pour préparer ou lancer un sort, un druide doit avoir une valeur de Sagesse au moins égale à 10 + le niveau du sort (soit Sag 10 pour les sorts de niveau 0, Sag 11 pour ceux du 1er niveau et ainsi de suite). Le DD des jets de sauvegarde contre ses sorts est égal à 10 + le niveau du sort + le modificateur de Sagesse du druide.
+Comme les autres lanceurs de sorts, le druide ne peut lancer qu’un nombre de sorts donné de chaque niveau chaque jour. Son quota de sorts quotidiens est indiqué sur la Table : le druide. De plus, il reçoit des sorts en bonus si sa valeur de Sagesse est suffisamment élevée (voir la Table : modificateurs de caractéristiques et sorts en bonus). Les druides ne bénéficient pas de sorts de domaines ou de pouvoirs accordés, contrairement aux prêtres.
+Un druide prépare et lance ses sorts comme un prêtre, si ce n’est qu’il est incapable de transformer spontanément ses sorts en sorts de soins ou de blessure (mais voir Incantation spontanée, ci-dessous). Un druide peut lancer tous les sorts de la liste des sorts de druide, à condition de pouvoir lancer des sorts de ce niveau, mais il doit choisir quels sorts préparer au cours de sa méditation quotidienne.
+Incantation spontanée. Un druide peut canaliser l’énergie réservée pour un sort afin de la transformer spontanément en un sort de convocation qu’il n’avait pas préparé à l’avance. Pour cela, il faut qu’il “ sacrifie ” un sort préparé pour pouvoir lancer à la place un sort de convocation d’alliés naturels de niveau égal ou inférieur.
+Sorts du Bien, du Chaos, de la Loi et du Mal. Un druide ne peut pas lancer de sorts dont l’alignement est opposé au sien ou à celui de son dieu (s’il en sert un). L’alignement d’un sort est indiqué par les registres Bien, Chaos, Loi et Mal dans son descriptif.
+Langues supplémentaires. Le druide peut choisir la langue sylvestre au niveau 1 comme l’une des langues supplémentaires due à l’Intelligence. Ce choix s’ajoute aux langues que le personnage peut choisir grâce à sa race.
+Dans le même temps, tous les druides de niveau 1 apprennent la langue des druides automatiquement et gratuitement (ils n’ont pas besoin de dépenser des points de compétence ou de l’inclure dans leurs langue supplémentaires). Cet idiome, qui possède son propre alphabet, est connu des seuls druides, lesquels ont interdiction de l’enseigner aux non-druides.
+Compagnon animal (Ext). Au début du jeu, un druide peut avoir un compagnon animal choisi dans la liste suivante : aigle, blaireau, chameau, cheval (léger ou lourd), chien de selle, chien, chouette, faucon, loup, poney, rat sanguinaire et serpent venimeux (petit ou de taille moyenne). Si la campagne se déroule entièrement ou partiellement dans un milieu aquatique, on peut ajouter les animaux suivants à cette liste : calmar, marsouin et requin de taille moyenne. Un compagnon animal suit loyalement le personnage au cours de ses aventures au mieux de ses capacités.
+Le compagnon animal d’un druide de niveau 1 est un animal tout à fait normal pour son espèce, aux exceptions indiquées plus loin. Lorsque le druide progresse en expérience, la puissance de l’animal augmente elle aussi, selon la table contenu dans l’encart.
+Si un druide décide de se séparer de son compagnon animal, il peut en obtenir un autre en accomplissant un rituel qui nécessite 24 heures de prières ininterrompues. Cette cérémonie peut aussi permettre de remplacer un compagnon animal qui aurait été tué.
+Un druide de niveau 4 ou plus peut choisir un compagnon animal hors norme (voir plus loin). Dans ce cas, l’animal augmente en puissance comme si le personnage était d’un niveau de druide moins élevé. Il faut retirer le nombre indiqué dans l’en-tête correspondant à l’animal choisi au niveau de druide du personnage pour déterminer la puissance de l’animal. (Si cet ajustement réduit le niveau effectif de druide à 0 ou moins, le personnage ne peut posséder un compagnon animal de cette espèce.)
+Empathie sauvage (Ext). Un druide peut ajuster son comportement, son langage et ses expressions corporelles pour améliorer l’attitude d’un animal (comme un ours ou un varan). Cette aptitude suit les mêmes règles que les tests de Diplomatie joués pour modifier l’attitude d’une personne. Le résultat d’un test d’empathie sauvage est déterminé par 1d20 + le niveau du druide + le modificateur de Charisme du druide. L’attitude initiale des animaux domestiques est l’indifférence, tandis que les animaux sauvages sont généralement inamicaux.
+Pour utiliser d’empathie sauvage, le druide et l’animal doivent être en mesure de se voir et de s’étudier l’un l’autre, ce qui signifie qu’ils doivent se trouver à moins de 9 mètres de distance dans des conditions normales. Il faut en moyenne une minute pour influencer un animal de cette façon, mais, comme pour la diplomatie, cela peut parfois prendre plus longtemps ou être plus rapide.
+Cette aptitude peut aussi servir à un druide pour influencer une créature magique dont la valeur d’Intelligence est de 1 ou 2 (comme un basilic ou un girallon), avec cependant un malus de –4 sur son test.
+Instinct naturel (Ext). Le druide bénéficie d’un bonus de +2 sur les tests de Connaissances (nature) et de Survie.
+Déplacement facilité (Ext). Dès le niveau 2, le druide se déplace sans la moindre gêne dans toutes sortes de taillis, y compris les fourrés, les buissons (même épineux) et les autres zones de végétation dense. Il progresse normalement et ne subit aucun dégât. À noter toutefois que la végétation enchantée de manière à restreindre le mouvement continue de l’affecter.
+Absence de traces. Au niveau 3, le druide ne laisse plus la moindre trace en milieu naturel et il est impossible de le pister. Il peut néanmoins laisser des traces s’il le souhaite.
+Résistance à l’appel de la nature. À partir du niveau 4, le druide bénéficie d’un bonus de +4 au jet de sauvegarde contre les pouvoirs magiques des fées (telles que les dryades, nymphes et autres esprits follets).
+Forme animale (Sur). Une fois par jour, un druide de niveau 5 peut se transformer en un animal de taille M ou P et reprendre son apparence initiale. Il peut prendre la forme de n’importe quelle créature du type animal. Ce pouvoir fonctionne comme le sort métamorphose, mis à part les exceptions présentées ici. La durée des effets est d’une heure par niveau de druide, ou jusqu’à ce que le personnage reprenne sa forme initiale. Une transformation (vers ou depuis la forme animale) est une action simple et ne provoque pas d’attaque d’opportunité.
+La forme choisie doit être celle d’un animal que le personnage connaît bien. Par exemple, un druide qui n’a jamais quitté sa forêt tempérée natale ne peut se transformer en ours polaire.
+Tant qu’il est transformé, un druide est incapable de parler. Il doit se contenter des bruits qu’un animal ordinaire est capable de produire sans entraînement. Il peut néanmoins communiquer normalement avec les autres animaux de la même espace, ou d’une espèce proche de sa forme actuelle. (Dans la nature, les perroquets poussent des cris, ils ne parlent pas. Un druide transformé en perroquet ne pas plus parler que s’il était transformé en poule.)
+Le personnage dispose d’une utilisation quotidienne supplémentaire de ce pouvoir aux niveaux 6, 7, 10, 14 et 18, comme l’indique la Table : le druide. De plus, un druide de niveau 8 ou plus peut prendre la forme d’un animal de taille G, un druide de niveau 11 ou plus celle d’un animal de taille TP et un druide de niveau 15 ou plus celle d’un animal de taille TG. Cependant, le personnage est limité aux animaux dont les dés de vies sont inférieurs ou égaux à son niveau de druide.
+Au niveau 12, un druide peut utiliser ce pouvoir pour prendre la forme d’une créature de type plante, comme un tertre errant. Les restrictions sur la taille et les DV s’appliquent aussi. (Cela ne permet pas à un druide de se transformer en une plante qui n’est pas une créature, comme un chêne ou un rosier.)
+Au niveau 16, un druide peut se transformer une fois par jour en un élémentaire d’Air, d’Eau, de Feu ou de Terre et de taille P, M ou G. Cette utilisation du pouvoir ne compte pas dans le quota quotidien de formes animales du druide, elle est comptabilisée séparément. Tant qu’il est transformé, le druide obtient temporairement tous les pouvoirs extraordinaires, surnaturels et magiques, ainsi que les dons, de l’élémentaire dont il prend la forme. Par contre, il conserve son propre type (c’est-à-dire humanoïde le plus souvent).
+Au niveau 18, il peut se transformer en élémentaire deux fois par jour, puis trois fois au niveau 20. De plus, un druide de niveau 20 peut se transformer en un élémentaire de taille TG.
+Immunité contre le venin (Ext). À partir du niveau 9, le druide est immunisé contre toutes les formes de poisons et de venins.
+Mille visages (Sur). Au niveau 13, le personnage acquiert le pouvoir surnaturel de se transformer à volonté, comme s’il utilisait le sort modification d’apparence, mais uniquement sous sa forme normale.
+Éternelle jeunesse (Ext). À partir du niveau 15, le druide ne subit plus les effets du vieillissement et devient immunisé contre les attaques provoquant un vieillissement accéléré. Les malus qu’il aurait pu subir avant d’atteindre ce niveau ne sont pas effacés pour autant. Le druide continue de vieillir et en tire tous les bénéfices en termes de bonus. Il meurt toujours de vieillesse lorsque son heure et venue.
+
+Anciens druides
+Un druide qui cesse de vénérer la nature, qui prend un alignement interdit ou apprend la langue des druides à un non-druide perd tous ses sorts et pouvoirs de druide. Il ne peut gagner de nouveaux niveaux de druide que s’il fait acte de contrition (voir le sort pénitence).
+
+Le compagnon animal du druide
+Le compagnon animal d’un druide est initialement un animal ordinaire. Au contact du druide et grâce à des rituels réguliers, il devient plus fort et plus malin qu’un membre moyen de son espèce. Il reste néanmoins intrinsèquement un animal, et son Intelligence n’est pas affectée. Il est lié à son maître et obtient ainsi quelques pouvoirs spéciaux, qui sont décrits ci-dessous.
+
+Niveau de classe|DV sup.|Aj. d’armure naturelle|Aj. de For/Dex|Tours sup.|Spécial|
+1–2|+0|+0|+0|1|Lien, transfert d'effet magique|
+3–5|+2|+2|+1|2|Esquive totale|
+6–8|+4|+4|+2|3|Dévotion|
+9–11|+6|+6|+3|4|Attaques multiples|
+12–14|+8|+8|+4|5||
+15–17|+10|+10|+5|6|Esquive extraordinaire|
+18–20|+12|+12|+6|7||
+
+Profil des compagnons animaux. Utilisez le profil fourni pour l’animal correspondant en faisant les modifications suivantes.
+Niveau de classe. Il s’agit du niveau de druide du personnage. Le niveau de classe du druide se cumule avec le niveau de toutes les classes qui ont droit elle aussi à un compagnon animal (comme le rôdeur) pour déterminer la puissance du compagnon et les animaux hors-normes accessibles au personnage.
+DV sup. L’animal obtient des dés de vie supplémentaires (des d8), qui sont ajoutés à ses points de vie (avec le modificateur de Constitution habituel). Cette augmentation de dés de vie influe aussi sur ses bonus de base à l’attaque et aux sauvegarde. Son bonus de base à l’attaque est moyen (comme un druide), ses bonus de base de Réflexes et de Vigueur sont élevés et celui de Volonté est faible. (Voir la Table : bonus de base à l’attaque et aux sauvegardes, en considérant un niveau égal à ses dés de vie.) Les DV supplémentaires d’un compagnon animal lui donnent aussi des points de compétence et des dons, selon la méthode d’évolution normale des monstres.
+Aj. d’armure naturelle. L’ajustement indiqué vient s’ajouter au bonus d’armure naturelle à la CA existant de l’animal.
+Aj. de For/Dex. Cet ajustement s’applique aux valeurs de Force et de Dextérité du compagnon animal.
+Tours sup. Le compagnon animal connaît le nombre indiqué de tours supplémentaires, en plus de ceux que le druide peut lui apprendre par ailleurs (voir la compétence Dressage). Ces tours supplémentaires ne nécessitent ni temps d’apprentissage ni test de Dressage et ils ne comptent pas dans le nombre total de tours qu’un animal peut apprendre. Le druide choisit quels tours sont connus de l’animal et ils ne peuvent plus être changés une fois choisis.
+Lien (Ext). Un druide peut diriger son compagnon animal par une action libre, ou le pousser par une action de mouvement, et ce même s’il ne possède pas un degré de maîtrise en Dressage de 1 ou plus. Le druide bénéficie d’un bonus de circonstances de +4 sur les tests d’empathie sauvage et de Dressage en rapport avec son compagnon animal.
+Transfert d’effet magique (Ext). Si le druide le souhaite, tout sort (mais pas un pouvoir magique) qu’il lance sur lui-même peut également affecter son compagnon animal. Ce dernier doit se trouver à 1,50 mètre ou moins de distance au moment de l’incantation pour bénéficier des effets du sort. Si le sort a une durée autre qu’instantanée, il cesse d’affecter le compagnon animal si celui-ci s’éloigne de son maître de plus de 1,50 mètre. Dans ce cas, l’effet du sort ne reprend pas même si le compagnon revient à côté du druide. De plus, le personnage peut lancer directement sur son compagnon animal tout sort à portée personnelle (il a alors une portée de contact) au lieu de le lancer sur lui-même. Ce transfert d’effet magique est permis même si, en temps normal, le sort ne devrait pas affecter une entité du type du compagnon (animal).
+Esquive totale (Ext). Lorsque le compagnon animal est soumis à un effet qui autorise un jet de Réflexes pour demi-dégâts, il ne subit aucun dégât s’il réussit son jet de sauvegarde.
+Dévotion (Ext). La dévotion du compagnon animal pour son maître est telle qu’il obtient du bonus de moral de +4 sur ses jets de sauvegarde contre les sorts et effets de l’école des enchantements.
+Attaques multiples (Ext). Le compagnon animal obtient automatiquement ce don en tant que don supplémentaire, à condition d’avoir au moins trois attaques naturelles et de ne pas déjà le posséder. Si l’animal ne remplit pas la condition des trois attaques naturelles, il obtient à la place de ce don la possibilité de porter une seconde attaque à l’aide de son arme naturelle principale, mais avec un malus de –5.
+Esquive extraordinaire (Ext). Lorsque le compagnon animal est soumis à un effet qui autorise un jet de Réflexes pour demi-dégâts, il ne subit aucun dégât s’il réussit son jet de sauvegarde et la moitié des dégâts dans le cas contraire.
+
+Compagnons animaux hors-normes
+Un druide d’un niveau suffisamment élevé peut choisir son compagnon animal parmi la liste suivante, en appliquant la réduction indiquée sur son niveau effectif de druide pour déterminer la puissance et les pouvoirs de son compagnon hors-norme.
+
+Niveau 4 et plus (Niveau –3)
+Belette sanguinaire
+Bison (animal)
+Blaireau sanguinaire
+Chauve-souris sanguinaire
+Crocodile (animal)1
+Glouton (animal)
+Gorille (animal)
+Guépard (animal)
+Léopard (animal)
+Ours noir (animal)
+Requin, grand (animal)1
+Sanglier (animal)
+Serpent constricteur (animal)
+Serpent venimeux, grand (animal)
+Varan (animal)
+
+Niveau 7 et plus (Niveau –6)
+Ours brun (animal)
+Crocodile géant (animal)
+Deinonychus (dinosaure)
+Gorille sanguinaire
+Sanglier sanguinaire
+Loup sanguinaire
+Glouton sanguinaire
+Elasmosaurus (dinosaure)
+Lion (animal)
+Rhinocéros (animal)
+Serpent venimeux, très grand (animal)
+Tigre (animal)
+
+Niveau 10 et plus (Niveau –9)
+Lion sanguinaire
+Mégaraptor (dinosaure)
+Orque épaulard
+Ours polaire (animal)
+Requin, très grand (animal)1
+Serpent constricteur géant (animal)
+
+Niveau 13 et plus (Niveau –12)
+Éléphant (animal)
+Ours sanguinaire
+Pieuvre géante (animal)1
+
+Niveau 16 et plus (Niveau –15)
+Calmar géant (animal)1
+Requin sanguinaire1
+Tigre sanguinaire
+Tricératops (dinosaure)
+Tyrannosaure (dinosaure)
+
+1 Disponible uniquement dans un milieu aquatique.
+
+Ensorceleur
+Alignement. Au choix.
+Dés de vie. d4.
+
+Compétences de classe
+Les compétences de l’ensorceleur (et la caractéristique dont chacune dépend) sont : Art de la magie (Int), Artisanat (Int), Bluff (Cha), Concentration (Con), Connaissances (mystères) (Int) et Profession (Sag).
+Points de compétence au niveau 1 : (2 + modificateur d’Int)  4
+Points de compétence à chaque niveau additionnel : 2 + modificateur d’Int
+
+Table : l’ensorceleur
+||||||Nombre de sorts par jour|
+Niveau|Bonus de base à l’attaque|Bonus de base de Réflexes|Bonus de base de Vigueur|Bonus de base de Volonté|Spécial|0 |1er|2e|3e|4e|5e|6e|7e|8e|9e|
+1|+0|+0|+0|+2|Appel de familier|5|3|—|—|—|—|—|—|—|—|
+2|+1|+0|+0|+3|—|6|4|—|—|—|—|—|—|—|—|
+3|+1|+1|+1|+3|—|6|5|—|—|—|—|—|—|—|—|
+4|+2|+1|+1|+4|—|6|6|3|—|—|—|—|—|—|—|
+5|+2|+1|+1|+4|—|6|6|4|—|—|—|—|—|—|—|
+6|+3|+2|+2|+5|—|6|6|5|3|—|—|—|—|—|—|
+7|+3|+2|+2|+5|—|6|6|6|4|—|—|—|—|—|—|
+8|+4|+2|+2|+6|—|6|6|6|5|3|—|—|—|—|—|
+9|+4|+3|+3|+6|—|6|6|6|6|4|—|—|—|—|—|
+10|+5|+3|+3|+7|—|6|6|6|6|5|3|—|—|—|—|
+11|+5|+3|+3|+7|—|6|6|6|6|6|4|—|—|—|—|
+12|+6/+1|+4|+4|+8|—|6|6|6|6|6|5|3|—|—|—|
+13|+6/+1|+4|+4|+8|—|6|6|6|6|6|6|4|—|—|—|
+14|+7/+2|+4|+4|+9|—|6|6|6|6|6|6|5|3|—|—|
+15|+7/+2|+5|+5|+9|—|6|6|6|6|6|6|6|4|—|—|
+16|+8/+3|+5|+5|+10|—|6|6|6|6|6|6|6|5|3|—|
+17|+8/+3|+5|+5|+10|—|6|6|6|6|6|6|6|6|4|—|
+18|+9/+4|+6|+6|+11|—|6|6|6|6|6|6|6|6|5|3|
+19|+9/+4|+6|+6|+11|—|6|6|6|6|6|6|6|6|6|4|
+20|+10/+5|+6|+6|+12|—|6|6|6|6|6|6|6|6|6|6|
+
+Table : sorts connus par l’ensorceleur
+|Nombre de sorts connus|
+Niveau|0 |1er|2e|3e|4e|5e|6e|7e|8e|9e|
+1|4|2|—|—|—|—|—|—|—|—|
+2|5|2|—|—|—|—|—|—|—|—|
+3|5|3|—|—|—|—|—|—|—|—|
+4|6|3|1|—|—|—|—|—|—|—|
+5|6|4|2|—|—|—|—|—|—|—|
+6|7|4|2|1|—|—|—|—|—|—|
+7|7|5|3|2|—|—|—|—|—|—|
+8|8|5|3|2|1|—|—|—|—|—|
+9|8|5|4|3|2|—|—|—|—|—|
+10|9|5|4|3|2|1|—|—|—|—|
+11|9|5|5|4|3|2|—|—|—|—|
+12|9|5|5|4|3|2|1|—|—|—|
+13|9|5|5|4|4|3|2|—|—|—|
+14|9|5|5|4|4|3|2|1|—|—|
+15|9|5|5|4|4|4|3|2|—|—|
+16|9|5|5|4|4|4|3|2|1|—|
+17|9|5|5|4|4|4|3|3|2|—|
+18|9|5|5|4|4|4|3|3|2|1|
+19|9|5|5|4|4|4|3|3|3|2|
+20|9|5|5|4|4|4|3|3|3|3|
+
+Particularités de la classe
+Voici les particularités et aptitudes de la classe d’ensorceleur :
+Armes et armures. L’ensorceleur est formé au maniement des armes courantes. Par contre, il n’est formé ni au maniement des boucliers, ni au port des armures. En effet, une armure restreint ses gestes, ce qui risque de faire échouer ses sorts à composante gestuelle.
+Sorts. Un ensorceleur peut lancer des sorts profanes (du même type que ceux des bardes et des magiciens) appartenant à la liste de sorts d’ensorceleur et de magicien, à quelques exceptions près. Il les lance sans avoir à les préparer à l’avance, à l'inverse des prêtres et des magiciens (voir ci-dessous).
+Le Charisme est la caractéristique primordiale des sorts d’ensorceleur. Pour apprendre ou lancer un sort, un ensorceleur doit avoir une valeur de Charisme au moins égale à 10 + le niveau du sort (soit Cha 10 pour les sorts de niveau 0, Cha 11 pour ceux du 1er niveau et ainsi de suite). Le DD des jets de sauvegarde contre ses sorts est égal à 10 + le niveau du sort + le modificateur de Charisme de l’ensorceleur.
+Comme les autres lanceurs de sorts, l’ensorceleur ne peut lancer qu’un nombre de sorts donné de chaque niveau chaque jour. Son quota de sorts quotidiens est indiqué sur la Table : l’ensorceleur. De plus, il reçoit des sorts en bonus si sa valeur de Charisme est suffisamment élevée (voir la Table : modificateurs de caractéristiques et sorts en bonus).
+Le répertoire de sorts d’un ensorceleur est très limité. Il commence sa carrière en connaissant seulement quatre sorts du niveau 0 (également appelés tours de magie) et deux sorts de 1er niveau, tous au choix du joueur. Lors de chaque passage de niveau, un ensorceleur apprend un ou plusieurs sorts supplémentaires, comme indiqué par la Table : sorts connus par l’ensorceleur. (Contrairement au quota de sorts quotidiens, le nombre de sorts connus par un ensorceleur n’est pas modifié par son éventuel bonus de Charisme ; les chiffres de cette table sont fixes.) Ces sorts peuvent être choisis parmi la liste des sorts courants d’ensorceleur et de magicien, mais ils peuvent également sortir de ce cadre si le personnage les a trouvés au cours d’une aventure. Cette méthode ne permet jamais à l’ensorceleur de gagner davantage de sorts qu’indiqué sur la Table : sorts connus par l’ensorceleur ; elle lui offre juste la possibilité d’apprendre des sorts originaux.
+Lorsqu’il atteint le niveau 4, et tous les 2 niveaux d’ensorceleur après cela (niveaux 6, 8, etc.), un ensorceleur peut choisir d’apprendre un nouveau sort à la place de l’un de ceux qu’il connaît déjà. L’ensorceleur “ oublie ” alors un sort au profit d’un autre. Le niveau du nouveau sort doit être identique à celui du sort oublié, et ce niveau doit être inférieur de 2 niveaux au plus haut niveau de sorts accessibles au personnage. Un ensorceleur ne peut échanger qu’un seul sort à chaque fois, et doit choisir s’il procède à un échange en même temps qu’il apprend de nouveaux sorts lors du passage de niveau.
+Contrairement à un magicien ou à un prêtre, un ensorceleur n’a pas besoin de préparer ses sorts à l’avance. Il peut lancer n’importe lequel des sorts de son répertoire à n’importe quel moment, à condition de ne pas avoir épuisé son quota de sorts de ce niveau pour la journée.
+Appel de familier. L’ensorceleur a la possibilité d’appeler un familier, ce qui lui demande une journée entière et des composantes matérielles valant 100 po. Un familier est une créature magique qui ressemble à un petit animal, mais plus résistant et plus intelligent. Il est autant le compagnon que le serviteur du personnage.
+L’ensorceleur choisit le type de familier qui répond à son appel. La puissance du familier croît avec celle de son maître.
+Si le familier meurt ou si l’ensorceleur le renvoie, le personnage doit jouer un jet de Vigueur (DD 15). En cas d’échec, il perd 200 PX par niveau d’ensorceleur (en cas de réussite, ce total est réduit de moitié). Le nombre de points d’expérience du personnage ne peut jamais tomber en dessous de 0 suite au décès ou au renvoi de son familier. Un familier tué ou renvoyé ne peut être remplacé avant un an et un jour. Les familiers peuvent être ramenés à la vie de la même manière que les personnages, mais eux ne perdent alors pas de niveau (ou de points de Constitution).
+Un personnage multiclassé dont plusieurs classes donnent droit à un familier ne peut tout de même avoir qu'un familier à la fois.
+
+Les familiers
+Un familier est un animal normal qui obtient de nouveaux pouvoirs lorsqu’il est convoqué au service d’un ensorceleur ou d’un magicien. Il conserve l’apparence, les dés de vie, les bonus de base à l’attaque et aux sauvegardes, les compétences et les dons de l’animal qu'il fut autrefois, mais il est considéré comme une créature magique plutôt qu’un animal pour tous les effets qui tiennent compte du type d’une créature. Seul un animal n’ayant pas été modifié par la magie peut devenir un familier. Cela signifie qu’un druide/ensorceleur ne peut faire un familier de son compagnon animal.
+Les familiers possèdent des facultés spéciales qu’ils transmettent à leur maître. Ces pouvoirs ne fonctionnent que lorsque le personnage et son familier sont à moins de 1,5 kilomètre l’un de l’autre.
+Les niveaux des différentes classes qui ont droit à un familier (comme l’ensorceleur et le magicien) se cumulent pour donner le niveau du maître, qui détermine les pouvoirs du familier.
+
+Familier|Faculté spéciale|
+Belette|Le maître obtient un bonus de +2 aux jets de Réflexes|
+Chat|Le maître obtient un bonus de +3 aux tests de Déplacement silencieux|
+Chauve-souris|Le maître obtient un bonus de +3 aux tests de Perception auditive|
+Chouette|Le maître obtient un bonus de +3 aux tests de Détection dans l’obscurité|
+Corbeau1|Le maître obtient un bonus de +3 aux tests d’Estimation|
+Crapaud|Le maître obtient +3 points de vie|
+Faucon|Le maître obtient un bonus de +3 aux tests de Détection sous une lumière vive|
+Rat|Le maître obtient un bonus de +2 aux jets de Vigueur|
+Serpent2|Le maître obtient un bonus de +3 aux tests de Bluff|
+Lézard|Le maître obtient un bonus de +2 aux tests d’Escalade|
+1 Un corbeau familier parle une langue du choix de son maître en tant que pouvoir surnaturel.
+2 Un très petit serpent venimeux.
+
+Profil des familiers. Utilisez le profil fourni pour l’animal correspondant, en faisant les modifications suivantes :
+Dés de vie. Pour tous les effets liés au nombre de DV, substituez le niveau du maître au nombre de DV du familier (ou conservez le nombre de DV de la créature s’il est plus élevé).
+Points de vie. Un familier a la moitié des points de vie de son maître (en arrondissant à l’entier inférieur), sans compter les points de vie temporaires.
+Attaques. Le bonus de base à l’attaque est égal à celui du maître, auquel on ajoute le modificateur de Force ou de Dextérité du familier (prenez le plus élevé des deux). Les dégâts infligés sont les mêmes que pour un animal de cette espèce.
+Jets de sauvegarde. Pour chaque catégorie de sauvegarde, le familier utilise soit les bonus de base de son maître soit les siens (Réflexes +2, Vigueur +2, Volonté +0) s’ils sont meilleurs. Le familier applique ses propres modificateurs de caractéristiques aux jets de sauvegarde et il n’obtient pas tout autre bonus sur les jets de sauvegarde dont pourrait bénéficier son maître.
+Compétences. Pour chaque compétence possédée par le maître ou le familier, celui-ci utilise soit le degré de maîtrise de son maître soit ceux d’un animal ordinaire de son espèce s’ils sont meilleurs. Le familier applique ses propres modificateurs de caractéristiques aux tests de compétence. Quel que soit le modificateur final de compétence d’un familier, certaines (comme Artisanat) resteront hors de portée pour un animal.
+
+Description des pouvoirs spéciaux des familiers. Tous les familiers ont des pouvoirs spéciaux (ou les transmettent à leur maître) dépendant du niveau combiné de celui-ci dans les différentes classes qui ont droit à un familier. Tous ces pouvoirs sont cumulatifs.
+Aj. d’armure naturelle. L’ajustement indiqué vient s’ajouter au bonus d’armure naturelle à la CA existant du familier. Il représente sa résistance surnaturelle.
+Int. La valeur d’Intelligence du familier. Les familiers sont aussi intelligents que des gens ordinaires, mais pas autant que des génies.
+Esquive extraordinaire (Ext). Si le familier est pris pour cible par une attaque autorisant un jet de Réflexes pour réduire de moitié les dégâts occasionnés, il l’évite totalement en cas de jet de sauvegarde réussi (même s’il le rate, l’attaque ne lui inflige que demi-dégâts).
+Transfert d’effet magique. Si le personnage le souhaite, tout sort (mais pas un pouvoir magique) qu’il lance sur lui-même peut également affecter son familier. Ce dernier doit se trouver à moins de 1,50 mètre de distance au moment de l’incantation. Si le sort a une durée autre qu’instantanée, il cesse d’affecter la créature si celle-ci s’éloigne trop de son maître de plus de 1,50 mètre. Dans ce cas, l’effet du sort ne reprend pas même si le familier revient à côté de l’ensorceleur. De plus, le personnage peut lancer directement sur son familier tout sort à portée personnelle (il a alors une portée de contact) au lieu de le lancer sur lui-même. Ce transfert d’effet magique est permis même si, en temps normal, le sort ne devrait pas affecter une entité du type du familier (créature magique).
+Lien télépathique (Sur). Le personnage dispose d’un lien télépathique avec son familier tant que celui-ci reste à moins de 1,5 kilomètre. Il ne voit pas par les yeux de la créature mais peut communiquer télépathiquement avec elle. À cause de la nature limitée du lien, seuls des sentiments généraux peuvent être transmis (comme la peur, la faim, le bonheur ou la curiosité). Notez que l’Intelligence limitée d’un familier de personnage de bas niveau restreint sévèrement ce qu’il est capable de comprendre ou de rapporter, et que même les familiers intelligents voient le monde d’une façon bien différente de celle des humains.
+En raison du lien unissant le familier à son maître, celui-ci a le même rapport que la créature à un lieu ou à un objet. Par exemple, si le familier observe une pièce que le personnage n’a jamais vue, ce dernier peut s’y téléporter comme s’il l’avait personnellement observée.
+Vigilance (Ext). La présence du familier affûte les sens de son maître. Tant que la créature se trouve à portée de main (au sens littéral), le personnage bénéficie du don Vigilance.
+Conduit (Sur). Le familier d’un maître de niveau 3 peut placer les sorts de contact à sa place. Quand le personnage lance un sort de contact, il peut décider d’utiliser son familier comme conduit (il doit le toucher au moment de l’incantation). Le familier peut alors porter l’attaque de contact normalement. Comme d’habitude, si le personnage lance un autre sort, l’énergie du sort de contact se dissipe instantanément si le familier n’a pas eu le temps de le transmettre.
+Communication avec le maître (Ext). Un maître de niveau 5 et son familier peuvent communiquer verbalement, comme s’ils utilisaient un langage existant, mais personne ne peut les comprendre sans assistance magique.
+Communication avec les animaux du même type (Ext). Le familier d’un maître de niveau 5 peut communiquer avec les animaux d’une espèce voisine de la sienne (y compris les versions sanguinaires) : les chauves-souris peuvent ainsi s’entretenir avec les chauves-souris ; les rats avec les rongeurs ; les chats avec les félins ; les faucons, les corbeaux et les chouettes avec les oiseaux ; les lézards et les serpents avec les reptiles ; les crapauds avec les amphibiens ; et les belettes avec les animaux de la famille de mustélidés (belettes, blaireaux, gloutons, hermines, moufettes, putois et zibelines). Les sujets de conversation sont limités par l’Intelligence des participants.
+Résistance à la magie (Ext). À partir du moment où son maître atteint le niveau 11, le familier acquiert une résistance à la magie égale au niveau du maître + 5. Si un adversaire tente d’affecter le familier à l’aide d’un sort, il doit effectuer un test de lanceur de sorts (1d20 + niveau de lanceur de sorts) et obtenir un résultat au moins égal à la résistance à la magie du familier.
+Scrutation sur le familier (Mag). Une fois par jour, un maître de niveau 13 observer son familier à distance comme à l’aide du sort scrutation.
+
+Niveau de classe du maître|Aj. d’armure naturelle|Int|Spécial|
+1–2|+1|6|Esquive extraordinaire, transfert d’effet magique, lien télépathique, vigilance|
+3–4|+2|7|Conduit|
+5–6|+3|8|Communication avec le maître|
+7–8|+4|9|Communication avec les animaux du même type|
+9–10|+5|10||
+11–12|+6|11|Résistance à la magie|
+13–14|+7|12|Scrutation sur le familier|
+15–16|+8|13||
+17–18|+9|14||
+19–20|+10|15||
+
+Guerrier
+Alignement. Au choix.
+Dés de vie. d10.
+
+Compétences de classe
+Les compétences du guerrier (et la caractéristique dont chacune dépend) sont : Artisanat (Int), Dressage (Cha), Équitation (Dex), Escalade (For), Intimidation (Cha), Natation (For) et Saut (For).
+Points de compétence au niveau 1 : (2 + modificateur d’Int)  4
+Points de compétence à chaque niveau additionnel : 2 + modificateur d’Int
+
+Table : le guerrier
+Niveau|Bonus de base à l’attaque|Bonus de base de Réflexes|Bonus de base de Vigueur|Bonus de base de Volonté|Spécial|
+1|+1|+0|+2|+0|Don supplémentaire|
+2|+2|+0|+3|+0|Don supplémentaire|
+3|+3|+1|+3|+1|—|
+4|+4|+1|+4|+1|Don supplémentaire|
+5|+5|+1|+4|+1|—|
+6|+6/+1|+2|+5|+2|Don supplémentaire|
+7|+7/+2|+2|+5|+2|—|
+8|+8/+3|+2|+6|+2|Don supplémentaire|
+9|+9/+4|+3|+6|+3|—|
+10|+10/+5|+3|+7|+3|Don supplémentaire|
+11|+11/+6/+1|+3|+7|+3|—|
+12|+12/+7/+2|+4|+8|+4|Don supplémentaire|
+13|+13/+8/+3|+4|+8|+4|—|
+14|+14/+9/+4|+4|+9|+4|Don supplémentaire|
+15|+15/+10/+5|+5|+9|+5|—|
+16|+16/+11/+6/+1|+5|+10|+5|Don supplémentaire|
+17|+17/+12/+7/+2|+5|+10|+5|—|
+18|+18/+13/+8/+3|+6|+11|+6|Don supplémentaire|
+19|+19/+14/+9/+4|+6|+11|+6|—|
+20|+20/+15/+10/+5|+6|+12|+6|Don supplémentaire|
+
+Particularités de la classe
+Voici les particularités et aptitudes de la classe de guerrier :
+Armes et armures. Le guerrier est formé au maniement de toutes les armes courantes, des armes de guerre et des boucliers (y compris les pavois). Il est également formé au port de toutes les armures (légères, intermédiaires et lourdes).
+Dons supplémentaires. Au niveau 1, le guerrier peut choisir un don supplémentaire, en plus de celui auquel tout le monde a droit et de celui qui est offert aux humains. Par la suite, il en gagne un autre tous les niveaux pairs (2, 4, 6, 8, 10, 12, 14, 16, 18 et 20). Ses dons supplémentaires doivent forcément être choisis parmi ceux qui sont indiqués comme étant des dons de guerrier. Le personnage doit satisfaire à toutes les conditions requises pour chaque don, y compris les valeurs de caractéristiques et le bonus à l’attaque minimaux.
+Ces dons sont obtenus en plus de ceux que n’importe quel personnage acquiert tous les trois niveaux (voir la Table : expérience et avantages liés au niveau). Lorsqu’il choisit un des dons auxquels tout le monde a droit, le guerrier n’est pas limité à la liste ci-dessus.
+

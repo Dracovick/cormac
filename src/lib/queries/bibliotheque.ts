@@ -14,7 +14,7 @@ import { formatCritique } from '@/lib/dnd35/critique'
  * sur sa propre page, côté serveur.
  */
 
-export type RayonSlug = 'sort' | 'potion' | 'objet' | 'arme' | 'armure' | 'don'
+export type RayonSlug = 'sort' | 'potion' | 'objet' | 'arme' | 'armure' | 'don' | 'competence'
 
 export type EntreeIndex = {
   id: number
@@ -38,6 +38,7 @@ export type BibliothequeIndex = {
   armes: EntreeIndex[]
   armures: EntreeIndex[]
   dons: EntreeIndex[]
+  competences: EntreeIndex[]
 }
 
 /** Abréviations VF 3.5 des classes pour la ligne « Niveau » des sorts. */
@@ -73,6 +74,13 @@ function formatPrix(prix: string | null): string | null {
   return `${n % 1 === 0 ? n : n.toFixed(2)} po`
 }
 
+/** La base écrit FOR/DEX/…; la fiche d'un joueur écrit le mot. */
+const LIBELLE_CARAC: Record<string, string> = {
+  FOR: 'Force', DEX: 'Dextérité', CON: 'Constitution',
+  INT: 'Intelligence', SAG: 'Sagesse', CHA: 'Charisme',
+  '—': 'Aucune caractéristique',
+}
+
 /** Les 23 « Relique (dieu) » forment un seul groupe de filtre. */
 function groupeObjet(type: string | null): string | undefined {
   if (!type) return undefined
@@ -95,7 +103,7 @@ async function niveauxParSort(): Promise<Map<number, { classe: string; niveau: n
 
 export async function getBibliothequeIndex(): Promise<BibliothequeIndex> {
   const db = getDb()
-  const [sorts, niveaux, potions, objets, armes, armures, dons] = await Promise.all([
+  const [sorts, niveaux, potions, objets, armes, armures, dons, competences] = await Promise.all([
     db.select({ id: schema.spells.id, nom: schema.spells.nom, ecole: schema.spells.ecole })
       .from(schema.spells).orderBy(schema.spells.nom),
     niveauxParSort(),
@@ -119,6 +127,13 @@ export async function getBibliothequeIndex(): Promise<BibliothequeIndex> {
     // qui n'ont rien à faire dans un rayon de référence. Voir drizzle/0008.
     db.select({ id: schema.feats.id, nom: schema.feats.nom, categorie: schema.feats.categorie, prerequis: schema.feats.prerequis })
       .from(schema.feats).where(eq(schema.feats.estCatalogue, true)).orderBy(schema.feats.nom),
+    // Même raison encore : `skills` porte les 88 lignes de fiche importées de
+    // FileMaker (« Scrutation », « Volonté », « connaissance des femmes »).
+    // Seules les 36 compétences du Manuel sont publiées. Voir drizzle/0009.
+    db.select({
+      id: schema.skills.id, nom: schema.skills.nom, caracteristique: schema.skills.caracteristique,
+      formationRequise: schema.skills.formationRequise, malusArmure: schema.skills.malusArmure,
+    }).from(schema.skills).where(eq(schema.skills.estCatalogue, true)).orderBy(schema.skills.nom),
   ])
 
   return {
@@ -164,6 +179,17 @@ export async function getBibliothequeIndex(): Promise<BibliothequeIndex> {
       detail: d.categorie ?? (d.prerequis ? `Prérequis : ${d.prerequis}` : ''),
       groupe: d.categorie ?? undefined,
     })),
+    competences: competences.map(c => ({
+      id: c.id, nom: c.nom,
+      detail: [
+        LIBELLE_CARAC[c.caracteristique] ?? c.caracteristique,
+        c.formationRequise ? 'formation nécessaire' : null,
+        c.malusArmure ? "malus d'armure aux tests" : null,
+      ].filter(Boolean).join(' · '),
+      // La caractéristique est ce qui range une compétence dans la tête d'un
+      // joueur : « qu'est-ce que je lance sur ma Dextérité ? »
+      groupe: LIBELLE_CARAC[c.caracteristique] ?? c.caracteristique,
+    })),
   }
 }
 
@@ -197,8 +223,15 @@ export type FicheArme = {
 }
 export type FicheArmure = { categorie: 'armure'; armure: typeof schema.armor.$inferSelect; prixAffiche: string | null }
 export type FicheDon = { categorie: 'don'; don: typeof schema.feats.$inferSelect }
+export type FicheCompetence = {
+  categorie: 'competence'
+  competence: typeof schema.skills.$inferSelect
+  caracteristique: string
+  /** Les classes pour qui c'est une compétence de classe (plafond niveau + 3). */
+  classesDeClasse: { nom: string; precision: string | null }[]
+}
 
-export type FicheBibliotheque = FicheSort | FichePotion | FicheObjet | FicheArme | FicheArmure | FicheDon
+export type FicheBibliotheque = FicheSort | FichePotion | FicheObjet | FicheArme | FicheArmure | FicheDon | FicheCompetence
 
 export async function getFicheBibliotheque(categorie: RayonSlug, id: number): Promise<FicheBibliotheque | null> {
   const db = getDb()
@@ -250,6 +283,21 @@ export async function getFicheBibliotheque(categorie: RayonSlug, id: number): Pr
     const [armure] = await db.select().from(schema.armor).where(eq(schema.armor.id, id))
     if (!armure) return null
     return { categorie, armure, prixAffiche: formatPrix(armure.prix) }
+  }
+
+  if (categorie === 'competence') {
+    const [competence] = await db.select().from(schema.skills).where(eq(schema.skills.id, id))
+    if (!competence) return null
+    const classes = await db
+      .select({ nom: schema.classes.nom, precision: schema.classSkillList.precision })
+      .from(schema.classSkillList)
+      .innerJoin(schema.classes, eq(schema.classSkillList.classeId, schema.classes.id))
+      .where(eq(schema.classSkillList.skillId, id))
+    return {
+      categorie, competence,
+      caracteristique: LIBELLE_CARAC[competence.caracteristique] ?? competence.caracteristique,
+      classesDeClasse: classes.sort((a, b) => a.nom.localeCompare(b.nom, 'fr')),
+    }
   }
 
   const [don] = await db.select().from(schema.feats).where(eq(schema.feats.id, id))
