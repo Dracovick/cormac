@@ -991,10 +991,25 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                     cha: (abilityScores.chaBase ?? 10) + (abilityScores.chaMagique ?? 0),
                   } : undefined
                   const manquants = featDef ? verifierPrerequisDon(featDef, donsNoms, bbaBase, absScores) : []
+                  const ficheDonId = feat.catalogueId ?? (feat.estCatalogue ? feat.id : null)
                   return (
                     <div key={feat.id} className="bg-stone-800/40 rounded p-2">
                       <div className="flex items-start gap-1.5">
                         <span className="text-stone-200 text-sm font-medium">{feat.nom}</span>
+                        {/* Règles du don au Manuel. Seules les lignes qui sont une
+                            entrée du catalogue (table 5-1) ou y sont rattachées en
+                            portent un : la table `feats` tient aussi les capacités
+                            de classe, les traits raciaux et les marqueurs de
+                            progression des vieilles fiches. Voir drizzle/0008. */}
+                        {ficheDonId !== null && (
+                          <Link
+                            href={`/bibliotheque/don/${ficheDonId}?from=/personnage/${id}`}
+                            title="Lire les règles de ce don au Manuel"
+                            className="text-stone-500 hover:text-amber-300 text-xs mt-0.5"
+                          >
+                            📖
+                          </Link>
+                        )}
                         <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(feat.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="text-stone-700 hover:text-amber-400 transition-colors text-xs mt-0.5">🔍</a>
                         {manquants.length > 0 && (
                           <span className="text-red-400 text-xs ml-auto shrink-0" title={`Prérequis manquants : ${manquants.join(', ')}`}>⚠ {manquants.join(', ')}</span>
@@ -1080,8 +1095,15 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             <Section titre="Armure portée">
               {armor.map(({ armor: a, charArmor }) => (
                 <div key={charArmor.id} className="bg-stone-800/60 rounded p-3">
-                  <div className="text-white font-semibold">
-                    {a.nom}{charArmor.bonusMagique ? ` +${charArmor.bonusMagique}` : ''}
+                  <div className="text-white font-semibold flex items-baseline gap-2">
+                    <span>{a.nom}{charArmor.bonusMagique ? ` +${charArmor.bonusMagique}` : ''}</span>
+                    <Link
+                      href={`/bibliotheque/armure/${a.id}?from=/personnage/${id}`}
+                      title="Lire la fiche de cette armure"
+                      className="text-stone-500 hover:text-amber-300 text-xs font-normal"
+                    >
+                      📖
+                    </Link>
                   </div>
                   <div className="text-stone-400 text-xs mt-1 space-x-3">
                     <span>Bonus CA : <span className="text-amber-300">+{(a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0)}</span></span>
@@ -1101,6 +1123,13 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   <div key={charItem.id} className="flex items-center gap-2 py-1 border-b border-stone-800 last:border-0">
                     <div className="flex-1 min-w-0">
                       <span className="text-purple-300 text-sm font-medium">{item.nom}</span>
+                      <Link
+                        href={`/bibliotheque/objet/${item.id}?from=/personnage/${id}`}
+                        title="Lire la fiche de cet objet magique"
+                        className="ml-1.5 text-stone-500 hover:text-amber-300 text-xs"
+                      >
+                        📖
+                      </Link>
                       <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(item.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="ml-1.5 text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
                       {charItem.emplacement && <span className="text-stone-600 text-xs ml-2">{charItem.emplacement}</span>}
                       {item.description && (
@@ -1150,6 +1179,13 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   <div key={charPotion.id} className="flex items-start justify-between bg-stone-800/40 rounded p-2">
                     <div>
                       <span className="text-green-300 text-sm">{potion.nom}</span>
+                      <Link
+                        href={`/bibliotheque/potion/${potion.id}?from=/personnage/${id}`}
+                        title="Lire la fiche de cette potion"
+                        className="ml-1.5 text-stone-500 hover:text-amber-300 text-xs"
+                      >
+                        📖
+                      </Link>
                       {potion.sortEffet && (
                         <p className="text-stone-400 text-xs mt-0.5">{potion.sortEffet}</p>
                       )}

@@ -201,8 +201,9 @@ function Contenu({ fiche, qs }: { fiche: FicheBibliotheque; qs: string }) {
         <>
           <div className="space-y-2">
             {fiche.don.categorie && <Row label="Catégorie">{fiche.don.categorie}</Row>}
-            {fiche.don.prerequis && <Row label="Prérequis">{fiche.don.prerequis}</Row>}
-            {fiche.don.effetMecanique && <Row label="Effet mécanique">{fiche.don.effetMecanique}</Row>}
+            {/* Les mots du Manuel : la table 5-1 dit « Conditions » et « Avantage ». */}
+            {fiche.don.prerequis && <Row label="Conditions">{fiche.don.prerequis}</Row>}
+            {fiche.don.effetMecanique && <Row label="Avantage">{fiche.don.effetMecanique}</Row>}
           </div>
           <Description texte={fiche.don.description} />
         </>

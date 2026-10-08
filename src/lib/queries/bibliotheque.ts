@@ -114,8 +114,11 @@ export async function getBibliothequeIndex(): Promise<BibliothequeIndex> {
       typeDegats: schema.weapons.typeDegats, famille: schema.weapons.famille,
     }).from(schema.weapons).where(eq(schema.weapons.estCatalogue, true)).orderBy(schema.weapons.nom),
     db.select().from(schema.armor).orderBy(schema.armor.nom),
+    // Même raison que pour les armes : la table porte aussi les lignes de fiche
+    // des personnages (« CLASS - Lay on hands », « DON Niv 1 », « =-=-=-= »),
+    // qui n'ont rien à faire dans un rayon de référence. Voir drizzle/0008.
     db.select({ id: schema.feats.id, nom: schema.feats.nom, categorie: schema.feats.categorie, prerequis: schema.feats.prerequis })
-      .from(schema.feats).orderBy(schema.feats.nom),
+      .from(schema.feats).where(eq(schema.feats.estCatalogue, true)).orderBy(schema.feats.nom),
   ])
 
   return {

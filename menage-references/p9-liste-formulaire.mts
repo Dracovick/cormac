@@ -83,10 +83,12 @@ const FEMININ = /^(Dague|Lance|Hache)/
 
 function ligne(e: Entree, suffixe = ''): string {
   const nom = (e.nom + suffixe).replace(/'/g, "\\'")
-  const estContact = e.famille.includes('corps à corps') || e.famille.includes('mains nues')
-  const portee = suffixe === '' && estContact
-    ? "'Contact'"
-    : (e.portee != null ? `'${e.portee} m'` : "'Contact'")
+  // La portée est TOUJOURS celle du livre, même pour une arme de contact : c'est
+  // son facteur de portée au jet, pas un verdict « arme à distance ». Écrire
+  // 'Contact' ici effacerait les 3 m de la dague au catalogue dès le premier
+  // enregistrement — « la saisie fait foi ». C'est la FAMILLE qui décide du mode
+  // de calcul (estArmeADistance), jamais ce champ.
+  const portee = e.portee != null ? `'${e.portee} m'` : "'Contact'"
   return `  { nom: '${nom}', famille: '${e.famille}', categorie: '${categorie(e.famille)}',`
     + ` degats: ${e.degats ? `'${e.degats}'` : 'null'}, degatsP: ${e.degatsP ? `'${e.degatsP}'` : 'null'},`
     + ` critMin: ${e.critMin}, critMult: ${e.critMult}, typeDegats: '${lettreType(e.type)}',`
@@ -162,8 +164,10 @@ export const WEAPON_CATEGORIE_LIBELLE: Record<WeaponCategorie, string> = {
 
 // `estArmeADistance` vit dans le même fichier mais n'a rien de généré : il est
 // lu par la fiche et la feuille imprimée. On le recopie tel quel.
+// ⚠ Fins de ligne : git réécrit le fichier en CRLF au passage. Chercher un
+// motif contenant « \n » renvoyait -1 et le script refusait d'écrire.
 const ancien = fs.readFileSync(`${RACINE}/src/lib/dnd35/weapons.ts`, 'utf8')
-const i = ancien.indexOf('/**\n * Arme de tir/de jet')
+const i = ancien.search(/\/\*\*\r?\n \* Arme de tir\/de jet/)
 if (i < 0) {
   console.error("⛔ bloc estArmeADistance introuvable dans l'ancien fichier — rien écrit.")
   process.exit(1)

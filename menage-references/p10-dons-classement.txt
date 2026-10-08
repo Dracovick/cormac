@@ -1,0 +1,493 @@
+# Classement à la main des 477 lignes de la table `feats` — 2026-10-08, Dracovick.
+# Format : id | verdict | cible
+#
+# VERDICTS
+#   D = don réel du Manuel 3.5          → cible = son nom à la table 5-1
+#   X = don d'une autre source          (3.0 abandonné en 3.5, ou supplément non relevé)
+#   C = capacité de classe              (attaque sournoise, renvoi, forme animale, pouvoir de domaine…)
+#   R = trait racial                    (vision nocturne, immunité au sommeil, bonus d'enchantement…)
+#   M = pouvoir de créature ou de monture/familier/template
+#   P = marqueur de progression         (« DON Niv 1 », « NIV01 (bonus) », « FEAT », « CLASS »…)
+#   S = séparateur visuel
+#   N = note de fiche                   (ni don, ni capacité nommable — texte libre du joueur)
+#   ? = à trancher par André
+#
+# Rien n'est écrit en base à partir de ce fichier. C'est la pièce à lire avant de décider.
+
+234|N|
+382|R|
+43|R|
+136|R|
+380|R|
+407|R|
+328|R|
+231|N|
+132|S|
+138|S|
+57|S|
+143|C|
+58|C|
+217|D|Tir à bout portant
+338|C|
+299|C|
+113|D|Arme de prédilection
+144|C|
+59|C|
+218|D|Tir rapide
+339|C|
+300|C|
+145|C|
+60|C|
+219|D|Tir de précision
+340|C|
+301|C|
+114|D|Attaque en finesse
+146|C|
+61|C|
+220|D|Arme de prédilection
+147|C|
+62|C|
+221|D|Science de l'initiative
+148|C|
+63|C|
+115|D|Science du critique
+149|C|
+64|C|
+156|C|
+65|C|
+116|D|Arme en main
+222|S|
+33|D|Vigilance
+273|D|Vigilance
+141|X|
+359|C|
+169|C|
+470|D|Arme de prédilection
+23|D|Arme de prédilection
+5|D|Arme de prédilection
+479|D|Arme de prédilection
+384|D|Arme de prédilection
+125|D|Arme en main
+444|D|Arme de prédilection
+442|R|
+9|N|
+343|M|
+308|M|
+48|D|Attaque en puissance
+452|D|Attaque éclair
+49|C|
+377|C|
+151|D|Attaque éclair
+447|D|Coup étourdissant
+450|C|
+68|C|
+336|P|
+246|D|Volonté de fer
+239|D|Robustesse
+142|D|Arme en main
+389|D|Efficacité des sorts accrue
+155|C|
+329|P|
+112|D|Maniement des boucliers
+50|N|
+330|P|
+202|C|
+198|C|
+201|C|
+195|C|
+197|C|
+196|C|
+199|C|
+200|C|
+118|C|
+117|C|
+31|D|Attaques réflexes
+367|D|Combat en aveugle
+214|D|Magie de guerre
+371|D|Combat monté
+140|D|Combat à deux armes
+21|D|Combat à deux armes
+453|D|Combat à deux armes
+446|D|Science du combat à mains nues
+70|C|
+175|C|
+309|M|
+443|D|Science du critique
+227|D|Création d'armes et armures magiques
+16|D|Création d'armes et armures magiques
+46|D|Création d'armes et armures magiques
+47|D|Création de bâtons magiques
+17|D|Création de bâtons magiques
+362|P|
+331|P|
+121|D|Arme de prédilection
+120|D|Maniement d'une arme de guerre
+119|C|
+417|P|
+420|P|
+421|P|
+424|P|
+423|P|
+413|P|
+419|P|
+415|D|Arme de prédilection
+416|P|
+426|P|
+465|P|
+425|P|
+427|P|
+412|P|
+302|M|
+275|M|
+262|R|
+277|M|
+279|M|
+263|M|
+67|C|
+40|R|
+215|D|Esquive
+383|N|
+459|C|
+462|C|
+437|R|
+395|R|
+393|R|
+396|R|
+454|R|
+391|R|
+390|R|
+392|R|
+436|R|
+394|R|
+397|R|
+455|D|Arme en main
+399|D|Science de l'initiative
+456|X|
+457|D|Arme de prédilection
+434|C|
+398|C|
+435|C|
+460|C|
+458|D|Science du critique
+463|C|
+464|P|
+466|C|
+445|D|Arme en main
+387|D|Efficacité des sorts accrue
+271|D|Extension d'effet
+88|D|Extension d'effet
+79|D|Extension d'effet
+83|D|Extension d'effet
+385|D|Emprise sur les morts-vivants
+27|D|Emprise sur les morts-vivants
+366|D|Endurance
+181|C|
+182|C|
+180|C|
+174|X|
+378|C|
+20|D|Esquive
+152|D|Esquive
+448|C|
+166|C|
+51|C|
+461|C|
+150|C|
+52|C|
+98|C|
+73|D|Maniement d'une arme exotique
+284|D|Expertise du combat
+213|N|
+358|P|
+326|D|Incantation silencieuse
+327|D|Incantation statique
+123|D|Incantation silencieuse
+124|D|Extension d'effet
+178|D|Science du critique
+122|D|Emprise sur les morts-vivants
+357|P|
+325|X|
+256|M|
+341|M|
+303|M|
+344|M|
+310|M|
+474|X|
+469|D|Vigueur surhumaine
+285|D|Vigueur surhumaine
+32|X|
+42|R|
+258|M|
+317|M|
+135|R|
+439|R|
+260|D|Science du critique
+127|D|Science du critique
+250|C|
+108|C|
+235|D|Science de l'initiative
+337|D|Science du critique
+75|D|Science du critique
+91|D|Science du critique
+101|D|Science du critique
+280|D|Science du critique
+81|D|Science du critique
+297|D|Science du critique
+286|D|Science du désarmement
+100|C|
+212|M|
+92|D|Science de l'initiative
+82|D|Science de l'initiative
+266|D|Science de l'initiative
+441|D|Incantation statique
+18|D|Incantation silencieuse
+228|D|Incantation silencieuse
+19|D|Incantation statique
+368|D|Science de l'initiative
+440|C|
+278|D|Volonté de fer
+287|D|Volonté de fer
+345|P|
+311|X|
+349|P|
+315|D|Incantation rapide
+39|D|Quintessence des sorts
+350|P|
+316|D|Quintessence des sorts
+35|D|Incantation statique
+346|P|
+312|D|Incantation silencieuse
+36|D|Tir à bout portant
+347|P|
+313|D|Extension d'effet
+37|D|Tir rapide
+348|P|
+314|D|Efficacité des sorts accrue
+38|D|Arme de prédilection
+71|C|
+288|D|Prestige
+248|D|Réflexes surhumains
+241|D|Réflexes surhumains
+240|R|
+255|M|
+254|M|
+259|M|
+225|D|Maniement des armes courantes
+468|D|Maniement d'une arme de guerre
+84|D|Quintessence des sorts
+230|D|Maîtrise des sorts
+188|D|Maîtrise des sorts
+7|D|Maîtrise des sorts
+471|D|Arme de prédilection supérieure
+8|D|École supérieure
+351|M|
+318|M|
+210|M|
+76|D|Souplesse du serpent
+289|D|Souplesse du serpent
+28|D|Combat monté
+332|P|
+207|D|Préparation de potions
+160|D|Écriture de parchemins
+159|C|
+204|D|Tir à bout portant
+158|D|Incantation silencieuse
+157|D|Extension de durée
+203|D|Maîtrise des sorts
+161|D|Incantation statique
+162|D|Extension d'effet
+163|D|Augmentation d'intensité
+205|D|Science du critique
+177|D|Efficacité des sorts accrue
+189|D|Arme de prédilection
+206|D|Maîtrise des sorts
+184|D|Maîtrise des sorts
+333|P|
+185|D|Quintessence des sorts
+208|D|Tir rapide
+194|D|Robustesse
+334|P|
+186|D|Incantation rapide
+431|P|
+335|D|Science du critique
+191|D|Science du critique
+192|D|Science de l'initiative
+193|D|Attaque en puissance
+352|C|
+319|C|
+41|R|
+363|P|
+388|P|
+128|C|
+129|C|
+364|P|
+130|C|
+131|C|
+281|X|
+236|X|
+29|X|
+154|D|Parade de projectiles
+449|D|Parade de projectiles
+245|D|Parade de projectiles
+276|M|
+176|C|
+167|C|
+137|N|
+179|D|Pistage
+153|C|
+265|D|Tir à bout portant
+429|D|Tir à bout portant
+89|D|Tir à bout portant
+104|D|Tir à bout portant
+294|D|Tir à bout portant
+133|R|
+11|R|
+96|D|Attaque en puissance
+74|D|Attaque en puissance
+14|D|Préparation de potions
+478|C|
+211|M|
+477|C|
+172|C|
+102|D|Arme en main
+264|D|Arme en main
+293|D|Arme en main
+272|D|Incantation rapide
+268|D|Incantation rapide
+13|D|Quintessence des sorts
+229|D|Quintessence des sorts
+190|D|Science de la bousculade
+365|R|
+282|R|
+30|X|
+430|D|Tir rapide
+105|D|Tir rapide
+295|D|Tir rapide
+77|C|
+467|C|
+414|C|
+257|M|
+353|C|
+320|C|
+473|D|Robustesse
+249|P|
+223|X|
+451|D|Réflexes surhumains
+34|R|
+476|C|
+54|C|
+6|D|Science de l'initiative
+139|D|Science du critique
+183|D|Science du combat à deux armes
+55|D|Science du critique
+433|D|Science du critique
+56|D|Science du critique
+386|D|Science du critique
+173|D|Science du croc-en-jambe
+472|D|Science du renvoi
+373|D|Écriture de parchemins
+170|D|Science du critique
+342|M|
+304|M|
+270|D|Incantation silencieuse
+242|D|Incantation silencieuse
+90|D|Incantation silencieuse
+374|D|Incantation silencieuse
+85|D|Incantation silencieuse
+237|D|Talent
+283|D|Talent
+66|C|
+69|C|
+252|C|
+93|C|
+10|D|Incantation rapide
+233|N|
+475|C|
+106|D|Souplesse du serpent
+165|D|Souplesse du serpent
+292|D|Efficacité des sorts accrue
+267|D|Efficacité des sorts accrue
+372|D|Efficacité des sorts accrue
+232|D|Efficacité des sorts accrue
+354|C|
+321|C|
+22|D|Spécialisation martiale
+4|D|Spécialisation martiale
+480|D|Spécialisation martiale
+370|N|
+369|N|
+269|D|Incantation statique
+243|D|Incantation statique
+87|D|Incantation statique
+375|D|Incantation statique
+86|D|Incantation statique
+44|C|
+376|C|
+305|M|
+171|C|
+355|M|
+322|M|
+360|C|
+253|P|
+361|C|
+3|D|Tir de précision
+2|D|Tir rapide
+1|D|Tir à bout portant
+24|D|Tir à bout portant
+298|D|Pistage
+306|M|
+209|M|
+99|C|
+251|C|
+111|C|
+109|C|
+110|C|
+307|M|
+126|N|
+25|D|Vigilance
+428|C|
+107|D|Vigilance
+224|R|
+438|R|
+134|R|
+422|R|
+381|R|
+15|D|Volonté de fer
+45|D|Volonté de fer
+247|D|Attaque en finesse
+274|D|Arme de prédilection
+291|D|Spécialisation martiale
+95|D|Attaque en finesse
+78|D|Attaque en finesse
+97|D|Attaque en finesse
+216|D|Attaque en finesse
+103|D|Arme de prédilection
+72|D|Arme de prédilection
+244|D|Arme de prédilection
+94|D|Arme de prédilection
+80|D|Arme de prédilection
+290|D|Arme de prédilection
+296|D|Arme de prédilection
+261|D|Spécialisation martiale
+323|C|
+356|C|
+324|C|
+410|D|Arme de prédilection
+164|N|
+408|N|
+404|C|
+403|D|Arme en main
+402|C|
+401|C|
+411|C|
+406|C|
+405|C|
+409|?|Talent
+400|D|Vigueur surhumaine
+432|P|
+187|C|
+226|D|École renforcée
+12|D|Écriture de parchemins
+418|D|Écriture de parchemins
+168|D|Écriture de parchemins
+53|N|

@@ -1,0 +1,350 @@
+feats en base : 477   lignes classées : 477
+
+══ CE QUE CONTIENT LA TABLE DES DONS ══
+  D  226 lignes  (206 portées par un personnage)  — don du Manuel 3.5
+  X   12 lignes  (10 portées par un personnage)  — don d'une autre source (3.0 ou supplément)
+  C  115 lignes  (105 portées par un personnage)  — capacité de classe
+  R   35 lignes  (35 portées par un personnage)  — trait racial
+  M   33 lignes  (27 portées par un personnage)  — pouvoir de créature
+  P   37 lignes  (37 portées par un personnage)  — marqueur de progression
+  S    4 lignes  (4 portées par un personnage)  — séparateur
+  N   14 lignes  (14 portées par un personnage)  — note de fiche
+  ?    1 lignes  (1 portées par un personnage)  — à trancher
+
+══ FUSIONS PROPOSÉES — 226 lignes vers 57 dons du Manuel ══
+
+→ Arme de prédilection  (22)
+     [113] 1st level feat: Weapon focus (dagger)   · 1 porteur
+     [220] 4- Arme de prédilection (arc +1)   · 1 porteur
+     [470] Arme de prédilection (Morgenstern)   · 1 porteur
+     [ 23] Arme de prédilection (arc long composite)   · 1 porteur
+     [  5] Arme de prédilection (arc long)   · personne
+     [479] Arme de prédilection (hache de guerre naine)   · 1 porteur
+     [384] Arme de prédilection +1   · 1 porteur
+     [444] Arme focus (Marteau de guerre)   · 1 porteur
+     [121] DOMAIN FEAT : Weapon focus (longsword)   · personne
+     [415] DON INITIAL: Weapon Focus (hache de guerre)   · 1 porteur
+     [457] Don niv 2 Arme de prédilection (épée longue) +1 à l'attaque   · 1 porteur
+     [ 38] L9: WEAPON FOCUS (+1 attack roll with bow)   · 1 porteur
+     [189] NIV1 - Weapon focus: warhammer   · 1 porteur
+     [274] Weapon Focus (great axe)   · 1 porteur
+     [103] Weapon focus (bastard)   · 1 porteur
+     [ 72] Weapon focus (bastard) +1   · 1 porteur
+     [244] Weapon focus (batlleaxe) +2 attack rolls   · 1 porteur
+     [ 94] Weapon focus (dagger)   · 2 porteurs
+     [ 80] Weapon focus (mace) +1   · 2 porteurs
+     [290] Weapon focus (rapier)   · 1 porteur
+     [296] Weapon focus:  Elven longsword (+1 attack - déjà inclus)   · 1 porteur
+     [410] arme de prédilection: grande hache   · 1 porteur
+
+→ Science du critique  (22)
+     [115] 6th level feat: Improved critical (dagger)   · 1 porteur
+     [443] Critique amélioré   · 1 porteur
+     [458] Don niveau 4 Science du critique double probabilité coup critique épée longue   · 1 porteur
+     [178] FEAT Niv 9: Improved ctritical (17 à 20)   · 1 porteur
+     [260] Improved Critical (battle axe)   · 1 porteur
+     [127] Improved Critical (épée à 2 mains)   · 1 porteur
+     [337] Improved critical   · 1 porteur
+     [ 75] Improved critical (bastard)   · 2 porteurs
+     [ 91] Improved critical (bow)   · 1 porteur
+     [101] Improved critical (dagger)   · 1 porteur
+     [280] Improved critical (greataxe)   · 1 porteur
+     [ 81] Improved critical (mace)   · 2 porteurs
+     [297] Improved critical : Elven longblade (double threat range)   · personne
+     [205] NIV06 (general): IMPROVED CRITICAL (crossbow)   · 1 porteur
+     [335] NIV3 - Improved critical   · 1 porteur
+     [191] NIV3 - Improved critical : warhammer   · personne
+     [139] Science du Critique Cimettre 15-20   · 1 porteur
+     [ 55] Science du critique (arbalète)   · 1 porteur
+     [433] Science du critique (katana)   · 1 porteur
+     [ 56] Science du critique (rapière)   · 1 porteur
+     [386] Science du critique +2 sur dé 20   · 1 porteur
+     [170] Sens du critique épée courte   · 1 porteur
+
+→ Incantation silencieuse  (11)
+     [326] FEAT : Silent Spell   · personne
+     [123] FEAT Niv 3: Silent Spell (+1 niveau)   · 1 porteur
+     [ 18] Incantation silencieuse   · 3 porteurs
+     [228] Incantation silencieuse (1 niveau supérieur)   · 1 porteur
+     [312] L3 : SILENT SPELL (incanter sans paroles) (+1 spell slots)   · personne
+     [158] NIV01 (race): SILENT SPELL (incanter sans paroles) (+1 spell slots)   · 1 porteur
+     [270] Silent Spell (+1 spell slot)   · 1 porteur
+     [242] Silent Spell (1 spell slot)   · 1 porteur
+     [ 90] Silent spell   · 1 porteur
+     [374] Silent spell (niveau 3)   · 1 porteur
+     [ 85] Silent spells   · 1 porteur
+
+→ Incantation statique  (10)
+     [327] FEAT : Still Spell   · personne
+     [441] Incantation sans gestuelle   · 1 porteur
+     [ 19] Incantation statique   · 1 porteur
+     [ 35] L1: STIL SPELL (cast without gestures)+1 spell slot   · 1 porteur
+     [161] NIV03 (general): STILL SPELL (incanter sans gestes) (+1 spell slots)   · 2 porteurs
+     [269] Still Spell  (+1 spell slot)   · 1 porteur
+     [243] Still Spell (1 spell slot)   · 1 porteur
+     [ 87] Still spell   · 1 porteur
+     [375] Still spell (niveau 5 extra)   · 1 porteur
+     [ 86] Still spells   · 1 porteur
+
+→ Tir à bout portant  (10)
+     [217] 1- Tir à bout portant   · 1 porteur
+     [ 36] L3: POINT BLANK (+1 attack and damage with ranged weaponds)   · 1 porteur
+     [204] NIV01 (race): POINT BLANK (+1 dégâts et attaque à distance)   · 1 porteur
+     [265] Point Blank   · 1 porteur
+     [429] Point Blank (Niveau 1)   · 1 porteur
+     [ 89] Point blank shot   · 1 porteur
+     [104] Point blank shot +1 to hit missile   · 1 porteur
+     [294] Pointblank Shot (+1 attack avec l'arc si moins de 30 pieds)   · 1 porteur
+     [  1] Tir à bout portant   · 1 porteur
+     [ 24] Tir à bout portant (Arc long composite)   · 1 porteur
+
+→ Arme en main  (9)
+     [116] 9th level feat: Quick Draw (free action)   · 1 porteur
+     [125] Arme en main   · 3 porteurs
+     [142] BONUS: QUICK DRAW avec arc magique si j'utilise les flèches magiques +0   · 1 porteur
+     [455] Don initial: Arme en main   · 1 porteur
+     [445] Dégainage rapide   · 1 porteur
+     [102] Quick draw   · 1 porteur
+     [264] Quickdraw   · 1 porteur
+     [293] Quickdraw (Dégaine comme action simple)   · 1 porteur
+     [403] dégainement rapide   · 1 porteur
+
+→ Science de l'initiative  (9)
+     [221] 5- Science de l'initiative (+4)   · 1 porteur
+     [399] Don initial: Sens de l'initiative   · 1 porteur
+     [235] Improved Initiative (+4)   · 1 porteur
+     [ 92] Improved initiative   · 1 porteur
+     [ 82] Improved initiative +4   · 3 porteurs
+     [266] Improved initiative +5   · 1 porteur
+     [368] Initiative améliorée   · 2 porteurs
+     [192] NIV6 - Improved initiative   · 1 porteur
+     [  6] Science de l'initiative   · 7 porteurs
+
+→ Efficacité des sorts accrue  (8)
+     [389] BONUS: SPELL PENETRATION avec robe magique   · 1 porteur
+     [387] Efficacité de sorts accru +2 niveau   · 1 porteur
+     [314] L9 : SPELL PENETRATION (+2 versus Spell resistance)   · personne
+     [177] NIV09 (general): SPELL PENETRATION (+2 versus Spell resistance)   · 2 porteurs
+     [292] Spell Penetration +2 versus other (from Robe)   · 1 porteur
+     [267] Spell penetration (+2 pour percer la résistance des autres)   · 1 porteur
+     [372] Spell penetration (niveau 1)   · 1 porteur
+     [232] Spell penetration +2   · 1 porteur
+
+→ Extension d'effet  (7)
+     [271] Empower Spell (+2 spell slot)  x1.5 degats   · 1 porteur
+     [ 88] Empower spell   · 1 porteur
+     [ 79] Empower spell (x1.5)   · 1 porteur
+     [ 83] Empower spells   · 1 porteur
+     [124] FEAT Niv 6: Empower Spell (+1 niveau)   · 1 porteur
+     [313] L6 : EMPOWER SPELL (+2 spell slots)   · personne
+     [162] NIV05 (class): EMPOWER SPELL (+2 spell slots)   · 2 porteurs
+
+→ Tir rapide  (7)
+     [218] 2- Tir rapide   · 1 porteur
+     [ 37] L6: RAPID SHOT (extra attack with ranged weapons)   · 1 porteur
+     [208] NIV12 (general) : RAPID SHOT (extra attaque avec arabalète)   · personne
+     [430] Rapid shot (Niveau 3)   · 1 porteur
+     [105] Rapid shot +1 attaque bonus  -2 to hit   · 1 porteur
+     [295] Rapidshot  (1 extra ranged attack per round, all with -2 penalty)   · 1 porteur
+     [  2] Tir rapide   · 1 porteur
+
+→ Attaque en finesse  (6)
+     [114] 3rd level feat: Weapon finesse (dagger)   · 1 porteur
+     [247] Weapon Finesse (peut utiliser le bonus de Dex sur jets d'attaque)   · 1 porteur
+     [ 95] Weapon finesse (dagger)   · 2 porteurs
+     [ 78] Weapon finesse (mace)   · 1 porteur
+     [ 97] Weapon finesse (rapier)   · 1 porteur
+     [216] Weapon finesse (tentacle)   · 1 porteur
+
+→ Maîtrise des sorts  (6)
+     [230] Maîtrise des sorts (5): Boule de feu, Dissipation de la magie, image miroir,   · 1 porteur
+     [188] Maîtrise des sorts (p. 39) rappel deux sorts par jour   · 1 porteur
+     [  7] Maîtrise des sorts (Évocation)   · 1 porteur
+     [203] NIV01 (start): SPELL MASTERY (apprendre 4 sorts par coeur)   · 1 porteur
+     [206] NIV10 (class): SPELL MASTERY (apprendre 4 sorts par coeur)   · 1 porteur
+     [184] NIV10 (class): SPELL MASTERY (apprendre sorts par coeur)   · 1 porteur
+
+→ Quintessence des sorts  (6)
+     [ 39] L12: MAXIMIZE SPELL (+3 spell slots)   · 1 porteur
+     [316] L15 : MAXIMIZE SPELL (+3 spell slots)   · personne
+     [ 84] Maximize spells   · 1 porteur
+     [185] NIV12 (general) : MAXIMIZE SPELL (+3 spell slots)   · personne
+     [ 13] Quintessence des sorts   · 3 porteurs
+     [229] Quintessence des sorts (3 niveaux supérieurs)   · 1 porteur
+
+→ Écriture de parchemins  (5)
+     [160] NIV01 (bonus) : SCRIBE SCROLL   · personne
+     [373] Scribe scroll (bonus)   · 1 porteur
+     [ 12] Écriture de parchemins   · 1 porteur
+     [418] Écriture des parchemins   · 1 porteur
+     [168] Écriture parchemin   · 1 porteur
+
+→ Incantation rapide  (5)
+     [315] L12 : QUICKEN SPELL (+4 spell slots)   · personne
+     [186] NIV15 (class) : QUICKEN SPELL (+4 spell slots)   · personne
+     [272] Quicken Spell (+1 sort par round, +4 spell slot)   · 1 porteur
+     [268] Quicken Spell (+4 spell slot)  free action   · 1 porteur
+     [ 10] Sort accéléré   · 1 porteur
+
+→ Spécialisation martiale  (5)
+     [ 22] Spécialisation martiale (arc long composite)   · 1 porteur
+     [  4] Spécialisation martiale (arc long)   · personne
+     [480] Spécialisation martiale (hache de guerre naine)   · 1 porteur
+     [291] Weapon Specialization (rapier)   · 1 porteur
+     [261] Weapon specialization (battleaxe) +3 damage   · 1 porteur
+
+→ Volonté de fer  (5)
+     [246] BONUS THRALL : Iron Will (+2 sur jet de sauvegarde Volonté)   · personne
+     [278] Iron Will (+2 will save)   · 1 porteur
+     [287] Iron will +2 save   · 1 porteur
+     [ 15] Volonté de fer   · 1 porteur
+     [ 45] Volonté de fer (+2 Volonté)   · 1 porteur
+
+→ Attaque en puissance  (4)
+     [ 48] Attaque en puissance   · 2 porteurs
+     [193] NIV9 - Power attack   · 1 porteur
+     [ 96] Power attack   · 2 porteurs
+     [ 74] Power attack (max 18/13)   · 1 porteur
+
+→ Souplesse du serpent  (4)
+     [ 76] Mobility (+4 AC)   · 1 porteur
+     [289] Mobilité +4 AC   · 1 porteur
+     [106] Souplesse du serpent   · 2 porteurs
+     [165] Souplesse serpent   · 1 porteur
+
+→ Vigilance  (4)
+     [ 33] Alertness   · 2 porteurs
+     [273] Alertness (+2 listen  and Spot)   · 1 porteur
+     [ 25] Vigilance   · 3 porteurs
+     [107] Vigilence   · 1 porteur
+
+→ Combat à deux armes  (3)
+     [140] Combat à 2 armes  JdA -4 à chaque main   · 1 porteur
+     [ 21] Combat à deux armes   · 1 porteur
+     [453] Combat à deux armes (2 attaques à -4 chacune)   · 1 porteur
+
+→ Création d'armes et armures magiques  (3)
+     [227] Création arme et armure magique   · 1 porteur
+     [ 16] Création d'armes et armures magiques   · 1 porteur
+     [ 46] Création d'armes t armures magiques   · 1 porteur
+
+→ Emprise sur les morts-vivants  (3)
+     [385] Emprise sur les morts vivants +4 quatre tentatives de renvois par jour   · 1 porteur
+     [ 27] Emprise sur les morts-Vivants   · 1 porteur
+     [122] FEAT Niv1: Extra Turning (3+ cha mod. + 4 = 6 fois par jour)   · 1 porteur
+
+→ Esquive  (3)
+     [215] Dodge   · 1 porteur
+     [ 20] Esquive   · 3 porteurs
+     [152] Esquive (+1 CA contre un adversaire choisi)   · 1 porteur
+
+→ Parade de projectiles  (3)
+     [154] Parade de projectiles   · 1 porteur
+     [449] Parade de projectiles (1x par round, Jet de réflexes DD20)   · 1 porteur
+     [245] Parry Arrow   · 1 porteur
+
+→ Réflexes surhumains  (3)
+     [248] Lightning Reflexes (+4 init)   · 1 porteur
+     [241] Ligthning reflexes   · 1 porteur
+     [451] Réflexes surnaturels (+2  sur les jets de réflexe)   · 1 porteur
+
+→ Robustesse  (3)
+     [239] BONUS THRALL : Toughness (+3 pv)   · personne
+     [194] NIV12 - Toughness   · 1 porteur
+     [473] Robustesse   · 3 porteurs
+
+→ Vigueur surhumaine  (3)
+     [469] Grande résistance   · 1 porteur
+     [285] Great Fortitude +2 save   · 1 porteur
+     [400] vigueur surhumaine   · 1 porteur
+
+→ Attaque éclair  (2)
+     [452] Attaque ressort (déplacement avant et après l'attaque)   · 1 porteur
+     [151] Attaque éclair (déplacement + attaque + déplacement)   · 1 porteur
+
+→ Combat monté  (2)
+     [371] Combat monté (cheval)   · 1 porteur
+     [ 28] Mounted Combat   · 1 porteur
+
+→ Création de bâtons magiques  (2)
+     [ 47] Création de bâton magiques   · 1 porteur
+     [ 17] Création de bâtons magiques   · 1 porteur
+
+→ Maniement d'une arme de guerre  (2)
+     [120] DOMAIN FEAT: Martial weapon (longsword)   · 1 porteur
+     [468] Maniement des armes de guerre   · 1 porteur
+
+→ Pistage  (2)
+     [179] Pistage   · 1 porteur
+     [298] Track (Pour suivre les traces d'une créature)   · 1 porteur
+
+→ Préparation de potions  (2)
+     [207] NIV01 (bonus) : BREW POTION   · personne
+     [ 14] Préparation de potions   · 2 porteurs
+
+→ Talent  (2)
+     [237] Skill Focus (+2 diplomacy)   · 1 porteur
+     [283] Skill focus (diplomacy)   · 1 porteur
+
+→ Tir de précision  (2)
+     [219] 3- Tir de précision (peut tirer en corps à corps)   · 1 porteur
+     [  3] Tir de précision   · 1 porteur
+
+→ Arme de prédilection supérieure  (1)
+     [471] Maîtrise martiale supérieure (Morgenstern)   · 1 porteur
+
+→ Attaques réflexes  (1)
+     [ 31] Combat Reflexes   · 1 porteur
+
+→ Augmentation d'intensité  (1)
+     [163] NIV06 (general): HEIGHTEN SPELL (pour augmenter le niveau du sort)   · 1 porteur
+
+→ Combat en aveugle  (1)
+     [367] Combat aveugle   · 1 porteur
+
+→ Coup étourdissant  (1)
+     [447] Attaque étourdissante (1x jour - Jet de vigueur DD 14)   · 1 porteur
+
+→ École renforcée  (1)
+     [226] École renforcé: a joute +2 au DD jet sauvegarde école évocation   · 1 porteur
+
+→ École supérieure  (1)
+     [  8] Maîtrise supérieure (Évocation)   · 1 porteur
+
+→ Endurance  (1)
+     [366] Endurance (+4 vigueur)   · 1 porteur
+
+→ Expertise du combat  (1)
+     [284] Expertise (peut diminuer attack de -5 pour ajourer +5 à la CA   · 1 porteur
+
+→ Extension de durée  (1)
+     [157] NIV01 (start): EXTEND SPELL (augmenter la durée d'un sort) (+1 spell slots)   · 1 porteur
+
+→ Magie de guerre  (1)
+     [214] Combat casting   · 1 porteur
+
+→ Maniement d'une arme exotique  (1)
+     [ 73] Exotic weapon (bastard)   · 1 porteur
+
+→ Maniement des boucliers  (1)
+     [112] Bonus feat (human) : Shield proficiency (no armor check penalty)   · personne
+
+→ Prestige  (1)
+     [288] Leadership (voir DMG)   · 1 porteur
+
+→ Science de la bousculade  (1)
+     [190] RACE - Improved bull rush   · 1 porteur
+
+→ Science du combat à mains nues  (1)
+     [446] Combat à mains nues amélioré   · 1 porteur
+
+→ Science du croc-en-jambe  (1)
+     [173] Science du croc en jambe (p.86)   · 1 porteur
+
+→ Science du désarmement  (1)
+     [286] Improved disarm  (pas d'attaque d'opportunité quand disarm)   · 1 porteur
+
+(3 dons déjà écrits exactement comme le Manuel : Maniement des armes courantes, Science du combat à deux armes, Science du renvoi)
+
+── 52 dons du Manuel que personne ne porte (le catalogue les apportera quand même) ──
+   Affinité magique · Amélioration des créatures convoquées · Spécialisation martiale supérieure · Athlétisme · Enchaînement · Succession d'enchaînements · Science du renversement · Science de la destruction · Autonomie · Défense à deux armes · Maîtrise du combat à deux armes · Attaque au galop · Charge dévastatrice · Piétinement · Tir monté · Course · Discret · Dispense de composantes matérielles · Doigts de fée · Efficacité des sorts supérieure · Dur à cuire · Attaque en rotation · Science de la feinte · Fin limier · Fourberie · Fraternité animale · Funambule · Incantation animale · Maniement du pavois · Science du coup de bouclier · Méticuleux · Négociation · Persuasion · Port des armures légères · Port des armures intermédiaires · Port des armures lourdes · Rechargement rapide · Savoir-faire mécanique · Interception de projectiles · Science de la lutte · Science du contresort · Tir de loin · Science du tir de précision · Tir en mouvement · Feu nourri · Voltigeur · Création d'anneaux magiques · Création d'objets merveilleux · Création de baguettes magiques · Création de sceptres magiques · Extension de portée · Extension de zone d'effet
