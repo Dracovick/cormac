@@ -10,6 +10,7 @@ import { CLASSES_DND35, getClasseInfo } from '@/lib/dnd35/classes'
 import { RACES_DND35, getRaceInfo } from '@/lib/dnd35/races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { getBab, getMultiClassSave, xpPourNiveau } from '@/lib/dnd35/rules'
+import { parseCritique } from '@/lib/dnd35/critique'
 import { SORTS_DND35 } from '@/lib/dnd35/spells'
 import { SORTS_EFFETS_CA, SORTS_EFFETS_CARAC, SORTS_EFFETS_VISUELS, SORTS_EFFETS_SUIVI, valeurEffetSelonNiveau } from '@/lib/dnd35/spell-effects'
 import { UNITES_MONNAIE } from '@/lib/dnd35/monnaie'
@@ -347,9 +348,9 @@ export async function saveCharacter(
   ecritures.push(db.delete(schema.characterWeapons).where(eq(schema.characterWeapons.personnageId, charId)))
   for (const arme of data.armes) {
     if (!arme.nom.trim()) continue
-    const critMatch = arme.crit.match(/(\d+)(?:-20)?\/[×x](\d+)/)
-    const critiqueMin = critMatch ? parseInt(critMatch[1]) : 20
-    const critiqueMult = critMatch ? parseInt(critMatch[2]) : 2
+    const critMatch = parseCritique(arme.crit)
+    const critiqueMin = critMatch ? critMatch.min : 20
+    const critiqueMult = critMatch ? critMatch.mult : 2
     const porteeNum = arme.portee && arme.portee !== 'Contact' ? parseInt(arme.portee) || null : null
     const armeId = await findOrCreateByNom(
       () => db.select({ id: schema.weapons.id }).from(schema.weapons).where(eq(schema.weapons.nom, arme.nom.trim())).limit(1),

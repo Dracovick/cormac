@@ -3,6 +3,7 @@ import type { CharacterData } from '@/lib/queries/character'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { getClasseInfo } from '@/lib/dnd35/classes'
 import { getBab } from '@/lib/dnd35/rules'
+import { formatCritique } from '@/lib/dnd35/critique'
 
 export function charDataToForm(d: CharacterData): CharacterFormData {
   const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows,
@@ -69,7 +70,7 @@ export function charDataToForm(d: CharacterData): CharacterFormData {
     dons: feats.map(f => f.feat.nom),
     armes: weapons.map(w => ({
       nom: w.weapon.nom, degats: w.weapon.degats ?? '',
-      crit: `${w.weapon.critiqueMin ?? 20}-20/×${w.weapon.critiqueMult ?? 2}`,
+      crit: formatCritique(w.weapon.critiqueMin, w.weapon.critiqueMult),
       typeDegats: w.weapon.typeDegats ?? '',
       portee: w.weapon.portee ? `${w.weapon.portee} m` : 'Contact',
       bonusMagique: w.charWeapon.bonusMagique ?? 0,

@@ -3,6 +3,7 @@ import { eq } from 'drizzle-orm'
 import * as schema from '@/db/schema'
 import { normaliserNom } from '@/lib/noms'
 import { aliasPour } from '@/lib/dnd35/anciens-noms'
+import { formatCritique } from '@/lib/dnd35/critique'
 
 /**
  * La Grande Bibliothèque — requêtes de consultation des catalogues de référence.
@@ -70,13 +71,6 @@ function formatPrix(prix: string | null): string | null {
   const n = Number(prix)
   if (!Number.isFinite(n) || n <= 0) return null
   return `${n % 1 === 0 ? n : n.toFixed(2)} po`
-}
-
-/** « 19-20/×2 » — la ligne de critique telle que les joueurs la lisent. */
-function formatCritique(min: number | null, mult: number | null): string {
-  const m = min ?? 20
-  const x = mult ?? 2
-  return m < 20 ? `${m}-20/×${x}` : `×${x}`
 }
 
 /** Les 23 « Relique (dieu) » forment un seul groupe de filtre. */

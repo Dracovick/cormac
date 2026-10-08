@@ -14,6 +14,7 @@ import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { sortsByClasseEtNiveau, niveauxMaxForClasse, type ClasseSortKey, type SortDnD } from '@/lib/dnd35/spells'
 import { getBab } from '@/lib/dnd35/rules'
 import { WEAPONS_DND35, WEAPON_CATEGORIES, type WeaponTemplate } from '@/lib/dnd35/weapons'
+import { normaliserCritique } from '@/lib/dnd35/critique'
 import { FEATS_DND35, CATEGORIES_PAR_CLASSE, verifierPrerequisDon, type FeatCategorie, type FeatDef } from '@/lib/dnd35/feats'
 import { NOMS_DOMAINES } from '@/lib/dnd35/domains'
 import { UNITES_MONNAIE, totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
@@ -646,7 +647,7 @@ function SectionEquipement({ data, update, derived, potionsCatalogue }: { data: 
       .filter(({ a }) => a.nom !== '' && !WEAPONS_DND35.find(w => w.nom === a.nom))
       .map(({ i }) => i)
   ))
-  const newArme = () => update('armes', [...data.armes, { nom: '', degats: '1d6', crit: '20-20/×2', typeDegats: 'T', portee: 'Contact', bonusMagique: 0, coteDeForce: null, bonusMunitions: null, quantite: 1 }])
+  const newArme = () => update('armes', [...data.armes, { nom: '', degats: '1d6', crit: '×2', typeDegats: 'T', portee: 'Contact', bonusMagique: 0, coteDeForce: null, bonusMunitions: null, quantite: 1 }])
   const delArme = (i: number) => {
     setCustomRows(prev => {
       const s = new Set<number>()
@@ -659,7 +660,7 @@ function SectionEquipement({ data, update, derived, potionsCatalogue }: { data: 
   const selectArmeTemplate = (i: number, t: WeaponTemplate) => {
     setCustomRows(prev => { const s = new Set(prev); s.delete(i); return s })
     const a = [...data.armes]
-    a[i] = { ...a[i], nom: t.nom, degats: t.degats, crit: t.crit, typeDegats: t.typeDegats, portee: t.portee }
+    a[i] = { ...a[i], nom: t.nom, degats: t.degats, crit: normaliserCritique(t.crit), typeDegats: t.typeDegats, portee: t.portee }
     update('armes', a)
   }
   const newArmure = () => update('armures', [...data.armures, { nom: '', type: 'Légère', bonusCA: 0, maxDex: 10, malusComp: 0, bonusMagique: 0 }])
@@ -733,7 +734,7 @@ function SectionEquipement({ data, update, derived, potionsCatalogue }: { data: 
                 })()}
               </div>
               <div><label className={LBL}>Dégâts</label><input className={INP} value={a.degats} onChange={e => setArme(i, 'degats', e.target.value)} placeholder="1d8" /></div>
-              <div><label className={LBL}>Crit</label><input className={INP} value={a.crit} onChange={e => setArme(i, 'crit', e.target.value)} placeholder="20/×2" /></div>
+              <div><label className={LBL}>Crit</label><input className={INP} value={a.crit} onChange={e => setArme(i, 'crit', e.target.value)} placeholder="×2 ou 19-20/×2" /></div>
               <div><label className={LBL}>Type</label><select className={SEL} value={a.typeDegats} onChange={e => setArme(i, 'typeDegats', e.target.value)}><option value="T">T (tranchant)</option><option value="C">C (contondant)</option><option value="P">P (perforant)</option></select></div>
               <div><label className={LBL}>+Mag</label><input className={INP_NUM + ' w-full'} type="number" value={a.bonusMagique} onChange={e => setArme(i, 'bonusMagique', parseInt(e.target.value) || 0)} /></div>
               <div className="flex items-end gap-1"><div className="flex-1"><label className={LBL}>Qté</label><input className={INP_NUM + ' w-full'} type="number" min={1} value={a.quantite} onChange={e => setArme(i, 'quantite', parseInt(e.target.value) || 1)} /></div><button onClick={() => delArme(i)} className={BTN_DEL + ' mb-2'}>✕</button></div>
@@ -766,7 +767,7 @@ function SectionEquipement({ data, update, derived, potionsCatalogue }: { data: 
           <button onClick={newArme} className={BTN_ADD}><span className="text-xl">+</span> Ajouter une arme</button>
           <button onClick={() => {
             const idx = data.armes.length
-            update('armes', [...data.armes, { nom: '', degats: '1d6', crit: '20-20/×2', typeDegats: 'T', portee: 'Contact', bonusMagique: 0, coteDeForce: null, bonusMunitions: null, quantite: 1 }])
+            update('armes', [...data.armes, { nom: '', degats: '1d6', crit: '×2', typeDegats: 'T', portee: 'Contact', bonusMagique: 0, coteDeForce: null, bonusMunitions: null, quantite: 1 }])
             setCustomRows(prev => new Set([...prev, idx]))
           }} className={BTN_ADD + ' text-purple-400 hover:text-purple-200'}><span className="text-xl">+</span> Arme personnalisée</button>
         </div>

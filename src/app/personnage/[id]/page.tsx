@@ -11,6 +11,7 @@ import { getFeatWeaponBonuses, getFeatDescription, getFeatPassiveBonuses, sommeB
 import { getDomaineInfo } from '@/lib/dnd35/domains'
 import { caracteristiqueDe } from '@/lib/dnd35/skills'
 import { getChargeCategorie, getChargeLimites } from '@/lib/dnd35/encumbrance'
+import { formatCritique } from '@/lib/dnd35/critique'
 import { FEATS_DND35, verifierPrerequisDon } from '@/lib/dnd35/feats'
 import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
 
@@ -685,7 +686,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                           >
                             <span>Dégâts : <span className="text-amber-300">{dmgStr}</span></span>
                           </DetailBonus>
-                          <span>Critique : <span className="text-amber-300">{weapon.critiqueMin}-20 ×{weapon.critiqueMult}</span></span>
+                          <span>Critique : <span className="text-amber-300">{formatCritique(weapon.critiqueMin, weapon.critiqueMult)}</span></span>
                           {weapon.portee && <span>Portée : <span className="text-amber-300">{weapon.portee}m</span></span>}
                           <span>Type : {weapon.typeDegats}</span>
                         </div>

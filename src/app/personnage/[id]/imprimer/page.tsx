@@ -8,6 +8,7 @@ import { getModifier, getBab, xpPourNiveau, modSauvegarde } from '@/lib/dnd35/ru
 import { getCompetenceRef, caracteristiqueDe } from '@/lib/dnd35/skills'
 import { getDomaineInfo } from '@/lib/dnd35/domains'
 import { getFeatPassiveBonuses, sommeBonus } from '@/lib/dnd35/feat-bonuses'
+import { formatCritique } from '@/lib/dnd35/critique'
 import { PrintButton } from '@/components/fiche/PrintButton'
 import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
 
@@ -555,7 +556,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                   </td>
                   <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', textAlign: 'center' }}>{bbaStr}</td>
                   <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', textAlign: 'center' }}>{w.weapon.degats ?? '—'}</td>
-                  <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', textAlign: 'center' }}>{w.weapon.critiqueMin ?? 20}–20/×{w.weapon.critiqueMult ?? 2}</td>
+                  <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', textAlign: 'center' }}>{formatCritique(w.weapon.critiqueMin, w.weapon.critiqueMult)}</td>
                   <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', textAlign: 'center' }}>{w.weapon.portee ? `${w.weapon.portee} m` : 'Contact'}</td>
                   <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', textAlign: 'center' }}>{w.weapon.typeDegats ?? '—'}</td>
                   <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt' }}></td>

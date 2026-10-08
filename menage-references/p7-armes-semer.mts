@@ -20,17 +20,12 @@
  */
 import { neon } from '@neondatabase/serverless'
 import fs from 'fs'
+import { descriptionComplete, type EntreeArme } from './p7-description-arme.mts'
 
 const sql = neon(fs.readFileSync('X:/Claude-Tools/cormac/.env.local', 'utf8').match(/DATABASE_URL=(.+)/)![1].trim())
 const ECRIRE = process.argv.includes('--ecrire')
 
-type Entree = {
-  nom: string; famille: string; prix: number | null
-  degatsP: string | null; degats: string | null
-  critMin: number | null; critMult: number | null
-  portee: number | null; poids: number | null; type: string | null
-  description: string; allonge?: boolean; double?: boolean; nonLetal?: boolean
-}
+type Entree = EntreeArme
 
 const livre: Entree[] = JSON.parse(
   fs.readFileSync('X:/Claude-Tools/cormac/menage-references/p7-armes-catalogue.json', 'utf8')
@@ -41,17 +36,6 @@ const norm = (s: string) =>
   s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
    .replace(/[\u2018\u2019\u02bc]/g, "'")
    .replace(/\s+/g, ' ').trim().toLowerCase()
-
-/** La description finale porte les notes de table du livre. */
-function descriptionComplete(e: Entree): string {
-  const notes: string[] = []
-  if (e.allonge) notes.push('Arme à allonge.')
-  if (e.double) notes.push('Arme double.')
-  if (e.nonLetal) notes.push('Inflige des dégâts non-létaux.')
-  const bloc = notes.length ? `\n\n*${notes.join(' ')}*` : ''
-  const degP = e.degatsP ? `\n\n*Dégâts pour une arme de taille P : ${e.degatsP}.*` : ''
-  return `${e.description}${bloc}${degP}\n\n*[Manuel des Joueurs, table 7-5 et chapitre 7]*`
-}
 
 const existantes = await sql`
   SELECT id, nom, est_catalogue, degats, critique_min, critique_mult, portee, type_degats, taille, poids, prix, description,
