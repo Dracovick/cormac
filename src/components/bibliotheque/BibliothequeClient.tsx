@@ -141,7 +141,7 @@ export function BibliothequeClient({ index }: { index: BibliothequeIndex }) {
         type="search"
         value={q}
         onChange={e => setQ(e.target.value)}
-        placeholder="Chercher partout — un sort, une potion, un objet, une arme, un don…"
+        placeholder="Chercher partout — un sort, une potion, un objet, une arme, un don, une compétence…"
         className="w-full bg-stone-900 border border-stone-700 focus:border-amber-600 rounded-lg px-4 py-3 text-stone-100 placeholder-stone-600 text-sm outline-none transition-colors mb-4"
         autoComplete="off"
       />

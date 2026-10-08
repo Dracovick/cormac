@@ -19,7 +19,7 @@ export default async function Bibliotheque() {
           </Link>
           <h1 className="text-3xl font-bold text-amber-300 mt-4">📚 La Grande Bibliothèque</h1>
           <p className="text-stone-500 text-sm mt-1">
-            Sorts, potions, objets magiques, armes, armures et dons — tout le savoir du Grimoire, en consultation libre.
+            Sorts, potions, objets magiques, armes, armures, dons et compétences — tout le savoir du Grimoire, en consultation libre.
           </p>
         </div>
       </header>
