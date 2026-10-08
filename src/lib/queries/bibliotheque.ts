@@ -111,11 +111,14 @@ export async function getBibliothequeIndex(): Promise<BibliothequeIndex> {
       id: schema.magicItems.id, nom: schema.magicItems.nom, type: schema.magicItems.type,
       prix: schema.magicItems.prix,
     }).from(schema.magicItems).orderBy(schema.magicItems.nom),
+    // Seul le catalogue du Manuel est publié : la table porte aussi les lignes
+    // d'inventaire des personnages ("Longbow +3, rapid shot"), qui n'ont rien
+    // à faire dans un rayon de référence. Voir drizzle/0006.
     db.select({
       id: schema.weapons.id, nom: schema.weapons.nom, degats: schema.weapons.degats,
       critiqueMin: schema.weapons.critiqueMin, critiqueMult: schema.weapons.critiqueMult,
-      typeDegats: schema.weapons.typeDegats,
-    }).from(schema.weapons).orderBy(schema.weapons.nom),
+      typeDegats: schema.weapons.typeDegats, famille: schema.weapons.famille,
+    }).from(schema.weapons).where(eq(schema.weapons.estCatalogue, true)).orderBy(schema.weapons.nom),
     db.select().from(schema.armor).orderBy(schema.armor.nom),
     db.select({ id: schema.feats.id, nom: schema.feats.nom, categorie: schema.feats.categorie, prerequis: schema.feats.prerequis })
       .from(schema.feats).orderBy(schema.feats.nom),
@@ -151,7 +154,9 @@ export async function getBibliothequeIndex(): Promise<BibliothequeIndex> {
     })),
     armes: armes.map(a => ({
       id: a.id, nom: a.nom,
-      detail: [a.degats, formatCritique(a.critiqueMin, a.critiqueMult), a.typeDegats].filter(Boolean).join(' · '),
+      detail: [a.famille, a.degats, formatCritique(a.critiqueMin, a.critiqueMult), a.typeDegats].filter(Boolean).join(' · '),
+      // Courante / de guerre / exotique : c'est ce qui décide du don de maniement.
+      groupe: a.famille?.split(' — ')[0] ?? undefined,
     })),
     armures: armures.map(a => ({
       id: a.id, nom: a.nom,

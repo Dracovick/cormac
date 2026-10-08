@@ -1,0 +1,247 @@
+{
+  "_source": "Manuel des Joueurs 3.5 VF — Table 7-5 : armes (p. 116-117) et Description des armes (p. 114-121). Blocs techniques transcrits tels quels (faits de jeu); descriptions réécrites règle par règle.",
+  "_notes": {
+    "prix": "en pièces d'or. 5 pa = 0.50 po, 1 pa = 0.10 po.",
+    "degats": "colonne Dgts (M) de la table. Les armes doubles portent leurs deux têtes séparées par /.",
+    "poids": "en kg, pour une arme de taille M (taille P = moitié, G = double). null = « spécial » dans le livre.",
+    "portee": "facteur de portée en mètres; null si l'arme n'est pas conçue pour être lancée ou tirée.",
+    "allonge": "note 4 du livre — arme à allonge.",
+    "double": "note 5 du livre — arme double.",
+    "non_letal": "note 3 du livre — dégâts non-létaux."
+  },
+  "armes": [
+    { "nom": "Attaque à mains nues", "famille": "Arme courante — combat à mains nues", "prix": null, "degatsP": "1d2", "degats": "1d3", "critMin": 20, "critMult": 2, "portee": null, "poids": null, "type": "Contondant",
+      "description": "Un personnage de taille M inflige 1d3 points de dégâts non-létaux à chaque attaque à mains nues — coup de poing, de pied, de tête. Un personnage de taille P n'en inflige que 1d2. Un moine, ou un personnage possédant le don Science du combat à mains nues, choisit d'infliger des dégâts létaux ou non-létaux. Ces dégâts comptent comme des dégâts d'arme pour tout effet qui accorde un bonus aux dégâts des armes. Une attaque à mains nues est toujours considérée comme une arme légère : le don Attaque en finesse s'y applique." },
+
+    { "nom": "Gantelet", "famille": "Arme courante — combat à mains nues", "prix": 2, "degatsP": "1d2", "degats": "1d3", "critMin": 20, "critMult": 2, "portee": null, "poids": 0.5, "type": "Contondant",
+      "description": "Ces épais gants de métal protègent les mains et permettent d'infliger des dégâts létaux à coups de poing, au lieu de non-létaux. Un coup de gantelet reste par ailleurs une attaque à mains nues. Le prix et le poids valent pour un seul gantelet, pas la paire. Les armures intermédiaires et lourdes en sont toutes équipées, sauf la cuirasse." },
+
+    { "nom": "Dague", "famille": "Arme courante — corps à corps légère", "prix": 2, "degatsP": "1d3", "degats": "1d4", "critMin": 19, "critMult": 2, "portee": 3, "poids": 0.5, "type": "Perforant ou tranchant",
+      "description": "Arme secondaire extrêmement courante. Dissimuler une dague sur soi donne un bonus de +2 au test d'Escamotage. Le type de dégâts — perforant ou tranchant — est au choix de l'utilisateur au moment de l'attaque." },
+
+    { "nom": "Dague coup-de-poing", "famille": "Arme courante — corps à corps légère", "prix": 2, "degatsP": "1d3", "degats": "1d4", "critMin": 20, "critMult": 3, "portee": null, "poids": 0.5, "type": "Perforant",
+      "description": "Cette dague permet de mettre toute sa force dans chaque coup et de causer des dégâts potentiellement plus importants qu'une dague ordinaire." },
+
+    { "nom": "Gantelet clouté", "famille": "Arme courante — corps à corps légère", "prix": 5, "degatsP": "1d3", "degats": "1d4", "critMin": 20, "critMult": 2, "portee": null, "poids": 0.5, "type": "Perforant",
+      "description": "Il est impossible d'être désarmé lorsqu'on se bat à coups de gantelets cloutés. Le coût et le poids s'entendent à l'unité, pas à la paire. Un coup de gantelet clouté est considéré comme une attaque avec arme." },
+
+    { "nom": "Masse d'armes légère", "famille": "Arme courante — corps à corps légère", "prix": 5, "degatsP": "1d4", "degats": "1d6", "critMin": 20, "critMult": 2, "portee": null, "poids": 2, "type": "Contondant",
+      "description": "Une masse d'armes est intégralement en métal, manche compris, ce qui la rend presque incassable." },
+
+    { "nom": "Serpe", "famille": "Arme courante — corps à corps légère", "prix": 6, "degatsP": "1d4", "degats": "1d6", "critMin": 20, "critMult": 2, "portee": null, "poids": 1, "type": "Tranchant",
+      "description": "Cette serpe ressemble à celle dont on se sert pour couper les branchages, mais sa lame renforcée en fait une arme très convenable. Elle est appréciée des druides et de tous ceux qui aiment les armes pouvant passer inaperçues. Sa forme permet de tenter un croc-en-jambe; en cas d'échec, le personnage peut lâcher son arme pour éviter que le croc-en-jambe ne se retourne contre lui." },
+
+    { "nom": "Épieu", "famille": "Arme courante — corps à corps à une main", "prix": 1, "degatsP": "1d4", "degats": "1d6", "critMin": 20, "critMult": 2, "portee": 6, "poids": 1.5, "type": "Perforant",
+      "description": "Sa longueur est suffisamment modeste pour s'en servir à une main. Il peut aussi être lancé." },
+
+    { "nom": "Gourdin", "famille": "Arme courante — corps à corps à une main", "prix": 0, "degatsP": "1d4", "degats": "1d6", "critMin": 20, "critMult": 2, "portee": 3, "poids": 1.5, "type": "Contondant",
+      "description": "Il est si facile de se tailler un gourdin en bois que cette arme ne coûte rien." },
+
+    { "nom": "Masse d'armes lourde", "famille": "Arme courante — corps à corps à une main", "prix": 12, "degatsP": "1d6", "degats": "1d8", "critMin": 20, "critMult": 2, "portee": null, "poids": 4, "type": "Contondant",
+      "description": "Une masse d'armes est intégralement en métal, manche compris, ce qui la rend presque incassable." },
+
+    { "nom": "Morgenstern", "famille": "Arme courante — corps à corps à une main", "prix": 8, "degatsP": "1d6", "degats": "1d8", "critMin": 20, "critMult": 2, "portee": null, "poids": 3, "type": "Contondant et perforant",
+      "description": "La morgenstern, ou masse à picots, est une arme toute simple combinant la force d'impact du gourdin et la puissance de pénétration des pointes. Elle inflige ses dégâts contondants ET perforants simultanément : une créature doit être protégée contre les deux types pour que son immunité ou sa résistance s'applique." },
+
+    { "nom": "Bâton", "famille": "Arme courante — corps à corps à deux mains", "prix": 0, "degatsP": "1d4/1d4", "degats": "1d6/1d6", "critMin": 20, "critMult": 2, "portee": null, "poids": 2, "type": "Contondant", "double": true,
+      "description": "Arme de prédilection des voyageurs, paysans, marchands et magiciens. C'est une arme double : on peut s'en servir comme si l'on se battait avec deux armes, en encourant alors les malus habituels du combat à deux armes, comme avec une arme à une main et une arme légère. Une créature qui la manie à une main ne peut pas s'en servir comme arme double : elle choisit l'une des deux têtes et s'y tient pour le round. Le bâton est une arme de moine, ce qui permet au moine d'utiliser certains de ses pouvoirs lorsqu'il combat avec elle." },
+
+    { "nom": "Lance", "famille": "Arme courante — corps à corps à deux mains", "prix": 2, "degatsP": "1d6", "degats": "1d8", "critMin": 20, "critMult": 3, "portee": 6, "poids": 3, "type": "Perforant",
+      "description": "L'une des armes les plus simples qui existe, particulièrement appréciée des druides et des ensorceleurs. On peut la lancer. À condition d'utiliser une action pour préparer une réception de charge, la lance inflige des dégâts doublés à un adversaire qui charge." },
+
+    { "nom": "Pique", "famille": "Arme courante — corps à corps à deux mains", "prix": 5, "degatsP": "1d6", "degats": "1d8", "critMin": 20, "critMult": 3, "portee": null, "poids": 4.5, "type": "Perforant", "allonge": true,
+      "description": "Arme à allonge : elle permet d'attaquer des adversaires distants de 3 mètres, mais pas ceux qui sont adjacents. À condition d'utiliser une action pour préparer une réception de charge, la pique inflige des dégâts doublés à un adversaire qui charge." },
+
+    { "nom": "Arbalète légère", "famille": "Arme courante — à distance", "prix": 35, "degatsP": "1d6", "degats": "1d8", "critMin": 19, "critMult": 2, "portee": 24, "poids": 2, "type": "Perforant",
+      "description": "Une arbalète légère se tend à l'aide d'un levier. La recharger est une action de mouvement qui provoque une attaque d'opportunité. Elle s'utilise habituellement à deux mains; il est possible de l'utiliser — mais pas de la recharger — d'une seule main, avec un malus de −2 au jet d'attaque. On peut en tenir une dans chaque main, avec les malus du combat à deux armes légères, qui se cumulent avec celui du tir à une main." },
+
+    { "nom": "Arbalète lourde", "famille": "Arme courante — à distance", "prix": 50, "degatsP": "1d8", "degats": "1d10", "critMin": 19, "critMult": 2, "portee": 36, "poids": 4, "type": "Perforant",
+      "description": "Une arbalète lourde se tend à l'aide d'une manivelle. La recharger est une action complexe qui provoque une attaque d'opportunité. Elle s'utilise habituellement à deux mains; il est possible de l'utiliser — mais pas de la recharger — d'une seule main, avec un malus de −4 au jet d'attaque. On peut en tenir une dans chaque main, avec les malus du combat à deux armes à une main, qui se cumulent avec celui du tir à une main." },
+
+    { "nom": "Dard", "famille": "Arme courante — à distance", "prix": 0.5, "degatsP": "1d3", "degats": "1d4", "critMin": 20, "critMult": 2, "portee": 6, "poids": 0.25, "type": "Perforant",
+      "description": "Un dard est une grosse flèche dotée d'une tête alourdie — ni plus ni moins qu'une petite javeline. Prix : 5 pa." },
+
+    { "nom": "Fronde", "famille": "Arme courante — à distance", "prix": 0, "degatsP": "1d3", "degats": "1d4", "critMin": 20, "critMult": 2, "portee": 15, "poids": null, "type": "Contondant",
+      "description": "La fronde lance des billes de plomb. Elle ne tire pas aussi loin que l'arbalète et n'est pas aussi puissante que l'arc, mais elle ne coûte rien et une lanière suffit à s'en créer une. Druides et halfelins l'affectionnent. Le modificateur de Force s'applique aux jets de dégâts, comme pour une arme de jet. Il est possible de l'utiliser, mais pas de la recharger, d'une seule main : recharger est une action de mouvement qui nécessite deux mains et provoque une attaque d'opportunité. On peut aussi lancer des pierres ordinaires, moins denses et moins profilées : les dégâts tombent d'une catégorie de taille (1d3 au lieu de 1d4 pour une taille M) et le jet d'attaque subit un malus de −1." },
+
+    { "nom": "Javeline", "famille": "Arme courante — à distance", "prix": 1, "degatsP": "1d4", "degats": "1d6", "critMin": 20, "critMult": 2, "portee": 9, "poids": 1, "type": "Perforant",
+      "description": "Lance souple conçue pour être lancée. On peut s'en servir au corps à corps, mais son efficacité est alors fortement réduite : le personnage est considéré comme ne sachant pas la manier (−4 au jet d'attaque)." },
+
+    { "nom": "Arme à pointes", "famille": "Arme de guerre — corps à corps légère", "prix": null, "degatsP": "1d4", "degats": "1d6", "critMin": 20, "critMult": 2, "portee": null, "poids": null, "type": "Perforant",
+      "description": "Une armure garnie de pointes permet d'infliger des dégâts pendant une lutte ou lors d'une attaque à part entière. Prix et poids : « spécial » — ils dépendent de l'armure sur laquelle les pointes sont montées (voir la section des armures du chapitre 7)." },
+
+    { "nom": "Épée courte", "famille": "Arme de guerre — corps à corps légère", "prix": 10, "degatsP": "1d4", "degats": "1d6", "critMin": 19, "critMult": 2, "portee": null, "poids": 1, "type": "Perforant",
+      "description": "Cette épée sert souvent d'arme secondaire." },
+
+    { "nom": "Hache de lancer", "famille": "Arme de guerre — corps à corps légère", "prix": 8, "degatsP": "1d4", "degats": "1d6", "critMin": 20, "critMult": 2, "portee": 3, "poids": 2, "type": "Tranchant",
+      "description": "Plus légère que la hachette; comme son nom l'indique, son équilibre la prédispose à être lancée. Les guerriers gnomes s'en servent parfois d'arme de corps à corps et de jet." },
+
+    { "nom": "Hachette", "famille": "Arme de guerre — corps à corps légère", "prix": 6, "degatsP": "1d4", "degats": "1d6", "critMin": 20, "critMult": 3, "portee": null, "poids": 1.5, "type": "Tranchant",
+      "description": "Les nains aiment utiliser cette petite hache comme arme secondaire." },
+
+    { "nom": "Kukri", "famille": "Arme de guerre — corps à corps légère", "prix": 8, "degatsP": "1d3", "degats": "1d4", "critMin": 18, "critMult": 2, "portee": null, "poids": 1, "type": "Tranchant",
+      "description": "Cette lourde dague à lame incurvée a son tranchant tourné vers l'intérieur de la lame." },
+
+    { "nom": "Marteau léger", "famille": "Arme de guerre — corps à corps légère", "prix": 1, "degatsP": "1d3", "degats": "1d4", "critMin": 20, "critMult": 2, "portee": 6, "poids": 1, "type": "Contondant",
+      "description": "Ce petit marteau est suffisamment léger pour être lancé. Les nains l'apprécient tout particulièrement." },
+
+    { "nom": "Matraque", "famille": "Arme de guerre — corps à corps légère", "prix": 1, "degatsP": "1d4", "degats": "1d6", "critMin": 20, "critMult": 2, "portee": null, "poids": 1, "type": "Contondant", "nonLetal": true,
+      "description": "Bien pratique lorsque l'on souhaite seulement assommer son adversaire : elle inflige des dégâts non-létaux." },
+
+    { "nom": "Pic de guerre léger", "famille": "Arme de guerre — corps à corps légère", "prix": 4, "degatsP": "1d3", "degats": "1d4", "critMin": 20, "critMult": 4, "portee": null, "poids": 1.5, "type": "Perforant",
+      "description": "Le pic est conçu pour concentrer toute l'énergie du coup en un seul point. Il ressemble à une pioche de mineur mais a été spécifiquement conçu comme arme de guerre." },
+
+    { "nom": "Rondache", "famille": "Arme de guerre — corps à corps légère", "prix": null, "degatsP": "1d2", "degats": "1d3", "critMin": 20, "critMult": 2, "portee": null, "poids": null, "type": "Contondant",
+      "description": "On peut donner des coups de bouclier au lieu de l'utiliser pour se défendre. Prix et poids : « spécial » — voir la section des armures du chapitre 7." },
+
+    { "nom": "Rondache à pointes", "famille": "Arme de guerre — corps à corps légère", "prix": null, "degatsP": "1d3", "degats": "1d4", "critMin": 20, "critMult": 2, "portee": null, "poids": null, "type": "Perforant",
+      "description": "On peut donner des coups de bouclier à pointes au lieu de l'utiliser pour se défendre. Prix et poids : « spécial » — voir la section des armures du chapitre 7." },
+
+    { "nom": "Cimeterre", "famille": "Arme de guerre — corps à corps à une main", "prix": 15, "degatsP": "1d4", "degats": "1d6", "critMin": 18, "critMult": 2, "portee": null, "poids": 2, "type": "Tranchant",
+      "description": "La ligne de sa lame courbe améliore son tranchant — d'où sa large zone de critique." },
+
+    { "nom": "Écu", "famille": "Arme de guerre — corps à corps à une main", "prix": null, "degatsP": "1d3", "degats": "1d4", "critMin": 20, "critMult": 2, "portee": null, "poids": null, "type": "Contondant",
+      "description": "On peut donner des coups de bouclier au lieu de l'utiliser pour se défendre. Prix et poids : « spécial » — voir la section des armures du chapitre 7." },
+
+    { "nom": "Écu à pointes", "famille": "Arme de guerre — corps à corps à une main", "prix": null, "degatsP": "1d4", "degats": "1d6", "critMin": 20, "critMult": 2, "portee": null, "poids": null, "type": "Perforant",
+      "description": "On peut donner des coups de bouclier à pointes au lieu de l'utiliser pour se défendre. Prix et poids : « spécial » — voir la section des armures du chapitre 7." },
+
+    { "nom": "Épée longue", "famille": "Arme de guerre — corps à corps à une main", "prix": 15, "degatsP": "1d6", "degats": "1d8", "critMin": 19, "critMult": 2, "portee": null, "poids": 2, "type": "Tranchant",
+      "description": "Cette arme à lame droite est celle des chevaliers, et plus particulièrement des paladins." },
+
+    { "nom": "Fléau d'armes léger", "famille": "Arme de guerre — corps à corps à une main", "prix": 8, "degatsP": "1d6", "degats": "1d8", "critMin": 20, "critMult": 2, "portee": null, "poids": 2.5, "type": "Contondant",
+      "description": "Le fléau d'armes confère un bonus de +2 au jet d'attaque opposé lorsque l'on tente de désarmer un adversaire — ainsi qu'au jet permettant de ne pas se retrouver soi-même désarmé en cas d'échec. Il permet également de tenter des crocs-en-jambe; en cas d'échec, le personnage peut lâcher son arme pour éviter le retour." },
+
+    { "nom": "Hache d'armes", "famille": "Arme de guerre — corps à corps à une main", "prix": 10, "degatsP": "1d6", "degats": "1d8", "critMin": 20, "critMult": 3, "portee": null, "poids": 3, "type": "Tranchant",
+      "description": "L'arme de corps à corps la plus répandue chez les nains." },
+
+    { "nom": "Marteau de guerre", "famille": "Arme de guerre — corps à corps à une main", "prix": 12, "degatsP": "1d6", "degats": "1d8", "critMin": 20, "critMult": 3, "portee": null, "poids": 2.5, "type": "Contondant",
+      "description": "Cette arme à une main très appréciée des nains est constituée d'un manche à l'extrémité duquel est fixée une lourde tête." },
+
+    { "nom": "Pic de guerre lourd", "famille": "Arme de guerre — corps à corps à une main", "prix": 8, "degatsP": "1d4", "degats": "1d6", "critMin": 20, "critMult": 4, "portee": null, "poids": 3, "type": "Perforant",
+      "description": "Le pic est conçu pour concentrer toute l'énergie du coup en un seul point. Il ressemble à une pioche de mineur mais a été spécifiquement conçu comme arme de guerre." },
+
+    { "nom": "Rapière", "famille": "Arme de guerre — corps à corps à une main", "prix": 20, "degatsP": "1d4", "degats": "1d6", "critMin": 18, "critMult": 2, "portee": null, "poids": 1, "type": "Perforant",
+      "description": "Le don Attaque en finesse permet d'ajouter son bonus de Dextérité au jet d'attaque, à la place du bonus de Force, quand on utilise une rapière destinée à une créature de sa taille — bien que ce ne soit pas une arme légère. Il est impossible de tenir une rapière à deux mains pour multiplier par 1,5 son bonus de Force aux dégâts." },
+
+    { "nom": "Trident", "famille": "Arme de guerre — corps à corps à une main", "prix": 15, "degatsP": "1d6", "degats": "1d8", "critMin": 20, "critMult": 2, "portee": 3, "poids": 2, "type": "Perforant",
+      "description": "Cette arme perforante à trois pointes peut être jetée de la même manière qu'un épieu ou une lance, mais son facteur de portée est moindre en raison d'une forme non aérodynamique. À condition d'utiliser une action pour préparer une réception de charge, le trident inflige des dégâts doublés à un adversaire qui charge." },
+
+    { "nom": "Cimeterre à deux mains", "famille": "Arme de guerre — corps à corps à deux mains", "prix": 75, "degatsP": "1d6", "degats": "2d4", "critMin": 18, "critMult": 2, "portee": null, "poids": 4, "type": "Tranchant",
+      "description": "La lame courbe de cette épée améliore d'autant son tranchant — d'où sa large zone de critique." },
+
+    { "nom": "Corsèque", "famille": "Arme de guerre — corps à corps à deux mains", "prix": 10, "degatsP": "1d6", "degats": "2d4", "critMin": 20, "critMult": 3, "portee": null, "poids": 6, "type": "Perforant", "allonge": true,
+      "description": "Arme à allonge : elle permet d'attaquer des adversaires distants de 3 mètres, mais il est impossible de l'utiliser contre un ennemi adjacent. Elle confère un bonus de +2 au jet d'attaque opposé lorsque l'on tente de désarmer un adversaire — ainsi qu'au jet permettant de ne pas se retrouver soi-même désarmé en cas d'échec." },
+
+    { "nom": "Coutille", "famille": "Arme de guerre — corps à corps à deux mains", "prix": 8, "degatsP": "1d8", "degats": "1d10", "critMin": 20, "critMult": 3, "portee": null, "poids": 5, "type": "Tranchant", "allonge": true,
+      "description": "Arme à allonge : elle permet d'attaquer des adversaires distants de 3 mètres, mais il est impossible de l'utiliser contre un ennemi adjacent." },
+
+    { "nom": "Épée à deux mains", "famille": "Arme de guerre — corps à corps à deux mains", "prix": 50, "degatsP": "1d10", "degats": "2d6", "critMin": 19, "critMult": 2, "portee": null, "poids": 4, "type": "Tranchant",
+      "description": "Beaucoup d'aventuriers considèrent l'épée à deux mains, ou espadon, comme l'une des meilleures armes qui soient. Elle est fiable et cause des dégâts conséquents." },
+
+    { "nom": "Faux", "famille": "Arme de guerre — corps à corps à deux mains", "prix": 18, "degatsP": "1d6", "degats": "2d4", "critMin": 20, "critMult": 4, "portee": null, "poids": 5, "type": "Perforant ou tranchant",
+      "description": "Cette arme ressemble à l'outil utilisé pour faucher le blé, mais son équilibre montre bien qu'elle a été conçue pour le combat. La forme de sa lame permet de causer des coups terribles avec la pointe, et son tranchant est particulièrement acéré. Le type de dégâts est au choix de l'utilisateur. Sa forme permet aussi de tenter des crocs-en-jambe; en cas d'échec, le personnage peut lâcher son arme pour éviter le retour." },
+
+    { "nom": "Fléau d'armes lourd", "famille": "Arme de guerre — corps à corps à deux mains", "prix": 15, "degatsP": "1d8", "degats": "1d10", "critMin": 19, "critMult": 2, "portee": null, "poids": 5, "type": "Contondant",
+      "description": "Le fléau d'armes confère un bonus de +2 au jet d'attaque opposé lorsque l'on tente de désarmer un adversaire — ainsi qu'au jet permettant de ne pas se retrouver soi-même désarmé en cas d'échec. Il permet également de tenter des crocs-en-jambe; en cas d'échec, le personnage peut lâcher son arme pour éviter le retour." },
+
+    { "nom": "Grande hache", "famille": "Arme de guerre — corps à corps à deux mains", "prix": 20, "degatsP": "1d10", "degats": "1d12", "critMin": 20, "critMult": 3, "portee": null, "poids": 6, "type": "Tranchant",
+      "description": "Cette lourde hache est l'une des armes de prédilection des barbares et de tous ceux qui aiment causer des dégâts importants à chaque coup." },
+
+    { "nom": "Guisarme", "famille": "Arme de guerre — corps à corps à deux mains", "prix": 9, "degatsP": "1d6", "degats": "2d4", "critMin": 20, "critMult": 3, "portee": null, "poids": 6, "type": "Tranchant", "allonge": true,
+      "description": "Arme à allonge : elle permet d'attaquer des adversaires distants de 3 mètres, mais il est impossible de l'utiliser contre un ennemi adjacent. Sa lame courbe permet également de tenter des crocs-en-jambe; en cas d'échec, le personnage peut lâcher son arme pour éviter le retour." },
+
+    { "nom": "Hallebarde", "famille": "Arme de guerre — corps à corps à deux mains", "prix": 10, "degatsP": "1d8", "degats": "1d10", "critMin": 20, "critMult": 3, "portee": null, "poids": 6, "type": "Perforant ou tranchant", "allonge": true,
+      "description": "En temps normal, on utilise la lame de la hallebarde, semblable à celle d'une hache, mais la pointe qui orne son extrémité peut s'avérer extrêmement efficace pour contrer une charge : à condition d'utiliser une action pour préparer une réception de charge, elle inflige des dégâts doublés à un adversaire qui charge. Le crochet opposé à la lame permet également de tenter des crocs-en-jambe; en cas d'échec, le personnage peut lâcher son arme pour éviter le retour." },
+
+    { "nom": "Lance d'arçon", "famille": "Arme de guerre — corps à corps à deux mains", "prix": 10, "degatsP": "1d6", "degats": "1d8", "critMin": 20, "critMult": 3, "portee": null, "poids": 5, "type": "Perforant", "allonge": true,
+      "description": "Une lance d'arçon, ou de cavalier, cause des dégâts doublés lors d'une charge montée. C'est une arme à allonge : elle permet d'attaquer des adversaires distants de 3 mètres, mais pas ceux qui sont adjacents. Un personnage monté peut la tenir à une main." },
+
+    { "nom": "Massue", "famille": "Arme de guerre — corps à corps à deux mains", "prix": 5, "degatsP": "1d8", "degats": "1d10", "critMin": 20, "critMult": 2, "portee": null, "poids": 4, "type": "Contondant",
+      "description": "Version à deux mains du gourdin ordinaire. Sa tête est souvent renforcée à l'aide de clous, de pointes ou de bandes métalliques." },
+
+    { "nom": "Arc court", "famille": "Arme de guerre — à distance", "prix": 30, "degatsP": "1d4", "degats": "1d6", "critMin": 20, "critMult": 3, "portee": 18, "poids": 1, "type": "Perforant",
+      "description": "Quelle que soit sa taille, un arc ne peut être utilisé qu'à deux mains. On peut se servir d'un arc court à cheval. Un malus de Force s'applique aux jets de dégâts, mais un bonus de Force ne s'applique pas avec un arc court ordinaire — il faut un arc court composite. Pour la formation à leur maniement et les dons similaires, les arcs courts ordinaires et composites sont considérés comme la même arme : le don Arme de prédilection s'applique aux deux." },
+
+    { "nom": "Arc court composite", "famille": "Arme de guerre — à distance", "prix": 75, "degatsP": "1d4", "degats": "1d6", "critMin": 20, "critMult": 3, "portee": 21, "poids": 1, "type": "Perforant",
+      "description": "Arc à deux mains, utilisable à cheval. Les arcs composites sont faits de lamelles de corne, de bois ou d'os, taillés de telle manière qu'ils restent incurvés même détendus. Chaque arc est fabriqué pour une valeur de Force donnée. Si le bonus de Force du personnage est inférieur à celui de l'arc, il subit un malus de −2 aux jets d'attaque. Un arc court composite ordinaire demande un modificateur de Force de +0. Chaque point de bonus de Force ajouté augmente le prix de +75 po : limite +1 → 150 po, limite +4 → 375 po. Le personnage applique son bonus de Force aux dégâts, dans la limite du bonus de l'arc; un arc composite ne peut jamais octroyer un bonus supérieur à celui de son utilisateur." },
+
+    { "nom": "Arc long", "famille": "Arme de guerre — à distance", "prix": 75, "degatsP": "1d6", "degats": "1d8", "critMin": 20, "critMult": 3, "portee": 30, "poids": 1.5, "type": "Perforant",
+      "description": "Quelle que soit sa taille, un arc ne peut être utilisé qu'à deux mains. L'arc long, ou grand arc, est trop peu maniable pour qu'on puisse s'en servir à cheval. Un malus de Force s'applique aux jets de dégâts, mais un bonus de Force ne s'applique pas avec un arc long ordinaire — il faut un arc long composite. Pour la formation à leur maniement et les dons similaires, les arcs longs ordinaires et composites sont considérés comme la même arme." },
+
+    { "nom": "Arc long composite", "famille": "Arme de guerre — à distance", "prix": 100, "degatsP": "1d6", "degats": "1d8", "critMin": 20, "critMult": 3, "portee": 33, "poids": 1.5, "type": "Perforant",
+      "description": "Arc à deux mains; un arc long composite peut être utilisé par un cavalier monté. Les arcs composites sont faits de lamelles de corne, de bois ou d'os, taillés de telle manière qu'ils restent incurvés même détendus. Chaque arc est fabriqué pour une valeur de Force donnée. Si le bonus de Force du personnage est inférieur à celui de l'arc, il subit un malus de −2 aux jets d'attaque. Un arc long composite ordinaire demande un modificateur de Force de +0. Chaque point de bonus de Force ajouté augmente le prix de +100 po : limite +1 → 200 po, limite +4 → 500 po. Le personnage applique son bonus de Force aux dégâts, dans la limite du bonus de l'arc; un arc composite ne peut jamais octroyer un bonus supérieur à celui de son utilisateur." },
+
+    { "nom": "Kama", "famille": "Arme exotique — corps à corps légère", "prix": 2, "degatsP": "1d4", "degats": "1d6", "critMin": 20, "critMult": 2, "portee": null, "poids": 1, "type": "Tranchant",
+      "description": "Le kama est une arme de moine, ce qui permet au moine d'utiliser certains de ses pouvoirs lorsqu'il combat avec elle. Sa forme permet également de tenter des crocs-en-jambe; en cas d'échec, le personnage peut lâcher son arme pour éviter le retour." },
+
+    { "nom": "Nunchaku", "famille": "Arme exotique — corps à corps légère", "prix": 2, "degatsP": "1d4", "degats": "1d6", "critMin": 20, "critMult": 2, "portee": null, "poids": 1, "type": "Contondant",
+      "description": "Le nunchaku est une arme de moine, ce qui permet au moine d'utiliser certains de ses pouvoirs lorsqu'il combat avec elle. Il confère un bonus de +2 au jet d'attaque opposé lorsque l'on tente de désarmer un adversaire — ainsi qu'au jet permettant de ne pas se retrouver soi-même désarmé en cas d'échec." },
+
+    { "nom": "Saï", "famille": "Arme exotique — corps à corps légère", "prix": 1, "degatsP": "1d3", "degats": "1d4", "critMin": 20, "critMult": 2, "portee": null, "poids": 0.5, "type": "Contondant",
+      "description": "Les longues protubérances du saï ont pour fonction d'aider à coincer l'arme d'un adversaire et à le désarmer : il confère un bonus de +4 au jet d'attaque opposé lorsque l'on tente de désarmer — ainsi qu'au jet permettant de ne pas se retrouver soi-même désarmé en cas d'échec. Le saï est une arme de moine." },
+
+    { "nom": "Siangham", "famille": "Arme exotique — corps à corps légère", "prix": 3, "degatsP": "1d4", "degats": "1d6", "critMin": 20, "critMult": 2, "portee": null, "poids": 0.5, "type": "Perforant",
+      "description": "Le siangham est une arme de moine, ce qui permet au moine d'utiliser certains de ses pouvoirs lorsqu'il combat avec elle." },
+
+    { "nom": "Épée bâtarde", "famille": "Arme exotique — corps à corps à une main", "prix": 35, "degatsP": "1d8", "degats": "1d10", "critMin": 19, "critMult": 2, "portee": null, "poids": 3, "type": "Tranchant",
+      "description": "Également connue sous le nom étrange d'épée à une main et demie. Elle est trop grande pour être utilisée à une main sans entraînement particulier, ce qui explique qu'elle soit rangée dans la catégorie des armes exotiques. Un personnage peut l'utiliser comme arme de guerre s'il la manie à deux mains." },
+
+    { "nom": "Fouet", "famille": "Arme exotique — corps à corps à une main", "prix": 1, "degatsP": "1d2", "degats": "1d3", "critMin": 20, "critMult": 2, "portee": null, "poids": 1, "type": "Tranchant", "allonge": true, "nonLetal": true,
+      "description": "Le fouet inflige des dégâts non-létaux. Il est incapable de toucher la moindre créature bénéficiant d'un bonus d'armure de +1 ou plus, ou d'un bonus d'armure naturelle au moins égal à +3. Il procure une allonge de 4,5 mètres, mais ne menace pas la zone dans laquelle il permet d'attaquer; contrairement aux autres armes à allonge, on peut s'en servir contre un ennemi adjacent ou situé à 3 mètres. Attaquer avec un fouet provoque une attaque d'opportunité, comme pour une arme à distance. Il permet de tenter un croc-en-jambe (le personnage peut lâcher son arme en cas d'échec) et confère un bonus de +2 au jet d'attaque opposé pour désarmer. Le don Attaque en finesse s'y applique, bien que ce ne soit pas une arme légère." },
+
+    { "nom": "Hache de guerre naine", "famille": "Arme exotique — corps à corps à une main", "prix": 30, "degatsP": "1d8", "degats": "1d10", "critMin": 20, "critMult": 3, "portee": null, "poids": 4, "type": "Tranchant",
+      "description": "Cette lourde hache est trop volumineuse pour être utilisée à une main sans entraînement particulier. Pour les nains, qui connaissent bien cette arme, c'est une arme de guerre. Pour les autres races, c'est une arme exotique si elle est maniée à une main, ou une arme de guerre si elle est maniée à deux mains." },
+
+    { "nom": "Chaîne cloutée", "famille": "Arme exotique — corps à corps à deux mains", "prix": 25, "degatsP": "1d6", "degats": "2d4", "critMin": 20, "critMult": 2, "portee": null, "poids": 5, "type": "Perforant", "allonge": true,
+      "description": "Arme à allonge qui permet d'attaquer à 3 mètres; contrairement aux autres armes de ce type, on peut s'en servir contre un ennemi adjacent. La chaîne pouvant s'enrouler autour d'un membre de la cible, elle permet de tenter un croc-en-jambe — en cas d'échec, le personnage peut lâcher son arme pour éviter le retour. Elle confère également un bonus de +2 au jet d'attaque opposé pour désarmer. Le don Attaque en finesse s'y applique, bien que ce ne soit pas une arme légère." },
+
+    { "nom": "Double-lame", "famille": "Arme exotique — corps à corps à deux mains", "prix": 100, "degatsP": "1d6/1d6", "degats": "1d8/1d8", "critMin": 19, "critMult": 2, "portee": null, "poids": 5, "type": "Tranchant", "double": true,
+      "description": "Cette arme étrange est une arme double : on peut s'en servir comme si l'on se battait avec deux armes, en encourant alors les malus habituels du combat à deux armes, comme avec une arme à une main et une arme légère. Une créature qui la manie à une main ne peut pas s'en servir comme arme double : elle choisit l'une des deux têtes et s'y tient pour le round." },
+
+    { "nom": "Fléau double", "famille": "Arme exotique — corps à corps à deux mains", "prix": 90, "degatsP": "1d6/1d6", "degats": "1d8/1d8", "critMin": 20, "critMult": 2, "portee": null, "poids": 5, "type": "Contondant", "double": true,
+      "description": "Arme double : on peut s'en servir comme si l'on se battait avec deux armes, en encourant alors les malus habituels du combat à deux armes, comme avec une arme à une main et une arme légère. Une créature qui la manie à une main choisit l'une des deux têtes et s'y tient pour le round. Elle confère un bonus de +2 au jet d'attaque opposé pour désarmer, et permet de tenter des crocs-en-jambe (le personnage peut lâcher son arme en cas d'échec)." },
+
+    { "nom": "Hache double orque", "famille": "Arme exotique — corps à corps à deux mains", "prix": 60, "degatsP": "1d6/1d6", "degats": "1d8/1d8", "critMin": 20, "critMult": 3, "portee": null, "poids": 7.5, "type": "Tranchant", "double": true,
+      "description": "Arme double : on peut s'en servir comme si l'on se battait avec deux armes, en encourant alors les malus habituels du combat à deux armes, comme avec une arme à une main et une arme légère. Une créature qui la manie à une main choisit l'une des deux têtes et s'y tient pour le round. Comme son nom le suggère, c'est une arme prisée des puissants guerriers orques." },
+
+    { "nom": "Marteau-piolet gnome", "famille": "Arme exotique — corps à corps à deux mains", "prix": 20, "degatsP": "1d6/1d4", "degats": "1d8/1d6", "critMin": 20, "critMult": 3, "portee": null, "poids": 3, "type": "Contondant et perforant", "double": true,
+      "description": "Arme double : on peut s'en servir comme si l'on se battait avec deux armes, en encourant alors les malus habituels du combat à deux armes, comme avec une arme à une main et une arme légère. Une créature qui la manie à une main choisit l'une des deux têtes et s'y tient pour le round. ⚠ Les deux têtes n'ont pas le même critique : la tête du marteau est contondante (×3), le piolet est perforant (×4). L'utilisateur choisit la tête qui sert d'arme principale; l'autre est l'équivalent de l'arme secondaire. La partie piolet permet de tenter des crocs-en-jambe. C'est une arme de guerre pour les gnomes, exotique pour toutes les autres races." },
+
+    { "nom": "Urgrosh nain", "famille": "Arme exotique — corps à corps à deux mains", "prix": 50, "degatsP": "1d6/1d4", "degats": "1d8/1d6", "critMin": 20, "critMult": 3, "portee": null, "poids": 6, "type": "Perforant ou tranchant", "double": true,
+      "description": "Cette arme double d'origine naine, également appelée hache-lance, reste très prisée chez les guerriers de cette race. On peut s'en servir comme si l'on se battait avec deux armes, en encourant alors les malus habituels du combat à deux armes, comme avec une arme à une main et une arme légère. Une créature qui la manie à une main choisit l'une des deux têtes et s'y tient pour le round. La tête de hache est tranchante (×3), la pointe est perforante (×3). À condition d'utiliser une action pour préparer une réception de charge, l'urgrosh inflige des dégâts doublés à un adversaire qui charge — c'est alors la pointe qui inflige les dégâts. C'est une arme de guerre pour les nains, exotique pour toutes les autres races." },
+
+    { "nom": "Arbalète de poing", "famille": "Arme exotique — à distance", "prix": 100, "degatsP": "1d3", "degats": "1d4", "critMin": 19, "critMult": 2, "portee": 9, "poids": 1, "type": "Perforant",
+      "description": "Cette arme se trouve chez les roublards et ceux qui préfèrent la discrétion à la force brute. Elle se tend à la main. La recharger est une action de mouvement qui provoque une attaque d'opportunité. Elle peut être utilisée — mais pas rechargée — d'une seule main sans malus. On peut en tenir une dans chaque main, avec les malus du combat à deux armes légères." },
+
+    { "nom": "Arbalète légère à répétition", "famille": "Arme exotique — à distance", "prix": 250, "degatsP": "1d6", "degats": "1d8", "critMin": 19, "critMult": 2, "portee": 24, "poids": 3, "type": "Perforant",
+      "description": "Le chargeur contient 5 carreaux. Tant qu'il n'est pas vide, recharger se fait en actionnant un levier — c'est une action libre. Remplacer un chargeur vide par un plein est une action complexe qui provoque une attaque d'opportunité. L'arme peut être utilisée à une main, ou à une dans chaque main, de la même façon qu'une arbalète ordinaire du même type; mais il faut deux mains pour actionner le levier ou changer de chargeur." },
+
+    { "nom": "Arbalète lourde à répétition", "famille": "Arme exotique — à distance", "prix": 400, "degatsP": "1d8", "degats": "1d10", "critMin": 19, "critMult": 2, "portee": 36, "poids": 6, "type": "Perforant",
+      "description": "Le chargeur contient 5 carreaux. Tant qu'il n'est pas vide, recharger se fait en actionnant un levier — c'est une action libre. Remplacer un chargeur vide par un plein est une action complexe qui provoque une attaque d'opportunité. L'arme peut être utilisée à une main, ou à une dans chaque main, de la même façon qu'une arbalète ordinaire du même type; mais il faut deux mains pour actionner le levier ou changer de chargeur." },
+
+    { "nom": "Bolas", "famille": "Arme exotique — à distance", "prix": 5, "degatsP": "1d3", "degats": "1d4", "critMin": 20, "critMult": 2, "portee": 3, "poids": 1, "type": "Contondant", "nonLetal": true,
+      "description": "Les bolas sont constitués de deux ou trois lourdes boules de bois reliées entre elles par de la corde. Elles infligent des dégâts non-létaux. Puisqu'elles peuvent s'enrouler autour de la jambe (ou d'un autre membre) de la cible, il est possible de les utiliser pour faire un croc-en-jambe à distance. Même si le personnage échoue dans sa tentative, le croc-en-jambe ne peut pas se retourner contre lui." },
+
+    { "nom": "Filet", "famille": "Arme exotique — à distance", "prix": 20, "degatsP": null, "degats": null, "critMin": null, "critMult": null, "portee": 3, "poids": 3, "type": null,
+      "description": "Le filet de guerre est garni de barbillons et d'une corde permettant de ramener la proie à soi. On l'utilise pour enchevêtrer l'adversaire. Pour le lancer, on effectue un jet d'attaque de contact à distance; la portée maximale est de 3 mètres. En cas de coup au but, la cible est enchevêtrée : malus de −2 aux jets d'attaque, malus de −4 à la Dextérité, vitesse de déplacement réduite de moitié, impossibilité de charger ou de courir. Si le personnage tient solidement la corde et remporte un test de Force opposé, la victime ne peut plus se déplacer en dehors du périmètre imposé par la longueur de la corde; pour lancer un sort, elle doit d'abord réussir un test de Concentration DD 15. La victime se libère en réussissant un test d'Évasion DD 20 (action complexe). Le filet a 5 points de résistance et un test de Force réussi le déchire (DD 25, action complexe). Il n'immobilise que les créatures dont la taille est comprise entre les catégories supérieure et inférieure à celle de son utilisateur — un filet de taille P enchevêtre une créature TP, P ou M. Le filet doit être replié avant d'être jeté efficacement : à la première utilisation d'un combat le jet d'attaque est normal, ensuite le personnage tire à −4 tant qu'il ne l'a pas replié (2 rounds pour un personnage formé à son maniement, 4 sinon)." },
+
+    { "nom": "Shuriken (5)", "famille": "Arme exotique — à distance", "prix": 1, "degatsP": "1", "degats": "1d2", "critMin": 20, "critMult": 2, "portee": 3, "poids": 0.25, "type": "Perforant",
+      "description": "Le shuriken est une arme de moine, ce qui permet au moine d'utiliser certains de ses pouvoirs lorsqu'il combat avec. Un shuriken ne peut pas servir au corps à corps. Bien qu'étant des armes de jet, les shurikens sont considérés comme des munitions pour ce qui est de les dégainer, d'en fabriquer des versions de maître ou spéciales, et des chances de les perdre une fois lancés. Prix et poids pour un lot de 5." },
+
+    { "nom": "Flèches (20)", "famille": "Munition", "prix": 1, "degatsP": null, "degats": null, "critMin": null, "critMult": null, "portee": null, "poids": 1.5, "type": null,
+      "description": "Munition des arcs courts et longs, ordinaires ou composites. Vendues par 20 dans un carquois de cuir. Une flèche atteignant sa cible n'est pas réutilisable; si le coup est raté, elle a 50 % de chances de se casser ou de se perdre. Utilisée comme arme de corps à corps, une flèche est une arme légère improvisée (malus de −4 aux jets d'attaque) qui inflige autant de dégâts qu'une dague de sa taille." },
+
+    { "nom": "Carreaux d'arbalète (10)", "famille": "Munition", "prix": 1, "degatsP": null, "degats": null, "critMin": null, "critMult": null, "portee": null, "poids": 0.5, "type": null,
+      "description": "Munition des arbalètes légères et lourdes. Vendus par 10 dans un carquois de bois. Un carreau atteignant sa cible n'est pas réutilisable; si le coup est raté, il a 50 % de chances de se casser ou de se perdre. Utilisé comme arme de corps à corps, un carreau est une arme légère improvisée (malus de −4 aux jets d'attaque) qui inflige autant de dégâts qu'une dague de sa taille (critique ×2). ⚠ Nom du catalogue : le Manuel écrit simplement « Carreaux (10) » sous chaque arbalète." },
+
+    { "nom": "Carreaux d'arbalète de poing (10)", "famille": "Munition", "prix": 1, "degatsP": null, "degats": null, "critMin": null, "critMult": null, "portee": null, "poids": 0.5, "type": null,
+      "description": "Munition de l'arbalète de poing, vendue par 10. Mêmes règles que les carreaux ordinaires. ⚠ Nom du catalogue : le Manuel écrit simplement « Carreaux (10) »." },
+
+    { "nom": "Carreaux pour arbalète à répétition (5)", "famille": "Munition", "prix": 1, "degatsP": null, "degats": null, "critMin": null, "critMult": null, "portee": null, "poids": 0.5, "type": null,
+      "description": "Chargeur de 5 carreaux pour arbalète à répétition, légère ou lourde. Mêmes règles que les carreaux ordinaires. ⚠ Nom du catalogue : le Manuel écrit simplement « Carreaux (5) »." },
+
+    { "nom": "Billes de fronde (10)", "famille": "Munition", "prix": 0.1, "degatsP": null, "degats": null, "critMin": null, "critMult": null, "portee": null, "poids": 2.5, "type": null,
+      "description": "Munition de la fronde. Elles sont en plomb, ce qui les rend bien plus lourdes que des pierres de même taille. Vendues par 10 dans une bourse de cuir. Une bille atteignant sa cible n'est pas réutilisable; si le coup est raté, elle a 50 % de chances de se casser ou de se perdre. Prix : 1 pa. ⚠ Nom du catalogue : le Manuel écrit simplement « Billes (10) »." }
+  ]
+}

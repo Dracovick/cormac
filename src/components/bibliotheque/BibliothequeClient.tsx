@@ -11,7 +11,7 @@ const RAYONS: { cle: RayonCle; slug: RayonSlug; label: string; icone: string; fi
   { cle: 'sorts', slug: 'sort', label: 'Sorts', icone: '✨', filtreLabel: 'Toutes les écoles' },
   { cle: 'potions', slug: 'potion', label: 'Potions', icone: '🧪' },
   { cle: 'objets', slug: 'objet', label: 'Objets magiques', icone: '💍', filtreLabel: 'Tous les types' },
-  { cle: 'armes', slug: 'arme', label: 'Armes', icone: '⚔️' },
+  { cle: 'armes', slug: 'arme', label: 'Armes', icone: '⚔️', filtreLabel: 'Toutes les catégories' },
   { cle: 'armures', slug: 'armure', label: 'Armures', icone: '🛡️' },
   { cle: 'dons', slug: 'don', label: 'Dons', icone: '🎯' },
 ]

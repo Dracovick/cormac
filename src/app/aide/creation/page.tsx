@@ -293,7 +293,9 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
 
         <Section titre="📚 La Grande Bibliothèque — vérifier une référence avant de la saisir">
           <p>Avant de taper le nom d'un sort, d'une arme, d'un objet magique ou d'un don, <strong className="text-amber-200">La Grande Bibliothèque</strong> (depuis la page d'accueil) permet de retrouver l'orthographe officielle et la fiche complète de chaque référence du Grimoire — sorts par école ou par classe (magie profane, divine, ou une classe précise) et triables par niveau, objets magiques par type, potions avec leur effet.</p>
+          <Row label="⚔️ Les armes du Manuel">Le rayon Armes porte les <strong>78 entrées</strong> de la table 7-5 : nom officiel VF, prix, dégâts (taille M et taille P), zone de critique, facteur de portée, poids et type de dégâts. Le filtre sépare les armes <em>courantes</em>, <em>de guerre</em> et <em>exotiques</em> — regardez-y avant de choisir une arme, c&apos;est cette catégorie qui dit si votre personnage a besoin du don <em>Maniement d&apos;une arme de guerre</em> ou <em>d&apos;une arme exotique</em>.</Row>
           <Tip>Saisir le nom exact tel qu'il apparaît dans la Bibliothèque évite de créer une variante en double — le bandeau des nouvelles références reste votre filet, mais autant viser juste du premier coup.</Tip>
+          <Tip>Au rayon Armes, les dégâts affichés sont ceux de l&apos;arme nue. Sur une fiche de personnage, c&apos;est normal d&apos;y ajouter le bonus magique et le modificateur de Force — le Grimoire fait ce calcul pour vous dans la section Armes.</Tip>
           <Tip>Les sorts du Manuel des Joueurs affichent maintenant leur fiche complète (portée, durée, jet de sauvegarde, texte des règles) : de quoi vérifier qu'un sort convient au personnage avant de l'inscrire à sa liste.</Tip>
         </Section>
 

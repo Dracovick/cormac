@@ -163,7 +163,8 @@ function Contenu({ fiche }: { fiche: FicheBibliotheque }) {
       return (
         <>
           <div className="space-y-2">
-            {fiche.categorieArme && <Row label="Catégorie">{fiche.categorieArme}</Row>}
+            {fiche.arme.famille && <Row label="Catégorie">{fiche.arme.famille}</Row>}
+            {!fiche.arme.famille && fiche.categorieArme && <Row label="Catégorie">{fiche.categorieArme}</Row>}
             {fiche.arme.degats && <Row label="Dégâts">{fiche.arme.degats}</Row>}
             <Row label="Critique">{fiche.critique}</Row>
             {fiche.arme.portee !== null && <Row label="Facteur de portée">{fiche.arme.portee} m</Row>}

@@ -18,6 +18,11 @@ export const weapons = pgTable('weapons', {
   poids: numeric('poids', { precision: 6, scale: 2 }),
   prix: numeric('prix', { precision: 10, scale: 2 }),
   description: text('description'),
+  // La table contient deux populations : le catalogue du Manuel (table 7-5) et
+  // les lignes d'inventaire importées de FileMaker ("Longbow +3, rapid shot").
+  // Seul le catalogue est publié à la Bibliothèque. Voir drizzle/0006.
+  estCatalogue: boolean('est_catalogue').notNull().default(false),
+  famille: varchar('famille', { length: 60 }),
 })
 
 export const armor = pgTable('armor', {
