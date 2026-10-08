@@ -66,8 +66,8 @@ export const WEAPONS_DND35: WeaponTemplate[] = [
   // Distance
   { nom: 'Arc court',          degats: '1d6',    crit: '20-20/×3', typeDegats: 'P', portee: '18 m',    categorie: 'Guerre' },
   { nom: 'Arc long',           degats: '1d8',    crit: '20-20/×3', typeDegats: 'P', portee: '27 m',    categorie: 'Guerre' },
-  { nom: 'Arc court composite', degats: '1d6',   crit: '20-20/×3', typeDegats: 'P', portee: '18 m',    categorie: 'Guerre' },
-  { nom: 'Arc long composite',  degats: '1d8',   crit: '20-20/×3', typeDegats: 'P', portee: '27 m',    categorie: 'Guerre' },
+  { nom: 'Arc court composite', degats: '1d6',   crit: '20-20/×3', typeDegats: 'P', portee: '21 m',    categorie: 'Guerre' },
+  { nom: 'Arc long composite',  degats: '1d8',   crit: '20-20/×3', typeDegats: 'P', portee: '33 m',    categorie: 'Guerre' },
 
   // ─── Armes exotiques ─────────────────────────────────────────────────────────
   // Légères
