@@ -655,7 +655,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                               entrée de catalogue pointe vers elle-même. */}
                           {ficheArmeId !== null && (
                             <Link
-                              href={`/bibliotheque/arme/${ficheArmeId}`}
+                              href={`/bibliotheque/arme/${ficheArmeId}?from=/personnage/${id}`}
                               title="Lire les règles de cette arme au Manuel"
                               className="text-stone-500 hover:text-amber-300 text-xs"
                             >

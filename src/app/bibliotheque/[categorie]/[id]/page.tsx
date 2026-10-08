@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getFicheBibliotheque, type FicheBibliotheque, type RayonSlug } from '@/lib/queries/bibliotheque'
+import { getNomPersonnage } from '@/lib/queries/character'
 
 export const dynamic = 'force-dynamic'
 
@@ -97,7 +98,7 @@ function formatPoids(poids: string | null): string | null {
   return `${n % 1 === 0 ? n : n} kg`
 }
 
-function Contenu({ fiche }: { fiche: FicheBibliotheque }) {
+function Contenu({ fiche, qs }: { fiche: FicheBibliotheque; qs: string }) {
   switch (fiche.categorie) {
     case 'sort':
       return (
@@ -117,7 +118,7 @@ function Contenu({ fiche }: { fiche: FicheBibliotheque }) {
             <div className="mt-5 pt-4 border-t border-stone-800">
               <p className="text-stone-500 text-xs mb-2">En fiole dans la Bibliothèque :</p>
               {fiche.potionsLiees.map(p => (
-                <Link key={p.id} href={`/bibliotheque/potion/${p.id}`} className="block text-amber-300 hover:text-amber-200 text-sm py-0.5">
+                <Link key={p.id} href={`/bibliotheque/potion/${p.id}${qs}`} className="block text-amber-300 hover:text-amber-200 text-sm py-0.5">
                   🧪 {p.nom}
                 </Link>
               ))}
@@ -137,7 +138,7 @@ function Contenu({ fiche }: { fiche: FicheBibliotheque }) {
           {fiche.sortLie && (
             <div className="mt-5 pt-4 border-t border-stone-800">
               <p className="text-stone-500 text-xs mb-2">Le sort derrière la fiole :</p>
-              <Link href={`/bibliotheque/sort/${fiche.sortLie.id}`} className="block text-amber-300 hover:text-amber-200 text-sm py-0.5">
+              <Link href={`/bibliotheque/sort/${fiche.sortLie.id}${qs}`} className="block text-amber-300 hover:text-amber-200 text-sm py-0.5">
                 ✨ {fiche.sortLie.nom}
               </Link>
             </div>
@@ -209,8 +210,12 @@ function Contenu({ fiche }: { fiche: FicheBibliotheque }) {
   }
 }
 
-export default async function FichePage({ params }: { params: Promise<{ categorie: string; id: string }> }) {
+export default async function FichePage({ params, searchParams }: {
+  params: Promise<{ categorie: string; id: string }>
+  searchParams: Promise<{ from?: string }>
+}) {
   const { categorie, id } = await params
+  const { from } = await searchParams
   if (!SLUGS.includes(categorie as RayonSlug)) notFound()
   const numId = Number(id)
   if (!Number.isInteger(numId) || numId <= 0) notFound()
@@ -220,16 +225,33 @@ export default async function FichePage({ params }: { params: Promise<{ categori
 
   const { icone, rayon } = EN_TETE[fiche.categorie]
 
+  // D'où vient le lecteur. Le paramètre arrive de l'URL : on n'accepte qu'une
+  // fiche de personnage qui existe vraiment, et on reconstruit le chemin de
+  // retour nous-mêmes plutôt que de renvoyer vers ce qu'on nous a donné.
+  const idVenant = /^\/personnage\/(\d+)$/.exec(from ?? '')?.[1]
+  const nomVenant = idVenant ? await getNomPersonnage(Number(idVenant)) : null
+  const retour = nomVenant && idVenant ? { href: `/personnage/${idVenant}`, nom: nomVenant } : null
+  // Recollé aux liens croisés de fiche à fiche (potion <-> sort) : le retour au
+  // personnage survit ainsi à une navigation latérale dans la Bibliothèque.
+  const qs = retour ? `?from=/personnage/${idVenant}` : ''
+
   return (
     <div className="min-h-screen bg-stone-950 text-stone-100">
       <header className="bg-gradient-to-b from-stone-900 to-stone-950 border-b border-amber-900/40 py-6 px-6">
         <div className="max-w-3xl mx-auto">
-          <Link href="/bibliotheque" className="inline-flex items-center gap-2 text-stone-400 hover:text-amber-300 active:text-amber-300 text-sm transition-colors px-3 -mx-3 min-h-[44px] rounded-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M19 12H5M12 5l-7 7 7 7"/>
-            </svg>
-            ← La Grande Bibliothèque
-          </Link>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <Link href={retour ? retour.href : '/bibliotheque'} className="inline-flex items-center gap-2 text-stone-400 hover:text-amber-300 active:text-amber-300 text-sm transition-colors px-3 -mx-3 min-h-[44px] rounded-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 12H5M12 5l-7 7 7 7"/>
+              </svg>
+              {retour ? `← Retour à ${retour.nom}` : '← La Grande Bibliothèque'}
+            </Link>
+            {retour && (
+              <Link href="/bibliotheque" className="text-stone-500 hover:text-amber-300 text-xs transition-colors">
+                📚 La Grande Bibliothèque →
+              </Link>
+            )}
+          </div>
           <p className="text-stone-500 text-xs mt-4">{icone} {rayon}</p>
           <h1 className="text-3xl font-bold text-amber-300 mt-1">{nomDe(fiche)}</h1>
         </div>
@@ -237,8 +259,24 @@ export default async function FichePage({ params }: { params: Promise<{ categori
 
       <main className="max-w-3xl mx-auto px-4 py-8">
         <div className="bg-stone-900/60 border border-stone-800 rounded-xl p-6">
-          <Contenu fiche={fiche} />
+          <Contenu fiche={fiche} qs={qs} />
         </div>
+
+        {/* Les fiches de sorts font plusieurs écrans : le retour se retrouve
+            aussi au bas de la page, là où finit la lecture. */}
+        {retour && (
+          <div className="mt-6 text-center">
+            <Link
+              href={retour.href}
+              className="inline-flex items-center gap-2 bg-stone-900/80 border border-stone-700 hover:border-amber-800/60 text-stone-400 hover:text-amber-300 active:text-amber-300 text-sm transition-colors px-4 min-h-[44px] rounded-lg"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 12H5M12 5l-7 7 7 7"/>
+              </svg>
+              Retour à {retour.nom}
+            </Link>
+          </div>
+        )}
       </main>
     </div>
   )

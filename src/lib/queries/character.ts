@@ -152,3 +152,21 @@ export async function listCharacters() {
 
   return [...map.values()]
 }
+
+/**
+ * Nom d'affichage d'un personnage, sans charger sa fiche entière.
+ *
+ * Sert au bouton « ← Retour à Cormac » des fiches de la Bibliothèque : quand on
+ * y arrive depuis une fiche de personnage (`?from=/personnage/33`), la fiche de
+ * référence nomme le personnage dans son lien de retour plutôt que d'écrire
+ * « la fiche ». Rend `null` si l'identifiant ne correspond à personne — le
+ * paramètre vient de l'URL, il peut mentir.
+ */
+export async function getNomPersonnage(id: number): Promise<string | null> {
+  const [ligne] = await getDb()
+    .select({ nom: schema.characters.nom })
+    .from(schema.characters)
+    .where(eq(schema.characters.id, id))
+    .limit(1)
+  return ligne?.nom ?? null
+}
