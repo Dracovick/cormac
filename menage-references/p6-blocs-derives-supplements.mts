@@ -24,6 +24,7 @@ type Couple = {
   reference: string     // nom tel qu'il est stocké en base
   page: number          // page imprimée de la fiche du dérivé
   zone?: string         // zone d'effet écrite à la main, quand le renvoi la change
+  livre?: string        // par défaut : le Manuel des Joueurs de Faerûn
 }
 
 const COUPLES: Couple[] = [
@@ -47,6 +48,12 @@ const COUPLES: Couple[] = [
   { derive: 'Remontrance de Nybor', reference: 'Doux rappel de Nybor', page: 117 },
   // Le livre imprime déjà « Effet : matrice retenant 2 sorts » (contre 1 à la matrice).
   { derive: 'Séquenceur de la Simbule', reference: 'Matrice de la Simbule', page: 117 },
+
+  // ── Codex Profane, chapitre 6. Même procédé de renvoi.
+  // Le livre imprime déjà « Effet : un orbe d'électricité » ; seul le type d'énergie change.
+  { derive: "Orbe d'électricité mineur", reference: "Orbe d'acide mineur", page: 116, livre: 'Codex Profane' },
+  // Le livre imprime déjà composantes et temps d'incantation ; le renvoi ne change que la puissance.
+  { derive: 'Signe de scellement suprême', reference: 'Signe de scellement', page: 123, livre: 'Codex Profane' },
 ]
 
 const COLONNES = ['composantes', 'portee', 'zone_effet', 'duree', 'jet_de_sauvegarde', 'resistance_magique'] as const
@@ -74,7 +81,7 @@ for (const c of COUPLES) {
     if (r.length === 1) champs++
   }
   const adaptee = c.zone ? ", l'effet étant celui qu'annonce la phrase de renvoi" : ''
-  const note = `*Blocs techniques repris de ${ref.nom.toLowerCase()}${adaptee} : le Manuel des Joueurs de Faerûn (p. ${c.page}) ne les réimprime pas pour ce sort, il le traite par renvoi.*`
+  const note = `*Blocs techniques repris de ${ref.nom.toLowerCase()}${adaptee} : ${c.livre ?? 'le Manuel des Joueurs de Faerûn'} (p. ${c.page}) ne les réimprime pas pour ce sort, il le traite par renvoi.*`
   const r = await sql`UPDATE spells SET description = description || E'\n\n' || ${note}
     WHERE id = ${s.id} AND description IS NOT NULL AND position(${note} in description) = 0 RETURNING id` as any[]
   if (r.length === 1) notes++
