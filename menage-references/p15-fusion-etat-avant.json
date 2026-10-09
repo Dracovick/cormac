@@ -1,0 +1,161 @@
+[
+  {
+    "fusion": "52->18",
+    "source": {
+      "id": 52,
+      "nom": "Anneau  de jade +2",
+      "type": null,
+      "emplacement": null,
+      "bonus": null,
+      "aura_magique": null,
+      "niveau_lanceur": null,
+      "prix": null,
+      "description": "Anneau de la campagne. Aucun « anneau de jade » au Guide du Maître.\n\n👀 La fiche porte déjà un **Anneau de jade** (entrée distincte), décrit par le MJ comme « protection +2 et protection contre le feu ». Les deux lignes désignent très probablement le même objet — c'est une fusion à trancher par le MJ, pas par le scribe.\n\nRègle des anneaux : on ne peut porter que deux anneaux magiques à la fois ; un troisième ne fonctionne pas.",
+      "charges_max": null,
+      "est_catalogue": false,
+      "catalogue_id": null
+    },
+    "cible_avant": {
+      "id": 18,
+      "nom": "Anneau de jade",
+      "type": "Anneau",
+      "emplacement": null,
+      "bonus": 2,
+      "aura_magique": null,
+      "niveau_lanceur": null,
+      "prix": null,
+      "description": "Protection +2 et protection contre le feu",
+      "charges_max": null,
+      "est_catalogue": false,
+      "catalogue_id": null
+    },
+    "porteurs_source": [
+      {
+        "id": 491,
+        "personnage_id": 47,
+        "objet_id": 52,
+        "emplacement": null,
+        "notes": null,
+        "charges_restantes": null,
+        "perso": "Rham"
+      }
+    ],
+    "porteurs_cible": [
+      {
+        "id": 924,
+        "personnage_id": 4,
+        "objet_id": 18,
+        "emplacement": "Doigt",
+        "notes": null,
+        "charges_restantes": null,
+        "perso": "DracoVick Von Drag"
+      }
+    ]
+  },
+  {
+    "fusion": "72->2",
+    "source": {
+      "id": 72,
+      "nom": "Anneaux protection +2",
+      "type": null,
+      "emplacement": "Doigt",
+      "bonus": null,
+      "aura_magique": null,
+      "niveau_lanceur": null,
+      "prix": null,
+      "description": "Anneau de protection +2 : bonus de parade de +2 à la CA. C'est le modèle +2 de la série du Guide du Maître (8 000 po ; Abjuration modérée ; NLS 5).\n\n👀 La fiche porte déjà une entrée **Anneau de protection +2** : ces deux lignes désignent la même pièce du livre. Fusion à trancher par le MJ.\n\nRègle des anneaux : on ne peut porter que deux anneaux magiques à la fois ; un troisième ne fonctionne pas. Le bonus de parade s'applique aussi contre les attaques de contact et compte même lorsque le porteur est pris au dépourvu.",
+      "charges_max": null,
+      "est_catalogue": false,
+      "catalogue_id": null
+    },
+    "cible_avant": {
+      "id": 2,
+      "nom": "Anneau de protection +2",
+      "type": "Anneau",
+      "emplacement": "Doigt",
+      "bonus": 2,
+      "aura_magique": "Abjuration (faible)",
+      "niveau_lanceur": 3,
+      "prix": null,
+      "description": "Confère un bonus de déviation de +2 à la CA.",
+      "charges_max": null,
+      "est_catalogue": false,
+      "catalogue_id": null
+    },
+    "porteurs_source": [
+      {
+        "id": 677,
+        "personnage_id": 43,
+        "objet_id": 72,
+        "emplacement": "Doigt",
+        "notes": "Bonus : 2",
+        "charges_restantes": null,
+        "perso": "Gaïa"
+      }
+    ],
+    "porteurs_cible": [
+      {
+        "id": 1052,
+        "personnage_id": 1,
+        "objet_id": 2,
+        "emplacement": "Doigt",
+        "notes": null,
+        "charges_restantes": null,
+        "perso": "Cormac"
+      }
+    ]
+  },
+  {
+    "fusion": "55->5",
+    "source": {
+      "id": 55,
+      "nom": "Gants de dextérité",
+      "type": null,
+      "emplacement": null,
+      "bonus": null,
+      "aura_magique": null,
+      "niveau_lanceur": null,
+      "prix": null,
+      "description": "**Gants de Dextérité** du Guide du Maître : ces gants de cuir souple extrêmement moulants permettent de manipuler les objets les plus délicats. De plus, ils améliorent la Dextérité de leur porteur, sous la forme d'un bonus d'altération variable s'appliquant à cette caractéristique. **Il faut porter les deux gants** pour profiter de ce bonus.\n\nTransmutation modérée ; NLS 8 ; Création d'objets merveilleux, grâce féline.\n\n⚠ Le livre en donne trois modèles : **+2** (4 000 po), **+4** (16 000 po) et **+6** (36 000 po). La fiche ne dit pas lequel. Le bonus est à préciser par le MJ — c'est 2, 4 ou 6 points de Dextérité sur un personnage joué, donc la CA, l'initiative et les jets de Réflexes.\n\n*La fiche porte par ailleurs une entrée distincte « Gantelets de dextérité +2 » : peut-être la même pièce.*",
+      "charges_max": null,
+      "est_catalogue": false,
+      "catalogue_id": null
+    },
+    "cible_avant": {
+      "id": 5,
+      "nom": "Gantelets de dextérité +2",
+      "type": "Gantelets",
+      "emplacement": "Mains",
+      "bonus": 2,
+      "aura_magique": "Transmutation (faible)",
+      "niveau_lanceur": 8,
+      "prix": null,
+      "description": "Augmente la DEX de +2.",
+      "charges_max": null,
+      "est_catalogue": false,
+      "catalogue_id": null
+    },
+    "porteurs_source": [
+      {
+        "id": 464,
+        "personnage_id": 56,
+        "objet_id": 55,
+        "emplacement": null,
+        "notes": null,
+        "charges_restantes": null,
+        "perso": "Tellian Fore"
+      }
+    ],
+    "porteurs_cible": [
+      {
+        "id": 1056,
+        "personnage_id": 1,
+        "objet_id": 5,
+        "emplacement": "Mains",
+        "notes": null,
+        "charges_restantes": null,
+        "perso": "Cormac"
+      }
+    ]
+  }
+]
