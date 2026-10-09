@@ -3,6 +3,10 @@
 // joueur lance le sort préparé (bouton « préparé ▶ ») et c'est lui qui le
 // retire (✕) quand le sort prend fin. La durée est affichée à titre de rappel.
 
+import { TYPES_CUMULABLES, type SourceCA, type ContributionCA } from './classe-armure'
+
+export { TYPES_CUMULABLES }
+
 export type Caracteristique = 'FOR' | 'DEX' | 'CON' | 'INT' | 'SAG' | 'CHA'
 export type CibleEffet = 'CA' | Caracteristique
 
@@ -49,9 +53,6 @@ export function valeurEffetSelonNiveau(effet: EffetCACatalogue, niveauLanceur: n
   return effet.valeur
 }
 
-// PHB 3.5 : les bonus de même type ne se cumulent pas (on garde le meilleur),
-// sauf les bonus d'esquive (et « divers ») qui se cumulent toujours.
-export const TYPES_CUMULABLES: string[] = ['esquive', 'divers']
 
 export const SORTS_EFFETS_CA: EffetCACatalogue[] = [
   { nom: 'Armure de mage',           typeBonus: 'armure',           valeur: 4,               duree: '1 h/niveau',      note: 'Ne se cumule pas avec une armure portée (le meilleur bonus s\'applique).' },
@@ -163,44 +164,37 @@ export type ContributionEffet = {
   remplacePar?: string // nom de la source qui rend l'effet inopérant (cumul)
 }
 
-// Applique les règles de cumul du PHB 3.5 aux effets sur la CA :
-// - même type de bonus → seul le meilleur compte (esquive et divers se cumulent)
-// - type « armure » comparé au bonus d'armure portée, « bouclier » au bouclier porté
-export function calculeBonusEffetsCA(
+// Les effets de sorts actifs, traduits en sources pour le moteur unique de la
+// classe d'armure (src/lib/dnd35/classe-armure.ts). Les sorts ne sont plus
+// arbitrés à part : un bouclier de la foi +2 et un anneau de parade +2 sont deux
+// bonus de parade, et le PHB 3.5 ne les cumule pas davantage entre eux qu'il ne
+// cumulerait deux sorts.
+export function sourcesCASorts(effets: EffetSortActif[]): SourceCA[] {
+  return effets.map(e => ({
+    cle: `sort:${e.id}`,
+    origine: 'sort' as const,
+    label: e.nom,
+    typeBonus: e.typeBonus,
+    valeur: e.valeur,
+  }))
+}
+
+// Rend aux contributions de sorts la forme attendue par le panneau « Sorts
+// actifs » (EffetsSorts), qui a besoin de l'id et de la cible de l'effet.
+export function contributionsSortsDepuisCA(
+  contributions: ContributionCA[],
   effets: EffetSortActif[],
-  equipement: { bonusArmurePortee: number; bonusBouclierPorte: number },
-): { total: number; contributions: ContributionEffet[] } {
-  const meilleurs = new Map<string, EffetSortActif>()
-  for (const e of effets) {
-    if (TYPES_CUMULABLES.includes(e.typeBonus)) continue
-    const best = meilleurs.get(e.typeBonus)
-    if (!best || e.valeur > best.valeur) meilleurs.set(e.typeBonus, e)
-  }
-
-  const contributions: ContributionEffet[] = effets.map(e => {
-    const base = { id: e.id, nom: e.nom, cible: e.cible, typeBonus: e.typeBonus, valeur: e.valeur }
-    if (TYPES_CUMULABLES.includes(e.typeBonus)) {
-      return { ...base, effective: e.valeur }
-    }
-    const best = meilleurs.get(e.typeBonus)
-    if (best && best.id !== e.id) {
-      return { ...base, effective: 0, remplacePar: best.nom }
-    }
-    // Le meilleur de son type : comparé à l'équipement porté pour armure/bouclier
-    if (e.typeBonus === 'armure' && equipement.bonusArmurePortee > 0) {
-      return equipement.bonusArmurePortee >= e.valeur
-        ? { ...base, effective: 0, remplacePar: 'armure portée' }
-        : { ...base, effective: e.valeur - equipement.bonusArmurePortee }
-    }
-    if (e.typeBonus === 'bouclier' && equipement.bonusBouclierPorte > 0) {
-      return equipement.bonusBouclierPorte >= e.valeur
-        ? { ...base, effective: 0, remplacePar: 'bouclier porté' }
-        : { ...base, effective: e.valeur - equipement.bonusBouclierPorte }
-    }
-    return { ...base, effective: e.valeur }
-  })
-
-  return { total: contributions.reduce((sum, c) => sum + c.effective, 0), contributions }
+): ContributionEffet[] {
+  const parCle = new Map(effets.map(e => [`sort:${e.id}`, e]))
+  return contributions
+    .filter(c => c.origine === 'sort')
+    .map(c => {
+      const e = parCle.get(c.cle)!
+      return {
+        id: e.id, nom: e.nom, cible: e.cible, typeBonus: e.typeBonus, valeur: e.valeur,
+        effective: c.effective, remplacePar: c.remplacePar,
+      }
+    })
 }
 
 export type BonusCaracs = Record<Caracteristique, number>

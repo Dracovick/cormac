@@ -1,0 +1,34 @@
+-- TYPE DE BONUS des objets magiques — pour que la CA cesse d'additionner
+-- aveuglément le champ `bonus` de tous les objets portés.
+--
+-- Le défaut, mesuré le 2026-10-09 : la fiche faisait
+--   sum(item.bonus) sur TOUS les objets magiques
+-- (src/app/personnage/[id]/page.tsx:122 et .../imprimer/page.tsx:125), sans
+-- regarder ce que l'objet est ni quelle sorte de bonus il donne. Résultat sur
+-- les 13 lignes d'inventaire concernées (7 personnages, 9 objets distincts) :
+--
+--   · un « Bandeau d'intelligence +2 » ajoutait +2 à la CLASSE D'ARMURE
+--     (il augmente l'Intelligence) ;
+--   · une « Cape de résistance +1 » ajoutait +1 à la CA
+--     (elle agit sur les jets de sauvegarde) ;
+--   · des « Gantelets de dextérité +2 » ajoutaient +2 à la CA
+--     (+2 de Dextérité vaut +1 de CA, +1 d'initiative, +1 aux Réflexes) ;
+--   · un « Carquois de flèches +1 » aurait fait de même s'il avait été porté
+--     (c'est un bonus d'arme sur les munitions).
+--
+-- Et, pour les objets qui donnent vraiment un bonus de CA, le PHB 3.5 interdit
+-- le cumul de deux bonus du MÊME TYPE : on garde le meilleur. Cormac portait un
+-- anneau de parade +2 ET une cape de parade +1 : le Grimoire comptait +3.
+--
+-- La solution n'est pas une heuristique sur le nom de l'objet — une devinette
+-- qui se trompe sur la saisie du MJ est pire qu'une donnée assumée. Le type de
+-- bonus devient donc une COLONNE, choisie au formulaire.
+--
+-- Vocabulaire : celui que le Grimoire emploie déjà pour les effets de sorts
+-- (src/lib/dnd35/spell-effects.ts, TypeBonusCA) — 'armure', 'bouclier',
+-- 'parade', 'armure naturelle', 'esquive', 'taille', 'intuition', 'divers'.
+--
+-- NULL = le bonus de cet objet NE VA PAS à la classe d'armure. C'est le défaut,
+-- et c'est le cas de l'immense majorité du rayon : sur 742 lignes, 9 seulement
+-- portent un `bonus` non nul, et 4 d'entre elles ne touchent pas la CA.
+ALTER TABLE "magic_items" ADD COLUMN IF NOT EXISTS "bonus_type" varchar(32);

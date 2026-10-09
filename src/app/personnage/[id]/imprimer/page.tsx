@@ -12,6 +12,7 @@ import { formatCritique } from '@/lib/dnd35/critique'
 import { estArmeADistance } from '@/lib/dnd35/weapons'
 import { PrintButton } from '@/components/fiche/PrintButton'
 import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
+import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies } from '@/lib/dnd35/classe-armure'
 
 export const dynamic = 'force-dynamic'
 
@@ -122,10 +123,30 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   const volT = volBase + modSauvegarde(abilityScores?.sagBase, abilityScores?.sagMagique, raceInfo?.bonusSag ?? 0) + (savingThrows?.volonteMagique ?? 0) + sommeBonus(donsPassifs.volonte)
 
   const caArmure = armor.reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
-  const caMagique = magicItems.reduce((sum, { item }) => sum + (item.bonus ?? 0), 0)
   const maxDex = armor.length > 0 ? Math.min(...armor.map(({ armor: a }) => a.maxDex ?? 10)) : 10
   const dexModCA = Math.min(dexMod, maxDex)
-  const caTotal = 10 + dexModCA + caArmure + (combatStats?.caNaturelle ?? 0) + (combatStats?.caDeflexion ?? 0) + (combatStats?.caDivers ?? 0) + caMagique
+  // ── CLASSE D'ARMURE ──
+  // Même arbitrage que la fiche à l'écran (src/lib/dnd35/classe-armure.ts), pour que
+  // le papier et l'écran ne divergent pas : un objet ne compte que si son `bonus_type`
+  // dit qu'il touche la CA, et deux bonus du même type ne se cumulent pas. Les effets
+  // de sorts n'entrent pas ici — le papier est un état au repos, pas un état de combat.
+  const estBouclierImpr = (t: string | null) => (t ?? '').toLowerCase().includes('bouclier')
+  const bonusArmurePortee = armor
+    .filter(({ armor: a }) => !estBouclierImpr(a.type))
+    .reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
+  const { total: bonusCASources, contributions: contributionsCA } = calculeClasseArmure(
+    [...sourcesCAObjets(magicItems), ...sourcesCASaisies(combatStats)],
+    { bonusArmurePortee, bonusBouclierPorte: caArmure - bonusArmurePortee },
+  )
+  // Les cases de la feuille officielle. « Divers » absorbe les types qui n'ont pas
+  // leur propre case (esquive, intuition, bouclier magique) pour que la somme des
+  // cases imprimées redonne bien le total.
+  const potCA = (type: string) => contributionsCA.filter(c => c.typeBonus === type).reduce((s, c) => s + c.effective, 0)
+  const caParade = potCA('parade')
+  const caNaturelle = potCA('armure naturelle')
+  const caTaille = potCA('taille')
+  const caDivers = bonusCASources - caParade - caNaturelle - caTaille
+  const caTotal = 10 + dexModCA + caArmure + bonusCASources
   const initT = dexMod + (combatStats?.initiativeBonus ?? 0) + sommeBonus(donsPassifs.initiative)
 
   const abilMods: Record<string, number> = { FOR: forMod, DEX: dexMod, CON: conMod, INT: intMod, SAG: sagMod, CHA: chaMod }
@@ -427,15 +448,15 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                       <td style={{ border: '1px solid #000', textAlign: 'center', fontSize: '9pt' }}>=</td>
                       <td style={{ border: '1px solid #000', textAlign: 'center', fontSize: '10pt', fontWeight: 'bold' }}>{caArmure}</td>
                       <td style={{ border: '1px solid #000', textAlign: 'center', color: '#555' }}>+</td>
-                      <td style={{ border: '1px solid #000', textAlign: 'center', fontSize: '10pt', fontWeight: 'bold' }}>{caMagique || 0}</td>
+                      <td style={{ border: '1px solid #000', textAlign: 'center', fontSize: '10pt', fontWeight: 'bold' }}>{caParade || 0}</td>
                       <td style={{ border: '1px solid #000', textAlign: 'center', color: '#555' }}>+</td>
-                      <td style={{ border: '1px solid #000', textAlign: 'center', fontSize: '10pt', fontWeight: 'bold' }}>{fm(dexMod)}</td>
+                      <td style={{ border: '1px solid #000', textAlign: 'center', fontSize: '10pt', fontWeight: 'bold' }}>{fm(dexModCA)}</td>
                       <td style={{ border: '1px solid #000', textAlign: 'center', color: '#555' }}>+</td>
-                      <td style={{ border: '1px solid #000', textAlign: 'center', background: '#f5f5f5', width: '6%' }}></td>
+                      <td style={{ border: '1px solid #000', textAlign: 'center', fontSize: '10pt', fontWeight: 'bold', width: '6%' }}>{caTaille || 0}</td>
                       <td style={{ border: '1px solid #000', textAlign: 'center', color: '#555' }}>+</td>
-                      <td style={{ border: '1px solid #000', textAlign: 'center', fontSize: '10pt', fontWeight: 'bold' }}>{combatStats?.caNaturelle || 0}</td>
+                      <td style={{ border: '1px solid #000', textAlign: 'center', fontSize: '10pt', fontWeight: 'bold' }}>{caNaturelle || 0}</td>
                       <td style={{ border: '1px solid #000', textAlign: 'center', color: '#555' }}>+</td>
-                      <td style={{ border: '1px solid #000', textAlign: 'center', fontSize: '10pt', fontWeight: 'bold' }}>{combatStats?.caDivers || 0}</td>
+                      <td style={{ border: '1px solid #000', textAlign: 'center', fontSize: '10pt', fontWeight: 'bold' }}>{caDivers || 0}</td>
                       <td style={{ border: '1px solid #000', padding: '2px 4px', fontSize: '7pt', verticalAlign: 'top' }} rowSpan={2}>
                         <div style={{ fontWeight: 'bold', fontSize: '8pt', marginBottom: '4px' }}>TYPE D'ARMURE</div>
                         <div style={{ fontSize: '8pt' }}>{armureName}</div>
@@ -445,7 +466,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                       <td style={{ border: '1px solid #aaa', padding: '1px 2px', fontSize: '6pt', color: '#888', textAlign: 'center' }}></td>
                       <td style={{ border: '1px solid #aaa', padding: '1px 2px', fontSize: '6pt', color: '#888', textAlign: 'center' }}>Armure</td>
                       <td></td>
-                      <td style={{ border: '1px solid #aaa', padding: '1px 2px', fontSize: '6pt', color: '#888', textAlign: 'center' }}>Magique</td>
+                      <td style={{ border: '1px solid #aaa', padding: '1px 2px', fontSize: '6pt', color: '#888', textAlign: 'center' }}>Parade</td>
                       <td></td>
                       <td style={{ border: '1px solid #aaa', padding: '1px 2px', fontSize: '6pt', color: '#888', textAlign: 'center' }}>Mod.DEX</td>
                       <td></td>

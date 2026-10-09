@@ -153,7 +153,18 @@ function Contenu({ fiche, qs }: { fiche: FicheBibliotheque; qs: string }) {
           <div className="space-y-2">
             {fiche.objet.type && <Row label="Type">{fiche.objet.type}</Row>}
             {fiche.objet.emplacement && <Row label="Emplacement">{fiche.objet.emplacement}</Row>}
-            {fiche.objet.bonus !== null && <Row label="Bonus">+{fiche.objet.bonus}</Row>}
+            {/* Le bonus ne dit rien tout seul : « +2 » peut être une parade, un
+                bonus d'armure, ou +2 à une caractéristique. On affiche donc à
+                quel titre il s'applique — c'est la colonne `bonus_type`, et
+                c'est elle que la classe d'armure lit (voir drizzle/0011). */}
+            {fiche.objet.bonus !== null && (
+              <Row label="Bonus">
+                +{fiche.objet.bonus}
+                {fiche.objet.bonusType
+                  ? <span className="text-stone-400"> — bonus de <strong className="text-amber-200">{fiche.objet.bonusType}</strong> à la CA</span>
+                  : <span className="text-stone-500"> — ne s&apos;applique pas à la classe d&apos;armure</span>}
+              </Row>
+            )}
             {fiche.objet.auraMagique && <Row label="Aura magique">{fiche.objet.auraMagique}</Row>}
             {fiche.objet.niveauLanceur !== null && <Row label="Niveau de lanceur">{fiche.objet.niveauLanceur}</Row>}
             {fiche.objet.chargesMax !== null && <Row label="Charges">{fiche.objet.chargesMax}</Row>}

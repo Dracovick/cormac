@@ -58,6 +58,12 @@ export const magicItems = pgTable('magic_items', {
   type: varchar('type', { length: 100 }),
   emplacement: varchar('emplacement', { length: 100 }),
   bonus: integer('bonus'),
+  // Quelle SORTE de bonus le champ ci-dessus donne, au vocabulaire du PHB 3.5
+  // (le même que les effets de sorts : voir TypeBonusCA dans dnd35/spell-effects).
+  // NULL = ce bonus ne va PAS à la classe d'armure — c'est le cas d'un bandeau
+  // d'Intelligence, d'une cape de résistance, de gants de Dextérité ou d'un
+  // carquois de fleches +1. Voir drizzle/0011.
+  bonusType: varchar('bonus_type', { length: 32 }),
   auraMagique: varchar('aura_magique', { length: 100 }),
   niveauLanceur: integer('niveau_lanceur'),
   prix: numeric('prix', { precision: 10, scale: 2 }),

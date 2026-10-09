@@ -48,7 +48,7 @@ export interface CharacterFormData {
   dons: string[]
   armes: { nom: string; degats: string; crit: string; typeDegats: string; portee: string; bonusMagique: number; coteDeForce?: number | null; bonusMunitions?: number | null; quantite: number }[]
   armures: { nom: string; type: string; bonusCA: number; maxDex: number; malusComp: number; bonusMagique: number }[]
-  objetsMagiques: { nom: string; type: string; emplacement: string; bonus: string; description: string; charges: number }[]
+  objetsMagiques: { nom: string; type: string; emplacement: string; bonus: string; bonusType: string; description: string; charges: number }[]
   potions: { nom: string; effet: string; charges: number }[]
   gemmes: { nom: string; quantite: number; valeur: number; unite: string; notes: string }[]
   pp: number; po: number; pe: number; pa: number; pc: number; pm: number
@@ -429,6 +429,8 @@ export async function saveCharacter(
         nom: obj.nom.trim(), type: obj.type || null,
         emplacement: obj.emplacement || null,
         bonus: bonusInt,
+        // Vide = ce bonus ne va PAS à la classe d'armure (voir drizzle/0011).
+        bonusType: obj.bonusType?.trim() || null,
         description: obj.description || null,
         chargesMax: obj.charges > 0 ? obj.charges : null,
       }).returning({ id: schema.magicItems.id })
@@ -442,6 +444,11 @@ export async function saveCharacter(
     const majObjet: Partial<typeof schema.magicItems.$inferInsert> = {}
     if (obj.type?.trim()) majObjet.type = obj.type.trim()
     if (obj.bonus?.trim() && bonusInt !== null) majObjet.bonus = bonusInt
+    // ⚠ Exception à la règle « un champ vide ne détruit rien » : pour le type de
+    // bonus, vide VEUT DIRE quelque chose — « ce +2 ne va pas à la CA ». Le MJ
+    // doit pouvoir retirer un type posé par erreur. On n'écrit donc que si
+    // l'objet porte un bonus, seul cas où le type a un sens.
+    if (obj.bonus?.trim() && bonusInt !== null) majObjet.bonusType = obj.bonusType?.trim() || null
     if (obj.description?.trim()) majObjet.description = obj.description.trim()
     if (Object.keys(majObjet).length > 0) {
       ecritures.push(db.update(schema.magicItems).set(majObjet).where(eq(schema.magicItems.id, objetId)))

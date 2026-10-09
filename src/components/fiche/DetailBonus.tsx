@@ -9,6 +9,8 @@ export type LigneDetail = {
   note?: string
   /** Bonus conditionnel : affiché entre parenthèses, NON compté dans le total (ex. Esquive) */
   conditionnel?: boolean
+  /** Bonus écarté par les règles de cumul : affiché barré, NON compté (ex. deux bonus de parade) */
+  ecarte?: boolean
 }
 
 type Props = {
@@ -86,8 +88,8 @@ export function DetailBonus({ titre, base, baseLabel, lignes, total, inline, chi
             {lignes.map((l, i) => (
               <div key={i}>
                 <div className="flex items-baseline justify-between text-xs">
-                  <span className={l.conditionnel ? 'text-stone-500' : 'text-stone-400'}>{l.label}</span>
-                  <span className={`font-mono ${l.conditionnel ? 'text-stone-500' : l.valeur < 0 ? 'text-red-400' : 'text-stone-200'}`}>
+                  <span className={l.conditionnel || l.ecarte ? 'text-stone-500' : 'text-stone-400'}>{l.label}</span>
+                  <span className={`font-mono ${l.ecarte ? 'text-stone-600 line-through' : l.conditionnel ? 'text-stone-500' : l.valeur < 0 ? 'text-red-400' : 'text-stone-200'}`}>
                     {l.conditionnel ? `(${signe(l.valeur)})` : signe(l.valeur)}
                   </span>
                 </div>

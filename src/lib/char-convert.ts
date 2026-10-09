@@ -85,7 +85,8 @@ export function charDataToForm(d: CharacterData): CharacterFormData {
     })),
     objetsMagiques: magicItems.map(m => ({
       nom: m.item.nom, type: m.item.type ?? '', emplacement: m.charItem.emplacement ?? '',
-      bonus: m.item.bonus?.toString() ?? '', description: m.item.description ?? '',
+      bonus: m.item.bonus?.toString() ?? '', bonusType: m.item.bonusType ?? '',
+      description: m.item.description ?? '',
       charges: m.charItem.chargesRestantes ?? 0,
     })),
     potions: potions.map(p => ({

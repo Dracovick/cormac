@@ -1,0 +1,14 @@
+=== Relevé de la CA en production (https://www.dracovick.com) ===
+
+#1   CA=21   DEX +5 · déflexion +1 · objets magiques +5
+#3   CA=20   DEX +3 · déflexion +1 · objets magiques +6
+#4   CA=27   DEX +0 · divers +15 · objets magiques +2
+#43  CA=17   DEX +0 · naturelle +4 · divers +1 · objets magiques +2
+#47  CA=37   DEX +1 · naturelle +4 · divers +20 · objets magiques +2
+#56  CA=21   DEX +4 · naturelle +2 · divers +3 · objets magiques +2
+#82  CA=20   armure +9 · DEX +0 · objets magiques +1
+#86  CA=20   armure +8 · DEX +1 · objets magiques +1
+
+#58  TÉMOIN CA=10   DEX +0
+#39  TÉMOIN CA=19   DEX +2 · naturelle +3 · divers +4 · don : Esquive +1
+#61  TÉMOIN CA=18   DEX -4 · naturelle +8 · divers +4

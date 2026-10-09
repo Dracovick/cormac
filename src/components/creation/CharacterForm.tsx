@@ -7,6 +7,7 @@ import type { CharacterFormData, PotionRef } from '@/app/actions/character'
 import { saveCharacter, getPotionsCatalogue } from '@/app/actions/character'
 import { ChampRechercheNom } from '@/components/ChampRechercheNom'
 import { getModifier, formatMod, ALIGNEMENTS, calcXpPenalite } from '@/lib/dnd35/rules'
+import { TYPES_BONUS_CA } from '@/lib/dnd35/classe-armure'
 import { CLASSES_DND35, getClasseInfo, getSortsSlotsParJour } from '@/lib/dnd35/classes'
 import { PRESTIGE_CLASSES, getPrestigeInfo, getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
 import { RACES_DND35, getRaceInfo } from '@/lib/dnd35/races'
@@ -667,7 +668,7 @@ function SectionEquipement({ data, update, derived, potionsCatalogue }: { data: 
   const newArmure = () => update('armures', [...data.armures, { nom: '', type: 'Légère', bonusCA: 0, maxDex: 10, malusComp: 0, bonusMagique: 0 }])
   const delArmure = (i: number) => update('armures', data.armures.filter((_, j) => j !== i))
   const setArmure = (i: number, k: string, v: any) => { const a = [...data.armures]; (a[i] as any)[k] = v; update('armures', a) }
-  const newObj = () => update('objetsMagiques', [...data.objetsMagiques, { nom: '', type: '', emplacement: '', bonus: '', description: '', charges: 0 }])
+  const newObj = () => update('objetsMagiques', [...data.objetsMagiques, { nom: '', type: '', emplacement: '', bonus: '', bonusType: '', description: '', charges: 0 }])
   const delObj = (i: number) => update('objetsMagiques', data.objetsMagiques.filter((_, j) => j !== i))
   const setObj = (i: number, k: string, v: any) => { const a = [...data.objetsMagiques]; (a[i] as any)[k] = v; update('objetsMagiques', a) }
   const newPot = () => update('potions', [...data.potions, { nom: '', effet: '', charges: 1 }])
@@ -800,15 +801,32 @@ function SectionEquipement({ data, update, derived, potionsCatalogue }: { data: 
       <div className={CARD}>
         <div className={SEC_H}>Objets magiques</div>
         {data.objetsMagiques.map((o, i) => (
-          <div key={i} className="grid grid-cols-2 sm:grid-cols-6 gap-2 mb-2 items-end bg-stone-800/30 rounded p-2">
-            <div className="sm:col-span-2"><label className={LBL}>Nom</label><input className={INP} value={o.nom} onChange={e => setObj(i, 'nom', e.target.value)} placeholder="Cape de protection +1" /></div>
-            <div><label className={LBL}>Emplacement</label><input className={INP} value={o.emplacement} onChange={e => setObj(i, 'emplacement', e.target.value)} placeholder="Épaules" /></div>
-            <div><label className={LBL}>Bonus</label><input className={INP} value={o.bonus} onChange={e => setObj(i, 'bonus', e.target.value)} placeholder="+1 CA" /></div>
+          <div key={i} className="grid grid-cols-2 sm:grid-cols-7 gap-2 mb-2 items-end bg-stone-800/30 rounded p-2">
+            <div className="sm:col-span-2"><label className={LBL}>Nom</label><input className={INP} value={o.nom} onChange={e => setObj(i, 'nom', e.target.value)} placeholder="Anneau de protection +2" /></div>
+            <div><label className={LBL}>Emplacement</label><input className={INP} value={o.emplacement} onChange={e => setObj(i, 'emplacement', e.target.value)} placeholder="Doigt" /></div>
+            <div><label className={LBL}>Bonus</label><input className={INP} value={o.bonus} onChange={e => setObj(i, 'bonus', e.target.value)} placeholder="2" /></div>
+            {/* Sans ce champ, un « +2 » ne dit pas s'il va à la CA, à une
+                caractéristique ou aux sauvegardes — et c'est en l'ignorant que la
+                fiche donnait +2 de CA à un bandeau d'Intelligence. */}
+            <div>
+              <label className={LBL} title="Ce bonus va-t-il à la classe d'armure, et à quel titre ? Deux bonus du même type ne se cumulent pas (PHB 3.5).">Bonus de</label>
+              <select className={INP} value={o.bonusType} onChange={e => setObj(i, 'bonusType', e.target.value)}>
+                <option value="">— pas de CA</option>
+                {TYPES_BONUS_CA.map(t => <option key={t} value={t}>{t}</option>)}
+              </select>
+            </div>
             <div><label className={LBL}>Charges</label><input className={INP_NUM + ' w-full'} type="number" min={0} value={o.charges} onChange={e => setObj(i, 'charges', parseInt(e.target.value) || 0)} title="0 = pas de charges" /></div>
             <div className="flex items-end"><button onClick={() => delObj(i)} className={BTN_DEL + ' mb-2 ml-auto'}>✕</button></div>
           </div>
         ))}
         <button onClick={newObj} className={BTN_ADD}><span className="text-xl">+</span> Ajouter un objet magique</button>
+        <p className="text-stone-500 text-xs mt-2 leading-snug">
+          <strong>Bonus de</strong> — laisser « pas de CA » pour tout ce qui ne touche pas la classe d'armure :
+          des gants de Dextérité (+2 de Dex, soit +1 de CA par la caractéristique), un bandeau d'Intelligence,
+          une cape de résistance (jets de sauvegarde), des flèches +1. Choisir <em>parade</em> pour un anneau de
+          protection, <em>armure</em> pour des bracelets d'armure, <em>armure naturelle</em> pour une amulette.
+          Le PHB 3.5 ne cumule pas deux bonus du même type : la fiche garde le meilleur et affiche l'autre barré.
+        </p>
       </div>
 
       {/* Potions */}

@@ -42,7 +42,8 @@ import { MonterNiveau } from '@/components/fiche/MonterNiveau'
 import { JournalDrawer } from '@/components/fiche/JournalDrawer'
 import { ButinDrawer } from '@/components/fiche/ButinDrawer'
 import { getPotionsCatalogue } from '@/app/actions/character'
-import { calculeBonusEffetsCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
+import { sourcesCASorts, contributionsSortsDepuisCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
+import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies } from '@/lib/dnd35/classe-armure'
 import { getDb } from '@/db'
 import { spells as spellsTable } from '@/db/schema/spells'
 
@@ -119,7 +120,6 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
     Paladin:     { carac: 'SAG', mod: sagMod },
     Rôdeur:      { carac: 'SAG', mod: sagMod },
   }
-  const caMagique = magicItems.reduce((sum, { item }) => sum + (item.bonus ?? 0), 0)
   const caArmure = armor.reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
   const maxDex = armor.length > 0 ? Math.min(...armor.map(({ armor: a }) => a.maxDex ?? 10)) : 10
   const dexModCA = Math.min(dexMod, maxDex)
@@ -140,10 +140,21 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
     .filter(({ armor: a }) => !estBouclier(a.type))
     .reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
   const bonusBouclierPorte = caArmure - bonusArmurePortee
-  const { total: bonusSortsCA, contributions: contributionsCA } = calculeBonusEffetsCA(effetsCA, { bonusArmurePortee, bonusBouclierPorte })
-  const caTotal = (combatStats
-    ? 10 + caArmure + (combatStats.caNaturelle ?? 0) + (combatStats.caDeflexion ?? 0) + (combatStats.caDivers ?? 0) + dexModCA + caMagique
-    : 10) + bonusSortsCA
+  // ── CLASSE D'ARMURE ──
+  // Toutes les sources passent par le même arbitrage (src/lib/dnd35/classe-armure.ts) :
+  // sorts actifs, objets magiques portés et les champs saisis sur la fiche. Le PHB 3.5
+  // ne cumule pas deux bonus du même type — un anneau de parade +2 et une cape de
+  // parade +1 donnent +2 — et un objet ne compte que si son `bonus_type` dit qu'il
+  // touche la CA (un bandeau d'Intelligence ou une cape de résistance, non).
+  const sourcesCA = [
+    ...sourcesCAObjets(magicItems),
+    ...sourcesCASaisies(combatStats),
+    ...sourcesCASorts(effetsCA),
+  ]
+  const { total: bonusCASources, contributions: contributionsCATout } =
+    calculeClasseArmure(sourcesCA, { bonusArmurePortee, bonusBouclierPorte })
+  const contributionsCA = contributionsSortsDepuisCA(contributionsCATout, effetsCA)
+  const caTotal = (combatStats ? 10 + caArmure + dexModCA : 10) + bonusCASources
   // Bonus passifs des dons (Science de l'initiative, Volonté de fer, Vigilance…) —
   // comptés automatiquement : le champ « divers » ne doit PAS les contenir en plus.
   const donsPassifs = getFeatPassiveBonuses(feats.map(f => f.feat.nom))
@@ -449,15 +460,22 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                 ...(bonusArmurePortee !== 0 ? [{ label: 'armure', valeur: bonusArmurePortee }] : []),
                 ...(bonusBouclierPorte !== 0 ? [{ label: 'bouclier', valeur: bonusBouclierPorte }] : []),
                 { label: 'DEX', valeur: dexModCA, note: dexMod > maxDex ? `plafonné par l'armure (max +${maxDex}, DEX réel ${signedNum(dexMod)})` : undefined },
-                ...((combatStats?.caNaturelle ?? 0) !== 0 ? [{ label: 'naturelle', valeur: combatStats!.caNaturelle! }] : []),
-                ...((combatStats?.caDeflexion ?? 0) !== 0 ? [{ label: 'déflexion', valeur: combatStats!.caDeflexion! }] : []),
-                ...((combatStats?.caDivers ?? 0) !== 0 ? [{ label: 'divers', valeur: combatStats!.caDivers! }] : []),
-                ...(caMagique !== 0 ? [{ label: 'objets magiques', valeur: caMagique, note: magicItems.filter(({ item }) => (item.bonus ?? 0) !== 0).map(({ item }) => `${item.nom} +${item.bonus}`).join(', ') }] : []),
-                ...contributionsCA.filter(c => c.effective !== 0).map(c => ({ label: `sort : ${c.nom}`, valeur: c.effective })),
+                // Une ligne par source arbitrée — objets portés, champs de la fiche,
+                // sorts actifs. Les sources écartées par le non-cumul 3.5 restent
+                // affichées, barrées, avec le nom de celle qui les supplante : rien
+                // n'est effacé en base, la fiche dit seulement ce qui compte.
+                ...contributionsCATout.map(c => ({
+                  label: c.origine === 'sort' ? `sort : ${c.label}` : c.label,
+                  valeur: c.effective !== 0 ? c.effective : c.valeur,
+                  ecarte: c.effective === 0,
+                  note: c.remplacePar
+                    ? `bonus de ${c.typeBonus} — ne se cumule pas, ${c.remplacePar} l'emporte`
+                    : `bonus de ${c.typeBonus}`,
+                })),
                 ...donsPassifs.caConditionnelle.map(b => ({ label: b.label, valeur: b.value, conditionnel: true, note: b.conditional })),
               ]}
             >
-              <StatBlock label="CA" value={caTotal} sub={`(armure +${caArmure} · DEX ${dexModCA >= 0 ? '+' : ''}${dexModCA}${caMagique ? ` · mag +${caMagique}` : ''}${bonusSortsCA ? ` · sorts ${bonusSortsCA > 0 ? '+' : ''}${bonusSortsCA}` : ''})`} />
+              <StatBlock label="CA" value={caTotal} sub={`(armure +${caArmure} · DEX ${signedNum(dexModCA)}${bonusCASources ? ` · bonus ${signedNum(bonusCASources)}` : ''})`} />
             </DetailBonus>
             <DetailBonus
               titre="Initiative"

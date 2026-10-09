@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "nom": "Cape de protection +1",
+    "bonus": 1,
+    "bonus_type": null
+  },
+  {
+    "id": 2,
+    "nom": "Anneau de protection +2",
+    "bonus": 2,
+    "bonus_type": null
+  },
+  {
+    "id": 4,
+    "nom": "Carquois de flèches +1",
+    "bonus": 1,
+    "bonus_type": null
+  },
+  {
+    "id": 5,
+    "nom": "Gantelets de dextérité +2",
+    "bonus": 2,
+    "bonus_type": null
+  },
+  {
+    "id": 8,
+    "nom": "Bracers d'armure +2",
+    "bonus": 2,
+    "bonus_type": null
+  },
+  {
+    "id": 9,
+    "nom": "Bandeau d'intelligence +2",
+    "bonus": 2,
+    "bonus_type": null
+  },
+  {
+    "id": 10,
+    "nom": "Cape de résistance +1",
+    "bonus": 1,
+    "bonus_type": null
+  },
+  {
+    "id": 12,
+    "nom": "Anneau de protection +1",
+    "bonus": 1,
+    "bonus_type": null
+  },
+  {
+    "id": 18,
+    "nom": "Anneau de jade",
+    "bonus": 2,
+    "bonus_type": null
+  }
+]
