@@ -1,0 +1,9 @@
+Augmente la DEX de +2. *(saisie du MJ)*
+
+**Gants de Dextérité** du Guide du Maître : ces gants de cuir souple extrêmement moulants permettent de manipuler les objets les plus délicats. De plus, ils améliorent la Dextérité de leur porteur, sous la forme d'un bonus d'altération variable s'appliquant à cette caractéristique. **Il faut porter les deux gants** pour profiter de ce bonus. Le livre en donne trois modèles — +2 (4 000 po), +4 (16 000 po) et +6 (36 000 po) ; cette ligne est le modèle **+2**.
+
+Transmutation modérée ; NLS 8 ; Création d’objets merveilleux, grâce féline.
+
+⚠ Un bonus de Dextérité n'est pas un bonus de CA : +2 de Dextérité vaut +1 à la CA, +1 à l'initiative et +1 aux jets de Réflexes. Le Grimoire, lui, ajoute le +2 de cette ligne directement à la CA. À vérifier avec le MJ sur les fiches qui portent ces gants.
+
+*Fusion du 2026-10-09, sur décision d’André : la ligne « Gants de dextérité » désignait la même pièce et a été repointée ici.*

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { libelleTypeBonus } from '@/lib/dnd35/classe-armure'
 import { notFound } from 'next/navigation'
 import { getFicheBibliotheque, type FicheBibliotheque, type RayonSlug } from '@/lib/queries/bibliotheque'
 import { getNomPersonnage } from '@/lib/queries/character'
@@ -161,7 +162,7 @@ function Contenu({ fiche, qs }: { fiche: FicheBibliotheque; qs: string }) {
               <Row label="Bonus">
                 +{fiche.objet.bonus}
                 {fiche.objet.bonusType
-                  ? <span className="text-stone-400"> — bonus de <strong className="text-amber-200">{fiche.objet.bonusType}</strong> à la CA</span>
+                  ? <span className="text-stone-400"> — {libelleTypeBonus(fiche.objet.bonusType)} à la CA</span>
                   : <span className="text-stone-500"> — ne s&apos;applique pas à la classe d&apos;armure</span>}
               </Row>
             )}

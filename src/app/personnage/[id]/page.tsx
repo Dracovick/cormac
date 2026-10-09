@@ -43,7 +43,7 @@ import { JournalDrawer } from '@/components/fiche/JournalDrawer'
 import { ButinDrawer } from '@/components/fiche/ButinDrawer'
 import { getPotionsCatalogue } from '@/app/actions/character'
 import { sourcesCASorts, contributionsSortsDepuisCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
-import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies } from '@/lib/dnd35/classe-armure'
+import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies, libelleTypeBonus } from '@/lib/dnd35/classe-armure'
 import { getDb } from '@/db'
 import { spells as spellsTable } from '@/db/schema/spells'
 
@@ -469,8 +469,8 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   valeur: c.effective !== 0 ? c.effective : c.valeur,
                   ecarte: c.effective === 0,
                   note: c.remplacePar
-                    ? `bonus de ${c.typeBonus} — ne se cumule pas, ${c.remplacePar} l'emporte`
-                    : `bonus de ${c.typeBonus}`,
+                    ? `${libelleTypeBonus(c.typeBonus)} — ne se cumule pas, ${c.remplacePar} l'emporte`
+                    : libelleTypeBonus(c.typeBonus),
                 })),
                 ...donsPassifs.caConditionnelle.map(b => ({ label: b.label, valeur: b.value, conditionnel: true, note: b.conditional })),
               ]}

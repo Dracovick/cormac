@@ -8,7 +8,7 @@
  *
  * Usage : npx tsx menage-references/p16-test-moteur-ca.mts
  */
-import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies, type SourceCA } from '../src/lib/dnd35/classe-armure'
+import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies, libelleTypeBonus, type SourceCA } from '../src/lib/dnd35/classe-armure'
 
 let echecs = 0
 function verifie(titre: string, obtenu: unknown, attendu: unknown) {
@@ -125,5 +125,13 @@ verifie(
   0,
 )
 
-console.log(echecs === 0 ? '\n✓ Les 14 épreuves passent.\n' : `\n✗ ${echecs} épreuve(s) en échec.\n`)
+console.log('\n── 8. L\'élision du libellé affiché sur la fiche ──')
+verifie('« bonus de parade »', libelleTypeBonus('parade'), 'bonus de parade')
+verifie('« bonus d’armure naturelle », et non « bonus de armure naturelle »', libelleTypeBonus('armure naturelle'), 'bonus d’armure naturelle')
+verifie('« bonus d’esquive »', libelleTypeBonus('esquive'), 'bonus d’esquive')
+verifie('« bonus d’intuition »', libelleTypeBonus('intuition'), 'bonus d’intuition')
+verifie('« bonus de bouclier »', libelleTypeBonus('bouclier'), 'bonus de bouclier')
+verifie('« bonus de taille »', libelleTypeBonus('taille'), 'bonus de taille')
+
+console.log(echecs === 0 ? '\n✓ Les 20 épreuves passent.\n' : `\n✗ ${echecs} épreuve(s) en échec.\n`)
 process.exit(echecs === 0 ? 0 : 1)

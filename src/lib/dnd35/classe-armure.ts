@@ -54,6 +54,12 @@ export type ContributionCA = SourceCA & {
 // sauf les bonus d'esquive (et « divers ») qui se cumulent toujours.
 export const TYPES_CUMULABLES: string[] = ['esquive', 'divers']
 
+// « bonus de parade » mais « bonus d'armure » : l'élision, pour que la note
+// affichée sur la fiche ne dise pas « bonus de armure naturelle ».
+export function libelleTypeBonus(type: string): string {
+  return /^[aeiouéèêiouy]/i.test(type) ? `bonus d’${type}` : `bonus de ${type}`
+}
+
 export function calculeClasseArmure(
   sources: SourceCA[],
   equipement: { bonusArmurePortee: number; bonusBouclierPorte: number },

@@ -1,0 +1,14 @@
+=== Relevé de la CA en production (https://www.dracovick.com) ===
+
+#1   CA=17   DEX +5 · Anneau de protection +2 +2 · Cape de protection +1 +1[écarté] · parade (fiche) +1[écarté]
+#3   CA=16   DEX +3 · Bracers d'armure +2 +2 · Anneau de protection +1 +1 · parade (fiche) +1[écarté]
+#4   CA=27   DEX +0 · Anneau de jade +2 · divers (fiche) +15
+#43  CA=17   DEX +0 · Anneau de protection +2 +2 · armure naturelle (fiche) +4 · divers (fiche) +1
+#47  CA=37   DEX +1 · Anneau de jade +2 · armure naturelle (fiche) +4 · divers (fiche) +20
+#56  CA=19   DEX +4 · armure naturelle (fiche) +2 · divers (fiche) +3
+#82  CA=20   armure +9 · DEX +0 · Anneau de protection +1 +1
+#86  CA=20   armure +8 · DEX +1 · Anneau de protection +1 +1
+
+#58  TÉMOIN CA=10   DEX +0
+#39  TÉMOIN CA=19   DEX +2 · armure naturelle (fiche) +3 · divers (fiche) +4 · don : Esquive +1
+#61  TÉMOIN CA=18   DEX -4 · armure naturelle (fiche) +8 · divers (fiche) +4
