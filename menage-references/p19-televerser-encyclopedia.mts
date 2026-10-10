@@ -18,6 +18,7 @@ import { neon } from '@neondatabase/serverless'
 import { readFileSync, statSync } from 'fs'
 import { resolve } from 'path'
 import { execFileSync } from 'child_process'
+import { createHash } from 'crypto'
 
 for (const line of readFileSync(resolve(process.cwd(), '.env.local'), 'utf-8').split('\n')) {
   const [k, ...v] = line.split('=')
@@ -123,25 +124,32 @@ for (const v of VOLUMES) {
     continue
   }
 
-  const blob = await put(`livres/${v.slug}.pdf`, readFileSync(chemin), {
+  const octets = readFileSync(chemin)
+  // Empreinte du contenu : elle sert de « ?v= » aux liens du lecteur. Sans elle,
+  // remplacer un volume resterait invisible jusqu'à 30 jours (le Blob met en
+  // cache et le retéléversement écrit au même chemin).
+  const version = createHash('sha256').update(octets).digest('hex').slice(0, 12)
+  const blob = await put(`livres/${v.slug}.pdf`, octets, {
     access: 'public',
     contentType: 'application/pdf',
     allowOverwrite: true,
     addRandomSuffix: false,
   })
-  console.log(`   ✓ téléversé → ${blob.url}`)
+  console.log(`   ✓ téléversé → ${blob.url}  (version ${version})`)
 
   await sql`
     INSERT INTO game_books
-      (slug, titre, volume, tranche, langue, pages, taille_octets, url, qualite_recherche, taux_ocr, ordre)
+      (slug, titre, volume, tranche, langue, pages, taille_octets, url,
+       qualite_recherche, taux_ocr, collection, version, ordre)
     VALUES
       (${v.slug}, ${v.titre}, ${v.volume}, ${v.tranche}, 'en', ${n}, ${taille},
-       ${blob.url}, ${q.verdict}, ${q.taux}, ${v.volume})
+       ${blob.url}, ${q.verdict}, ${q.taux}, 'encyclopedia-magica', ${version}, ${v.volume})
     ON CONFLICT (slug) DO UPDATE SET
       titre = EXCLUDED.titre, volume = EXCLUDED.volume, tranche = EXCLUDED.tranche,
       pages = EXCLUDED.pages, taille_octets = EXCLUDED.taille_octets,
       url = EXCLUDED.url, qualite_recherche = EXCLUDED.qualite_recherche,
-      taux_ocr = EXCLUDED.taux_ocr, ordre = EXCLUDED.ordre
+      taux_ocr = EXCLUDED.taux_ocr, collection = EXCLUDED.collection,
+      version = EXCLUDED.version, ordre = EXCLUDED.ordre
   `
   console.log('   ✓ fiche en base')
 }

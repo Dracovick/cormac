@@ -4,6 +4,13 @@ import { useState } from 'react'
 
 type Props = {
   url: string
+  /**
+   * Empreinte du fichier, ajoutée en « ?v= ». ⚠ Sans elle, remplacer un volume
+   * resterait invisible jusqu'à un mois : le Blob répond
+   * « Cache-Control: max-age=2592000 » et un retéléversement écrit au même
+   * chemin, donc à la même adresse.
+   */
+  version: string | null
   titre: string
   pages: number | null
   /** 'fiable' | 'partielle' | 'inutilisable' — ce que vaut la recherche ici. */
@@ -31,9 +38,13 @@ type Props = {
  * iframe.
  */
 export function LecteurLivre({
-  url, titre, pages, qualiteRecherche, tauxOcr, tailleAffichee, enAnglais,
+  url, version, titre, pages, qualiteRecherche, tauxOcr, tailleAffichee, enAnglais,
 }: Props) {
   const [ouvert, setOuvert] = useState(false)
+
+  const v = version ? `v=${encodeURIComponent(version)}` : ''
+  const lien = v ? `${url}?${v}` : url
+  const lienTelechargement = v ? `${url}?${v}&download=1` : `${url}?download=1`
 
   const recherche = qualiteRecherche === 'fiable'
     ? {
@@ -81,7 +92,7 @@ export function LecteurLivre({
           {ouvert ? '✕ Fermer le lecteur' : '📖 Lire ici'}
         </button>
         <a
-          href={url}
+          href={lien}
           target="_blank"
           rel="noopener noreferrer"
           className="bg-stone-800 hover:bg-stone-700 border border-stone-600 text-stone-200 rounded-lg px-4 py-2 text-sm transition-colors min-h-[44px] flex items-center"
@@ -89,7 +100,7 @@ export function LecteurLivre({
           ↗ Ouvrir dans un onglet
         </a>
         <a
-          href={`${url}?download=1`}
+          href={lienTelechargement}
           className="bg-stone-800 hover:bg-stone-700 border border-stone-600 text-stone-200 rounded-lg px-4 py-2 text-sm transition-colors min-h-[44px] flex items-center"
         >
           ⬇ Télécharger{tailleAffichee ? ` (${tailleAffichee})` : ''}
@@ -108,7 +119,7 @@ export function LecteurLivre({
       {ouvert && (
         <div className="mt-3">
           <iframe
-            src={url}
+            src={lien}
             title={titre}
             className="w-full rounded-lg border border-stone-700 bg-stone-900"
             style={{ height: '80vh', minHeight: '480px' }}

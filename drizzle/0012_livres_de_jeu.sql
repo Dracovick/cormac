@@ -50,3 +50,13 @@ CREATE TABLE IF NOT EXISTS "game_books" (
 -- copies doivent coexister — la complète pour lire, la partielle pour chercher —
 -- et un slug suffixé (« -3b ») n'aurait plus été reconnu comme le même ouvrage.
 ALTER TABLE "game_books" ADD COLUMN IF NOT EXISTS "collection" varchar(80);
+
+-- `version` : empreinte courte du fichier téléversé (SHA-256 tronqué).
+--
+-- ⚠ Sans elle, remplacer un volume serait INVISIBLE pendant un mois. Le Blob
+-- répond « Cache-Control: public, max-age=2592000 » — 30 jours — et un
+-- retéléversement écrit au même chemin, donc à la même adresse. Le CDN et le
+-- navigateur continueraient de servir l'ancien fichier. Les liens du lecteur
+-- portent donc « ?v=<version> », qui change avec le contenu et seulement avec
+-- lui. Cas concret attendu : le volume 3, qu'André cherche en meilleure copie.
+ALTER TABLE "game_books" ADD COLUMN IF NOT EXISTS "version" varchar(32);

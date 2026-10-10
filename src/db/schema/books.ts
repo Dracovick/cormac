@@ -35,6 +35,13 @@ export const gameBooks = pgTable('game_books', {
    * même collection. Voir drizzle/0012.
    */
   collection: varchar('collection', { length: 80 }),
+  /**
+   * Empreinte courte du fichier (SHA-256 tronqué) — la version servie aux liens
+   * sous « ?v= ». ⚠ Le Blob met en cache 30 jours et un retéléversement écrit au
+   * MÊME chemin : sans ce paramètre, remplacer un volume serait invisible
+   * pendant un mois. Voir drizzle/0012.
+   */
+  version: varchar('version', { length: 32 }),
   note: text('note'),
   ordre: integer('ordre').notNull().default(0),
 })

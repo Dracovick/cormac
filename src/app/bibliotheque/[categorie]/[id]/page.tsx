@@ -119,6 +119,7 @@ function Contenu({ fiche, qs }: { fiche: FicheBibliotheque; qs: string }) {
 
           <LecteurLivre
             url={fiche.livre.url}
+            version={fiche.livre.version}
             titre={fiche.livre.titre}
             pages={fiche.livre.pages}
             qualiteRecherche={fiche.livre.qualiteRecherche}
