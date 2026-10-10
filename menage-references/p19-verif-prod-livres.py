@@ -58,7 +58,10 @@ verifie("GET /bibliotheque", st == 200, f"HTTP {st}")
 verifie("le rayon « Livres » est dans la page", "Livres" in h and "\\ud83d\\udcd6" in h or "📖" in h)
 for v in range(1, 5):
     verifie(f"le volume {v} est dans l'index", f"Volume {v}" in h)
-verifie("la copie partielle est dans l'index", "copie partielle" in h)
+# ⛔ La copie partielle du volume 3 a été retirée le 2026-10-10, le volume
+# complet ayant été réparé (décision d'André). Le contrôle s'inverse : sa
+# présence serait désormais l'anomalie.
+verifie("la copie partielle a bien QUITTÉ l'index", "copie partielle" not in h)
 verifie("l'index annonce la langue", "en anglais" in h)
 
 # ── 2. Chaque fiche de livre répond et porte ce qu'il faut
@@ -72,7 +75,7 @@ ids = sorted(set(
     int(m) for m in re.findall(
         r'\\"id\\":(\d+),\\"nom\\":\\"Encyclopedia Magica', h)
 ))
-verifie("les 5 livres sont dans l'index envoyé au navigateur", len(ids) == 5,
+verifie("les 4 volumes sont dans l'index envoyé au navigateur", len(ids) == 4,
         f"{len(ids)} trouvé(s) : {ids}")
 
 urls_pdf: dict[int, str] = {}
@@ -104,6 +107,18 @@ for i, u in urls_pdf.items():
     dispo = head2.get("content-disposition", "")
     verifie(f"  …et ?download=1 le donne en téléchargement", "attachment" in dispo.lower(),
             f"HTTP {st2}, content-disposition: {dispo or '(absent)'}")
+
+# ── 3 bis. Le volume 3 réparé : sa fiche doit annoncer une recherche qui marche
+#    et non plus l'avertissement « hors d'usage » de la version d'avant.
+for i, u in urls_pdf.items():
+    if "encyclopedia-magica-3" not in u:
+        continue
+    st, f3 = get(f"/bibliotheque/livre/{i}")
+    verifie("volume 3 — sa fiche n'annonce plus une recherche hors d'usage",
+            "hors d&#x27;usage" not in f3 and "hors d'usage" not in f3)
+    verifie("volume 3 — sa fiche dit que la reconnaissance a été refaite",
+            "refaite" in f3 or "refait" in f3)
+    verifie("volume 3 — il a toujours ses 417 pages", "417" in f3)
 
 # ── 4. TÉMOIN : une fiche de sort ne doit porter AUCUN élément du lecteur
 st, t = get("/bibliotheque/sort/1")

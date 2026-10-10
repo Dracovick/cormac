@@ -303,9 +303,10 @@ export async function getFicheBibliotheque(categorie: RayonSlug, id: number): Pr
   if (categorie === 'livre') {
     const [livre] = await db.select().from(schema.gameBooks).where(eq(schema.gameBooks.id, id))
     if (!livre) return null
-    // La collection est une colonne, pas une déduction sur le slug : la seconde
-    // copie du volume 3 porte « -3-partiel » et doit rester dans le même
-    // ouvrage. Voir drizzle/0012.
+    // La collection est une colonne, pas une déduction sur le slug : un même
+    // ouvrage peut porter des slugs qui ne se ressemblent pas, et une copie de
+    // dépannage d'un volume doit rester rangée dans son ouvrage (c'était le cas
+    // de « -3-partiel », retirée le 2026-10-10). Voir drizzle/0012.
     const tous = await db.select({
       id: schema.gameBooks.id, titre: schema.gameBooks.titre,
       volume: schema.gameBooks.volume, collection: schema.gameBooks.collection,

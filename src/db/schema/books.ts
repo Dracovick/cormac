@@ -31,8 +31,9 @@ export const gameBooks = pgTable('game_books', {
   tauxOcr: integer('taux_ocr'),
   /**
    * Regroupe les volumes d'un même ouvrage. Explicite, et pas déduit du slug :
-   * la seconde copie du volume 3 porte « -3-partiel » et doit rester dans la
-   * même collection. Voir drizzle/0012.
+   * une copie de dépannage d'un volume doit rester dans la même collection même
+   * si son slug diffère — c'était le cas de « -3-partiel », retirée du rayon le
+   * 2026-10-10 après réparation du volume complet. Voir drizzle/0012.
    */
   collection: varchar('collection', { length: 80 }),
   /**
