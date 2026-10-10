@@ -43,6 +43,7 @@ import { ButinDrawer } from '@/components/fiche/ButinDrawer'
 import { getPotionsCatalogue } from '@/app/actions/character'
 import { sourcesCASorts, contributionsSortsDepuisCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
 import { calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
+import { apercuDescription } from '@/lib/apercu'
 import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies, libelleTypeBonus } from '@/lib/dnd35/classe-armure'
 import { getDb } from '@/db'
 import { spells as spellsTable } from '@/db/schema/spells'
@@ -1113,7 +1114,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                       <a href={`https://www.google.com/search?q=site:regles-donjons-dragons.com+${encodeURIComponent(item.nom)}`} target="_blank" rel="noopener noreferrer" title="Voir la description D&D 3.5" className="ml-1.5 text-stone-700 hover:text-amber-400 transition-colors text-xs">🔍</a>
                       {charItem.emplacement && <span className="text-stone-600 text-xs ml-2">{charItem.emplacement}</span>}
                       {item.description && (
-                        <p className="text-stone-500 text-xs mt-0.5 truncate">{item.description}</p>
+                        <p className="text-stone-500 text-xs mt-0.5 truncate">{apercuDescription(item.description)}</p>
                       )}
                       {/* Note propre à CE personnage (provenance du butin), comme pour les potions */}
                       {charItem.notes && (
@@ -1170,7 +1171,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                         <p className="text-stone-400 text-xs mt-0.5">{potion.sortEffet}</p>
                       )}
                       {potion.description && (
-                        <p className="text-stone-500 text-xs mt-0.5">{potion.description}</p>
+                        <p className="text-stone-500 text-xs mt-0.5">{apercuDescription(potion.description, 300)}</p>
                       )}
                       {charPotion.notes && (
                         <p className="text-amber-600 text-xs italic mt-0.5">{charPotion.notes}</p>
