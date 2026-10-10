@@ -12,6 +12,7 @@ import { formatCritique } from '@/lib/dnd35/critique'
 import { PrintButton } from '@/components/fiche/PrintButton'
 import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
 import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies } from '@/lib/dnd35/classe-armure'
+import { calculeBonusEffetsCarac, sourcesCASorts, contributionsSortsDepuisCA } from '@/lib/dnd35/spell-effects'
 import { calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
 
 export const dynamic = 'force-dynamic'
@@ -44,7 +45,8 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   if (!data) notFound()
 
   const { character, race, clan, classes, abilityScores, combatStats, savingThrows,
-    skills, feats, spells, weapons, armor, magicItems, potions, currency, gems, languages, companions } = data
+    skills, feats, spells, weapons, armor, magicItems, potions, currency, gems, languages, companions,
+    spellEffects } = data
 
   const firstClass = classes[0]
   const classeInfo = firstClass ? getClasseInfo(firstClass.classe.nom) : null
@@ -141,6 +143,63 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   const initT = dexMod + (combatStats?.initiativeBonus ?? 0) + sommeBonus(donsPassifs.initiative)
 
   const abilMods: Record<string, number> = { FOR: forMod, DEX: dexMod, CON: conMod, INT: intMod, SAG: sagMod, CHA: chaMod }
+
+  // ── ÉTAT AU REPOS ──
+  // Décision du MJ (10 octobre 2026) : la feuille imprimée est un état AU REPOS. Un sort
+  // d'une minute n'a rien à faire sur un document qu'on garde toute la soirée, alors les
+  // sorts en cours n'entrent dans aucun calcul du papier — contrairement à l'écran, qui
+  // les propage partout. Mais la feuille doit le DIRE : sans ça, l'écart avec l'écran se
+  // lit comme une erreur de calcul (Lucky sous Grâce du chat : +13/+8 à l'écran, +11/+6
+  // sur papier). Le bandeau nomme donc les sorts actifs à l'instant de l'impression et
+  // chiffre ce qu'ils changeraient, avec les MÊMES moteurs que l'écran.
+  const CIBLES_CARAC = ['FOR', 'DEX', 'CON', 'INT', 'SAG', 'CHA']
+  const effetsCaracActifs = spellEffects.filter(e => CIBLES_CARAC.includes(e.cible))
+  const effetsCAActifs = spellEffects.filter(e => e.cible === 'CA')
+  const effetsDeplActifs = spellEffects.filter(e => e.cible === 'DEPL')
+  const { bonus: bonusCaracSorts, contributions: contribCaracSorts } = calculeBonusEffetsCarac(effetsCaracActifs)
+  // Les écarts, cible par cible : ce que la feuille n'affiche pas.
+  const LIBELLE_CARAC: Record<string, string> = { FOR: 'FOR', DEX: 'DEX', CON: 'CON', INT: 'INT', SAG: 'SAG', CHA: 'CHA' }
+  const scoresAuRepos: Record<string, number> = { FOR: forT, DEX: dexT, CON: conT, INT: intT, SAG: sagT, CHA: chaT }
+  const ecartsCarac = CIBLES_CARAC
+    .filter(c => bonusCaracSorts[c as keyof typeof bonusCaracSorts] !== 0)
+    .map(c => {
+      const repos = scoresAuRepos[c]
+      const sous = repos + bonusCaracSorts[c as keyof typeof bonusCaracSorts]
+      return `${LIBELLE_CARAC[c]} ${repos} → ${sous} (mod. ${fm(getModifier(repos))} → ${fm(getModifier(sous))})`
+    })
+  // CA sous sorts : le même arbitrage de cumul que l'écran, sorts compris, et la DEX
+  // éventuellement augmentée (plafonnée par l'armure comme la case imprimée).
+  const dexModCASorts = Math.min(getModifier(dexT + bonusCaracSorts.DEX), maxDex)
+  const { total: bonusCAAvecSorts, contributions: contribCAAvecSorts } = calculeClasseArmure(
+    [...sourcesCAObjets(magicItems), ...sourcesCASaisies(combatStats), ...sourcesCASorts(effetsCAActifs)],
+    { bonusArmurePortee, bonusBouclierPorte: caArmure - bonusArmurePortee },
+  )
+  // Ce qu'un sort de CA apporte réellement : un bouclier de la foi +2 ne s'ajoute pas à
+  // un anneau de parade +2 déjà porté, et le bandeau ne doit pas annoncer un bonus que
+  // la règle du cumul efface.
+  const contribCASorts = contributionsSortsDepuisCA(contribCAAvecSorts, effetsCAActifs)
+  const caAvecSorts = 10 + dexModCASorts + caArmure + bonusCAAvecSorts
+  const bonusDeplSorts = effetsDeplActifs.reduce((sum, e) => sum + e.valeur, 0)
+  // TOUS les sorts actifs sont nommés, même ceux qui ne déplacent aucun total (Lumière,
+  // Immunité aux énergies) : une liste partielle sous le mot « actifs » se lirait comme
+  // la liste complète, et le MJ conclurait que le reste n'est pas en cours.
+  const apportEffet = (e: { id: number; nom: string; cible: string; valeur: number }) => {
+    if (e.cible === 'DEPL') return `${e.nom} (${fm(e.valeur)} m)`
+    const contrib = [...contribCaracSorts, ...contribCASorts].find(c => c.id === e.id)
+    if (contrib) {
+      const cible = e.cible === 'CA' ? 'CA' : e.cible
+      return contrib.effective !== 0
+        ? `${e.nom} (${fm(contrib.effective)} ${cible})`
+        : `${e.nom} (sans effet : ${contrib.remplacePar ?? 'cumul'})`
+    }
+    return e.nom
+  }
+  const nomsSortsActifs = spellEffects.map(apportEffet)
+  const ecartsStats = [
+    ...ecartsCarac,
+    ...(caAvecSorts !== caTotal ? [`CA ${caTotal} → ${caAvecSorts}`] : []),
+    ...(bonusDeplSorts !== 0 ? [`Déplacement ${combatStats?.deplacement ?? 9} → ${(combatStats?.deplacement ?? 9) + bonusDeplSorts} m`] : []),
+  ]
 
   // Domaines divins — même source que la fiche à l'écran (combatStats.domaine1/2),
   // pour que le papier et l'écran ne divergent pas.
@@ -329,6 +388,25 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
           </div>
         )}
         </div>
+
+        {/* État au repos — la feuille dit elle-même ce qu'elle ne compte pas */}
+        <table style={{ ...TABLE, marginBottom: '0', marginTop: '2px' }}>
+          <tbody>
+            <tr>
+              <td style={{ border: '1px solid #000', padding: '2px 6px', fontSize: '6.5pt', background: '#eee', lineHeight: 1.45 }}>
+                <strong style={{ textTransform: 'uppercase', letterSpacing: '0.03em' }}>État au repos</strong>
+                {' — cette feuille ne compte aucun sort en cours : tous ses totaux (attaque, dégâts, CA, jets de sauvegarde, compétences) sont ceux du personnage sans effet magique temporaire.'}
+                {nomsSortsActifs.length > 0 && (
+                  <>
+                    <br />
+                    <strong>Actifs à l&apos;impression, non comptés ici :</strong>{' '}{nomsSortsActifs.join(' · ')}.
+                    {ecartsStats.length > 0 && <> <strong>Avec eux :</strong> {ecartsStats.join(' · ')}.</>}
+                  </>
+                )}
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
         {/* Caractéristiques + Classe/PV/CA */}
         <table style={{ ...TABLE, marginBottom: '0' }}>
