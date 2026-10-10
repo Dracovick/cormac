@@ -3,10 +3,11 @@ import { libelleTypeBonus } from '@/lib/dnd35/classe-armure'
 import { notFound } from 'next/navigation'
 import { getFicheBibliotheque, type FicheBibliotheque, type RayonSlug } from '@/lib/queries/bibliotheque'
 import { getNomPersonnage } from '@/lib/queries/character'
+import { LecteurLivre } from '@/components/bibliotheque/LecteurLivre'
 
 export const dynamic = 'force-dynamic'
 
-const SLUGS: RayonSlug[] = ['sort', 'potion', 'objet', 'arme', 'armure', 'don', 'competence']
+const SLUGS: RayonSlug[] = ['sort', 'potion', 'objet', 'arme', 'armure', 'don', 'competence', 'livre']
 
 const EN_TETE: Record<RayonSlug, { icone: string; rayon: string }> = {
   sort: { icone: '✨', rayon: 'Sorts' },
@@ -16,6 +17,7 @@ const EN_TETE: Record<RayonSlug, { icone: string; rayon: string }> = {
   armure: { icone: '🛡️', rayon: 'Armures' },
   don: { icone: '🎯', rayon: 'Dons' },
   competence: { icone: '🎓', rayon: 'Compétences' },
+  livre: { icone: '📖', rayon: 'Livres' },
 }
 
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
@@ -91,6 +93,7 @@ function nomDe(fiche: FicheBibliotheque): string {
     case 'armure': return fiche.armure.nom
     case 'don': return fiche.don.nom
     case 'competence': return fiche.competence.nom
+    case 'livre': return fiche.livre.titre
   }
 }
 
@@ -103,6 +106,43 @@ function formatPoids(poids: string | null): string | null {
 
 function Contenu({ fiche, qs }: { fiche: FicheBibliotheque; qs: string }) {
   switch (fiche.categorie) {
+    case 'livre':
+      return (
+        <>
+          <div className="space-y-2">
+            {fiche.livre.volume !== null && <Row label="Volume">{fiche.livre.volume} de 4</Row>}
+            {fiche.livre.tranche && <Row label="Entrées couvertes">{fiche.livre.tranche}</Row>}
+            {fiche.livre.pages !== null && <Row label="Pages">{fiche.livre.pages}</Row>}
+            {fiche.tailleAffichee && <Row label="Taille du fichier">{fiche.tailleAffichee}</Row>}
+            <Row label="Langue">{fiche.livre.langue === 'en' ? 'Anglais' : 'Français'}</Row>
+          </div>
+
+          <LecteurLivre
+            url={fiche.livre.url}
+            titre={fiche.livre.titre}
+            pages={fiche.livre.pages}
+            qualiteRecherche={fiche.livre.qualiteRecherche}
+            tauxOcr={fiche.livre.tauxOcr}
+            tailleAffichee={fiche.tailleAffichee}
+            enAnglais={fiche.livre.langue === 'en'}
+          />
+
+          <Description texte={fiche.livre.note} />
+
+          {fiche.memeCollection.length > 1 && (
+            <div className="mt-5 pt-4 border-t border-stone-800">
+              <p className="text-stone-500 text-xs mb-2">Les autres volumes de la collection :</p>
+              {fiche.memeCollection
+                .filter(l => l.id !== fiche.livre.id)
+                .map(l => (
+                  <Link key={l.id} href={`/bibliotheque/livre/${l.id}${qs}`} className="block text-amber-300 hover:text-amber-200 text-sm py-0.5">
+                    📖 {l.titre}
+                  </Link>
+                ))}
+            </div>
+          )}
+        </>
+      )
     case 'sort':
       return (
         <>

@@ -14,7 +14,7 @@ import { formatCritique } from '@/lib/dnd35/critique'
  * sur sa propre page, côté serveur.
  */
 
-export type RayonSlug = 'sort' | 'potion' | 'objet' | 'arme' | 'armure' | 'don' | 'competence'
+export type RayonSlug = 'sort' | 'potion' | 'objet' | 'arme' | 'armure' | 'don' | 'competence' | 'livre'
 
 export type EntreeIndex = {
   id: number
@@ -42,6 +42,7 @@ export type BibliothequeIndex = {
   armures: EntreeIndex[]
   dons: EntreeIndex[]
   competences: EntreeIndex[]
+  livres: EntreeIndex[]
 }
 
 /** Abréviations VF 3.5 des classes pour la ligne « Niveau » des sorts. */
@@ -77,6 +78,13 @@ function formatPrix(prix: string | null): string | null {
   return `${n % 1 === 0 ? n : n.toFixed(2)} po`
 }
 
+/** « 14,7 Mo » — la taille d'un fichier téléchargeable, pour que le joueur sache. */
+export function formatTaille(octets: number | null): string | null {
+  if (octets === null || octets <= 0) return null
+  const mo = octets / 1024 / 1024
+  return mo >= 100 ? `${Math.round(mo)} Mo` : `${mo.toFixed(1).replace('.', ',')} Mo`
+}
+
 /** La base écrit FOR/DEX/…; la fiche d'un joueur écrit le mot. */
 const LIBELLE_CARAC: Record<string, string> = {
   FOR: 'Force', DEX: 'Dextérité', CON: 'Constitution',
@@ -106,7 +114,7 @@ async function niveauxParSort(): Promise<Map<number, { classe: string; niveau: n
 
 export async function getBibliothequeIndex(): Promise<BibliothequeIndex> {
   const db = getDb()
-  const [sorts, niveaux, potions, objets, armes, armures, dons, competences] = await Promise.all([
+  const [sorts, niveaux, potions, objets, armes, armures, dons, competences, livres] = await Promise.all([
     db.select({ id: schema.spells.id, nom: schema.spells.nom, ecole: schema.spells.ecole })
       .from(schema.spells).orderBy(schema.spells.nom),
     niveauxParSort(),
@@ -143,6 +151,10 @@ export async function getBibliothequeIndex(): Promise<BibliothequeIndex> {
       id: schema.skills.id, nom: schema.skills.nom, caracteristique: schema.skills.caracteristique,
       formationRequise: schema.skills.formationRequise, malusArmure: schema.skills.malusArmure,
     }).from(schema.skills).where(eq(schema.skills.estCatalogue, true)).orderBy(schema.skills.nom),
+    // Les livres consultables en entier : le PDF vit dans Vercel Blob, pas dans
+    // le dépôt. Le rayon n'en publie que l'étiquette; la lecture se fait sur la
+    // fiche. Voir drizzle/0012.
+    db.select().from(schema.gameBooks).orderBy(schema.gameBooks.ordre),
   ])
 
   return {
@@ -203,6 +215,17 @@ export async function getBibliothequeIndex(): Promise<BibliothequeIndex> {
       // « Connaissance de la magie » doit mener à « Art de la magie ».
       alias: aliasPour(c.nom),
     })),
+    livres: livres.map(l => ({
+      id: l.id, nom: l.titre,
+      detail: [
+        l.tranche ? `entrées ${l.tranche}` : null,
+        l.pages ? `${l.pages} pages` : null,
+        formatTaille(l.tailleOctets),
+        l.langue === 'en' ? 'en anglais' : null,
+      ].filter(Boolean).join(' · '),
+      // Un joueur qui cherche « encyclopedia » ou « magica » doit tomber dessus.
+      alias: ['encyclopedia magica', 'encyclopedia', 'magica'],
+    })),
   }
 }
 
@@ -251,7 +274,14 @@ export type FicheCompetence = {
   classesDeClasse: { nom: string; precision: string | null }[]
 }
 
-export type FicheBibliotheque = FicheSort | FichePotion | FicheObjet | FicheArme | FicheArmure | FicheDon | FicheCompetence
+export type FicheLivre = {
+  categorie: 'livre'
+  livre: typeof schema.gameBooks.$inferSelect
+  tailleAffichee: string | null
+  /** Les autres volumes de la même collection, pour passer de l'un à l'autre. */
+  memeCollection: { id: number; titre: string; volume: number | null }[]
+}
+export type FicheBibliotheque = FicheSort | FichePotion | FicheObjet | FicheArme | FicheArmure | FicheDon | FicheCompetence | FicheLivre
 
 export async function getFicheBibliotheque(categorie: RayonSlug, id: number): Promise<FicheBibliotheque | null> {
   const db = getDb()
@@ -268,6 +298,26 @@ export async function getFicheBibliotheque(categorie: RayonSlug, id: number): Pr
       .filter(p => normaliserNom(nomSortDePotion(p.nom)) === cible)
       .sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
     return { categorie, sort, niveaux: formatNiveaux(niveaux.get(sort.id) ?? []), potionsLiees }
+  }
+
+  if (categorie === 'livre') {
+    const [livre] = await db.select().from(schema.gameBooks).where(eq(schema.gameBooks.id, id))
+    if (!livre) return null
+    // La collection est une colonne, pas une déduction sur le slug : la seconde
+    // copie du volume 3 porte « -3-partiel » et doit rester dans le même
+    // ouvrage. Voir drizzle/0012.
+    const tous = await db.select({
+      id: schema.gameBooks.id, titre: schema.gameBooks.titre,
+      volume: schema.gameBooks.volume, collection: schema.gameBooks.collection,
+    }).from(schema.gameBooks).orderBy(schema.gameBooks.ordre)
+    return {
+      categorie,
+      livre,
+      tailleAffichee: formatTaille(livre.tailleOctets),
+      memeCollection: tous
+        .filter(t => livre.collection !== null && t.collection === livre.collection)
+        .map(({ id, titre, volume }) => ({ id, titre, volume })),
+    }
   }
 
   if (categorie === 'potion') {

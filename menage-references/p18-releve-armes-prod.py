@@ -65,14 +65,14 @@ def releve_papier(pid: int) -> list[str]:
     bloc = h[i:j]
     lignes = []
     for tr in re.split(r"<tr", bloc)[1:]:
-        cells = [
-            html.unescape(RE_BALISE.sub("", c)).strip()
-            for c in re.split(r"<td", tr)[1:]
-        ]
-        cells = [c for c in cells]
+        cells = []
+        for c in re.split(r"<td", tr)[1:]:
+            # couper l'attribut de la balise : on ne garde que le contenu
+            k = c.find(">")
+            cells.append(html.unescape(RE_BALISE.sub("", c[k + 1:])).strip() if k >= 0 else "")
         # une ligne d'arme a un nom non vide en première cellule
         if cells and cells[0] and cells[0] not in ("Armes",):
-            lignes.append(" | ".join(cells))
+            lignes.append(" | ".join(cells[:3]))
     return lignes
 
 

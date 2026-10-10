@@ -1,0 +1,136 @@
+
+──── #1 ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Épée longue +1                                       +10 / +5
+    Dégâts   Épée longue +1                                       1d8+4
+    Attaque  Arc long composite (Force +3) +1                     +15 / +10
+    Dégâts   Arc long composite (Force +3) +1                     1d8+8
+  PAPIER
+    Épée longue +1 | +10 / +5 | 1d8+4
+    Arc long composite (Force +3) +1 | +15 / +10 | 1d8+8
+
+──── #3 ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Bâton de guerre +1                                   +3
+    Dégâts   Bâton de guerre +1                                   1d6
+    Attaque  Dague                                                +2
+    Dégâts   Dague                                                1d4-1
+  PAPIER
+    Bâton de guerre +1 | +3 | 1d6
+    Dague | +2 | 1d4-1
+
+──── #4 ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Bâtonnet de parade +5                                +15 / +10
+    Dégâts   Bâtonnet de parade +5                                1d8+7
+    Attaque  Bâtonnet parade +5                                   +10 / +5
+    Dégâts   Bâtonnet parade +5                                   —+2
+    Attaque  Bâton +3                                             +13 / +8
+    Dégâts   Bâton +3                                             1d6+5
+    Attaque  Bâton + 3                                            +10 / +5
+    Dégâts   Bâton + 3                                            1d6 +5+2
+    Attaque  Dague +3 avec lumière continuelle                    +10 / +5
+    Dégâts   Dague +3 avec lumière continuelle                    1d4 +5+2
+    Attaque  Dague +3                                             +13 / +8
+    Dégâts   Dague +3                                             1d4+5
+  PAPIER
+    Bâtonnet de parade +5 | +15 / +10 | 1d8+7
+    Bâtonnet parade +5 | +10 / +5 | —+2
+    Bâton +3 | +13 / +8 | 1d6+5
+    Bâton + 3 | +10 / +5 | 1d6 +5+2
+    Dague +3 avec lumière continuelle | +10 / +5 | 1d4 +5+2
+    Dague +3 | +13 / +8 | 1d4+5
+
+──── #5 ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Épée longue                                          +11 / +6
+    Dégâts   Épée longue                                          1d8+2
+    Attaque  Arc long composite                                   +12 / +7
+    Dégâts   Arc long composite                                   1d8+3
+  PAPIER
+    Épée longue | +11 / +6 | 1d8+2
+    Arc long composite | +12 / +7 | 1d8+3
+
+──── #20 ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Masse de fantascin +3                                +12 / +7
+    Dégâts   Masse de fantascin +3                                1d8 +3 +4+4
+    Attaque  Fouet +2                                             +14 / +9
+    Dégâts   Fouet +2                                             1d3 +3+6
+    Attaque  Morgenstern +3                                       +17 / +12
+    Dégâts   Morgenstern +3                                       1d8+7
+    Attaque  Bolas                                                +13 / +8
+    Dégâts   Bolas                                                1d4
+    Attaque  Arbalète légère                                      +13 / +8
+    Dégâts   Arbalète légère                                      1d8
+  PAPIER
+    Masse de fantascin +3 | +12 / +7 | 1d8 +3 +4+4
+    Fouet +2 | +14 / +9 | 1d3 +3+6
+    Morgenstern +3 | +17 / +12 | 1d8+7
+    Bolas | +11 / +6 | 1d4
+    Arbalète légère | +11 / +6 | 1d8
+
+──── #21 ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Dague +1                                             +9 / +4
+    Dégâts   Dague +1                                             1d4+2
+    Attaque  Rapière +2                                           +10 / +5
+    Dégâts   Rapière +2                                           1d6+3
+    Attaque  Arc court composite (Force +3)                       +14 / +9
+    Dégâts   Arc court composite (Force +3)                       1d6+3
+  PAPIER
+    Dague +1 | +9 / +4 | 1d4+2
+    Rapière +2 | +10 / +5 | 1d6+3
+    Arc court composite (Force +3) | +14 / +9 | 1d6+3
+
+──── #82 ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Dague frappée                                        +10
+    Dégâts   Dague frappée                                        1d4+5
+    Attaque  Dague lancée                                         +10
+    Dégâts   Dague lancée                                         1d4+5
+    Attaque  Épée à deux mains +1                                 +11
+    Dégâts   Épée à deux mains +1                                 2d6+6
+  PAPIER
+    Dague frappée | +10 | 1d4+5
+    Dague lancée | +10 | 1d4+5
+    Épée à deux mains +1 | +11 | 2d6+6
+
+──── #86 ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Masse d'armes lourde +2                              +12 / +7
+    Dégâts   Masse d'armes lourde +2                              1d8+5
+    Attaque  Marteau léger                                        +10 / +5
+    Dégâts   Marteau léger                                        1d4+3
+    Attaque  Hache de guerre naine +1                             +12 / +7
+    Dégâts   Hache de guerre naine +1                             1d10+6
+    Attaque  Arbalète lourde +1                                   +9 / +4
+    Dégâts   Arbalète lourde +1                                   1d10+1
+  PAPIER
+    Masse d'armes lourde +2 | +12 / +7 | 1d8+5
+    Marteau léger | +10 / +5 | 1d4+3
+    Hache de guerre naine +1 | +12 / +7 | 1d10+6
+    Arbalète lourde +1 | +9 / +4 | 1d10+1
+
+──── #6 TÉMOIN ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Dague                                                -1
+    Dégâts   Dague                                                1d4-2
+    Attaque  Rapière                                              -1
+    Dégâts   Rapière                                              1d6-2
+    Attaque  Arc court                                            +9 / +4
+    Dégâts   Arc court                                            1d6
+  PAPIER
+    Dague | -1 | 1d4-2
+    Rapière | -1 | 1d6-2
+    Arc court | +9 / +4 | 1d6
+
+──── #22 TÉMOIN ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Mains nues (avec bonus moine)                        +12 / +7
+    Dégâts   Mains nues (avec bonus moine)                        1d12+3 (+3)+3
+    Attaque  Mains nues (avec bonus multiclassé)                  +12 / +7
+    Dégâts   Mains nues (avec bonus multiclassé)                  1d12+3 (+3)+3
+  PAPIER
+    Mains nues (avec bonus moine) | +12 / +7 | 1d12+3 (+3)+3
+    Mains nues (avec bonus multiclassé) | +12 / +7 | 1d12+3 (+3)+3

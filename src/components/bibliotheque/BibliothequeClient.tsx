@@ -15,6 +15,7 @@ const RAYONS: { cle: RayonCle; slug: RayonSlug; label: string; icone: string; fi
   { cle: 'armures', slug: 'armure', label: 'Armures', icone: '🛡️' },
   { cle: 'dons', slug: 'don', label: 'Dons', icone: '🎯' },
   { cle: 'competences', slug: 'competence', label: 'Compétences', icone: '🎓', filtreLabel: 'Toutes les caractéristiques' },
+  { cle: 'livres', slug: 'livre', label: 'Livres', icone: '📖' },
 ]
 
 type Trouvaille = EntreeIndex & { slug: RayonSlug; icone: string; rayonLabel: string }
