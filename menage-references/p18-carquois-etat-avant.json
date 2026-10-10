@@ -1,0 +1,14 @@
+{
+  "id": 41,
+  "nom": "Carquois de flèches +2 infini",
+  "type": "Carquois",
+  "emplacement": "Dos",
+  "bonus": null,
+  "bonus_type": null,
+  "prix": null,
+  "aura_magique": null,
+  "niveau_lanceur": null,
+  "est_catalogue": false,
+  "catalogue_id": null,
+  "description": "Flèches magiques +1."
+}

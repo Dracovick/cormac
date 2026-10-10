@@ -760,7 +760,7 @@ function SectionEquipement({ data, update, derived, potionsCatalogue }: { data: 
                     <div><label className={LBL} title="Bonus de Force maximal ajouté aux dégâts (ne s'applique pas au jet d'attaque)">Côte Force</label><input className={INP_NUM + ' w-full'} type="number" min={0} value={a.coteDeForce ?? ''} placeholder="—" onChange={e => setArme(i, 'coteDeForce', e.target.value === '' ? null : parseInt(e.target.value) || 0)} /></div>
                   )}
                   {isRanged && (
-                    <div><label className={LBL} title="Flèches +1, bolts +2, etc. S'ajoute à l'attaque ET aux dégâts.">Munitions +Mag</label><input className={INP_NUM + ' w-full'} type="number" min={0} value={a.bonusMunitions ?? ''} placeholder="—" onChange={e => setArme(i, 'bonusMunitions', e.target.value === '' ? null : parseInt(e.target.value) || 0)} /></div>
+                    <div><label className={LBL} title="Flèches +1, carreaux +2, etc. S'ajoute à l'attaque ET aux dégâts — mais ne se cumule pas avec le bonus de l'arme : la fiche garde le meilleur des deux.">Munitions +Mag</label><input className={INP_NUM + ' w-full'} type="number" min={0} value={a.bonusMunitions ?? ''} placeholder="—" onChange={e => setArme(i, 'bonusMunitions', e.target.value === '' ? null : parseInt(e.target.value) || 0)} /></div>
                   )}
                   <div className={`${isComposite && isRanged ? '' : 'sm:col-span-3'} flex items-end pb-1`}>
                     <span className="text-stone-600 text-xs italic">

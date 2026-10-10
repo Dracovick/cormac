@@ -1,0 +1,184 @@
+
+──── #1 ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Épée longue +1                                       +10 / +5
+    Dégâts   Épée longue +1                                       1d8+4
+    Attaque  Arc long composite (Force +3) +1                     +16 / +11
+    Dégâts   Arc long composite (Force +3) +1                     1d8+9
+  PAPIER
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Épée longue +1 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+10 / +5 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d8 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">19-20/×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Tranchant | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Arc long composite +1 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+12 / +7 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d8 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×3 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">33 m | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Perçant | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+
+──── #3 ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Bâton de guerre +1                                   +3
+    Dégâts   Bâton de guerre +1                                   1d6
+    Attaque  Dague                                                +2
+    Dégâts   Dague                                                1d4-1
+  PAPIER
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Bâton de guerre +1 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+3 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d6 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">C | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Dague | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d4 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">19-20/×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">3 m | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">P | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+
+──── #4 ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Bâtonnet de parade +5                                +15 / +10
+    Dégâts   Bâtonnet de parade +5                                1d8+7
+    Attaque  Bâtonnet parade +5                                   +10 / +5
+    Dégâts   Bâtonnet parade +5                                   —+2
+    Attaque  Bâton +3                                             +13 / +8
+    Dégâts   Bâton +3                                             1d6+5
+    Attaque  Bâton + 3                                            +10 / +5
+    Dégâts   Bâton + 3                                            1d6 +5+2
+    Attaque  Dague +3 avec lumière continuelle                    +10 / +5
+    Dégâts   Dague +3 avec lumière continuelle                    1d4 +5+2
+    Attaque  Dague +3                                             +13 / +8
+    Dégâts   Dague +3                                             1d4+5
+  PAPIER
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Bâtonnet de parade +5 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+15 / +10 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d8 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">C | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Bâtonnet parade +5 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+10 / +5 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">— | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">— | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Bâton +3 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+13 / +8 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d6 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">C | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Bâton + 3 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+10 / +5 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d6 +5 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">— | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Dague +3 avec lumière continuelle | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+10 / +5 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d4 +5 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">— | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Dague +3 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+13 / +8 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d4 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">19-20/×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">3 m | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">P | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+
+──── #5 ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Épée longue                                          +11 / +6
+    Dégâts   Épée longue                                          1d8+2
+    Attaque  Arc long composite                                   +12 / +7
+    Dégâts   Arc long composite                                   1d8+3
+  PAPIER
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Épée longue | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+11 / +6 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d8 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">19-20/×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Tranchant | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Arc long composite | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+11 / +6 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d8 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×3 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">33 m | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Perçant | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+
+──── #20 ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Masse de fantascin +3                                +12 / +7
+    Dégâts   Masse de fantascin +3                                1d8 +3 +4+4
+    Attaque  Fouet +2                                             +14 / +9
+    Dégâts   Fouet +2                                             1d3 +3+6
+    Attaque  Morgenstern +3                                       +17 / +12
+    Dégâts   Morgenstern +3                                       1d8+7
+    Attaque  Bolas                                                +13 / +8
+    Dégâts   Bolas                                                1d4
+    Attaque  Arbalète légère                                      +13 / +8
+    Dégâts   Arbalète légère                                      1d8
+  PAPIER
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Masse de fantascin +3 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+12 / +7 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d8 +3 +4 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">— | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Fouet +2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+14 / +9 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d3 +3 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">— | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Morgenstern +3 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+15 / +10 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d8 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">C | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Bolas | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+11 / +6 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d4 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">3 m | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contondant | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Arbalète légère | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+11 / +6 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d8 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">19-20/×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">24 m | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Perforant | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+
+──── #21 ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Dague +1                                             +9 / +4
+    Dégâts   Dague +1                                             1d4+2
+    Attaque  Rapière +2                                           +10 / +5
+    Dégâts   Rapière +2                                           1d6+3
+    Attaque  Arc court composite (Force +3)                       +14 / +9
+    Dégâts   Arc court composite (Force +3)                       1d6+3
+  PAPIER
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Dague +1 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+9 / +4 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d4 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">19-20/×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">3 m | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">P | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Rapière +2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+10 / +5 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d6 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">18-20/×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">P | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Arc court composite | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+12 / +7 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d6 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×3 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">21 m | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">P | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+
+──── #82 ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Dague frappée                                        +10
+    Dégâts   Dague frappée                                        1d4+5
+    Attaque  Dague lancée                                         +10
+    Dégâts   Dague lancée                                         1d4+5
+    Attaque  Épée à deux mains +1                                 +11
+    Dégâts   Épée à deux mains +1                                 2d6+6
+  PAPIER
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Dague frappée | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+10 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d4 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">— | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Dague lancée | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+10 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d4 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">— | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Épée à deux mains +1 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+11 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">2d6 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">19-20/×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Tranchant | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+
+──── #86 ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Masse d'armes lourde +2                              +12 / +7
+    Dégâts   Masse d'armes lourde +2                              1d8+5
+    Attaque  Marteau léger                                        +10 / +5
+    Dégâts   Marteau léger                                        1d4+3
+    Attaque  Hache de guerre naine +1                             +12 / +7
+    Dégâts   Hache de guerre naine +1                             1d10+6
+    Attaque  Arbalète lourde +1                                   +9 / +4
+    Dégâts   Arbalète lourde +1                                   1d10+1
+  PAPIER
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Masse d'armes lourde +2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+12 / +7 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d8 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contondant | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Marteau léger | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+10 / +5 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d4 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">6 m | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contondant | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Hache de guerre naine +1 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+11 / +6 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d10 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×3 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Tranchant | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Arbalète lourde +1 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+9 / +4 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d10 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">19-20/×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">36 m | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Perforant | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+
+──── #6 TÉMOIN ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Dague                                                -1
+    Dégâts   Dague                                                1d4-2
+    Attaque  Rapière                                              -1
+    Dégâts   Rapière                                              1d6-2
+    Attaque  Arc court                                            +9 / +4
+    Dégâts   Arc court                                            1d6
+  PAPIER
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Dague | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">-1 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d4 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">19-20/×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">3 m | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">P | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Rapière | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">-1 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d6 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">18-20/×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">P | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Arc court | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+9 / +4 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d6 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×3 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">18 m | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">P | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+
+──── #22 TÉMOIN ────────────────────────────────────────
+  ÉCRAN
+    Attaque  Mains nues (avec bonus moine)                        +12 / +7
+    Dégâts   Mains nues (avec bonus moine)                        1d12+3 (+3)+3
+    Attaque  Mains nues (avec bonus multiclassé)                  +12 / +7
+    Dégâts   Mains nues (avec bonus multiclassé)                  1d12+3 (+3)+3
+  PAPIER
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Mains nues (avec bonus moine) | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+12 / +7 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d12+3 (+3) | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">— | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;font-weight:bold">Mains nues (avec bonus multiclassé) | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">+12 / +7 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">1d12+3 (+3) | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">×2 | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">Contact | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt;text-align:center">— | style="border:1px solid #ccc;padding:2px 6px;font-size:9pt">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">
+    colSpan="7" style="border:1px solid #eee;height:18px">

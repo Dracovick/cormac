@@ -174,8 +174,8 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           <Tip>La fiche affiche automatiquement <span className="font-mono text-stone-300">(Force +3)</span> après le nom quand une côte est renseignée, et <span className="font-mono text-stone-300">+2</span> en suffixe pour un bonus magique.</Tip>
 
           <p className="font-semibold text-stone-400 mt-3">Munitions magiques (flèches, bolts)</p>
-          <Row label="Munitions +Mag">Bonus d'enchantement des flèches ou carreaux utilisés. S'ajoute à l'attaque ET aux dégâts, cumulable avec le bonus de l'arc. Pas besoin de créer une arme séparée pour les flèches.</Row>
-          <Row label="Exemple">Flèches +2 → entrez <strong>Munitions +Mag = 2</strong>. Le détail affichera <span className="font-mono text-stone-300">fl. +2</span> dans la décomposition.</Row>
+          <Row label="Munitions +Mag">Bonus d'altération des flèches ou carreaux utilisés. S'ajoute à l'attaque ET aux dégâts. Pas besoin de créer une arme séparée pour les flèches. ⚠ <strong>Il ne se cumule pas avec le bonus de l'arc</strong> : la fiche garde le meilleur des deux et barre l'autre, comme le livre l'impose.</Row>
+          <Row label="Exemple">Flèches +2 sur un arc +1 → entrez <strong>Munitions +Mag = 2</strong>. Le détail affichera <span className="font-mono text-stone-300">munitions magiques +2</span>, et l'<span className="font-mono text-stone-300">arme magique +1</span> barrée en dessous : « ne se cumule pas, les munitions +2 l'emportent ». Le total d'altération est <strong>+2</strong>.</Row>
         </Section>
 
         <Section titre="🗡️ Onglet Équipement — objets magiques, bonus et charges">

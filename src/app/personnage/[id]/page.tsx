@@ -7,12 +7,11 @@ import { getMultiClassBab, xpPourNiveau, modSauvegarde } from '@/lib/dnd35/rules
 import { getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
 import { getCapacitesPourPersonnage } from '@/lib/dnd35/class-features'
 import { SORTS_DND35, type ClasseSortKey } from '@/lib/dnd35/spells'
-import { getFeatWeaponBonuses, getFeatDescription, getFeatPassiveBonuses, sommeBonus } from '@/lib/dnd35/feat-bonuses'
+import { getFeatDescription, getFeatPassiveBonuses, sommeBonus } from '@/lib/dnd35/feat-bonuses'
 import { getDomaineInfo } from '@/lib/dnd35/domains'
 import { caracteristiqueDe } from '@/lib/dnd35/skills'
 import { getChargeCategorie, getChargeLimites } from '@/lib/dnd35/encumbrance'
 import { formatCritique } from '@/lib/dnd35/critique'
-import { estArmeADistance } from '@/lib/dnd35/weapons'
 import { FEATS_DND35, verifierPrerequisDon } from '@/lib/dnd35/feats'
 import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
 
@@ -43,6 +42,7 @@ import { JournalDrawer } from '@/components/fiche/JournalDrawer'
 import { ButinDrawer } from '@/components/fiche/ButinDrawer'
 import { getPotionsCatalogue } from '@/app/actions/character'
 import { sourcesCASorts, contributionsSortsDepuisCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
+import { calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
 import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies, libelleTypeBonus } from '@/lib/dnd35/classe-armure'
 import { getDb } from '@/db'
 import { spells as spellsTable } from '@/db/schema/spells'
@@ -187,14 +187,6 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const rawBabProj  = combatStats?.bbaProjectiles || rawBabCorps
   const bbaCorpsTotal = rawBabCorps + forMod
   const bbaProjTotal  = rawBabProj  + dexMod
-  function attackSeq(total: number, rawBab: number, weaponBonus = 0): string {
-    const first = total + weaponBonus
-    const seq = [first]
-    if (rawBab >= 6)  seq.push(first - 5)
-    if (rawBab >= 11) seq.push(first - 10)
-    if (rawBab >= 16) seq.push(first - 15)
-    return seq.map(signedNum).join(' / ')
-  }
 
   const classeLabel = classes.map(c => `${c.classe.nom} ${c.characterClass.niveau}`).join(' / ')
   const niveauTotal = classes.reduce((sum, c) => sum + c.characterClass.niveau, 0)
@@ -560,7 +552,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           <div className="grid grid-cols-2 gap-3">
             <DetailBonus
               titre="Attaque au corps à corps"
-              total={attackSeq(bbaCorpsTotal, rawBabCorps)}
+              total={sequenceAttaques(bbaCorpsTotal, rawBabCorps)}
               lignes={[
                 { label: 'bonus de base (BAB)', valeur: rawBabCorps, note: rawBabCorps >= 6 ? 'BAB ≥ 6 : attaques multiples, chacune à −5 de la précédente' : undefined },
                 { label: 'FOR', valeur: forMod },
@@ -568,13 +560,13 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             >
               <div className="bg-stone-800/60 rounded p-3 text-left">
                 <div className="text-amber-500 text-xs uppercase tracking-wide mb-1">Corps à corps</div>
-                <div className="text-white font-semibold">{attackSeq(bbaCorpsTotal, rawBabCorps)}</div>
+                <div className="text-white font-semibold">{sequenceAttaques(bbaCorpsTotal, rawBabCorps)}</div>
                 <div className="text-stone-500 text-xs mt-0.5">BAB {rawBabCorps} + FOR {signedNum(forMod)}</div>
               </div>
             </DetailBonus>
             <DetailBonus
               titre="Attaque à distance"
-              total={attackSeq(bbaProjTotal, rawBabProj)}
+              total={sequenceAttaques(bbaProjTotal, rawBabProj)}
               lignes={[
                 { label: 'bonus de base (BAB)', valeur: rawBabProj, note: rawBabProj >= 6 ? 'BAB ≥ 6 : attaques multiples, chacune à −5 de la précédente' : undefined },
                 { label: 'DEX', valeur: dexMod },
@@ -582,7 +574,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             >
               <div className="bg-stone-800/60 rounded p-3 text-left">
                 <div className="text-amber-500 text-xs uppercase tracking-wide mb-1">Projectiles</div>
-                <div className="text-white font-semibold">{attackSeq(bbaProjTotal, rawBabProj)}</div>
+                <div className="text-white font-semibold">{sequenceAttaques(bbaProjTotal, rawBabProj)}</div>
                 <div className="text-stone-500 text-xs mt-0.5">BAB {rawBabProj} + DEX {signedNum(dexMod)}</div>
               </div>
             </DetailBonus>
@@ -594,40 +586,22 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           <Section titre="Armes">
             <div className="space-y-3">
               {weapons.map(({ weapon, charWeapon }) => {
-                // La famille tranche, pas la portée : la dague se lance à 3 m
-                // sans cesser d'être une arme de contact. Voir estArmeADistance.
-                const isRanged   = estArmeADistance(weapon.famille, weapon.portee)
-                const rawBab     = isRanged ? rawBabProj : rawBabCorps
-                const bbaTotal   = isRanged ? bbaProjTotal : bbaCorpsTotal
-                const wpnBonus   = charWeapon.bonusMagique ?? 0
-
-                const { attackItems, damageItems } = getFeatWeaponBonuses(
-                  feats.map(f => f.feat.nom),
-                  weapon.nom,
-                  isRanged
-                )
-                const featAtkBonus    = attackItems.reduce((s, b) => s + b.value, 0)
-                const featDmgBonus   = damageItems.reduce((s, b) => s + b.value, 0)
-                const munitionsBonus = isRanged ? (charWeapon.bonusMunitions ?? 0) : 0
-
-                const coteDeForce   = charWeapon.coteDeForce ?? null
-                const isComposite   = coteDeForce !== null || weapon.nom.toLowerCase().includes('composite')
-                // Arc composite : FOR plafonné à la côte de Force ; autres distances : pas de FOR aux dégâts
-                const abilityDmgMod = !isRanged
-                  ? forMod
-                  : coteDeForce !== null
-                    ? Math.min(forMod, coteDeForce)
-                    : isComposite ? forMod : 0
-                const totalDmgMod   = wpnBonus + munitionsBonus + abilityDmgMod + featDmgBonus
-                const deArme        = weapon.degats ?? '—'
-                const dmgStr        = totalDmgMod === 0
-                  ? deArme
-                  : `${deArme}${totalDmgMod > 0 ? '+' : ''}${totalDmgMod}`
-
-                // Nom affiché : (Force +N) pour la côte, +N pour la magie
-                const nomDisplay = weapon.nom
-                  + (coteDeForce !== null ? ` (Force +${coteDeForce})` : '')
-                  + (wpnBonus > 0 ? ` +${wpnBonus}` : '')
+                // Un seul moteur pour l'écran et le papier — sinon ils divergent,
+                // et ils ont divergé : voir l'en-tête de dnd35/attaque.
+                const calc = calculeArme({
+                  nom: weapon.nom,
+                  famille: weapon.famille,
+                  portee: weapon.portee,
+                  degats: weapon.degats,
+                  bonusArme: charWeapon.bonusMagique ?? 0,
+                  bonusMunitions: charWeapon.bonusMunitions,
+                  coteDeForce: charWeapon.coteDeForce,
+                  dons: feats.map(f => f.feat.nom),
+                  bbaBrutCorps: rawBabCorps,
+                  bbaBrutDistance: rawBabProj,
+                  forMod,
+                  dexMod,
+                })
 
                 // Fiche de la Bibliothèque à ouvrir pour cette arme : son entrée
                 // de catalogue si la ligne y est rattachée, elle-même si c'est
@@ -635,47 +609,13 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                 // arme de supplément, ligne trop imprécise pour être identifiée).
                 const ficheArmeId = weapon.catalogueId ?? (weapon.estCatalogue ? weapon.id : null)
 
-                // Décomposition « Pourquoi +9/+5? » — mêmes termes que le calcul
-                // du total juste dessous (attackSeq et dmgStr).
-                const LABELS_DONS: Record<string, string> = {
-                  'Préd.': 'don : Arme de prédilection',
-                  'Maîtr. sup.': 'don : Maîtrise martiale sup.',
-                  'Spéc.': 'don : Spécialisation martiale',
-                  'Spéc. sup.': 'don : Spécialisation sup.',
-                  'TBP': 'don : Tir à bout portant',
-                }
-                const ligneDon = (b: { label: string; value: number; conditional?: string }) => ({
-                  label: LABELS_DONS[b.label] ?? b.label,
-                  valeur: b.value,
-                  note: b.conditional ? `seulement à ${b.conditional}` : undefined,
-                })
-                const atkLignes = [
-                  { label: 'bonus de base (BAB)', valeur: rawBab, note: rawBab >= 6 ? 'BAB ≥ 6 : attaques multiples — la séquence vient du BAB seul (−5 chacune), tous les bonus s’appliquent à chaque attaque' : undefined },
-                  { label: isRanged ? 'DEX' : 'FOR', valeur: isRanged ? dexMod : forMod },
-                  ...(wpnBonus > 0       ? [{ label: 'arme magique',       valeur: wpnBonus }]       : []),
-                  ...(munitionsBonus > 0 ? [{ label: 'munitions magiques', valeur: munitionsBonus }] : []),
-                  ...attackItems.map(ligneDon),
-                ]
-                const dmgLignes = [
-                  ...(abilityDmgMod !== 0 ? [{
-                    label: isRanged ? 'FOR (arc composite)' : 'FOR',
-                    valeur: abilityDmgMod,
-                    note: coteDeForce !== null && forMod > coteDeForce
-                      ? `FOR ${signedNum(forMod)} plafonnée par la côte de Force de l'arc (max +${coteDeForce})`
-                      : undefined,
-                  }] : []),
-                  ...(wpnBonus > 0       ? [{ label: 'arme magique',       valeur: wpnBonus }]       : []),
-                  ...(munitionsBonus > 0 ? [{ label: 'munitions magiques', valeur: munitionsBonus }] : []),
-                  ...damageItems.map(ligneDon),
-                ]
-
                 return (
                   <div key={charWeapon.id} className="bg-stone-800/60 rounded p-3">
                     <div className="flex flex-wrap items-start justify-between gap-2">
                       <div className="flex-1">
                         <div className="flex items-baseline gap-3">
                           <span className="text-white font-semibold">
-                            {nomDisplay}
+                            {calc.nomAffiche}
                           </span>
                           {/* Règles officielles de l'arme. Une ligne d'inventaire
                               rattachée pointe vers son entrée de catalogue; une
@@ -691,33 +631,33 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                           )}
                           <span className="text-stone-500 text-xs">Att.</span>
                           <DetailBonus
-                            titre={`Attaque — ${nomDisplay}`}
-                            total={attackSeq(bbaTotal + featAtkBonus + munitionsBonus, rawBab, wpnBonus)}
-                            lignes={atkLignes}
+                            titre={`Attaque — ${calc.nomAffiche}`}
+                            total={calc.sequence}
+                            lignes={calc.attaqueLignes}
                             inline
                           >
                             <span className="text-amber-300 font-bold text-sm">
-                              {attackSeq(bbaTotal + featAtkBonus + munitionsBonus, rawBab, wpnBonus)}
+                              {calc.sequence}
                             </span>
                           </DetailBonus>
                         </div>
                         <div className="text-stone-400 text-xs mt-1 space-x-3">
                           <DetailBonus
-                            titre={`Dégâts — ${nomDisplay}`}
-                            base={deArme}
+                            titre={`Dégâts — ${calc.nomAffiche}`}
+                            base={weapon.degats ?? '—'}
                             baseLabel="dé de l'arme"
-                            total={dmgStr}
-                            lignes={dmgLignes}
+                            total={calc.degatsTexte}
+                            lignes={calc.degatsLignes}
                             inline
                           >
-                            <span>Dégâts : <span className="text-amber-300">{dmgStr}</span></span>
+                            <span>Dégâts : <span className="text-amber-300">{calc.degatsTexte}</span></span>
                           </DetailBonus>
                           <span>Critique : <span className="text-amber-300">{formatCritique(weapon.critiqueMin, weapon.critiqueMult)}</span></span>
                           {weapon.portee && <span>Portée : <span className="text-amber-300">{weapon.portee}m</span></span>}
                           <span>Type : {weapon.typeDegats}</span>
                         </div>
                       </div>
-                      <LiveAttaque personnageId={character.id} nomArme={nomDisplay} />
+                      <LiveAttaque personnageId={character.id} nomArme={calc.nomAffiche} />
                     </div>
                     {charWeapon.proprietesSpeciales && (
                       <p className="text-purple-300 text-xs mt-2 italic">{charWeapon.proprietesSpeciales}</p>

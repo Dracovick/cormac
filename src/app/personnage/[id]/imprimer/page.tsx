@@ -9,10 +9,10 @@ import { getCompetenceRef, caracteristiqueDe } from '@/lib/dnd35/skills'
 import { getDomaineInfo } from '@/lib/dnd35/domains'
 import { getFeatPassiveBonuses, sommeBonus } from '@/lib/dnd35/feat-bonuses'
 import { formatCritique } from '@/lib/dnd35/critique'
-import { estArmeADistance } from '@/lib/dnd35/weapons'
 import { PrintButton } from '@/components/fiche/PrintButton'
 import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
 import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies } from '@/lib/dnd35/classe-armure'
+import { calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
 
 export const dynamic = 'force-dynamic'
 
@@ -99,15 +99,6 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   const rawBabProj  = combatStats?.bbaProjectiles  || rawBabCorps
   const bbaCorps = rawBabCorps + forMod
   const bbaProj  = rawBabProj  + dexMod
-
-  function atkSeq(total: number, rawBab: number, wpnBonus = 0): string {
-    const first = total + wpnBonus
-    const seq = [first]
-    if (rawBab >= 6)  seq.push(first - 5)
-    if (rawBab >= 11) seq.push(first - 10)
-    if (rawBab >= 16) seq.push(first - 15)
-    return seq.map(fm).join(' / ')
-  }
 
   // Jets de sauvegarde : valeurs stockées en DB (calculées multi-classe à la sauvegarde)
   const saveBonnes = classeInfo?.bonsSauvegardes ?? []
@@ -566,18 +557,30 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
           </thead>
           <tbody>
             {weapons.length > 0 ? weapons.map((w, i) => {
-              const wpnBonus = w.charWeapon.bonusMagique ?? 0
-              const isRanged = estArmeADistance(w.weapon.famille, w.weapon.portee)
-              const rawBab   = isRanged ? rawBabProj : rawBabCorps
-              const bbaTotal = isRanged ? bbaProj    : bbaCorps
-              const bbaStr   = atkSeq(bbaTotal, rawBab, wpnBonus)
+              // Le MÊME moteur que l'écran : c'est la duplication du calcul qui
+              // faisait diverger le papier (munitions, dons et modificateurs de
+              // dégâts manquaient). Voir l'en-tête de dnd35/attaque.
+              const calc = calculeArme({
+                nom: w.weapon.nom,
+                famille: w.weapon.famille,
+                portee: w.weapon.portee,
+                degats: w.weapon.degats,
+                bonusArme: w.charWeapon.bonusMagique ?? 0,
+                bonusMunitions: w.charWeapon.bonusMunitions,
+                coteDeForce: w.charWeapon.coteDeForce,
+                dons: feats.map(f => f.feat.nom),
+                bbaBrutCorps: rawBabCorps,
+                bbaBrutDistance: rawBabProj,
+                forMod,
+                dexMod,
+              })
               return (
                 <tr key={i} style={{ background: i % 2 === 0 ? '#fff' : '#f9f9f9' }}>
                   <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', fontWeight: 'bold' }}>
-                    {w.weapon.nom}{wpnBonus > 0 ? ` +${wpnBonus}` : ''}
+                    {calc.nomAffiche}
                   </td>
-                  <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', textAlign: 'center' }}>{bbaStr}</td>
-                  <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', textAlign: 'center' }}>{w.weapon.degats ?? '—'}</td>
+                  <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', textAlign: 'center' }}>{calc.sequence}</td>
+                  <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', textAlign: 'center' }}>{calc.degatsTexte}</td>
                   <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', textAlign: 'center' }}>{formatCritique(w.weapon.critiqueMin, w.weapon.critiqueMult)}</td>
                   <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', textAlign: 'center' }}>{w.weapon.portee ? `${w.weapon.portee} m` : 'Contact'}</td>
                   <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', textAlign: 'center' }}>{w.weapon.typeDegats ?? '—'}</td>
