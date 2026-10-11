@@ -13,11 +13,11 @@ export default async function Home() {
     <div className="relative min-h-screen overflow-hidden" style={{ backgroundColor: '#080608' }}>
 
       {/* Dragon gauche — original */}
-      <div className="absolute left-0 bottom-0 w-[48%] h-[90vh] pointer-events-none select-none overflow-hidden">
+      <div className="absolute left-0 top-0 w-[48%] h-[90vh] pointer-events-none select-none overflow-hidden">
         <img
           src={DRAGON_IMG}
           alt=""
-          className="absolute bottom-0 left-0 w-full h-full object-cover object-center"
+          className="absolute top-0 left-0 w-full h-full object-cover object-center"
           style={{ opacity: 0.85 }}
         />
         {/* Fondu bord intérieur (droite) */}
@@ -25,19 +25,19 @@ export default async function Home() {
           className="absolute inset-0"
           style={{ background: 'linear-gradient(to right, transparent 30%, #080608 90%)' }}
         />
-        {/* Fondu haut */}
+        {/* Fondu bas */}
         <div
           className="absolute inset-0"
-          style={{ background: 'linear-gradient(to bottom, #080608 0%, transparent 25%)' }}
+          style={{ background: 'linear-gradient(to top, #080608 0%, transparent 25%)' }}
         />
       </div>
 
       {/* Dragon droit — miroir */}
-      <div className="absolute right-0 bottom-0 w-[48%] h-[90vh] pointer-events-none select-none overflow-hidden">
+      <div className="absolute right-0 top-0 w-[48%] h-[90vh] pointer-events-none select-none overflow-hidden">
         <img
           src={DRAGON_IMG}
           alt=""
-          className="absolute bottom-0 right-0 w-full h-full object-cover object-center"
+          className="absolute top-0 right-0 w-full h-full object-cover object-center"
           style={{ opacity: 0.85, transform: 'scaleX(-1)' }}
         />
         {/* Fondu bord intérieur (gauche) */}
@@ -45,21 +45,21 @@ export default async function Home() {
           className="absolute inset-0"
           style={{ background: 'linear-gradient(to left, transparent 30%, #080608 90%)' }}
         />
-        {/* Fondu haut */}
+        {/* Fondu bas */}
         <div
           className="absolute inset-0"
-          style={{ background: 'linear-gradient(to bottom, #080608 0%, transparent 25%)' }}
+          style={{ background: 'linear-gradient(to top, #080608 0%, transparent 25%)' }}
         />
       </div>
 
       {/* Lueur rouge ambiante derrière chaque dragon */}
       <div
-        className="absolute left-0 top-1/3 w-[40%] h-[60%] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at left center, rgba(185,28,28,0.25) 0%, transparent 70%)' }}
+        className="absolute left-0 top-0 w-[40%] h-[60%] pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at left top, rgba(185,28,28,0.25) 0%, transparent 70%)' }}
       />
       <div
-        className="absolute right-0 top-1/3 w-[40%] h-[60%] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at right center, rgba(185,28,28,0.25) 0%, transparent 70%)' }}
+        className="absolute right-0 top-0 w-[40%] h-[60%] pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at right top, rgba(185,28,28,0.25) 0%, transparent 70%)' }}
       />
 
       {/* Contenu */}
