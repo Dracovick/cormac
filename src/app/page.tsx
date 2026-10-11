@@ -17,8 +17,8 @@ export default async function Home() {
         <img
           src={DRAGON_IMG}
           alt=""
-          className="absolute top-0 left-0 w-full h-full object-cover object-center"
-          style={{ opacity: 0.85 }}
+          className="absolute top-0 left-0 w-full h-full object-cover object-center opacity-[0.32] lg:opacity-[0.85]"
+          style={{ filter: 'brightness(0.9) contrast(1.15) saturate(1.2)' }}
         />
         {/* Fondu bord intérieur (droite) */}
         <div
@@ -37,8 +37,8 @@ export default async function Home() {
         <img
           src={DRAGON_IMG}
           alt=""
-          className="absolute top-0 right-0 w-full h-full object-cover object-center"
-          style={{ opacity: 0.85, transform: 'scaleX(-1)' }}
+          className="absolute top-0 right-0 w-full h-full object-cover object-center opacity-[0.32] lg:opacity-[0.85]"
+          style={{ transform: 'scaleX(-1)', filter: 'brightness(0.9) contrast(1.15) saturate(1.2)' }}
         />
         {/* Fondu bord intérieur (gauche) */}
         <div
@@ -60,6 +60,12 @@ export default async function Home() {
       <div
         className="absolute right-0 top-0 w-[40%] h-[60%] pointer-events-none"
         style={{ background: 'radial-gradient(ellipse at right top, rgba(185,28,28,0.25) 0%, transparent 70%)' }}
+      />
+
+      {/* Voile sombre derrière le titre : garde le texte lisible par-dessus les dragons */}
+      <div
+        className="absolute left-0 right-0 top-0 h-[90vh] pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 50% 45% at 50% 20%, rgba(8,6,8,0.90) 0%, rgba(8,6,8,0.62) 45%, transparent 78%)' }}
       />
 
       {/* Contenu */}
