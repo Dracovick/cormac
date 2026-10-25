@@ -32,7 +32,21 @@ import { PrintButton } from '@/components/fiche/PrintButton'
 
 const TABLE = { width: '100%', borderCollapse: 'collapse' as const, marginBottom: '4px' }
 const PAGE = { pageBreakAfter: 'always' as const, padding: '0', marginBottom: '0' }
-const SELECT = { padding: '4px 6px', borderRadius: '6px' }
+/** Menu de la barre de réglages. Le fond et la couleur du texte sont déclarés
+ *  explicitement : un `border-radius` fait abandonner à Chrome l'apparence
+ *  native du widget, le fond retombe à `transparent`, et le champ disparaît
+ *  dans la barre sombre qui le porte. Même palette que le reste du Grimoire
+ *  (stone-800 sur stone-900, texte stone-100). `color-scheme: dark` fait suivre
+ *  la flèche et la liste déroulante native, qui ne se stylent pas en CSS. */
+const SELECT = {
+  padding: '4px 6px',
+  borderRadius: '6px',
+  background: '#292524',
+  color: '#f5f5f4',
+  border: '1px solid #57534e',
+  fontSize: '13px',
+  colorScheme: 'dark' as const,
+}
 
 /** Case à remplir : bordure noire, fond blanc, rien dedans. */
 function cell(style?: React.CSSProperties, key?: string | number) {
@@ -300,7 +314,10 @@ export default async function FicheViergePage({ searchParams }: {
         @media screen {
           body { background: #888; }
         }
-        select, input { color: #1c1917; }
+        /* La liste déroulante ouverte est peinte par le système : on lui donne
+           la même palette, sinon elle retombe au blanc de l'OS. */
+        .no-print select option { background: #292524; color: #f5f5f4; }
+        .no-print select:focus { outline: none; border-color: #d97706; }
       `}</style>
 
       {/* ══ Barre de réglages — jamais imprimée ══ */}
