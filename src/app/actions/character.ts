@@ -15,6 +15,7 @@ import { SORTS_DND35 } from '@/lib/dnd35/spells'
 import { SORTS_EFFETS_CA, SORTS_EFFETS_CARAC, SORTS_EFFETS_VISUELS, SORTS_EFFETS_SUIVI, valeurEffetSelonNiveau } from '@/lib/dnd35/spell-effects'
 import { UNITES_MONNAIE } from '@/lib/dnd35/monnaie'
 import { logJournal } from '@/lib/journal'
+import { nomParchemin } from '@/lib/parchemins'
 import { normaliserNom } from '@/lib/noms'
 import { aliasPour } from '@/lib/dnd35/anciens-noms'
 
@@ -603,6 +604,7 @@ export async function deleteCharacter(personnageId: number): Promise<void> {
     db.delete(schema.characterArmor).where(eq(schema.characterArmor.personnageId, personnageId)),
     db.delete(schema.characterMagicItems).where(eq(schema.characterMagicItems.personnageId, personnageId)),
     db.delete(schema.characterPotions).where(eq(schema.characterPotions.personnageId, personnageId)),
+    db.delete(schema.characterScrolls).where(eq(schema.characterScrolls.personnageId, personnageId)),
     db.delete(schema.characterCurrency).where(eq(schema.characterCurrency.personnageId, personnageId)),
     db.delete(schema.characterGems).where(eq(schema.characterGems.personnageId, personnageId)),
     db.delete(schema.characterLanguages).where(eq(schema.characterLanguages.personnageId, personnageId)),
@@ -888,6 +890,73 @@ export async function jeterPotion(charPotionId: number, personnageId: number) {
   revalidatePath(`/personnage/${personnageId}`)
 }
 
+// ─── Parchemins ──────────────────────────────────────────────────────────────
+// Un parchemin ne se boit pas : il se LIT, et il se consume quand le sort part
+// (SRD, Magic Items — Scrolls). D'où un vocabulaire à lui, jusque dans le
+// journal : c'est ce mélange qui avait fait écrire « Boit « Parchemin Porte
+// dimensionnelle » (0 gorgée restante) » le 2026-10-25.
+
+export async function lireParchemin(charScrollId: number, personnageId: number) {
+  // Ancré sur (id, personnageId) : impossible de lire le parchemin d'un autre
+  const filtre = and(
+    eq(schema.characterScrolls.id, charScrollId),
+    eq(schema.characterScrolls.personnageId, personnageId)
+  )
+  const [row] = await getDb()
+    .select({
+      quantite: schema.characterScrolls.quantite,
+      niveauSort: schema.characterScrolls.niveauSort,
+      niveauLanceur: schema.characterScrolls.niveauLanceur,
+      nomLibre: schema.characterScrolls.nomLibre,
+      nomSort: schema.spells.nom,
+    })
+    .from(schema.characterScrolls)
+    .leftJoin(schema.spells, eq(schema.characterScrolls.sortId, schema.spells.id))
+    .where(filtre)
+  if (!row) return
+  if (row.quantite <= 0) return
+
+  const reste = Math.max(0, row.quantite - 1)
+  await getDb().update(schema.characterScrolls).set({ quantite: reste }).where(filtre)
+
+  // Le NLS va au journal quand il est connu : c'est lui qui a fixé la portée et
+  // les dégâts du sort qui vient de partir, pas le niveau du lecteur.
+  const precisions = [
+    row.niveauSort != null ? `sort de niveau ${row.niveauSort}` : null,
+    row.niveauLanceur != null ? `NLS ${row.niveauLanceur}` : null,
+  ].filter(Boolean).join(', ')
+  const suite = reste > 0
+    ? `il reste ${reste} exemplaire${reste > 1 ? 's' : ''}`
+    : 'le parchemin se consume'
+  await logJournal(personnageId, 'parchemin',
+    `Lit le parchemin « ${nomParchemin(row.nomSort, row.nomLibre)} »${precisions ? ` (${precisions})` : ''} — ${suite}`)
+  revalidatePath(`/personnage/${personnageId}`)
+}
+
+export async function jeterParchemin(charScrollId: number, personnageId: number) {
+  const filtre = and(
+    eq(schema.characterScrolls.id, charScrollId),
+    eq(schema.characterScrolls.personnageId, personnageId)
+  )
+  const [row] = await getDb()
+    .select({
+      quantite: schema.characterScrolls.quantite,
+      nomLibre: schema.characterScrolls.nomLibre,
+      nomSort: schema.spells.nom,
+    })
+    .from(schema.characterScrolls)
+    .leftJoin(schema.spells, eq(schema.characterScrolls.sortId, schema.spells.id))
+    .where(filtre)
+  if (!row) return
+  await getDb().delete(schema.characterScrolls).where(filtre)
+  const nom = nomParchemin(row.nomSort, row.nomLibre)
+  await logJournal(personnageId, 'parchemin',
+    row.quantite > 0
+      ? `Se débarrasse du parchemin « ${nom} » (${row.quantite} exemplaire${row.quantite > 1 ? 's' : ''} au moment du geste)`
+      : `Jette le parchemin consumé de « ${nom} »`)
+  revalidatePath(`/personnage/${personnageId}`)
+}
+
 export async function preparerSorts(personnageId: number, preparations: { charSpellId: number; estPrepare: number }[]) {
   const db = getDb()
   await Promise.all(
@@ -1067,4 +1136,97 @@ export async function getPotionsCatalogue(): Promise<PotionRef[]> {
   return rows
     .map(r => ({ ...r, alias: aliasPour(r.nom) }))
     .sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
+}
+
+// ─── Catalogue des sorts, pour inscrire un parchemin ────────────────────────
+// ⛔ PAS chargé avec la fiche : 1221 sorts et leurs niveaux par classe pèsent
+// bien plus que les 89 potions. Le panneau des parchemins l'appelle à sa
+// première ouverture, et la recherche se fait ensuite dans le navigateur.
+export type SortRef = {
+  id: number
+  nom: string
+  /** Niveau du sort par classe du Manuel : { Magicien: 4, Ensorceleur: 4 }. */
+  niveaux: Record<string, number>
+}
+
+export async function getSortsCatalogue(): Promise<SortRef[]> {
+  const db = getDb()
+  const [sorts, niveaux] = await Promise.all([
+    db.select({ id: schema.spells.id, nom: schema.spells.nom }).from(schema.spells),
+    db.select({ sortId: schema.spellClassLevels.sortId, niveau: schema.spellClassLevels.niveau, classe: schema.classes.nom })
+      .from(schema.spellClassLevels)
+      .innerJoin(schema.classes, eq(schema.spellClassLevels.classeId, schema.classes.id)),
+  ])
+  const parSort = new Map<number, Record<string, number>>()
+  for (const n of niveaux) {
+    if (!n.classe) continue
+    const bloc = parSort.get(n.sortId) ?? {}
+    // Le plus bas gagne si une classe apparaît deux fois (listes de domaine).
+    if (bloc[n.classe] == null || n.niveau < bloc[n.classe]) bloc[n.classe] = n.niveau
+    parSort.set(n.sortId, bloc)
+  }
+  return sorts
+    .map(s => ({ ...s, niveaux: parSort.get(s.id) ?? {} }))
+    .sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
+}
+
+export type EntreeParchemin = {
+  /** Le sort du catalogue. NULL quand le joueur a tapé un nom qui n'y est pas. */
+  sortId: number | null
+  nomLibre?: string
+  niveauSort?: number | null
+  niveauLanceur?: number | null
+  type?: string | null
+  quantite: number
+  notes?: string
+}
+
+export async function ajouterParchemin(personnageId: number, e: EntreeParchemin): Promise<{ ok: boolean; message: string }> {
+  const db = getDb()
+  const [perso] = await db.select({ id: schema.characters.id }).from(schema.characters)
+    .where(eq(schema.characters.id, personnageId)).limit(1)
+  if (!perso) return { ok: false, message: 'Personnage introuvable.' }
+
+  const nomLibre = (e.nomLibre ?? '').trim().slice(0, 200)
+  if (e.sortId == null && !nomLibre) {
+    return { ok: false, message: 'Choisissez un sort, ou donnez un nom au parchemin.' }
+  }
+
+  // Le sort lié fait foi : son nom vient alors de la Bibliothèque, pas de la
+  // saisie. Garder les deux laisserait deux noms possibles pour la même ligne.
+  let sortId: number | null = null
+  let nomSort: string | null = null
+  if (e.sortId != null) {
+    const [s] = await db.select({ id: schema.spells.id, nom: schema.spells.nom })
+      .from(schema.spells).where(eq(schema.spells.id, e.sortId)).limit(1)
+    if (s) { sortId = s.id; nomSort = s.nom }
+  }
+
+  const borneOuNull = (n: number | null | undefined, min: number, max: number) =>
+    n == null || !Number.isFinite(n) ? null : Math.min(max, Math.max(min, Math.trunc(n)))
+
+  const quantite = Math.min(99, Math.max(1, Math.trunc(Number(e.quantite) || 1)))
+  const type = e.type === 'profane' || e.type === 'divin' ? e.type : null
+
+  await db.insert(schema.characterScrolls).values({
+    personnageId,
+    sortId,
+    nomLibre: sortId == null ? nomLibre : null,
+    niveauSort: borneOuNull(e.niveauSort, 0, 9),
+    niveauLanceur: borneOuNull(e.niveauLanceur, 1, 20),
+    type,
+    quantite,
+    notes: (e.notes ?? '').trim().slice(0, 500) || null,
+  })
+
+  const nom = nomParchemin(nomSort, nomLibre)
+  await logJournal(personnageId, 'parchemin',
+    `Inscrit ${quantite > 1 ? `${quantite} parchemins` : 'un parchemin'} de « ${nom} »`)
+  revalidatePath(`/personnage/${personnageId}`)
+  return {
+    ok: true,
+    message: sortId == null
+      ? `Parchemin « ${nom} » ajouté — sans fiche de sort : ce nom n'est pas au catalogue.`
+      : `Parchemin « ${nom} » ajouté.`,
+  }
 }

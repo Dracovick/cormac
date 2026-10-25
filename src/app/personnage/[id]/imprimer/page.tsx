@@ -14,6 +14,7 @@ import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
 import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies } from '@/lib/dnd35/classe-armure'
 import { calculeBonusEffetsCarac, sourcesCASorts, contributionsSortsDepuisCA } from '@/lib/dnd35/spell-effects'
 import { calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
+import { nomParchemin } from '@/lib/parchemins'
 
 export const dynamic = 'force-dynamic'
 
@@ -45,7 +46,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   if (!data) notFound()
 
   const { character, race, clan, classes, abilityScores, combatStats, savingThrows,
-    skills, feats, spells, weapons, armor, magicItems, potions, currency, gems, languages, companions,
+    skills, feats, spells, weapons, armor, magicItems, potions, scrolls, currency, gems, languages, companions,
     spellEffects } = data
 
   const firstClass = classes[0]
@@ -821,7 +822,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
           </tbody>
         </table>
 
-        {/* Équipements (armures + potions) */}
+        {/* Équipements (armures + potions + parchemins) */}
         <table style={{ ...TABLE, marginBottom: '4px' }}>
           <thead>
             <tr style={{ background: '#000', color: '#fff' }}>
@@ -852,7 +853,23 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                 <td style={{ border: '1px solid #ddd', padding: '2px 6px' }}></td>
               </tr>
             ))}
-            {Array.from({ length: Math.max(0, 20 - armor.length - potions.length) }).map((_, i) => (
+            {/* Les parchemins portent le nom de leur SORT, son niveau et le NLS :
+                c'est ce qu'on lit à la table, et le NLS fixe portée et dégâts. */}
+            {scrolls.map((sc, i) => (
+              <tr key={`sc-${sc.scroll.id}`} style={{ background: (armor.length + potions.length + i) % 2 === 0 ? '#fff' : '#f5f5f5' }}>
+                <td style={{ border: '1px solid #ddd', padding: '2px 6px', fontSize: '9pt' }}>
+                  Parchemin — {nomParchemin(sc.spell?.nom, sc.scroll.nomLibre)}
+                  {sc.scroll.niveauSort != null ? ` (niv. ${sc.scroll.niveauSort}` : ''}
+                  {sc.scroll.niveauSort != null && sc.scroll.niveauLanceur != null ? `, NLS ${sc.scroll.niveauLanceur}` : ''}
+                  {sc.scroll.niveauSort != null ? ')' : ''}
+                  {` ×${sc.scroll.quantite}`}
+                </td>
+                <td style={{ border: '1px solid #ddd', padding: '2px 6px' }}></td>
+                <td style={{ border: '1px solid #ddd', padding: '2px 6px' }}></td>
+                <td style={{ border: '1px solid #ddd', padding: '2px 6px' }}></td>
+              </tr>
+            ))}
+            {Array.from({ length: Math.max(0, 20 - armor.length - potions.length - scrolls.length) }).map((_, i) => (
               <tr key={`ee-${i}`}><td colSpan={4} style={{ border: '1px solid #eee', height: '18px' }}></td></tr>
             ))}
           </tbody>

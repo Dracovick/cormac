@@ -52,6 +52,7 @@ export function iconeEntree(type: string, valeur: number | null): { icone: strin
       : { icone: '✚', couleur: 'text-green-400' }
     case 'sort':    return { icone: '✨', couleur: 'text-purple-300' }
     case 'potion':  return { icone: '🧪', couleur: 'text-emerald-300' }
+    case 'parchemin': return { icone: '📜', couleur: 'text-amber-200' }
     case 'charge':  return { icone: '🔮', couleur: 'text-violet-300' }
     case 'effet':   return { icone: '◈', couleur: 'text-blue-300' }
     case 'attaque': return { icone: '⚔', couleur: 'text-amber-300' }

@@ -25,6 +25,9 @@ import { NuitDeRepos } from '@/components/fiche/NuitDeRepos'
 import { LiveSort } from '@/components/fiche/LiveSort'
 import { LivePotion } from '@/components/fiche/LivePotion'
 import { JeterPotion } from '@/components/fiche/JeterPotion'
+import { nomParchemin } from '@/lib/parchemins'
+import { AjouterParchemin } from '@/components/fiche/AjouterParchemin'
+import { LireParchemin } from '@/components/fiche/LireParchemin'
 import { LiveCharge } from '@/components/fiche/LiveCharge'
 import { LiveNotes } from '@/components/fiche/LiveNotes'
 import { InitiativeEnCours } from '@/components/fiche/InitiativeEnCours'
@@ -75,7 +78,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const [data, potionsCatalogue] = await Promise.all([getCharacter(Number(id)), getPotionsCatalogue()])
   if (!data) notFound()
 
-  const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, currency, gems, languages, creatures, companions, spellEffects } = data
+  const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, scrolls, currency, gems, languages, creatures, companions, spellEffects } = data
 
   // Valeur du trésor en gemmes, convertie en po (mithral à part : aucun taux)
   const totalGem = totalGemmes(gems.map(g => ({
@@ -1189,7 +1192,63 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             )}
           </Section>
 
-          <Section titre="Trésor & Compagnons">
+          {/* ── PARCHEMINS ──
+              Section à part depuis le 2026-10-25 : rangés avec les potions, ils
+              héritaient de leurs « gorgées ». Chaque ligne pointe sur la fiche du
+              sort de la Bibliothèque — le 📖 ouvre sa description, sa portée et
+              son jet de sauvegarde, rien n'est recopié ici. */}
+          <Section
+            titre="Parchemins"
+            action={<AjouterParchemin personnageId={character.id} />}
+          >
+            {scrolls.length > 0 ? (
+              <div className="space-y-2">
+                {scrolls.map(({ scroll, spell }) => {
+                  const nom = nomParchemin(spell?.nom, scroll.nomLibre)
+                  const details = [
+                    scroll.niveauSort != null ? `niveau ${scroll.niveauSort}` : null,
+                    scroll.niveauLanceur != null ? `NLS ${scroll.niveauLanceur}` : null,
+                    scroll.type,
+                  ].filter(Boolean).join(' · ')
+                  return (
+                    <div key={scroll.id} className="flex items-start justify-between bg-stone-800/40 rounded p-2">
+                      <div className="min-w-0">
+                        <span className={`text-sm ${scroll.quantite > 0 ? 'text-amber-200' : 'text-stone-500 line-through'}`}>{nom}</span>
+                        {spell ? (
+                          <Link
+                            href={`/bibliotheque/sort/${spell.id}?from=/personnage/${id}`}
+                            title="Lire la description du sort inscrit sur ce parchemin"
+                            className="ml-1.5 text-stone-500 hover:text-amber-300 text-xs"
+                          >
+                            📖
+                          </Link>
+                        ) : (
+                          // Pas de 📖 : la ligne dit elle-même pourquoi, plutôt que
+                          // de laisser croire à un lien qui ne mène nulle part.
+                          <span className="ml-1.5 text-stone-600 text-xs italic" title="Ce sort n'est pas au catalogue du Grimoire">
+                            hors catalogue
+                          </span>
+                        )}
+                        {details && <p className="text-stone-400 text-xs mt-0.5">{details}</p>}
+                        {spell?.ecole && <p className="text-stone-500 text-xs mt-0.5">{spell.ecole}</p>}
+                        {scroll.notes && <p className="text-amber-600 text-xs italic mt-0.5">{scroll.notes}</p>}
+                      </div>
+                      <LireParchemin
+                        charScrollId={scroll.id}
+                        personnageId={character.id}
+                        nom={nom}
+                        quantite={scroll.quantite}
+                      />
+                    </div>
+                  )
+                })}
+              </div>
+            ) : (
+              <p className="text-stone-600 text-xs">Aucun parchemin — le ➕ ci-dessus en inscrit un et le relie à son sort.</p>
+            )}
+          </Section>
+
+          <Section titre="Trésor & Compagnons" className="md:col-span-2">
             {currency && (
               <div className="mb-4">
                 <div className="text-amber-500 text-xs uppercase tracking-wide mb-2">Monnaie</div>

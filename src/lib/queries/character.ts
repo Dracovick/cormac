@@ -58,7 +58,7 @@ export async function getCharacter(id: number) {
       : Promise.resolve([]),
   ])
 
-  const [spells, weapons, armor, magicItems, potions, currency, gems, languages, creatures, companions, spellEffects] = await Promise.all([
+  const [spells, weapons, armor, magicItems, potions, scrolls, currency, gems, languages, creatures, companions, spellEffects] = await Promise.all([
     getDb().select({ charSpell: schema.characterSpells, spell: schema.spells })
       .from(schema.characterSpells)
       .innerJoin(schema.spells, eq(schema.characterSpells.sortId, schema.spells.id))
@@ -86,6 +86,15 @@ export async function getCharacter(id: number) {
       .innerJoin(schema.potions, eq(schema.characterPotions.potionId, schema.potions.id))
       .where(eq(schema.characterPotions.personnageId, id)),
 
+    // ⚠ leftJoin, pas innerJoin : un parchemin dont le sort n'est pas au
+    // catalogue porte `sortId` NULL et son nom dans `nomLibre`. Un innerJoin
+    // le ferait disparaître de la fiche sans la moindre erreur.
+    getDb().select({ scroll: schema.characterScrolls, spell: schema.spells })
+      .from(schema.characterScrolls)
+      .leftJoin(schema.spells, eq(schema.characterScrolls.sortId, schema.spells.id))
+      .where(eq(schema.characterScrolls.personnageId, id))
+      .orderBy(schema.characterScrolls.niveauSort, schema.characterScrolls.id),
+
     getDb().select().from(schema.characterCurrency)
       .where(eq(schema.characterCurrency.personnageId, id))
       .then(r => r[0]),
@@ -112,7 +121,7 @@ export async function getCharacter(id: number) {
       .orderBy(schema.characterSpellEffects.id),
   ])
 
-  return { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, currency, gems, languages, creatures, companions, spellEffects }
+  return { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, scrolls, currency, gems, languages, creatures, companions, spellEffects }
 }
 
 export type CharacterData = NonNullable<Awaited<ReturnType<typeof getCharacter>>>

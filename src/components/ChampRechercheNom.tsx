@@ -3,7 +3,18 @@
 import { useState } from 'react'
 import { chercherFloue, existeAuCatalogue } from '@/lib/recherche-floue'
 
-export type SuggestionNom = { nom: string; detail?: string | null; alias?: string[] }
+export type SuggestionNom = {
+  nom: string
+  detail?: string | null
+  alias?: string[]
+  /**
+   * Identifiant de la fiche choisie, quand l'appelant en a un (les parchemins
+   * s'en servent pour lier le sort). ⛔ Ne pas retrouver l'entrée par son nom
+   * au retour de `onPick` : les 1221 sorts n'ont aujourd'hui aucun homonyme
+   * (mesuré le 2026-10-25), mais rien n'empêche André d'en saisir un demain.
+   */
+  id?: number
+}
 
 type Props = {
   value: string

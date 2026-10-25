@@ -1,6 +1,7 @@
 import { pgTable, serial, varchar, text, integer, numeric, timestamp } from 'drizzle-orm/pg-core'
 import { races, classes, clans, gods } from './references'
 import { creatures } from './creatures'
+import { spells } from './spells'
 
 export const characters = pgTable('characters', {
   id: serial('id').primaryKey(),
@@ -132,6 +133,27 @@ export const characterPotions = pgTable('character_potions', {
   notes: text('notes'),
 })
 
+// Parchemins. ⛔ Volontairement SANS table catalogue, contrairement aux potions :
+// le catalogue d'un parchemin, c'est la fiche du sort qu'il porte. Recopier la
+// portée ou la durée ici les laisserait diverger de `spells`. Voir drizzle/0013.
+export const characterScrolls = pgTable('character_scrolls', {
+  id: serial('id').primaryKey(),
+  personnageId: integer('personnage_id').notNull().references(() => characters.id),
+  /** Le lien vers la Bibliothèque. NULL quand le sort n'est pas au catalogue. */
+  sortId: integer('sort_id').references(() => spells.id),
+  /** Secours, et seulement ça : rempli uniquement quand `sortId` est NULL. */
+  nomLibre: varchar('nom_libre', { length: 200 }),
+  /** Niveau du sort tel qu'inscrit — il fixe le DD du test de niveau de lanceur. */
+  niveauSort: integer('niveau_sort'),
+  /** NLS du parchemin : il fixe portée, durée et dégâts, pas le niveau du lecteur. */
+  niveauLanceur: integer('niveau_lanceur'),
+  /** 'profane' | 'divin' — qui peut le lire sans Utilisation d'objets magiques. */
+  type: varchar('type', { length: 10 }),
+  /** 0 = lu. La ligne reste pour mémoire; le ✕ la retire. */
+  quantite: integer('quantite').notNull().default(1),
+  notes: text('notes'),
+})
+
 export const characterCurrency = pgTable('character_currency', {
   id: serial('id').primaryKey(),
   personnageId: integer('personnage_id').notNull().references(() => characters.id),
@@ -219,7 +241,7 @@ export const characterNotes = pgTable('character_notes', {
 export const characterJournal = pgTable('character_journal', {
   id: serial('id').primaryKey(),
   personnageId: integer('personnage_id').references(() => characters.id),
-  type: varchar('type', { length: 20 }).notNull(), // pv | sort | potion | charge | effet | attaque | repos | round | note
+  type: varchar('type', { length: 20 }).notNull(), // pv | sort | potion | parchemin | charge | effet | attaque | repos | round | note
   description: text('description').notNull(),
   valeur: integer('valeur'), // delta PV, numéro de round…
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
