@@ -90,6 +90,9 @@ const NIVEAUX = Array.from({ length: 20 }, (_, i) => i + 1)
  * numérotées, qui vaut pour les dons choisis librement. Le papier les NOMME pour
  * que le joueur ne les oublie pas.
  */
+/** Niveaux auxquels tout personnage gagne un don (Manuel des Joueurs, table 3–2). */
+const NIVEAUX_DE_DON = [1, 3, 6, 9, 12, 15, 18]
+
 const DONS_BONUS_DE_CLASSE: Record<string, string> = {
   Magicien: 'Écriture de parchemins au niveau 1, puis un don supplémentaire aux niveaux 5, 10, 15 et 20 — obligatoirement de métamagie, de création d\'objet, ou Maîtrise des sorts.',
   Moine: 'Un don supplémentaire aux niveaux 1, 2 et 6, à choisir dans la liste imposée de la classe.',
@@ -132,7 +135,7 @@ function FeuilleSorts({ titreCalibrage, info, niveauxDeSort, classeNom, spontane
               {info?.caracteristiqueSorts && (
                 <>
                   {'  '}<b>Carac. de sorts :</b> {info.caracteristiqueSorts.toUpperCase()}
-                  {'  '}<b>DD :</b> 10 + niveau du sort + mod. {info.caracteristiqueSorts.slice(0, 3).toUpperCase()}
+                  {'  '}<b>DD :</b> <span style={{ whiteSpace: 'nowrap' }}>10 + niveau du sort + mod. {info.caracteristiqueSorts.slice(0, 3).toUpperCase()}</span>
                 </>
               )}
               {info?.niveauMaxSorts && <>{'  '}<b>Niveau de sort max. :</b> {info.niveauMaxSorts}</>}
@@ -154,9 +157,9 @@ function FeuilleSorts({ titreCalibrage, info, niveauxDeSort, classeNom, spontane
                   </div>
                 ))}
                 <div style={{ fontSize: '6.5pt', color: '#777', fontStyle: 'italic', marginTop: '2px' }}>
-                  ⚠ Le quota n&apos;est pas imprimé : il se reporte de la <b>Table : le {classeNom.toLowerCase()}</b> du
-                  Manuel des Joueurs, parce que les tables d&apos;emplacements du Grimoire divergent du manuel et que
-                  la décision du MJ est en attente. Les niveaux de sort non encore accessibles se rayent.
+                  ⚠ Le quota n&apos;est pas imprimé : il se reporte de la <b>Table&nbsp;: le {classeNom.toLowerCase()}</b>
+                  {' '}du Manuel des Joueurs, parce que les tables d&apos;emplacements du Grimoire divergent du manuel
+                  et que la décision du MJ est en attente. Les niveaux de sort non encore accessibles se rayent.
                   {' '}S&apos;ajoutent à la main : le bonus de caractéristique élevée
                   {classeNom === 'Prêtre' && ', et l\'emplacement de domaine (+1 par niveau de sort ≥ 1)'}.
                   {spontane && ` ${classeNom} lance spontanément : son nombre de sorts CONNUS suit une table distincte du manuel.`}
@@ -726,6 +729,7 @@ export default async function FicheViergePage({ searchParams }: {
                           <td colSpan={7} style={{ border: '1px solid #000', padding: '2px 6px', fontSize: '6.5pt', background: '#eee', lineHeight: 1.4 }}>
                             <b>Cl.</b> ■ = compétence de classe (1 rang = 1 point) · □ = hors classe (1 rang = 2 points).
                             {' '}<b>*</b> = formation requise : sans rang, l&apos;action est impossible.
+                            {classeNom === 'Prêtre' && <> Deux domaines ajoutent des compétences de classe : <b>Faune</b> ou <b>Flore</b> → Connaissances (nature), <b>Connaissance</b> → toutes les Connaissances, <b>Voyage</b> → Survie, <b>Duperie</b> → Bluff, Déguisement et Discrétion.</>}
                             {calibre
                               ? <> Plafond : <b>{plafondClasse}</b> rangs de classe, <b>{plafondHorsClasse}</b> hors classe. Points à dépenser : <b>({info!.competencesParNiveau} + mod. INT) × 4</b> au niveau 1, puis <b>{info!.competencesParNiveau} + mod. INT</b> par niveau (minimum 1).</>
                               : <> Plafond : niveau + 3 rangs pour une compétence de classe, la moitié hors classe.</>}
@@ -769,7 +773,7 @@ export default async function FicheViergePage({ searchParams }: {
                         <tr>
                           <td colSpan={2} style={{ border: '1px solid #000', padding: '2px 6px', fontSize: '6.5pt', color: '#666', lineHeight: 1.4 }}>
                             {dons
-                              ? <>{dons.normaux} don{dons.normaux > 1 ? 's' : ''} de progression (niveaux 1, 3, 6, 9, 12, 15, 18){dons.bonusClasse ? `, ${dons.bonusClasse} don${dons.bonusClasse > 1 ? 's' : ''} de bonus du guerrier` : ''}{dons.racial ? ', 1 don racial d\'humain' : ''}.{DONS_BONUS_DE_CLASSE[classeNom] && <><br /><b>En plus, hors de ce compte :</b> {DONS_BONUS_DE_CLASSE[classeNom]}</>}</>
+                              ? <>{dons.normaux} don{dons.normaux > 1 ? 's' : ''} de progression (niveau{dons.normaux > 1 ? 'x' : ''} {NIVEAUX_DE_DON.filter(n => n <= niveau).join(', ')}){dons.bonusClasse ? `, ${dons.bonusClasse} don${dons.bonusClasse > 1 ? 's' : ''} de bonus du guerrier` : ''}{dons.racial ? ', 1 don racial d\'humain' : ''}.{DONS_BONUS_DE_CLASSE[classeNom] && <><br /><b>En plus, hors de ce compte :</b> {DONS_BONUS_DE_CLASSE[classeNom]}</>}</>
                               : <>Un don au niveau 1, puis un de plus aux niveaux 3, 6, 9, 12, 15 et 18. Le guerrier et l&apos;humain en ont davantage.</>}
                           </td>
                         </tr>
