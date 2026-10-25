@@ -131,14 +131,27 @@ function FeuilleSorts({ titreCalibrage, info, niveauxDeSort, classeNom, spontane
           </tr>
           <tr>
             <td colSpan={7} style={{ border: '1px solid #ccc', padding: '3px 6px', fontSize: '7.5pt', background: '#f5f5f5' }}>
-              <b>Personnage :</b> ______________________________  <b>Jour de jeu :</b> ______________
-              {info?.caracteristiqueSorts && (
-                <>
-                  {'  '}<b>Carac. de sorts :</b> {info.caracteristiqueSorts.toUpperCase()}
-                  {'  '}<b>DD :</b> <span style={{ whiteSpace: 'nowrap' }}>10 + niveau du sort + mod. {info.caracteristiqueSorts.slice(0, 3).toUpperCase()}</span>
-                </>
+              {/* Deux lignes explicites : en flux libre, « mod. SAG » se coupait en fin de
+                  ligne, et le nowrap qui le réparait collait le rappel du DD au niveau
+                  de sort maximal. Une ligne par propos, chacune insécable. */}
+              <div><b>Personnage :</b> ______________________________{'  '}<b>Jour de jeu :</b> ______________</div>
+              {info && (info.caracteristiqueSorts || info.niveauMaxSorts) && (
+                <div style={{ marginTop: '2px' }}>
+                  {info.caracteristiqueSorts && (
+                    <>
+                      <span style={{ whiteSpace: 'nowrap' }}><b>Carac. de sorts :</b> {info.caracteristiqueSorts.toUpperCase()}</span>
+                      {'  ·  '}
+                      <span style={{ whiteSpace: 'nowrap' }}><b>DD :</b> 10 + niveau du sort + mod. {info.caracteristiqueSorts.slice(0, 3).toUpperCase()}</span>
+                    </>
+                  )}
+                  {info.niveauMaxSorts && (
+                    <>
+                      {info.caracteristiqueSorts ? '  ·  ' : ''}
+                      <span style={{ whiteSpace: 'nowrap' }}><b>Niveau de sort max. :</b> {info.niveauMaxSorts}</span>
+                    </>
+                  )}
+                </div>
               )}
-              {info?.niveauMaxSorts && <>{'  '}<b>Niveau de sort max. :</b> {info.niveauMaxSorts}</>}
             </td>
           </tr>
           {niveauxDeSort.length > 0 && (
