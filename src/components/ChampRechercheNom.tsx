@@ -24,8 +24,15 @@ type Props = {
   catalogue: SuggestionNom[]
   placeholder?: string
   className?: string
-  /** « potion », « objet »… — sert à la ligne « ➕ Créer “X” comme nouvelle potion ». */
+  /** « potion », « parchemin »… — sert à la ligne « ➕ Créer “X” comme nouvelle potion ». */
   typeLabel: string
+  /**
+   * Genre grammatical de `typeLabel`. ⛔ Ne pas le deviner : la version d'avant
+   * testait `typeLabel === 'objet'` pour écrire « nouvel », une liste
+   * d'exceptions qui donnait « nouvelle parchemin » au premier mot masculin
+   * ajouté (le 2026-10-25). Par défaut féminin — les deux appels « potion ».
+   */
+  genre?: 'm' | 'f'
   inputRef?: React.Ref<HTMLInputElement>
 }
 
@@ -39,7 +46,11 @@ type Props = {
  * la ligne « ➕ Créer… ». Tout se passe dans le navigateur : aucun appel au
  * serveur, la liste répond à la frappe même en pleine partie.
  */
-export function ChampRechercheNom({ value, onChange, onPick, catalogue, placeholder, className, typeLabel, inputRef }: Props) {
+export function ChampRechercheNom({ value, onChange, onPick, catalogue, placeholder, className, typeLabel, genre = 'f', inputRef }: Props) {
+  // « nouvel » devant une voyelle, « nouveau » sinon, « nouvelle » au féminin.
+  const article = genre === 'm'
+    ? (/^[aeiouéèêàâîôûy]/i.test(typeLabel) ? 'nouvel' : 'nouveau')
+    : 'nouvelle'
   const [ouvert, setOuvert] = useState(false)
 
   const actif = ouvert && value.trim().length >= 2
@@ -92,7 +103,7 @@ export function ChampRechercheNom({ value, onChange, onPick, catalogue, placehol
               onMouseDown={e => { e.preventDefault(); setOuvert(false) }}
               className="block w-full text-left px-2.5 py-2 text-sm text-emerald-300/90 hover:bg-stone-700/70 cursor-pointer"
             >
-              ➕ Créer « {value.trim()} » comme {typeLabel === 'objet' ? 'nouvel' : 'nouvelle'} {typeLabel}
+              ➕ Créer « {value.trim()} » comme {article} {typeLabel}
             </button>
           )}
         </div>

@@ -157,7 +157,8 @@ export function AjouterParchemin({ personnageId }: Props) {
                   }))}
                   placeholder={catalogue == null ? 'Chargement…' : 'Rechercher un sort…'}
                   className={CHAMP}
-                  typeLabel="parchemin hors catalogue"
+                  typeLabel="parchemin, sans fiche de sort"
+                  genre="m"
                 />
                 {sortId != null && listeClasses && (
                   <span className="block text-stone-500 text-xs mt-1">🔗 lié à la fiche du sort — {listeClasses}</span>
