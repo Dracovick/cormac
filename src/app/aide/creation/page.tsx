@@ -70,6 +70,39 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           <Tip>Un bouton <strong>⚡ Recommencer</strong> flottant en haut à droite permet de revenir au formulaire de sélection sans perdre votre travail.</Tip>
         </Section>
 
+        <Section titre="📄 Créer sur papier — la fiche vierge">
+          <p>Quand la création se fait à la table sans ordinateur, l&apos;accueil propose <strong className="text-amber-200">🖨️ Fiche vierge à imprimer</strong>. On la remplit au crayon, puis on la saisit dans le Grimoire après la séance.</p>
+          <Row label="Classe et niveau">Deux menus <em>facultatifs</em>. Laissés vides, la feuille est générique et convient à n&apos;importe quel personnage, multiclassé compris. Renseignés, ils impriment en gris les repères que la règle impose — sans remplir aucune valeur de personnage.</Row>
+          <div className="grid grid-cols-2 gap-3 mt-2">
+            <div className="bg-stone-800/50 rounded p-3">
+              <div className="text-amber-300 font-semibold text-sm">Ce qui s&apos;imprime en gris</div>
+              <ul className="list-disc list-inside text-stone-300 text-xs mt-1 space-y-0.5">
+                <li>Dé de vie de la classe</li>
+                <li>Attaque de base au niveau choisi</li>
+                <li>Jets de sauvegarde de base, bons jets marqués ✦</li>
+                <li>Plafond de rangs : de classe et hors classe</li>
+                <li>Nombre de dons dus, ventilé par origine</li>
+                <li>Niveaux de sort de la classe</li>
+              </ul>
+            </div>
+            <div className="bg-stone-800/50 rounded p-3">
+              <div className="text-stone-300 font-semibold text-sm">Ce qui reste à remplir</div>
+              <ul className="list-disc list-inside text-stone-300 text-xs mt-1 space-y-0.5">
+                <li>Les six caractéristiques et leurs modificateurs</li>
+                <li>PV, CA, initiative, déplacement</li>
+                <li>Rangs de compétence et bonus divers</li>
+                <li>Armes, armures, équipement, monnaie</li>
+                <li>Les dons choisis, les pouvoirs de classe</li>
+                <li>Les sorts connus ou préparés</li>
+              </ul>
+            </div>
+          </div>
+          <Tip>Les repères sortent des <strong>mêmes tables de règles que le formulaire et la fiche imprimée</strong> (<span className="font-mono text-xs">classes.ts</span>, <span className="font-mono text-xs">rules.ts</span>, <span className="font-mono text-xs">skills.ts</span>). Une table corrigée corrige les trois documents du même coup.</Tip>
+          <Row label="Rappel des points de compétence">Le bas de la page des compétences affiche la formule de la classe choisie : <span className="font-mono text-stone-400">(N + mod. INT) × 4</span> au niveau 1, puis <span className="font-mono text-stone-400">N + mod. INT</span> par niveau — avec le vrai N de la classe, et le plafond de rangs des deux colonnes.</Row>
+          <Row label="Feuilles de sorts">Le menu <strong>Document</strong> permet d&apos;imprimer <strong>seulement</strong> des feuilles de sorts, jusqu&apos;à six d&apos;un coup : niveau, sort, école, portée, durée, DD, et une rangée de cases à cocher.</Row>
+          <Tip>⚠ Le <strong>quota d&apos;emplacements par jour n&apos;est pas imprimé</strong> : les tables d&apos;emplacements du Grimoire divergent du Manuel des Joueurs (relevé contre le texte officiel le 24 octobre 2026, décision du MJ en attente). La feuille imprime les niveaux de sort de la classe et laisse une ligne pour reporter le quota du manuel — plutôt que d&apos;imprimer un chiffre qui se lirait comme une règle à la table.</Tip>
+        </Section>
+
         <Section titre="📋 Les onglets du formulaire">
           <p>Le formulaire est divisé en 8 onglets. La barre d'onglets est accessible en tout temps en haut de l'écran.</p>
           <div className="grid gap-2 mt-2">

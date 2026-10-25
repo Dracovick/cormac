@@ -1,6 +1,6 @@
 import type { CharacterFormData } from '@/app/actions/character'
 import { getRaceInfo } from './races'
-import { getClasseInfo, getSortsSlotsParJour } from './classes'
+import { getClasseInfo, getSortsSlotsParJour, nombreDonsAttendus } from './classes'
 import { getModifier, xpPourNiveau } from './rules'
 import { COMPETENCES_DND35 } from './skills'
 import { SORTS_DND35, type ClasseSortKey } from './spells'
@@ -240,11 +240,9 @@ export function generateCharacter(params: GenParams): CharacterFormData {
   }))
 
   // ── Dons ────────────────────────────────────────────────────────────────────
-  const donsNormaux = 1 + Math.floor(niveau / 3)
-  const donsHumain = race === 'Humain' ? 1 : 0
-  const GUERRIER_BONUS = [1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
-  const donsGuerrier = classe === 'Guerrier' ? GUERRIER_BONUS.filter(l => l <= niveau).length : 0
-  const dons = (DONS_PAR_CLASSE[classe] ?? []).slice(0, donsNormaux + donsHumain + donsGuerrier)
+  // Même compte que la fiche vierge imprimable : une seule source de vérité.
+  const { total: nbDons } = nombreDonsAttendus(classe, niveau, race)
+  const dons = (DONS_PAR_CLASSE[classe] ?? []).slice(0, nbDons)
 
   // ── Sorts ───────────────────────────────────────────────────────────────────
   const sorts: CharacterFormData['sorts'] = []

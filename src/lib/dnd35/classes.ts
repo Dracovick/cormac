@@ -104,6 +104,34 @@ const SLOTS_DEMI_4: number[][] = [
   [4, 4, 4, 4], // CL 20
 ]
 
+// Niveaux auxquels le guerrier gagne un don de bonus : le 1er, puis chaque
+// niveau pair (Manuel des Joueurs, table 3–6).
+const GUERRIER_DONS_BONUS = [1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+
+/**
+ * Nombre de dons qu'un personnage possède à un niveau donné, ventilé par
+ * origine — pour que le générateur et la fiche vierge comptent pareil.
+ *
+ * Règle 3.5 : un don au 1er niveau, puis un de plus tous les trois niveaux
+ * (3, 6, 9, 12, 15, 18). Le guerrier ajoute ses dons de bonus, l'humain son
+ * don racial supplémentaire.
+ *
+ * ⚠ Les dons de bonus des AUTRES classes (le moine, le roublard au 10e…) ne
+ * sont pas comptés : ce sont des pouvoirs de classe à liste imposée, pas des
+ * dons que le joueur choisit librement.
+ */
+export function nombreDonsAttendus(
+  classe: string | null | undefined,
+  niveau: number,
+  race?: string | null,
+): { normaux: number; bonusClasse: number; racial: number; total: number } {
+  const n = Math.min(Math.max(niveau, 1), 20)
+  const normaux = 1 + Math.floor(n / 3)
+  const bonusClasse = classe === 'Guerrier' ? GUERRIER_DONS_BONUS.filter(l => l <= n).length : 0
+  const racial = race === 'Humain' ? 1 : 0
+  return { normaux, bonusClasse, racial, total: normaux + bonusClasse + racial }
+}
+
 export function getSortsSlotsParJour(classe: string, niveau: number): number[] {
   const idx = Math.min(Math.max(niveau, 1), 20) - 1
   if (classe === 'Barde') return SLOTS_BARDE[idx] ?? []
