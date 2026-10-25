@@ -305,9 +305,9 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
       <div className="no-print" style={{ background: '#1c1917', padding: '12px 16px', display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '16px', borderRadius: '8px', position: 'sticky', top: 0, zIndex: 10 }}>
         <Link href={`/personnage/${id}`} style={{ color: '#a8a29e', fontSize: '14px', textDecoration: 'none' }}>← Retour à la fiche</Link>
         <span style={{ color: '#57534e' }}>|</span>
-        <PrintButton />
+        <PrintButton nomFichier={`fiche-${character.nom}`} />
         <span style={{ color: '#78716c', fontSize: '13px', marginLeft: 'auto' }}>
-          Dans la boîte de dialogue d'impression, choisir « Sauvegarder en PDF »
+          « Sauvegarder en PDF » télécharge le fichier directement
         </span>
       </div>
 

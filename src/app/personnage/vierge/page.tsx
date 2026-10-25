@@ -374,7 +374,13 @@ export default async function FicheViergePage({ searchParams }: {
             Appliquer
           </button>
 
-          <PrintButton />
+          <PrintButton
+            nomFichier={[
+              mode === 'sorts' ? 'feuilles-de-sorts' : 'fiche-vierge',
+              classeNom || 'generique',
+              niveauStr,
+            ].filter(Boolean).join('-')}
+          />
         </form>
         <div style={{ color: '#a8a29e', fontSize: '12px', marginTop: '8px', lineHeight: 1.5 }}>
           {calibre
