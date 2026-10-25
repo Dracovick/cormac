@@ -25,12 +25,14 @@ export function LiveNotes({ personnageId, notes }: Props) {
   if (editing) {
     return (
       <div className="space-y-2">
+        {/* text-base sans variante sm: — `sm:text-sm` ramenait le champ à 14 px
+            dès la tablette, là où on écrit justement à l'Apple Pencil. */}
         <textarea
           value={value}
           onChange={e => setValue(e.target.value)}
           autoFocus
-          rows={6}
-          className="w-full bg-stone-800 border border-amber-700/50 focus:border-amber-500 rounded-lg px-3 py-2 text-stone-200 text-base sm:text-sm leading-relaxed resize-y focus:outline-none"
+          rows={10}
+          className="w-full bg-stone-800 border border-amber-700/50 focus:border-amber-500 rounded-lg px-3 py-2.5 text-stone-200 text-base leading-loose resize-y focus:outline-none"
           placeholder="Note générale — contacts, informations qui suivent le personnage d'une partie à l'autre..."
         />
         <div className="flex gap-2">
