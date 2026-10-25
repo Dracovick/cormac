@@ -59,7 +59,11 @@ export function PrintButton({ nomFichier }: { nomFichier?: string }) {
   }
 
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+    // `flexShrink: 0` : ces deux boutons vivent dans une barre `display:flex`.
+    // Sans ça, la barre les comprime et chacun se coupe en deux lignes alors
+    // qu'il reste de la place à côté — relevé sur la page d'impression d'une
+    // fiche, où « Retour à la fiche » se brisait aussi.
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', flexShrink: 0 }}>
       <button
         type="button"
         onClick={sauvegarder}

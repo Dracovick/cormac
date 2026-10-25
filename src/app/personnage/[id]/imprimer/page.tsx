@@ -302,7 +302,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
       `}</style>
 
       {/* Boutons de navigation — masqués à l'impression */}
-      <div className="no-print" style={{ background: '#1c1917', padding: '12px 16px', display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '16px', borderRadius: '8px', position: 'sticky', top: 0, zIndex: 10 }}>
+      <div className="no-print" style={{ background: '#1c1917', padding: '12px 16px', display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '16px', borderRadius: '8px', position: 'sticky', top: 0, zIndex: 10 }}>
         <Link href={`/personnage/${id}`} style={{ color: '#a8a29e', fontSize: '14px', textDecoration: 'none' }}>← Retour à la fiche</Link>
         <span style={{ color: '#57534e' }}>|</span>
         <PrintButton nomFichier={`fiche-${character.nom}`} />

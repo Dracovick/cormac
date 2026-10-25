@@ -49,7 +49,9 @@ const CAS = [
   { nom: 'sorts · Barde 10',     chemin: '/personnage/vierge?mode=sorts&copies=1&classe=Barde&niveau=10',  attendu: 1 },
   { nom: 'sorts · Ensorc. 20',   chemin: '/personnage/vierge?mode=sorts&copies=1&classe=Ensorceleur&niveau=20', attendu: 1 },
   { nom: 'sorts · 3 copies',     chemin: '/personnage/vierge?mode=sorts&copies=3&classe=Prêtre&niveau=5', attendu: 3 },
-  { nom: 'fiche · générique',    chemin: '/personnage/vierge',                                          attendu: 3 },
+  // Sans classe choisie, on ne sait pas si le personnage lance : la feuille de
+  // sorts est donc incluse (`afficheSorts = !info || estLanceur`). D'où 4.
+  { nom: 'fiche · générique',    chemin: '/personnage/vierge',                                          attendu: 4 },
   { nom: 'fiche · Guerrier 12',  chemin: '/personnage/vierge?classe=Guerrier&niveau=12&race=Humain',     attendu: 3 },
   { nom: 'fiche · Prêtre 5',     chemin: '/personnage/vierge?classe=Prêtre&niveau=5',                    attendu: 4 },
   { nom: 'fiche · Magicien 9',   chemin: '/personnage/vierge?classe=Magicien&niveau=9',                  attendu: 4 },
