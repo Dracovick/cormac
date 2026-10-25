@@ -21,8 +21,9 @@
  * joueurs, on ne la refactorise pas pour en ajouter une autre.
  */
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import {
   CLASSES_DND35,
   getClasseInfo,
@@ -193,12 +194,29 @@ function FeuilleSorts({ lignes, titreCalibrage, info, niveauxDeSort, classeNom, 
 }
 
 
-export default function FicheViergePage() {
-  const [classeNom, setClasseNom] = useState('')
-  const [niveauStr, setNiveauStr] = useState('')
-  const [race, setRace] = useState('')
-  const [mode, setMode] = useState<'fiche' | 'sorts'>('fiche')
-  const [copies, setCopies] = useState(2)
+/**
+ * Les réglages se lisent aussi dans l'adresse — `?classe=Pr%C3%AAtre&niveau=5`,
+ * `?mode=sorts&copies=4`. Deux raisons : le MJ peut garder en favori la feuille
+ * exacte qu'il réimprime chaque séance, et le document imprimé devient
+ * vérifiable sans piloter de navigateur.
+ */
+function FicheVierge() {
+  const params = useSearchParams()
+  const classeInitiale = params.get('classe') ?? ''
+  const [classeNom, setClasseNom] = useState(
+    CLASSES_DND35.some(c => c.nom === classeInitiale) ? classeInitiale : '',
+  )
+  const niveauInitial = Number(params.get('niveau'))
+  const [niveauStr, setNiveauStr] = useState(
+    Number.isInteger(niveauInitial) && niveauInitial >= 1 && niveauInitial <= 20 ? String(niveauInitial) : '',
+  )
+  const raceInitiale = params.get('race') ?? ''
+  const [race, setRace] = useState(raceInitiale === 'Humain' || raceInitiale === 'Autre' ? raceInitiale : '')
+  const [mode, setMode] = useState<'fiche' | 'sorts'>(params.get('mode') === 'sorts' ? 'sorts' : 'fiche')
+  const copiesInitiales = Number(params.get('copies'))
+  const [copies, setCopies] = useState(
+    Number.isInteger(copiesInitiales) && copiesInitiales >= 1 && copiesInitiales <= 6 ? copiesInitiales : 2,
+  )
 
   const info = classeNom ? getClasseInfo(classeNom) : undefined
   const niveau = niveauStr ? Number(niveauStr) : 0
@@ -864,5 +882,18 @@ export default function FicheViergePage() {
         </>
       )}
     </div>
+  )
+}
+
+/**
+ * `useSearchParams` impose une frontière Suspense. Le repli est vide plutôt
+ * qu'un message d'attente : la page se rend en une fraction de seconde et un
+ * texte qui clignote sur un document à imprimer ne sert personne.
+ */
+export default function FicheViergePage() {
+  return (
+    <Suspense fallback={null}>
+      <FicheVierge />
+    </Suspense>
   )
 }
