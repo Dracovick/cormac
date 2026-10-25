@@ -46,3 +46,6 @@ next-env.d.ts
 /Livres de jeu en PDF/
 /Anciens Personnages FileMaker TABLES/
 extraction.md
+
+# Fichiers de travail ephemeres des agents
+.scratch/
