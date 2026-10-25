@@ -26,9 +26,16 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
     // qui mange la moitié de la page qu'on vient justement d'agrandir pour écrire.
     // Au crayon on écrit directement dans le champ, sans le toucher avant.
     if (window.matchMedia('(pointer: fine)').matches) zonePleine.current?.focus()
+    // Le corps de page ne doit pas défiler sous la pleine page : au crayon, un
+    // trait qui dépasse la zone ferait glisser la fiche derrière.
+    const defilement = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
     const echap = (ev: KeyboardEvent) => { if (ev.key === 'Escape') setPlein(false) }
     window.addEventListener('keydown', echap)
-    return () => window.removeEventListener('keydown', echap)
+    return () => {
+      document.body.style.overflow = defilement
+      window.removeEventListener('keydown', echap)
+    }
   }, [plein])
 
   function charger() {
