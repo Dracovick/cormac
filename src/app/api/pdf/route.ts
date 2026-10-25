@@ -32,6 +32,42 @@ export const dynamic = 'force-dynamic'
 
 const COOKIE = 'cormac_auth'
 
+/**
+ * ⚠ LES POLICES DÉCIDENT DE LA PAGINATION.
+ *
+ * Les feuilles sont dessinées en `Arial, sans-serif`. Chromium serverless n'a
+ * aucune police système : il ne lui reste qu'Open Sans, livrée avec le paquet.
+ * Open Sans n'a pas les métriques d'Arial, et la première mesure l'a prouvé —
+ * la feuille de sorts d'un Prêtre 5 sortait sur **5 pages au lieu de 4**, la
+ * cinquième ne portant qu'une ligne de note.
+ *
+ * On sert donc Arimo, qui est métriquement compatible avec Arial, sous le nom
+ * de famille « Arial ». Mesuré avec fontTools contre l'arial.ttf de Windows :
+ * même unitsPerEm (2048), mêmes ascender/descender/lineGap hhea
+ * (1854 / −434 / 67), et mêmes largeurs d'avance au millième sur A a M m W w
+ * i I 1 espace point. La pagination du PDF suit donc celle de l'imprimante.
+ *
+ * ⛔ On ne redessine PAS les feuilles pour les faire tenir : elles sont
+ * calibrées et validées sur l'imprimante du MJ. C'est au rendu serveur de
+ * s'aligner sur elle, pas l'inverse.
+ */
+const POLICES = `
+@font-face {
+  font-family: 'Arial';
+  src: url('/polices/Arimo-Variable.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Arial';
+  src: url('/polices/Arimo-Italic-Variable.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: block;
+}
+`
+
 /** Liste blanche des pages qu'on accepte de rendre. La route reçoit un chemin
  *  de l'extérieur : sans ce filtre, elle deviendrait un fetch arbitraire signé
  *  par le cookie de l'utilisateur. */
@@ -117,6 +153,19 @@ export async function GET(request: NextRequest) {
 
     const page = await navigateur.newPage()
     await page.setViewport({ width: 1100, height: 1400, deviceScaleFactor: 1 })
+
+    // Les @font-face doivent être là au PREMIER calcul de mise en page, sinon la
+    // page se dispose en Open Sans et le reflow qui suit peut laisser des traces.
+    await page.evaluateOnNewDocument((css: string) => {
+      const poser = () => {
+        const balise = document.createElement('style')
+        balise.textContent = css
+        document.head.appendChild(balise)
+      }
+      if (document.head) poser()
+      else document.addEventListener('DOMContentLoaded', poser, { once: true })
+    }, POLICES)
+
     await page.goto(cible.toString(), { waitUntil: 'networkidle0', timeout: 45_000 })
 
     // Le middleware redirige en silence : une page de login rendue en PDF
@@ -127,6 +176,31 @@ export async function GET(request: NextRequest) {
         "Chromium a été redirigé vers la page de connexion : le cookie de session n'a pas été accepté.",
         { status: 502 },
       )
+    }
+
+    // `@font-face` se charge à la demande : il faut réclamer les quatre variantes
+    // puis attendre, sinon `page.pdf()` peut partir avant qu'elles soient posées.
+    const policesChargees = await page.evaluate(async () => {
+      await Promise.all([
+        document.fonts.load('400 10pt Arial'),
+        document.fonts.load('700 10pt Arial'),
+        document.fonts.load('italic 400 10pt Arial'),
+        document.fonts.load('italic 700 10pt Arial'),
+      ])
+      await document.fonts.ready
+      let posees = 0
+      document.fonts.forEach(police => {
+        if (police.family === 'Arial' && police.status === 'loaded') posees++
+      })
+      return posees
+    })
+
+    if (policesChargees === 0) {
+      // Pas un motif de refus — le document reste juste, seule sa pagination
+      // peut gagner une page. Mais il faut que ça se voie quelque part.
+      console.error('[api/pdf] Arimo non chargée : la pagination suivra Open Sans', {
+        cible: cible.pathname,
+      })
     }
 
     const pdf = await page.pdf({
@@ -146,6 +220,9 @@ export async function GET(request: NextRequest) {
         'Content-Disposition': `attachment; filename="${fichier}"`,
         'Content-Length': String(pdf.length),
         'Cache-Control': 'no-store',
+        // Pour pouvoir vérifier en production que la pagination repose bien sur
+        // Arimo, sans avoir à deviner d'après le nombre de pages.
+        'X-Grimoire-Polices': String(policesChargees),
       },
     })
   } catch (err) {
