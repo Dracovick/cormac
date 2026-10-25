@@ -190,7 +190,7 @@ export function AjouterParchemin({ personnageId }: Props) {
                 </label>
               </div>
               <p className="text-stone-600 text-xs leading-snug">
-                Le <strong>NLS</strong> (niveau de lanceur) fixe la portée, la durée et les dégâts du sort qui
+                Le <strong>NLS</strong>{' '}(niveau de lanceur) fixe la portée, la durée et les dégâts du sort qui
                 en sort — pas le niveau de celui qui lit. Proposé au minimum du SRD; corrigez-le si le MJ a
                 dit mieux. Laissez vide s&apos;il n&apos;est pas connu.
               </p>
