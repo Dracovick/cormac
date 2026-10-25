@@ -101,8 +101,7 @@ const DONS_BONUS_DE_CLASSE: Record<string, string> = {
  * copie du mode « feuilles seulement ». Déclarée hors du rendu : un composant
  * créé pendant le rendu perd son état à chaque frappe dans les menus.
  */
-function FeuilleSorts({ lignes, titreCalibrage, info, niveauxDeSort, classeNom, spontane }: {
-  lignes: number
+function FeuilleSorts({ titreCalibrage, info, niveauxDeSort, classeNom, spontane }: {
   titreCalibrage: string
   info: ClasseInfo | undefined
   /** Niveaux de sort que la classe atteint en carrière — 0 (oraisons) à niveauMaxSorts. */
@@ -110,6 +109,14 @@ function FeuilleSorts({ lignes, titreCalibrage, info, niveauxDeSort, classeNom, 
   classeNom: string
   spontane: boolean
 }) {
+  // Une feuille de sorts doit tenir sur UNE page, sinon « 3 copies » en imprime
+  // six. Calibré par mesure sur la production (Chrome, letter, marges 0,6 po,
+  // 24 octobre 2026) : sans grille d'emplacements, 34 lignes passent; avec une
+  // grille de 10 niveaux, 26 est le seuil et 28 déborde. Chaque niveau de sort
+  // coûte donc un peu moins d'une ligne — d'où le retrait d'une ligne par
+  // niveau, avec de la marge sous le seuil mesuré pour absorber les écarts de
+  // police entre Chrome et une imprimante réelle.
+  const lignes = Math.max(20, 32 - niveauxDeSort.length)
   return (
     <>
       <table style={TABLE}>
@@ -350,7 +357,7 @@ export default async function FicheViergePage({ searchParams }: {
       ══════════════════════════════════════════════════════════════════════ */}
       {mode === 'sorts' && Array.from({ length: copies }).map((_, i) => (
         <div key={i} style={i < copies - 1 ? PAGE : { padding: 0 }}>
-          <FeuilleSorts lignes={34} titreCalibrage={titreCalibrage} info={info} niveauxDeSort={niveauxDeSort} classeNom={classeNom} spontane={spontane} />
+          <FeuilleSorts titreCalibrage={titreCalibrage} info={info} niveauxDeSort={niveauxDeSort} classeNom={classeNom} spontane={spontane} />
         </div>
       ))}
 
@@ -882,7 +889,7 @@ export default async function FicheViergePage({ searchParams }: {
           ══════════════════════════════════════════════════════════════════ */}
           {afficheSorts && (
             <div style={{ padding: 0 }}>
-              <FeuilleSorts lignes={30} titreCalibrage={titreCalibrage} info={info} niveauxDeSort={niveauxDeSort} classeNom={classeNom} spontane={spontane} />
+              <FeuilleSorts titreCalibrage={titreCalibrage} info={info} niveauxDeSort={niveauxDeSort} classeNom={classeNom} spontane={spontane} />
             </div>
           )}
         </>
