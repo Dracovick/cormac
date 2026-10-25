@@ -37,9 +37,17 @@ const COOKIE = 'cormac_auth'
  *
  * Les feuilles sont dessinées en `Arial, sans-serif`. Chromium serverless n'a
  * aucune police système : il ne lui reste qu'Open Sans, livrée avec le paquet.
- * Open Sans n'a pas les métriques d'Arial, et la première mesure l'a prouvé —
- * la feuille de sorts d'un Prêtre 5 sortait sur **5 pages au lieu de 4**, la
- * cinquième ne portant qu'une ligne de note.
+ * Open Sans n'a pas les métriques d'Arial, donc la pagination du PDF n'aurait
+ * aucune raison de valoir celle de l'imprimante du MJ — et une feuille de sorts
+ * qui gagne une page fait sortir six feuilles quand on en demande trois.
+ *
+ * ⚠ Ce n'est PAS ce qui expliquait le débordement observé le 25 octobre 2026 :
+ * le même document rendu par le Chrome de Windows, avec le vrai Arial, donnait
+ * le même compte de pages. Le défaut était dans la feuille, pas dans la police
+ * (voir le calibrage de `FeuilleSorts`). La substitution de police reste à
+ * corriger pour une autre raison : sans elle, le PDF et l'imprimante ne
+ * mesureraient pas la même chose, et un calibrage valide d'un côté pourrait
+ * être faux de l'autre.
  *
  * On sert donc Arimo, qui est métriquement compatible avec Arial, sous le nom
  * de famille « Arial ». Mesuré avec fontTools contre les arial.ttf / arialbd.ttf

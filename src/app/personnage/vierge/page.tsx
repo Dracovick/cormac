@@ -127,13 +127,26 @@ function FeuilleSorts({ titreCalibrage, info, niveauxDeSort, classeNom, spontane
   spontane: boolean
 }) {
   // Une feuille de sorts doit tenir sur UNE page, sinon « 3 copies » en imprime
-  // six. Calibré par mesure sur la production (Chrome, letter, marges 0,6 po,
-  // 24 octobre 2026) : sans grille d'emplacements, 34 lignes passent; avec une
-  // grille de 10 niveaux, 26 est le seuil et 28 déborde. Chaque niveau de sort
-  // coûte donc un peu moins d'une ligne — d'où le retrait d'une ligne par
-  // niveau, avec de la marge sous le seuil mesuré pour absorber les écarts de
-  // police entre Chrome et une imprimante réelle.
-  const lignes = Math.max(20, 32 - niveauxDeSort.length)
+  // six.
+  //
+  // ⚠ Ce calibrage a déjà cédé une fois : il avait été mesuré, puis l'en-tête a
+  // gagné une ligne au commit suivant et TOUTES les classes sont repassées à
+  // deux pages, sans que rien ne le signale. Le document ne se plaint pas quand
+  // il déborde. `scripts/mesure-pagination.mjs` remesure les huit cas contre la
+  // production : **le passer après toute retouche de cette feuille.**
+  //
+  // Seuils relevés le 25 octobre 2026 (Chrome de Windows, vrai Arial, letter,
+  // marges 0,6 po) — dernier nombre de lignes qui tient sur une page :
+  //
+  //   grille absente (générique) : 29   ·   4 niveaux (paladin, rôdeur) : 24
+  //   7 niveaux (barde)          : 22   ·  10 niveaux (prêtre, magicien) : 20
+  //
+  // Le seuil baisse quand la grille d'emplacements grandit, et sa hauteur varie
+  // aussi avec la longueur de l'avertissement (le prêtre porte la mention de
+  // l'emplacement de domaine, l'ensorceleur celle du lancer spontané). D'où
+  // `27 − n`, qui reste sous chaque seuil mesuré avec au moins une ligne de
+  // marge — de quoi absorber une imprimante qui rogne un peu.
+  const lignes = Math.max(12, 27 - niveauxDeSort.length)
   return (
     <>
       <table style={TABLE}>

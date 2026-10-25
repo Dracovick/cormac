@@ -7,12 +7,15 @@ uniquement par `/api/pdf`, qui les déclare sous le nom de famille `Arial`.
 
 Les feuilles du Grimoire sont dessinées en `Arial, sans-serif`. Chromium serverless n'a
 aucune police système : il retombe sur Open Sans, livrée avec `@sparticuz/chromium`. Open
-Sans n'a pas les métriques d'Arial, et la pagination dérape — mesuré le 25 octobre 2026 :
-la feuille d'un Prêtre 5 sortait sur **5 pages** au lieu des 4 mesurées sur l'imprimante
-du MJ, la cinquième ne portant qu'une ligne de note.
+Sans n'a pas les métriques d'Arial — le PDF ne mesurerait donc pas la même chose que
+l'imprimante du MJ, et un calibrage de pagination valide d'un côté pourrait être faux de
+l'autre.
 
-Les feuilles ne sont pas retouchées pour tenir : elles sont calibrées et validées sur
-l'imprimante. C'est au rendu serveur de s'aligner sur elle.
+⚠ **Ce n'est pas ce qui expliquait le débordement du 25 octobre 2026.** La feuille de sorts
+sortait sur deux pages, et le témoin l'a tranché : le même document rendu par le Chrome de
+Windows, avec le vrai Arial, débordait pareil. Le défaut était dans la feuille (calibrage
+de `FeuilleSorts`), pas dans la police. Les polices restent utiles pour que les deux rendus
+soient comparables, pas pour faire tenir un document.
 
 ## Ce que sont ces fichiers
 
