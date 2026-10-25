@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState, useTransition } from 'react'
 import { ajouterButin, type TypeButin } from '@/app/actions/butin'
-import type { PotionRef } from '@/app/actions/character'
+import { getSortsCatalogue, type PotionRef, type SortRef } from '@/app/actions/character'
+import { CLASSES_ARCANIQUES, CLASSES_DIVINES, TYPES_PARCHEMIN, nlsSuggere } from '@/lib/parchemins'
 import { UNITES_MONNAIE } from '@/lib/dnd35/monnaie'
 import { ChampRechercheNom } from '@/components/ChampRechercheNom'
 
@@ -22,6 +23,7 @@ const ONGLETS: { code: TypeButin; libelle: string; icone: string }[] = [
   { code: 'monnaie', libelle: 'Monnaie', icone: '🪙' },
   { code: 'gemme', libelle: 'Gemmes', icone: '💎' },
   { code: 'potion', libelle: 'Potions', icone: '🧪' },
+  { code: 'parchemin', libelle: 'Parchemins', icone: '📜' },
   { code: 'objet', libelle: 'Objets magiques', icone: '🔮' },
   { code: 'arme', libelle: 'Armes', icone: '🗡️' },
 ]
@@ -38,6 +40,11 @@ const VIDE = {
   potNom: '',
   potEffet: '',
   potDoses: '1',
+  parNom: '',
+  parNiveau: '',
+  parNls: '',
+  parType: '',
+  parQuantite: '1',
   objNom: '',
   objEmplacement: '',
   objCharges: '',
@@ -72,12 +79,18 @@ export function ButinDrawer({
   potionsCatalogue = [],
   ongletInitial = 'monnaie',
   libelleBouton = '💰 Butin',
-  titleBouton = 'Encaisser un trésor trouvé en partie — monnaie, gemmes, potions, objets magiques, armes',
+  titleBouton = 'Encaisser un trésor trouvé en partie — monnaie, gemmes, potions, parchemins, objets magiques, armes',
   varianteBouton = 'tresor',
 }: Props) {
   const [open, setOpen] = useState(false)
   const [onglet, setOnglet] = useState<TypeButin>(ongletInitial)
   const [v, setV] = useState(VIDE)
+  /** Le sort lié au parchemin en cours de saisie. null = nom libre. */
+  const [parSortId, setParSortId] = useState<number | null>(null)
+  const [parNiveauxClasses, setParNiveauxClasses] = useState<Record<string, number>>({})
+  // ⛔ Les 1221 sorts ne partent PAS avec la fiche : ils arrivent à la
+  // première ouverture de l'onglet Parchemins, et seulement là.
+  const [sortsCatalogue, setSortsCatalogue] = useState<SortRef[] | null>(null)
   const [message, setMessage] = useState<string | null>(null)
   const [avis, setAvis] = useState<string | null>(null)
   const [erreur, setErreur] = useState<string | null>(null)
@@ -103,6 +116,13 @@ export function ButinDrawer({
   useEffect(() => {
     if (open) premierChamp.current?.focus()
   }, [open, onglet])
+
+  useEffect(() => {
+    if (!open || onglet !== 'parchemin' || sortsCatalogue != null) return
+    let vivant = true
+    getSortsCatalogue().then(liste => { if (vivant) setSortsCatalogue(liste) })
+    return () => { vivant = false }
+  }, [open, onglet, sortsCatalogue])
 
   function fermer() {
     setOpen(false)
@@ -172,6 +192,23 @@ export function ButinDrawer({
           notes: note,
         }
       }
+      case 'parchemin': {
+        if (parSortId == null && !v.parNom.trim()) {
+          setErreur('Choisissez un sort, ou donnez un nom au parchemin.')
+          return null
+        }
+        const entier = (x: string) => { const n = parseInt(x, 10); return Number.isFinite(n) ? n : null }
+        return {
+          type: 'parchemin' as const,
+          sortId: parSortId,
+          nomLibre: parSortId == null ? v.parNom : undefined,
+          niveauSort: entier(v.parNiveau),
+          niveauLanceur: entier(v.parNls),
+          typeMagie: v.parType || null,
+          quantite: parseInt(v.parQuantite) || 1,
+          notes: note,
+        }
+      }
       case 'objet': {
         if (!v.objNom.trim()) {
           setErreur("Nommez l'objet.")
@@ -213,6 +250,12 @@ export function ButinDrawer({
           return { ...prev, gemNom: '', gemQuantite: '1', gemValeur: '' }
         case 'potion':
           return { ...prev, potNom: '', potEffet: '', potDoses: '1' }
+        case 'parchemin':
+          // Le sort lié se défait aussi : sans ça, le parchemin suivant
+          // hériterait silencieusement du sort du précédent.
+          setParSortId(null)
+          setParNiveauxClasses({})
+          return { ...prev, parNom: '', parNiveau: '', parNls: '', parType: '', parQuantite: '1' }
         case 'objet':
           return { ...prev, objNom: '', objEmplacement: '', objCharges: '' }
         case 'arme':
@@ -411,6 +454,98 @@ export function ButinDrawer({
                       />
                     </label>
                   </div>
+                </>
+              )}
+
+              {onglet === 'parchemin' && (
+                <>
+                  <label>
+                    <Etiquette>Sort inscrit sur le parchemin</Etiquette>
+                    <ChampRechercheNom
+                      inputRef={premierChamp}
+                      value={v.parNom}
+                      onChange={texte => {
+                        maj('parNom', texte)
+                        // Retaper après avoir choisi défait le lien : la ligne ne
+                        // doit pas garder le sort d'avant sous un nom qui a changé.
+                        if (parSortId != null) { setParSortId(null); setParNiveauxClasses({}) }
+                      }}
+                      onPick={sug => {
+                        // Le rattachement remplit niveau et nature depuis les
+                        // listes de classes du Manuel — rien à chercher au livre.
+                        const ref = sug.id != null
+                          ? sortsCatalogue?.find(x => x.id === sug.id)
+                          : sortsCatalogue?.find(x => x.nom === sug.nom)
+                        setParSortId(ref?.id ?? null)
+                        setParNiveauxClasses(ref?.niveaux ?? {})
+                        const duManuel = [...CLASSES_ARCANIQUES, ...CLASSES_DIVINES]
+                          .map(c => ref?.niveaux[c])
+                          .filter((n): n is number => n != null)
+                        const niveau = duManuel.length ? Math.min(...duManuel) : null
+                        const arcanique = CLASSES_ARCANIQUES.some(c => ref?.niveaux[c] != null)
+                        const divin = CLASSES_DIVINES.some(c => ref?.niveaux[c] != null)
+                        const suggere = nlsSuggere(niveau)
+                        setV(prev => ({
+                          ...prev,
+                          parNom: sug.nom,
+                          parNiveau: niveau == null ? '' : String(niveau),
+                          parNls: suggere == null ? '' : String(suggere),
+                          // Un sort des deux listes ne tranche pas : on laisse vide.
+                          parType: arcanique && !divin ? 'profane' : divin && !arcanique ? 'divin' : '',
+                        }))
+                      }}
+                      catalogue={(sortsCatalogue ?? []).map(x => ({
+                        id: x.id,
+                        nom: x.nom,
+                        detail: Object.entries(x.niveaux)
+                          .sort((a, b) => a[1] - b[1])
+                          .map(([c, n]) => `${c} ${n}`)
+                          .join(' · ') || null,
+                      }))}
+                      placeholder={sortsCatalogue == null ? 'Chargement des sorts…' : 'Rechercher un sort…'}
+                      className={CHAMP}
+                      typeLabel="parchemin, sans fiche de sort"
+                      genre="m"
+                    />
+                    {parSortId != null && Object.keys(parNiveauxClasses).length > 0 && (
+                      <span className="block text-stone-500 text-xs mt-1">
+                        🔗 lié à la fiche du sort — {Object.entries(parNiveauxClasses)
+                          .sort((a, b) => a[1] - b[1] || a[0].localeCompare(b[0], 'fr'))
+                          .map(([c, n]) => `${c} ${n}`)
+                          .join(' · ')}
+                      </span>
+                    )}
+                  </label>
+                  <div className="flex gap-2">
+                    <label className="w-20">
+                      <Etiquette>Niveau</Etiquette>
+                      <input type="text" inputMode="numeric" value={v.parNiveau}
+                        onChange={e => maj('parNiveau', e.target.value)} placeholder="—" className={CHAMP} />
+                    </label>
+                    <label className="w-20">
+                      <Etiquette>NLS</Etiquette>
+                      <input type="text" inputMode="numeric" value={v.parNls}
+                        onChange={e => maj('parNls', e.target.value)} placeholder="—" className={CHAMP} />
+                    </label>
+                    <label className="flex-1">
+                      <Etiquette>Nature</Etiquette>
+                      <select value={v.parType} onChange={e => maj('parType', e.target.value)}
+                        className={CHAMP + ' [color-scheme:dark]'}>
+                        <option value="">— non précisée —</option>
+                        {TYPES_PARCHEMIN.map(t => <option key={t.code} value={t.code}>{t.libelle}</option>)}
+                      </select>
+                    </label>
+                    <label className="w-24">
+                      <Etiquette>Exemplaires</Etiquette>
+                      <input type="text" inputMode="numeric" value={v.parQuantite}
+                        onChange={e => maj('parQuantite', e.target.value)} className={CHAMP} />
+                    </label>
+                  </div>
+                  <p className="text-stone-600 text-xs leading-snug">
+                    Le <strong>NLS</strong>{' '}(niveau de lanceur) fixe la portée, la durée et les dégâts —
+                    pas le niveau de celui qui lit. Proposé au minimum du SRD. Deux parchemins du même sort
+                    à des NLS différents restent <strong>deux lignes</strong> : ce ne sont pas les mêmes objets.
+                  </p>
                 </>
               )}
 

@@ -21,12 +21,14 @@ import { UNITES_MONNAIE, uniteCourte } from '@/lib/dnd35/monnaie'
 // appartient au personnage (bonus magique, emplacement, charges, quantité, note)
 // va dans la table `character_*`, jamais dans le catalogue.
 
-export type TypeButin = 'monnaie' | 'gemme' | 'potion' | 'objet' | 'arme'
+export type TypeButin = 'monnaie' | 'gemme' | 'potion' | 'parchemin' | 'objet' | 'arme'
 
 export type EntreeButin =
   | { type: 'monnaie'; montant: number; unite: string; notes?: string }
   | { type: 'gemme'; nom: string; quantite: number; valeur: number; unite: string; notes?: string }
   | { type: 'potion'; nom: string; effet?: string; doses: number; notes?: string }
+  | { type: 'parchemin'; sortId: number | null; nomLibre?: string; niveauSort?: number | null
+      niveauLanceur?: number | null; typeMagie?: string | null; quantite: number; notes?: string }
   | { type: 'objet'; nom: string; emplacement?: string; charges?: number; notes?: string }
   | { type: 'arme'; nom: string; degats?: string; bonusMagique?: number; quantite: number; notes?: string }
 
@@ -224,6 +226,82 @@ export async function ajouterButin(personnageId: number, entree: EntreeButin): P
       }
       description = `Reçoit ${nom}${doses > 1 ? ` (${doses} doses)` : ''}`
       valeurJournal = doses
+      break
+    }
+
+    // ── Parchemins ──
+    // ⛔ Aucun catalogue à alimenter, contrairement aux potions : le catalogue
+    // d'un parchemin, c'est la fiche du sort. On ne crée donc RIEN de partagé —
+    // tout ce qui est écrit appartient au personnage qui ramasse.
+    case 'parchemin': {
+      const nomLibre = nettoie(entree.nomLibre, MAX_NOM)
+      if (entree.sortId == null && !nomLibre) {
+        return { ok: false, message: 'Choisissez un sort, ou donnez un nom au parchemin.' }
+      }
+      const quantite = borne(entree.quantite, 1, 99, 1)
+      const niveauSort = entree.niveauSort == null ? null : borne(entree.niveauSort, 0, 9, 0)
+      const nls = entree.niveauLanceur == null ? null : borne(entree.niveauLanceur, 1, 20, 1)
+      const typeMagie = entree.typeMagie === 'profane' || entree.typeMagie === 'divin' ? entree.typeMagie : null
+
+      // Le sort lié fait foi : son nom vient de la Bibliothèque, jamais de la saisie.
+      let sortId: number | null = null
+      let nomSort: string | null = null
+      if (entree.sortId != null) {
+        const [s] = await db
+          .select({ id: schema.spells.id, nom: schema.spells.nom })
+          .from(schema.spells)
+          .where(eq(schema.spells.id, entree.sortId))
+          .limit(1)
+        if (s) { sortId = s.id; nomSort = s.nom }
+      }
+      const nom = nomSort ?? nomLibre
+
+      // ⚠ On ne cumule que sur (sort, NLS) identiques. Deux parchemins du même
+      // sort à des niveaux de lanceur différents sont deux objets différents :
+      // une boule de feu NLS 5 fait 5d6, la même à NLS 10 en fait 10d6. Les
+      // empiler sur une ligne effacerait la différence.
+      const lignes = await db
+        .select()
+        .from(schema.characterScrolls)
+        .where(eq(schema.characterScrolls.personnageId, personnageId))
+      const jumeau = lignes.find(l =>
+        l.niveauLanceur === nls &&
+        (sortId != null
+          ? l.sortId === sortId
+          : l.sortId == null && normaliserNom(l.nomLibre ?? '') === normaliserNom(nomLibre)))
+
+      if (jumeau) {
+        const total = jumeau.quantite + quantite
+        await db
+          .update(schema.characterScrolls)
+          .set({ quantite: total, notes: note || jumeau.notes })
+          .where(eq(schema.characterScrolls.id, jumeau.id))
+        message = `${nom} — ${total} exemplaire${total > 1 ? 's' : ''} en poche`
+      } else {
+        await db.insert(schema.characterScrolls).values({
+          personnageId,
+          sortId,
+          nomLibre: sortId == null ? nomLibre : null,
+          niveauSort,
+          niveauLanceur: nls,
+          type: typeMagie,
+          quantite,
+          notes: note || null,
+        })
+        message = `Parchemin « ${nom} » ajouté${quantite > 1 ? ` ×${quantite}` : ''}.`
+        if (sortId == null) {
+          avis = `« ${nom} » n'est pas au catalogue des sorts : la ligne n'aura pas de 📖 à ouvrir.`
+        }
+      }
+
+      const precisions = [
+        niveauSort != null ? `niveau ${niveauSort}` : null,
+        nls != null ? `NLS ${nls}` : null,
+      ].filter(Boolean).join(', ')
+      description =
+        `Reçoit ${quantite > 1 ? `${quantite} parchemins` : 'un parchemin'} de ${nom}` +
+        (precisions ? ` (${precisions})` : '')
+      valeurJournal = quantite
       break
     }
 

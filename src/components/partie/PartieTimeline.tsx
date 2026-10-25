@@ -9,6 +9,7 @@ import { heureQuebec, iconeEntree, lirePhoto } from '@/lib/journal-format'
 import { CombatTracker } from '@/components/partie/CombatTracker'
 import { DistribuerXp } from '@/components/partie/DistribuerXp'
 import { PhotoPartie } from '@/components/partie/PhotoPartie'
+import { NotePleinePage } from '@/components/NotePleinePage'
 
 type Props = { entrees: EntreeJournalPartie[]; etatGroupe: EtatPersonnage[]; enDirect: boolean; jour: string; combat: CombatActif | null }
 
@@ -29,6 +30,9 @@ const COULEURS = [
 export function PartieTimeline({ entrees, etatGroupe, enDirect, jour, combat }: Props) {
   const router = useRouter()
   const [note, setNote] = useState('')
+  // Pleine page : la note du MJ sur tout l'écran. Demandé par André le
+  // 2026-10-25 pour prendre ses notes de partie à l'Apple Pencil sur iPad.
+  const [plein, setPlein] = useState(false)
   const [isPending, startTransition] = useTransition()
 
   // En direct : la page se rafraîchit toute seule pendant la partie (journée courante
@@ -39,17 +43,22 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour, combat }: 
     if (!enDirect) return
     const t = setInterval(() => {
       if (document.visibilityState !== 'visible') return
+      // ⛔ La pleine page coupe le rafraîchissement, même sans focus : au crayon,
+      // Scribble n'allume pas le focus du textarea, donc le garde-fou
+      // `activeElement` ci-dessous ne protégerait rien pendant qu'on écrit.
+      if (plein) return
       const tag = document.activeElement?.tagName
       if (tag === 'TEXTAREA' || tag === 'INPUT' || tag === 'SELECT') return
       router.refresh()
     }, 5_000)
     return () => clearInterval(t)
-  }, [enDirect, router])
+  }, [enDirect, router, plein])
 
   function envoyerNote() {
     const t = note.trim()
     if (!t) return
     setNote('')
+    setPlein(false)
     startTransition(async () => {
       await ajouterNoteMJ(t)
       router.refresh()
@@ -99,6 +108,10 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour, combat }: 
     <div className="mb-4">
       <CombatTracker combat={combat} jour={jour} />
       <DistribuerXp jour={jour} />
+      {/* Le champ s'ouvre sur trois lignes et grandit jusqu'à huit. Avant, il
+          partait d'UNE ligne : le résumé de fin de partie s'écrivait dans une
+          fente. text-base sans variante sm: — `sm:text-sm` ramenait le texte à
+          14 px dès la tablette, là où le MJ écrit justement au crayon. */}
       <div className="flex gap-2 items-end">
       <textarea
         value={note}
@@ -109,18 +122,41 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour, combat }: 
         }}
         onKeyDown={e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); envoyerNote() } }}
         maxLength={4000}
-        rows={1}
+        rows={3}
         placeholder="Note du MJ — moment mémorable, indice, résumé de fin de partie… (Ctrl+Entrée pour publier)"
-        className="flex-1 bg-stone-900 border border-stone-700 rounded px-3 py-1.5 text-stone-200 text-base sm:text-sm placeholder:text-stone-600 focus:outline-none focus:border-amber-600 resize-none overflow-y-auto leading-snug"
+        className="flex-1 bg-stone-900 border border-stone-700 rounded px-3 py-2 text-stone-200 text-base placeholder:text-stone-600 focus:outline-none focus:border-amber-600 resize-y overflow-y-auto leading-relaxed"
       />
-      <button
-        onClick={envoyerNote}
-        disabled={!note.trim() || isPending}
-        className="text-sm bg-amber-900/40 hover:bg-amber-800/60 disabled:opacity-40 border border-amber-800/50 text-amber-300 rounded px-3 py-1.5 transition-colors shrink-0"
-      >
-        📝 Noter
-      </button>
+      <div className="flex flex-col gap-1.5 shrink-0">
+        <button
+          onClick={envoyerNote}
+          disabled={!note.trim() || isPending}
+          className="text-sm bg-amber-900/40 hover:bg-amber-800/60 disabled:opacity-40 border border-amber-800/50 text-amber-300 rounded px-3 py-1.5 transition-colors"
+        >
+          📝 Noter
+        </button>
+        <button
+          onClick={() => setPlein(true)}
+          className="text-xs text-amber-500 hover:text-amber-300 border border-amber-800/60 hover:border-amber-600 rounded px-3 py-1.5 transition-colors whitespace-nowrap"
+          title="Écrire en pleine page — pour l'Apple Pencil"
+        >
+          ⤢ Pleine page
+        </button>
       </div>
+      </div>
+
+      {plein && (
+        <NotePleinePage
+          titre="📝 Note du MJ"
+          sousTitre="Visible par toute la table, dans le journal de chaque fiche"
+          valeur={note}
+          onChange={setNote}
+          onPublier={envoyerNote}
+          onReduire={() => setPlein(false)}
+          publicationBloquee={isPending}
+          placeholder="Note du MJ — moment mémorable, indice, résumé de fin de partie… (Ctrl+Entrée pour publier)"
+          libellePublier="📝 Noter"
+        />
+      )}
       <div className="mt-2">
         <PhotoPartie />
       </div>

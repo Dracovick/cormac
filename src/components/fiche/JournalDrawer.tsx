@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useRef, useState, useTransition } from 'react'
+import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import { ajouterNoteJoueur, getJournal, supprimerEntreeJournal, type EntreeJournalPartie } from '@/app/actions/journal'
 import { journeeLudique, journeeLudiqueCourante, dateLisible, heureQuebec, iconeEntree, lirePhoto } from '@/lib/journal-format'
+import { NotePleinePage } from '@/components/NotePleinePage'
 
 type Props = { personnageId: number; nomPersonnage: string }
 
@@ -17,26 +18,7 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
   // Pleine page : la note occupe tout l'écran. Pensé pour l'Apple Pencil — à la
   // table, on écrit à la main dans le champ, et Scribble a besoin de place.
   const [plein, setPlein] = useState(false)
-  const zonePleine = useRef<HTMLTextAreaElement>(null)
   const [isPending, startTransition] = useTransition()
-
-  useEffect(() => {
-    if (!plein) return
-    // ⚠ Pas d'autofocus au doigt ni au crayon : il fait monter le clavier virtuel,
-    // qui mange la moitié de la page qu'on vient justement d'agrandir pour écrire.
-    // Au crayon on écrit directement dans le champ, sans le toucher avant.
-    if (window.matchMedia('(pointer: fine)').matches) zonePleine.current?.focus()
-    // Le corps de page ne doit pas défiler sous la pleine page : au crayon, un
-    // trait qui dépasse la zone ferait glisser la fiche derrière.
-    const defilement = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    const echap = (ev: KeyboardEvent) => { if (ev.key === 'Escape') setPlein(false) }
-    window.addEventListener('keydown', echap)
-    return () => {
-      document.body.style.overflow = defilement
-      window.removeEventListener('keydown', echap)
-    }
-  }, [plein])
 
   function charger() {
     startTransition(async () => {
@@ -273,59 +255,21 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
         </div>
       )}
 
-      {/* ─── Pleine page ────────────────────────────────────────────────────────
-          La note d'aventure seule, sur tout l'écran. Même état `note` que le
-          panneau du tiroir : réduire ne perd rien, publier publie la même chose.
-          h-[100dvh] et pas h-full : sur iPad, le clavier virtuel rétrécit le
-          viewport visuel, et un `fixed inset-0` laisserait le pied des boutons
-          sous le clavier. */}
+      {/* Pleine page — même composant que la note du MJ de /partie depuis le
+          2026-10-25 : l'autofocus conditionnel, le blocage du défilement et
+          la hauteur en dvh sont trois détails non évidents qui ne doivent
+          exister qu'à un seul endroit. */}
       {plein && (
-        <div className="fixed inset-0 z-[60] h-[100dvh] bg-stone-900 flex flex-col">
-          <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-stone-700 shrink-0">
-            <div className="min-w-0">
-              <div className="text-amber-400 font-semibold">✏️ Note d&apos;aventure</div>
-              <div className="text-stone-500 text-xs truncate">{nomPersonnage} — visible par toute la table</div>
-            </div>
-            <button
-              onClick={() => setPlein(false)}
-              className="text-stone-400 hover:text-amber-300 text-xs px-3 py-1.5 border border-stone-600 hover:border-amber-700 rounded-lg transition-colors shrink-0"
-              title="Revenir au tiroir (Échap) — le texte est conservé"
-            >
-              ⤡ Réduire
-            </button>
-          </div>
-
-          {/* text-lg + leading-loose : des lignes de 2 em, assez hautes pour
-              qu'une écriture manuscrite ne morde pas sur la ligne du dessous. */}
-          <textarea
-            ref={zonePleine}
-            value={note}
-            onChange={e => setNote(e.target.value)}
-            onKeyDown={e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); publierNote() } }}
-            maxLength={4000}
-            placeholder="Note d'aventure — indice, PNJ rencontré, décision du groupe, butin à partager… (Ctrl+Entrée pour publier)"
-            className="flex-1 min-h-0 w-full bg-stone-900 px-5 py-4 text-stone-100 text-lg leading-loose resize-none focus:outline-none placeholder:text-stone-700"
-          />
-
-          <div className="px-4 py-3 border-t border-stone-700 shrink-0 flex items-center gap-3">
-            <button
-              onClick={publierNote}
-              disabled={!note.trim() || isPending}
-              className="bg-amber-700 hover:bg-amber-600 disabled:opacity-40 text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors"
-            >
-              📝 Publier
-            </button>
-            <button
-              onClick={() => setPlein(false)}
-              className="text-stone-500 hover:text-stone-300 text-xs px-3 py-2 transition-colors"
-            >
-              Continuer plus tard
-            </button>
-            <span className={`ml-auto text-xs tabular-nums ${note.length >= 3800 ? 'text-amber-400' : 'text-stone-600'}`}>
-              {note.length} / 4000
-            </span>
-          </div>
-        </div>
+        <NotePleinePage
+          titre="✏️ Note d'aventure"
+          sousTitre={`${nomPersonnage} — visible par toute la table`}
+          valeur={note}
+          onChange={setNote}
+          onPublier={publierNote}
+          onReduire={() => setPlein(false)}
+          publicationBloquee={isPending}
+          placeholder="Note d'aventure — indice, PNJ rencontré, décision du groupe, butin à partager… (Ctrl+Entrée pour publier)"
+        />
       )}
     </>
   )
