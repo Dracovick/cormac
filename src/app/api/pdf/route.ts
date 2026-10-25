@@ -42,10 +42,17 @@ const COOKIE = 'cormac_auth'
  * cinquième ne portant qu'une ligne de note.
  *
  * On sert donc Arimo, qui est métriquement compatible avec Arial, sous le nom
- * de famille « Arial ». Mesuré avec fontTools contre l'arial.ttf de Windows :
- * même unitsPerEm (2048), mêmes ascender/descender/lineGap hhea
- * (1854 / −434 / 67), et mêmes largeurs d'avance au millième sur A a M m W w
- * i I 1 espace point. La pagination du PDF suit donc celle de l'imprimante.
+ * de famille « Arial ». Mesuré avec fontTools contre les arial.ttf / arialbd.ttf
+ * / ariali.ttf de Windows : même unitsPerEm (2048), mêmes
+ * ascender/descender/lineGap hhea (1854 / −434 / 67), et largeurs d'avance
+ * identiques au millième — romain, gras et italique.
+ *
+ * ⚠ LES QUATRE VARIANTES SONT STATIQUES, pas variables. Avec les fichiers
+ * variables d'Arimo, deux choses allaient de travers : Skia embarquait les
+ * glyphes en polices **Type 3** (rastérisées, PDF à 351 Ko au lieu de 220) et
+ * le gras retombait quand même sur Open Sans. Les quatre statiques sont
+ * instanciées depuis les fichiers variables (fontTools, wght 400 et 700) — voir
+ * `public/polices/NOTES.md`.
  *
  * ⛔ On ne redessine PAS les feuilles pour les faire tenir : elles sont
  * calibrées et validées sur l'imprimante du MJ. C'est au rendu serveur de
@@ -54,15 +61,29 @@ const COOKIE = 'cormac_auth'
 const POLICES = `
 @font-face {
   font-family: 'Arial';
-  src: url('/polices/Arimo-Variable.ttf') format('truetype-variations');
-  font-weight: 100 900;
+  src: url('/polices/Arimo-Regular.ttf') format('truetype');
+  font-weight: 400;
   font-style: normal;
   font-display: block;
 }
 @font-face {
   font-family: 'Arial';
-  src: url('/polices/Arimo-Italic-Variable.ttf') format('truetype-variations');
-  font-weight: 100 900;
+  src: url('/polices/Arimo-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Arial';
+  src: url('/polices/Arimo-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Arial';
+  src: url('/polices/Arimo-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
   font-style: italic;
   font-display: block;
 }
