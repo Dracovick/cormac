@@ -1,5 +1,3 @@
-'use client'
-
 /**
  * FICHE DE PERSONNAGE VIERGE — à imprimer et remplir au crayon.
  *
@@ -21,9 +19,7 @@
  * joueurs, on ne la refactorise pas pour en ajouter une autre.
  */
 
-import { Suspense, useState } from 'react'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
 import {
   CLASSES_DND35,
   getClasseInfo,
@@ -36,6 +32,7 @@ import { PrintButton } from '@/components/fiche/PrintButton'
 
 const TABLE = { width: '100%', borderCollapse: 'collapse' as const, marginBottom: '4px' }
 const PAGE = { pageBreakAfter: 'always' as const, padding: '0', marginBottom: '0' }
+const SELECT = { padding: '4px 6px', borderRadius: '6px' }
 
 /** Case à remplir : bordure noire, fond blanc, rien dedans. */
 function cell(style?: React.CSSProperties, key?: string | number) {
@@ -195,28 +192,31 @@ function FeuilleSorts({ lignes, titreCalibrage, info, niveauxDeSort, classeNom, 
 
 
 /**
- * Les réglages se lisent aussi dans l'adresse — `?classe=Pr%C3%AAtre&niveau=5`,
- * `?mode=sorts&copies=4`. Deux raisons : le MJ peut garder en favori la feuille
- * exacte qu'il réimprime chaque séance, et le document imprimé devient
- * vérifiable sans piloter de navigateur.
+ * Les réglages passent par l'adresse — `?classe=Pr%C3%AAtre&niveau=5`,
+ * `?mode=sorts&copies=4` — et la barre de réglages est un simple formulaire GET.
+ *
+ * ⚠ Volontairement un composant SERVEUR, sans état React. Une première version
+ * lisait les réglages avec `useSearchParams` : la frontière Suspense que cela
+ * impose vide le rendu serveur, et la page n'arrivait plus qu'à travers
+ * JavaScript — 10 Ko de HTML au lieu de 114. Sur un document à imprimer, c'est
+ * inacceptable : un navigateur lent, un onglet restauré ou une impression
+ * déclenchée trop tôt produisaient une feuille blanche. Ici tout le gabarit
+ * arrive déjà rendu du serveur, et le seul script de la page est le bouton
+ * d'impression.
  */
-function FicheVierge() {
-  const params = useSearchParams()
-  const classeInitiale = params.get('classe') ?? ''
-  const [classeNom, setClasseNom] = useState(
-    CLASSES_DND35.some(c => c.nom === classeInitiale) ? classeInitiale : '',
-  )
-  const niveauInitial = Number(params.get('niveau'))
-  const [niveauStr, setNiveauStr] = useState(
-    Number.isInteger(niveauInitial) && niveauInitial >= 1 && niveauInitial <= 20 ? String(niveauInitial) : '',
-  )
-  const raceInitiale = params.get('race') ?? ''
-  const [race, setRace] = useState(raceInitiale === 'Humain' || raceInitiale === 'Autre' ? raceInitiale : '')
-  const [mode, setMode] = useState<'fiche' | 'sorts'>(params.get('mode') === 'sorts' ? 'sorts' : 'fiche')
-  const copiesInitiales = Number(params.get('copies'))
-  const [copies, setCopies] = useState(
-    Number.isInteger(copiesInitiales) && copiesInitiales >= 1 && copiesInitiales <= 6 ? copiesInitiales : 2,
-  )
+export default async function FicheViergePage({ searchParams }: {
+  searchParams: Promise<{ classe?: string; niveau?: string; race?: string; mode?: string; copies?: string }>
+}) {
+  const sp = await searchParams
+  const classeNom = CLASSES_DND35.some(c => c.nom === sp.classe) ? sp.classe! : ''
+  const niveauDemande = Number(sp.niveau)
+  const niveauStr = Number.isInteger(niveauDemande) && niveauDemande >= 1 && niveauDemande <= 20
+    ? String(niveauDemande) : ''
+  const race = sp.race === 'Humain' || sp.race === 'Autre' ? sp.race : ''
+  const mode: 'fiche' | 'sorts' = sp.mode === 'sorts' ? 'sorts' : 'fiche'
+  const copiesDemandees = Number(sp.copies)
+  const copies = Number.isInteger(copiesDemandees) && copiesDemandees >= 1 && copiesDemandees <= 6
+    ? copiesDemandees : 2
 
   const info = classeNom ? getClasseInfo(classeNom) : undefined
   const niveau = niveauStr ? Number(niveauStr) : 0
@@ -282,13 +282,15 @@ function FicheVierge() {
 
       {/* ══ Barre de réglages — jamais imprimée ══ */}
       <div className="no-print" style={{ background: '#1c1917', padding: '12px 16px', marginBottom: '16px', borderRadius: '8px', position: 'sticky', top: 0, zIndex: 10 }}>
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+        {/* Formulaire GET : les réglages voyagent dans l'adresse, aucun état
+            client, et la page reste entièrement rendue par le serveur. */}
+        <form method="get" style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
           <Link href="/" style={{ color: '#a8a29e', fontSize: '14px', textDecoration: 'none' }}>← Accueil</Link>
           <span style={{ color: '#57534e' }}>|</span>
 
           <label style={{ color: '#d6d3d1', fontSize: '13px' }}>
             Document{' '}
-            <select value={mode} onChange={e => setMode(e.target.value as 'fiche' | 'sorts')} style={{ padding: '4px 6px', borderRadius: '6px' }}>
+            <select name="mode" defaultValue={mode} style={SELECT}>
               <option value="fiche">Fiche de personnage</option>
               <option value="sorts">Feuilles de sorts seulement</option>
             </select>
@@ -296,7 +298,7 @@ function FicheVierge() {
 
           <label style={{ color: '#d6d3d1', fontSize: '13px' }}>
             Classe{' '}
-            <select value={classeNom} onChange={e => setClasseNom(e.target.value)} style={{ padding: '4px 6px', borderRadius: '6px' }}>
+            <select name="classe" defaultValue={classeNom} style={SELECT}>
               <option value="">— Générique —</option>
               {CLASSES_DND35.map(c => <option key={c.nom} value={c.nom}>{c.nom}</option>)}
             </select>
@@ -304,7 +306,7 @@ function FicheVierge() {
 
           <label style={{ color: '#d6d3d1', fontSize: '13px' }}>
             Niveau{' '}
-            <select value={niveauStr} onChange={e => setNiveauStr(e.target.value)} style={{ padding: '4px 6px', borderRadius: '6px' }}>
+            <select name="niveau" defaultValue={niveauStr} style={SELECT}>
               <option value="">—</option>
               {NIVEAUX.map(n => <option key={n} value={n}>{n}</option>)}
             </select>
@@ -312,24 +314,28 @@ function FicheVierge() {
 
           <label style={{ color: '#d6d3d1', fontSize: '13px' }}>
             Race{' '}
-            <select value={race} onChange={e => setRace(e.target.value)} style={{ padding: '4px 6px', borderRadius: '6px' }}>
+            <select name="race" defaultValue={race} style={SELECT}>
               <option value="">—</option>
               <option value="Humain">Humain (+1 don)</option>
               <option value="Autre">Autre</option>
             </select>
           </label>
 
-          {mode === 'sorts' && (
-            <label style={{ color: '#d6d3d1', fontSize: '13px' }}>
-              Copies{' '}
-              <select value={copies} onChange={e => setCopies(Number(e.target.value))} style={{ padding: '4px 6px', borderRadius: '6px' }}>
-                {[1, 2, 3, 4, 5, 6].map(n => <option key={n} value={n}>{n}</option>)}
-              </select>
-            </label>
-          )}
+          {/* Toujours présent : le champ doit survivre à un passage en mode
+              « sorts », sinon le nombre de copies se perd à chaque soumission. */}
+          <label style={{ color: '#d6d3d1', fontSize: '13px' }}>
+            Copies{' '}
+            <select name="copies" defaultValue={String(copies)} style={SELECT}>
+              {[1, 2, 3, 4, 5, 6].map(n => <option key={n} value={n}>{n}</option>)}
+            </select>
+          </label>
+
+          <button type="submit" style={{ background: '#78350f', color: '#fde68a', border: '1px solid #92400e', borderRadius: '8px', padding: '7px 14px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}>
+            Appliquer
+          </button>
 
           <PrintButton />
-        </div>
+        </form>
         <div style={{ color: '#a8a29e', fontSize: '12px', marginTop: '8px', lineHeight: 1.5 }}>
           {calibre
             ? `Calibré pour ${titreCalibrage} : dé de vie d${info!.de}, attaque de base ${formatMod(bbaBase!)}, plafond de rangs ${plafondClasse}, ${dons!.total} don${dons!.total > 1 ? 's' : ''}${estLanceur ? ', feuille de sorts aux niveaux de la classe' : ''}. Aucune valeur de personnage n'est remplie.`
@@ -882,18 +888,5 @@ function FicheVierge() {
         </>
       )}
     </div>
-  )
-}
-
-/**
- * `useSearchParams` impose une frontière Suspense. Le repli est vide plutôt
- * qu'un message d'attente : la page se rend en une fraction de seconde et un
- * texte qui clignote sur un document à imprimer ne sert personne.
- */
-export default function FicheViergePage() {
-  return (
-    <Suspense fallback={null}>
-      <FicheVierge />
-    </Suspense>
   )
 }
