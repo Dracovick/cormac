@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState, useTransition } from 'react'
 import { ajouterButin, type TypeButin } from '@/app/actions/butin'
-import { getSortsCatalogue, type PotionRef, type SortRef } from '@/app/actions/character'
+import { getCataloguesButin, getSortsCatalogue, type ArmeRef, type ArmureRef,
+         type ObjetRef, type PotionRef, type SortRef } from '@/app/actions/character'
 import { CLASSES_ARCANIQUES, CLASSES_DIVINES, TYPES_PARCHEMIN, nlsSuggere } from '@/lib/parchemins'
 import { UNITES_MONNAIE } from '@/lib/dnd35/monnaie'
 import { ChampRechercheNom } from '@/components/ChampRechercheNom'
@@ -26,6 +27,7 @@ const ONGLETS: { code: TypeButin; libelle: string; icone: string }[] = [
   { code: 'parchemin', libelle: 'Parchemins', icone: '📜' },
   { code: 'objet', libelle: 'Objets magiques', icone: '🔮' },
   { code: 'arme', libelle: 'Armes', icone: '🗡️' },
+  { code: 'armure', libelle: 'Armures', icone: '🛡️' },
 ]
 
 // Champs vierges — un seul état pour tout le panneau : passer d'un onglet à
@@ -52,6 +54,8 @@ const VIDE = {
   armeDegats: '',
   armeBonus: '0',
   armeQuantite: '1',
+  armureNom: '',
+  armureBonus: '0',
   note: '',
 }
 
@@ -79,7 +83,7 @@ export function ButinDrawer({
   potionsCatalogue = [],
   ongletInitial = 'monnaie',
   libelleBouton = '💰 Butin',
-  titleBouton = 'Encaisser un trésor trouvé en partie — monnaie, gemmes, potions, parchemins, objets magiques, armes',
+  titleBouton = 'Encaisser un trésor trouvé en partie — monnaie, gemmes, potions, parchemins, objets magiques, armes, armures',
   varianteBouton = 'tresor',
 }: Props) {
   const [open, setOpen] = useState(false)
@@ -91,6 +95,11 @@ export function ButinDrawer({
   // ⛔ Les 1221 sorts ne partent PAS avec la fiche : ils arrivent à la
   // première ouverture de l'onglet Parchemins, et seulement là.
   const [sortsCatalogue, setSortsCatalogue] = useState<SortRef[] | null>(null)
+  // Objets, armes et armures : un seul aller-retour, à la première ouverture
+  // d'un des trois onglets qui s'en servent.
+  const [cataloguesButin, setCataloguesButin] = useState<
+    { objets: ObjetRef[]; armes: ArmeRef[]; armures: ArmureRef[] } | null
+  >(null)
   const [message, setMessage] = useState<string | null>(null)
   const [avis, setAvis] = useState<string | null>(null)
   const [erreur, setErreur] = useState<string | null>(null)
@@ -123,6 +132,14 @@ export function ButinDrawer({
     getSortsCatalogue().then(liste => { if (vivant) setSortsCatalogue(liste) })
     return () => { vivant = false }
   }, [open, onglet, sortsCatalogue])
+
+  useEffect(() => {
+    const concerne = onglet === 'objet' || onglet === 'arme' || onglet === 'armure'
+    if (!open || !concerne || cataloguesButin != null) return
+    let vivant = true
+    getCataloguesButin().then(c => { if (vivant) setCataloguesButin(c) })
+    return () => { vivant = false }
+  }, [open, onglet, cataloguesButin])
 
   function fermer() {
     setOpen(false)
@@ -222,6 +239,18 @@ export function ButinDrawer({
           notes: note,
         }
       }
+      case 'armure': {
+        if (!v.armureNom.trim()) {
+          setErreur("Nommez l'armure.")
+          return null
+        }
+        return {
+          type: 'armure' as const,
+          nom: v.armureNom,
+          bonusMagique: parseInt(v.armureBonus) || 0,
+          notes: note,
+        }
+      }
       case 'arme': {
         if (!v.armeNom.trim()) {
           setErreur("Nommez l'arme.")
@@ -260,6 +289,8 @@ export function ButinDrawer({
           return { ...prev, objNom: '', objEmplacement: '', objCharges: '' }
         case 'arme':
           return { ...prev, armeNom: '', armeDegats: '', armeBonus: '0', armeQuantite: '1' }
+        case 'armure':
+          return { ...prev, armureNom: '', armureBonus: '0' }
       }
     })
   }
@@ -553,13 +584,33 @@ export function ButinDrawer({
                 <>
                   <label>
                     <Etiquette>Nom</Etiquette>
-                    <input
-                      ref={premierChamp}
-                      type="text"
+                    <ChampRechercheNom
+                      inputRef={premierChamp}
                       value={v.objNom}
-                      onChange={e => maj('objNom', e.target.value)}
-                      placeholder="Anneau de protection +1"
+                      onChange={texte => maj('objNom', texte)}
+                      onPick={sug => {
+                        // Réutiliser la fiche du rayon : emplacement et charges d'un coup.
+                        const ref = cataloguesButin?.objets.find(o => o.id === sug.id)
+                        setV(prev => ({
+                          ...prev,
+                          objNom: sug.nom,
+                          objEmplacement: ref?.emplacement ?? prev.objEmplacement,
+                          objCharges: ref?.chargesMax != null ? String(ref.chargesMax) : prev.objCharges,
+                        }))
+                      }}
+                      catalogue={(cataloguesButin?.objets ?? []).map(o => ({
+                        id: o.id,
+                        nom: o.nom,
+                        // 🗃️ : ligne de la campagne d'André, pas une règle de
+                        // livre — le même marqueur qu'au rayon de la Bibliothèque.
+                        detail: [o.campagne ? '🗃️ campagne' : o.type, o.emplacement]
+                          .filter(Boolean).join(' · ') || null,
+                        alias: o.alias,
+                      }))}
+                      placeholder={cataloguesButin == null ? 'Chargement du rayon…' : 'Rechercher ou créer…'}
                       className={CHAMP}
+                      typeLabel="objet magique"
+                      genre="m"
                     />
                   </label>
                   <div className="flex gap-2">
@@ -592,17 +643,77 @@ export function ButinDrawer({
                 </>
               )}
 
+              {onglet === 'armure' && (
+                <>
+                  <label>
+                    <Etiquette>Nom</Etiquette>
+                    <ChampRechercheNom
+                      inputRef={premierChamp}
+                      value={v.armureNom}
+                      onChange={texte => maj('armureNom', texte)}
+                      onPick={sug => maj('armureNom', sug.nom)}
+                      catalogue={(cataloguesButin?.armures ?? []).map(a => ({
+                        id: a.id,
+                        nom: a.nom,
+                        detail: [
+                          a.type,
+                          a.bonusArmure != null ? `+${a.bonusArmure} CA` : null,
+                          a.maxDex != null ? `DEX max +${a.maxDex}` : null,
+                        ].filter(Boolean).join(' · ') || null,
+                      }))}
+                      placeholder={cataloguesButin == null ? 'Chargement du rayon…' : 'Rechercher ou créer…'}
+                      className={CHAMP}
+                      typeLabel="armure"
+                      genre="f"
+                    />
+                  </label>
+                  <label className="w-24 block">
+                    <Etiquette>Bonus magique</Etiquette>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={v.armureBonus}
+                      onChange={e => maj('armureBonus', e.target.value)}
+                      className={CHAMP}
+                    />
+                  </label>
+                  <p className="text-stone-600 text-xs leading-snug">
+                    ⚠ L&apos;armure ramassée va <strong className="text-stone-500">au sac, pas sur le dos</strong> :
+                    votre classe d&apos;armure ne bouge pas. Sinon un chiffre de combat changerait tout seul au
+                    moment d&apos;ouvrir un coffre. Pour l&apos;endosser :{' '}
+                    <strong className="text-stone-500">Modifier → Équipement</strong>.
+                  </p>
+                </>
+              )}
+
               {onglet === 'arme' && (
                 <>
                   <label>
                     <Etiquette>Nom</Etiquette>
-                    <input
-                      ref={premierChamp}
-                      type="text"
+                    <ChampRechercheNom
+                      inputRef={premierChamp}
                       value={v.armeNom}
-                      onChange={e => maj('armeNom', e.target.value)}
-                      placeholder="Épée longue"
+                      onChange={texte => maj('armeNom', texte)}
+                      onPick={sug => {
+                        // Les dégâts viennent de la table 7-5 du Manuel, pas de la
+                        // mémoire : choisir « Épée longue » remplit 1d8.
+                        const ref = cataloguesButin?.armes.find(a => a.id === sug.id)
+                        setV(prev => ({
+                          ...prev,
+                          armeNom: sug.nom,
+                          armeDegats: ref?.degats ?? prev.armeDegats,
+                        }))
+                      }}
+                      catalogue={(cataloguesButin?.armes ?? []).map(a => ({
+                        id: a.id,
+                        nom: a.nom,
+                        detail: [a.degats, a.typeDegats].filter(Boolean).join(' · ') || null,
+                        alias: a.alias,
+                      }))}
+                      placeholder={cataloguesButin == null ? 'Chargement du rayon…' : 'Rechercher ou créer…'}
                       className={CHAMP}
+                      typeLabel="arme"
+                      genre="f"
                     />
                   </label>
                   <div className="flex gap-2">

@@ -21,7 +21,7 @@ import { UNITES_MONNAIE, uniteCourte } from '@/lib/dnd35/monnaie'
 // appartient au personnage (bonus magique, emplacement, charges, quantité, note)
 // va dans la table `character_*`, jamais dans le catalogue.
 
-export type TypeButin = 'monnaie' | 'gemme' | 'potion' | 'parchemin' | 'objet' | 'arme'
+export type TypeButin = 'monnaie' | 'gemme' | 'potion' | 'parchemin' | 'objet' | 'arme' | 'armure'
 
 export type EntreeButin =
   | { type: 'monnaie'; montant: number; unite: string; notes?: string }
@@ -31,6 +31,7 @@ export type EntreeButin =
       niveauLanceur?: number | null; typeMagie?: string | null; quantite: number; notes?: string }
   | { type: 'objet'; nom: string; emplacement?: string; charges?: number; notes?: string }
   | { type: 'arme'; nom: string; degats?: string; bonusMagique?: number; quantite: number; notes?: string }
+  | { type: 'armure'; nom: string; bonusMagique?: number; notes?: string }
 
 export type ResultatButin = {
   ok: boolean
@@ -412,6 +413,46 @@ export async function ajouterButin(personnageId: number, entree: EntreeButin): P
       }
       description = `Reçoit ${etiquette}${quantite > 1 ? ` ×${quantite}` : ''}`
       valeurJournal = quantite
+      break
+    }
+
+    // ── Armures ──
+    // ⚠ Une armure ramassée arrive NON PORTÉE (`estPortee: 0`). Sans ça, la
+    // classe d'armure du personnage changerait au moment où on encaisse un
+    // trésor — un chiffre de combat qui bouge tout seul, sans que personne
+    // n'ait dit qu'on l'enfilait. On l'endosse depuis Modifier → Équipement.
+    case 'armure': {
+      const nom = nettoie(entree.nom, MAX_NOM)
+      if (!nom) return { ok: false, message: "Nommez l'armure." }
+      const bonusMagique = borne(entree.bonusMagique, 0, 10, 0)
+
+      const catalogue = await trouverParNom(
+        () => db.select({ id: schema.armor.id, nom: schema.armor.nom }).from(schema.armor),
+        nom
+      )
+      let armureId: number
+      if (catalogue) {
+        // ⛔ Aucun UPDATE : `armor` est partagée par nom avec les autres fiches.
+        armureId = catalogue.id
+      } else {
+        const [creee] = await db
+          .insert(schema.armor)
+          .values({ nom })
+          .returning({ id: schema.armor.id })
+        armureId = creee.id
+        avis = `« ${nom} » n'était pas au catalogue : la ligne est créée sans bonus d'armure ni malus. À compléter dans Modifier → Équipement.`
+      }
+
+      const etiquette = bonusMagique > 0 ? `${nom} +${bonusMagique}` : nom
+      await db.insert(schema.characterArmor).values({
+        personnageId,
+        armureId,
+        bonusMagique,
+        estPortee: 0,
+      })
+      message = `${etiquette} ajoutée au sac — pas encore endossée.`
+      description = `Reçoit ${etiquette} (non portée)`
+      valeurJournal = 1
       break
     }
   }

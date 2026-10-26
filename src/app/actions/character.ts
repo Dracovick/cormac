@@ -1230,3 +1230,67 @@ export async function ajouterParchemin(personnageId: number, e: EntreeParchemin)
       : `Parchemin « ${nom} » ajouté.`,
   }
 }
+
+// ─── Catalogues du Butin : objets magiques, armes, armures ──────────────────
+// Demande d'André le 2026-10-25 : « les Objets magiques, les armes, proposent
+// une recherche dans la grande bibliothèque comme pour les parchemins et les
+// potions ». Le périmètre de chaque liste est donc celui de SON rayon, relu
+// dans `lib/queries/bibliotheque.ts` plutôt que supposé :
+//
+//   · objets  — TOUT (745), les lignes de campagne marquées 🗃️ comme au rayon
+//   · armes   — le CATALOGUE seul (78). Les 158 autres sont des lignes
+//               d'inventaire importées (« Bastard sword +2 », « Masse de
+//               fantascin +3 ») : des noms qu'on ne veut pas voir reproposés.
+//   · armures — TOUT (8), la table n'a pas de colonne `estCatalogue`.
+//
+// ⛔ PAS chargés avec la fiche : 831 lignes. Le panneau du Butin les appelle à
+// la première ouverture d'un des trois onglets, en un seul aller-retour.
+export type ObjetRef = {
+  id: number; nom: string; type: string | null; emplacement: string | null
+  chargesMax: number | null; bonus: number | null
+  /** Ligne de la campagne d'André, pas une règle de livre — marquée 🗃️. */
+  campagne: boolean
+  alias: string[]
+}
+export type ArmeRef = {
+  id: number; nom: string; degats: string | null
+  critiqueMin: number | null; critiqueMult: number | null
+  typeDegats: string | null; portee: number | null; alias: string[]
+}
+export type ArmureRef = {
+  id: number; nom: string; type: string | null; bonusArmure: number | null
+  maxDex: number | null; malusCompetence: number | null; risqueEchecMagique: number | null
+}
+
+export async function getCataloguesButin(): Promise<{
+  objets: ObjetRef[]; armes: ArmeRef[]; armures: ArmureRef[]
+}> {
+  const db = getDb()
+  const [objets, armes, armures] = await Promise.all([
+    db.select({
+      id: schema.magicItems.id, nom: schema.magicItems.nom, type: schema.magicItems.type,
+      emplacement: schema.magicItems.emplacement, chargesMax: schema.magicItems.chargesMax,
+      bonus: schema.magicItems.bonus, estCatalogue: schema.magicItems.estCatalogue,
+    }).from(schema.magicItems),
+    db.select({
+      id: schema.weapons.id, nom: schema.weapons.nom, degats: schema.weapons.degats,
+      critiqueMin: schema.weapons.critiqueMin, critiqueMult: schema.weapons.critiqueMult,
+      typeDegats: schema.weapons.typeDegats, portee: schema.weapons.portee,
+    }).from(schema.weapons).where(eq(schema.weapons.estCatalogue, true)),
+    db.select().from(schema.armor),
+  ])
+  const parNom = (a: { nom: string }, b: { nom: string }) => a.nom.localeCompare(b.nom, 'fr')
+  return {
+    objets: objets
+      .map(({ estCatalogue, ...o }) => ({ ...o, campagne: !estCatalogue, alias: aliasPour(o.nom) }))
+      .sort(parNom),
+    armes: armes.map(a => ({ ...a, alias: aliasPour(a.nom) })).sort(parNom),
+    armures: armures
+      .map(a => ({
+        id: a.id, nom: a.nom, type: a.type, bonusArmure: a.bonusArmure,
+        maxDex: a.maxDex, malusCompetence: a.malusCompetence,
+        risqueEchecMagique: a.risqueEchecMagique,
+      }))
+      .sort(parNom),
+  }
+}
