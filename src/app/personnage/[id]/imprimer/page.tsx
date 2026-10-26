@@ -116,8 +116,12 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   const refT = refBase + modSauvegarde(abilityScores?.dexBase, abilityScores?.dexMagique, raceInfo?.bonusDex ?? 0) + (savingThrows?.reflexesMagique ?? 0) + sommeBonus(donsPassifs.reflexes)
   const volT = volBase + modSauvegarde(abilityScores?.sagBase, abilityScores?.sagMagique, raceInfo?.bonusSag ?? 0) + (savingThrows?.volonteMagique ?? 0) + sommeBonus(donsPassifs.volonte)
 
-  const caArmure = armor.reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
-  const maxDex = armor.length > 0 ? Math.min(...armor.map(({ armor: a }) => a.maxDex ?? 10)) : 10
+  // ⛔ Même règle que la fiche : seules les armures ENDOSSÉES comptent.
+  // `est_portee` n'était lu nulle part avant le 2026-10-25 — une armure du sac
+  // ajoutait sa CA sur la feuille imprimée comme à l'écran.
+  const armuresPortees = armor.filter(({ charArmor }) => charArmor.estPortee !== 0)
+  const caArmure = armuresPortees.reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
+  const maxDex = armuresPortees.length > 0 ? Math.min(...armuresPortees.map(({ armor: a }) => a.maxDex ?? 10)) : 10
   const dexModCA = Math.min(dexMod, maxDex)
   // ── CLASSE D'ARMURE ──
   // Même arbitrage que la fiche à l'écran (src/lib/dnd35/classe-armure.ts), pour que
@@ -125,7 +129,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   // dit qu'il touche la CA, et deux bonus du même type ne se cumulent pas. Les effets
   // de sorts n'entrent pas ici — le papier est un état au repos, pas un état de combat.
   const estBouclierImpr = (t: string | null) => (t ?? '').toLowerCase().includes('bouclier')
-  const bonusArmurePortee = armor
+  const bonusArmurePortee = armuresPortees
     .filter(({ armor: a }) => !estBouclierImpr(a.type))
     .reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
   const { total: bonusCASources, contributions: contributionsCA } = calculeClasseArmure(
@@ -231,7 +235,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
 
   const totalRangs = skillsData.reduce((acc, s) => acc + s.rangs, 0)
 
-  const armurePortee = armor[0]
+  const armurePortee = armuresPortees[0]
   const armureName = armurePortee
     ? `${armurePortee.armor.nom}${armurePortee.charArmor.bonusMagique ? ` +${armurePortee.charArmor.bonusMagique}` : ''}`
     : '—'
@@ -837,6 +841,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
               <tr key={a.armor.id} style={{ background: i % 2 === 0 ? '#fff' : '#f5f5f5' }}>
                 <td style={{ border: '1px solid #ddd', padding: '2px 6px', fontSize: '9pt' }}>
                   {a.armor.nom}{a.charArmor.bonusMagique ? ` +${a.charArmor.bonusMagique}` : ''}
+                  {a.charArmor.estPortee === 0 ? ' (au sac — ne compte pas)' : ''}
                 </td>
                 <td style={{ border: '1px solid #ddd', padding: '2px 6px' }}></td>
                 <td style={{ border: '1px solid #ddd', padding: '2px 6px' }}></td>

@@ -100,10 +100,12 @@ function calcDerived(data: CharacterFormData) {
     vigBase, vigTotal: vigBase + conMod + data.vigueurMagique,
     refBase, refTotal: refBase + dexMod + data.reflexesMagique,
     volBase, volTotal: volBase + sagMod + data.volonteMagique,
-    caArmure: data.armures.reduce((s, a) => s + (a.bonusCA ?? 0) + (a.bonusMagique ?? 0), 0),
+    // Même règle que la fiche : une armure au sac ne compte pas.
+    caArmure: data.armures.filter(a => a.estPortee !== false).reduce((s, a) => s + (a.bonusCA ?? 0) + (a.bonusMagique ?? 0), 0),
     get caTotal() {
-      const armBonus = data.armures.reduce((s, a) => s + (a.bonusCA ?? 0) + (a.bonusMagique ?? 0), 0)
-      const maxDex = data.armures.length > 0 ? Math.min(...data.armures.map(a => a.maxDex ?? 10)) : 10
+      const portees = data.armures.filter(a => a.estPortee !== false)
+      const armBonus = portees.reduce((s, a) => s + (a.bonusCA ?? 0) + (a.bonusMagique ?? 0), 0)
+      const maxDex = portees.length > 0 ? Math.min(...portees.map(a => a.maxDex ?? 10)) : 10
       return 10 + Math.min(dexMod, maxDex) + armBonus + data.caNaturelle + data.caDeflexion + data.caDivers
     },
     initiativeTotal: dexMod + data.initiativeBonus,
@@ -665,7 +667,7 @@ function SectionEquipement({ data, update, derived, potionsCatalogue }: { data: 
     a[i] = { ...a[i], nom: t.nom, degats: t.degats ?? '', crit: t.critMin != null ? formatCritique(t.critMin, t.critMult) : '', typeDegats: t.typeDegats, portee: t.portee }
     update('armes', a)
   }
-  const newArmure = () => update('armures', [...data.armures, { nom: '', type: 'Légère', bonusCA: 0, maxDex: 10, malusComp: 0, bonusMagique: 0 }])
+  const newArmure = () => update('armures', [...data.armures, { nom: '', type: 'Légère', bonusCA: 0, maxDex: 10, malusComp: 0, bonusMagique: 0, estPortee: true }])
   const delArmure = (i: number) => update('armures', data.armures.filter((_, j) => j !== i))
   const setArmure = (i: number, k: string, v: any) => { const a = [...data.armures]; (a[i] as any)[k] = v; update('armures', a) }
   const newObj = () => update('objetsMagiques', [...data.objetsMagiques, { nom: '', type: '', emplacement: '', bonus: '', bonusType: '', description: '', charges: 0 }])
@@ -786,11 +788,29 @@ function SectionEquipement({ data, update, derived, potionsCatalogue }: { data: 
       <div className={CARD}>
         <div className={SEC_H}>Armure &amp; Boucliers</div>
         {data.armures.map((a, i) => (
-          <div key={i} className="grid grid-cols-3 sm:grid-cols-6 gap-2 mb-2 items-end bg-stone-800/30 rounded p-2">
+          <div key={i} className="grid grid-cols-3 sm:grid-cols-7 gap-2 mb-2 items-end bg-stone-800/30 rounded p-2">
             <div className="sm:col-span-2"><label className={LBL}>Nom</label><input className={INP} value={a.nom} onChange={e => setArmure(i, 'nom', e.target.value)} placeholder="Chemise de mailles" /></div>
             <div><label className={LBL}>Type</label><select className={SEL} value={a.type} onChange={e => setArmure(i, 'type', e.target.value)}><option>Légère</option><option>Intermédiaire</option><option>Lourde</option><option>Bouclier</option></select></div>
             <div><label className={LBL}>Bonus CA</label><input className={INP_NUM + ' w-full'} type="number" value={a.bonusCA} onChange={e => setArmure(i, 'bonusCA', parseInt(e.target.value) || 0)} /></div>
             <div><label className={LBL}>+Mag</label><input className={INP_NUM + ' w-full'} type="number" value={a.bonusMagique} onChange={e => setArmure(i, 'bonusMagique', parseInt(e.target.value) || 0)} /></div>
+            {/* ⚠ Décochée, l'armure reste dans l'inventaire mais ne compte plus :
+                ni CA, ni plafond de DEX, ni malus de compétences, ni risque
+                d'échec arcanique, ni déplacement. C'est l'état d'une armure
+                rangée dans le sac. */}
+            <div>
+              <label className={LBL} title="Décochez pour une armure transportée mais pas endossée">Portée</label>
+              <label className="flex items-center gap-1.5 h-[38px] cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={a.estPortee !== false}
+                  onChange={e => setArmure(i, 'estPortee', e.target.checked)}
+                  className="w-4 h-4 accent-amber-600 cursor-pointer"
+                />
+                <span className={`text-xs ${a.estPortee === false ? 'text-stone-500' : 'text-amber-300'}`}>
+                  {a.estPortee === false ? 'au sac' : 'sur le dos'}
+                </span>
+              </label>
+            </div>
             <div className="flex items-end"><button onClick={() => delArmure(i)} className={BTN_DEL + ' mb-2 ml-auto'}>✕</button></div>
           </div>
         ))}

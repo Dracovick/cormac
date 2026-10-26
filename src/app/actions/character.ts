@@ -48,7 +48,9 @@ export interface CharacterFormData {
   competences: { skillId: number; nom: string; caracteristique: string; rangs: number; divers: number }[]
   dons: string[]
   armes: { nom: string; degats: string; crit: string; typeDegats: string; portee: string; bonusMagique: number; coteDeForce?: number | null; bonusMunitions?: number | null; quantite: number }[]
-  armures: { nom: string; type: string; bonusCA: number; maxDex: number; malusComp: number; bonusMagique: number }[]
+  // `estPortee` est facultatif : une fiche saisie avant l'ajout de la case ne
+  // le porte pas, et son armure doit rester portée comme avant.
+  armures: { nom: string; type: string; bonusCA: number; maxDex: number; malusComp: number; bonusMagique: number; estPortee?: boolean }[]
   objetsMagiques: { nom: string; type: string; emplacement: string; bonus: string; bonusType: string; description: string; charges: number }[]
   potions: { nom: string; effet: string; charges: number }[]
   gemmes: { nom: string; quantite: number; valeur: number; unite: string; notes: string }[]
@@ -416,6 +418,9 @@ export async function saveCharacter(
     ecritures.push(db.insert(schema.characterArmor).values({
       personnageId: charId, armureId,
       bonusMagique: armure.bonusMagique ?? 0,
+      // ⚠ `?? true` et non `?? 1` : une fiche saisie avant l'ajout de la case
+      // n'a pas ce champ, et son armure doit rester portée comme avant.
+      estPortee: (armure.estPortee ?? true) ? 1 : 0,
     }))
   }
 

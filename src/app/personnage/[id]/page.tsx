@@ -124,13 +124,22 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
     Paladin:     { carac: 'SAG', mod: sagMod },
     Rôdeur:      { carac: 'SAG', mod: sagMod },
   }
-  const caArmure = armor.reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
-  const maxDex = armor.length > 0 ? Math.min(...armor.map(({ armor: a }) => a.maxDex ?? 10)) : 10
+  // ⛔ Seules les armures ENDOSSÉES comptent. `est_portee` existait depuis la
+  // création de la table mais n'était lu nulle part : une armure ramassée et
+  // posée dans le sac ajoutait sa CA, plafonnait la DEX, pénalisait les
+  // compétences, ajoutait du risque d'échec arcanique et ralentissait le
+  // personnage. Trouvé le 2026-10-25 en essayant le nouvel onglet 🛡️ Armures
+  // du Butin — la CA de Cormac est passée de 17 à 24 sans que rien ne le dise.
+  // ⚠ Les armures NON portées restent affichées dans la liste, marquées : on
+  // les possède, on ne les a simplement pas sur le dos.
+  const armuresPortees = armor.filter(({ charArmor }) => charArmor.estPortee !== 0)
+  const caArmure = armuresPortees.reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
+  const maxDex = armuresPortees.length > 0 ? Math.min(...armuresPortees.map(({ armor: a }) => a.maxDex ?? 10)) : 10
   const dexModCA = Math.min(dexMod, maxDex)
   // Malus de compétence cumulé (valeurs stockées en négatif en DB — on prend la valeur absolue)
-  const malusArmure = armor.reduce((sum, { armor: a }) => sum + Math.abs(a.malusCompetence ?? 0), 0)
+  const malusArmure = armuresPortees.reduce((sum, { armor: a }) => sum + Math.abs(a.malusCompetence ?? 0), 0)
   // Risque d'échec arcanique cumulé (s'additionnent si plusieurs armures)
-  const risqueEchecTotal = armor.reduce((sum, { armor: a }) => sum + (a.risqueEchecMagique ?? 0), 0)
+  const risqueEchecTotal = armuresPortees.reduce((sum, { armor: a }) => sum + (a.risqueEchecMagique ?? 0), 0)
   // Compétences pénalisées par le malus d'armure (PHB 3.5)
   // Le malus d'armure aux tests vient maintenant de la colonne skills.malus_armure,
   // relevée au Manuel (9 compétences sur 36). La liste écrite ici à la main en
@@ -140,7 +149,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
     Boolean(s.malusArmure || cat?.malusArmure)
   // Effets de sorts actifs sur la CA (activés/retirés par le joueur) — cumul PHB 3.5
   const estBouclier = (t: string | null) => (t ?? '').toLowerCase().includes('bouclier')
-  const bonusArmurePortee = armor
+  const bonusArmurePortee = armuresPortees
     .filter(({ armor: a }) => !estBouclier(a.type))
     .reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
   const bonusBouclierPorte = caArmure - bonusArmurePortee
@@ -168,9 +177,9 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   // + bonus des sorts actifs (ex. Repli expéditif +9 m)
   const baseDepl = combatStats?.deplacement ?? 9
   const deplacement = (() => {
-    const armorDeplValues = armor.map(({ armor: a }) => a.deplacement).filter((d): d is number => d != null)
+    const armorDeplValues = armuresPortees.map(({ armor: a }) => a.deplacement).filter((d): d is number => d != null)
     if (armorDeplValues.length > 0) return Math.min(...armorDeplValues) + bonusDepl
-    const hasHeavy = armor.some(({ armor: a }) =>
+    const hasHeavy = armuresPortees.some(({ armor: a }) =>
       (a.type ?? '').toLowerCase().includes('lourde') || (a.type ?? '').toLowerCase().includes('lourd')
     )
     if (hasHeavy) return (baseDepl >= 9 ? 6 : 4) + bonusDepl
@@ -1073,11 +1082,20 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
         {/* ── ARMURE + OBJETS MAGIQUES ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {armor.length > 0 && (
-            <Section titre="Armure portée">
-              {armor.map(({ armor: a, charArmor }) => (
-                <div key={charArmor.id} className="bg-stone-800/60 rounded p-3">
-                  <div className="text-white font-semibold flex items-baseline gap-2">
+            <Section titre={armuresPortees.length === armor.length ? 'Armure portée' : 'Armures'}>
+              {armor.map(({ armor: a, charArmor }) => {
+                const auSac = charArmor.estPortee === 0
+                return (
+                <div key={charArmor.id} className={`rounded p-3 ${auSac ? 'bg-stone-800/30 border border-stone-700/60' : 'bg-stone-800/60'}`}>
+                  <div className={`font-semibold flex items-baseline gap-2 ${auSac ? 'text-stone-400' : 'text-white'}`}>
                     <span>{a.nom}{charArmor.bonusMagique ? ` +${charArmor.bonusMagique}` : ''}</span>
+                    {/* Une armure au sac est possédée, pas endossée : ses chiffres
+                        sont montrés pour information, mais ne comptent nulle part. */}
+                    {auSac && (
+                      <span className="text-stone-500 text-xs font-normal italic" title="Transportée, pas endossée : ne compte ni dans la CA, ni dans le plafond de DEX, ni dans les malus">
+                        🎒 au sac — ne compte pas
+                      </span>
+                    )}
                     <Link
                       href={`/bibliotheque/armure/${a.id}?from=/personnage/${id}`}
                       title="Lire la fiche de cette armure"
@@ -1093,7 +1111,8 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                     {(a.risqueEchecMagique ?? 0) > 0 && <span>Échec arcanique : <span className="text-red-400">{a.risqueEchecMagique}%</span></span>}
                   </div>
                 </div>
-              ))}
+                )
+              })}
             </Section>
           )}
 

@@ -82,6 +82,10 @@ export function charDataToForm(d: CharacterData): CharacterFormData {
       nom: a.armor.nom, type: a.armor.type ?? '', bonusCA: a.armor.bonusArmure ?? 0,
       maxDex: a.armor.maxDex ?? 10, malusComp: a.armor.malusCompetence ?? 0,
       bonusMagique: a.charArmor.bonusMagique ?? 0,
+      // ⚠ Sans ce transport, enregistrer une modification remettrait toute
+      // armure du sac SUR LE DOS : `saveCharacter` réécrit la table et la
+      // valeur par défaut de la colonne est 1.
+      estPortee: a.charArmor.estPortee !== 0,
     })),
     objetsMagiques: magicItems.map(m => ({
       nom: m.item.nom, type: m.item.type ?? '', emplacement: m.charItem.emplacement ?? '',
