@@ -8,7 +8,7 @@ import { xpPourNiveau } from '@/lib/dnd35/rules'
 // Distribution d'XP depuis la vue du MJ : le total de la rencontre est réparti
 // également entre les personnages cochés (pénalité multi-classes déduite), puis
 // chaque part reste ajustable à la main avant de confirmer.
-export function DistribuerXp({ jour }: { jour: string }) {
+export function DistribuerXp({ jour, mj }: { jour: string; mj: string }) {
   const router = useRouter()
   const [ouvert, setOuvert] = useState(false)
   const [persos, setPersos] = useState<PersonnageXp[] | null>(null)
@@ -76,7 +76,7 @@ export function DistribuerXp({ jour }: { jour: string }) {
       .filter(p => Number.isInteger(p.montant) && p.montant > 0)
     if (parts.length === 0) return
     startTransition(async () => {
-      await distribuerXp(parts)
+      await distribuerXp(parts, mj)
       setOuvert(false)
       router.refresh()
     })

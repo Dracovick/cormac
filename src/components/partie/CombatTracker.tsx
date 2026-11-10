@@ -8,7 +8,7 @@ import {
   type CombatActif, type EntrantCombat, type PersonnageInitiative,
 } from '@/app/actions/combat'
 
-type Props = { combat: CombatActif | null; jour: string }
+type Props = { combat: CombatActif | null; jour: string; mj: string }
 
 type LigneAdversaire = { nom: string; mod: string; jet: string }
 
@@ -16,7 +16,7 @@ const signe = (n: number) => (n >= 0 ? `+${n}` : `${n}`)
 
 // Ordre d'initiative de la table : les joueurs lancent leur vrai d20, le MJ entre
 // les résultats bruts — l'app ajoute le modificateur de chaque fiche et tient l'ordre.
-export function CombatTracker({ combat, jour }: Props) {
+export function CombatTracker({ combat, jour, mj }: Props) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
@@ -80,7 +80,7 @@ export function CombatTracker({ combat, jour }: Props) {
     const entrants = entrantsPrepares()
     if (entrants.length === 0) return
     setPrepOuverte(false)
-    rafraichir(() => demarrerCombat(entrants))
+    rafraichir(() => demarrerCombat(entrants, mj))
   }
 
   function envoyerRenfort() {
@@ -111,7 +111,7 @@ export function CombatTracker({ combat, jour }: Props) {
           )}
           <span className="ml-auto" />
           <button
-            onClick={() => rafraichir(terminerCombat)}
+            onClick={() => rafraichir(() => terminerCombat(mj))}
             disabled={isPending}
             className="text-xs bg-stone-800 hover:bg-stone-700 text-stone-400 hover:text-stone-200 rounded px-2 py-1 transition-colors"
             title="Termine le combat — le bilan (dégâts, sorts, rounds) s'inscrit dans la chronique"
@@ -171,7 +171,7 @@ export function CombatTracker({ combat, jour }: Props) {
 
         <div className="flex flex-wrap items-center gap-2">
           <button
-            onClick={() => rafraichir(tourSuivant)}
+            onClick={() => rafraichir(() => tourSuivant(mj))}
             disabled={isPending || combat.combattants.length === 0}
             className="text-sm bg-amber-900/40 hover:bg-amber-800/60 disabled:opacity-40 border border-amber-800/50 text-amber-300 rounded px-3 py-1.5 min-h-[36px] transition-colors"
           >▶ Tour suivant</button>

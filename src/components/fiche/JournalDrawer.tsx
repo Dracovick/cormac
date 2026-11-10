@@ -4,6 +4,7 @@ import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import { ajouterNoteJoueur, getJournal, supprimerEntreeJournal, type EntreeJournalPartie } from '@/app/actions/journal'
 import { journeeLudique, journeeLudiqueCourante, dateLisible, heureQuebec, iconeEntree, lirePhoto } from '@/lib/journal-format'
+import { PastilleMJ } from '@/components/partie/PastilleMJ'
 import { NotePleinePage } from '@/components/NotePleinePage'
 
 type Props = { personnageId: number; nomPersonnage: string }
@@ -179,6 +180,7 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
                             <div key={e.id} className="flex items-center gap-2 py-1 group">
                               <div className="flex-1 h-px bg-amber-900/60" />
                               <span className="text-amber-500 text-xs font-semibold uppercase tracking-wide">{e.description}</span>
+                              <PastilleMJ mj={e.mj} />
                               <div className="flex-1 h-px bg-amber-900/60" />
                               {/* Toujours visible : au survol seulement, le bouton n'existait pas sur tablette */}
                               <button
@@ -196,6 +198,7 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
                           return (
                             <div key={e.id} className="flex items-start gap-2 text-sm group rounded px-1 py-1.5 hover:bg-stone-800/60">
                               <span className="text-stone-600 text-xs font-mono mt-0.5 shrink-0">{heureQuebec(new Date(e.createdAt))}</span>
+                              <PastilleMJ mj={e.mj} />
                               <span className="shrink-0 text-sky-300">📷</span>
                               <div className="flex-1">
                                 <a href={url} target="_blank" rel="noopener noreferrer" title="Ouvrir la photo en grand">
@@ -213,6 +216,9 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
                         // d'une autre fiche, puisque les notes sont partagées par la table.
                         const estNote = e.type === 'note' || e.type === 'bilan'
                         const noteJoueur = e.type === 'note' && e.personnageId != null
+                        // Le MJ se signe de la même façon qu'un joueur signe sa note
+                        // d'aventure : en ligne, dans le tiroir étroit d'une fiche, une
+                        // pastille de plus pousserait le texte dans une gouttière.
                         // ✕ seulement sur ce que ce personnage a le droit d'effacer :
                         // ses propres entrées et les marqueurs globaux — pas les notes des autres
                         const effacable = e.personnageId == null || e.personnageId === personnageId
@@ -222,6 +228,7 @@ export function JournalDrawer({ personnageId, nomPersonnage }: Props) {
                             <span className={`shrink-0 ${couleur}`}>{icone}</span>
                             <span className={`flex-1 leading-snug whitespace-pre-wrap ${estNote ? 'text-amber-100/90 italic' : 'text-stone-300'}`}>
                               {noteJoueur && <span className="not-italic font-semibold text-amber-300">{e.nomPersonnage ?? '?'} — </span>}
+                              {!noteJoueur && e.mj && <span className="not-italic font-semibold text-amber-300">🎩 {e.mj} — </span>}
                               {e.description}
                             </span>
                             {effacable && (

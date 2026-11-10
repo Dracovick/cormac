@@ -4,7 +4,7 @@ import { getDb } from '@/db'
 import * as schema from '@/db/schema'
 import { and, desc, eq, gt, gte, isNotNull, isNull, like, lt, or, sql } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
-import { logJournal } from '@/lib/journal'
+import { logJournal, normaliserMj } from '@/lib/journal'
 import { decalageQuebec, COUPURE_JOURNEE_H, TZ_QUEBEC } from '@/lib/journal-format'
 import { calcXpPenalite, xpPourNiveau } from '@/lib/dnd35/rules'
 import { getRaceInfo } from '@/lib/dnd35/races'
@@ -15,6 +15,7 @@ export type EntreeJournal = {
   type: string
   description: string
   valeur: number | null
+  mj: string | null   // le Maître de jeu qui a posé l'entrée; null = action d'une fiche
   createdAt: Date
 }
 
@@ -38,13 +39,13 @@ export async function logAttaque(
 }
 
 // ─── Marqueurs de combat (globaux : personnage_id null, partagés par la table) ──
-export async function marquerRound(action: 'debut' | 'suivant' | 'fin') {
+export async function marquerRound(action: 'debut' | 'suivant' | 'fin', mj?: string | null) {
   if (action === 'debut') {
-    await logJournal(null, 'round', 'Début du combat — round 1', 1)
+    await logJournal(null, 'round', 'Début du combat — round 1', 1, mj)
   } else if (action === 'fin') {
     const bilan = await calculerBilanCombat()
-    await logJournal(null, 'round', 'Fin du combat', null)
-    if (bilan) await logJournal(null, 'bilan', bilan.texte, bilan.rounds)
+    await logJournal(null, 'round', 'Fin du combat', null, mj)
+    if (bilan) await logJournal(null, 'bilan', bilan.texte, bilan.rounds, mj)
   } else {
     // Round suivant : reprend le dernier numéro de round et l'incrémente
     const [dernier] = await getDb()
@@ -54,7 +55,7 @@ export async function marquerRound(action: 'debut' | 'suivant' | 'fin') {
       .orderBy(desc(schema.characterJournal.id))
       .limit(1)
     const n = dernier?.valeur != null ? dernier.valeur + 1 : 1
-    await logJournal(null, 'round', `Round ${n}`, n)
+    await logJournal(null, 'round', `Round ${n}`, n, mj)
   }
   revalidatePath('/partie')
 }
@@ -209,7 +210,7 @@ export async function getGroupeXp(dateStr: string): Promise<PersonnageXp[]> {
     .sort((a, b) => Number(b.actif) - Number(a.actif) || a.nom.localeCompare(b.nom, 'fr'))
 }
 
-export async function distribuerXp(parts: { personnageId: number; montant: number }[]) {
+export async function distribuerXp(parts: { personnageId: number; montant: number }[], mj?: string | null) {
   const db = getDb()
   const propres = parts
     .filter(p => Number.isInteger(p.montant) && p.montant > 0 && p.montant <= 1_000_000)
@@ -243,28 +244,44 @@ export async function distribuerXp(parts: { personnageId: number; montant: numbe
     }
     let description = `Reçoit ${part.montant.toLocaleString('fr-CA')} XP (total ${apres.toLocaleString('fr-CA')})`
     if (franchi) description += ` — 🎉 seuil du niveau ${franchi} franchi !`
-    await logJournal(part.personnageId, 'xp', description, part.montant)
+    await logJournal(part.personnageId, 'xp', description, part.montant, mj)
     revalidatePath(`/personnage/${part.personnageId}`)
   }
   revalidatePath('/partie')
 }
 
+// ─── Les Maîtres de jeu déjà passés par le journal ───────────────────────────
+// Alimente la liste de choix du champ d'identification de /partie. Construite à la
+// lecture plutôt que tenue dans une table : personne n'a à « créer » un maître de jeu
+// avant de jouer, et un nom cesse d'être proposé le jour où ses entrées disparaissent.
+// Les plus récents d'abord — à la table, c'est presque toujours le MJ de la veille.
+export async function getMaitresDeJeu(): Promise<string[]> {
+  const rows = await getDb()
+    .select({ mj: schema.characterJournal.mj, dernier: sql<number>`max(${schema.characterJournal.id})` })
+    .from(schema.characterJournal)
+    .where(isNotNull(schema.characterJournal.mj))
+    .groupBy(schema.characterJournal.mj)
+    .orderBy(desc(sql`max(${schema.characterJournal.id})`))
+    .limit(50)
+  return rows.map(r => r.mj).filter((m): m is string => !!m)
+}
+
 // ─── Note du Maître de jeu (globale : visible par toute la table) ────────────
 // Multiligne : sert autant aux petites remarques qu'aux résumés de fin de partie.
-export async function ajouterNoteMJ(texte: string) {
+export async function ajouterNoteMJ(texte: string, mj?: string | null) {
   const t = texte.trim().slice(0, 4000)
   if (!t) return
-  await logJournal(null, 'note', t)
+  await logJournal(null, 'note', t, null, mj)
   revalidatePath('/partie')
 }
 
 // ─── Photo de la table (globale : la map de jeu en fin de partie) ────────────
 // L'image est déjà téléversée sur Vercel Blob par /api/upload-photo-partie;
 // ici on n'inscrit que l'entrée de journal : URL en première ligne, légende ensuite.
-export async function ajouterPhotoMJ(url: string, legende?: string) {
+export async function ajouterPhotoMJ(url: string, legende?: string, mj?: string | null) {
   if (!/^https:\/\//.test(url)) return
   const l = (legende ?? '').trim().slice(0, 500)
-  await logJournal(null, 'photo', l ? `${url}\n${l}` : url)
+  await logJournal(null, 'photo', l ? `${url}\n${l}` : url, null, mj)
   revalidatePath('/partie')
 }
 
@@ -296,6 +313,7 @@ export async function getJournal(personnageId: number, limite = 300): Promise<En
       type: schema.characterJournal.type,
       description: schema.characterJournal.description,
       valeur: schema.characterJournal.valeur,
+      mj: schema.characterJournal.mj,
       createdAt: schema.characterJournal.createdAt,
       nomPersonnage: schema.characters.nom,
     })
@@ -344,12 +362,13 @@ export type ResumePartie = {
   notes: number         // notes du MJ et notes d'aventure des joueurs
   photos: number        // photos de la table (📷 map de jeu)
   personnages: string[] // personnages actifs, triés
+  mjs: string[]         // Maîtres de jeu identifiés ce soir-là (vide avant le 2026-11-09)
 }
 
 export async function getListeParties(): Promise<ResumePartie[]> {
   const db = getDb()
   const jour = sqlJourneeLudique()
-  const [aggregats, actifs] = await Promise.all([
+  const [aggregats, actifs, mjs] = await Promise.all([
     db.select({
       jour,
       nbEntrees: sql<number>`count(*)::int`,
@@ -366,6 +385,9 @@ export async function getListeParties(): Promise<ResumePartie[]> {
     db.selectDistinct({ jour, nom: schema.characters.nom })
       .from(schema.characterJournal)
       .innerJoin(schema.characters, eq(schema.characterJournal.personnageId, schema.characters.id)),
+    db.selectDistinct({ jour, mj: schema.characterJournal.mj })
+      .from(schema.characterJournal)
+      .where(isNotNull(schema.characterJournal.mj)),
   ])
   const parJour = new Map<string, string[]>()
   for (const a of actifs) {
@@ -373,9 +395,19 @@ export async function getListeParties(): Promise<ResumePartie[]> {
     if (liste) liste.push(a.nom)
     else parJour.set(a.jour, [a.nom])
   }
+  // Plusieurs MJ sur une même soirée est un cas réel : deux tables en parallèle, ou
+  // un relais en cours de partie. La carte les affiche tous plutôt que d'en élire un.
+  const mjParJour = new Map<string, string[]>()
+  for (const m of mjs) {
+    if (!m.mj) continue
+    const liste = mjParJour.get(m.jour)
+    if (liste) liste.push(m.mj)
+    else mjParJour.set(m.jour, [m.mj])
+  }
   return aggregats.map(a => ({
     ...a,
     personnages: (parJour.get(a.jour) ?? []).sort((x, y) => x.localeCompare(y, 'fr')),
+    mjs: (mjParJour.get(a.jour) ?? []).sort((x, y) => x.localeCompare(y, 'fr')),
   }))
 }
 
@@ -404,6 +436,7 @@ export async function getJournalPartie(dateStr: string): Promise<EntreeJournalPa
       type: schema.characterJournal.type,
       description: schema.characterJournal.description,
       valeur: schema.characterJournal.valeur,
+      mj: schema.characterJournal.mj,
       createdAt: schema.characterJournal.createdAt,
       nomPersonnage: schema.characters.nom,
     })

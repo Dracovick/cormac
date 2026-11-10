@@ -10,8 +10,17 @@ import { CombatTracker } from '@/components/partie/CombatTracker'
 import { DistribuerXp } from '@/components/partie/DistribuerXp'
 import { PhotoPartie } from '@/components/partie/PhotoPartie'
 import { NotePleinePage } from '@/components/NotePleinePage'
+import { IdentiteMJ, useMaitreDeJeu } from '@/components/partie/IdentiteMJ'
+import { PastilleMJ } from '@/components/partie/PastilleMJ'
 
-type Props = { entrees: EntreeJournalPartie[]; etatGroupe: EtatPersonnage[]; enDirect: boolean; jour: string; combat: CombatActif | null }
+type Props = {
+  entrees: EntreeJournalPartie[]
+  etatGroupe: EtatPersonnage[]
+  enDirect: boolean
+  jour: string
+  combat: CombatActif | null
+  maitres: string[]   // les MJ déjà passés par le journal, pour la liste de choix
+}
 
 // Couleurs des badges de personnage (attribuées par ordre d'apparition dans la journée)
 const COULEURS = [
@@ -27,13 +36,17 @@ const COULEURS = [
 
 // Chronologie fusionnée de la table : les personnages actifs de la journée sont détectés
 // automatiquement ; le MJ peut en masquer d'un clic sur leur pastille.
-export function PartieTimeline({ entrees, etatGroupe, enDirect, jour, combat }: Props) {
+export function PartieTimeline({ entrees, etatGroupe, enDirect, jour, combat, maitres }: Props) {
   const router = useRouter()
   const [note, setNote] = useState('')
   // Pleine page : la note du MJ sur tout l'écran. Demandé par André le
   // 2026-10-25 pour prendre ses notes de partie à l'Apple Pencil sur iPad.
   const [plein, setPlein] = useState(false)
   const [isPending, startTransition] = useTransition()
+  // Qui mène la partie. Le nom vit dans le stockage local de l'appareil, que le
+  // serveur ne connaît pas : il vaut null le temps que le navigateur réponde.
+  const [mj, definirMj] = useMaitreDeJeu()
+  const signature = mj ?? ''
 
   // En direct : la page se rafraîchit toute seule pendant la partie (journée courante
   // seulement, onglet visible seulement). Le texte d'une note en cours vit dans l'état
@@ -60,7 +73,7 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour, combat }: 
     setNote('')
     setPlein(false)
     startTransition(async () => {
-      await ajouterNoteMJ(t)
+      await ajouterNoteMJ(t, signature)
       router.refresh()
     })
   }
@@ -106,8 +119,9 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour, combat }: 
   // Entrée = saut de ligne, Ctrl+Entrée = publier (idéal pour le résumé de fin de partie).
   const formNote = (
     <div className="mb-4">
-      <CombatTracker combat={combat} jour={jour} />
-      <DistribuerXp jour={jour} />
+      <IdentiteMJ mj={mj} onChange={definirMj} maitres={maitres} />
+      <CombatTracker combat={combat} jour={jour} mj={signature} />
+      <DistribuerXp jour={jour} mj={signature} />
       {/* Le champ s'ouvre sur trois lignes et grandit jusqu'à huit. Avant, il
           partait d'UNE ligne : le résumé de fin de partie s'écrivait dans une
           fente. text-base sans variante sm: — `sm:text-sm` ramenait le texte à
@@ -158,7 +172,7 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour, combat }: 
         />
       )}
       <div className="mt-2">
-        <PhotoPartie />
+        <PhotoPartie mj={signature} />
       </div>
     </div>
   )
@@ -249,6 +263,7 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour, combat }: 
               <div key={e.id} className="flex items-center gap-2 py-1.5 group">
                 <div className="flex-1 h-px bg-amber-900/60" />
                 <span className="text-amber-500 text-xs font-semibold uppercase tracking-wide">{e.description}</span>
+                <PastilleMJ mj={e.mj} />
                 <div className="flex-1 h-px bg-amber-900/60" />
                 {/* Toujours visible : au survol seulement, le bouton n'existait pas sur tablette */}
                 <button
@@ -264,6 +279,7 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour, combat }: 
             return (
               <div key={e.id} className="flex items-start gap-2 text-sm rounded px-1 py-1.5 group hover:bg-stone-800/60">
                 <span className="text-stone-600 text-xs font-mono mt-0.5 shrink-0 w-10">{heureQuebec(new Date(e.createdAt))}</span>
+                <PastilleMJ mj={e.mj} />
                 <span className="shrink-0 text-sky-300">📷</span>
                 <div className="flex-1">
                   <a href={url} target="_blank" rel="noopener noreferrer" title="Ouvrir la photo en grand">
@@ -295,6 +311,7 @@ export function PartieTimeline({ entrees, etatGroupe, enDirect, jour, combat }: 
                   {e.nomPersonnage}
                 </Link>
               )}
+              <PastilleMJ mj={e.mj} />
               <span className={`shrink-0 ${couleur}`}>{icone}</span>
               <span className={`flex-1 leading-snug whitespace-pre-wrap ${estNote ? 'text-amber-100/90 italic' : 'text-stone-300'}`}>{e.description}</span>
               <button

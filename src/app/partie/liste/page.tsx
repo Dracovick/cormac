@@ -58,6 +58,16 @@ export default async function ListePartiesPage() {
                     </span>
                     <span className="text-stone-600 text-xs">{p.nbEntrees} entrée{p.nbEntrees > 1 ? 's' : ''} au journal</span>
                   </div>
+                  {p.mjs.length > 0 && (
+                    <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+                      <span className="text-stone-600 text-xs">Menée par</span>
+                      {p.mjs.map(nom => (
+                        <span key={nom} className="text-xs bg-amber-950/70 text-amber-300/90 border border-amber-800/50 rounded-full px-2 py-0.5">
+                          🎩 {nom}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   {p.personnages.length > 0 && (
                     <div className="flex flex-wrap items-center gap-1.5 mt-2">
                       {p.personnages.map(nom => (

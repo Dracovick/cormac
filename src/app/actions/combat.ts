@@ -166,7 +166,7 @@ function trierCombat(liste: Combattant[]): Combattant[] {
   return [...liste].sort((a, b) => b.total - a.total || b.mod - a.mod)
 }
 
-export async function demarrerCombat(entrants: EntrantCombat[]) {
+export async function demarrerCombat(entrants: EntrantCombat[], mj?: string | null) {
   const propres = entrants.filter(entrantValide).slice(0, 40)
   if (propres.length === 0) return
   const db = getDb()
@@ -185,13 +185,13 @@ export async function demarrerCombat(entrants: EntrantCombat[]) {
   })))
   await db.insert(schema.combats).values({ combattants: JSON.stringify(combattants) })
 
-  await logJournal(null, 'round', 'Début du combat — round 1', 1)
+  await logJournal(null, 'round', 'Début du combat — round 1', 1, mj)
   const ordre = combattants.map(c => `${c.nom} ${c.total}`).join(', ')
-  await logJournal(null, 'note', `⚔ Ordre d'initiative — ${ordre}`)
+  await logJournal(null, 'note', `⚔ Ordre d'initiative — ${ordre}`, null, mj)
   revalidatePath('/partie')
 }
 
-export async function tourSuivant() {
+export async function tourSuivant(mj?: string | null) {
   const combat = await getCombatActif()
   if (!combat || combat.combattants.length === 0) return
   const courant = combat.combattants[combat.tourIndex]
@@ -201,7 +201,7 @@ export async function tourSuivant() {
   if (tourIndex >= combat.combattants.length) {
     tourIndex = 0
     round += 1
-    await logJournal(null, 'round', `Round ${round}`, round)
+    await logJournal(null, 'round', `Round ${round}`, round, mj)
   }
   await sauverCombat(combat.id, { round, tourIndex, combattants: combat.combattants })
 }
@@ -257,12 +257,12 @@ export async function ajouterCombattant(entrant: EntrantCombat) {
   await sauverCombat(combat.id, { round: combat.round, tourIndex, combattants: liste })
 }
 
-export async function terminerCombat() {
+export async function terminerCombat(mj?: string | null) {
   const combat = await getCombatActif()
   if (!combat) return
   await getDb().update(schema.combats).set({ statut: 'termine', updatedAt: new Date() })
     .where(eq(schema.combats.id, combat.id))
   // Mêmes marqueurs qu'avant : « Fin du combat » + bilan (dégâts, sorts, rounds)
-  await marquerRound('fin')
+  await marquerRound('fin', mj)
   revalidatePath('/partie')
 }

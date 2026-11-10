@@ -36,7 +36,7 @@ async function compresserImage(file: File): Promise<Blob> {
   }
 }
 
-export function PhotoPartie() {
+export function PhotoPartie({ mj }: { mj: string }) {
   const router = useRouter()
   const inputRef = useRef<HTMLInputElement>(null)
   const [apercu, setApercu] = useState<{ blob: Blob; url: string } | null>(null)
@@ -76,7 +76,7 @@ export function PhotoPartie() {
         const res = await fetch('/api/upload-photo-partie', { method: 'POST', body: fd })
         const data = await res.json()
         if (!res.ok || !data.url) throw new Error(data.error ?? 'Téléversement échoué')
-        await ajouterPhotoMJ(data.url, legende)
+        await ajouterPhotoMJ(data.url, legende, mj)
         annuler()
         router.refresh()
       } catch (e) {

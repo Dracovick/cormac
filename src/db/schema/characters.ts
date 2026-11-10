@@ -244,5 +244,10 @@ export const characterJournal = pgTable('character_journal', {
   type: varchar('type', { length: 20 }).notNull(), // pv | sort | potion | parchemin | charge | effet | attaque | repos | round | note
   description: text('description').notNull(),
   valeur: integer('valeur'), // delta PV, numéro de round…
+  // Qui a posé cette entrée, quand c'est le MJ : note du MJ, ordre d'initiative,
+  // round, bilan, photo de la map, distribution d'XP. NULL pour tout ce qui vient
+  // d'une fiche de personnage (le joueur est déjà désigné par personnageId) et pour
+  // les entrées écrites avant le 2026-11-09, où aucun MJ ne s'identifiait.
+  mj: varchar('mj', { length: 60 }),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 })
