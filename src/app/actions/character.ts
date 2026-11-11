@@ -1253,6 +1253,13 @@ export async function ajouterParchemin(personnageId: number, e: EntreeParchemin)
 export type ObjetRef = {
   id: number; nom: string; type: string | null; emplacement: string | null
   chargesMax: number | null; bonus: number | null
+  /**
+   * Quelle SORTE de bonus `bonus` donne, au vocabulaire du PHB 3.5 — NULL = il
+   * ne va PAS à la classe d'armure. Sans lui, préremplir le bonus d'un bandeau
+   * d'Intelligence depuis le rayon redonnerait +2 de CA à son porteur : c'est
+   * le défaut corrigé le 2026-10-09 (colonne `bonus_type`, drizzle/0011).
+   */
+  bonusType: string | null
   /** Ligne de la campagne d'André, pas une règle de livre — marquée 🗃️. */
   campagne: boolean
   alias: string[]
@@ -1267,16 +1274,37 @@ export type ArmureRef = {
   maxDex: number | null; malusCompetence: number | null; risqueEchecMagique: number | null
 }
 
+const parNomFr = (a: { nom: string }, b: { nom: string }) => a.nom.localeCompare(b.nom, 'fr')
+
+/**
+ * Le rayon des objets magiques pour un champ à suggestions — tout le rayon,
+ * catalogue de livre ET lignes de campagne, chacune sachant d'où elle vient.
+ * Utilisé par le panneau Butin et par Modifier → Équipement.
+ */
+async function lireObjetsCatalogue(): Promise<ObjetRef[]> {
+  const db = getDb()
+  const objets = await db.select({
+    id: schema.magicItems.id, nom: schema.magicItems.nom, type: schema.magicItems.type,
+    emplacement: schema.magicItems.emplacement, chargesMax: schema.magicItems.chargesMax,
+    bonus: schema.magicItems.bonus, bonusType: schema.magicItems.bonusType,
+    estCatalogue: schema.magicItems.estCatalogue,
+  }).from(schema.magicItems)
+  return objets
+    .map(({ estCatalogue, ...o }) => ({ ...o, campagne: !estCatalogue, alias: aliasPour(o.nom) }))
+    .sort(parNomFr)
+}
+
+/** Le même rayon, pour les pages qui n'ont besoin que des objets. */
+export async function getObjetsCatalogue(): Promise<ObjetRef[]> {
+  return lireObjetsCatalogue()
+}
+
 export async function getCataloguesButin(): Promise<{
   objets: ObjetRef[]; armes: ArmeRef[]; armures: ArmureRef[]
 }> {
   const db = getDb()
   const [objets, armes, armures] = await Promise.all([
-    db.select({
-      id: schema.magicItems.id, nom: schema.magicItems.nom, type: schema.magicItems.type,
-      emplacement: schema.magicItems.emplacement, chargesMax: schema.magicItems.chargesMax,
-      bonus: schema.magicItems.bonus, estCatalogue: schema.magicItems.estCatalogue,
-    }).from(schema.magicItems),
+    lireObjetsCatalogue(),
     db.select({
       id: schema.weapons.id, nom: schema.weapons.nom, degats: schema.weapons.degats,
       critiqueMin: schema.weapons.critiqueMin, critiqueMult: schema.weapons.critiqueMult,
@@ -1284,18 +1312,15 @@ export async function getCataloguesButin(): Promise<{
     }).from(schema.weapons).where(eq(schema.weapons.estCatalogue, true)),
     db.select().from(schema.armor),
   ])
-  const parNom = (a: { nom: string }, b: { nom: string }) => a.nom.localeCompare(b.nom, 'fr')
   return {
-    objets: objets
-      .map(({ estCatalogue, ...o }) => ({ ...o, campagne: !estCatalogue, alias: aliasPour(o.nom) }))
-      .sort(parNom),
-    armes: armes.map(a => ({ ...a, alias: aliasPour(a.nom) })).sort(parNom),
+    objets,
+    armes: armes.map(a => ({ ...a, alias: aliasPour(a.nom) })).sort(parNomFr),
     armures: armures
       .map(a => ({
         id: a.id, nom: a.nom, type: a.type, bonusArmure: a.bonusArmure,
         maxDex: a.maxDex, malusCompetence: a.malusCompetence,
         risqueEchecMagique: a.risqueEchecMagique,
       }))
-      .sort(parNom),
+      .sort(parNomFr),
   }
 }

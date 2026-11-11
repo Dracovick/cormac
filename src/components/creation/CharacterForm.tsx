@@ -3,8 +3,8 @@
 import { useState, useTransition, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import type { CharacterFormData, PotionRef } from '@/app/actions/character'
-import { saveCharacter, getPotionsCatalogue } from '@/app/actions/character'
+import type { CharacterFormData, ObjetRef, PotionRef } from '@/app/actions/character'
+import { saveCharacter, getPotionsCatalogue, getObjetsCatalogue } from '@/app/actions/character'
 import { ChampRechercheNom } from '@/components/ChampRechercheNom'
 import { getModifier, formatMod, ALIGNEMENTS, calcXpPenalite } from '@/lib/dnd35/rules'
 import { TYPES_BONUS_CA } from '@/lib/dnd35/classe-armure'
@@ -643,7 +643,7 @@ function SectionDons({ data, update }: { data: CharacterFormData; update: Upd })
 }
 
 // ─── Section: Équipement ─────────────────────────────────────────────────────
-function SectionEquipement({ data, update, derived, potionsCatalogue }: { data: CharacterFormData; update: Upd; derived: Derived; potionsCatalogue: PotionRef[] }) {
+function SectionEquipement({ data, update, derived, potionsCatalogue, objetsCatalogue }: { data: CharacterFormData; update: Upd; derived: Derived; potionsCatalogue: PotionRef[]; objetsCatalogue: ObjetRef[] }) {
   const [newLang, setNewLang] = useState('')
   // Track which weapon rows are in custom-name mode (nom doesn't match any template)
   const [customRows, setCustomRows] = useState<Set<number>>(() => new Set(
@@ -673,6 +673,29 @@ function SectionEquipement({ data, update, derived, potionsCatalogue }: { data: 
   const newObj = () => update('objetsMagiques', [...data.objetsMagiques, { nom: '', type: '', emplacement: '', bonus: '', bonusType: '', description: '', charges: 0 }])
   const delObj = (i: number) => update('objetsMagiques', data.objetsMagiques.filter((_, j) => j !== i))
   const setObj = (i: number, k: string, v: any) => { const a = [...data.objetsMagiques]; (a[i] as any)[k] = v; update('objetsMagiques', a) }
+  // Choisir une suggestion = réutiliser la fiche du rayon, comme au panneau Butin :
+  // emplacement, charges et type se remplissent d'un coup.
+  const pickObj = (i: number, ref: ObjetRef) => {
+    const a = [...data.objetsMagiques]
+    const o = a[i]
+    // ⚠ Le bonus et SON TYPE voyagent ensemble, et ils écrasent la saisie. Les
+    // séparer, c'est reconstruire le défaut du 2026-10-09 : un bandeau
+    // d'Intelligence (bonus 2, type NULL = pas de CA) qui hériterait d'un
+    // « parade » laissé dans la case donnerait +2 de CA à son porteur.
+    // Quand le rayon ne porte aucun bonus, il ne dit rien : on garde la saisie.
+    const bonusDuRayon = ref.bonus != null
+      ? { bonus: String(ref.bonus), bonusType: ref.bonusType ?? '' }
+      : {}
+    a[i] = {
+      ...o,
+      nom: ref.nom,
+      type: ref.type ?? o.type,
+      emplacement: ref.emplacement ?? o.emplacement,
+      charges: ref.chargesMax ?? o.charges,
+      ...bonusDuRayon,
+    }
+    update('objetsMagiques', a)
+  }
   const newPot = () => update('potions', [...data.potions, { nom: '', effet: '', charges: 1 }])
   const delPot = (i: number) => update('potions', data.potions.filter((_, j) => j !== i))
   const setPot = (i: number, k: string, v: any) => { const a = [...data.potions]; (a[i] as any)[k] = v; update('potions', a) }
@@ -822,7 +845,32 @@ function SectionEquipement({ data, update, derived, potionsCatalogue }: { data: 
         <div className={SEC_H}>Objets magiques</div>
         {data.objetsMagiques.map((o, i) => (
           <div key={i} className="grid grid-cols-2 sm:grid-cols-7 gap-2 mb-2 items-end bg-stone-800/30 rounded p-2">
-            <div className="sm:col-span-2"><label className={LBL}>Nom</label><input className={INP} value={o.nom} onChange={e => setObj(i, 'nom', e.target.value)} placeholder="Anneau de protection +2" /></div>
+            <div className="sm:col-span-2">
+              <label className={LBL}>Nom</label>
+              {/* La même mécanique qu'au panneau Butin : on cherche dans le rayon
+                  plutôt que de retaper un nom — c'est ce qui évite les jumelles
+                  d'orthographe dans `magic_items`. ⛔ Retrouver la fiche par son
+                  `id`, jamais par son nom : une entrée peut porter l'apostrophe
+                  typographique (U+2019) et la comparaison de chaînes la rate. */}
+              <ChampRechercheNom
+                value={o.nom}
+                onChange={v => setObj(i, 'nom', v)}
+                onPick={s => { const ref = objetsCatalogue.find(r => r.id === s.id); if (ref) pickObj(i, ref) }}
+                catalogue={objetsCatalogue.map(r => ({
+                  id: r.id,
+                  nom: r.nom,
+                  // 🗃️ : ligne de la campagne d'André, pas une règle de livre —
+                  // le même marqueur qu'au rayon de la Bibliothèque et au Butin.
+                  detail: [r.campagne ? '🗃️ campagne' : r.type, r.emplacement]
+                    .filter(Boolean).join(' · ') || null,
+                  alias: r.alias,
+                }))}
+                placeholder={objetsCatalogue.length === 0 ? 'Chargement du rayon…' : 'Rechercher ou créer…'}
+                className={INP}
+                typeLabel="objet magique"
+                genre="m"
+              />
+            </div>
             <div><label className={LBL}>Emplacement</label><input className={INP} value={o.emplacement} onChange={e => setObj(i, 'emplacement', e.target.value)} placeholder="Doigt" /></div>
             <div><label className={LBL}>Bonus</label><input className={INP} value={o.bonus} onChange={e => setObj(i, 'bonus', e.target.value)} placeholder="2" /></div>
             {/* Sans ce champ, un « +2 » ne dit pas s'il va à la CA, à une
@@ -1178,15 +1226,19 @@ const NOMS_TABLES: Record<string, string> = {
   magicItems: 'objet magique', potions: 'potion', languages: 'langue', spells: 'sort',
 }
 
-export function CharacterForm({ personnageId, initialData, potionsCatalogue }: { personnageId?: number; initialData?: CharacterFormData; potionsCatalogue?: PotionRef[] }) {
+export function CharacterForm({ personnageId, initialData, potionsCatalogue, objetsCatalogue }: { personnageId?: number; initialData?: CharacterFormData; potionsCatalogue?: PotionRef[]; objetsCatalogue?: ObjetRef[] }) {
   const [data, setData] = useState<CharacterFormData>(initialData ?? DEFAULT_FORM)
-  // Catalogue des potions pour le champ à suggestions. Les pages serveur le
-  // passent en prop; la page « générer » (client) le laisse vide et on le
-  // charge ici, une seule fois.
+  // Catalogues pour les champs à suggestions. Les pages serveur les passent en
+  // prop; la page « générer » (client) les laisse vides et on les charge ici,
+  // une seule fois.
   const [potionsCat, setPotionsCat] = useState<PotionRef[]>(potionsCatalogue ?? [])
   useEffect(() => {
     if (!potionsCatalogue) getPotionsCatalogue().then(setPotionsCat).catch(() => {})
   }, [potionsCatalogue])
+  const [objetsCat, setObjetsCat] = useState<ObjetRef[]>(objetsCatalogue ?? [])
+  useEffect(() => {
+    if (!objetsCatalogue) getObjetsCatalogue().then(setObjetsCat).catch(() => {})
+  }, [objetsCatalogue])
   const [tab, setTab] = useState('identite')
   const [error, setError] = useState<string | null>(null)
   // Références créées faute d'avoir été reconnues : on les montre avant de quitter la page.
@@ -1324,7 +1376,7 @@ export function CharacterForm({ personnageId, initialData, potionsCatalogue }: {
         {tab === 'combat' && <SectionCombat data={data} update={update} derived={derived} />}
         {tab === 'competences' && <SectionCompetences data={data} update={update} derived={derived} />}
         {tab === 'dons' && <SectionDons data={data} update={update} />}
-        {tab === 'equipement' && <SectionEquipement data={data} update={update} derived={derived} potionsCatalogue={potionsCat} />}
+        {tab === 'equipement' && <SectionEquipement data={data} update={update} derived={derived} potionsCatalogue={potionsCat} objetsCatalogue={objetsCat} />}
         {tab === 'sorts' && derived.lanceurSorts && <SectionSorts data={data} update={update} derived={derived} />}
         {tab === 'notes' && <SectionNotes data={data} update={update} />}
 
