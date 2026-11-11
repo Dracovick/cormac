@@ -19,6 +19,7 @@ import { formatCritique } from '@/lib/dnd35/critique'
 import { FEATS_DND35, CATEGORIES_PAR_CLASSE, verifierPrerequisDon, type FeatCategorie, type FeatDef } from '@/lib/dnd35/feats'
 import { NOMS_DOMAINES } from '@/lib/dnd35/domains'
 import { UNITES_MONNAIE, totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
+import { memeNom } from '@/lib/noms'
 
 // ─── Styles ──────────────────────────────────────────────────────────────────
 const INP = 'bg-stone-800 border border-stone-700 rounded px-2 py-1.5 text-stone-100 text-sm focus:outline-none focus:border-amber-500 w-full'
@@ -673,26 +674,34 @@ function SectionEquipement({ data, update, derived, potionsCatalogue, objetsCata
   const newObj = () => update('objetsMagiques', [...data.objetsMagiques, { nom: '', type: '', emplacement: '', bonus: '', bonusType: '', description: '', charges: 0 }])
   const delObj = (i: number) => update('objetsMagiques', data.objetsMagiques.filter((_, j) => j !== i))
   const setObj = (i: number, k: string, v: any) => { const a = [...data.objetsMagiques]; (a[i] as any)[k] = v; update('objetsMagiques', a) }
-  // Choisir une suggestion = réutiliser la fiche du rayon, comme au panneau Butin :
-  // emplacement, charges et type se remplissent d'un coup.
+  // Choisir une suggestion = réutiliser la fiche du rayon, comme au panneau Butin.
   const pickObj = (i: number, ref: ObjetRef) => {
     const a = [...data.objetsMagiques]
     const o = a[i]
-    // ⚠ Le bonus et SON TYPE voyagent ensemble, et ils écrasent la saisie. Les
-    // séparer, c'est reconstruire le défaut du 2026-10-09 : un bandeau
-    // d'Intelligence (bonus 2, type NULL = pas de CA) qui hériterait d'un
-    // « parade » laissé dans la case donnerait +2 de CA à son porteur.
-    // Quand le rayon ne porte aucun bonus, il ne dit rien : on garde la saisie.
-    const bonusDuRayon = ref.bonus != null
-      ? { bonus: String(ref.bonus), bonusType: ref.bonusType ?? '' }
-      : {}
+    // ⚠ Ici la ligne est RÉUTILISÉE, au contraire du panneau Butin où elle est
+    // neuve à chaque ajout. Remplacer l'objet d'une ligne déjà remplie doit donc
+    // repartir à zéro : sans ce test, choisir un bandeau d'Intelligence par
+    // dessus un anneau de protection laissait le bandeau « au Doigt » — mesuré
+    // en prod le 2026-11-11, c'est le test navigateur qui l'a trouvé.
+    // Une ligne vierge, ou le MÊME objet rechoisi, garde ce qui a été tapé à côté :
+    // le rayon ne porte presque jamais l'emplacement ni les charges (22 et 33
+    // fiches sur 754), et la saisie du MJ vaut mieux qu'un champ vidé.
+    const changeDObjet = o.nom.trim() !== '' && !memeNom(o.nom, ref.nom)
+    /** La fiche du rayon d'abord; sinon la saisie, sauf si elle décrit l'objet d'avant. */
+    const texte = (duRayon: string | null, saisi: string) =>
+      duRayon ?? (changeDObjet ? '' : saisi)
     a[i] = {
       ...o,
       nom: ref.nom,
-      type: ref.type ?? o.type,
-      emplacement: ref.emplacement ?? o.emplacement,
-      charges: ref.chargesMax ?? o.charges,
-      ...bonusDuRayon,
+      type: texte(ref.type, o.type),
+      emplacement: texte(ref.emplacement, o.emplacement),
+      charges: ref.chargesMax ?? (changeDObjet ? 0 : o.charges),
+      // ⚠ Le bonus et SON TYPE voyagent toujours ensemble. Les séparer, c'est
+      // reconstruire le défaut du 2026-10-09 : un bandeau d'Intelligence
+      // (bonus 2, type NULL = pas de CA) qui hériterait d'un « parade » laissé
+      // dans la case donnerait +2 de CA à son porteur.
+      bonus: texte(ref.bonus != null ? String(ref.bonus) : null, o.bonus),
+      bonusType: ref.bonus != null ? (ref.bonusType ?? '') : texte(null, o.bonusType),
     }
     update('objetsMagiques', a)
   }
