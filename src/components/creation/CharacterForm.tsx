@@ -19,7 +19,6 @@ import { formatCritique } from '@/lib/dnd35/critique'
 import { FEATS_DND35, CATEGORIES_PAR_CLASSE, verifierPrerequisDon, type FeatCategorie, type FeatDef } from '@/lib/dnd35/feats'
 import { NOMS_DOMAINES } from '@/lib/dnd35/domains'
 import { UNITES_MONNAIE, totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
-import { memeNom } from '@/lib/noms'
 
 // ─── Styles ──────────────────────────────────────────────────────────────────
 const INP = 'bg-stone-800 border border-stone-700 rounded px-2 py-1.5 text-stone-100 text-sm focus:outline-none focus:border-amber-500 w-full'
@@ -678,30 +677,30 @@ function SectionEquipement({ data, update, derived, potionsCatalogue, objetsCata
   const pickObj = (i: number, ref: ObjetRef) => {
     const a = [...data.objetsMagiques]
     const o = a[i]
-    // ⚠ Ici la ligne est RÉUTILISÉE, au contraire du panneau Butin où elle est
-    // neuve à chaque ajout. Remplacer l'objet d'une ligne déjà remplie doit donc
-    // repartir à zéro : sans ce test, choisir un bandeau d'Intelligence par
-    // dessus un anneau de protection laissait le bandeau « au Doigt » — mesuré
-    // en prod le 2026-11-11, c'est le test navigateur qui l'a trouvé.
-    // Une ligne vierge, ou le MÊME objet rechoisi, garde ce qui a été tapé à côté :
-    // le rayon ne porte presque jamais l'emplacement ni les charges (22 et 33
-    // fiches sur 754), et la saisie du MJ vaut mieux qu'un champ vidé.
-    const changeDObjet = o.nom.trim() !== '' && !memeNom(o.nom, ref.nom)
-    /** La fiche du rayon d'abord; sinon la saisie, sauf si elle décrit l'objet d'avant. */
-    const texte = (duRayon: string | null, saisi: string) =>
-      duRayon ?? (changeDObjet ? '' : saisi)
+    // La règle, et elle est délibérément bête : **le rayon n'écrase que ce qu'il
+    // affirme**. Rien de ce que le MJ a tapé n'est effacé par un choix de nom —
+    // il ne porte l'emplacement que sur 22 de ses 754 fiches et les charges sur
+    // 33, et ces deux champs décrivent l'EXEMPLAIRE du personnage
+    // (`character_magic_items`), pas le modèle du livre.
+    //
+    // ⛔ J'ai essayé plus fin le 2026-11-11 — « remplacer l'objet d'une ligne
+    // déjà remplie repart à zéro » — et le test en prod a montré que ça efface
+    // l'emplacement tapé AVANT le nom, parce que le texte en cours de frappe
+    // ressemble à l'objet d'avant. Une heuristique qui se trompe sur la saisie
+    // du MJ est pire que le cas qu'elle corrige : un emplacement hérité est
+    // visible dans la case d'à côté, une saisie perdue ne se voit pas.
     a[i] = {
       ...o,
       nom: ref.nom,
-      type: texte(ref.type, o.type),
-      emplacement: texte(ref.emplacement, o.emplacement),
-      charges: ref.chargesMax ?? (changeDObjet ? 0 : o.charges),
-      // ⚠ Le bonus et SON TYPE voyagent toujours ensemble. Les séparer, c'est
+      type: ref.type ?? o.type,
+      emplacement: ref.emplacement ?? o.emplacement,
+      charges: ref.chargesMax ?? o.charges,
+      // ⚠ Seule exception : le bonus et SON TYPE entrent dans la classe d'armure,
+      // alors ils voyagent ensemble et ils écrasent. Les séparer, c'est
       // reconstruire le défaut du 2026-10-09 : un bandeau d'Intelligence
       // (bonus 2, type NULL = pas de CA) qui hériterait d'un « parade » laissé
       // dans la case donnerait +2 de CA à son porteur.
-      bonus: texte(ref.bonus != null ? String(ref.bonus) : null, o.bonus),
-      bonusType: ref.bonus != null ? (ref.bonusType ?? '') : texte(null, o.bonusType),
+      ...(ref.bonus != null ? { bonus: String(ref.bonus), bonusType: ref.bonusType ?? '' } : {}),
     }
     update('objetsMagiques', a)
   }
