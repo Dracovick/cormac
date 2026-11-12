@@ -49,7 +49,11 @@ export interface CharacterFormData {
   dons: string[]
   // `quantiteMunitions` est facultatif : une fiche saisie avant l'ajout de la
   // case ne le porte pas, et ses projectiles ne doivent pas disparaître.
-  armes: { nom: string; degats: string; crit: string; typeDegats: string; portee: string; bonusMagique: number; coteDeForce?: number | null; bonusMunitions?: number | null; quantiteMunitions?: number | null; quantite: number }[]
+  // `caracAttaque` est facultatif comme `quantiteMunitions` : une fiche saisie
+  // avant drizzle/0016 n'en porte pas. `famille`/`nomCatalogue`/`familleCatalogue`
+  // voyagent en LECTURE SEULE — le formulaire s'en sert pour savoir si l'arme
+  // accepte Attaque en finesse, `saveCharacter` ne les réécrit jamais.
+  armes: { nom: string; degats: string; crit: string; typeDegats: string; portee: string; bonusMagique: number; coteDeForce?: number | null; bonusMunitions?: number | null; quantiteMunitions?: number | null; caracAttaque?: 'for' | 'dex' | null; famille?: string | null; nomCatalogue?: string | null; familleCatalogue?: string | null; quantite: number }[]
   // `estPortee` est facultatif : une fiche saisie avant l'ajout de la case ne
   // le porte pas, et son armure doit rester portée comme avant.
   armures: { nom: string; type: string; bonusCA: number; maxDex: number; malusComp: number; bonusMagique: number; estPortee?: boolean }[]
@@ -388,6 +392,9 @@ export async function saveCharacter(
       // `saveCharacter` réécrit la table de fond en comble. Même piège que
       // `estPortee` sur les armures, payé le 2026-10-25.
       quantiteMunitions: arme.quantiteMunitions ?? null,
+      // Même transport obligatoire : sans lui, enregistrer une fiche remettrait
+      // chaque arme en « automatique » et effacerait le choix du joueur.
+      caracAttaque: arme.caracAttaque ?? null,
       quantite: arme.quantite ?? 1,
     }))
   }

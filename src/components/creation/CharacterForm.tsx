@@ -15,7 +15,8 @@ import { RACES_DND35, getRaceInfo } from '@/lib/dnd35/races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { sortsByClasseEtNiveau, niveauxMaxForClasse, type ClasseSortKey, type SortDnD } from '@/lib/dnd35/spells'
 import { getBab } from '@/lib/dnd35/rules'
-import { WEAPONS_DND35, WEAPON_CATEGORIES, WEAPON_CATEGORIE_LIBELLE, type WeaponTemplate } from '@/lib/dnd35/weapons'
+import { WEAPONS_DND35, WEAPON_CATEGORIES, WEAPON_CATEGORIE_LIBELLE, estArmeADistance, type WeaponTemplate } from '@/lib/dnd35/weapons'
+import { aAttaqueEnFinesse, armeEligibleFinesse } from '@/lib/dnd35/attaque'
 import { formatCritique } from '@/lib/dnd35/critique'
 import { FEATS_DND35, CATEGORIES_PAR_CLASSE, verifierPrerequisDon, type FeatCategorie, type FeatDef } from '@/lib/dnd35/feats'
 import { NOMS_DOMAINES } from '@/lib/dnd35/domains'
@@ -699,13 +700,18 @@ function SectionDons({ data, update }: { data: CharacterFormData; update: Upd })
 // ─── Section: Équipement ─────────────────────────────────────────────────────
 function SectionEquipement({ data, update, derived, potionsCatalogue, objetsCatalogue }: { data: CharacterFormData; update: Upd; derived: Derived; potionsCatalogue: PotionRef[]; objetsCatalogue: ObjetRef[] }) {
   const [newLang, setNewLang] = useState('')
+  // Attaque en finesse : le Manuel dit « peut choisir ». Le sélecteur FOR/DEX
+  // n'a de sens que si le personnage a le don — ou s'il est Bretteur, qui le
+  // reçoit d'office au niveau 1 sans jamais l'inscrire dans ses dons.
+  const niveauBretteur = (data.classes ?? []).find(c => c.classe === 'Bretteur')?.niveau ?? 0
+  const peutFinesse = aAttaqueEnFinesse(data.dons ?? []) || niveauBretteur >= 1
   // Track which weapon rows are in custom-name mode (nom doesn't match any template)
   const [customRows, setCustomRows] = useState<Set<number>>(() => new Set(
     data.armes.map((a, i) => ({ a, i }))
       .filter(({ a }) => a.nom !== '' && !WEAPONS_DND35.find(w => w.nom === a.nom))
       .map(({ i }) => i)
   ))
-  const newArme = () => update('armes', [...data.armes, { nom: '', degats: '1d6', crit: '×2', typeDegats: 'T', portee: 'Contact', bonusMagique: 0, coteDeForce: null, bonusMunitions: null, quantiteMunitions: null, quantite: 1 }])
+  const newArme = () => update('armes', [...data.armes, { nom: '', degats: '1d6', crit: '×2', typeDegats: 'T', portee: 'Contact', bonusMagique: 0, coteDeForce: null, bonusMunitions: null, quantiteMunitions: null, caracAttaque: null, quantite: 1 }])
   const delArme = (i: number) => {
     setCustomRows(prev => {
       const s = new Set<number>()
@@ -865,13 +871,48 @@ function SectionEquipement({ data, update, derived, potionsCatalogue, objetsCata
                 </div>
               )
             })()}
+            {/* Sous-rangée conditionnelle : Attaque en finesse, le choix FOR/DEX.
+                Le Manuel dit « PEUT CHOISIR » — le Grimoire décidait seul en
+                gardant le meilleur des deux. Voir drizzle/0016.
+
+                N'apparaît que sur une ligne où le choix EXISTE vraiment : le
+                personnage a le don (ou est Bretteur), l'arme est éligible, et
+                c'est du corps à corps. Un sélecteur sans effet serait pire que
+                pas de sélecteur. */}
+            {(() => {
+              if (!peutFinesse) return null
+              const famille = a.famille ?? a.familleCatalogue ?? null
+              const porteeNum = a.portee && a.portee !== 'Contact' ? parseInt(a.portee) || null : null
+              if (estArmeADistance(famille, porteeNum)) return null
+              if (!armeEligibleFinesse(a.nom, a.nomCatalogue ?? null, famille)) return null
+              const choix = a.caracAttaque ?? ''
+              const auto = derived.dexMod > derived.forMod ? 'DEX' : 'FOR'
+              return (
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 mt-1.5 pt-1.5 border-t border-stone-700/30 items-end">
+                  <div>
+                    <label className={LBL} title="Attaque en finesse : sur une arme légère (rapière, fouet et chaîne cloutée comprises), le Manuel laisse CHOISIR entre la Dextérité et la Force pour le jet d'attaque. Automatique = le meilleur des deux. Les DÉGÂTS restent toujours à la Force.">Jet d’attaque</label>
+                    <select className={SEL} value={choix} onChange={e => setArme(i, 'caracAttaque', e.target.value === '' ? null : e.target.value)}>
+                      <option value="">Automatique — le meilleur ({auto})</option>
+                      <option value="for">Force {formatMod(derived.forMod)}</option>
+                      <option value="dex">Dextérité {formatMod(derived.dexMod)}</option>
+                    </select>
+                  </div>
+                  <div className="sm:col-span-3 flex items-end pb-1">
+                    <span className="text-stone-600 text-xs italic">
+                      ⚔ Attaque en finesse : cette arme accepte la DEX au jet d’attaque. Les dégâts restent à la FOR.
+                      {niveauBretteur >= 1 && !aAttaqueEnFinesse(data.dons ?? []) ? ' Bretteur niv.1 : le don est offert par la classe.' : ''}
+                    </span>
+                  </div>
+                </div>
+              )
+            })()}
           </div>
         ))}
         <div className="flex gap-4 mt-2">
           <button onClick={newArme} className={BTN_ADD}><span className="text-xl">+</span> Ajouter une arme</button>
           <button onClick={() => {
             const idx = data.armes.length
-            update('armes', [...data.armes, { nom: '', degats: '1d6', crit: '×2', typeDegats: 'T', portee: 'Contact', bonusMagique: 0, coteDeForce: null, bonusMunitions: null, quantiteMunitions: null, quantite: 1 }])
+            update('armes', [...data.armes, { nom: '', degats: '1d6', crit: '×2', typeDegats: 'T', portee: 'Contact', bonusMagique: 0, coteDeForce: null, bonusMunitions: null, quantiteMunitions: null, caracAttaque: null, quantite: 1 }])
             setCustomRows(prev => new Set([...prev, idx]))
           }} className={BTN_ADD + ' text-purple-400 hover:text-purple-200'}><span className="text-xl">+</span> Arme personnalisée</button>
         </div>

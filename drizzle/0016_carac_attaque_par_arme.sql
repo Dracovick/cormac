@@ -1,0 +1,32 @@
+-- LE LIVRE DIT « PEUT CHOISIR » — ALORS LE JOUEUR CHOISIT.
+--
+-- André, le 2026-11-12, sur la fiche de Duncan Darkvale [97] : « il faut mettre
+-- une mécanique qui permet au joueur de choisir entre le bonus de FOR ou de DEX
+-- pour son arme. Et pour tous les joueurs qui ont Attaque en finesse ».
+--
+-- ── Ce que le Manuel dit exactement ─────────────────────────────────────────
+-- Attaque en finesse : « Lorsqu'il utilise une arme légère, une rapière, un
+-- fouet ou une chaîne cloutée […], le personnage PEUT CHOISIR d'appliquer son
+-- bonus de Dextérité à ses jets d'attaque plutôt que celui de Force. »
+--
+-- Le Grimoire choisissait à sa place, en gardant le meilleur des deux. C'est le
+-- bon défaut — personne ne prend volontairement le plus petit chiffre — mais ce
+-- n'est pas la règle, et il existe des raisons de table de vouloir l'autre :
+-- une posture ou un effet qui s'accroche à la Force, un MJ qui arbitre une
+-- situation, ou simplement la volonté de voir le jet tel qu'il se ferait sans
+-- le don.
+--
+-- ── Pourquoi NULL est permis, et ce qu'il veut dire ─────────────────────────
+-- NULL = « automatique » : le moteur garde le meilleur des deux, exactement
+-- comme avant cette colonne. C'est la valeur de TOUTES les lignes existantes,
+-- donc la livraison ne change aucun chiffre de aucune fiche tant que personne
+-- ne touche à rien. 'for' et 'dex' sont des choix explicites du joueur, et ils
+-- l'emportent même quand ils donnent le plus petit total : c'est le sens du
+-- mot « choisir ».
+--
+-- ⛔ La colonne ne s'applique QU'AU CORPS À CORPS et qu'aux armes éligibles au
+-- don. Une arbalète se tire à la Dextérité par la règle générale, pas par un
+-- choix ; une épée bâtarde n'est jamais éligible. Le moteur ignore donc la
+-- valeur dans ces deux cas plutôt que de produire un chiffre que le livre
+-- n'autorise pas — voir `armeEligibleFinesse` dans src/lib/dnd35/attaque.ts.
+ALTER TABLE "character_weapons" ADD COLUMN IF NOT EXISTS "carac_attaque" text;

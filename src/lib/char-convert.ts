@@ -77,6 +77,17 @@ export function charDataToForm(d: CharacterData): CharacterFormData {
       coteDeForce: w.charWeapon.coteDeForce ?? null,
       bonusMunitions: w.charWeapon.bonusMunitions ?? null,
       quantiteMunitions: w.charWeapon.quantiteMunitions ?? null,
+      // ⚠ Même piège que `quantiteMunitions` et `estPortee` : `saveCharacter`
+      // réécrit la table de fond en comble. Sans ce transport, enregistrer une
+      // fiche effacerait le choix FOR/DEX de chaque arme.
+      caracAttaque: (w.charWeapon.caracAttaque as 'for' | 'dex' | null) ?? null,
+      // Lecture seule — jamais réécrits. Le formulaire en a besoin pour savoir
+      // si l'arme accepte Attaque en finesse : 160 des 198 lignes d'armes ont
+      // `famille` NULL et un nom libre anglais, et seule l'entrée de catalogue
+      // rattachée dit alors de quelle arme il s'agit.
+      famille: w.weapon.famille ?? null,
+      nomCatalogue: w.catalogue?.nom ?? null,
+      familleCatalogue: w.catalogue?.famille ?? null,
       quantite: w.charWeapon.quantite ?? 1,
     })),
     armures: armor.map(a => ({

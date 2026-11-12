@@ -13,7 +13,7 @@ import { PrintButton } from '@/components/fiche/PrintButton'
 import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
 import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies } from '@/lib/dnd35/classe-armure'
 import { calculeBonusEffetsCarac, sourcesCASorts, contributionsSortsDepuisCA } from '@/lib/dnd35/spell-effects'
-import { armeEligibleFinesse, calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
+import { aAttaqueEnFinesse, armeEligibleFinesse, calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
 import { getBonusClasse } from '@/lib/dnd35/bonus-classe'
 import { renvoiCasesDivers } from '@/lib/dnd35/renvoi-divers'
 import { estArmeADistance } from '@/lib/dnd35/weapons'
@@ -132,6 +132,16 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
       armeEligibleFinesse(w.weapon.nom, w.catalogue?.nom ?? null, w.weapon.famille ?? w.catalogue?.famille)
     ),
   }
+  // Le tableau « Bonus d'attaque » du papier donne un chiffre SANS arme, donc
+  // à la Force. Sur une fiche qui a Attaque en finesse, il contredit la ligne
+  // d'arme imprimée deux tableaux plus bas. On le dit dans la bande de titre —
+  // ⛔ PAS sur une ligne à part : neuf pixels sous le tableau des sauvegardes
+  // faisaient passer la feuille de Lucky [20] de 4 à 5 pages, le 2026-11-12.
+  const renvoiFinesse = (aAttaqueEnFinesse(feats.map(f => f.feat.nom)) || bonusClasse.niveauBretteur >= 1)
+    && ctxDons.uneArmeEligible && dexMod !== forMod
+    ? `Finesse — arme légère (rapière, fouet, chaîne cloutée) : ${fm(rawBabCorps + dexMod)} au corps à corps (DEX). Dégâts à la FOR.`
+    : null
+
   const vigT = vigBase + modSauvegarde(abilityScores?.conBase, abilityScores?.conMagique, raceInfo?.bonusCon ?? 0) + (savingThrows?.vigueurMagique ?? 0) + sommeBonus(donsPassifs.vigueur)
   const refT = refBase + modSauvegarde(abilityScores?.dexBase, abilityScores?.dexMagique, raceInfo?.bonusDex ?? 0) + (savingThrows?.reflexesMagique ?? 0) + sommeBonus(donsPassifs.reflexes) + sommeBonus(bonusClasse.reflexes)
   const volT = volBase + modSauvegarde(abilityScores?.sagBase, abilityScores?.sagMagique, raceInfo?.bonusSag ?? 0) + (savingThrows?.volonteMagique ?? 0) + sommeBonus(donsPassifs.volonte)
@@ -640,7 +650,12 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
         <table style={{ ...TABLE, marginBottom: '0' }}>
           <thead>
             <tr>
-              <td colSpan={10} style={{ background: '#000', color: '#fff', fontWeight: 'bold', fontSize: '8pt', padding: '2px 6px', textTransform: 'uppercase' }}>Bonus d'attaque</td>
+              <td colSpan={10} style={{ background: '#000', color: '#fff', fontWeight: 'bold', fontSize: '8pt', padding: '2px 6px', textTransform: 'uppercase' }}>
+                Bonus d&apos;attaque
+                {renvoiFinesse && (
+                  <span style={{ fontWeight: 'normal', textTransform: 'none', fontSize: '6.5pt', color: '#bbb', marginLeft: '8px' }}>{renvoiFinesse}</span>
+                )}
+              </td>
             </tr>
             <tr>
               {['', 'Bonus total', '=', 'Attaque base', '+', 'Caract.', '+', 'Taille', '+', 'Divers'].map((h, i) => (
@@ -713,6 +728,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                 bonusArme: w.charWeapon.bonusMagique ?? 0,
                 bonusMunitions: w.charWeapon.bonusMunitions,
                 coteDeForce: w.charWeapon.coteDeForce,
+                caracAttaque: w.charWeapon.caracAttaque as 'for' | 'dex' | null,
                 dons: feats.map(f => f.feat.nom),
                 bbaBrutCorps: rawBabCorps,
                 bbaBrutDistance: rawBabProj,

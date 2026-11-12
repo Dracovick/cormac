@@ -45,7 +45,7 @@ import { JournalDrawer } from '@/components/fiche/JournalDrawer'
 import { ButinDrawer } from '@/components/fiche/ButinDrawer'
 import { getPotionsCatalogue } from '@/app/actions/character'
 import { sourcesCASorts, contributionsSortsDepuisCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
-import { armeEligibleFinesse, calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
+import { aAttaqueEnFinesse, armeEligibleFinesse, calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
 import { getBonusClasse, effetsCapaciteClasse, NOM_BRETTEUR } from '@/lib/dnd35/bonus-classe'
 import { estArmeADistance } from '@/lib/dnd35/weapons'
 import { effetsDuDon } from '@/lib/dnd35/dons-effets'
@@ -218,6 +218,15 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const rawBabProj  = combatStats?.bbaProjectiles || rawBabCorps
   const bbaCorpsTotal = rawBabCorps + forMod
   const bbaProjTotal  = rawBabProj  + dexMod
+  // Le bloc « Corps à corps » de l'en-tête est un chiffre SANS arme : il vaut
+  // pour n'importe laquelle, donc il se calcule à la Force. Sur un personnage
+  // qui a Attaque en finesse, il contredisait sa propre ligne d'arme juste en
+  // dessous — Duncan Darkvale [97] affichait « +5 · BAB 4 + FOR +1 » au-dessus
+  // d'une dague à +10. On donne donc les DEUX chiffres : celui de l'arme
+  // quelconque, et celui des armes qui acceptent la finesse.
+  const aFinesseFiche = aAttaqueEnFinesse(feats.map(f => f.feat.nom)) || bonusClasse.niveauBretteur >= 1
+  const montrerCorpsFinesse = aFinesseFiche && uneArmeEligibleFinesse && dexMod !== forMod
+  const bbaCorpsFinesse = rawBabCorps + dexMod
 
   const classeLabel = classes.map(c => `${c.classe.nom} ${c.characterClass.niveau}`).join(' / ')
   const niveauTotal = classes.reduce((sum, c) => sum + c.characterClass.niveau, 0)
@@ -589,13 +598,21 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
               total={sequenceAttaques(bbaCorpsTotal, rawBabCorps)}
               lignes={[
                 { label: 'bonus de base (BAB)', valeur: rawBabCorps, note: rawBabCorps >= 6 ? 'BAB ≥ 6 : attaques multiples, chacune à −5 de la précédente' : undefined },
-                { label: 'FOR', valeur: forMod },
+                { label: 'FOR', valeur: forMod, note: montrerCorpsFinesse ? `chiffre d'une arme quelconque. Avec Attaque en finesse, une arme légère (rapière, fouet et chaîne cloutée comprises) peut prendre la DEX ${signedNum(dexMod)} à la place : ${sequenceAttaques(bbaCorpsFinesse, rawBabCorps)}. Les DÉGÂTS restent à la FOR.` : undefined },
               ]}
             >
               <div className="bg-stone-800/60 rounded p-3 text-left">
                 <div className="text-amber-500 text-xs uppercase tracking-wide mb-1">Corps à corps</div>
                 <div className="text-white font-semibold">{sequenceAttaques(bbaCorpsTotal, rawBabCorps)}</div>
                 <div className="text-stone-500 text-xs mt-0.5">BAB {rawBabCorps} + FOR {signedNum(forMod)}</div>
+                {/* Sans cette seconde ligne, l'en-tête contredit la ligne d'arme
+                    juste en dessous sur toute fiche à Attaque en finesse. */}
+                {montrerCorpsFinesse && (
+                  <div className="text-amber-600/80 text-xs mt-1 pt-1 border-t border-stone-700/40">
+                    ⚔ finesse : <span className="font-semibold text-amber-500">{sequenceAttaques(bbaCorpsFinesse, rawBabCorps)}</span>
+                    <span className="text-stone-500"> · BAB {rawBabCorps} + DEX {signedNum(dexMod)}</span>
+                  </div>
+                )}
               </div>
             </DetailBonus>
             <DetailBonus
@@ -632,6 +649,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   bonusArme: charWeapon.bonusMagique ?? 0,
                   bonusMunitions: charWeapon.bonusMunitions,
                   coteDeForce: charWeapon.coteDeForce,
+                  caracAttaque: charWeapon.caracAttaque as 'for' | 'dex' | null,
                   dons: feats.map(f => f.feat.nom),
                   bbaBrutCorps: rawBabCorps,
                   bbaBrutDistance: rawBabProj,
@@ -667,6 +685,20 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                             >
                               📖
                             </Link>
+                          )}
+                          {/* La caractéristique qui porte le jet, sur une arme
+                              où le Manuel laisse CHOISIR. Sans ce marqueur, un
+                              joueur qui force la Force sur une dague voit un
+                              chiffre plus petit sans savoir d'où il vient. */}
+                          {calc.choixFinessePossible && (
+                            <span
+                              className={`text-xs px-1.5 py-0.5 rounded ${calc.caracAttaqueChoisieParLeJoueur ? 'bg-amber-900/40 text-amber-400' : 'bg-stone-700/40 text-stone-400'}`}
+                              title={calc.caracAttaqueChoisieParLeJoueur
+                                ? `Attaque en finesse : ${calc.caracAttaqueRetenue === 'dex' ? 'la Dextérité' : 'la Force'} a été CHOISIE pour cette arme dans Modifier → Équipement. Les dégâts restent à la Force.`
+                                : `Attaque en finesse : le Grimoire garde le meilleur des deux (${calc.caracAttaqueRetenue === 'dex' ? 'DEX' : 'FOR'}). Le choix se force dans Modifier → Équipement. Les dégâts restent à la Force.`}
+                            >
+                              ⚔ {calc.caracAttaqueRetenue === 'dex' ? 'DEX' : 'FOR'}{calc.caracAttaqueChoisieParLeJoueur ? ' choisie' : ' (auto)'}
+                            </span>
                           )}
                           <span className="text-stone-500 text-xs">Att.</span>
                           <DetailBonus

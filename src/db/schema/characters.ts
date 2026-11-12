@@ -107,6 +107,13 @@ export const characterWeapons = pgTable('character_weapons', {
   bonusMunitions: integer('bonus_munitions'),
   /** Combien de projectiles au carquois. NULL = non suivi, 0 = épuisé. Voir drizzle/0015. */
   quantiteMunitions: integer('quantite_munitions'),
+  /**
+   * Attaque en finesse : la caractéristique choisie pour le JET D'ATTAQUE de
+   * cette ligne. NULL = automatique (le meilleur des deux), 'for' ou 'dex' =
+   * choix explicite du joueur, qui l'emporte même s'il est moins bon. Ignorée
+   * à distance et sur une arme non éligible. Voir drizzle/0016.
+   */
+  caracAttaque: text('carac_attaque'),
   proprietesSpeciales: text('proprietes_speciales'),
   quantite: integer('quantite').default(1),
 })

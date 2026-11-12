@@ -124,6 +124,19 @@ export type EntreeArme = {
   bonusMunitions: number | null
   /** Côte de Force d'un arc composite : plafonne la FOR aux dégâts. */
   coteDeForce: number | null
+  /**
+   * Attaque en finesse : la caractéristique CHOISIE par le joueur pour le jet
+   * d'attaque de cette ligne d'arme.
+   *
+   *   null / absent — automatique : le meilleur des deux, comme avant 0016 ;
+   *   'dex'         — la Dextérité, même si la Force est meilleure ;
+   *   'for'         — la Force, même si la Dextérité est meilleure.
+   *
+   * Le Manuel dit « PEUT CHOISIR » : décider à la place du joueur est un
+   * défaut commode, pas la règle. Ignoré à distance et sur une arme non
+   * éligible — le livre n'y autorise aucun choix.
+   */
+  caracAttaque?: 'for' | 'dex' | null
   /** Noms des dons du personnage. */
   dons: string[]
   bbaBrutCorps: number
@@ -166,6 +179,15 @@ export type CalculArme = {
   degatsLignes: LigneBonus[]
   /** La DEX a-t-elle effectivement remplacé la FOR sur cette ligne ? */
   finesseAppliquee: boolean
+  /**
+   * Le personnage peut-il choisir sa caractéristique d'attaque sur cette ligne
+   * (don ou Bretteur + arme éligible + corps à corps) ? C'est la condition
+   * d'affichage du sélecteur au formulaire comme de la mention sur la fiche.
+   */
+  choixFinessePossible: boolean
+  /** Le choix retenu, et s'il vient du joueur ou du défaut automatique. */
+  caracAttaqueRetenue: 'for' | 'dex'
+  caracAttaqueChoisieParLeJoueur: boolean
   /** Le personnage tient-il Attaque en finesse de sa classe (Bretteur 1) ? */
   finesseOfferteParClasse: boolean
   /** L'arme accepte-t-elle Attaque en finesse (donc la Frappe perspicace) ? */
@@ -239,11 +261,15 @@ export function calculeArme(e: EntreeArme): CalculArme {
   const bretteur = e.niveauBretteur ?? 0
   const finesseOfferte = bretteur >= 1
   const armeFinesse = armeEligibleFinesse(e.nom, e.nomCatalogue, e.famille ?? e.familleCatalogue)
-  const finesse =
-    !estADistance &&
-    (aAttaqueEnFinesse(e.dons) || finesseOfferte) &&
-    armeFinesse &&
-    e.dexMod > e.forMod
+  const choixPossible =
+    !estADistance && (aAttaqueEnFinesse(e.dons) || finesseOfferte) && armeFinesse
+
+  // Le choix du joueur l'emporte, y compris quand il donne le plus petit
+  // total : « peut choisir » veut dire qu'on peut choisir moins bien. Sans
+  // choix saisi (NULL, le cas de toutes les lignes d'avant 0016), on garde le
+  // meilleur des deux — le comportement d'hier, à l'identique.
+  const choixJoueur = choixPossible ? (e.caracAttaque ?? null) : null
+  const finesse = choixPossible && (choixJoueur === 'dex' || (choixJoueur === null && e.dexMod > e.forMod))
   const caracAtk = estADistance || finesse ? e.dexMod : e.forMod
 
   // Frappe perspicace (Bretteur 3) : le modificateur d'INTELLIGENCE s'ajoute
@@ -320,8 +346,10 @@ export function calculeArme(e: EntreeArme): CalculArme {
         label: estADistance ? 'DEX' : finesse ? 'DEX (Attaque en finesse)' : 'FOR',
         valeur: caracAtk,
         note: finesse
-          ? `${finesseOfferte && !aAttaqueEnFinesse(e.dons) ? 'Bretteur niv.1 : Attaque en finesse offerte' : 'don Attaque en finesse'} — la DEX remplace la FOR +${e.forMod} sur une arme légère (rapière, fouet et chaîne cloutée comprises)`
-          : undefined,
+          ? `${finesseOfferte && !aAttaqueEnFinesse(e.dons) ? 'Bretteur niv.1 : Attaque en finesse offerte' : 'don Attaque en finesse'} — la DEX remplace la FOR +${e.forMod} sur une arme légère (rapière, fouet et chaîne cloutée comprises)${choixJoueur === 'dex' ? ' · choix du joueur' : ''}`
+          : choixPossible
+            ? `Attaque en finesse : la DEX +${e.dexMod} est permise sur cette arme${choixJoueur === 'for' ? ', le joueur garde la FOR' : e.dexMod === e.forMod ? ' (même valeur)' : ' mais elle est moins bonne'}`
+            : undefined,
       },
       ...(alteration > 0 ? [{ label: labelAlteration, valeur: alteration }] : []),
       ...ligneEcartee,
@@ -345,6 +373,9 @@ export function calculeArme(e: EntreeArme): CalculArme {
       }] : []),
     ],
     finesseAppliquee: finesse,
+    choixFinessePossible: choixPossible,
+    caracAttaqueRetenue: estADistance || finesse ? 'dex' : 'for',
+    caracAttaqueChoisieParLeJoueur: choixJoueur !== null,
     finesseOfferteParClasse: finesseOfferte,
     armeEligibleAFinesse: armeFinesse,
     perspicaceAppliquee: frappePerspicace,
