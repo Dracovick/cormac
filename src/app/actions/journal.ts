@@ -7,7 +7,7 @@ import { revalidatePath } from 'next/cache'
 import { logJournal, normaliserMj } from '@/lib/journal'
 import { decalageQuebec, COUPURE_JOURNEE_H, TZ_QUEBEC } from '@/lib/journal-format'
 import { calcXpPenalite, xpPourNiveau } from '@/lib/dnd35/rules'
-import { getRaceInfo } from '@/lib/dnd35/races'
+import { getRaceOuSousRace } from '@/lib/dnd35/sous-races'
 
 export type EntreeJournal = {
   id: number
@@ -203,7 +203,7 @@ export async function getGroupeXp(dateStr: string): Promise<PersonnageXp[]> {
         nom: p.nom,
         xp: p.xp ?? 0,
         niveauTotal: cls.reduce((s, c) => s + c.niveau, 0),
-        penalite: calcXpPenalite(cls, getRaceInfo(p.race ?? '')?.classePreferee ?? 'any'),
+        penalite: calcXpPenalite(cls, getRaceOuSousRace(p.race ?? '')?.classePreferee ?? 'any'),
         actif: actifsIds.has(p.id),
       }
     })

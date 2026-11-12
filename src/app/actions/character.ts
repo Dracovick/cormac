@@ -7,7 +7,8 @@ import type { BatchItem } from 'drizzle-orm/batch'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { CLASSES_DND35, getClasseInfo } from '@/lib/dnd35/classes'
-import { RACES_DND35, getRaceInfo } from '@/lib/dnd35/races'
+import { RACES_DND35 } from '@/lib/dnd35/races'
+import { getRaceOuSousRace } from '@/lib/dnd35/sous-races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { getBab, getMultiClassSave, xpPourNiveau } from '@/lib/dnd35/rules'
 import { parseCritique } from '@/lib/dnd35/critique'
@@ -126,7 +127,7 @@ export async function saveCharacter(
 ): Promise<{ id: number; nouvellesReferences: NouvelleReference[] }> {
   const db = getDb()
   const referencesCreees: NouvelleReference[] = []
-  const raceInfo = getRaceInfo(data.race)
+  const raceInfo = getRaceOuSousRace(data.race)
   const classeInfo = getClasseInfo(data.classe)
   const allClasses = data.classes?.length > 0 ? data.classes : [{ classe: data.classe, niveau: data.niveau }]
 

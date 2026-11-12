@@ -1,5 +1,5 @@
 import type { CharacterFormData } from '@/app/actions/character'
-import { getRaceInfo } from './races'
+import { getRaceOuSousRace, decomposerRace } from './sous-races'
 import { getClasseInfo, getSortsSlotsParJour, nombreDonsAttendus } from './classes'
 import { getModifier, xpPourNiveau } from './rules'
 import { COMPETENCES_DND35 } from './skills'
@@ -193,7 +193,10 @@ export interface GenParams {
 export function generateCharacter(params: GenParams): CharacterFormData {
   const { race, classe, niveau, alignement, sexe = 'Masculin' } = params
 
-  const raceInfo = getRaceInfo(race)
+  const raceInfo = getRaceOuSousRace(race)
+  // Les tables de noms et de langues sont indexées par race du Manuel : un
+  // « Halfelin vaillant » doit y retrouver « Halfelin », sinon il naît sans nom.
+  const { race: raceParente } = decomposerRace(race)
   const classeInfo = getClasseInfo(classe)
   if (!raceInfo || !classeInfo) throw new Error('Race ou classe invalide')
 
@@ -267,7 +270,7 @@ export function generateCharacter(params: GenParams): CharacterFormData {
   }
 
   // ── Nom aléatoire ────────────────────────────────────────────────────────────
-  const nomsList = NOMS_PAR_RACE[race] ?? NOMS_PAR_RACE['Humain']
+  const nomsList = NOMS_PAR_RACE[raceParente] ?? NOMS_PAR_RACE['Humain']
   const listeNoms = sexe === 'Féminin' ? nomsList.feminin : nomsList.masculin
   const nom = listeNoms[Math.floor(Math.random() * listeNoms.length)]
 
@@ -299,7 +302,7 @@ export function generateCharacter(params: GenParams): CharacterFormData {
     armures,
     objetsMagiques: [], potions: [], gemmes: [],
     pp: 0, po: 0, pe: 0, pa: 0, pc: 0, pm: 0,
-    langues: LANGUES_PAR_RACE[race] ?? ['Commun'],
+    langues: LANGUES_PAR_RACE[raceParente] ?? ['Commun'],
     sorts,
     historique: '', notes: '', compagnons: [],
     joueurPrenom: '', joueurNom: '',

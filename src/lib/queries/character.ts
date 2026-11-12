@@ -1,5 +1,6 @@
 import { getDb } from '@/db'
 import { eq } from 'drizzle-orm'
+import { getSousRaceInfo } from '@/lib/dnd35/sous-races'
 import { alias } from 'drizzle-orm/pg-core'
 import * as schema from '@/db/schema'
 
@@ -134,7 +135,31 @@ export async function getCharacter(id: number) {
       .orderBy(schema.characterSpellEffects.id),
   ])
 
-  return { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, scrolls, currency, gems, equipement, languages, creatures, companions, spellEffects }
+  // ── Traits raciaux d'une SOUS-RACE ───────────────────────────────────────
+  // Une sous-race ne porte en base que ce qui la DIFFÉRENCIE : un halfelin
+  // vaillant reste un halfelin. Les traits de la race parente sont donc
+  // ramenés ici, à la lecture — et non recopiés en base, sinon les copies
+  // divergeraient le jour où l'original est corrigé.
+  //
+  // ⚠ On retire ceux que la sous-race contredit frontalement : « Chance
+  // halfeline : +1 à tous les JS » à côté de « Pas de chance halfeline »,
+  // c'est une fiche qui ment. La comparaison normalise l'apostrophe, parce
+  // que la base porte l'apostrophe typographique d'André (U+2019) là où le
+  // code écrit la droite.
+  const sousRace = getSousRaceInfo(race?.nom)
+  let traitsRaciaux = racialFeatures
+  if (sousRace) {
+    const [parente] = await getDb().select().from(schema.races).where(eq(schema.races.nom, sousRace.race))
+    if (parente) {
+      const cle = (t: string) => t.trim().toLowerCase().replace(/[‘’ʼ]/g, "'")
+      const retires = new Set((sousRace.remplace ?? []).map(cle))
+      const heritables = (await getDb().select().from(schema.racialFeatures).where(eq(schema.racialFeatures.raceId, parente.id)))
+        .filter(f => !retires.has(cle(f.nom)))
+      traitsRaciaux = [...heritables, ...racialFeatures]
+    }
+  }
+
+  return { character, race, sousRace: sousRace ?? null, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures: traitsRaciaux, spells, weapons, armor, magicItems, potions, scrolls, currency, gems, equipement, languages, creatures, companions, spellEffects }
 }
 
 export type CharacterData = NonNullable<Awaited<ReturnType<typeof getCharacter>>>

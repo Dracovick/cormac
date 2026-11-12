@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { getCharacter } from '@/lib/queries/character'
 import { getClasseInfo, getEmplacementsNiveau, comptePreparations } from '@/lib/dnd35/classes'
 import { getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
-import { getRaceInfo } from '@/lib/dnd35/races'
+import { getRaceOuSousRace, getSousRaceInfo } from '@/lib/dnd35/sous-races'
 import { getModifier, getBab, xpPourNiveau, modSauvegarde } from '@/lib/dnd35/rules'
 import { getCompetenceRef, caracteristiqueDe } from '@/lib/dnd35/skills'
 import { getDomaineInfo } from '@/lib/dnd35/domains'
@@ -58,7 +58,14 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   const classeInfo = firstClass ? getClasseInfo(firstClass.classe.nom) : null
   const niveauTotal = classes.reduce((sum, c) => sum + c.characterClass.niveau, 0) || 1
   const niveau = firstClass?.characterClass.niveau ?? 1
-  const raceInfo = getRaceInfo(race?.nom ?? '')
+  const raceInfo = getRaceOuSousRace(race?.nom ?? '')
+  // ⚠ La case RACE fait 10 % de la largeur de la page. « Halfelin des
+  // profondeurs » y boucle sur deux lignes, et une ligne de plus en tête de
+  // feuille repousse tout le reste — c'est ce qui a fait passer Lucky de 4 à
+  // 5 pages en novembre. On y écrit donc la race du Manuel en gras et
+  // l'étiquette de la sous-race en petit, jamais le nom complet.
+  const sousRaceImprimee = getSousRaceInfo(race?.nom)
+  const etiquetteCourte = sousRaceImprimee?.etiquette.replace(/\s*\(.*\)$/, '')
   const allClassNoms = classes.map(c => c.classe.nom)
   // Classe lanceuse de sorts : n'importe laquelle des classes
   const casterClasses = classes.filter(c => getClasseInfo(c.classe.nom)?.lanceurSorts)
@@ -407,7 +414,11 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
           <tbody>
             <tr>
               <td style={{ border: '1px solid #000', padding: '3px 6px', fontSize: '14pt', fontWeight: 'bold', width: '30%' }}>{character.nom}</td>
-              {td(race?.nom ?? '—', { fontWeight: 'bold', width: '10%' })}
+              {td(
+                sousRaceImprimee
+                  ? <>{sousRaceImprimee.race}<span style={{ fontSize: '6pt', fontWeight: 'normal' }}> · {etiquetteCourte}</span></>
+                  : (race?.nom ?? '—'),
+                { fontWeight: 'bold', width: '10%' })}
               {td(character.sexe ?? '—', { width: '6%' })}
               {td(combatStats?.deplacement ?? '9', { width: '10%' })}
               {td(combatStats?.karma ?? 0, { width: '10%' })}

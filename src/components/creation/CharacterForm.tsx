@@ -11,7 +11,8 @@ import { getModifier, formatMod, ALIGNEMENTS, calcXpPenalite } from '@/lib/dnd35
 import { TYPES_BONUS_CA } from '@/lib/dnd35/classe-armure'
 import { CLASSES_DND35, CLASSES_BASE_SUPPLEMENTS, getClasseInfo, getSortsSlotsParJour } from '@/lib/dnd35/classes'
 import { PRESTIGE_CLASSES, getPrestigeInfo, getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
-import { RACES_DND35, getRaceInfo } from '@/lib/dnd35/races'
+import { RACES_DND35 } from '@/lib/dnd35/races'
+import { sousRacesDe, getSousRaceInfo, getRaceOuSousRace, decomposerRace, picto, libelleEffet } from '@/lib/dnd35/sous-races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { sortsByClasseEtNiveau, niveauxMaxForClasse, type ClasseSortKey, type SortDnD } from '@/lib/dnd35/spells'
 import { getBab } from '@/lib/dnd35/rules'
@@ -61,7 +62,7 @@ export const DEFAULT_FORM: CharacterFormData = {
 type Derived = ReturnType<typeof calcDerived>
 
 function calcDerived(data: CharacterFormData) {
-  const raceInfo = getRaceInfo(data.race)
+  const raceInfo = getRaceOuSousRace(data.race)
   const allClasses = data.classes?.length > 0 ? data.classes : [{ classe: data.classe, niveau: data.niveau }]
   const primaryClasse = allClasses[0]?.classe ?? data.classe
   const classeInfo = getClasseInfo(primaryClasse)
@@ -145,13 +146,7 @@ function SectionIdentite({ data, update }: { data: CharacterFormData; update: Up
             <label className={LBL}>Nom du joueur</label>
             <input className={INP} value={data.joueurNom} onChange={e => update('joueurNom', e.target.value)} placeholder="Nom de famille" />
           </div>
-          <div>
-            <label className={LBL}>Race</label>
-            <select className={SEL} value={data.race} onChange={e => update('race', e.target.value)}>
-              {RACES_DND35.map(r => <option key={r.nom} value={r.nom}>{r.nom}</option>)}
-              <option value="">— Autre —</option>
-            </select>
-          </div>
+          <ChampRace race={data.race} onChange={v => update('race', v)} />
           {/* Gestionnaire multi-classes — occupe toute la largeur */}
           <div className="sm:col-span-2">
             <label className={LBL}>Classes &amp; Niveaux</label>
@@ -220,7 +215,7 @@ function SectionIdentite({ data, update }: { data: CharacterFormData; update: Up
               {(() => {
                 const classes = data.classes ?? []
                 if (classes.length <= 1) return null
-                const raceInfo = getRaceInfo(data.race)
+                const raceInfo = getRaceOuSousRace(data.race)
                 const classePreferee = raceInfo?.classePreferee ?? 'any'
                 const penalty = calcXpPenalite(classes, classePreferee)
                 if (penalty === 0 && classePreferee !== 'any') return null
@@ -1549,5 +1544,102 @@ export function CharacterForm({ personnageId, initialData, potionsCatalogue, obj
         </div>
       </main>
     </div>
+  )
+}
+
+/**
+ * CHAMP RACE + SOUS-RACE
+ *
+ * Deux menus, mais une seule valeur enregistrée : `race` porte le nom complet
+ * (« Halfelin vaillant »), et `decomposerRace` le resépare à l'ouverture d'une
+ * fiche. C'est ce qui permet aux sous-races de n'avoir AUCUNE colonne à elles
+ * et à aucun calcul de changer — une ligne de `races` suffit.
+ *
+ * ⛔ Le second menu ne s'affiche pas quand la race n'a pas de sous-race : un
+ * sélecteur sans choix est pire que pas de sélecteur. Et l'encart sous les
+ * menus dit ce que la sous-race CHANGE, avec le vocabulaire des dons — ⚙ déjà
+ * compté, ✋ à appliquer soi-même, ℹ pour information — parce qu'un joueur a le
+ * droit de savoir ce que la fiche fait de son choix.
+ */
+function ChampRace({ race, onChange }: { race: string; onChange: (v: string) => void }) {
+  const { race: parente, sousRace } = decomposerRace(race)
+  const sousRaces = sousRacesDe(parente)
+  const info = getSousRaceInfo(sousRace)
+  // Une race saisie à la main (« Bariaure », « Petite-gens ») doit rester
+  // visible dans le menu : sans cette option, le select s'affiche vide et le
+  // nom paraît perdu alors qu'il est bien enregistré.
+  const horsListe = parente && !RACES_DND35.some(r => r.nom === parente)
+
+  const groupes: { titre: string; items: typeof sousRaces }[] = [
+    { titre: 'Manuel des Monstres', items: sousRaces.filter(s => s.source === 'Manuel des Monstres') },
+    { titre: 'Royaumes Oubliés', items: sousRaces.filter(s => s.source === 'Royaumes Oubliés') },
+    { titre: 'Dans les deux livres', items: sousRaces.filter(s => s.source === 'Les deux') },
+  ].filter(g => g.items.length > 0)
+
+  return (
+    <>
+      <div>
+        <label className={LBL}>Race</label>
+        <select className={SEL} value={parente} onChange={e => onChange(e.target.value)}>
+          {RACES_DND35.map(r => <option key={r.nom} value={r.nom}>{r.nom}</option>)}
+          {horsListe && <option value={parente}>{parente}</option>}
+          <option value="">— Autre —</option>
+        </select>
+      </div>
+
+      {sousRaces.length > 0 && (
+        <div>
+          <label className={LBL}>Sous-race</label>
+          <select
+            className={SEL}
+            value={sousRace ?? ''}
+            onChange={e => onChange(e.target.value || parente)}
+          >
+            <option value="">— aucune —</option>
+            {groupes.map(g => (
+              <optgroup key={g.titre} label={g.titre}>
+                {g.items.map(s => <option key={s.nom} value={s.nom}>{s.etiquette}</option>)}
+              </optgroup>
+            ))}
+          </select>
+        </div>
+      )}
+
+      {info && (
+        <div className="sm:col-span-2 bg-stone-800/40 border border-stone-700 rounded-lg px-3 py-2.5">
+          <div className="text-amber-200 text-sm font-semibold">
+            {info.nom} <span className="text-stone-500 font-normal text-xs">— {info.source}</span>
+          </div>
+          <p className="text-stone-400 text-xs mt-1 leading-relaxed">{info.description}</p>
+          {info.regions && <p className="text-stone-500 text-xs mt-1"><strong>Régions :</strong> {info.regions}</p>}
+
+          {info.traits.length === 0
+            ? <p className="text-stone-500 text-xs mt-2 italic">Aucune différence de règles avec la race de base : c&apos;est la variété la plus courante.</p>
+            : (
+              <ul className="mt-2 space-y-1">
+                {info.traits.map(t => (
+                  <li key={t.nom} className="text-xs leading-relaxed">
+                    <span className="text-amber-300">{picto(t.effet)} {t.nom}</span>
+                    <span className="text-stone-600"> · {libelleEffet(t.effet)}</span>
+                    <div className="text-stone-400">{t.description}</div>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+          {info.ajustementNiveau ? (
+            <p className="text-stone-500 text-xs mt-2">
+              <strong>Ajustement de niveau du livre : +{info.ajustementNiveau}.</strong> Il élève le niveau
+              global équivalent, donc le seuil d&apos;expérience du personnage. Le Grimoire l&apos;affiche
+              mais ne l&apos;applique pas aux calculs d&apos;expérience.
+            </p>
+          ) : null}
+
+          {info.divergence && (
+            <p className="text-stone-500 text-xs mt-2">⚠ {info.divergence}</p>
+          )}
+        </div>
+      )}
+    </>
   )
 }

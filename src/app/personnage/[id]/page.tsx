@@ -89,7 +89,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const [data, potionsCatalogue] = await Promise.all([getCharacter(Number(id)), getPotionsCatalogue()])
   if (!data) notFound()
 
-  const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, scrolls, currency, gems, equipement, languages, creatures, companions, spellEffects } = data
+  const { character, race, sousRace, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, scrolls, currency, gems, equipement, languages, creatures, companions, spellEffects } = data
 
   // Valeur du trésor en gemmes, convertie en po (mithral à part : aucun taux)
   const totalGem = totalGemmes(gems.map(g => ({
@@ -1547,6 +1547,26 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
         {/* ── TRAITS RACIAUX ── */}
         {racialFeatures.length > 0 && (
           <Section titre={`Traits raciaux — ${race?.nom ?? 'Race'}`}>
+            {/* Une sous-race ne remplace pas sa race : la section réunit les
+                traits hérités et ceux qui la distinguent, ces derniers marqués
+                ⚙ ✋ ℹ comme les dons. L'encart dit d'où vient la sous-race —
+                un joueur doit pouvoir retrouver la page du livre. */}
+            {sousRace && (
+              <div className="mb-3 bg-stone-800/30 border border-stone-700/60 rounded-lg px-3 py-2">
+                <div className="text-amber-200 text-xs font-semibold">
+                  Sous-race de {sousRace.race} — {sousRace.source}
+                </div>
+                <p className="text-stone-400 text-xs mt-1 leading-relaxed">{sousRace.description}</p>
+                {sousRace.regions && <p className="text-stone-500 text-xs mt-1"><strong>Régions :</strong> {sousRace.regions}</p>}
+                {sousRace.ajustementNiveau ? (
+                  <p className="text-stone-500 text-xs mt-1">
+                    <strong>Ajustement de niveau du livre : +{sousRace.ajustementNiveau}.</strong> Il élève le
+                    niveau global équivalent, donc le seuil d&apos;expérience. Affiché, jamais appliqué aux calculs.
+                  </p>
+                ) : null}
+                {sousRace.divergence && <p className="text-stone-500 text-xs mt-1">⚠ {sousRace.divergence}</p>}
+              </div>
+            )}
             <div className="grid gap-2 sm:grid-cols-2">
               {racialFeatures.map(f => (
                 <div key={f.id} className="bg-stone-800/40 rounded-lg px-3 py-2">
