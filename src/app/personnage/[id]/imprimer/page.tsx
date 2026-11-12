@@ -1115,17 +1115,26 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
               {emplacementsParClasse.length > 0 && (
                 <tr>
                   <td colSpan={3} style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '8pt', background: '#fafafa' }}>
-                    {emplacementsParClasse.map(({ nomClasse, compteurs, inc, bonusTotal }) => (
+                    {/* ⛔ Rien d'ajouté à CETTE ligne : chez un magicien de haut
+                        niveau elle compte déjà dix compteurs et frôle la largeur
+                        de la cellule (mesuré au PDF : ~140 caractères tiennent,
+                        la ligne en fait 139). Un astérisque par niveau la faisait
+                        boucler sur deux lignes, et une ligne de plus en tête d'un
+                        tableau repousse tout le reste — c'est ce qui avait fait
+                        passer Lucky de 4 à 5 pages en novembre. Le détail du bonus
+                        va donc dans la note ci-dessous, qui existait déjà. */}
+                    {emplacementsParClasse.map(({ nomClasse, compteurs }) => (
                       <div key={nomClasse} style={{ lineHeight: 1.4 }}>
                         <b>Emplacements — {nomClasse} :</b>{' '}
-                        {compteurs.map(c => `${c.niveau === 0 ? 'Or.' : `niv.${c.niveau}`} ${c.prepares}/${c.total}${c.bonus > 0 ? `*` : ''}`).join('  ·  ')}
-                        {bonusTotal > 0 && (
-                          <span style={{ color: '#555' }}> — * dont +{bonusTotal} en bonus de {inc.carac} {fm(inc.mod)}</span>
-                        )}
+                        {compteurs.map(c => `${c.niveau === 0 ? 'Or.' : `niv.${c.niveau}`} ${c.prepares}/${c.total}`).join('  ·  ')}
                       </div>
                     ))}
                     <div style={{ fontSize: '7pt', color: '#777', fontStyle: 'italic' }}>
-                      Préparés / emplacements à l&apos;impression, sorts en bonus de caractéristique compris (table 1-1, p. 8) — hors emplacement de domaine.
+                      Préparés / emplacements à l&apos;impression
+                      {emplacementsParClasse.filter(x => x.bonusTotal > 0).map(({ nomClasse, inc, bonusTotal }) =>
+                        `, dont +${bonusTotal} en bonus de ${inc.carac} ${fm(inc.mod)}${emplacementsParClasse.length > 1 ? ` (${nomClasse})` : ''}`
+                      ).join('')}
+                      {' '}— hors emplacement de domaine.
                     </div>
                   </td>
                 </tr>
