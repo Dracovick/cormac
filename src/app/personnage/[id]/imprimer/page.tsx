@@ -15,6 +15,7 @@ import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies } from '@/lib/dn
 import { calculeBonusEffetsCarac, sourcesCASorts, contributionsSortsDepuisCA } from '@/lib/dnd35/spell-effects'
 import { armeEligibleFinesse, calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
 import { getBonusClasse } from '@/lib/dnd35/bonus-classe'
+import { renvoiCasesDivers } from '@/lib/dnd35/renvoi-divers'
 import { estArmeADistance } from '@/lib/dnd35/weapons'
 import { effetsDuDon } from '@/lib/dnd35/dons-effets'
 import { nomParchemin } from '@/lib/parchemins'
@@ -152,17 +153,10 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
     { jet: 'Vigueur', sources: donsPassifs.vigueur },
     { jet: 'Volonté', sources: donsPassifs.volonte },
   ].filter(x => x.sources.length > 0)
-  // Le renvoi tient sur UNE ligne de la bande de titre, sinon la bande grandit et la
-  // feuille peut basculer sur une page de plus. D'où les abréviations : « don : » saute
-  // (la section Dons et Pouvoirs le dit déjà), et la condition d'un bonus conditionnel
-  // est réduite à sa première proposition.
-  const libelleDivers = (s: { label: string; value: number; conditional?: string }) => {
-    const nom = s.label.replace(/^don\s*:\s*/i, '')
-    const cond = s.conditional
-      ? ` (${s.conditional.split(',')[0].replace(/interm[ée]diaire/gi, 'interm.').trim()})`
-      : ''
-    return `${nom} ${fm(s.value)}${cond}`
-  }
+  // Le renvoi qui dit d'où vient le chiffre des cases « Divers ». Il doit tenir sur une
+  // ligne de la bande de titre — voir l'en-tête de dnd35/renvoi-divers, qui porte la
+  // mesure et les trois formes de repli.
+  const renvoiDivers = renvoiCasesDivers(diversExplique)
 
   // ⛔ Même règle que la fiche : seules les armures ENDOSSÉES comptent.
   // `est_portee` n'était lu nulle part avant le 2026-10-25 — une armure du sac
@@ -624,10 +618,8 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                   hauteur. */}
               <td colSpan={10} style={{ background: '#000', color: '#fff', fontWeight: 'bold', fontSize: '8pt', padding: '2px 6px', textTransform: 'uppercase' }}>
                 Jets de sauvegarde
-                {diversExplique.length > 0 && (
-                  <span style={{ fontWeight: 'normal', fontSize: '5.5pt', textTransform: 'none', color: '#ddd', marginLeft: '10px' }}>
-                    Divers — {diversExplique.map(({ jet, sources }) => `${jet} : ${sources.map(libelleDivers).join(', ')}`).join(' · ')}
-                  </span>
+                {renvoiDivers && (
+                  <span style={{ fontWeight: 'normal', fontSize: '5.5pt', textTransform: 'none', color: '#ddd', marginLeft: '10px' }}>{renvoiDivers}</span>
                 )}
               </td>
             </tr>
