@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getCharacter } from '@/lib/queries/character'
-import { getClasseInfo, getEmplacementsNiveau, comptePreparations } from '@/lib/dnd35/classes'
+import { getClasseInfo, getEmplacementsAvecBonus, comptePreparations } from '@/lib/dnd35/classes'
 import { getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
 import { getRaceOuSousRace, getSousRaceInfo } from '@/lib/dnd35/sous-races'
 import { getModifier, getBab, xpPourNiveau, modSauvegarde } from '@/lib/dnd35/rules'
@@ -74,27 +74,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   const casterClasses = classes.filter(c => getClasseInfo(c.classe.nom)?.lanceurSorts)
   const isSpellcaster = casterClasses.length > 0
 
-  // Compteur d'emplacements par classe lanceuse et par niveau de sort — même
-  // calcul que la fiche à l'écran (getEmplacementsNiveau / comptePreparations),
-  // pour que le papier et l'écran ne divergent pas. Figé à l'instant de l'impression.
   const classeSortDefautNom = casterClasses[0]?.classe.nom ?? null
-  const emplacementsParClasse = casterClasses.map(c => {
-    const nomClasse = c.classe.nom
-    const niveauLanceur = getNiveauLanceurEffectif(
-      nomClasse,
-      classes.map(k => ({ classe: k.classe.nom, niveau: k.characterClass.niveau }))
-    ) || c.characterClass.niveau
-    // Les sorts sans classe attribuée appartiennent à la classe lanceuse par défaut
-    const sortsClasse = spells
-      .filter(s => s.charSpell.classe === nomClasse || (s.charSpell.classe == null && nomClasse === classeSortDefautNom))
-      .map(s => ({ niveau: s.charSpell.niveau ?? 0, estPrepare: s.charSpell.estPrepare ?? 0 }))
-    const compteurs = Array.from({ length: 10 }, (_, n) => ({
-      niveau: n,
-      prepares: comptePreparations(sortsClasse, n),
-      emplacements: getEmplacementsNiveau(nomClasse, niveauLanceur, n),
-    })).filter(x => x.emplacements > 0 || x.prepares > 0)
-    return { nomClasse, compteurs }
-  }).filter(x => x.compteurs.length > 0)
 
   // Totaux caractéristiques
   const forT = (abilityScores?.forBase ?? 10) + (abilityScores?.forMagique ?? 0) + (raceInfo?.bonusFor ?? 0)
@@ -106,6 +86,40 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
 
   const forMod = getModifier(forT); const dexMod = getModifier(dexT); const conMod = getModifier(conT)
   const intMod = getModifier(intT); const sagMod = getModifier(sagT); const chaMod = getModifier(chaT)
+
+  // Compteur d'emplacements par classe lanceuse et par niveau de sort — même
+  // calcul que la fiche à l'écran (getEmplacementsAvecBonus / comptePreparations),
+  // pour que le papier et l'écran ne divergent pas. Figé à l'instant de l'impression.
+  // ⚠️ Placé APRÈS les modificateurs : les sorts en bonus d'une caractéristique
+  // élevée (Manuel des Joueurs, table 1-1, p. 8) en dépendent.
+  const MOD_INCANTATION: Record<string, { carac: string; mod: number }> = {
+    Magicien: { carac: 'INT', mod: intMod },
+    Ensorceleur: { carac: 'CHA', mod: chaMod },
+    Barde: { carac: 'CHA', mod: chaMod },
+    Prêtre: { carac: 'SAG', mod: sagMod },
+    Druide: { carac: 'SAG', mod: sagMod },
+    Paladin: { carac: 'SAG', mod: sagMod },
+    Rôdeur: { carac: 'SAG', mod: sagMod },
+  }
+  const emplacementsParClasse = casterClasses.map(c => {
+    const nomClasse = c.classe.nom
+    const niveauLanceur = getNiveauLanceurEffectif(
+      nomClasse,
+      classes.map(k => ({ classe: k.classe.nom, niveau: k.characterClass.niveau }))
+    ) || c.characterClass.niveau
+    // Les sorts sans classe attribuée appartiennent à la classe lanceuse par défaut
+    const sortsClasse = spells
+      .filter(s => s.charSpell.classe === nomClasse || (s.charSpell.classe == null && nomClasse === classeSortDefautNom))
+      .map(s => ({ niveau: s.charSpell.niveau ?? 0, estPrepare: s.charSpell.estPrepare ?? 0 }))
+    const inc = MOD_INCANTATION[nomClasse]
+    const compteurs = Array.from({ length: 10 }, (_, n) => ({
+      niveau: n,
+      prepares: comptePreparations(sortsClasse, n),
+      ...getEmplacementsAvecBonus(nomClasse, niveauLanceur, n, inc?.mod ?? 0),
+    })).filter(x => x.total > 0 || x.prepares > 0)
+    const bonusTotal = compteurs.reduce((sum, x) => sum + x.bonus, 0)
+    return { nomClasse, compteurs, inc, bonusTotal }
+  }).filter(x => x.compteurs.length > 0)
 
   // BBA multi-classe : somme de chaque classe
   const bbaBase = classes.reduce((sum, c) => {
@@ -1101,14 +1115,17 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
               {emplacementsParClasse.length > 0 && (
                 <tr>
                   <td colSpan={3} style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '8pt', background: '#fafafa' }}>
-                    {emplacementsParClasse.map(({ nomClasse, compteurs }) => (
+                    {emplacementsParClasse.map(({ nomClasse, compteurs, inc, bonusTotal }) => (
                       <div key={nomClasse} style={{ lineHeight: 1.4 }}>
                         <b>Emplacements — {nomClasse} :</b>{' '}
-                        {compteurs.map(c => `${c.niveau === 0 ? 'Or.' : `niv.${c.niveau}`} ${c.prepares}/${c.emplacements}`).join('  ·  ')}
+                        {compteurs.map(c => `${c.niveau === 0 ? 'Or.' : `niv.${c.niveau}`} ${c.prepares}/${c.total}${c.bonus > 0 ? `*` : ''}`).join('  ·  ')}
+                        {bonusTotal > 0 && (
+                          <span style={{ color: '#555' }}> — * dont +{bonusTotal} en bonus de {inc.carac} {fm(inc.mod)}</span>
+                        )}
                       </div>
                     ))}
                     <div style={{ fontSize: '7pt', color: '#777', fontStyle: 'italic' }}>
-                      Préparés / emplacements de base à l&apos;impression — hors bonus de caractéristique élevée et hors emplacement de domaine.
+                      Préparés / emplacements à l&apos;impression, sorts en bonus de caractéristique compris (table 1-1, p. 8) — hors emplacement de domaine.
                     </div>
                   </td>
                 </tr>

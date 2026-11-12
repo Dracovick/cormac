@@ -1,5 +1,6 @@
 import type { BabProgression } from './rules'
 import { PRESTIGE_CLASSES } from './prestige-classes'
+import { emplacementsBonusCarac } from './emplacements-bonus'
 
 export interface ClasseInfo {
   nom: string
@@ -183,9 +184,9 @@ export function getSortsSlotsParJour(classe: string, niveau: number): number[] {
  * n'ont pas d'oraisons. Sans ce décalage, un Paladin affiche les emplacements
  * d'un niveau de sort trop haut.
  *
- * ⚠ Emplacements DE BASE uniquement, comme toute la chaîne d'affichage du
- * Grimoire : hors bonus de caractéristique élevée, et hors emplacement de
- * domaine du prêtre (+1 par niveau de sort ≥ 1), que le joueur gère lui-même.
+ * ⚠ Emplacements DE BASE uniquement : hors bonus de caractéristique élevée
+ * (voir `getEmplacementsAvecBonus` ci-dessous) et hors emplacement de domaine
+ * du prêtre (+1 par niveau de sort ≥ 1), que le joueur gère lui-même.
  *
  * Source unique de vérité : utilisée par la fiche, la page d'impression et la
  * modale de préparation (PreparerSorts), pour qu'elles ne divergent jamais.
@@ -200,6 +201,38 @@ export function getEmplacementsNiveau(
     return niveauSort === 0 ? 0 : (slots[niveauSort - 1] ?? 0)
   }
   return slots[niveauSort] ?? 0
+}
+
+/**
+ * Emplacements RÉELS pour un niveau de sort : la table de la classe, plus les
+ * sorts en bonus d'une caractéristique d'incantation élevée (Manuel des
+ * Joueurs, table 1-1, p. 8 — voir `emplacements-bonus.ts`).
+ *
+ * ⛔ Le bonus n'est accordé que si le personnage a DÉJÀ accès à ce niveau de
+ * sort, c'est-à-dire si sa table lui en donne au moins un. C'est la règle du
+ * livre, sous la table : un magicien 1 à 20 d'Intelligence ne reçoit pas de
+ * sort de 5e niveau. Sans cette condition, une Intelligence de 20 ouvrirait
+ * cinq niveaux de sorts à un personnage de niveau 1.
+ *
+ * ⚠️ `modCarac` est le modificateur COMPLET de la caractéristique
+ * d'incantation — base + objet magique + ajustement racial + effets de sorts
+ * actifs —, exactement celui qui sert déjà au DD des sorts. Un bandeau de
+ * Sagesse +2 donne donc bien ses emplacements, et un affaiblissement
+ * temporaire les retire.
+ *
+ * Retourne le détail plutôt qu'un total, pour que l'écran et le papier puissent
+ * afficher la somme (« 5 = 3 + 2 ») : un joueur doit pouvoir retrouver d'où
+ * vient chaque emplacement sans croire le logiciel sur parole.
+ */
+export function getEmplacementsAvecBonus(
+  classe: string,
+  niveauLanceur: number,
+  niveauSort: number,
+  modCarac: number,
+): { base: number; bonus: number; total: number } {
+  const base = getEmplacementsNiveau(classe, niveauLanceur, niveauSort)
+  const bonus = base > 0 ? emplacementsBonusCarac(modCarac, niveauSort) : 0
+  return { base, bonus, total: base + bonus }
 }
 
 /**

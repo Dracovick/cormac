@@ -9,7 +9,7 @@ import { ChampRechercheNom } from '@/components/ChampRechercheNom'
 import { chercherFloue } from '@/lib/recherche-floue'
 import { getModifier, formatMod, ALIGNEMENTS, calcXpPenalite } from '@/lib/dnd35/rules'
 import { TYPES_BONUS_CA } from '@/lib/dnd35/classe-armure'
-import { CLASSES_DND35, CLASSES_BASE_SUPPLEMENTS, getClasseInfo, getSortsSlotsParJour } from '@/lib/dnd35/classes'
+import { CLASSES_DND35, CLASSES_BASE_SUPPLEMENTS, getClasseInfo, getSortsSlotsParJour, getEmplacementsAvecBonus } from '@/lib/dnd35/classes'
 import { PRESTIGE_CLASSES, getPrestigeInfo, getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
 import { OPTIONS_RACE } from '@/lib/dnd35/races'
 import { sousRacesDe, getSousRaceInfo, getRaceOuSousRace, decomposerRace, nomSousRaceSelon, changerRace, picto, libelleEffet } from '@/lib/dnd35/sous-races'
@@ -1169,7 +1169,17 @@ function SectionSorts({ data, update, derived }: { data: CharacterFormData; upda
   const sortsActifs = data.sorts.filter(s => classeDe(s) === effectiveCaster)
 
   const selectedAtLevel = sortsActifs.filter(s => s.niveau === spellLevel).reduce((sum, s) => sum + (s.nombrePrepare ?? 0), 0)
-  const slotsAtLevel = slots[spellLevel] ?? 0
+  // Emplacements réels : la table de la classe + les sorts en bonus de la
+  // caractéristique d'incantation (Manuel des Joueurs, table 1-1, p. 8).
+  // `derived` porte déjà les modificateurs COMPLETS — base + objet magique +
+  // ajustement racial —, les mêmes qui servent au DD des sorts.
+  const caracSorts = getClasseInfo(effectiveCaster)?.caracteristiqueSorts
+  const modSorts = caracSorts === 'intelligence' ? derived.intMod
+    : caracSorts === 'sagesse' ? derived.sagMod
+      : caracSorts === 'charisme' ? derived.chaMod : 0
+  const abrevSorts = caracSorts === 'intelligence' ? 'INT' : caracSorts === 'sagesse' ? 'SAG' : caracSorts === 'charisme' ? 'CHA' : ''
+  const empl = getEmplacementsAvecBonus(effectiveCaster, activeCasterNiveau, spellLevel, modSorts)
+  const slotsAtLevel = empl.total
 
   function toggle(sort: SortDnD) {
     const exists = sortsActifs.some(s => s.nom === sort.nom)
@@ -1245,8 +1255,11 @@ function SectionSorts({ data, update, derived }: { data: CharacterFormData; upda
       {/* Info emplacements pour le niveau sélectionné */}
       {slotsAtLevel > 0 && (
         <div className={`text-xs mb-3 px-2 py-1 rounded ${selectedAtLevel >= slotsAtLevel ? 'bg-amber-900/30 text-amber-400' : 'bg-stone-800/40 text-stone-500'}`}>
-          Niveau {spellLevel} : <span className="font-bold">{selectedAtLevel}</span> préparation{selectedAtLevel > 1 ? 's' : ''} · {slotsAtLevel} emplacement{slotsAtLevel > 1 ? 's' : ''} de base
-          {selectedAtLevel > slotsAtLevel && <span className="text-amber-500 ml-1">(dépassement — bonus de carac. requis)</span>}
+          Niveau {spellLevel} : <span className="font-bold">{selectedAtLevel}</span> préparation{selectedAtLevel > 1 ? 's' : ''} · {slotsAtLevel} emplacement{slotsAtLevel > 1 ? 's' : ''}
+          {empl.bonus > 0 && (
+            <span className="text-emerald-500/90 ml-1">({empl.base} de base + {empl.bonus} de {abrevSorts} {formatMod(modSorts)})</span>
+          )}
+          {selectedAtLevel > slotsAtLevel && <span className="text-amber-500 ml-1">(dépassement — emplacement de domaine ?)</span>}
         </div>
       )}
       {slotsAtLevel === 0 && spellLevel > 0 && (

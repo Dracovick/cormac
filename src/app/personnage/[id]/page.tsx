@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getCharacter } from '@/lib/queries/character'
 import { DeleteButton } from '@/components/fiche/DeleteButton'
-import { getClasseInfo, getSortsSlotsParJour, getEmplacementsNiveau, comptePreparations } from '@/lib/dnd35/classes'
+import { getClasseInfo, getSortsSlotsParJour, getEmplacementsAvecBonus, comptePreparations } from '@/lib/dnd35/classes'
 import { getMultiClassBab, xpPourNiveau, modSauvegarde } from '@/lib/dnd35/rules'
 import { getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
 import { getCapacitesPourPersonnage } from '@/lib/dnd35/class-features'
@@ -865,18 +865,23 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           // Compteur d'emplacements par niveau de sort.
           // Le total préparé est la SOMME des estPrepare (un sort préparé deux fois
           // vaut 2) — comptePreparations s'en charge. Le dénominateur vient de
-          // getEmplacementsNiveau, le même calcul que la modale 🙏 Prier / 📖 Étudier.
+          // getEmplacementsAvecBonus, le même calcul que la modale 🙏 Prier / 📖 Étudier.
           // La fiche est un composant serveur et depenseSort appelle revalidatePath :
           // le compteur décroît donc tout seul dès qu'un sort est lancé.
           const estSpontane = nomClasse === 'Ensorceleur' || nomClasse === 'Barde'
           // DD des sorts de cette classe : 10 + niveau du sort + mod. de la caractéristique d'incantation
           const inc = CARAC_INCANTATION[nomClasse]
           const aDomaine = Boolean(combatStats?.domaine1 || combatStats?.domaine2)
-          const compteurs = Array.from({ length: 10 }, (_, n) => ({
-            niveau: n,
-            prepares: comptePreparations(spellsMapped, n),
-            emplacements: getEmplacementsNiveau(nomClasse, niveauLanceur, n),
-          })).filter(c => c.emplacements > 0 || c.prepares > 0)
+          // ⭐ Les emplacements en bonus d'une caractéristique élevée entrent ici
+          // (Manuel des Joueurs, table 1-1, p. 8). `inc.mod` est le modificateur
+          // COMPLET — base + objet magique + racial + effets de sorts actifs —,
+          // le même qui sert au DD ci-dessous. Un bandeau de Sagesse +2 donne
+          // donc bien ses emplacements, et un affaiblissement les retire.
+          const compteurs = Array.from({ length: 10 }, (_, n) => {
+            const e = getEmplacementsAvecBonus(nomClasse, niveauLanceur, n, inc?.mod ?? 0)
+            return { niveau: n, prepares: comptePreparations(spellsMapped, n), ...e }
+          }).filter(c => c.total > 0 || c.prepares > 0)
+          const bonusCaracTotal = compteurs.reduce((s, c) => s + c.bonus, 0)
           return (
             <Section
               key={casterC.characterClass.id}
@@ -888,6 +893,8 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   niveau={niveauLanceur}
                   spells={spellsMapped}
                   availableSpells={divineAvailableSpells}
+                  modCarac={inc?.mod ?? 0}
+                  caracSorts={inc?.carac}
                   classeAttribution={casterClasses.length > 1 ? nomClasse : undefined}
                 />
               }
@@ -906,16 +913,19 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                     <span className="text-stone-500 text-xs mr-1">
                       {estSpontane ? 'Emplacements restants :' : 'Sorts préparés :'}
                     </span>
-                    {compteurs.map(({ niveau: n, prepares, emplacements }) => {
+                    {compteurs.map(({ niveau: n, prepares, base, bonus, total: emplacements }) => {
                       const epuise = prepares === 0 && emplacements > 0
                       const depasse = prepares > emplacements
+                      const detail = bonus > 0
+                        ? `${base} de base + ${bonus} (${inc.carac} ${inc.mod >= 0 ? '+' : ''}${inc.mod})`
+                        : `${base} de base`
                       return (
                         <span
                           key={n}
                           title={
                             depasse
-                              ? `Niveau ${n} : ${prepares} préparés pour ${emplacements} emplacements de base — le surplus vient d'une caractéristique élevée ou du domaine.`
-                              : `Niveau ${n} : ${prepares} sur ${emplacements} emplacements de base`
+                              ? `Niveau ${n} : ${prepares} préparés pour ${emplacements} emplacements — ${detail}. Le surplus vient du domaine ou d'une source que le Grimoire ne calcule pas.`
+                              : `Niveau ${n} : ${prepares} sur ${emplacements} emplacements — ${detail}`
                           }
                           className={`text-xs px-2 py-0.5 rounded-full border ${
                             depasse
@@ -928,13 +938,23 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                           <span className="text-stone-500">{n === 0 ? 'Oraisons ' : `Niv. ${n} `}</span>
                           <span className="font-bold font-mono">{prepares}</span>
                           <span className="opacity-60 font-mono">/{emplacements}</span>
+                          {bonus > 0 && (
+                            <span className="text-emerald-500/80 font-mono text-[10px] ml-0.5">+{bonus}</span>
+                          )}
                         </span>
                       )
                     })}
                   </div>
                   <p className="text-stone-600 text-[11px] mt-1.5 leading-snug">
-                    Emplacements <strong>de base</strong> — hors bonus de caractéristique élevée
-                    {estDivin && aDomaine && <> et hors emplacement de domaine (+1 par niveau de sort ≥ 1, à gérer vous-même)</>}.
+                    {bonusCaracTotal > 0 ? (
+                      <>
+                        Emplacements de base <strong>+ les sorts en bonus</strong> de {inc.carac} {inc.mod >= 0 ? '+' : ''}{inc.mod}
+                        {' '}(<span className="text-emerald-500/80">+{bonusCaracTotal}</span> au total, table 1-1 du Manuel des Joueurs p. 8)
+                      </>
+                    ) : (
+                      <>Emplacements <strong>de base</strong> — {inc.carac} {inc.mod >= 0 ? '+' : ''}{inc.mod} ne donne aucun sort en bonus</>
+                    )}
+                    {estDivin && aDomaine && <>, et hors emplacement de domaine (+1 par niveau de sort ≥ 1, à gérer vous-même)</>}.
                   </p>
                 </div>
               )}

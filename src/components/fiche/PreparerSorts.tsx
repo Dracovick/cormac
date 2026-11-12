@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { preparerSorts, preparerSortsDivins } from '@/app/actions/character'
-import { getEmplacementsNiveau } from '@/lib/dnd35/classes'
+import { getEmplacementsAvecBonus } from '@/lib/dnd35/classes'
 import { LigneSort } from './LigneSort'
 
 const ARCANE    = ['Magicien', 'Ensorceleur', 'Barde']
@@ -21,10 +21,12 @@ type Props = {
   niveau: number
   spells: Spell[]
   availableSpells?: AvailableSpell[]  // liste complète pour les lanceurs divins
+  modCarac?: number                   // modificateur COMPLET de la caractéristique d'incantation
+  caracSorts?: 'INT' | 'SAG' | 'CHA'  // laquelle — pour l'écrire dans le détail affiché
   classeAttribution?: string          // multi-classes : classe à laquelle attribuer les sorts préparés
 }
 
-export function PreparerSorts({ personnageId, classe, niveau, spells, availableSpells, classeAttribution }: Props) {
+export function PreparerSorts({ personnageId, classe, niveau, spells, availableSpells, modCarac = 0, caracSorts, classeAttribution }: Props) {
   const [open, setOpen] = useState(false)
   // Map<string, number> — clé = charSpellId.toString() pour arcane, spell.nom pour divin
   const [preps, setPreps] = useState<Map<string, number>>(new Map())
@@ -71,9 +73,16 @@ export function PreparerSorts({ personnageId, classe, niveau, spells, availableS
     setOpen(true)
   }
 
-  // Même calcul que la fiche et la page d'impression — voir getEmplacementsNiveau.
+  // Même calcul que la fiche et la page d'impression — voir getEmplacementsAvecBonus.
+  // ⚠️ Le plafond de préparation DOIT inclure les sorts en bonus d'une
+  // caractéristique élevée : sans eux, le bouton « + » se bloquait au quota de
+  // base et un prêtre à 20 de Sagesse ne pouvait pas préparer les quatre sorts
+  // par jour auxquels le Manuel lui donne droit.
+  function emplacementsDe(niv: number) {
+    return getEmplacementsAvecBonus(classe, niveau, niv, modCarac)
+  }
   function getSlotMax(niv: number): number {
-    return getEmplacementsNiveau(classe, niveau, niv)
+    return emplacementsDe(niv).total
   }
 
   function usedAtLevel(niv: number): number {
@@ -150,13 +159,20 @@ export function PreparerSorts({ personnageId, classe, niveau, spells, availableS
             {/* Résumé des emplacements */}
             <div className="px-5 pt-3 pb-2 flex flex-wrap gap-2">
               {niveaux.map(n => {
-                const max  = getSlotMax(n)
+                const { base, bonus, total: max } = emplacementsDe(n)
                 const used = usedAtLevel(n)
                 if (max === 0) return null
                 const full = used >= max
                 return (
-                  <span key={n} className={`text-xs px-2 py-0.5 rounded-full border ${full ? 'bg-amber-900/40 border-amber-700/60 text-amber-300' : 'bg-stone-800 border-stone-700 text-stone-400'}`}>
+                  <span
+                    key={n}
+                    title={bonus > 0
+                      ? `${base} de base + ${bonus} en bonus (${caracSorts ?? 'carac.'} ${modCarac >= 0 ? '+' : ''}${modCarac})`
+                      : `${base} de base`}
+                    className={`text-xs px-2 py-0.5 rounded-full border ${full ? 'bg-amber-900/40 border-amber-700/60 text-amber-300' : 'bg-stone-800 border-stone-700 text-stone-400'}`}
+                  >
                     {n === 0 ? 'Oraisons' : `Niv.${n}`} {used}/{max}
+                    {bonus > 0 && <span className="text-emerald-500/80 ml-0.5">+{bonus}</span>}
                   </span>
                 )
               })}
@@ -176,6 +192,11 @@ export function PreparerSorts({ personnageId, classe, niveau, spells, availableS
                       </span>
                       <span className={`text-xs ml-auto ${used >= max ? 'text-amber-400 font-semibold' : 'text-stone-600'}`}>
                         {used}/{max} emplacements
+                        {emplacementsDe(n).bonus > 0 && (
+                          <span className="text-emerald-600/80 ml-1">
+                            ({emplacementsDe(n).base} + {emplacementsDe(n).bonus} {caracSorts ?? ''})
+                          </span>
+                        )}
                       </span>
                     </div>
                     {max === 0 && (
