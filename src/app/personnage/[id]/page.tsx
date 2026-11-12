@@ -225,7 +225,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   // d'une dague à +10. On donne donc les DEUX chiffres : celui de l'arme
   // quelconque, et celui des armes qui acceptent la finesse.
   const aFinesseFiche = aAttaqueEnFinesse(feats.map(f => f.feat.nom)) || bonusClasse.niveauBretteur >= 1
-  const montrerCorpsFinesse = aFinesseFiche && uneArmeEligibleFinesse && dexMod !== forMod
+  // ⛔ Seulement quand la DEX est MEILLEURE. C'est le seul cas où le grand
+  // chiffre de l'en-tête induit en erreur. Sur Parx [36] — FOR +2, DEX +1 —
+  // le renvoi aurait annoncé « finesse : +7 » sous un « +8 » : juste, mais
+  // présenté comme un gain alors que c'est une perte. Le badge ⚔ FOR (auto)
+  // de la ligne d'arme porte déjà cette information, à sa place.
+  const montrerCorpsFinesse = aFinesseFiche && uneArmeEligibleFinesse && dexMod > forMod
   const bbaCorpsFinesse = rawBabCorps + dexMod
 
   const classeLabel = classes.map(c => `${c.classe.nom} ${c.characterClass.niveau}`).join(' / ')

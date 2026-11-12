@@ -138,7 +138,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   // ⛔ PAS sur une ligne à part : neuf pixels sous le tableau des sauvegardes
   // faisaient passer la feuille de Lucky [20] de 4 à 5 pages, le 2026-11-12.
   const renvoiFinesse = (aAttaqueEnFinesse(feats.map(f => f.feat.nom)) || bonusClasse.niveauBretteur >= 1)
-    && ctxDons.uneArmeEligible && dexMod !== forMod
+    && ctxDons.uneArmeEligible && dexMod > forMod  // ⛔ uniquement quand la DEX est MEILLEURE — voir la fiche à l'écran
     ? `Finesse — arme légère (rapière, fouet, chaîne cloutée) : ${fm(rawBabCorps + dexMod)} au corps à corps (DEX). Dégâts à la FOR.`
     : null
 
