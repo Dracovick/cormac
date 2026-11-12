@@ -249,4 +249,31 @@ export const FEATS_SUPPLEMENTS: FeatDef[] = [
   { nom: 'Science de la capture de sort', categorie: 'Magie', description: 'Don épique (niveau 21+). Contrôle les sorts capturés (capture de sort, vol de concentration) comme s\'il les avait lancés : NLS et variables remplaçables par les siens. [MJ de Faerûn]', prerequis: ['Art de la magie 40', 'Connaissances (mystères) 40', 'Talent épique (Art de la magie)', 'Aptitude de capture de sort'] },
   { nom: 'Science de la métamagie coopérative', categorie: 'Métamagie', description: 'Don épique (niveau 21+). Applique Incantation rapide, silencieuse ou statique au sort d\'un allié via la magie coopérative ; +2 utilisations quotidiennes de magie coopérative. [MJ de Faerûn]', prerequis: ['Art de la magie 30', 'Incantation rapide', 'Incantation silencieuse', 'Incantation statique', 'Aptitude de magie coopérative'] },
   { nom: 'Spécialisation martiale de prédilection', categorie: 'Combat', description: 'Don épique (niveau 21+). +2 aux jets de dégâts avec l\'arme de prédilection de son dieu. [MJ de Faerûn]', prerequis: ['Domaine de la Guerre', 'Arme de prédilection (arme du dieu)', 'Prouesse épique'] },
+
+  // ── TOME OF BATTLE : THE BOOK OF NINE SWORDS ──
+  // ⛔ Ce livre n'a PAS de traduction française officielle. Les noms retenus ici
+  // sont ceux de regles-donjons-dragons.com (Gemmaline), la référence française
+  // qu'André consulte — « Lame d'ombre », « Île de lames », discipline « Main
+  // d'ombre ». Le nom anglais suit en alias pour que la recherche le trouve.
+  //
+  // ⚠ Et le texte suivi est celui du LIVRE ANGLAIS, pas celui de la fiche
+  // française : celle-ci résume Lame d'ombre en « appliquer son modificateur de
+  // Dextérité aux ATTAQUES au corps à corps », là où le livre dit « add your
+  // Dexterity modifier as a bonus on melee DAMAGE ». Divergence signalée à
+  // André le 2026-11-12 ; son arbitrage peut renverser ce choix.
+  {
+    nom: 'Lame d\'ombre',
+    categorie: 'Combat',
+    alias: ['Shadow Blade', 'Lame d’ombre'],
+    description: 'En posture de la discipline Main d\'ombre, ajoute le modificateur de DEX aux dégâts de corps à corps — en PLUS de celui de FOR — avec une arme de prédilection de la discipline (dague, épée courte, sai, siangham, chaîne cloutée, mains nues). Condition : connaître une posture de Main d\'ombre. Tient lieu d\'Attaque en finesse pour remplir un prérequis. [Tome of Battle]',
+  },
+  // Une POSTURE, pas un don — le Grimoire n'a pas de section pour les manœuvres
+  // martiales, et une fiche la porte déjà dans ses dons. Rangée ici pour qu'elle
+  // soit saisissable et décrite, en le disant dès la première phrase.
+  {
+    nom: 'Île de lames',
+    categorie: 'Combat',
+    alias: ['Island of Blades', 'Island of Blade'],
+    description: 'Posture martiale (Main d\'ombre, niveau 1) — pas un don : adoptée par une action rapide, elle dure tant qu\'on la tient. Le personnage et un allié tous deux adjacents à la même créature la prennent en tenaille, quel que soit leur positionnement, et contre plusieurs adversaires à la fois. [Tome of Battle]',
+  },
 ]

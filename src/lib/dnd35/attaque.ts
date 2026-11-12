@@ -194,6 +194,16 @@ export type CalculArme = {
   armeEligibleAFinesse: boolean
   /** Le mod. d'INT a-t-il été ajouté aux dégâts (Bretteur 3) ? */
   perspicaceAppliquee: boolean
+  /**
+   * Lame d'ombre (*Shadow Blade*, Tome of Battle) : le mod. de DEX aux dégâts,
+   * et ce que donnerait la ligne de dégâts avec lui.
+   *
+   * ⛔ JAMAIS compris dans `degatsMod` ni dans `degatsTexte` : il ne vaut que
+   * tant que le personnage se tient dans une posture de la discipline Main
+   * d'ombre, ce qu'une fiche au repos ne peut pas affirmer. Null quand le don
+   * est absent, l'arme hors discipline, ou la Dextérité sans bonus.
+   */
+  lameDombre: { bonus: number; degatsTexte: string } | null
   /** Contributions écartées par le non-cumul, à afficher barrées. */
   ecartes: BonusEcarte[]
 }
@@ -245,6 +255,62 @@ export function armeEligibleFinesse(
   if (f.includes('legere') || f.includes('mains nues')) return true
   const noms = [nom, nomCatalogue ?? ''].map(sansAccent)
   return EXCEPTIONS_FINESSE.some(e => noms.some(n => n.includes(e)))
+}
+
+/**
+ * Lame d'ombre (*Shadow Blade*, Tome of Battle) — le personnage a-t-il le don ?
+ *
+ * « While you are in a Shadow Hand stance and attack with one of the
+ *   discipline's preferred weapons, you can add your Dexterity modifier as a
+ *   bonus on melee damage for attacks made with the weapon. »
+ *
+ * ⚠ C'est un bonus AUX DÉGÂTS, qui s'AJOUTE à la Force — pas un remplacement
+ * comme Attaque en finesse, et pas un bonus à l'attaque. La fiche française
+ * que consulte André (regles-donjons-dragons.com) le résume en « appliquer son
+ * modificateur de Dextérité aux attaques au corps à corps », ce que le livre ne
+ * dit pas : signalé le 2026-11-12, le Grimoire suit le livre.
+ *
+ * ⛔ Hors du total, toujours : le bonus n'existe QUE tant que le personnage se
+ * tient dans une posture de la discipline Main d'ombre. Une posture s'adopte
+ * et se quitte en combat, par une action rapide — aucun chiffre de fiche au
+ * repos ne peut l'affirmer. Même traitement que le bonus d'esquive du Bretteur.
+ *
+ * Le nom est du texte libre : on accepte le français comme l'anglais, et les
+ * deux apostrophes (droite et typographique) via le point.
+ */
+export function aLameDombre(dons: string[]): boolean {
+  return dons.some(d => /lame d.ombre|shadow\s*blade/.test(sansAccent(d)))
+}
+
+/**
+ * L'arme est-elle une arme de prédilection de la discipline Main d'ombre ?
+ *
+ * Tome of Battle, discipline Shadow Hand : dague, épée courte, sai, siangham,
+ * chaîne cloutée, attaque à mains nues. Compétence clé : Discrétion.
+ *
+ * ⚠ Testé au MOT, pas en sous-chaîne : « sai » apparaît dans trop de mots
+ * français pour qu'un `includes` soit sûr. Et comme pour l'éligibilité à la
+ * finesse, on regarde le nom de la ligne ET celui de l'entrée de catalogue
+ * rattachée — 160 des 198 lignes d'armes des fiches portent un nom libre
+ * anglais venu de FileMaker (« Short sword +1 »).
+ */
+const MOTIFS_MAIN_DOMBRE = [
+  /\bdagues?\b/, /\bdaggers?\b/,
+  /\bepees? courtes?\b/, /\bshort\s*swords?\b/,
+  /\bsai\b/, /\bsianghams?\b/,
+  /\bchaines? cloutees?\b/, /\bspiked\s*chains?\b/,
+]
+
+export function armeMainDombre(
+  nom: string,
+  nomCatalogue: string | null | undefined,
+  famille: string | null | undefined,
+): boolean {
+  const f = sansAccent(famille ?? '')
+  if (f.includes('mains nues')) return true
+  const noms = [nom, nomCatalogue ?? ''].map(sansAccent)
+  if (noms.some(n => /\bmains nues\b|\bunarmed\b/.test(n))) return true
+  return MOTIFS_MAIN_DOMBRE.some(m => noms.some(n => m.test(n)))
 }
 
 export function calculeArme(e: EntreeArme): CalculArme {
@@ -311,6 +377,20 @@ export function calculeArme(e: EntreeArme): CalculArme {
   const attaque = bbaBrut + caracAtk + alteration + donsAtk
   const degatsMod = alteration + caracDmg + donsDmg + bonusPerspicace
   const deArme = e.degats ?? '—'
+
+  // Lame d'ombre : le mod. de DEX s'ajoute aux dégâts de corps à corps avec une
+  // arme de prédilection de la discipline Main d'ombre — mais SEULEMENT en
+  // posture de cette discipline. Calculé ici pour que la fiche puisse l'écrire,
+  // délibérément tenu HORS de `degatsMod` : un total qui l'inclurait annoncerait
+  // comme acquis un bonus qui dépend d'une action rapide en combat.
+  const bonusLameDombre =
+    aLameDombre(e.dons) &&
+    !estADistance &&
+    armeMainDombre(e.nom, e.nomCatalogue, e.famille ?? e.familleCatalogue) &&
+    e.dexMod > 0
+      ? e.dexMod
+      : 0
+  const modAvecLame = degatsMod + bonusLameDombre
 
   const ligneDon = (b: { label: string; value: number; conditional?: string }): LigneBonus => ({
     label: LABELS_DONS[b.label] ?? b.label,
@@ -379,6 +459,12 @@ export function calculeArme(e: EntreeArme): CalculArme {
     finesseOfferteParClasse: finesseOfferte,
     armeEligibleAFinesse: armeFinesse,
     perspicaceAppliquee: frappePerspicace,
+    lameDombre: bonusLameDombre > 0
+      ? {
+          bonus: bonusLameDombre,
+          degatsTexte: modAvecLame === 0 ? deArme : `${deArme}${modAvecLame > 0 ? '+' : ''}${modAvecLame}`,
+        }
+      : null,
     ecartes: ecarte ? [ecarte] : [],
   }
 }

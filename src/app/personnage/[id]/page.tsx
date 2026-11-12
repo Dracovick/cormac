@@ -45,7 +45,7 @@ import { JournalDrawer } from '@/components/fiche/JournalDrawer'
 import { ButinDrawer } from '@/components/fiche/ButinDrawer'
 import { getPotionsCatalogue } from '@/app/actions/character'
 import { sourcesCASorts, contributionsSortsDepuisCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
-import { aAttaqueEnFinesse, armeEligibleFinesse, calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
+import { aAttaqueEnFinesse, armeEligibleFinesse, armeMainDombre, calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
 import { getBonusClasse, effetsCapaciteClasse, NOM_BRETTEUR } from '@/lib/dnd35/bonus-classe'
 import { estArmeADistance } from '@/lib/dnd35/weapons'
 import { effetsDuDon } from '@/lib/dnd35/dons-effets'
@@ -189,6 +189,13 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const uneArmeEligibleFinesse = weapons.some(({ weapon, catalogue }) =>
     !estArmeADistance(weapon.famille, weapon.portee) &&
     armeEligibleFinesse(weapon.nom, catalogue?.nom ?? null, weapon.famille ?? catalogue?.famille)
+  )
+  // Même mesure pour la discipline Main d'ombre : la condition de Lame d'ombre
+  // n'est pas l'éligibilité à la finesse mais la liste d'armes de la discipline.
+  // Une rapière accepte la finesse et n'est PAS une arme de Main d'ombre.
+  const uneArmeMainDombre = weapons.some(({ weapon, catalogue }) =>
+    !estArmeADistance(weapon.famille, weapon.portee) &&
+    armeMainDombre(weapon.nom, catalogue?.nom ?? null, weapon.famille ?? catalogue?.famille)
   )
 
   // Déplacement auto : utilise l'armure.deplacement si renseigné, sinon détecte armure lourde
@@ -740,6 +747,22 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                             </span>
                           )}
                         </div>
+                        {/* Lame d'ombre (Tome of Battle) : le mod. de DEX aux
+                            dégâts, mais seulement tant que le personnage tient
+                            une posture de Main d'ombre. Hors du total ci-dessus,
+                            donc sur sa propre ligne et avec sa condition écrite —
+                            le joueur voit les deux chiffres et sait lequel vaut
+                            à quel moment. Même parti que le bonus d'esquive du
+                            Bretteur, qui ne touche pas la CA affichée. */}
+                        {calc.lameDombre && (
+                          <div
+                            className="text-violet-300 text-xs mt-1"
+                            title="Lame d'ombre (Tome of Battle) : en posture de la discipline Main d'ombre, le modificateur de Dextérité s'ajoute aux dégâts — en plus de celui de Force — avec une arme de prédilection de la discipline. La posture s'adopte par une action rapide : le total ci-dessus ne l'inclut pas."
+                          >
+                            ✋ Lame d’ombre : dégâts <span className="text-violet-200 font-semibold">{calc.lameDombre.degatsTexte}</span>
+                            {' '}<span className="text-stone-500">(+{calc.lameDombre.bonus} DEX) en posture de Main d’ombre</span>
+                          </div>
+                        )}
                       </div>
                       <LiveAttaque personnageId={character.id} nomArme={calc.nomAffiche} />
                     </div>
@@ -1047,7 +1070,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             // entière : il faut une arme qui l'accepte, et une Dextérité qui
             // vaille mieux que la Force. Sans ce contexte on ne peut pas dire
             // s'il agit — Parx le porte et n'en tire rien (DEX 13, FOR 14).
-            const ctxDons = { forMod, dexMod, uneArmeEligible: uneArmeEligibleFinesse }
+            const ctxDons = { forMod, dexMod, uneArmeEligible: uneArmeEligibleFinesse, uneArmeMainDombre }
             const effetsPar = new Map(feats.map(({ feat }) => [feat.id, effetsDuDon(feat.nom, ctxDons)]))
             const nbLus = [...effetsPar.values()].filter(e => e.length > 0).length
             return (

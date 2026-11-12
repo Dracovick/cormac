@@ -13,7 +13,7 @@ import { PrintButton } from '@/components/fiche/PrintButton'
 import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
 import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies } from '@/lib/dnd35/classe-armure'
 import { calculeBonusEffetsCarac, sourcesCASorts, contributionsSortsDepuisCA } from '@/lib/dnd35/spell-effects'
-import { aAttaqueEnFinesse, armeEligibleFinesse, calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
+import { aAttaqueEnFinesse, armeEligibleFinesse, armeMainDombre, calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
 import { getBonusClasse } from '@/lib/dnd35/bonus-classe'
 import { renvoiCasesDivers } from '@/lib/dnd35/renvoi-divers'
 import { estArmeADistance } from '@/lib/dnd35/weapons'
@@ -130,6 +130,13 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
     uneArmeEligible: weapons.some(w =>
       !estArmeADistance(w.weapon.famille, w.weapon.portee) &&
       armeEligibleFinesse(w.weapon.nom, w.catalogue?.nom ?? null, w.weapon.famille ?? w.catalogue?.famille)
+    ),
+    // La condition de Lame d'ombre : les armes de prédilection de la discipline
+    // Main d'ombre, qui ne sont pas les armes de finesse (une rapière accepte la
+    // finesse et n'est pas une arme de Main d'ombre).
+    uneArmeMainDombre: weapons.some(w =>
+      !estArmeADistance(w.weapon.famille, w.weapon.portee) &&
+      armeMainDombre(w.weapon.nom, w.catalogue?.nom ?? null, w.weapon.famille ?? w.catalogue?.famille)
     ),
   }
   // Le tableau « Bonus d'attaque » du papier donne un chiffre SANS arme, donc
@@ -746,6 +753,17 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                     {w.charWeapon.quantiteMunitions !== null && (
                       <span style={{ fontWeight: 'normal', color: '#666', fontSize: '8pt' }}>
                         {' '}· {w.charWeapon.quantiteMunitions} munitions
+                      </span>
+                    )}
+                    {/* Lame d'ombre : le total de dégâts EN POSTURE de Main d'ombre.
+                        Dans la cellule du nom et non dans celle des Dégâts : la
+                        colonne Dégâts doit garder le chiffre qui vaut au repos,
+                        celui qu'on lit sans réfléchir. Formulation courte à
+                        dessein — la cellule fait 30 % de la largeur utile, et un
+                        texte qui y boucle grandit la ligne, donc la page. */}
+                    {calc.lameDombre && (
+                      <span style={{ fontWeight: 'normal', color: '#666', fontSize: '7pt' }}>
+                        {' '}· posture Main d&apos;ombre : {calc.lameDombre.degatsTexte}
                       </span>
                     )}
                   </td>
