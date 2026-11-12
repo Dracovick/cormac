@@ -1178,7 +1178,12 @@ function SectionSorts({ data, update, derived }: { data: CharacterFormData; upda
     : caracSorts === 'sagesse' ? derived.sagMod
       : caracSorts === 'charisme' ? derived.chaMod : 0
   const abrevSorts = caracSorts === 'intelligence' ? 'INT' : caracSorts === 'sagesse' ? 'SAG' : caracSorts === 'charisme' ? 'CHA' : ''
-  const empl = getEmplacementsAvecBonus(effectiveCaster, activeCasterNiveau, spellLevel, modSorts)
+  // ⭐ Les TROIS affichages d'emplacements de cet onglet lisent la même table :
+  // le bandeau du haut, les onglets « Niv.N [x/y] » et le bandeau du niveau
+  // sélectionné. Ne brancher que l'un des trois ferait se contredire la page.
+  const emplParNiveau = Array.from({ length: 10 }, (_, n) =>
+    getEmplacementsAvecBonus(effectiveCaster, activeCasterNiveau, n, modSorts))
+  const empl = emplParNiveau[spellLevel] ?? { base: 0, bonus: 0, total: 0 }
   const slotsAtLevel = empl.total
 
   function toggle(sort: SortDnD) {
@@ -1225,20 +1230,26 @@ function SectionSorts({ data, update, derived }: { data: CharacterFormData; upda
       {slots.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-4 p-2 bg-stone-900/60 rounded border border-stone-700/40">
           <span className="text-stone-500 text-xs self-center">Emplacements/jour :</span>
-          {slots.map((n, i) => n > 0 && (
-            <span key={i} className="text-xs px-2 py-0.5 rounded bg-stone-800 border border-stone-700">
+          {emplParNiveau.map(({ base, bonus, total }, i) => total > 0 && (
+            <span key={i} className="text-xs px-2 py-0.5 rounded bg-stone-800 border border-stone-700"
+              title={bonus > 0 ? `${base} de base + ${bonus} de ${abrevSorts} ${formatMod(modSorts)}` : `${base} de base`}>
               <span className="text-stone-500">niv.{i} </span>
-              <span className="text-amber-400 font-bold">{n}</span>
+              <span className="text-amber-400 font-bold">{total}</span>
+              {bonus > 0 && <span className="text-emerald-500/80">+{bonus}</span>}
             </span>
           ))}
-          <span className="text-stone-600 text-xs self-center ml-auto italic">+ bonus hautes carac.</span>
+          <span className="text-stone-600 text-xs self-center ml-auto italic">
+            {emplParNiveau.some(e => e.bonus > 0)
+              ? <>sorts en bonus de {abrevSorts} {formatMod(modSorts)} compris</>
+              : <>{abrevSorts || 'carac.'} {formatMod(modSorts)} — aucun sort en bonus</>}
+          </span>
         </div>
       )}
 
       {/* Onglets par niveau */}
       <div className="flex flex-wrap gap-1 mb-2">
         {levels.map(l => {
-          const slotCount = slots[l] ?? 0
+          const slotCount = emplParNiveau[l]?.total ?? 0
           const selCount = sortsActifs.filter(s => s.niveau === l).reduce((sum, s) => sum + (s.nombrePrepare ?? 0), 0)
           const knownCount = sortsActifs.filter(s => s.niveau === l).length
           return (
@@ -1318,7 +1329,7 @@ function SectionSorts({ data, update, derived }: { data: CharacterFormData; upda
               const levels = [...new Set(sorted.map(s => s.niveau))].sort((a, b) => a - b)
               return levels.map(lvl => {
                 const sortsLvl = sorted.filter(s => s.niveau === lvl)
-                const slotsLvl = slots[lvl] ?? 0
+                const slotsLvl = emplParNiveau[lvl]?.total ?? 0
                 const prepLvl = sortsLvl.reduce((sum, s) => sum + (s.nombrePrepare ?? 0), 0)
                 return (
                   <div key={lvl}>
