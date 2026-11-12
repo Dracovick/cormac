@@ -134,6 +134,24 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   const vigT = vigBase + modSauvegarde(abilityScores?.conBase, abilityScores?.conMagique, raceInfo?.bonusCon ?? 0) + (savingThrows?.vigueurMagique ?? 0) + sommeBonus(donsPassifs.vigueur)
   const refT = refBase + modSauvegarde(abilityScores?.dexBase, abilityScores?.dexMagique, raceInfo?.bonusDex ?? 0) + (savingThrows?.reflexesMagique ?? 0) + sommeBonus(donsPassifs.reflexes) + sommeBonus(bonusClasse.reflexes)
   const volT = volBase + modSauvegarde(abilityScores?.sagBase, abilityScores?.sagMagique, raceInfo?.bonusSag ?? 0) + (savingThrows?.volonteMagique ?? 0) + sommeBonus(donsPassifs.volonte)
+  // Ce qui entre dans la case « Divers » du tableau des sauvegardes, et qui l'écrit.
+  // Les totaux ci-dessus portaient déjà ces bonus ; c'est la CASE qui était muette, si
+  // bien que base + carac + magique ne redonnait pas le total sur le papier.
+  // L'initiative avait exactement le même défaut : sa case Divers était vide alors que
+  // son total porte Science de l'initiative et le bonus saisi à la fiche.
+  const diversInitSources = [
+    ...donsPassifs.initiative,
+    ...((combatStats?.initiativeBonus ?? 0) !== 0
+      ? [{ label: 'bonus saisi à la fiche', value: combatStats?.initiativeBonus ?? 0 }]
+      : []),
+  ]
+  const diversInit = sommeBonus(diversInitSources)
+  const diversExplique = [
+    { jet: 'Initiative', sources: diversInitSources },
+    { jet: 'Réflexes', sources: [...donsPassifs.reflexes, ...bonusClasse.reflexes] },
+    { jet: 'Vigueur', sources: donsPassifs.vigueur },
+    { jet: 'Volonté', sources: donsPassifs.volonte },
+  ].filter(x => x.sources.length > 0)
 
   // ⛔ Même règle que la fiche : seules les armures ENDOSSÉES comptent.
   // `est_portee` n'était lu nulle part avant le 2026-10-25 — une armure du sac
@@ -292,7 +310,13 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   )
 
   // Ligne save (Réflexes, Vigueur, Volonté)
-  function SaveRow({ label, total, base, abilMod, magic }: { label: string; sub: string; total: number; base: number; abilMod: number; magic: number }) {
+  // ⚠ La case « Divers » existait depuis toujours, mais elle était rendue VIDE : le
+  // papier affichait le bon total sans montrer d'où venait la différence (Grâce du
+  // Bretteur, Réflexes surhumains, Volonté de fer…). André le 12 novembre : « PDF pour
+  // expliquer le +2 Réflexes ». La case porte maintenant le chiffre, et la source est
+  // nommée sous le tableau. Elle reste grise et vide quand il n'y a rien à y mettre —
+  // c'est alors la case à remplir au crayon de la feuille officielle.
+  function SaveRow({ label, total, base, abilMod, magic, divers }: { label: string; sub: string; total: number; base: number; abilMod: number; magic: number; divers: number }) {
     return (
       <tr>
         <td style={{ border: '1px solid #000', padding: '2px 4px', fontSize: '8pt', fontWeight: 'bold', background: '#222', color: '#fff', width: '22%' }}>{label}</td>
@@ -304,7 +328,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
         <td style={{ border: '1px solid #000', padding: '2px 4px', fontSize: '8pt', textAlign: 'center', color: '#555' }}>+</td>
         <td style={{ border: '1px solid #000', padding: '2px 4px', fontSize: '9pt', textAlign: 'center' }}>{magic || ''}</td>
         <td style={{ border: '1px solid #000', padding: '2px 4px', fontSize: '8pt', textAlign: 'center', color: '#555' }}>+</td>
-        <td style={{ border: '1px solid #000', padding: '2px 4px', fontSize: '8pt', background: '#f5f5f5', width: '8%' }}></td>
+        <td style={{ border: '1px solid #000', padding: '2px 4px', fontSize: divers !== 0 ? '9pt' : '8pt', textAlign: 'center', fontWeight: divers !== 0 ? 'bold' : 'normal', background: divers !== 0 ? '#fff' : '#f5f5f5', width: '8%' }}>{divers !== 0 ? fm(divers) : ''}</td>
       </tr>
     )
   }
@@ -519,7 +543,9 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                       <td style={{ border: '1px solid #000', padding: '2px', textAlign: 'center', color: '#555', fontSize: '9pt' }}>=</td>
                       <td style={{ border: '1px solid #000', padding: '2px', textAlign: 'center', fontSize: '9pt' }}>{fm(dexMod)}</td>
                       <td style={{ border: '1px solid #000', padding: '2px', textAlign: 'center', color: '#555', fontSize: '9pt' }}>+</td>
-                      <td style={{ border: '1px solid #000', padding: '2px', background: '#f5f5f5', width: '10%' }}></td>
+                      {/* Même correction que les sauvegardes : la case portait le vide alors que
+                          le total compte Science de l'initiative et le bonus saisi à la fiche. */}
+                      <td style={{ border: '1px solid #000', padding: '2px', textAlign: 'center', fontSize: '9pt', fontWeight: diversInit !== 0 ? 'bold' : 'normal', background: diversInit !== 0 ? '#fff' : '#f5f5f5', width: '10%' }}>{diversInit !== 0 ? fm(diversInit) : ''}</td>
                     </tr>
                     <tr>
                       <td colSpan={3}></td>
@@ -589,11 +615,23 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
             </tr>
           </thead>
           <tbody>
-            <SaveRow label="Réflexes (DEX)" sub="dextérité" total={refT} base={refBase} abilMod={dexMod} magic={savingThrows?.reflexesMagique ?? 0} />
-            <SaveRow label="Vigueur (CON)" sub="constitution" total={vigT} base={vigBase} abilMod={conMod} magic={savingThrows?.vigueurMagique ?? 0} />
-            <SaveRow label="Volonté (SAG)" sub="sagesse" total={volT} base={volBase} abilMod={sagMod} magic={savingThrows?.volonteMagique ?? 0} />
+            <SaveRow label="Réflexes (DEX)" sub="dextérité" total={refT} base={refBase} abilMod={dexMod} magic={savingThrows?.reflexesMagique ?? 0} divers={sommeBonus(donsPassifs.reflexes) + sommeBonus(bonusClasse.reflexes)} />
+            <SaveRow label="Vigueur (CON)" sub="constitution" total={vigT} base={vigBase} abilMod={conMod} magic={savingThrows?.vigueurMagique ?? 0} divers={sommeBonus(donsPassifs.vigueur)} />
+            <SaveRow label="Volonté (SAG)" sub="sagesse" total={volT} base={volBase} abilMod={sagMod} magic={savingThrows?.volonteMagique ?? 0} divers={sommeBonus(donsPassifs.volonte)} />
           </tbody>
         </table>
+        {/* D'où vient le « divers » : sans ce renvoi, le chiffre de la case se lit comme
+            une erreur de calcul, et c'est exactement la question qu'André a posée. */}
+        {diversExplique.length > 0 && (
+          <div style={{ fontSize: '6pt', color: '#333', padding: '1px 2px', lineHeight: '1.3' }}>
+            {diversExplique.map(({ jet, sources }) => (
+              <span key={jet} style={{ marginRight: '10px' }}>
+                <strong>Divers {jet} :</strong>{' '}
+                {sources.map(s => `${s.label} ${fm(s.value)}${s.conditional ? ` (${s.conditional})` : ''}`).join(' · ')}
+              </span>
+            ))}
+          </div>
+        )}
 
         {/* BBA */}
         <table style={{ ...TABLE, marginBottom: '0' }}>
