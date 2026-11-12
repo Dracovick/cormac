@@ -1614,7 +1614,10 @@ function ChampRace({ race, onChange }: { race: string; onChange: (v: string) => 
       {info && (
         <div className="sm:col-span-2 bg-stone-800/40 border border-stone-700 rounded-lg px-3 py-2.5">
           <div className="text-amber-200 text-sm font-semibold">
-            {info.nom} <span className="text-stone-500 font-normal text-xs">— {info.source}</span>
+            {/* Le nom sous l'appellation de la fiche : l'encart disait
+                « Halfelin vaillant » au-dessus d'un menu Race qui affichait
+                « Petite-gens » — le formulaire se contredisait. */}
+            {nomSousRaceSelon(parente, info)} <span className="text-stone-500 font-normal text-xs">— {info.source}</span>
           </div>
           <p className="text-stone-400 text-xs mt-1 leading-relaxed">{info.description}</p>
           {info.regions && <p className="text-stone-500 text-xs mt-1"><strong>Régions :</strong> {info.regions}</p>}
