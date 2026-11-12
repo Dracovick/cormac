@@ -251,6 +251,8 @@ export const FEATS_SUPPLEMENTS: FeatDef[] = [
   { nom: 'Spécialisation martiale de prédilection', categorie: 'Combat', description: 'Don épique (niveau 21+). +2 aux jets de dégâts avec l\'arme de prédilection de son dieu. [MJ de Faerûn]', prerequis: ['Domaine de la Guerre', 'Arme de prédilection (arme du dieu)', 'Prouesse épique'] },
 
   // ── TOME OF BATTLE : THE BOOK OF NINE SWORDS ──
+  // Relu au livre, qu'André a fourni en PDF le 2026-11-12 : Lame d'ombre p. 32,
+  // discipline Main d'ombre et ses armes p. 75, Île de lames p. 78.
   // ⛔ Ce livre n'a PAS de traduction française officielle. Les noms retenus ici
   // sont ceux de regles-donjons-dragons.com (Gemmaline), la référence française
   // qu'André consulte — « Lame d'ombre », « Île de lames », discipline « Main
@@ -265,7 +267,7 @@ export const FEATS_SUPPLEMENTS: FeatDef[] = [
     nom: 'Lame d\'ombre',
     categorie: 'Combat',
     alias: ['Shadow Blade', 'Lame d’ombre'],
-    description: 'En posture de la discipline Main d\'ombre, ajoute le modificateur de DEX aux dégâts de corps à corps — en PLUS de celui de FOR — avec une arme de prédilection de la discipline (dague, épée courte, sai, siangham, chaîne cloutée, mains nues). Condition : connaître une posture de Main d\'ombre. Tient lieu d\'Attaque en finesse pour remplir un prérequis. [Tome of Battle]',
+    description: 'En posture de la discipline Main d\'ombre, ajoute le modificateur de DEX aux dégâts de corps à corps — en PLUS de celui de FOR — avec une arme de prédilection de la discipline (dague, épée courte, sai, siangham, chaîne cloutée, mains nues). Condition : connaître une posture de Main d\'ombre. Tient lieu d\'Attaque en finesse pour remplir un prérequis. [Tome of Battle p. 32]',
   },
   // Une POSTURE, pas un don — le Grimoire n'a pas de section pour les manœuvres
   // martiales, et une fiche la porte déjà dans ses dons. Rangée ici pour qu'elle
@@ -274,6 +276,6 @@ export const FEATS_SUPPLEMENTS: FeatDef[] = [
     nom: 'Île de lames',
     categorie: 'Combat',
     alias: ['Island of Blades', 'Island of Blade'],
-    description: 'Posture martiale (Main d\'ombre, niveau 1) — pas un don : adoptée par une action rapide, elle dure tant qu\'on la tient. Le personnage et un allié tous deux adjacents à la même créature la prennent en tenaille, quel que soit leur positionnement, et contre plusieurs adversaires à la fois. [Tome of Battle]',
+    description: 'Posture martiale (Main d\'ombre, Savant martial 1) — pas un don : adoptée par une action rapide, elle dure tant qu\'on la tient. Le personnage et un allié tous deux adjacents à la même créature la prennent en tenaille, quel que soit leur positionnement, et contre plusieurs adversaires à la fois. [Tome of Battle p. 78]',
   },
 ]

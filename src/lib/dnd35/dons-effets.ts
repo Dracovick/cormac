@@ -201,7 +201,7 @@ export function effetsDuDon(nom: string, ctx?: ContexteFiche): EffetDon[] {
     }
   }
 
-  // ── Lame d'ombre (Shadow Blade, Tome of Battle) : le mod. de DEX s'ajoute aux
+  // ── Lame d'ombre (Shadow Blade, Tome of Battle p. 32) : le mod. de DEX s'ajoute aux
   // dégâts, en plus de la Force — mais seulement en posture de la discipline
   // Main d'ombre, et avec une de ses armes de prédilection. Le chiffre vient du
   // même module que le calcul des lignes d'armes (`aLameDombre` y est défini),
@@ -234,7 +234,7 @@ export function effetsDuDon(nom: string, ctx?: ContexteFiche): EffetDon[] {
     }
   }
 
-  // ── Île de lames (Island of Blades) : une POSTURE de Main d'ombre, pas un don
+  // ── Île de lames (Island of Blades, p. 78) : une POSTURE de Main d'ombre, pas un don
   // — mais le Grimoire n'a pas de section pour les manœuvres martiales, et une
   // fiche la porte dans ses dons. Elle n'ouvre aucun calcul : elle rend la prise
   // en tenaille accessible sans contrainte de position. Le +2 affiché est celui

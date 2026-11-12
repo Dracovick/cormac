@@ -260,6 +260,7 @@ export function armeEligibleFinesse(
 /**
  * Lame d'ombre (*Shadow Blade*, Tome of Battle) — le personnage a-t-il le don ?
  *
+ * Tome of Battle p. 32, relu au livre (André l'a fourni en PDF le 2026-11-12) :
  * « While you are in a Shadow Hand stance and attack with one of the
  *   discipline's preferred weapons, you can add your Dexterity modifier as a
  *   bonus on melee damage for attacks made with the weapon. »
@@ -285,8 +286,9 @@ export function aLameDombre(dons: string[]): boolean {
 /**
  * L'arme est-elle une arme de prédilection de la discipline Main d'ombre ?
  *
- * Tome of Battle, discipline Shadow Hand : dague, épée courte, sai, siangham,
- * chaîne cloutée, attaque à mains nues. Compétence clé : Discrétion.
+ * Tome of Battle p. 75, au livre : « This discipline's preferred weapons are the
+ * dagger, sai, short sword, spiked chain, siangham, and unarmed strike. Its key
+ * skill is Hide. » — dague, sai, épée courte, chaîne cloutée, siangham, mains nues.
  *
  * ⚠ Testé au MOT, pas en sous-chaîne : « sai » apparaît dans trop de mots
  * français pour qu'un `includes` soit sûr. Et comme pour l'éligibilité à la
