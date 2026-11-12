@@ -173,6 +173,7 @@ export const CATEGORIES_PAR_CLASSE: Record<string, FeatCategorie[]> = {
   'Prêtre':      ['Combat', 'Magie', 'Métamagie', 'Création d\'objets', 'Divin'],
   'Druide':      ['Magie', 'Métamagie', 'Création d\'objets', 'Divin'],
   'Barde':       ['Combat', 'Magie', 'Métamagie', 'Création d\'objets'],
+  'Bretteur':    ['Combat', 'Tir'],
   'Moine':       ['Combat'],
   'Roublard':    ['Combat', 'Tir'],
 }

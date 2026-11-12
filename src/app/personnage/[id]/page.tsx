@@ -46,6 +46,7 @@ import { ButinDrawer } from '@/components/fiche/ButinDrawer'
 import { getPotionsCatalogue } from '@/app/actions/character'
 import { sourcesCASorts, contributionsSortsDepuisCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
 import { armeEligibleFinesse, calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
+import { getBonusClasse, effetsCapaciteClasse, NOM_BRETTEUR } from '@/lib/dnd35/bonus-classe'
 import { estArmeADistance } from '@/lib/dnd35/weapons'
 import { effetsDuDon } from '@/lib/dnd35/dons-effets'
 import { EffetsDon } from '@/components/fiche/EffetsDon'
@@ -175,6 +176,20 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   // comptés automatiquement : le champ « divers » ne doit PAS les contenir en plus.
   const donsPassifs = getFeatPassiveBonuses(feats.map(f => f.feat.nom))
   const initiativeTotal = (combatStats ? dexMod + (combatStats.initiativeBonus ?? 0) : dexMod) + sommeBonus(donsPassifs.initiative)
+  // Bonus chiffrés venus des POUVOIRS DE CLASSE (Bretteur : Grâce, bonus
+  // d'esquive, Attaque en finesse offerte, Frappe perspicace). Un pouvoir de
+  // classe n'est pas un don : `getFeatPassiveBonuses` ne peut pas les voir.
+  const bonusClasse = getBonusClasse(
+    classes.map(c => ({ nom: c.classe.nom, niveau: c.characterClass.niveau })),
+    armuresPortees.map(({ armor: a }) => a.type),
+  )
+  // Une seule mesure de l'éligibilité à Attaque en finesse, partagée par le
+  // bloc des dons et celui des capacités de classe : le don et le pouvoir du
+  // Bretteur sont la même règle, ils ne peuvent pas se contredire à l'écran.
+  const uneArmeEligibleFinesse = weapons.some(({ weapon, catalogue }) =>
+    !estArmeADistance(weapon.famille, weapon.portee) &&
+    armeEligibleFinesse(weapon.nom, catalogue?.nom ?? null, weapon.famille ?? catalogue?.famille)
+  )
 
   // Déplacement auto : utilise l'armure.deplacement si renseigné, sinon détecte armure lourde
   // + bonus des sorts actifs (ex. Repli expéditif +9 m)
@@ -480,7 +495,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                     ? `${libelleTypeBonus(c.typeBonus)} — ne se cumule pas, ${c.remplacePar} l'emporte`
                     : libelleTypeBonus(c.typeBonus),
                 })),
-                ...donsPassifs.caConditionnelle.map(b => ({ label: b.label, valeur: b.value, conditionnel: true, note: b.conditional })),
+                ...[...donsPassifs.caConditionnelle, ...bonusClasse.caConditionnelle].map(b => ({ label: b.label, valeur: b.value, conditionnel: true, note: b.conditional })),
               ]}
             >
               <StatBlock label="CA" value={caTotal} sub={`(armure +${caArmure} · DEX ${signedNum(dexModCA)}${bonusCASources ? ` · bonus ${signedNum(bonusCASources)}` : ''})`} />
@@ -508,7 +523,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           {savingThrows && (
             <div className="grid grid-cols-3 gap-3 mb-4">
               {[
-                { label: 'Réflexes', carac: 'DEX', base: savingThrows.reflexesBase, mod: dexMod, mag: savingThrows.reflexesMagique, dons: donsPassifs.reflexes },
+                { label: 'Réflexes', carac: 'DEX', base: savingThrows.reflexesBase, mod: dexMod, mag: savingThrows.reflexesMagique, dons: [...donsPassifs.reflexes, ...bonusClasse.reflexes] },
                 { label: 'Vigueur', carac: 'CON', base: savingThrows.vigueurBase, mod: modSauvegarde(abilityScores?.conBase, abilityScores?.conMagique, race?.bonusCon ?? 0, effCarac.CON), mag: savingThrows.vigueurMagique, dons: donsPassifs.vigueur },
                 { label: 'Volonté', carac: 'SAG', base: savingThrows.volonteBase, mod: modSauvegarde(abilityScores?.sagBase, abilityScores?.sagMagique, race?.bonusSag ?? 0, effCarac.SAG), mag: savingThrows.volonteMagique, dons: donsPassifs.volonte },
               ].map(({ label, carac, base, mod, mag, dons }) => {
@@ -619,6 +634,9 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   bbaBrutDistance: rawBabProj,
                   forMod,
                   dexMod,
+                  niveauBretteur: bonusClasse.niveauBretteur,
+                  intMod,
+                  armureBloquanteBretteur: bonusClasse.armureBloquante,
                 })
 
                 // Fiche de la Bibliothèque à ouvrir pour cette arme : son entrée
@@ -989,14 +1007,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             // entière : il faut une arme qui l'accepte, et une Dextérité qui
             // vaille mieux que la Force. Sans ce contexte on ne peut pas dire
             // s'il agit — Parx le porte et n'en tire rien (DEX 13, FOR 14).
-            const ctxDons = {
-              forMod,
-              dexMod,
-              uneArmeEligible: weapons.some(({ weapon, catalogue }) =>
-                !estArmeADistance(weapon.famille, weapon.portee) &&
-                armeEligibleFinesse(weapon.nom, catalogue?.nom ?? null, weapon.famille ?? catalogue?.famille)
-              ),
-            }
+            const ctxDons = { forMod, dexMod, uneArmeEligible: uneArmeEligibleFinesse }
             const effetsPar = new Map(feats.map(({ feat }) => [feat.id, effetsDuDon(feat.nom, ctxDons)]))
             const nbLus = [...effetsPar.values()].filter(e => e.length > 0).length
             return (
@@ -1067,15 +1078,35 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
 
         {/* ── CAPACITÉS DE CLASSE ── */}
         {(() => {
+          // Ce que le Grimoire CALCULE d'un pouvoir de classe, dérivé des mêmes
+          // fonctions que les totaux — le pendant de `effetsDuDon` pour les
+          // dons. Seules les classes instrumentées portent ce bloc : écrire
+          // « aucun calcul automatique » sous les pouvoirs du Barbare ou du
+          // Moine serait une affirmation que personne n'a vérifiée.
+          const ctxCapacites = {
+            forMod, dexMod, intMod,
+            uneArmeEligible: uneArmeEligibleFinesse,
+            armureBloquante: bonusClasse.armureBloquante,
+          }
           const allCaps = classes.flatMap(c =>
             getCapacitesPourPersonnage(c.classe.nom, c.characterClass.niveau).map(cap => ({
               ...cap,
               classe: c.classe.nom,
+              instrumentee: c.classe.nom === NOM_BRETTEUR,
+              effets: effetsCapaciteClasse(c.classe.nom, cap.nom, c.characterClass.niveau, ctxCapacites),
             }))
           )
           if (allCaps.length === 0) return null
+          const nbCapLues = allCaps.filter(c => c.effets.length > 0).length
           return (
-            <Section titre="Capacités de classe">
+            <Section
+              titre="Capacités de classe"
+              action={nbCapLues > 0 ? (
+                <span className="text-stone-500 text-xs" title="Les autres sont affichées avec leur description, mais aucun chiffre de la fiche ne les inclut : c'est au joueur de les appliquer à la table.">
+                  {nbCapLues} dans les calculs
+                </span>
+              ) : undefined}
+            >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {allCaps.map((cap, i) => (
                   <div key={i} className="bg-stone-800/40 rounded p-2">
@@ -1085,6 +1116,9 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                       {classes.length > 1 && <span className="text-stone-700 text-xs">· {cap.classe}</span>}
                     </div>
                     <p className="text-stone-400 text-xs mt-0.5 leading-relaxed">{cap.detail}</p>
+                    {/* Comme pour les dons : la ligne ci-dessus dit ce que le
+                        LIVRE en dit, celle-ci ce que le GRIMOIRE en calcule. */}
+                    {cap.instrumentee && <EffetsDon effets={cap.effets} />}
                   </div>
                 ))}
               </div>

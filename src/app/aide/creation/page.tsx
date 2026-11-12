@@ -315,6 +315,31 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           <Tip>Le message vert <strong>✓ Pas de pénalité XP · Classe préférée : Guerrier (auto — la plus haute)</strong> s'affiche pour confirmer quelle classe est exemptée. S'il devient orange ⚠, avancez la classe en retard au prochain niveau.</Tip>
         </Section>
 
+        <Section titre="⚔️ Bretteur — une classe de base venue d'un supplément">
+          <p>Le sélecteur de classe a maintenant <strong>trois</strong> groupes : <strong>Classes de base (Manuel des Joueurs)</strong>, ses onze classes; <strong>Classes de base (suppléments)</strong>; et <strong>Classes de prestige</strong>. Le <strong className="text-amber-200">Bretteur</strong> (<em>Swashbuckler</em>, Guerriers &amp; Harceleurs p. 11) ouvre le deuxième groupe.</p>
+          <p className="mt-2">⚠️ <strong>Pourquoi un groupe à part plutôt que le premier ?</strong> Le Bretteur se prend au 1<sup>er</sup> niveau et monte jusqu&apos;au 20<sup>e</sup>, exactement comme les onze du Manuel — ce n&apos;est pas une classe de prestige. Mais il demande un <em>autre livre</em> à la table. Le mélanger aux onze ferait passer pour officiel ce qui exige un supplément; le ranger en prestige ferait croire qu&apos;il se superpose à une classe existante. Son livre d&apos;origine est écrit entre parenthèses dans le menu.</p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-3">
+            {[
+              ['Dé de vie', 'd10'],
+              ['BBA', 'plein (comme le Guerrier)'],
+              ['Bonne sauvegarde', 'Réflexes seuls'],
+              ['Compétences', '4 + mod. INT par niveau'],
+              ['Armes', 'courantes et de guerre'],
+              ['Armures', 'légères'],
+            ].map(([k, v]) => (
+              <div key={k} className="bg-stone-800/50 rounded px-3 py-2 text-xs">
+                <div className="text-amber-300 font-medium">{k}</div>
+                <div className="text-stone-400">{v}</div>
+              </div>
+            ))}
+          </div>
+          <Row label="Ses douze compétences de classe">Les voici, telles que le livre les donne : <strong>Acrobaties</strong>, <strong>Artisanat</strong>, <strong>Bluff</strong>, <strong>Diplomatie</strong>, <strong>Équilibre</strong>, <strong>Escalade</strong>, <strong>Évasion</strong>, <strong>Maîtrise des cordes</strong>, <strong>Natation</strong>, <strong>Profession</strong>, <strong>Psychologie</strong> et <strong>Saut</strong>. Le plafond de rangs, le marquage ● de classe dans le formulaire et la fiche de la compétence à la Grande Bibliothèque les reconnaissent tous les trois.</Row>
+          <Tip>⚠️ <strong>La Discrétion n&apos;est PAS une compétence de Bretteur</strong>, contrairement à ce qu&apos;on lit parfois. Le livre lui donne douze compétences, et <em>Hide</em> n&apos;en fait pas partie — ni <em>Déplacement silencieux</em>, ni <em>Détection</em>, ni <em>Survie</em>. Vérifié avant d&apos;écrire la liste.</Tip>
+          <Row label="Dons offerts dans le sélecteur">Comme le Guerrier et le Roublard, le Bretteur voit les catégories <strong>Combat</strong>, <strong>Tir</strong> et <strong>Général</strong>. ⚠️ Il ne reçoit <strong>aucun don de bonus de classe</strong> — rien de l&apos;ordre des dons de guerrier. Son unique don offert est <strong>Attaque en finesse</strong>, au 1<sup>er</sup> niveau, et c&apos;est un pouvoir de classe : <strong>ne le saisissez pas dans ses dons</strong>, la fiche le compte déjà.</Row>
+          <Row label="Ce que le Grimoire calcule de ses pouvoirs">Quatre de ses onze pouvoirs touchent un chiffre de la fiche, et chacun porte son marqueur dans la section <em>Capacités de classe</em> — voir l&apos;aide de la fiche joueur, section <strong>⚔️ Bretteur</strong>.</Row>
+          <Tip>Le Grimoire n&apos;a <strong>pas</strong> <em>Guerriers &amp; Harceleurs</em> en PDF : la fiche de classe a été relevée au texte du supplément, pas à l&apos;image du livre français. Les <strong>noms anglais</strong> sont donc rappelés entre parenthèses dans chaque pouvoir (<em>Grace</em>, <em>Insightful Strike</em>, <em>Acrobatic Charge</em>…) — si la traduction officielle diffère, c&apos;est l&apos;anglais qui tranche.</Tip>
+        </Section>
+
         <Section titre="🏛 Classes de prestige">
           <p>Le menu des classes contient maintenant <strong className="text-amber-200">98 classes de prestige</strong> : Guide du Maître (15 — Archimage, Assassin, Chevalier noir, Théurge mystique…), Codex Divin (24), Codex Profane (19), Les Maîtres de la Nature (18), Manuel des Joueurs de Faerûn (18 + 2 classes <strong className="text-violet-300">épiques</strong>) et Les Royaumes Oubliés (2 — Adepte des ombres, Voleur de guilde). Elles apparaissent dans le groupe <strong>« Classes de prestige »</strong> du sélecteur, avec leur livre d'origine entre parenthèses.</p>
           <ul className="list-disc list-inside space-y-1 pl-2 mt-2">

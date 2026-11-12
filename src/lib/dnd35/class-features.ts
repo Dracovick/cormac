@@ -28,6 +28,23 @@ export const CAPACITES_PAR_CLASSE: Record<string, CapaciteClasse[]> = {
     { niveau: 15, nom: 'Suggestion de masse',      detail: 'Affecte plusieurs créatures avec Suggestion.' },
     { niveau: 18, nom: 'Inspiration épique',       detail: 'Permet d\'accorder un reroll à un allié 1×/round.' },
   ],
+  // Classe de base de supplément — Guerriers & Harceleurs, p. 11 (Complete
+  // Warrior). Les noms anglais sont rappelés dans le détail : le Grimoire n'a
+  // pas ce livre en PDF, et la traduction française n'a pas pu être relue à la
+  // source comme celle du Manuel.
+  'Bretteur': [
+    { niveau: 1,  nom: 'Attaque en finesse',       detail: 'Don Attaque en finesse offert, même sans en remplir les conditions (BBA +1). La DEX remplace la FOR à l\'attaque avec une arme légère, une rapière, un fouet ou une chaîne cloutée.' },
+    { niveau: 2,  nom: 'Grâce',                    detail: 'Bonus de compétence aux jets de Réflexes : +1 au niv.2, +2 au niv.11, +3 au niv.20. Perdu en armure intermédiaire ou lourde, ou sous une charge intermédiaire ou lourde. (Grace)' },
+    { niveau: 3,  nom: 'Frappe perspicace',        detail: 'Ajoute le modificateur d\'INTELLIGENCE aux dégâts, en plus de la Force, avec toute arme utilisable avec Attaque en finesse (arme légère, rapière, fouet, chaîne cloutée). Sans effet sur les créatures insensibles aux coups critiques. Perdu en armure intermédiaire ou lourde. (Insightful Strike)' },
+    { niveau: 5,  nom: 'Bonus d\'esquive',         detail: 'Désigne un adversaire pendant son action : bonus d\'esquive à la CA contre les attaques de corps à corps de CE seul adversaire — +1 au niv.5, +2 au niv.10, +3 au niv.15, +4 au niv.20. Perdu en armure intermédiaire ou lourde. (Dodge bonus)' },
+    { niveau: 7,  nom: 'Charge acrobatique',       detail: 'Peut charger là où d\'autres ne peuvent pas : par-dessus un terrain difficile qui ralentit normalement, ou à travers les alliés qui barrent le passage. (Acrobatic Charge)' },
+    { niveau: 8,  nom: 'Tenaille améliorée',       detail: 'Quand il prend un adversaire en tenaille, son bonus d\'attaque passe de +2 à +4. (Improved Flanking)' },
+    { niveau: 11, nom: 'Chance',                   detail: '1×/jour : relance un jet d\'attaque, un test de compétence, un test de caractéristique ou un jet de sauvegarde raté. (Lucky)' },
+    { niveau: 13, nom: 'Maîtrise des acrobaties',  detail: 'Peut faire un « prendre 10 » sur ses tests de Saut et d\'Acrobaties même sous la contrainte ou la distraction. (Acrobatic Skill Mastery)' },
+    { niveau: 14, nom: 'Critique affaiblissant',   detail: 'Chaque coup critique infligé cause en plus 2 points de dégâts de FORCE. Sans effet sur les créatures insensibles aux critiques. (Weakening Critical)' },
+    { niveau: 17, nom: 'Esprit fuyant',            detail: 'Un jet de Volonté raté contre un enchantement peut être retenté une fois, un round plus tard. (Slippery Mind)' },
+    { niveau: 19, nom: 'Critique handicapant',     detail: 'Chaque coup critique infligé cause en plus 2 points de dégâts de CONSTITUTION, qui se cumulent avec les 2 points de Force du critique affaiblissant. (Wounding Critical)' },
+  ],
   'Druide': [
     { niveau: 1,  nom: 'Empathie sauvage',         detail: 'Calme ou influence les animaux (équivalent Diplomatie).' },
     { niveau: 1,  nom: 'Langue secrète',           detail: 'Connaît le Druidique, langue secrète non enseignée aux non-druides.' },

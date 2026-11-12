@@ -9,7 +9,7 @@ import { ChampRechercheNom } from '@/components/ChampRechercheNom'
 import { chercherFloue } from '@/lib/recherche-floue'
 import { getModifier, formatMod, ALIGNEMENTS, calcXpPenalite } from '@/lib/dnd35/rules'
 import { TYPES_BONUS_CA } from '@/lib/dnd35/classe-armure'
-import { CLASSES_DND35, getClasseInfo, getSortsSlotsParJour } from '@/lib/dnd35/classes'
+import { CLASSES_DND35, CLASSES_BASE_SUPPLEMENTS, getClasseInfo, getSortsSlotsParJour } from '@/lib/dnd35/classes'
 import { PRESTIGE_CLASSES, getPrestigeInfo, getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
 import { RACES_DND35, getRaceInfo } from '@/lib/dnd35/races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
@@ -162,8 +162,15 @@ function SectionIdentite({ data, update }: { data: CharacterFormData; update: Up
                       const next = [...classes]; next[i] = { ...next[i], classe: e.target.value }
                       update('classes', next)
                     }}>
-                      <optgroup label="Classes de base">
+                      <optgroup label="Classes de base (Manuel des Joueurs)">
                         {CLASSES_DND35.map(cl => <option key={cl.nom} value={cl.nom}>{cl.nom}</option>)}
+                      </optgroup>
+                      {/* Classe de base, mais d'un supplément : elle se prend au
+                          1er niveau comme les onze du Manuel, et demande un
+                          autre livre à la table. Les mélanger ferait passer
+                          pour officiel ce qui ne l'est pas. */}
+                      <optgroup label="Classes de base (suppléments)">
+                        {CLASSES_BASE_SUPPLEMENTS.map(cl => <option key={cl.nom} value={cl.nom}>{cl.nom} ({cl.source})</option>)}
                       </optgroup>
                       <optgroup label="Classes de prestige">
                         {PRESTIGE_CLASSES.map(cl => <option key={cl.nom} value={cl.nom}>{cl.nom} ({cl.source})</option>)}

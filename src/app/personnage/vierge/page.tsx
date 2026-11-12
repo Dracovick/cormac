@@ -21,7 +21,7 @@
 
 import Link from 'next/link'
 import {
-  CLASSES_DND35,
+  CLASSES_BASE,
   getClasseInfo,
   nombreDonsAttendus,
   type ClasseInfo,
@@ -258,7 +258,7 @@ export default async function FicheViergePage({ searchParams }: {
   searchParams: Promise<{ classe?: string; niveau?: string; race?: string; mode?: string; copies?: string }>
 }) {
   const sp = await searchParams
-  const classeNom = CLASSES_DND35.some(c => c.nom === sp.classe) ? sp.classe! : ''
+  const classeNom = CLASSES_BASE.some(c => c.nom === sp.classe) ? sp.classe! : ''
   const niveauDemande = Number(sp.niveau)
   const niveauStr = Number.isInteger(niveauDemande) && niveauDemande >= 1 && niveauDemande <= 20
     ? String(niveauDemande) : ''
@@ -353,7 +353,7 @@ export default async function FicheViergePage({ searchParams }: {
             Classe{' '}
             <select name="classe" defaultValue={classeNom} style={SELECT}>
               <option value="">— Générique —</option>
-              {CLASSES_DND35.map(c => <option key={c.nom} value={c.nom}>{c.nom}</option>)}
+              {CLASSES_BASE.map(c => <option key={c.nom} value={c.nom}>{c.nom}</option>)}
             </select>
           </label>
 

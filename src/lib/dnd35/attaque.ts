@@ -130,6 +130,21 @@ export type EntreeArme = {
   bbaBrutDistance: number
   forMod: number
   dexMod: number
+  /**
+   * Niveau de Bretteur (Guerriers & Harceleurs, p. 11). Deux de ses pouvoirs
+   * touchent cette ligne d'arme :
+   *   niv.1 — Attaque en finesse OFFERTE, qu'il ait saisi le don ou non ;
+   *   niv.3 — Frappe perspicace : le mod. d'INT s'ajoute aux dégâts.
+   * 0 ou absent : le personnage n'est pas Bretteur, rien ne change.
+   */
+  niveauBretteur?: number
+  /** Modificateur d'Intelligence — ne sert qu'à la Frappe perspicace. */
+  intMod?: number
+  /**
+   * Armure portée qui éteint les pouvoirs du Bretteur (intermédiaire ou
+   * lourde), son nom pour l'afficher. Null ou absent : rien n'est éteint.
+   */
+  armureBloquanteBretteur?: string | null
 }
 
 export type CalculArme = {
@@ -149,6 +164,14 @@ export type CalculArme = {
   nomAffiche: string
   attaqueLignes: LigneBonus[]
   degatsLignes: LigneBonus[]
+  /** La DEX a-t-elle effectivement remplacé la FOR sur cette ligne ? */
+  finesseAppliquee: boolean
+  /** Le personnage tient-il Attaque en finesse de sa classe (Bretteur 1) ? */
+  finesseOfferteParClasse: boolean
+  /** L'arme accepte-t-elle Attaque en finesse (donc la Frappe perspicace) ? */
+  armeEligibleAFinesse: boolean
+  /** Le mod. d'INT a-t-il été ajouté aux dégâts (Bretteur 3) ? */
+  perspicaceAppliquee: boolean
   /** Contributions écartées par le non-cumul, à afficher barrées. */
   ecartes: BonusEcarte[]
 }
@@ -210,12 +233,33 @@ export function calculeArme(e: EntreeArme): CalculArme {
   // remplace la FOR si elle est meilleure. Le livre dit « peut choisir » — à la
   // table on prend toujours le meilleur des deux, et la ligne de détail nomme
   // le don pour que le choix reste lisible.
+  //
+  // Le Bretteur l'a d'office au 1er niveau, don saisi ou non : sa fiche doit
+  // calculer juste même si le joueur n'a rien inscrit dans ses dons.
+  const bretteur = e.niveauBretteur ?? 0
+  const finesseOfferte = bretteur >= 1
+  const armeFinesse = armeEligibleFinesse(e.nom, e.nomCatalogue, e.famille ?? e.familleCatalogue)
   const finesse =
     !estADistance &&
-    aAttaqueEnFinesse(e.dons) &&
-    armeEligibleFinesse(e.nom, e.nomCatalogue, e.famille ?? e.familleCatalogue) &&
+    (aAttaqueEnFinesse(e.dons) || finesseOfferte) &&
+    armeFinesse &&
     e.dexMod > e.forMod
   const caracAtk = estADistance || finesse ? e.dexMod : e.forMod
+
+  // Frappe perspicace (Bretteur 3) : le modificateur d'INTELLIGENCE s'ajoute
+  // aux dégâts, EN PLUS de la Force, avec toute arme utilisable avec Attaque en
+  // finesse. L'armure intermédiaire ou lourde l'éteint.
+  //
+  // ⚠ Elle suit l'ÉLIGIBILITÉ de l'arme, pas le basculement sur la DEX : un
+  // Bretteur à forte Force garde la FOR à l'attaque et touche quand même son
+  // bonus d'INT aux dégâts. Les lier ferait disparaître le bonus sur la moitié
+  // des fiches sans que rien ne le dise.
+  const frappePerspicace =
+    bretteur >= 3 &&
+    !estADistance &&
+    armeFinesse &&
+    !e.armureBloquanteBretteur &&
+    (e.intMod ?? 0) > 0
 
   const { total: alteration, source, ecarte } = alterationEffective({
     bonusArme: e.bonusArme,
@@ -236,8 +280,10 @@ export function calculeArme(e: EntreeArme): CalculArme {
       ? Math.min(e.forMod, e.coteDeForce)
       : estComposite ? e.forMod : 0
 
+  const bonusPerspicace = frappePerspicace ? (e.intMod ?? 0) : 0
+
   const attaque = bbaBrut + caracAtk + alteration + donsAtk
-  const degatsMod = alteration + caracDmg + donsDmg
+  const degatsMod = alteration + caracDmg + donsDmg + bonusPerspicace
   const deArme = e.degats ?? '—'
 
   const ligneDon = (b: { label: string; value: number; conditional?: string }): LigneBonus => ({
@@ -274,7 +320,7 @@ export function calculeArme(e: EntreeArme): CalculArme {
         label: estADistance ? 'DEX' : finesse ? 'DEX (Attaque en finesse)' : 'FOR',
         valeur: caracAtk,
         note: finesse
-          ? `don Attaque en finesse : la DEX remplace la FOR +${e.forMod} sur une arme légère (rapière, fouet et chaîne cloutée comprises)`
+          ? `${finesseOfferte && !aAttaqueEnFinesse(e.dons) ? 'Bretteur niv.1 : Attaque en finesse offerte' : 'don Attaque en finesse'} — la DEX remplace la FOR +${e.forMod} sur une arme légère (rapière, fouet et chaîne cloutée comprises)`
           : undefined,
       },
       ...(alteration > 0 ? [{ label: labelAlteration, valeur: alteration }] : []),
@@ -292,7 +338,16 @@ export function calculeArme(e: EntreeArme): CalculArme {
       ...(alteration > 0 ? [{ label: labelAlteration, valeur: alteration }] : []),
       ...ligneEcartee,
       ...damageItems.map(ligneDon),
+      ...(bonusPerspicace > 0 ? [{
+        label: 'Bretteur : Frappe perspicace (INT)',
+        valeur: bonusPerspicace,
+        note: 'sans effet sur les créatures insensibles aux coups critiques ; perdu en armure intermédiaire ou lourde',
+      }] : []),
     ],
+    finesseAppliquee: finesse,
+    finesseOfferteParClasse: finesseOfferte,
+    armeEligibleAFinesse: armeFinesse,
+    perspicaceAppliquee: frappePerspicace,
     ecartes: ecarte ? [ecarte] : [],
   }
 }

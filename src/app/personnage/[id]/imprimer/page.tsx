@@ -14,6 +14,7 @@ import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
 import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies } from '@/lib/dnd35/classe-armure'
 import { calculeBonusEffetsCarac, sourcesCASorts, contributionsSortsDepuisCA } from '@/lib/dnd35/spell-effects'
 import { armeEligibleFinesse, calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
+import { getBonusClasse } from '@/lib/dnd35/bonus-classe'
 import { estArmeADistance } from '@/lib/dnd35/weapons'
 import { effetsDuDon } from '@/lib/dnd35/dons-effets'
 import { nomParchemin } from '@/lib/parchemins'
@@ -114,6 +115,13 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   // et mêmes bonus de dons (Science de l'initiative, Volonté de fer…) pour que le papier
   // et l'écran ne divergent pas.
   const donsPassifs = getFeatPassiveBonuses(feats.map(f => f.feat.nom))
+  // Les pouvoirs de classe chiffrés (Bretteur : Grâce, Frappe perspicace,
+  // Attaque en finesse offerte). Le papier et l'écran passent par la MÊME
+  // fonction : c'est la duplication qui les a fait diverger le 10 octobre.
+  const bonusClasse = getBonusClasse(
+    classes.map(c => ({ nom: c.classe.nom, niveau: c.characterClass.niveau })),
+    armor.filter(({ charArmor }) => charArmor.estPortee !== 0).map(({ armor: a }) => a.type),
+  )
   // De quoi juger Attaque en finesse : il faut une arme qui l'accepte, et une
   // Dextérité qui vaille mieux que la Force. Mêmes valeurs que l'écran.
   const ctxDons = {
@@ -124,7 +132,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
     ),
   }
   const vigT = vigBase + modSauvegarde(abilityScores?.conBase, abilityScores?.conMagique, raceInfo?.bonusCon ?? 0) + (savingThrows?.vigueurMagique ?? 0) + sommeBonus(donsPassifs.vigueur)
-  const refT = refBase + modSauvegarde(abilityScores?.dexBase, abilityScores?.dexMagique, raceInfo?.bonusDex ?? 0) + (savingThrows?.reflexesMagique ?? 0) + sommeBonus(donsPassifs.reflexes)
+  const refT = refBase + modSauvegarde(abilityScores?.dexBase, abilityScores?.dexMagique, raceInfo?.bonusDex ?? 0) + (savingThrows?.reflexesMagique ?? 0) + sommeBonus(donsPassifs.reflexes) + sommeBonus(bonusClasse.reflexes)
   const volT = volBase + modSauvegarde(abilityScores?.sagBase, abilityScores?.sagMagique, raceInfo?.bonusSag ?? 0) + (savingThrows?.volonteMagique ?? 0) + sommeBonus(donsPassifs.volonte)
 
   // ⛔ Même règle que la fiche : seules les armures ENDOSSÉES comptent.
@@ -669,6 +677,9 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                 bbaBrutDistance: rawBabProj,
                 forMod,
                 dexMod,
+                niveauBretteur: bonusClasse.niveauBretteur,
+                intMod,
+                armureBloquanteBretteur: bonusClasse.armureBloquante,
               })
               return (
                 <tr key={i} style={{ background: i % 2 === 0 ? '#fff' : '#f9f9f9' }}>

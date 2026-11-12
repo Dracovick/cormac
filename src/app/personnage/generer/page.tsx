@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { RACES_DND35 } from '@/lib/dnd35/races'
-import { CLASSES_DND35 } from '@/lib/dnd35/classes'
+import { CLASSES_BASE } from '@/lib/dnd35/classes'
 import { ALIGNEMENTS } from '@/lib/dnd35/rules'
 import { generateCharacter, type GenParams } from '@/lib/dnd35/generator'
 import { CharacterForm } from '@/components/creation/CharacterForm'
@@ -26,7 +26,7 @@ export default function GenererPersonnage() {
     setGenerated(generateCharacter(params))
   }
 
-  const classeInfo = CLASSES_DND35.find(c => c.nom === params.classe)
+  const classeInfo = CLASSES_BASE.find(c => c.nom === params.classe)
 
   if (generated) {
     return (
@@ -70,7 +70,7 @@ export default function GenererPersonnage() {
             <div>
               <label className={LBL}>Classe</label>
               <select className={SEL} value={params.classe} onChange={e => setParams(p => ({ ...p, classe: e.target.value }))}>
-                {CLASSES_DND35.map(c => (
+                {CLASSES_BASE.map(c => (
                   <option key={c.nom} value={c.nom}>{c.nom}</option>
                 ))}
               </select>

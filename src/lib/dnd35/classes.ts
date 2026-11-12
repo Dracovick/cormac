@@ -12,6 +12,20 @@ export interface ClasseInfo {
   niveauMaxSorts?: number
 }
 
+/**
+ * Classe de BASE venue d'un supplément.
+ *
+ * Elle se prend au 1er niveau et monte jusqu'au 20e, comme les onze du Manuel —
+ * ce n'est pas une classe de prestige. Mais elle n'est pas dans le Manuel, et
+ * mélanger les deux listes ferait passer pour officiel ce qui demande un
+ * supplément à la table : le sélecteur les garde séparées, et `source` dit quel
+ * livre il faut avoir.
+ */
+export interface ClasseBaseSupplementInfo extends ClasseInfo {
+  supplement: true
+  source: string
+}
+
 export const CLASSES_DND35: ClasseInfo[] = [
   { nom: 'Barbare',     de: 12, bab: 'elevee',  bonsSauvegardes: ['vigueur'],                     competencesParNiveau: 4, lanceurSorts: false },
   { nom: 'Barde',       de: 6,  bab: 'moyenne', bonsSauvegardes: ['reflexes', 'volonte'],          competencesParNiveau: 6, lanceurSorts: true,  caracteristiqueSorts: 'charisme',      niveauMaxSorts: 6 },
@@ -26,8 +40,28 @@ export const CLASSES_DND35: ClasseInfo[] = [
   { nom: 'Roublard',    de: 6,  bab: 'moyenne', bonsSauvegardes: ['reflexes'],                    competencesParNiveau: 8, lanceurSorts: false },
 ]
 
+/**
+ * Classes de base des suppléments.
+ *
+ * Bretteur (Swashbuckler) — Guerriers & Harceleurs, p. 11 : d10, BBA plein,
+ * Réflexes seuls en bonne sauvegarde, 4 + INT points de compétence, armes
+ * courantes et de guerre, armures légères (pas de bouclier pour ses pouvoirs).
+ */
+export const CLASSES_BASE_SUPPLEMENTS: ClasseBaseSupplementInfo[] = [
+  { nom: 'Bretteur', supplement: true, source: 'Guerriers & Harceleurs',
+    de: 10, bab: 'elevee', bonsSauvegardes: ['reflexes'], competencesParNiveau: 4, lanceurSorts: false },
+]
+
+/**
+ * Toutes les classes de base, Manuel puis suppléments — pour les sélecteurs et
+ * tout ce qui doit accepter un nom de classe de base sans trancher sa source.
+ */
+export const CLASSES_BASE: ClasseInfo[] = [...CLASSES_DND35, ...CLASSES_BASE_SUPPLEMENTS]
+
 export function getClasseInfo(nom: string): ClasseInfo | undefined {
-  return CLASSES_DND35.find(c => c.nom === nom) ?? PRESTIGE_CLASSES.find(c => c.nom === nom)
+  return CLASSES_DND35.find(c => c.nom === nom)
+    ?? CLASSES_BASE_SUPPLEMENTS.find(c => c.nom === nom)
+    ?? PRESTIGE_CLASSES.find(c => c.nom === nom)
 }
 
 // Emplacements de sorts par jour (index = niveau de sort 0-9), selon classe et niveau de personnage
