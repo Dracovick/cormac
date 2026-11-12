@@ -102,6 +102,20 @@ export type EntreeArme = {
   nom: string
   famille: string | null | undefined
   portee: number | null | undefined
+  /**
+   * Nom et famille de l'entrée de CATALOGUE rattachée, quand la ligne
+   * d'inventaire n'en porte pas. 160 des 198 lignes d'armes des fiches
+   * viennent de FileMaker avec `famille` NULL et un nom libre anglais
+   * (« Rapier +2 », « Mace (light) +3 ») : leur `catalogue_id` est le seul
+   * endroit où l'on sait quelle arme c'est.
+   *
+   * ⛔ Servent UNIQUEMENT à juger l'éligibilité à Attaque en finesse. Les
+   * brancher sur `estArmeADistance` ferait basculer des dizaines de lignes
+   * du BAB de corps à corps à celui de projectiles d'un coup : c'est un
+   * arbitrage d'André, pas un effet de bord.
+   */
+  nomCatalogue?: string | null
+  familleCatalogue?: string | null
   /** Dé de l'arme, « 1d8 ». Peut être nul sur une ligne d'inventaire. */
   degats: string | null | undefined
   /** Champ `bonus_magique` de la ligne d'inventaire. */
@@ -139,10 +153,69 @@ export type CalculArme = {
   ecartes: BonusEcarte[]
 }
 
+/** Minuscules, sans accent — les noms de dons et d'armes sont du texte libre. */
+function sansAccent(s: string): string {
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+}
+
+/**
+ * Le personnage porte-t-il Attaque en finesse ?
+ *
+ * Les noms de dons sont du texte libre importé de FileMaker : le même don
+ * s'écrit « Weapon finesse (dagger) », « Weapon Finesse (peut utiliser le
+ * bonus de Dex sur jets d'attaque) », « 3rd level feat: Weapon finesse
+ * (dagger) » ou « Acuité martiale (Dague) » selon la fiche. On reconnaît
+ * aussi « Acuité martiale », l'ancienne traduction maison du sélecteur.
+ */
+export function aAttaqueEnFinesse(dons: string[]): boolean {
+  return dons.some(d => /attaque en finesse|acuite martiale|weapon\s*finesse/.test(sansAccent(d)))
+}
+
+/**
+ * L'arme accepte-t-elle Attaque en finesse ?
+ *
+ * SRD 3.5 VF, Attaque en finesse : « Lorsqu'il utilise une arme légère, une
+ * rapière, un fouet ou une chaîne cloutée (et que cette arme est destinée à
+ * une créature de sa catégorie de taille), le personnage peut choisir
+ * d'appliquer son bonus de Dextérité à ses jets d'attaque plutôt que celui de
+ * Force. […] Les armes naturelles sont toujours considérées comme étant des
+ * armes légères. »
+ *
+ * ⚠ Le don ne se choisit PAS arme par arme : c'est la règle de la 3.0, et le
+ * Grimoire l'appliquait encore (le sélecteur ouvrait une liste d'armes).
+ *
+ * La famille du livre porte le maniement (« Arme courante — corps à corps
+ * légère »). Les trois exceptions nommées ne sont pas légères : on les
+ * reconnaît au nom, celui de la ligne comme celui du catalogue.
+ */
+const EXCEPTIONS_FINESSE = ['rapiere', 'fouet', 'chaine cloutee']
+
+export function armeEligibleFinesse(
+  nom: string,
+  nomCatalogue: string | null | undefined,
+  famille: string | null | undefined,
+): boolean {
+  const f = sansAccent(famille ?? '')
+  // « corps à corps légère », et le combat à mains nues (armes naturelles).
+  if (f.includes('legere') || f.includes('mains nues')) return true
+  const noms = [nom, nomCatalogue ?? ''].map(sansAccent)
+  return EXCEPTIONS_FINESSE.some(e => noms.some(n => n.includes(e)))
+}
+
 export function calculeArme(e: EntreeArme): CalculArme {
   const estADistance = estArmeADistance(e.famille, e.portee)
   const bbaBrut = estADistance ? e.bbaBrutDistance : e.bbaBrutCorps
-  const caracAtk = estADistance ? e.dexMod : e.forMod
+
+  // Attaque en finesse : au corps à corps, avec une arme qui l'accepte, la DEX
+  // remplace la FOR si elle est meilleure. Le livre dit « peut choisir » — à la
+  // table on prend toujours le meilleur des deux, et la ligne de détail nomme
+  // le don pour que le choix reste lisible.
+  const finesse =
+    !estADistance &&
+    aAttaqueEnFinesse(e.dons) &&
+    armeEligibleFinesse(e.nom, e.nomCatalogue, e.famille ?? e.familleCatalogue) &&
+    e.dexMod > e.forMod
+  const caracAtk = estADistance || finesse ? e.dexMod : e.forMod
 
   const { total: alteration, source, ecarte } = alterationEffective({
     bonusArme: e.bonusArme,
@@ -197,7 +270,13 @@ export function calculeArme(e: EntreeArme): CalculArme {
           ? 'BAB ≥ 6 : attaques multiples — la séquence vient du BAB seul (−5 chacune), tous les bonus s’appliquent à chaque attaque'
           : undefined,
       },
-      { label: estADistance ? 'DEX' : 'FOR', valeur: caracAtk },
+      {
+        label: estADistance ? 'DEX' : finesse ? 'DEX (Attaque en finesse)' : 'FOR',
+        valeur: caracAtk,
+        note: finesse
+          ? `don Attaque en finesse : la DEX remplace la FOR +${e.forMod} sur une arme légère (rapière, fouet et chaîne cloutée comprises)`
+          : undefined,
+      },
       ...(alteration > 0 ? [{ label: labelAlteration, valeur: alteration }] : []),
       ...ligneEcartee,
       ...attackItems.map(ligneDon),

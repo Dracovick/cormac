@@ -34,13 +34,19 @@ const FEATS_BASE: FeatDef[] = [
   // Eschew Materials. Au Manuel c'est un don GÉNÉRAL, pas de métamagie : il ne
   // coûte aucun niveau d'emplacement. L'ancien « Sort discret » le classait à tort.
   { nom: 'Dispense de composantes matérielles', categorie: 'Général', alias: ['Eschew Materials', 'Sort discret'], description: 'Lancer sans les composantes matérielles coûtant 1 po ou moins' },
+  // Weapon Finesse. Le sélecteur l'appelait « Acuité martiale » — une traduction
+  // maison qu'aucun livre ne porte, alors que le catalogue de la Bibliothèque
+  // avait déjà le nom du SRD. Et il ouvrait un sélecteur d'ARME : c'est la règle
+  // de la 3.0. La 3.5 l'applique à toute arme légère, plus trois exceptions
+  // nommées (rapière, fouet, chaîne cloutée) — aucun choix à faire.
+  // Le Manuel le classe GÉNÉRAL ; un guerrier peut le prendre en don de bonus.
+  { nom: 'Attaque en finesse',       categorie: 'Général', alias: ['Weapon Finesse', 'Acuité martiale'], prerequis: ['BBA+1'], description: 'Appliquer le modificateur de DEX au lieu de celui de FOR aux jets d\'attaque avec une arme légère, une rapière, un fouet ou une chaîne cloutée' },
 
   // ── COMBAT ──────────────────────────────────────────────────────────────────
   { nom: 'Arme de prédilection',              categorie: 'Combat', needsWeapon: true, description: '+1 aux jets d\'attaque avec l\'arme choisie' },
   { nom: 'Maîtrise martiale supérieure',      categorie: 'Combat', needsWeapon: true, description: '+1 attaque supplémentaire avec l\'arme choisie (Guerrier niv. 4)', prerequis: ['Arme de prédilection', 'BBA+4'] },
   { nom: 'Spécialisation martiale',           categorie: 'Combat', needsWeapon: true, description: '+2 aux dégâts avec l\'arme choisie (Guerrier niv. 4)', prerequis: ['Arme de prédilection', 'BBA+4'] },
   { nom: 'Spécialisation martiale supérieure',categorie: 'Combat', needsWeapon: true, description: '+2 dégâts supplémentaires avec l\'arme choisie (Guerrier niv. 8)', prerequis: ['Spécialisation martiale', 'BBA+8'] },
-  { nom: 'Acuité martiale',                   categorie: 'Combat', needsWeapon: true, description: 'Utiliser DEX au lieu de FOR pour les jets d\'attaque avec l\'arme choisie' },
   { nom: 'Attaque en puissance',              categorie: 'Combat', description: 'Échange jusqu\'à −5 en attaque contre +5 aux dégâts (à 2 mains : +10)', prerequis: ['FOR13'] },
   { nom: 'Fendant',                           categorie: 'Combat', description: 'Attaque supplémentaire gratuite si l\'ennemi est mis hors de combat', prerequis: ['BBA+1'] },
   { nom: 'Grand fendant',                     categorie: 'Combat', description: 'Attaque supplémentaire après chaque ennemi mis hors de combat', prerequis: ['Fendant', 'BBA+4'] },

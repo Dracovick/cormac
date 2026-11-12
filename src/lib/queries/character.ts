@@ -9,6 +9,13 @@ import * as schema from '@/db/schema'
 // — et le malus d'armure aux tests. Ce self-join ramène la mère avec la ligne.
 const skillCatalogue = alias(schema.skills, 'skill_catalogue')
 
+// Même histoire pour les armes, et c'est là que la famille du livre se trouve :
+// 160 des 198 lignes d'armes des fiches viennent de FileMaker avec `famille`
+// NULL et un nom libre souvent anglais (« Mace (light) +3 »). Leur `catalogue_id`
+// pointe l'entrée du Manuel, qui porte le maniement — « corps à corps légère »,
+// seule façon de savoir si Attaque en finesse s'applique.
+const weaponCatalogue = alias(schema.weapons, 'weapon_catalogue')
+
 export async function getCharacter(id: number) {
   const [character] = await getDb()
     .select()
@@ -66,9 +73,10 @@ export async function getCharacter(id: number) {
       .orderBy(schema.characterSpells.niveau, schema.spells.nom),
 
 
-    getDb().select({ charWeapon: schema.characterWeapons, weapon: schema.weapons })
+    getDb().select({ charWeapon: schema.characterWeapons, weapon: schema.weapons, catalogue: weaponCatalogue })
       .from(schema.characterWeapons)
       .innerJoin(schema.weapons, eq(schema.characterWeapons.armeId, schema.weapons.id))
+      .leftJoin(weaponCatalogue, eq(schema.weapons.catalogueId, weaponCatalogue.id))
       .where(eq(schema.characterWeapons.personnageId, id)),
 
     getDb().select({ charArmor: schema.characterArmor, armor: schema.armor })

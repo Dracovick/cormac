@@ -646,6 +646,8 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
               const calc = calculeArme({
                 nom: w.weapon.nom,
                 famille: w.weapon.famille,
+                nomCatalogue: w.catalogue?.nom ?? null,
+                familleCatalogue: w.catalogue?.famille ?? null,
                 portee: w.weapon.portee,
                 degats: w.weapon.degats,
                 bonusArme: w.charWeapon.bonusMagique ?? 0,

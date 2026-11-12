@@ -598,12 +598,14 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
         {weapons.length > 0 && (
           <Section titre="Armes">
             <div className="space-y-3">
-              {weapons.map(({ weapon, charWeapon }) => {
+              {weapons.map(({ weapon, charWeapon, catalogue }) => {
                 // Un seul moteur pour l'écran et le papier — sinon ils divergent,
                 // et ils ont divergé : voir l'en-tête de dnd35/attaque.
                 const calc = calculeArme({
                   nom: weapon.nom,
                   famille: weapon.famille,
+                  nomCatalogue: catalogue?.nom ?? null,
+                  familleCatalogue: catalogue?.famille ?? null,
                   portee: weapon.portee,
                   degats: weapon.degats,
                   bonusArme: charWeapon.bonusMagique ?? 0,
