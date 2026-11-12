@@ -147,11 +147,22 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   ]
   const diversInit = sommeBonus(diversInitSources)
   const diversExplique = [
-    { jet: 'Initiative', sources: diversInitSources },
+    { jet: 'Init.', sources: diversInitSources },
     { jet: 'Réflexes', sources: [...donsPassifs.reflexes, ...bonusClasse.reflexes] },
     { jet: 'Vigueur', sources: donsPassifs.vigueur },
     { jet: 'Volonté', sources: donsPassifs.volonte },
   ].filter(x => x.sources.length > 0)
+  // Le renvoi tient sur UNE ligne de la bande de titre, sinon la bande grandit et la
+  // feuille peut basculer sur une page de plus. D'où les abréviations : « don : » saute
+  // (la section Dons et Pouvoirs le dit déjà), et la condition d'un bonus conditionnel
+  // est réduite à sa première proposition.
+  const libelleDivers = (s: { label: string; value: number; conditional?: string }) => {
+    const nom = s.label.replace(/^don\s*:\s*/i, '')
+    const cond = s.conditional
+      ? ` (${s.conditional.split(',')[0].replace(/interm[ée]diaire/gi, 'interm.').trim()})`
+      : ''
+    return `${nom} ${fm(s.value)}${cond}`
+  }
 
   // ⛔ Même règle que la fiche : seules les armures ENDOSSÉES comptent.
   // `est_portee` n'était lu nulle part avant le 2026-10-25 — une armure du sac
@@ -606,7 +617,19 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
         <table style={{ ...TABLE, marginBottom: '0' }}>
           <thead>
             <tr>
-              <td colSpan={10} style={{ background: '#000', color: '#fff', fontWeight: 'bold', fontSize: '8pt', padding: '2px 6px', textTransform: 'uppercase' }}>Jets de sauvegarde</td>
+              {/* Le renvoi des cases « Divers » voyage DANS la bande du titre, et pas sur
+                  une ligne à elle : mesuré le 12 novembre, une ligne de 6 pt sous le
+                  tableau suffisait à faire passer la feuille de Lucky de 4 à 5 pages. La
+                  bande existe déjà et sa largeur est libre — le renvoi n'y coûte aucune
+                  hauteur. */}
+              <td colSpan={10} style={{ background: '#000', color: '#fff', fontWeight: 'bold', fontSize: '8pt', padding: '2px 6px', textTransform: 'uppercase' }}>
+                Jets de sauvegarde
+                {diversExplique.length > 0 && (
+                  <span style={{ fontWeight: 'normal', fontSize: '5.5pt', textTransform: 'none', color: '#ddd', marginLeft: '10px' }}>
+                    Divers — {diversExplique.map(({ jet, sources }) => `${jet} : ${sources.map(libelleDivers).join(', ')}`).join(' · ')}
+                  </span>
+                )}
+              </td>
             </tr>
             <tr>
               {['', 'Total', '=', 'Jet de base', '+', 'Caract.', '+', 'Magique', '+', 'Divers'].map((h, i) => (
@@ -620,18 +643,6 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
             <SaveRow label="Volonté (SAG)" sub="sagesse" total={volT} base={volBase} abilMod={sagMod} magic={savingThrows?.volonteMagique ?? 0} divers={sommeBonus(donsPassifs.volonte)} />
           </tbody>
         </table>
-        {/* D'où vient le « divers » : sans ce renvoi, le chiffre de la case se lit comme
-            une erreur de calcul, et c'est exactement la question qu'André a posée. */}
-        {diversExplique.length > 0 && (
-          <div style={{ fontSize: '6pt', color: '#333', padding: '1px 2px', lineHeight: '1.3' }}>
-            {diversExplique.map(({ jet, sources }) => (
-              <span key={jet} style={{ marginRight: '10px' }}>
-                <strong>Divers {jet} :</strong>{' '}
-                {sources.map(s => `${s.label} ${fm(s.value)}${s.conditional ? ` (${s.conditional})` : ''}`).join(' · ')}
-              </span>
-            ))}
-          </div>
-        )}
 
         {/* BBA */}
         <table style={{ ...TABLE, marginBottom: '0' }}>
