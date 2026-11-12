@@ -50,7 +50,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   const data = await getCharacter(Number(id))
   if (!data) notFound()
 
-  const { character, race, clan, classes, abilityScores, combatStats, savingThrows,
+  const { character, race, appellationRace, clan, classes, abilityScores, combatStats, savingThrows,
     skills, feats, spells, weapons, armor, magicItems, potions, scrolls, currency, gems, equipement, languages, companions,
     spellEffects } = data
 
@@ -62,8 +62,11 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   // ⚠ La case RACE fait 10 % de la largeur de la page. « Halfelin des
   // profondeurs » y boucle sur deux lignes, et une ligne de plus en tête de
   // feuille repousse tout le reste — c'est ce qui a fait passer Lucky de 4 à
-  // 5 pages en novembre. On y écrit donc la race du Manuel en gras et
-  // l'étiquette de la sous-race en petit, jamais le nom complet.
+  // 5 pages en novembre. On y écrit donc la race en gras et l'étiquette de la
+  // sous-race en petit, jamais le nom complet.
+  // ⚠ La race écrite est l'APPELLATION portée par la fiche — « Petite-gens »
+  // là où le joueur l'a choisie, et non « Halfelin ». Elle est plus longue de
+  // quatre caractères : la pagination se remesure au PDF, pas à l'écran.
   const sousRaceImprimee = getSousRaceInfo(race?.nom)
   const etiquetteCourte = sousRaceImprimee?.etiquette.replace(/\s*\(.*\)$/, '')
   const allClassNoms = classes.map(c => c.classe.nom)
@@ -416,7 +419,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
               <td style={{ border: '1px solid #000', padding: '3px 6px', fontSize: '14pt', fontWeight: 'bold', width: '30%' }}>{character.nom}</td>
               {td(
                 sousRaceImprimee
-                  ? <>{sousRaceImprimee.race}<span style={{ fontSize: '6pt', fontWeight: 'normal' }}> · {etiquetteCourte}</span></>
+                  ? <>{appellationRace ?? sousRaceImprimee.race}<span style={{ fontSize: '6pt', fontWeight: 'normal' }}> · {etiquetteCourte}</span></>
                   : (race?.nom ?? '—'),
                 { fontWeight: 'bold', width: '10%' })}
               {td(character.sexe ?? '—', { width: '6%' })}

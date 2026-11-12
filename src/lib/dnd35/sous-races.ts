@@ -630,12 +630,77 @@ export function sousRacesDe(race: string | null | undefined): SousRaceInfo[] {
 
 const normalise = (s: string) => s.trim().toLowerCase()
 
-/** Retrouve une sous-race par son nom complet ou l'un de ses alias. */
+// ─── LES DEUX APPELLATIONS D'UNE MÊME RACE ────────────────────────────────────
+//
+// ⚠ Décision d'André, 2026-11-12 : « On garde Petite-gens et Halfelin...
+// Plusieurs joueurs préfèrent le nom anglais! Tant que tout fonctionne avec les
+// deux! » — donc pas de fusion, mais une ÉQUIVALENCE qui traverse toute la
+// chaîne : menus, ajustements, traits raciaux, générateur de noms, papier.
+//
+// Le mécanisme ne connaît aucun nom en dur : il lit `RACES_DND35[].alias`. Le
+// jour où une autre race prend un second nom de table, elle marche du même coup.
+
+/**
+ * Toutes les appellations d'une race : son nom du Manuel d'abord, puis les noms
+ * de table. Un nom inconnu ressort seul — on n'invente pas de synonyme.
+ */
+export function appellationsDe(race: string | null | undefined): string[] {
+  if (!race) return []
+  const base = getRaceInfo(race)
+  return base ? [base.nom, ...(base.alias ?? [])] : [race]
+}
+
+const commencePar = (nom: string, prefixe: string) => normalise(nom).startsWith(normalise(prefixe))
+
+/**
+ * Le nom à ENREGISTRER pour une sous-race, sous l'appellation que la fiche porte
+ * déjà : « Petite-gens » + le vaillant donne « Petite-gens vaillant », et la
+ * fiche de Daniel ne devient pas un halfelin dans son dos.
+ *
+ * ⛔ Une sous-race dont le nom ne reprend PAS celui de la race parente — le
+ * drow, le duergar, le svirfnebelin, le haut-elfe — n'est jamais réécrite :
+ * « Elfe noir drow » n'existe dans aucun livre. Et une appellation inconnue ne
+ * compose rien : mieux vaut le nom canonique qu'un nom inventé.
+ */
+export function nomSousRaceSelon(appellation: string | null | undefined, sousRace: SousRaceInfo): string {
+  if (!appellation) return sousRace.nom
+  const app = appellation.trim()
+  const base = RACES_DND35.find(r => r.nom === sousRace.race)
+  if (!base || !appellationsDe(base.nom).some(a => normalise(a) === normalise(app))) return sousRace.nom
+  if (!commencePar(sousRace.nom, base.nom)) return sousRace.nom
+  return app + sousRace.nom.slice(base.nom.length)
+}
+
+/** Les noms sous lesquels une sous-race peut être écrite, appellations comprises. */
+function variantesDe(sousRace: SousRaceInfo): string[] {
+  const noms = [sousRace.nom, ...(sousRace.alias ?? [])]
+  for (const app of appellationsDe(sousRace.race)) {
+    const compose = nomSousRaceSelon(app, sousRace)
+    if (!noms.some(n => normalise(n) === normalise(compose))) noms.push(compose)
+  }
+  return noms
+}
+
+/**
+ * L'appellation de la race parente que ce nom porte réellement : « Petite-gens
+ * vaillant » dit Petite-gens, « cœurvaillant » ne dit rien et retombe sur le
+ * nom du Manuel.
+ */
+function appellationPortee(nom: string, sousRace: SousRaceInfo): string {
+  const candidates = appellationsDe(sousRace.race)
+  return candidates.find(a => commencePar(nom.trim(), a)) ?? sousRace.race
+}
+
+/**
+ * Retrouve une sous-race par son nom complet, l'un de ses alias, ou le même nom
+ * écrit sous l'autre appellation de sa race (« Petite-gens vaillant »).
+ */
 export function getSousRaceInfo(nom: string | null | undefined): SousRaceInfo | undefined {
   if (!nom) return undefined
   const n = normalise(nom)
   return SOUS_RACES_DND35.find(s => normalise(s.nom) === n)
     ?? SOUS_RACES_DND35.find(s => s.alias?.some(a => normalise(a) === n))
+    ?? SOUS_RACES_DND35.find(s => variantesDe(s).some(v => normalise(v) === n))
 }
 
 /**
@@ -643,11 +708,17 @@ export function getSousRaceInfo(nom: string | null | undefined): SousRaceInfo | 
  * Un nom qui n'est pas une sous-race connue ressort tel quel, sous-race nulle —
  * c'est le cas de toutes les fiches existantes, et c'est ce qui garantit qu'elles
  * ne bougent pas.
+ *
+ * ⭐ L'appellation portée est RENDUE TELLE QUELLE : « Petite-gens vaillant »
+ * donne { race: 'Petite-gens', … }, pour que le menu Race affiche le nom que le
+ * joueur a choisi. ⚠ Les tables indexées par race du Manuel (noms, langues)
+ * doivent donc canoniser par `getRaceInfo()` avant de s'en servir.
  */
 export function decomposerRace(nom: string | null | undefined): { race: string; sousRace: string | null } {
   const sr = getSousRaceInfo(nom)
-  if (sr) return { race: sr.race, sousRace: sr.nom }
-  return { race: nom ?? '', sousRace: null }
+  if (!sr) return { race: nom ?? '', sousRace: null }
+  const app = appellationPortee(nom ?? '', sr)
+  return { race: app, sousRace: nomSousRaceSelon(app, sr) }
 }
 
 /**

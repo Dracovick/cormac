@@ -89,7 +89,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const [data, potionsCatalogue] = await Promise.all([getCharacter(Number(id)), getPotionsCatalogue()])
   if (!data) notFound()
 
-  const { character, race, sousRace, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, scrolls, currency, gems, equipement, languages, creatures, companions, spellEffects } = data
+  const { character, race, sousRace, appellationRace, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, scrolls, currency, gems, equipement, languages, creatures, companions, spellEffects } = data
 
   // Valeur du trésor en gemmes, convertie en po (mithral à part : aucun taux)
   const totalGem = totalGemmes(gems.map(g => ({
@@ -1554,7 +1554,9 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             {sousRace && (
               <div className="mb-3 bg-stone-800/30 border border-stone-700/60 rounded-lg px-3 py-2">
                 <div className="text-amber-200 text-xs font-semibold">
-                  Sous-race de {sousRace.race} — {sousRace.source}
+                  {/* L'appellation que la fiche porte, pas le nom du Manuel :
+                      sur la fiche de Garret, « Sous-race de Petite-gens ». */}
+                  Sous-race de {appellationRace ?? sousRace.race} — {sousRace.source}
                 </div>
                 <p className="text-stone-400 text-xs mt-1 leading-relaxed">{sousRace.description}</p>
                 {sousRace.regions && <p className="text-stone-500 text-xs mt-1"><strong>Régions :</strong> {sousRace.regions}</p>}

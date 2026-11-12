@@ -12,7 +12,7 @@ import { TYPES_BONUS_CA } from '@/lib/dnd35/classe-armure'
 import { CLASSES_DND35, CLASSES_BASE_SUPPLEMENTS, getClasseInfo, getSortsSlotsParJour } from '@/lib/dnd35/classes'
 import { PRESTIGE_CLASSES, getPrestigeInfo, getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
 import { RACES_DND35 } from '@/lib/dnd35/races'
-import { sousRacesDe, getSousRaceInfo, getRaceOuSousRace, decomposerRace, picto, libelleEffet } from '@/lib/dnd35/sous-races'
+import { sousRacesDe, getSousRaceInfo, getRaceOuSousRace, decomposerRace, nomSousRaceSelon, picto, libelleEffet } from '@/lib/dnd35/sous-races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { sortsByClasseEtNiveau, niveauxMaxForClasse, type ClasseSortKey, type SortDnD } from '@/lib/dnd35/spells'
 import { getBab } from '@/lib/dnd35/rules'
@@ -1598,7 +1598,13 @@ function ChampRace({ race, onChange }: { race: string; onChange: (v: string) => 
             <option value="">— aucune —</option>
             {groupes.map(g => (
               <optgroup key={g.titre} label={g.titre}>
-                {g.items.map(s => <option key={s.nom} value={s.nom}>{s.etiquette}</option>)}
+                {/* ⭐ La valeur reprend l'appellation de la fiche : sur une fiche
+                    « Petite-gens », choisir le vaillant écrit « Petite-gens
+                    vaillant », jamais « Halfelin vaillant ». */}
+                {g.items.map(s => {
+                  const v = nomSousRaceSelon(parente, s)
+                  return <option key={s.nom} value={v}>{s.etiquette}</option>
+                })}
               </optgroup>
             ))}
           </select>

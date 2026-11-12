@@ -1,6 +1,6 @@
 import { getDb } from '@/db'
 import { eq } from 'drizzle-orm'
-import { getSousRaceInfo } from '@/lib/dnd35/sous-races'
+import { getSousRaceInfo, decomposerRace } from '@/lib/dnd35/sous-races'
 import { alias } from 'drizzle-orm/pg-core'
 import * as schema from '@/db/schema'
 
@@ -146,20 +146,43 @@ export async function getCharacter(id: number) {
   // c'est une fiche qui ment. La comparaison normalise l'apostrophe, parce
   // que la base porte l'apostrophe typographique d'André (U+2019) là où le
   // code écrit la droite.
+  //
+  // ⭐ Et la fiche peut porter l'autre appellation de la race : « Petite-gens
+  // vaillant » est le même vaillant que « Halfelin vaillant ». Ses traits
+  // propres sont alors lus sur la ligne canonique, et sa parente est cherchée
+  // sous l'appellation portée d'abord — une seule source dans les deux cas,
+  // jamais une copie de plus en base.
   const sousRace = getSousRaceInfo(race?.nom)
+  // L'appellation de la race parente telle que la fiche la porte — « Halfelin »
+  // ou « Petite-gens ». La fiche et la feuille imprimée l'écrivent toutes deux :
+  // afficher le nom du Manuel sur une fiche saisie sous l'autre nom ferait
+  // mentir la fiche sur le choix du joueur.
+  const appellationRace = sousRace ? decomposerRace(race?.nom).race : (race?.nom ?? null)
   let traitsRaciaux = racialFeatures
   if (sousRace) {
-    const [parente] = await getDb().select().from(schema.races).where(eq(schema.races.nom, sousRace.race))
-    if (parente) {
+    const traitsDe = async (nom: string) => {
+      const [r] = await getDb().select({ id: schema.races.id }).from(schema.races).where(eq(schema.races.nom, nom))
+      return r ? await getDb().select().from(schema.racialFeatures).where(eq(schema.racialFeatures.raceId, r.id)) : []
+    }
+    // Traits propres : ceux de la ligne de la fiche, ou ceux de la ligne
+    // canonique quand la fiche porte l'autre appellation (ligne créée à la
+    // volée par `findOrCreateByNom`, donc sans trait à elle).
+    const propres = racialFeatures.length > 0 || race?.nom === sousRace.nom
+      ? racialFeatures
+      : await traitsDe(sousRace.nom)
+    // Parente : sous l'appellation portée si cette ligne a des traits à elle
+    // (les 6 traits de « Petite-gens » sont saisis, comme ceux d'« Halfelin »),
+    // sinon sous le nom du Manuel.
+    const sousAppellation = appellationRace && appellationRace !== sousRace.race ? await traitsDe(appellationRace) : []
+    const heritesBruts = sousAppellation.length > 0 ? sousAppellation : await traitsDe(sousRace.race)
+    if (heritesBruts.length > 0 || propres !== racialFeatures) {
       const cle = (t: string) => t.trim().toLowerCase().replace(/[‘’ʼ]/g, "'")
       const retires = new Set((sousRace.remplace ?? []).map(cle))
-      const heritables = (await getDb().select().from(schema.racialFeatures).where(eq(schema.racialFeatures.raceId, parente.id)))
-        .filter(f => !retires.has(cle(f.nom)))
-      traitsRaciaux = [...heritables, ...racialFeatures]
+      traitsRaciaux = [...heritesBruts.filter(f => !retires.has(cle(f.nom))), ...propres]
     }
   }
 
-  return { character, race, sousRace: sousRace ?? null, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures: traitsRaciaux, spells, weapons, armor, magicItems, potions, scrolls, currency, gems, equipement, languages, creatures, companions, spellEffects }
+  return { character, race, sousRace: sousRace ?? null, appellationRace, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures: traitsRaciaux, spells, weapons, armor, magicItems, potions, scrolls, currency, gems, equipement, languages, creatures, companions, spellEffects }
 }
 
 export type CharacterData = NonNullable<Awaited<ReturnType<typeof getCharacter>>>

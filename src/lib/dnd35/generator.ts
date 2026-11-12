@@ -1,5 +1,6 @@
 import type { CharacterFormData } from '@/app/actions/character'
 import { getRaceOuSousRace, decomposerRace } from './sous-races'
+import { getRaceInfo } from './races'
 import { getClasseInfo, getSortsSlotsParJour, nombreDonsAttendus } from './classes'
 import { getModifier, xpPourNiveau } from './rules'
 import { COMPETENCES_DND35 } from './skills'
@@ -196,7 +197,11 @@ export function generateCharacter(params: GenParams): CharacterFormData {
   const raceInfo = getRaceOuSousRace(race)
   // Les tables de noms et de langues sont indexées par race du Manuel : un
   // « Halfelin vaillant » doit y retrouver « Halfelin », sinon il naît sans nom.
-  const { race: raceParente } = decomposerRace(race)
+  // ⚠ Et il faut CANONISER l'appellation : « Petite-gens » est le nom de table
+  // d'André pour la même race, et sans cette résolution ses halfelins
+  // recevaient des noms humains et le Commun pour seule langue.
+  const { race: appellation } = decomposerRace(race)
+  const raceParente = getRaceInfo(appellation)?.nom ?? appellation
   const classeInfo = getClasseInfo(classe)
   if (!raceInfo || !classeInfo) throw new Error('Race ou classe invalide')
 

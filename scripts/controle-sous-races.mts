@@ -18,8 +18,10 @@ import { fileURLToPath } from 'node:url'
 import { RACES_DND35, getRaceInfo } from '../src/lib/dnd35/races'
 import {
   SOUS_RACES_DND35, sousRacesDe, getSousRaceInfo, getRaceOuSousRace,
-  decomposerRace, fusionner, picto,
+  decomposerRace, fusionner, picto, appellationsDe, nomSousRaceSelon,
 } from '../src/lib/dnd35/sous-races'
+import { expandQuery } from '../src/lib/recherche-fiches'
+import { generateCharacter } from '../src/lib/dnd35/generator'
 
 const RACINE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const env = fs.readFileSync(path.join(RACINE, '.env.local'), 'utf8')
@@ -208,11 +210,23 @@ for (const sr of SOUS_RACES_DND35) {
   }
 }
 
-// ─── 12. Non-régression : aucune fiche ne doit porter une sous-race ───────────
+// ─── 12. Les fiches qui portent une sous-race sont toutes reconnues ───────────
+// ⚠ L'invariant d'origine disait « aucune fiche ne porte de sous-race » — vrai
+// au moment de la livraison, périmé dès qu'André en a saisi une (Bram
+// Verrelune [99], passé en halfelin vaillant le 2026-11-12). Un contrôle sans
+// condition de fin finit par mesurer autre chose que ce qu'il croit. Ce qui
+// doit rester vrai, c'est que toute sous-race PORTÉE soit lisible : reconnue
+// par `getSousRaceInfo`, et fusionnable en un profil complet.
+const toutesVariantes = SOUS_RACES_DND35.flatMap(s =>
+  appellationsDe(s.race).map(a => nomSousRaceSelon(a, s)))
 const fichesSousRace = await sql`
   select c.id, c.nom, r.nom as race from characters c join races r on r.id = c.race_id
-  where r.nom = any(${SOUS_RACES_DND35.map(s => s.nom)})`
-egal('Aucune fiche existante ne porte une sous-race (livraison additive)', fichesSousRace.length, 0)
+  where r.nom = any(${toutesVariantes})`
+for (const f of fichesSousRace) {
+  const sr = getSousRaceInfo(f.race)
+  verifier(`[${f.id}] ${f.nom} : « ${f.race} » est une sous-race reconnue`, !!sr)
+  verifier(`[${f.id}] ${f.nom} : « ${f.race} » rend un profil fusionné`, !!getRaceOuSousRace(f.race))
+}
 
 const totalFiches = await sql`select count(*)::int as n from characters`
 egal('74 fiches, inchangé', totalFiches[0].n, 74)
@@ -225,6 +239,116 @@ for (const r of RACES_DND35) {
     [ligne.bonus_for, ligne.bonus_dex, ligne.bonus_con, ligne.bonus_int, ligne.bonus_sag, ligne.bonus_cha],
     [r.bonusFor, r.bonusDex, r.bonusCon, r.bonusInt, r.bonusSag, r.bonusCha])
 }
+
+
+// ─── 14. LES DEUX APPELLATIONS D'UNE MÊME RACE ────────────────────────────────
+//
+// André, 2026-11-12 : « On garde Petite-gens et Halfelin... Plusieurs joueurs
+// préfèrent le nom anglais! Tant que tout fonctionne avec les deux! »
+//
+// « Fonctionne » se mesure, il ne se promet pas. Chaque maillon de la chaîne est
+// contrôlé sous les DEUX noms, et chaque contrôle positif a son témoin négatif :
+// une équivalence qui accepte tout n'équivaut rien.
+
+const VAILLANT = getSousRaceInfo('Halfelin vaillant')!
+const DROW = getSousRaceInfo('Drow')!
+verifier('Témoin de présence : le vaillant et le drow sont au module', !!VAILLANT && !!DROW)
+
+// 14.1 Les appellations, lues de RACES_DND35 et jamais écrites en dur
+egal('appellationsDe(Halfelin)', appellationsDe('Halfelin'), ['Halfelin', 'Petite-gens'])
+egal("appellationsDe(Petite-gens) — l'alias rend la même liste", appellationsDe('Petite-gens'), ['Halfelin', 'Petite-gens'])
+egal("⭐ témoin : Elfe n'a qu'une appellation", appellationsDe('Elfe'), ['Elfe'])
+egal('⭐ témoin : une race inconnue ne reçoit aucun synonyme', appellationsDe('Bariaure'), ['Bariaure'])
+egal('⭐ témoin : rien ne rend rien', appellationsDe(null), [])
+
+// 14.2 Le nom composé — c'est lui qui est ENREGISTRÉ sur la fiche
+egal('Petite-gens + vaillant = « Petite-gens vaillant »', nomSousRaceSelon('Petite-gens', VAILLANT), 'Petite-gens vaillant')
+egal('Halfelin + vaillant inchangé', nomSousRaceSelon('Halfelin', VAILLANT), 'Halfelin vaillant')
+egal('⭐ témoin : le drow ne reprend pas le nom de sa race, donc jamais réécrit', nomSousRaceSelon('Elfe', DROW), 'Drow')
+egal('⭐ témoin : une appellation étrangère à la race ne compose rien', nomSousRaceSelon('Bariaure', VAILLANT), 'Halfelin vaillant')
+egal('⭐ témoin : sans appellation, le nom canonique', nomSousRaceSelon(null, VAILLANT), 'Halfelin vaillant')
+
+// 14.3 La reconnaissance du nom composé
+verifier('« Petite-gens vaillant » est reconnu', getSousRaceInfo('Petite-gens vaillant')?.nom === 'Halfelin vaillant')
+verifier('… à la casse et aux espaces près', getSousRaceInfo('  petite-gens VAILLANT ')?.nom === 'Halfelin vaillant')
+verifier('« cœurvaillant » reste reconnu (alias du livre)', getSousRaceInfo('cœurvaillant')?.nom === 'Halfelin vaillant')
+verifier("⭐ témoin : « Petite-gens drow » n'existe pas", getSousRaceInfo('Petite-gens drow') === undefined)
+verifier("⭐ témoin : « Petite-gens » seul n'est pas une sous-race", getSousRaceInfo('Petite-gens') === undefined)
+
+// 14.4 ⭐ LE CONTRÔLE QUI COMPTE : les CALCULS sont identiques sous les deux noms
+for (const sr of sousRacesDe('Halfelin')) {
+  const compose = nomSousRaceSelon('Petite-gens', sr)
+  const a = getRaceOuSousRace(sr.nom)
+  const b = getRaceOuSousRace(compose)
+  egal(`${compose} : ajustements identiques à ${sr.nom}`,
+    [b?.bonusFor, b?.bonusDex, b?.bonusCon, b?.bonusInt, b?.bonusSag, b?.bonusCha, b?.deplacement, b?.visionNocturne, b?.classePreferee],
+    [a?.bonusFor, a?.bonusDex, a?.bonusCon, a?.bonusInt, a?.bonusSag, a?.bonusCha, a?.deplacement, a?.visionNocturne, a?.classePreferee])
+}
+egal('Les 5 sous-races de halfelins sont proposées sous les deux noms',
+  sousRacesDe('Petite-gens').map(s => s.nom), sousRacesDe('Halfelin').map(s => s.nom))
+verifier('⭐ témoin : il y en a bien 5, pas 0 (une liste vide rendrait tout vrai)', sousRacesDe('Petite-gens').length === 5)
+
+// 14.5 La décomposition rend l'appellation PORTÉE — c'est elle que les menus et
+// la feuille imprimée affichent.
+egal('« Petite-gens vaillant » se décompose en Petite-gens', decomposerRace('Petite-gens vaillant'), { race: 'Petite-gens', sousRace: 'Petite-gens vaillant' })
+egal('« Halfelin vaillant » inchangé (non-régression)', decomposerRace('Halfelin vaillant'), { race: 'Halfelin', sousRace: 'Halfelin vaillant' })
+egal('un alias du livre canonise sur le nom du Manuel', decomposerRace('cœurvaillant'), { race: 'Halfelin', sousRace: 'Halfelin vaillant' })
+egal('⭐ témoin : une race sans sous-race ressort telle quelle', decomposerRace('Petite-gens'), { race: 'Petite-gens', sousRace: null })
+egal('⭐ témoin : Bariaure ressort tel quel', decomposerRace('Bariaure'), { race: 'Bariaure', sousRace: null })
+
+// 14.6 Le générateur — noms et langues sont indexés par race du Manuel.
+// ⚠ C'est ici que « Petite-gens » donnait des noms HUMAINS et le Commun seul.
+const PRENOMS_HALFELINS = ['Andry', 'Cade', 'Eldon', 'Garret', 'Hob', 'Milo', 'Perrin']
+for (const race of ['Halfelin', 'Petite-gens', 'Petite-gens vaillant', 'Halfelin vaillant']) {
+  // ⚠ try/catch : le générateur JETTE sur une race qu'il ne reconnaît pas, et
+  // une exception ici emporterait le verdict de tout le script avec elle.
+  let g: ReturnType<typeof generateCharacter> | null = null
+  try { g = generateCharacter({ race, classe: 'Roublard', niveau: 3, alignement: 'Neutre', sexe: 'Masculin' }) }
+  catch (e) { echecs.push(`généré en « ${race} » : le générateur a jeté — ${(e as Error).message}`) }
+  if (g) {
+    const prenom = g.nom.split(' ')[0]
+    verifier(`généré en « ${race} » : prénom halfelin`, PRENOMS_HALFELINS.includes(prenom), `obtenu « ${prenom} »`)
+    egal(`généré en « ${race} » : langues du halfelin`, g.langues, ['Commun', 'Halfelin'])
+  }
+}
+const temoinHumain = generateCharacter({ race: 'Humain', classe: 'Roublard', niveau: 3, alignement: 'Neutre', sexe: 'Masculin' })
+verifier('⭐ témoin : un humain NE reçoit PAS un prénom halfelin',
+  !PRENOMS_HALFELINS.includes(temoinHumain.nom.split(' ')[0]), `obtenu « ${temoinHumain.nom} »`)
+egal('⭐ témoin : un humain ne reçoit pas les langues du halfelin', temoinHumain.langues, ['Commun'])
+
+// 14.7 La recherche de la liste des personnages
+egal('chercher « halfelin » cherche aussi petite-gens', [...expandQuery('halfelin')].sort(), ['halfelin', 'petite-gens'])
+egal('chercher « petite-gens » cherche aussi halfelin', [...expandQuery('petite-gens')].sort(), ['halfelin', 'petite-gens'])
+egal('⭐ témoin : les synonymes de classe ne sont pas écrasés', expandQuery('mage'), ['magicien', 'mage'])
+egal('⭐ témoin : un terme sans synonyme reste seul', expandQuery('elfe'), ['elfe'])
+
+// 14.8 En base : les deux lignes de race portent les MÊMES ajustements et les
+// MÊMES traits. ⚠ C'est la condition pour qu'une fiche ne change pas de chiffre
+// selon le nom sous lequel elle est saisie — et André garde les deux lignes.
+const lignesHalfelines = await sql`
+  select r.nom, r.bonus_for, r.bonus_dex, r.bonus_con, r.bonus_int, r.bonus_sag, r.bonus_cha,
+         r.deplacement_base, r.vision_nocturne,
+         (select count(*)::int from characters c where c.race_id = r.id) as fiches
+  from races r where r.nom in ('Halfelin', 'Petite-gens') order by r.nom`
+egal('Les deux lignes de race existent en base', lignesHalfelines.map(r => r.nom), ['Halfelin', 'Petite-gens'])
+if (lignesHalfelines.length === 2) {
+  const [h, pg] = lignesHalfelines
+  egal("Petite-gens porte les mêmes ajustements qu'Halfelin en base",
+    [pg.bonus_for, pg.bonus_dex, pg.bonus_con, pg.bonus_int, pg.bonus_sag, pg.bonus_cha, pg.deplacement_base, pg.vision_nocturne],
+    [h.bonus_for, h.bonus_dex, h.bonus_con, h.bonus_int, h.bonus_sag, h.bonus_cha, h.deplacement_base, h.vision_nocturne])
+  verifier('⭐ témoin de présence : les deux lignes portent des fiches',
+    h.fiches > 0 && pg.fiches > 0, `Halfelin ${h.fiches}, Petite-gens ${pg.fiches}`)
+}
+const traitsDeux = await sql`
+  select r.nom as race, f.nom
+  from racial_features f join races r on r.id = f.race_id
+  where r.nom in ('Halfelin', 'Petite-gens') order by f.nom`
+const clefTrait = (t: string) => t.trim().toLowerCase().replace(/[‘’ʼ]/g, "'")
+egal('Les traits raciaux des deux lignes sont les mêmes',
+  traitsDeux.filter(t => t.race === 'Petite-gens').map(t => clefTrait(t.nom)),
+  traitsDeux.filter(t => t.race === 'Halfelin').map(t => clefTrait(t.nom)))
+verifier('⭐ témoin de présence : il y a bien des traits à comparer',
+  traitsDeux.filter(t => t.race === 'Halfelin').length === 6)
 
 // ─── Verdict ──────────────────────────────────────────────────────────────────
 console.log(`\n${ok} contrôle(s) réussi(s), ${echecs.length} échec(s).`)

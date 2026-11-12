@@ -2,39 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
-
-// Termes alternatifs recherchés ensemble
-const SYNONYMES: Record<string, string[]> = {
-  'mage':         ['magicien', 'mage'],
-  'magicien':     ['magicien', 'mage'],
-  'prêtre':       ['clerc', 'prêtre'],
-  'pretre':       ['clerc', 'prêtre'],
-  'clerc':        ['clerc', 'prêtre'],
-  'voleur':       ['roublard', 'voleur'],
-  'roublard':     ['roublard', 'voleur'],
-  'rodeur':       ['rôdeur', 'ranger'],
-  'rôdeur':       ['rôdeur', 'ranger'],
-  'ranger':       ['rôdeur', 'ranger'],
-  'sorcier':      ['ensorceleur', 'sorcier'],
-  'ensorceleur':  ['ensorceleur', 'sorcier'],
-  'combattant':   ['guerrier', 'combattant'],
-  'guerrier':     ['guerrier', 'combattant'],
-  'paladin':      ['paladin', 'chevalier'],
-  'chevalier':    ['paladin', 'chevalier'],
-  'lb':           ['loyal bon'],
-  'ln':           ['loyal neutre'],
-  'lm':           ['loyal mauvais'],
-  'nb':           ['neutre bon'],
-  'nn':           ['neutre'],
-  'nm':           ['neutre mauvais'],
-  'cb':           ['chaotique bon'],
-  'cn':           ['chaotique neutre'],
-  'cm':           ['chaotique mauvais'],
-}
-
-function expandQuery(q: string): string[] {
-  return SYNONYMES[q] ?? [q]
-}
+import { expandQuery } from '@/lib/recherche-fiches'
 
 type Character = {
   id: number
