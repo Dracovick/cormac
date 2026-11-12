@@ -1232,7 +1232,9 @@ function SectionSorts({ data, update, derived }: { data: CharacterFormData; upda
           <span className="text-stone-500 text-xs self-center">Emplacements/jour :</span>
           {emplParNiveau.map(({ base, bonus, total }, i) => total > 0 && (
             <span key={i} className="text-xs px-2 py-0.5 rounded bg-stone-800 border border-stone-700"
-              title={bonus > 0 ? `${base} de base + ${bonus} de ${abrevSorts} ${formatMod(modSorts)}` : `${base} de base`}>
+              title={i === 0
+                ? `${base} de base — les oraisons ne reçoivent jamais de sort en bonus (table 1-1 du Manuel des Joueurs p. 8 : la colonne « 0 » est vide à toutes les lignes)`
+                : bonus > 0 ? `${base} de base + ${bonus} de ${abrevSorts} ${formatMod(modSorts)}` : `${base} de base`}>
               <span className="text-stone-500">niv.{i} </span>
               <span className="text-amber-400 font-bold">{total}</span>
               {bonus > 0 && <span className="text-emerald-500/80">+{bonus}</span>}
@@ -1240,7 +1242,7 @@ function SectionSorts({ data, update, derived }: { data: CharacterFormData; upda
           ))}
           <span className="text-stone-600 text-xs self-center ml-auto italic">
             {emplParNiveau.some(e => e.bonus > 0)
-              ? <>sorts en bonus de {abrevSorts} {formatMod(modSorts)} compris</>
+              ? <>sorts en bonus de {abrevSorts} {formatMod(modSorts)} compris{(emplParNiveau[0]?.total ?? 0) > 0 && <> — jamais aux oraisons</>}</>
               : <>{abrevSorts || 'carac.'} {formatMod(modSorts)} — aucun sort en bonus</>}
           </span>
         </div>

@@ -81,6 +81,35 @@ verifier('témoin de présence : le magicien 1 a bien 1 emplacement de base au 1
 verifier('aucun bonus aux oraisons d\'un magicien 1 à INT 20',
   getEmplacementsAvecBonus('Magicien', 1, 0, 5).bonus === 0)
 
+// ⛔ Le cas qu'André a soulevé le 12 novembre : Bram Verrelune, Prêtre 5, SAG 20.
+// Ses oraisons ne doivent PAS bouger — et le témoin qui rend ce contrôle concluant
+// est la ligne du dessous : au même score, le 1er niveau gagne bien 2 emplacements.
+// Sans ce témoin, un calcul tombé en panne rendrait « 0 partout » et passerait au vert.
+const bramOraisons = getEmplacementsAvecBonus('Prêtre', 5, 0, 5)
+egal('⭐ Bram [99] — Prêtre 5, SAG 20 : aucun bonus aux oraisons',
+  { bonus: bramOraisons.bonus, total: bramOraisons.total },
+  { bonus: 0, total: bramOraisons.base })
+verifier('… témoin : au même score, son 1er niveau gagne bien 2 emplacements',
+  getEmplacementsAvecBonus('Prêtre', 5, 1, 5).bonus === 2)
+
+// Balayage : la colonne « 0 » de la table 1-1 reste vide sur toutes les classes et
+// toutes les valeurs — avec un compteur de présence pour que ce vert veuille dire
+// quelque chose.
+let bonusVus = 0
+for (const classeB of ['Magicien', 'Prêtre', 'Druide', 'Ensorceleur', 'Barde']) {
+  for (let niv = 1; niv <= 20; niv++) {
+    for (let mod = 0; mod <= 17; mod++) {
+      if (getEmplacementsAvecBonus(classeB, niv, 0, mod).bonus !== 0) {
+        echecs.push(`oraisons : ${classeB} ${niv} à mod +${mod} reçoit un bonus`)
+      }
+      bonusVus += getEmplacementsAvecBonus(classeB, niv, 1, mod).bonus
+    }
+  }
+}
+verifier('⭐ aucun bonus aux oraisons — 5 classes × 20 niveaux × 18 modificateurs', true)
+verifier(`témoin de présence : ${bonusVus} emplacements de 1er niveau accordés dans le même balayage`,
+  bonusVus > 0)
+
 // ─── 5. Non-régression : un modificateur faible ne change RIEN ────────────────
 let inchanges = 0
 const CLASSES_LANCEUSES = ['Magicien', 'Prêtre', 'Druide', 'Ensorceleur', 'Barde', 'Paladin', 'Rôdeur']

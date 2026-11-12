@@ -166,9 +166,11 @@ export function PreparerSorts({ personnageId, classe, niveau, spells, availableS
                 return (
                   <span
                     key={n}
-                    title={bonus > 0
-                      ? `${base} de base + ${bonus} en bonus (${caracSorts ?? 'carac.'} ${modCarac >= 0 ? '+' : ''}${modCarac})`
-                      : `${base} de base`}
+                    title={n === 0
+                      ? `${base} de base — les oraisons ne reçoivent jamais de sort en bonus, quelle que soit la ${caracSorts ?? 'caractéristique'} (table 1-1 du Manuel des Joueurs p. 8 : la colonne « 0 » est vide à toutes les lignes)`
+                      : bonus > 0
+                        ? `${base} de base + ${bonus} en bonus (${caracSorts ?? 'carac.'} ${modCarac >= 0 ? '+' : ''}${modCarac})`
+                        : `${base} de base`}
                     className={`text-xs px-2 py-0.5 rounded-full border ${full ? 'bg-amber-900/40 border-amber-700/60 text-amber-300' : 'bg-stone-800 border-stone-700 text-stone-400'}`}
                   >
                     {n === 0 ? 'Oraisons' : `Niv.${n}`} {used}/{max}

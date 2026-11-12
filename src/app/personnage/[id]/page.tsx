@@ -882,6 +882,9 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             return { niveau: n, prepares: comptePreparations(spellsMapped, n), ...e }
           }).filter(c => c.total > 0 || c.prepares > 0)
           const bonusCaracTotal = compteurs.reduce((s, c) => s + c.bonus, 0)
+          // Le paladin et le rôdeur n'ont pas d'oraisons : inutile de leur expliquer
+          // une colonne de table qui ne les concerne pas.
+          const aOraisons = compteurs.some(c => c.niveau === 0 && c.total > 0)
           return (
             <Section
               key={casterC.characterClass.id}
@@ -916,9 +919,17 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                     {compteurs.map(({ niveau: n, prepares, base, bonus, total: emplacements }) => {
                       const epuise = prepares === 0 && emplacements > 0
                       const depasse = prepares > emplacements
-                      const detail = bonus > 0
-                        ? `${base} de base + ${bonus} (${inc.carac} ${inc.mod >= 0 ? '+' : ''}${inc.mod})`
-                        : `${base} de base`
+                      // ⛔ Les oraisons (niveau 0) ne reçoivent JAMAIS de sort en bonus, à aucune
+                      // valeur de caractéristique : dans la table 1-1 du Manuel des Joueurs p. 8,
+                      // la colonne « 0 » ne porte que des tirets, de +0 à +17 et au-delà. Le texte
+                      // du prêtre p. 51 le redit pour le sort de domaine (« à l'exception du
+                      // niveau 0 »). Sans cette mention, la ligne « + les sorts en bonus de SAG +5 »
+                      // juste en dessous se lit comme si elle valait pour tous les niveaux.
+                      const detail = n === 0
+                        ? `${base} de base — les oraisons ne reçoivent jamais de sort en bonus, quelle que soit la ${inc.carac} (table 1-1, p. 8 : la colonne « 0 » est vide à toutes les lignes)`
+                        : bonus > 0
+                          ? `${base} de base + ${bonus} (${inc.carac} ${inc.mod >= 0 ? '+' : ''}${inc.mod})`
+                          : `${base} de base`
                       return (
                         <span
                           key={n}
@@ -950,6 +961,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                       <>
                         Emplacements de base <strong>+ les sorts en bonus</strong> de {inc.carac} {inc.mod >= 0 ? '+' : ''}{inc.mod}
                         {' '}(<span className="text-emerald-500/80">+{bonusCaracTotal}</span> au total, table 1-1 du Manuel des Joueurs p. 8)
+                        {aOraisons && <>, <strong>jamais aux oraisons</strong> (la colonne « 0 » de cette table est vide)</>}
                       </>
                     ) : (
                       <>Emplacements <strong>de base</strong> — {inc.carac} {inc.mod >= 0 ? '+' : ''}{inc.mod} ne donne aucun sort en bonus</>

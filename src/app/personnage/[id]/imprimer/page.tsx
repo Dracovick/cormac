@@ -1134,6 +1134,13 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                       {emplacementsParClasse.filter(x => x.bonusTotal > 0).map(({ nomClasse, inc, bonusTotal }) =>
                         `, dont +${bonusTotal} en bonus de ${inc.carac} ${fm(inc.mod)}${emplacementsParClasse.length > 1 ? ` (${nomClasse})` : ''}`
                       ).join('')}
+                      {/* ⛔ Les oraisons ne reçoivent jamais de sort en bonus (table 1-1 p. 8,
+                          colonne « 0 » vide à toutes les lignes). Sans cette mention, « Or. 0/4 »
+                          juste au-dessus d'un « dont +4 en bonus de SAG +5 » se lit comme un oubli.
+                          Trois mots seulement : la note est en 7pt et une ligne de plus en tête
+                          d'un tableau repousse tout le reste de la feuille. */}
+                      {emplacementsParClasse.some(x => x.bonusTotal > 0 && x.compteurs.some(c => c.niveau === 0 && c.total > 0))
+                        && ', jamais aux oraisons'}
                       {' '}— hors emplacement de domaine.
                     </div>
                   </td>
