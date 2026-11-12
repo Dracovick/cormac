@@ -543,7 +543,10 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   <div className="bg-stone-800/60 rounded p-3 text-center">
                     <div className="text-amber-500 text-xs uppercase tracking-wide">{label}</div>
                     <div className="text-white text-2xl font-bold">{signedNum(totalJS)}</div>
-                    <div className="text-stone-500 text-xs">base {signedNum(base ?? 0)} · car. {signedNum(mod)}{sommeBonus(dons) > 0 ? ` · don ${signedNum(sommeBonus(dons))}` : ''}{(mag ?? 0) > 0 ? ` · mag. ${signedNum(mag ?? 0)}` : ''}</div>
+                    <div className="text-stone-500 text-xs">base {signedNum(base ?? 0)} · car. {signedNum(mod)}{/* « bonus » et non « don » : depuis le Bretteur, cette somme porte aussi
+                        des POUVOIRS DE CLASSE (la Grâce). Écrire « don » faisait chercher
+                        au joueur un don qu'il n'a pas — le panneau 🔍 nomme la vraie source. */}
+                    {sommeBonus(dons) > 0 ? ` · bonus ${signedNum(sommeBonus(dons))}` : ''}{(mag ?? 0) > 0 ? ` · mag. ${signedNum(mag ?? 0)}` : ''}</div>
                   </div>
                 </DetailBonus>
                 )
