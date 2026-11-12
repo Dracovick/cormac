@@ -59,14 +59,14 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
         <Section titre="⚡ Générer un personnage automatiquement">
           <p>Depuis la page d'accueil, cliquez sur <strong className="text-amber-200">⚡ Générer automatiquement</strong>. Choisissez :</p>
           <ul className="list-disc list-inside space-y-1 pl-2">
-            <li><strong>Race</strong> (Humain, Elfe, Nain, Halfelin, Demi-Elfe, Demi-Orque, Gnome)</li>
+            <li><strong>Race</strong> (Humain, Elfe, Nain, Halfelin — ou <em>Petite-gens</em>, le même peuple sous son autre nom —, Demi-Elfe, Demi-Orque, Gnome)</li>
             <li><strong>Classe</strong> (toutes les classes de base D&D 3.5)</li>
             <li><strong>Niveau</strong> (1 à 20)</li>
             <li><strong>Alignement</strong> et <strong>Sexe</strong></li>
           </ul>
           <p>Le système génère automatiquement : les caractéristiques (tableau standard [15,14,13,12,10,8] assigné par priorité de classe), les PV, les compétences, les dons, les sorts, une arme et une armure de départ, les langues raciales, et un nom aléatoire.</p>
           <p>Le formulaire s'ouvre pré-rempli — vous pouvez tout modifier avant de sauvegarder.</p>
-          <Tip><strong>Halfelin</strong> et <strong>Petite-gens</strong> sont <strong>deux noms de la même race</strong>, et les deux sont pleinement reconnus — c&apos;est une décision du maître de jeu : plusieurs joueurs préfèrent l&apos;un, plusieurs l&apos;autre. Une fiche écrite <em>Petite-gens</em> (le nom de la 3.0) reçoit bien −2 en Force, +2 en Dextérité, la taille P et les six traits raciaux, et le nom choisi reste affiché partout : sur la fiche, dans le menu, sur la feuille imprimée. <strong>Les sous-races suivent l&apos;appellation</strong> : sur une fiche <em>Petite-gens</em>, choisir le vaillant écrit <em>Petite-gens vaillant</em>, jamais <em>Halfelin vaillant</em>. Et la recherche de la liste des personnages cherche les deux noms ensemble — taper <em>halfelin</em> trouve aussi les Petite-gens, et l&apos;inverse.</Tip>
+          <Tip><strong>Halfelin</strong> et <strong>Petite-gens</strong> sont <strong>deux noms de la même race</strong>, et les deux sont pleinement reconnus — c&apos;est une décision du maître de jeu : plusieurs joueurs préfèrent l&apos;un, plusieurs l&apos;autre. Une fiche écrite <em>Petite-gens</em> (le nom de la 3.0) reçoit bien −2 en Force, +2 en Dextérité, la taille P et les six traits raciaux, et le nom choisi reste affiché partout : sur la fiche, dans le menu, sur la feuille imprimée. Le menu Race offre les deux noms : <em>Halfelin</em> et <em>Petite-gens (= Halfelin)</em>, à la création comme dans le générateur automatique, et on peut passer de l&apos;un à l&apos;autre à tout moment sans perdre sa sous-race. <strong>Les sous-races suivent l&apos;appellation</strong> : sur une fiche <em>Petite-gens</em>, choisir le vaillant écrit <em>Petite-gens vaillant</em>, jamais <em>Halfelin vaillant</em>. Et la recherche de la liste des personnages cherche les deux noms ensemble — taper <em>halfelin</em> trouve aussi les Petite-gens, et l&apos;inverse.</Tip>
           <Tip>Un bouton <strong>⚡ Recommencer</strong> flottant en haut à droite permet de revenir au formulaire de sélection sans perdre votre travail.</Tip>
         </Section>
 

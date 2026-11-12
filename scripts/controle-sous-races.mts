@@ -15,7 +15,7 @@ import { neon } from '@neondatabase/serverless'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { RACES_DND35, getRaceInfo } from '../src/lib/dnd35/races'
+import { RACES_DND35, getRaceInfo, OPTIONS_RACE } from '../src/lib/dnd35/races'
 import {
   SOUS_RACES_DND35, sousRacesDe, getSousRaceInfo, getRaceOuSousRace,
   decomposerRace, fusionner, picto, appellationsDe, nomSousRaceSelon, changerRace,
@@ -331,6 +331,20 @@ egal('⭐ témoin : — Autre — abandonne la sous-race', changerRace('', 'Half
 egal('⭐ témoin : sans sous-race courante, la race passe telle quelle', changerRace('Halfelin', null), 'Halfelin')
 egal('⭐ témoin : Elfe → Halfelin avec un drow abandonne (le drow n\'est pas halfelin)', changerRace('Halfelin', 'Drow'), 'Halfelin')
 egal('Elfe → Elfe avec un drow le garde', changerRace('Elfe', 'Drow'), 'Drow')
+
+// 14.10 Le menu Race offre les DEUX appellations — c'est la condition pour
+// qu'un joueur puisse CHOISIR son nom, et non seulement le garder.
+egal('Le menu Race compte 8 options pour 7 races', OPTIONS_RACE.length, 8)
+verifier('« Halfelin » est au menu', OPTIONS_RACE.some(o => o.valeur === 'Halfelin' && o.libelle === 'Halfelin'))
+verifier('« Petite-gens » est au menu, avec son équivalence',
+  OPTIONS_RACE.some(o => o.valeur === 'Petite-gens' && o.libelle === 'Petite-gens (= Halfelin)'))
+verifier('⭐ témoin : l\'option porte le nom NU en valeur, pas le libellé',
+  OPTIONS_RACE.every(o => getRaceInfo(o.valeur) !== undefined))
+egal('⭐ témoin : les 7 races du Manuel y sont toutes',
+  RACES_DND35.filter(r => OPTIONS_RACE.some(o => o.valeur === r.nom)).length, 7)
+verifier('⭐ témoin : aucune sous-race ne pollue le menu Race',
+  !OPTIONS_RACE.some(o => getSousRaceInfo(o.valeur) !== undefined))
+egal('⭐ témoin : chaque valeur est unique', new Set(OPTIONS_RACE.map(o => o.valeur)).size, OPTIONS_RACE.length)
 
 // 14.8 En base : les deux lignes de race portent les MÊMES ajustements et les
 // MÊMES traits. ⚠ C'est la condition pour qu'une fiche ne change pas de chiffre

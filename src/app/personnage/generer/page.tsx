@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { RACES_DND35 } from '@/lib/dnd35/races'
+import { OPTIONS_RACE } from '@/lib/dnd35/races'
 import { CLASSES_BASE } from '@/lib/dnd35/classes'
 import { ALIGNEMENTS } from '@/lib/dnd35/rules'
 import { generateCharacter, type GenParams } from '@/lib/dnd35/generator'
@@ -63,7 +63,7 @@ export default function GenererPersonnage() {
             <div>
               <label className={LBL}>Race</label>
               <select className={SEL} value={params.race} onChange={e => setParams(p => ({ ...p, race: e.target.value }))}>
-                {RACES_DND35.map(r => <option key={r.nom} value={r.nom}>{r.nom}</option>)}
+                {OPTIONS_RACE.map(o => <option key={o.valeur} value={o.valeur}>{o.libelle}</option>)}
               </select>
             </div>
 

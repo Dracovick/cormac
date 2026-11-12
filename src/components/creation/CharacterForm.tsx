@@ -11,7 +11,7 @@ import { getModifier, formatMod, ALIGNEMENTS, calcXpPenalite } from '@/lib/dnd35
 import { TYPES_BONUS_CA } from '@/lib/dnd35/classe-armure'
 import { CLASSES_DND35, CLASSES_BASE_SUPPLEMENTS, getClasseInfo, getSortsSlotsParJour } from '@/lib/dnd35/classes'
 import { PRESTIGE_CLASSES, getPrestigeInfo, getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
-import { RACES_DND35 } from '@/lib/dnd35/races'
+import { OPTIONS_RACE } from '@/lib/dnd35/races'
 import { sousRacesDe, getSousRaceInfo, getRaceOuSousRace, decomposerRace, nomSousRaceSelon, changerRace, picto, libelleEffet } from '@/lib/dnd35/sous-races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { sortsByClasseEtNiveau, niveauxMaxForClasse, type ClasseSortKey, type SortDnD } from '@/lib/dnd35/spells'
@@ -1565,10 +1565,15 @@ function ChampRace({ race, onChange }: { race: string; onChange: (v: string) => 
   const { race: parente, sousRace } = decomposerRace(race)
   const sousRaces = sousRacesDe(parente)
   const info = getSousRaceInfo(sousRace)
-  // Une race saisie à la main (« Bariaure », « Petite-gens ») doit rester
-  // visible dans le menu : sans cette option, le select s'affiche vide et le
-  // nom paraît perdu alors qu'il est bien enregistré.
-  const horsListe = parente && !RACES_DND35.some(r => r.nom === parente)
+  // ⭐ Le menu offre CHAQUE appellation, pas seulement le nom du Manuel :
+  // « Petite-gens » suit « Halfelin », parce qu'un joueur doit pouvoir le
+  // CHOISIR et non seulement le garder quand il y est déjà. Mesuré sur la
+  // production : une fois une fiche passée en « Halfelin », l'option
+  // « Petite-gens » avait disparu et on ne pouvait plus y revenir.
+  // Une race saisie à la main (« Bariaure », « Illithid ») doit rester visible
+  // dans le menu : sans cette option, le select s'affiche vide et le nom paraît
+  // perdu alors qu'il est bien enregistré.
+  const horsListe = parente && !OPTIONS_RACE.some(o => o.valeur === parente)
 
   const groupes: { titre: string; items: typeof sousRaces }[] = [
     { titre: 'Manuel des Monstres', items: sousRaces.filter(s => s.source === 'Manuel des Monstres') },
@@ -1584,7 +1589,7 @@ function ChampRace({ race, onChange }: { race: string; onChange: (v: string) => 
             réécrit : c'est la même race sous l'autre nom. Changer de race,
             elle, l'abandonne. */}
         <select className={SEL} value={parente} onChange={e => onChange(changerRace(e.target.value, sousRace))}>
-          {RACES_DND35.map(r => <option key={r.nom} value={r.nom}>{r.nom}</option>)}
+          {OPTIONS_RACE.map(o => <option key={o.valeur} value={o.valeur}>{o.libelle}</option>)}
           {horsListe && <option value={parente}>{parente}</option>}
           <option value="">— Autre —</option>
         </select>

@@ -30,3 +30,20 @@ export function getRaceInfo(nom: string): RaceInfo | undefined {
   return RACES_DND35.find(r => r.nom === nom)
     ?? RACES_DND35.find(r => r.alias?.includes(nom))
 }
+
+/**
+ * Les options du menu Race — chaque race, suivie de ses autres appellations.
+ *
+ * ⭐ « Petite-gens » doit pouvoir être CHOISI, pas seulement conservé quand une
+ * fiche le porte déjà : mesuré sur la production, une fiche passée en
+ * « Halfelin » ne pouvait plus revenir, l'option ayant disparu du menu. Le
+ * libellé dit que c'est le même peuple, pour qu'un joueur neuf ne croie pas à
+ * deux races distinctes.
+ *
+ * Une seule source pour les deux menus : le formulaire de fiche et le
+ * générateur automatique.
+ */
+export const OPTIONS_RACE: { valeur: string; libelle: string }[] = RACES_DND35.flatMap(r => [
+  { valeur: r.nom, libelle: r.nom },
+  ...(r.alias ?? []).map(a => ({ valeur: a, libelle: `${a} (= ${r.nom})` })),
+])
