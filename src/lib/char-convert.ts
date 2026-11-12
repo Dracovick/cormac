@@ -7,7 +7,7 @@ import { formatCritique } from '@/lib/dnd35/critique'
 
 export function charDataToForm(d: CharacterData): CharacterFormData {
   const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows,
-    skills, feats, weapons, armor, magicItems, potions, currency, gems, languages, companions, spells } = d
+    skills, feats, weapons, armor, magicItems, potions, currency, gems, equipement, languages, companions, spells } = d
   const firstClass = classes[0]
 
   const competences = COMPETENCES_DND35.map(c => {
@@ -113,6 +113,19 @@ export function charDataToForm(d: CharacterData): CharacterFormData {
       nom: g.nom, quantite: g.quantite ?? 1,
       valeur: parseFloat(g.valeur?.toString() ?? '0'),
       unite: g.unite ?? 'po', notes: g.notes ?? '',
+    })),
+    // ⚠ `?? null` et non `?? 0` : un objet dont on n'a pas noté le poids ne pèse
+    // pas zéro, il n'est pas pesé. Reconvertir l'absence en 0 ici la rendrait
+    // définitive au premier enregistrement — et la charge portée compterait
+    // alors un sac à dos à 0 kg comme une mesure.
+    equipement: equipement.map(e => ({
+      nom: e.nom,
+      quantite: e.quantite ?? 1,
+      emplacement: e.emplacement ?? '',
+      valeur: e.valeur != null ? parseFloat(e.valeur.toString()) : null,
+      unite: e.unite ?? 'po',
+      poids: e.poids != null ? parseFloat(e.poids.toString()) : null,
+      notes: e.notes ?? '',
     })),
     pp: parseFloat(currency?.pp?.toString() ?? '0'), po: parseFloat(currency?.po?.toString() ?? '0'),
     pe: parseFloat(currency?.pe?.toString() ?? '0'), pa: parseFloat(currency?.pa?.toString() ?? '0'),

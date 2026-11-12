@@ -10,7 +10,7 @@ import { SORTS_DND35, type ClasseSortKey } from '@/lib/dnd35/spells'
 import { getFeatDescription, getFeatPassiveBonuses, sommeBonus } from '@/lib/dnd35/feat-bonuses'
 import { getDomaineInfo } from '@/lib/dnd35/domains'
 import { caracteristiqueDe } from '@/lib/dnd35/skills'
-import { getChargeCategorie, getChargeLimites } from '@/lib/dnd35/encumbrance'
+import { getChargeCategorieKg, getChargeLimitesKg } from '@/lib/dnd35/encumbrance'
 import { formatCritique } from '@/lib/dnd35/critique'
 import { FEATS_DND35, verifierPrerequisDon } from '@/lib/dnd35/feats'
 import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
@@ -30,6 +30,8 @@ import { AjouterParchemin } from '@/components/fiche/AjouterParchemin'
 import { LireParchemin } from '@/components/fiche/LireParchemin'
 import { LiveCharge } from '@/components/fiche/LiveCharge'
 import { LiveNotes } from '@/components/fiche/LiveNotes'
+import { EquipementCourant } from '@/components/fiche/EquipementCourant'
+import { poidsEquipement } from '@/lib/equipement'
 import { InitiativeEnCours } from '@/components/fiche/InitiativeEnCours'
 import { PreparerSorts } from '@/components/fiche/PreparerSorts'
 import { AjouterSort } from '@/components/fiche/AjouterSort'
@@ -64,6 +66,11 @@ function signedNum(n: number) {
   return n >= 0 ? `+${n}` : `${n}`
 }
 
+/** Un poids en kilogrammes : « 16,5 », « 15 ». Virgule décimale, zéros retirés. */
+function kg(n: number) {
+  return n.toFixed(1).replace(/\.0$/, '').replace('.', ',')
+}
+
 // « aucun » (y compris « aucun (objet) », « aucun (voir description) »…) :
 // le sort n'appelle aucun jet de sauvegarde, donc pas de DD à afficher.
 // Mais « aucun ou Volonté, annule » garde son DD : une partie de l'effet se sauvegarde.
@@ -82,7 +89,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const [data, potionsCatalogue] = await Promise.all([getCharacter(Number(id)), getPotionsCatalogue()])
   if (!data) notFound()
 
-  const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, scrolls, currency, gems, languages, creatures, companions, spellEffects } = data
+  const { character, race, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, scrolls, currency, gems, equipement, languages, creatures, companions, spellEffects } = data
 
   // Valeur du trésor en gemmes, convertie en po (mithral à part : aucun taux)
   const totalGem = totalGemmes(gems.map(g => ({
@@ -259,13 +266,23 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   const pvAttenduMax = niveauTotal > 0 ? niveauTotal * (primaryDe + conMod) + pvDons : 0
   const pvAttenduMin = niveauTotal > 0 ? Math.max(niveauTotal, niveauTotal * (1 + conMod)) + pvDons : 0
 
-  // Encombrement simplifié (PHB 3.5, p.162) — armes + armures uniquement
+  // Encombrement (PHB 3.5, p.162) — armes, armures ET équipement courant.
+  // ⚠ Tout est en KILOGRAMMES : les poids de la base le sont (dague 0,50),
+  // la table du SRD est en livres, et la conversion se fait dans
+  // `getChargeCategorieKg`. Avant le 2026-11-12, les kg étaient comparés tels
+  // quels à une table en livres et l'affichage disait « lbs » — la charge
+  // ressortait optimiste d'un facteur 2. Voir encumbrance.ts.
+  // ⛔ Une ligne d'équipement NON PESÉE (poids NULL) ne compte pas : « non
+  // mesuré » n'est pas « ne pèse rien », et la compter à 0 ferait passer un
+  // inventaire entier pour une mesure.
+  const { total: poidsEquip, nonPesees: equipementNonPese } = poidsEquipement(
+    equipement.map(e => ({ quantite: e.quantite, poids: e.poids != null ? parseFloat(e.poids.toString()) : null })))
   const poidsTotal = [
     ...weapons.map(({ weapon }) => parseFloat(weapon.poids?.toString() ?? '0')),
     ...armor.map(({ armor: a }) => parseFloat(a.poids?.toString() ?? '0')),
-  ].reduce((sum, w) => sum + w, 0)
-  const chargeCategorie = getChargeCategorie(forT, poidsTotal)
-  const chargeLimites = getChargeLimites(forT)
+  ].reduce((sum, w) => sum + w, 0) + poidsEquip
+  const chargeCategorie = getChargeCategorieKg(forT, poidsTotal)
+  const chargeLimites = getChargeLimitesKg(forT)
 
   // Domaines du prêtre/druide
   const d1Info = combatStats?.domaine1 ? getDomaineInfo(combatStats.domaine1) : undefined
@@ -592,14 +609,24 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           {/* Encombrement */}
           {poidsTotal > 0 && (
             <div className="text-stone-600 text-xs mb-3 flex items-center gap-2 flex-wrap">
-              <span>Charge portée : <span className="text-stone-400">{poidsTotal.toFixed(1)} lbs</span></span>
+              <span>Charge portée : <span className="text-stone-400">{poidsTotal.toFixed(1).replace('.', ',')} kg</span></span>
               <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${
                 chargeCategorie === 'légère' ? 'bg-green-900/40 text-green-400' :
                 chargeCategorie === 'moyenne' ? 'bg-yellow-900/40 text-yellow-400' :
                 chargeCategorie === 'lourde' ? 'bg-orange-900/40 text-orange-400' :
                 'bg-red-900/40 text-red-400'
               }`}>{chargeCategorie}</span>
-              <span className="text-stone-700">légère ≤{chargeLimites.legere} · moy. ≤{chargeLimites.moyenne} · lourde ≤{chargeLimites.lourde}</span>
+              <span className="text-stone-700">légère ≤{kg(chargeLimites.legere)} · moy. ≤{kg(chargeLimites.moyenne)} · lourde ≤{kg(chargeLimites.lourde)} kg</span>
+              {poidsEquip > 0 && (
+                <span className="text-stone-700" title="Le poids saisi à la section 🎒 Équipement, armes et armures exclues">
+                  dont 🎒 {kg(poidsEquip)} kg
+                </span>
+              )}
+              {equipementNonPese > 0 && (
+                <span className="text-stone-700" title="Un objet sans poids saisi ne compte pas : « non pesé » n'est pas « ne pèse rien »">
+                  · {equipementNonPese} objet{equipementNonPese > 1 ? 's' : ''} non pesé{equipementNonPese > 1 ? 's' : ''}
+                </span>
+              )}
             </div>
           )}
 
@@ -1301,6 +1328,27 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             </Section>
           )}
         </div>
+
+        {/* ── ÉQUIPEMENT COURANT ──
+            Toujours affichée, même vide : le ➕ sert justement à inscrire ce qui
+            manquait. Pleine largeur parce que son formulaire s'ouvre EN PLACE —
+            demandé par André le 2026-11-12 : modifiable ici autant que dans
+            ✏️ Modifier. */}
+        <Section titre="🎒 Équipement">
+          <EquipementCourant
+            personnageId={character.id}
+            lignes={equipement.map(e => ({
+              id: e.id,
+              nom: e.nom,
+              quantite: e.quantite ?? 1,
+              emplacement: e.emplacement ?? '',
+              valeur: e.valeur != null ? parseFloat(e.valeur.toString()) : null,
+              unite: e.unite ?? 'po',
+              poids: e.poids != null ? parseFloat(e.poids.toString()) : null,
+              notes: e.notes ?? '',
+            }))}
+          />
+        </Section>
 
         {/* ── POTIONS + MONNAIE ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

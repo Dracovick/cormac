@@ -77,9 +77,11 @@ export function aFrappePerspicace(niveauBretteur: number): boolean {
  * que le joueur tranche le reste à la table.
  *
  * ⛔ La charge n'entre PAS dans ce test, et c'est délibéré : l'encombrement du
- * Grimoire ne pèse que les armes et les armures (voir `poidsTotal` sur la
- * fiche). Éteindre un pouvoir sur une charge qu'on sait sous-estimée rendrait
- * un faux négatif impossible à comprendre à la table.
+ * Grimoire pèse les armes, les armures et l'équipement courant saisi (voir
+ * `poidsTotal` sur la fiche), mais il ne peut rien peser de ce qui n'a pas été
+ * inscrit — et une ligne d'équipement sans poids saisi ne compte pas. Éteindre
+ * un pouvoir sur une charge qu'on sait incomplète rendrait un faux négatif
+ * impossible à comprendre à la table.
  */
 export function armureEteintBretteur(
   typesArmuresPortees: (string | null | undefined)[],

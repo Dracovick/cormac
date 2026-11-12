@@ -191,6 +191,28 @@ export const characterGems = pgTable('character_gems', {
   notes: text('notes'),
 })
 
+// Équipement courant — la corde, le miroir, les outils de voleur, les rations.
+// Volontairement SANS lien vers la table catalogue `equipment`, qui existe depuis
+// le premier schéma et contient 0 ligne : ici c'est le NOM qui appartient au
+// joueur (« corde de chanvre, 15 m », « rations pour 4 jours »), et passer par un
+// catalogue obligerait à muter une ligne partagée au nom du personnage qui
+// enregistre. Même raisonnement que `character_gems`. Voir drizzle/0017.
+export const characterEquipment = pgTable('character_equipment', {
+  id: serial('id').primaryKey(),
+  personnageId: integer('personnage_id').notNull().references(() => characters.id),
+  nom: varchar('nom', { length: 200 }).notNull(),
+  quantite: integer('quantite').default(1),
+  /** La colonne « Localisation » de la feuille imprimée : sac à dos, ceinture, botte. */
+  emplacement: varchar('emplacement', { length: 100 }),
+  /** Prix À LA PIÈCE. NULL = non chiffré, là où 0 dirait « gratuit ». */
+  valeur: numeric('valeur', { precision: 10, scale: 2 }),
+  // Unité monétaire de la valeur : pp | po | pe | pa | pc | pm
+  unite: varchar('unite', { length: 4 }).default('po'),
+  /** Poids À LA PIÈCE, en KILOGRAMMES — l'unité du catalogue d'armes et du papier. */
+  poids: numeric('poids', { precision: 6, scale: 2 }),
+  notes: text('notes'),
+})
+
 export const characterLanguages = pgTable('character_languages', {
   id: serial('id').primaryKey(),
   personnageId: integer('personnage_id').notNull().references(() => characters.id),

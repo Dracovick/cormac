@@ -26,6 +26,35 @@ export function getChargeLimites(str: number): { legere: number; moyenne: number
   return { legere: light, moyenne: light * 2, lourde: light * 3 }
 }
 
+// ─── Kilogrammes ─────────────────────────────────────────────────────────────
+// ⚠ La table ci-dessus est celle du SRD, en LIVRES. Les poids de la base, eux,
+// sont en KILOGRAMMES : mesuré au catalogue d'armes le 2026-11-12 — dague 0,50 ·
+// arbalète lourde 4,00 · masse d'armes lourde 4,00 · masse légère 2,00, soit
+// exactement les valeurs du Manuel des Joueurs 3.5 en version française. La
+// feuille imprimée dit de son côté « Poids (kg) » en toutes lettres.
+//
+// Comparer directement les deux rendait la charge optimiste d'un facteur 2 : un
+// sac de 25 kg s'affichait « 25 lbs » et restait « légère » là où il relève de
+// la charge moyenne. Mesuré avant correction sur les 74 fiches : 21 portent un
+// poids non nul, et UNE SEULE change de catégorie — Grimdar [86], 64 kg à FOR
+// 16, qui passe de « légère » à « moyenne ». Les 20 autres ne bougent pas.
+//
+// ⭐ Le facteur est 2, et non 2,2046 : le Manuel français convertit à raison de
+// 1 livre = 0,5 kg, et sa table d'encombrement suit la même règle (charge légère
+// à FOR 10 : 33 lb → 16,5 kg). Prendre la conversion physique exacte donnerait
+// des seuils qui ne sont dans aucun livre de la table.
+const LB_PAR_KG = 2
+
+export function getChargeCategorieKg(str: number, poidsKg: number): ChargeCategorie {
+  return getChargeCategorie(str, poidsKg * LB_PAR_KG)
+}
+
+/** Les trois seuils en kilogrammes — ceux de la table française du Manuel. */
+export function getChargeLimitesKg(str: number): { legere: number; moyenne: number; lourde: number } {
+  const l = getChargeLimites(str)
+  return { legere: l.legere / LB_PAR_KG, moyenne: l.moyenne / LB_PAR_KG, lourde: l.lourde / LB_PAR_KG }
+}
+
 // Effets des catégories de charge (PHB 3.5 p.162)
 export const EFFETS_CHARGE: Record<ChargeCategorie, string> = {
   légère:    'Aucun malus.',

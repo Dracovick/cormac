@@ -21,6 +21,7 @@ import { formatCritique } from '@/lib/dnd35/critique'
 import { FEATS_DND35, CATEGORIES_PAR_CLASSE, verifierPrerequisDon, type FeatCategorie, type FeatDef } from '@/lib/dnd35/feats'
 import { NOMS_DOMAINES } from '@/lib/dnd35/domains'
 import { UNITES_MONNAIE, totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
+import { nombreLisible, poidsEquipement } from '@/lib/equipement'
 
 // ─── Styles ──────────────────────────────────────────────────────────────────
 const INP = 'bg-stone-800 border border-stone-700 rounded px-2 py-1.5 text-stone-100 text-sm focus:outline-none focus:border-amber-500 w-full'
@@ -49,7 +50,7 @@ export const DEFAULT_FORM: CharacterFormData = {
   deplacement: null, karma: 0,
   reflexesMagique: 0, vigueurMagique: 0, volonteMagique: 0,
   competences: COMPETENCES_DND35.map(c => ({ skillId: 0, nom: c.nom, caracteristique: c.caracteristique, rangs: 0, divers: 0 })),
-  dons: [], armes: [], armures: [], objetsMagiques: [], potions: [], gemmes: [],
+  dons: [], armes: [], armures: [], objetsMagiques: [], potions: [], gemmes: [], equipement: [],
   pp: 0, po: 0, pe: 0, pa: 0, pc: 0, pm: 0,
   langues: [], sorts: [],
   historique: '', notes: '', compagnons: [],
@@ -779,6 +780,16 @@ function SectionEquipement({ data, update, derived, potionsCatalogue, objetsCata
   const delGem = (i: number) => update('gemmes', gemmes.filter((_, j) => j !== i))
   const setGem = (i: number, k: string, v: any) => { const a = [...gemmes]; (a[i] as any)[k] = v; update('gemmes', a) }
   const totalGem = totalGemmes(gemmes)
+  // Équipement courant (drizzle/0017) — nom libre, aucun catalogue. `poids` et
+  // `valeur` naissent à `null` : « non pesé » n'est pas « ne pèse rien », et un 0
+  // par défaut ferait entrer des sacs à dos de 0 kg dans la charge portée.
+  const equipement = data.equipement ?? []
+  const newEquip = () => update('equipement', [...equipement, { nom: '', quantite: 1, emplacement: '', valeur: null, unite: 'po', poids: null, notes: '' }])
+  const delEquip = (i: number) => update('equipement', equipement.filter((_, j) => j !== i))
+  const setEquip = (i: number, k: string, v: any) => { const a = [...equipement]; (a[i] as any)[k] = v; update('equipement', a) }
+  // `''` doit redevenir `null`, pas 0 : vider le champ efface la mesure.
+  const numOuNull = (v: string) => { const t = v.replace(',', '.').trim(); if (t === '') return null; const n = parseFloat(t); return Number.isFinite(n) ? n : null }
+  const poidsEquip = poidsEquipement(equipement)
   const addLang = () => { if (!newLang.trim()) return; update('langues', [...data.langues, newLang.trim()]); setNewLang('') }
 
   return (
@@ -1019,6 +1030,44 @@ function SectionEquipement({ data, update, derived, potionsCatalogue, objetsCata
           </div>
         ))}
         <button onClick={newPot} className={BTN_ADD}><span className="text-xl">+</span> Ajouter une potion</button>
+      </div>
+
+      {/* Équipement courant — la corde, le miroir, les outils de voleur, les rations.
+          Demandé par André le 2026-11-12. Les quatre colonnes de la table
+          ÉQUIPEMENTS de la feuille imprimée (Localisation, Valeur, Poids) sont
+          exactement les champs d'ici : elles étaient rendues vides depuis
+          toujours. Voir drizzle/0017. */}
+      <div className={CARD}>
+        <div className={SEC_H}>🎒 Équipement courant</div>
+        <p className="text-stone-500 text-xs mb-3 leading-snug">
+          Ce qui n&apos;est ni arme, ni armure, ni magique : corde, miroir, outils de voleur,
+          rations, torches, piquets. <strong>Poids et valeur s&apos;entendent à la pièce</strong> et
+          se laissent vides quand on ne les connaît pas — un zéro inventé compterait comme une mesure.
+        </p>
+        {equipement.map((e, i) => (
+          <div key={i} className="grid grid-cols-2 sm:grid-cols-9 gap-2 mb-2 items-end bg-stone-800/30 rounded p-2">
+            <div className="sm:col-span-2"><label className={LBL}>Objet</label><input className={INP} value={e.nom} onChange={ev => setEquip(i, 'nom', ev.target.value)} placeholder="Corde de chanvre (15 m)" /></div>
+            <div><label className={LBL}>Qté</label><input className={INP_NUM + ' w-full'} type="number" min={1} value={e.quantite} onChange={ev => setEquip(i, 'quantite', parseInt(ev.target.value) || 1)} /></div>
+            <div><label className={LBL}>Poids (kg)</label><input className={INP_NUM + ' w-full'} type="text" inputMode="decimal" value={e.poids ?? ''} onChange={ev => setEquip(i, 'poids', numOuNull(ev.target.value))} placeholder="—" /></div>
+            <div className="sm:col-span-2"><label className={LBL}>Localisation</label><input className={INP} value={e.emplacement} onChange={ev => setEquip(i, 'emplacement', ev.target.value)} placeholder="sac à dos" /></div>
+            <div><label className={LBL}>Valeur</label><input className={INP_NUM + ' w-full'} type="text" inputMode="decimal" value={e.valeur ?? ''} onChange={ev => setEquip(i, 'valeur', numOuNull(ev.target.value))} placeholder="—" /></div>
+            <div><label className={LBL}>Unité</label>
+              <select className={SEL} value={e.unite} onChange={ev => setEquip(i, 'unite', ev.target.value)}>
+                {UNITES_MONNAIE.map(u => <option key={u.code} value={u.code}>{u.label}</option>)}
+              </select>
+            </div>
+            <div className="flex items-end"><button onClick={() => delEquip(i)} className={BTN_DEL + ' mb-2 ml-auto'}>✕</button></div>
+            <div className="col-span-2 sm:col-span-9"><label className={LBL}>Note</label><input className={INP} value={e.notes} onChange={ev => setEquip(i, 'notes', ev.target.value)} placeholder="Trouvée dans la crypte, usée…" /></div>
+          </div>
+        ))}
+        <button onClick={newEquip} className={BTN_ADD}><span className="text-xl">+</span> Ajouter un objet</button>
+        {equipement.length > 0 && (
+          <div className="mt-3 text-xs text-stone-400">
+            Poids de l&apos;équipement :{' '}
+            <span className="text-amber-300 font-bold font-mono">{nombreLisible(poidsEquip.total)} kg</span>
+            <span className="text-stone-600 italic"> — il s&apos;ajoute aux armes et aux armures dans la charge portée de la fiche.</span>
+          </div>
+        )}
       </div>
 
       {/* Trésor */}
@@ -1394,6 +1443,7 @@ export function CharacterForm({ personnageId, initialData, potionsCatalogue, obj
     if (data.objetsMagiques.some(o => !o.nom.trim())) sansNom.push('un objet magique')
     if (data.potions.some(p => !p.nom.trim())) sansNom.push('une potion')
     if ((data.gemmes ?? []).some(g => !g.nom.trim())) sansNom.push('une gemme')
+    if ((data.equipement ?? []).some(e => !e.nom.trim())) sansNom.push('un objet d’équipement')
     if (data.compagnons.some(c => !c.nom.trim())) sansNom.push('un compagnon')
     if (sansNom.length > 0) {
       setError(`Ligne sans nom : ${sansNom.join(', ')}. Écrivez le nom (le texte pâle dans le champ n’est qu’un exemple), ou retirez la ligne avec ✕.`)

@@ -60,6 +60,12 @@ export interface CharacterFormData {
   objetsMagiques: { nom: string; type: string; emplacement: string; bonus: string; bonusType: string; description: string; charges: number }[]
   potions: { nom: string; effet: string; charges: number }[]
   gemmes: { nom: string; quantite: number; valeur: number; unite: string; notes: string }[]
+  // Équipement courant (drizzle/0017). `valeur` et `poids` sont `null` quand ils
+  // ne sont pas renseignés — pas 0 : « non pesé » et « ne pèse rien » sont deux
+  // états différents, et seul le premier doit rester hors de la charge portée.
+  // Facultatif comme `quantiteMunitions` : une fiche enregistrée depuis un écran
+  // plus ancien ne le porte pas, et son équipement ne doit pas disparaître.
+  equipement?: { nom: string; quantite: number; emplacement: string; valeur: number | null; unite: string; poids: number | null; notes: string }[]
   pp: number; po: number; pe: number; pa: number; pc: number; pm: number
   langues: string[]
   sorts: { nom: string; niveau: number; ecole: string; nombrePrepare: number; classe?: string }[]
@@ -534,6 +540,33 @@ export async function saveCharacter(
     }))
   }
 
+  // ── 15c. Équipement courant ──
+  // Écrit directement dans character_equipment, sans catalogue (drizzle/0017).
+  //
+  // ⚠ `undefined` ≠ `[]`, et la différence est tout l'intérêt de ce bloc.
+  // `[]` dit « le joueur a vidé la liste » → on efface. `undefined` dit « cet
+  // écran ne parle pas d'équipement » → on ne touche à rien. Le patron des
+  // gemmes (`data.gemmes ?? []` suivi d'un delete inconditionnel) effacerait
+  // tout l'équipement d'une fiche enregistrée depuis un appelant qui ignore le
+  // champ. Même famille de piège que `estPortee` sur les armures.
+  if (data.equipement !== undefined) {
+    ecritures.push(db.delete(schema.characterEquipment).where(eq(schema.characterEquipment.personnageId, charId)))
+    for (const eq_ of data.equipement) {
+      if (!eq_.nom.trim()) continue
+      ecritures.push(db.insert(schema.characterEquipment).values({
+        personnageId: charId,
+        nom: eq_.nom.trim(),
+        quantite: eq_.quantite > 0 ? eq_.quantite : 1,
+        emplacement: eq_.emplacement?.trim() || null,
+        // `null` et non `'0'` quand rien n'est saisi : voir drizzle/0017.
+        valeur: eq_.valeur != null && Number.isFinite(eq_.valeur) ? eq_.valeur.toString() : null,
+        unite: UNITES_MONNAIE.some(u => u.code === eq_.unite) ? eq_.unite : 'po',
+        poids: eq_.poids != null && Number.isFinite(eq_.poids) ? eq_.poids.toString() : null,
+        notes: eq_.notes?.trim() || null,
+      }))
+    }
+  }
+
   // ── 16. Langues ──
   ecritures.push(db.delete(schema.characterLanguages).where(eq(schema.characterLanguages.personnageId, charId)))
   for (const langNom of data.langues) {
@@ -625,6 +658,7 @@ export async function deleteCharacter(personnageId: number): Promise<void> {
     db.delete(schema.characterScrolls).where(eq(schema.characterScrolls.personnageId, personnageId)),
     db.delete(schema.characterCurrency).where(eq(schema.characterCurrency.personnageId, personnageId)),
     db.delete(schema.characterGems).where(eq(schema.characterGems.personnageId, personnageId)),
+    db.delete(schema.characterEquipment).where(eq(schema.characterEquipment.personnageId, personnageId)),
     db.delete(schema.characterLanguages).where(eq(schema.characterLanguages.personnageId, personnageId)),
     db.delete(schema.characterSpells).where(eq(schema.characterSpells.personnageId, personnageId)),
     db.delete(schema.characterSpellEffects).where(eq(schema.characterSpellEffects.personnageId, personnageId)),

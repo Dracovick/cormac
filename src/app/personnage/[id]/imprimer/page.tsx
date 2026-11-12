@@ -19,6 +19,7 @@ import { renvoiCasesDivers } from '@/lib/dnd35/renvoi-divers'
 import { estArmeADistance } from '@/lib/dnd35/weapons'
 import { effetsDuDon } from '@/lib/dnd35/dons-effets'
 import { nomParchemin } from '@/lib/parchemins'
+import { nombreLisible, poidsLotEquipement } from '@/lib/equipement'
 
 export const dynamic = 'force-dynamic'
 
@@ -50,7 +51,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   if (!data) notFound()
 
   const { character, race, clan, classes, abilityScores, combatStats, savingThrows,
-    skills, feats, spells, weapons, armor, magicItems, potions, scrolls, currency, gems, languages, companions,
+    skills, feats, spells, weapons, armor, magicItems, potions, scrolls, currency, gems, equipement, languages, companions,
     spellEffects } = data
 
   const firstClass = classes[0]
@@ -323,6 +324,20 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
     notes: g.notes ?? '',
   }))
   const totalGem = totalGemmes(gemmes)
+
+  // Équipement courant (drizzle/0017) — il remplit les colonnes Localisation,
+  // Valeur et Poids de la table ÉQUIPEMENTS, rendues vides depuis toujours.
+  // ⚠ `null` reste une cellule VIDE : sur une feuille, « 0 kg » se lit comme une
+  // pesée, et c'est la case qu'on remplit au crayon quand on la connaîtra.
+  const equipLignes = equipement.map(e => ({
+    nom: e.nom,
+    quantite: e.quantite ?? 1,
+    emplacement: e.emplacement ?? '',
+    valeur: e.valeur != null ? parseFloat(e.valeur.toString()) : null,
+    unite: e.unite ?? 'po',
+    poids: e.poids != null ? parseFloat(e.poids.toString()) : null,
+    notes: e.notes ?? '',
+  }))
 
   const td = (content: React.ReactNode, style?: React.CSSProperties) => (
     <td style={{ border: '1px solid #000', padding: '2px 4px', fontSize: '8pt', ...style }}>{content}</td>
@@ -994,7 +1009,27 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                 <td style={{ border: '1px solid #ddd', padding: '2px 6px' }}></td>
               </tr>
             ))}
-            {Array.from({ length: Math.max(0, 20 - armor.length - potions.length - scrolls.length) }).map((_, i) => (
+            {/* Équipement courant : le seul bloc de cette table dont les trois
+                colonnes de droite portent un chiffre. Elles restent vides quand
+                il n'a pas été saisi — c'est la case à remplir au crayon. */}
+            {equipLignes.map((e, i) => (
+              <tr key={`eq-${i}`} style={{ background: (armor.length + potions.length + scrolls.length + i) % 2 === 0 ? '#fff' : '#f5f5f5' }}>
+                <td style={{ border: '1px solid #ddd', padding: '2px 6px', fontSize: '9pt' }}>
+                  {e.nom}{e.quantite > 1 ? ` ×${e.quantite}` : ''}{e.notes ? ` — ${e.notes}` : ''}
+                </td>
+                <td style={{ border: '1px solid #ddd', padding: '2px 6px', fontSize: '8pt', textAlign: 'center' }}>{e.emplacement}</td>
+                <td style={{ border: '1px solid #ddd', padding: '2px 6px', fontSize: '8pt', textAlign: 'center' }}>
+                  {e.valeur != null ? `${nombreLisible(e.valeur)}${(e.unite || 'po') !== 'po' ? ` ${uniteCourte(e.unite)}` : ''}` : ''}
+                </td>
+                <td style={{ border: '1px solid #ddd', padding: '2px 6px', fontSize: '8pt', textAlign: 'center' }}>
+                  {e.poids != null ? nombreLisible(poidsLotEquipement(e)) : ''}
+                </td>
+              </tr>
+            ))}
+            {/* Les lignes vides se résorbent à mesure que la table se remplit :
+                la HAUTEUR du tableau ne change pas tant qu'on reste sous 20
+                lignes, donc la pagination ne bouge pas. */}
+            {Array.from({ length: Math.max(0, 20 - armor.length - potions.length - scrolls.length - equipLignes.length) }).map((_, i) => (
               <tr key={`ee-${i}`}><td colSpan={4} style={{ border: '1px solid #eee', height: '18px' }}></td></tr>
             ))}
           </tbody>
