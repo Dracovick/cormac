@@ -103,7 +103,10 @@ export const characterWeapons = pgTable('character_weapons', {
   armeId: integer('arme_id').notNull(),
   bonusMagique: integer('bonus_magique').default(0),
   coteDeForce: integer('cote_de_force'),
+  /** Bonus d'ALTÉRATION des munitions : flèches +1, carreaux +2. Jamais plus de +5. */
   bonusMunitions: integer('bonus_munitions'),
+  /** Combien de projectiles au carquois. NULL = non suivi, 0 = épuisé. Voir drizzle/0015. */
+  quantiteMunitions: integer('quantite_munitions'),
   proprietesSpeciales: text('proprietes_speciales'),
   quantite: integer('quantite').default(1),
 })

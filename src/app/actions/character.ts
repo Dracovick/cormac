@@ -47,7 +47,9 @@ export interface CharacterFormData {
 
   competences: { skillId: number; nom: string; caracteristique: string; rangs: number; divers: number }[]
   dons: string[]
-  armes: { nom: string; degats: string; crit: string; typeDegats: string; portee: string; bonusMagique: number; coteDeForce?: number | null; bonusMunitions?: number | null; quantite: number }[]
+  // `quantiteMunitions` est facultatif : une fiche saisie avant l'ajout de la
+  // case ne le porte pas, et ses projectiles ne doivent pas disparaître.
+  armes: { nom: string; degats: string; crit: string; typeDegats: string; portee: string; bonusMagique: number; coteDeForce?: number | null; bonusMunitions?: number | null; quantiteMunitions?: number | null; quantite: number }[]
   // `estPortee` est facultatif : une fiche saisie avant l'ajout de la case ne
   // le porte pas, et son armure doit rester portée comme avant.
   armures: { nom: string; type: string; bonusCA: number; maxDex: number; malusComp: number; bonusMagique: number; estPortee?: boolean }[]
@@ -382,6 +384,10 @@ export async function saveCharacter(
       bonusMagique: arme.bonusMagique ?? 0,
       coteDeForce: arme.coteDeForce ?? null,
       bonusMunitions: arme.bonusMunitions ?? null,
+      // ⚠ Sans ce transport, enregistrer une modification VIDERAIT le carquois :
+      // `saveCharacter` réécrit la table de fond en comble. Même piège que
+      // `estPortee` sur les armures, payé le 2026-10-25.
+      quantiteMunitions: arme.quantiteMunitions ?? null,
       quantite: arme.quantite ?? 1,
     }))
   }

@@ -209,7 +209,7 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
         </Section>
 
         <Section titre="🗡️ Onglet Équipement — arc composite et munitions">
-          <p>Chaque arme a une <strong>rangée principale</strong> (Nom, Dégâts, Crit, Type, +Mag, Qté) et une <strong>sous-rangée optionnelle</strong> pour les arcs et arbalètes.</p>
+          <p>Chaque arme a une <strong>rangée principale</strong> (Nom, Dégâts, Crit, Type, +Mag, Qté) et une <strong>sous-rangée optionnelle</strong> pour les arcs, arbalètes et frondes (côte de Force, bonus des munitions, quantité de munitions).</p>
           <Row label="+Mag (arme)">Bonus d'enchantement magique de l'arme elle-même. S'ajoute à l'attaque ET aux dégâts.</Row>
 
           <p className="font-semibold text-stone-400 mt-3">Arc composite</p>
@@ -217,9 +217,11 @@ export default async function AideCreation({ searchParams }: { searchParams: Pro
           <Row label="Exemple">Pour un arc long composite (Force +3) : entrez <strong>Côte Force = 3</strong> et <strong>+Mag = 0</strong>. Si votre FOR mod est +5, seul +3 s'ajoute aux dégâts. Pour un arc magique en plus, entrez aussi +Mag.</Row>
           <Tip>La fiche affiche automatiquement <span className="font-mono text-stone-300">(Force +3)</span> après le nom quand une côte est renseignée, et <span className="font-mono text-stone-300">+2</span> en suffixe pour un bonus magique.</Tip>
 
-          <p className="font-semibold text-stone-400 mt-3">Munitions magiques (flèches, bolts)</p>
-          <Row label="Munitions +Mag">Bonus d'altération des flèches ou carreaux utilisés. S'ajoute à l'attaque ET aux dégâts. Pas besoin de créer une arme séparée pour les flèches. ⚠ <strong>Il ne se cumule pas avec le bonus de l'arc</strong> : la fiche garde le meilleur des deux et barre l'autre, comme le livre l'impose.</Row>
-          <Row label="Exemple">Flèches +2 sur un arc +1 → entrez <strong>Munitions +Mag = 2</strong>. Le détail affichera <span className="font-mono text-stone-300">munitions magiques +2</span>, et l'<span className="font-mono text-stone-300">arme magique +1</span> barrée en dessous : « ne se cumule pas, les munitions +2 l'emportent ». Le total d'altération est <strong>+2</strong>.</Row>
+          <p className="font-semibold text-stone-400 mt-3">Munitions — deux cases, deux grandeurs</p>
+          <p>⚠️ <strong>Ne confondez pas les deux.</strong> Jusqu'au 12 novembre 2026, il n'y avait qu'une case, étiquetée « Munitions +Mag », et son nom se lisait aussi bien comme « les munitions, et leur magie ». Deux fiches y avaient saisi <strong>20</strong> pour vingt projectiles : leur arme affichait <strong>+27 à l'attaque et 1d4+20 aux dégâts</strong>, elle touchait sur un 1 naturel. Les cases sont désormais séparées et nommées pour ce qu'elles sont.</p>
+          <Row label="Bonus munit.">Bonus d'<strong>altération magique</strong> des flèches ou carreaux : des flèches +1, des carreaux +2. <strong>Jamais plus de +5</strong> au Manuel. S'ajoute à l'attaque ET aux dégâts. Pas besoin de créer une arme séparée pour les flèches. ⚠ <strong>Il ne se cumule pas avec le bonus de l'arc</strong> : la fiche garde le meilleur des deux et barre l'autre, comme le livre l'impose.</Row>
+          <Row label="Munit. (qté)">Combien de projectiles au carquois : 20 flèches, 20 billes, 10 carreaux. <strong>N'entre dans aucun calcul</strong> — c'est un compte à la table, affiché sur la fiche et sur la feuille imprimée pour qu'on le biffe en jouant. Laissez vide si vous ne les comptez pas : vide veut dire « non suivi », là où 0 dirait « il n'en reste plus ».</Row>
+          <Row label="Exemple">Flèches +2 sur un arc +1, et vingt flèches au carquois → <strong>Bonus munit. = 2</strong> et <strong>Munit. (qté) = 20</strong>. Le détail d'attaque affichera <span className="font-mono text-stone-300">munitions magiques +2</span>, et l'<span className="font-mono text-stone-300">arme magique +1</span> barrée en dessous : « ne se cumule pas, les munitions +2 l'emportent ». Le total d'altération est <strong>+2</strong> — le 20, lui, ne touche à rien.</Row>
         </Section>
 
         <Section titre="🗡️ Onglet Équipement — objets magiques, bonus et charges">

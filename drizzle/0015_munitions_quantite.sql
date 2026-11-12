@@ -1,0 +1,31 @@
+-- COMBIEN DE BILLES, ET NON « +20 À L'ATTAQUE ».
+--
+-- André, le 2026-11-12, confirmant une anomalie signalée la nuit même sur la
+-- fronde de Bram Verrelune : « oui, il s'agit bien de 20 billes ».
+--
+-- La fiche n'avait qu'une case pour les munitions, `bonus_munitions`, et elle
+-- porte le bonus d'ALTÉRATION MAGIQUE — des flèches +1, des carreaux +2. Son
+-- étiquette au formulaire disait « Munitions +Mag », ce qui se lit aussi bien
+-- comme « les munitions, et leur magie ». Un nombre de projectiles saisi là
+-- part droit dans le jet d'attaque : la fronde de Bram affichait +27 et
+-- 1d4+20, elle touchait sur un 1 naturel.
+--
+-- Deux lignes sur les 198 étaient dans ce cas (mesuré le 2026-11-12) :
+--   [99] Bram Verrelune — Fronde, munitions +20
+--   [98] Azadrielle Pétales de Lune — Arbalète légère, munitions +20
+-- Les deux autres lignes à munitions non nulles portent un vrai bonus magique
+-- (+2) : l'arc de Cormac [1] et celui d'Ariane [21]. Au Manuel, une arme ou une
+-- munition ne dépasse pas +5 — un 20 n'est jamais un bonus d'altération.
+--
+-- ── Pourquoi une colonne de plus, et non la colonne `quantite` existante ────
+-- `quantite` compte les ARMES de la ligne (deux dagues, trois javelines). Y
+-- mettre 20 dirait « vingt frondes », ce qui est faux et change l'encombrement.
+-- Le nombre de projectiles est une grandeur distincte de l'arme qui les lance.
+--
+-- ── Pourquoi NULL est permis ────────────────────────────────────────────────
+-- La plupart des armes n'ont pas de munitions, et un carquois dont on ne compte
+-- pas les flèches est une situation de jeu normale : NULL dit « non suivi »,
+-- là où 0 dirait « il n'en reste plus ». À la table, les deux ne se jouent pas
+-- pareil — et le carquois de Cormac est une réserve infinie, tranché par André
+-- le 2026-10-10.
+ALTER TABLE "character_weapons" ADD COLUMN IF NOT EXISTS "quantite_munitions" integer;

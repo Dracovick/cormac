@@ -45,7 +45,10 @@ import { JournalDrawer } from '@/components/fiche/JournalDrawer'
 import { ButinDrawer } from '@/components/fiche/ButinDrawer'
 import { getPotionsCatalogue } from '@/app/actions/character'
 import { sourcesCASorts, contributionsSortsDepuisCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
-import { calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
+import { armeEligibleFinesse, calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
+import { estArmeADistance } from '@/lib/dnd35/weapons'
+import { effetsDuDon } from '@/lib/dnd35/dons-effets'
+import { EffetsDon } from '@/components/fiche/EffetsDon'
 import { apercuDescription } from '@/lib/apercu'
 import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies, libelleTypeBonus } from '@/lib/dnd35/classe-armure'
 import { getDb } from '@/db'
@@ -670,6 +673,14 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                           <span>Critique : <span className="text-amber-300">{formatCritique(weapon.critiqueMin, weapon.critiqueMult)}</span></span>
                           {weapon.portee && <span>Portée : <span className="text-amber-300">{weapon.portee}m</span></span>}
                           <span>Type : {weapon.typeDegats}</span>
+                          {/* Le carquois. Un compte à la table, qui n'entre dans
+                              aucun calcul — c'est tout l'intérêt de l'avoir sorti
+                              de la case du bonus magique (drizzle/0015). */}
+                          {charWeapon.quantiteMunitions !== null && (
+                            <span title="Projectiles en réserve — n'entre dans aucun calcul d'attaque">
+                              Munitions : <span className="text-amber-300">{charWeapon.quantiteMunitions}</span>
+                            </span>
+                          )}
                         </div>
                       </div>
                       <LiveAttaque personnageId={character.id} nomArme={calc.nomAffiche} />
@@ -968,8 +979,35 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             </Section>
           )}
 
-          {feats.length > 0 && (
-            <Section titre="Dons">
+          {feats.length > 0 && (() => {
+            // « Est-ce que les calculs tiennent compte des dons? » — demande
+            // d'André le 2026-11-12. Oui pour une quinzaine d'entre eux, non
+            // pour les autres, et rien ne le disait. Chaque don porte désormais
+            // ce que le moteur en fait, dérivé du moteur lui-même.
+            //
+            // Attaque en finesse est le seul dont l'effet dépend de la fiche
+            // entière : il faut une arme qui l'accepte, et une Dextérité qui
+            // vaille mieux que la Force. Sans ce contexte on ne peut pas dire
+            // s'il agit — Parx le porte et n'en tire rien (DEX 13, FOR 14).
+            const ctxDons = {
+              forMod,
+              dexMod,
+              uneArmeEligible: weapons.some(({ weapon, catalogue }) =>
+                !estArmeADistance(weapon.famille, weapon.portee) &&
+                armeEligibleFinesse(weapon.nom, catalogue?.nom ?? null, weapon.famille ?? catalogue?.famille)
+              ),
+            }
+            const effetsPar = new Map(feats.map(({ feat }) => [feat.id, effetsDuDon(feat.nom, ctxDons)]))
+            const nbLus = [...effetsPar.values()].filter(e => e.length > 0).length
+            return (
+            <Section
+              titre="Dons"
+              action={
+                <span className="text-stone-500 text-xs" title="Les autres sont affichés avec leur description, mais aucun chiffre de la fiche ne les inclut : c'est au joueur de les appliquer à la table.">
+                  {nbLus} / {feats.length} dans les calculs
+                </span>
+              }
+            >
               <div className="space-y-2">
                 {feats.map(({ feat }) => {
                   const featDef = FEATS_DND35.find(f => f.nom === feat.nom)
@@ -1012,12 +1050,19 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                           {feat.effetMecanique ?? getFeatDescription(feat.nom)}
                         </div>
                       )}
+                      {/* Ce que le MOTEUR en fait — à distinguer de la description
+                          ci-dessus, qui dit ce que le LIVRE en dit. Les deux ne se
+                          recouvrent pas : « Échange −5 en attaque contre +5 aux
+                          dégâts » est juste, et aucun chiffre de la fiche ne le
+                          porte. Confondre les deux fait compter deux fois. */}
+                      <EffetsDon effets={effetsPar.get(feat.id) ?? []} />
                     </div>
                   )
                 })}
               </div>
             </Section>
-          )}
+            )
+          })()}
         </div>
 
         {/* ── CAPACITÉS DE CLASSE ── */}

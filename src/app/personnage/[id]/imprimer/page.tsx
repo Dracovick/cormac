@@ -13,7 +13,9 @@ import { PrintButton } from '@/components/fiche/PrintButton'
 import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
 import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies } from '@/lib/dnd35/classe-armure'
 import { calculeBonusEffetsCarac, sourcesCASorts, contributionsSortsDepuisCA } from '@/lib/dnd35/spell-effects'
-import { calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
+import { armeEligibleFinesse, calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
+import { estArmeADistance } from '@/lib/dnd35/weapons'
+import { effetsDuDon } from '@/lib/dnd35/dons-effets'
 import { nomParchemin } from '@/lib/parchemins'
 
 export const dynamic = 'force-dynamic'
@@ -112,6 +114,15 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   // et mêmes bonus de dons (Science de l'initiative, Volonté de fer…) pour que le papier
   // et l'écran ne divergent pas.
   const donsPassifs = getFeatPassiveBonuses(feats.map(f => f.feat.nom))
+  // De quoi juger Attaque en finesse : il faut une arme qui l'accepte, et une
+  // Dextérité qui vaille mieux que la Force. Mêmes valeurs que l'écran.
+  const ctxDons = {
+    forMod, dexMod,
+    uneArmeEligible: weapons.some(w =>
+      !estArmeADistance(w.weapon.famille, w.weapon.portee) &&
+      armeEligibleFinesse(w.weapon.nom, w.catalogue?.nom ?? null, w.weapon.famille ?? w.catalogue?.famille)
+    ),
+  }
   const vigT = vigBase + modSauvegarde(abilityScores?.conBase, abilityScores?.conMagique, raceInfo?.bonusCon ?? 0) + (savingThrows?.vigueurMagique ?? 0) + sommeBonus(donsPassifs.vigueur)
   const refT = refBase + modSauvegarde(abilityScores?.dexBase, abilityScores?.dexMagique, raceInfo?.bonusDex ?? 0) + (savingThrows?.reflexesMagique ?? 0) + sommeBonus(donsPassifs.reflexes)
   const volT = volBase + modSauvegarde(abilityScores?.sagBase, abilityScores?.sagMagique, raceInfo?.bonusSag ?? 0) + (savingThrows?.volonteMagique ?? 0) + sommeBonus(donsPassifs.volonte)
@@ -663,6 +674,12 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                 <tr key={i} style={{ background: i % 2 === 0 ? '#fff' : '#f9f9f9' }}>
                   <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', fontWeight: 'bold' }}>
                     {calc.nomAffiche}
+                    {/* Le carquois sur le papier : c'est là qu'on biffe en jouant. */}
+                    {w.charWeapon.quantiteMunitions !== null && (
+                      <span style={{ fontWeight: 'normal', color: '#666', fontSize: '8pt' }}>
+                        {' '}· {w.charWeapon.quantiteMunitions} munitions
+                      </span>
+                    )}
                   </td>
                   <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', textAlign: 'center' }}>{calc.sequence}</td>
                   <td style={{ border: '1px solid #ccc', padding: '2px 6px', fontSize: '9pt', textAlign: 'center' }}>{calc.degatsTexte}</td>
@@ -750,11 +767,26 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
                     </tr>
                   </thead>
                   <tbody>
-                    {feats.map((f, i) => (
+                    {feats.map((f, i) => {
+                      // Ce que les chiffres de CETTE feuille incluent déjà. Le
+                      // papier est l'exemplaire qu'on a en main à la table :
+                      // « Init +4 » à côté du don dit au joueur de ne pas
+                      // l'additionner une seconde fois. Même contexte que
+                      // l'écran — un marqueur qui diverge du sien serait pire
+                      // que pas de marqueur (voir l'en-tête de dnd35/attaque).
+                      const effets = effetsDuDon(f.feat.nom, ctxDons)
+                      const resume = effets
+                        .map(e => `${e.statut === 'main' ? '✋ ' : ''}${e.ou} ${e.quoi}`)
+                        .join(' · ')
+                      return (
                       <tr key={f.feat.id} style={{ background: i % 2 === 0 ? '#f5f5f5' : '#fff' }}>
-                        <td style={{ border: '1px solid #ddd', padding: '2px 6px', fontSize: '8pt' }}>{f.feat.nom}</td>
+                        <td style={{ border: '1px solid #ddd', padding: '2px 6px', fontSize: '8pt' }}>
+                          {f.feat.nom}
+                          {resume && <span style={{ color: '#666', fontSize: '7pt' }}> — {resume}</span>}
+                        </td>
                       </tr>
-                    ))}
+                      )
+                    })}
                     {Array.from({ length: Math.max(0, 20 - feats.length) }).map((_, i) => (
                       <tr key={`ef-${i}`}><td style={{ border: '1px solid #eee', height: '18px' }}></td></tr>
                     ))}

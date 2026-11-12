@@ -8,10 +8,20 @@ function normalizeWeaponName(nom: string): string {
   return nom.toLowerCase().replace(/\s*[+\-]\d+/g, '').replace(/\s+/g, ' ').trim()
 }
 
+/**
+ * L'arme visée par un don, telle qu'écrite entre parenthèses en fin de nom :
+ * « Arme de prédilection (Dague) » → « dague ».
+ *
+ * Exporté sous le nom `extraitCibleDon` pour `dons-effets.ts`, qui en a besoin
+ * pour demander au moteur ce qu'il accorde à un don — sans la cible,
+ * l'appariement d'arme échoue et le moteur ne rend rien.
+ */
 function extractFeatTarget(featNom: string): string | null {
   const m = featNom.match(/\(([^)]+)\)\s*$/i)
   return m ? normalizeWeaponName(m[1]) : null
 }
+
+export { extractFeatTarget as extraitCibleDon }
 
 function weaponMatches(weaponNom: string, target: string): boolean {
   return normalizeWeaponName(weaponNom) === target

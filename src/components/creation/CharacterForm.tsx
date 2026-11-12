@@ -698,7 +698,7 @@ function SectionEquipement({ data, update, derived, potionsCatalogue, objetsCata
       .filter(({ a }) => a.nom !== '' && !WEAPONS_DND35.find(w => w.nom === a.nom))
       .map(({ i }) => i)
   ))
-  const newArme = () => update('armes', [...data.armes, { nom: '', degats: '1d6', crit: '×2', typeDegats: 'T', portee: 'Contact', bonusMagique: 0, coteDeForce: null, bonusMunitions: null, quantite: 1 }])
+  const newArme = () => update('armes', [...data.armes, { nom: '', degats: '1d6', crit: '×2', typeDegats: 'T', portee: 'Contact', bonusMagique: 0, coteDeForce: null, bonusMunitions: null, quantiteMunitions: null, quantite: 1 }])
   const delArme = (i: number) => {
     setCustomRows(prev => {
       const s = new Set<number>()
@@ -839,12 +839,20 @@ function SectionEquipement({ data, update, derived, potionsCatalogue, objetsCata
                   {isComposite && (
                     <div><label className={LBL} title="Bonus de Force maximal ajouté aux dégâts (ne s'applique pas au jet d'attaque)">Côte Force</label><input className={INP_NUM + ' w-full'} type="number" min={0} value={a.coteDeForce ?? ''} placeholder="—" onChange={e => setArme(i, 'coteDeForce', e.target.value === '' ? null : parseInt(e.target.value) || 0)} /></div>
                   )}
+                  {/* Deux grandeurs, deux cases. L'étiquette « Munitions +Mag »
+                      portait les deux sens à la fois, et un nombre de billes
+                      saisi là partait dans le jet d'attaque : la fronde de Bram
+                      affichait +27. Le maximum de 5 est celui du Manuel —
+                      au-delà, ce n'est plus un bonus d'altération. Voir drizzle/0015. */}
                   {isRanged && (
-                    <div><label className={LBL} title="Flèches +1, carreaux +2, etc. S'ajoute à l'attaque ET aux dégâts — mais ne se cumule pas avec le bonus de l'arme : la fiche garde le meilleur des deux.">Munitions +Mag</label><input className={INP_NUM + ' w-full'} type="number" min={0} value={a.bonusMunitions ?? ''} placeholder="—" onChange={e => setArme(i, 'bonusMunitions', e.target.value === '' ? null : parseInt(e.target.value) || 0)} /></div>
+                    <div><label className={LBL} title="Bonus MAGIQUE des munitions : flèches +1, carreaux +2. Jamais plus de +5 au Manuel. S'ajoute à l'attaque ET aux dégâts — mais ne se cumule pas avec le bonus de l'arme : la fiche garde le meilleur des deux. ⚠ Ce n'est PAS le nombre de projectiles.">Bonus munit.</label><input className={INP_NUM + ' w-full'} type="number" min={0} max={5} value={a.bonusMunitions ?? ''} placeholder="—" onChange={e => setArme(i, 'bonusMunitions', e.target.value === '' ? null : parseInt(e.target.value) || 0)} /></div>
                   )}
-                  <div className={`${isComposite && isRanged ? '' : 'sm:col-span-3'} flex items-end pb-1`}>
+                  {isRanged && (
+                    <div><label className={LBL} title="Combien de projectiles au carquois : 20 flèches, 20 billes, 10 carreaux. N'entre dans AUCUN calcul d'attaque — c'est un compte à la table. Laisser vide si on ne les compte pas.">Munit. (qté)</label><input className={INP_NUM + ' w-full'} type="number" min={0} value={a.quantiteMunitions ?? ''} placeholder="—" onChange={e => setArme(i, 'quantiteMunitions', e.target.value === '' ? null : parseInt(e.target.value) || 0)} /></div>
+                  )}
+                  <div className={`${isComposite && isRanged ? 'sm:col-span-4' : isRanged ? 'sm:col-span-2' : 'sm:col-span-3'} flex items-end pb-1`}>
                     <span className="text-stone-600 text-xs italic">
-                      {isComposite ? 'Arc composite : côte Force plafonne le bonus FOR aux dégâts' : 'Munitions magiques : flèches, bolts, etc.'}
+                      {isComposite ? 'Arc composite : côte Force plafonne le bonus FOR aux dégâts' : 'Le bonus compte dans l’attaque ; la quantité, non'}
                     </span>
                   </div>
                 </div>
@@ -856,7 +864,7 @@ function SectionEquipement({ data, update, derived, potionsCatalogue, objetsCata
           <button onClick={newArme} className={BTN_ADD}><span className="text-xl">+</span> Ajouter une arme</button>
           <button onClick={() => {
             const idx = data.armes.length
-            update('armes', [...data.armes, { nom: '', degats: '1d6', crit: '×2', typeDegats: 'T', portee: 'Contact', bonusMagique: 0, coteDeForce: null, bonusMunitions: null, quantite: 1 }])
+            update('armes', [...data.armes, { nom: '', degats: '1d6', crit: '×2', typeDegats: 'T', portee: 'Contact', bonusMagique: 0, coteDeForce: null, bonusMunitions: null, quantiteMunitions: null, quantite: 1 }])
             setCustomRows(prev => new Set([...prev, idx]))
           }} className={BTN_ADD + ' text-purple-400 hover:text-purple-200'}><span className="text-xl">+</span> Arme personnalisée</button>
         </div>

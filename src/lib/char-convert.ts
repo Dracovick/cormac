@@ -76,6 +76,7 @@ export function charDataToForm(d: CharacterData): CharacterFormData {
       bonusMagique: w.charWeapon.bonusMagique ?? 0,
       coteDeForce: w.charWeapon.coteDeForce ?? null,
       bonusMunitions: w.charWeapon.bonusMunitions ?? null,
+      quantiteMunitions: w.charWeapon.quantiteMunitions ?? null,
       quantite: w.charWeapon.quantite ?? 1,
     })),
     armures: armor.map(a => ({
