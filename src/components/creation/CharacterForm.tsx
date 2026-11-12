@@ -6,6 +6,7 @@ import Link from 'next/link'
 import type { CharacterFormData, ObjetRef, PotionRef } from '@/app/actions/character'
 import { saveCharacter, getPotionsCatalogue, getObjetsCatalogue } from '@/app/actions/character'
 import { ChampRechercheNom } from '@/components/ChampRechercheNom'
+import { chercherFloue } from '@/lib/recherche-floue'
 import { getModifier, formatMod, ALIGNEMENTS, calcXpPenalite } from '@/lib/dnd35/rules'
 import { TYPES_BONUS_CA } from '@/lib/dnd35/classe-armure'
 import { CLASSES_DND35, getClasseInfo, getSortsSlotsParJour } from '@/lib/dnd35/classes'
@@ -509,6 +510,7 @@ function SectionCompetences({ data, update, derived }: { data: CharacterFormData
 // ─── Section: Dons ───────────────────────────────────────────────────────────
 function SectionDons({ data, update }: { data: CharacterFormData; update: Upd }) {
   const [catFilter, setCatFilter] = useState<FeatCategorie | 'Tous'>('Tous')
+  const [recherche, setRecherche] = useState('')
   const [pendingFeat, setPendingFeat] = useState<FeatDef | null>(null)
   const [selectedWeapon, setSelectedWeapon] = useState('')
   const [customDon, setCustomDon] = useState('')
@@ -518,13 +520,29 @@ function SectionDons({ data, update }: { data: CharacterFormData; update: Upd })
   // Catégories pertinentes pour les classes du personnage (union multi-classes)
   const relevantCats = new Set<FeatCategorie>(['Général'])
   allClasses.forEach(cls => (CATEGORIES_PAR_CLASSE[cls] ?? []).forEach(cat => relevantCats.add(cat)))
-  const CAT_ORDER: FeatCategorie[] = ['Combat', 'Tir', 'Magie', 'Métamagie', 'Divin', 'Général']
+  const CAT_ORDER: FeatCategorie[] = ['Combat', 'Tir', 'Magie', 'Métamagie', 'Création d\'objets', 'Divin', 'Général']
   const visibleCats = CAT_ORDER.filter(c => relevantCats.has(c))
 
-  // Dons à afficher selon le filtre actif
-  const displayedFeats = FEATS_DND35.filter(f =>
-    relevantCats.has(f.categorie) && (catFilter === 'Tous' || f.categorie === catFilter)
-  )
+  /**
+   * Dons à afficher. Deux régimes, et c'est volontaire :
+   *
+   *  - champ de recherche VIDE : la liste reste bornée aux catégories des
+   *    classes du personnage, triée par nom. C'est le parcours normal.
+   *  - champ de recherche REMPLI : on cherche dans les 300 dons, hors de toute
+   *    catégorie et hors des classes du personnage, alias anglais compris.
+   *    Chercher un nom précis et ne rien trouver parce qu'un filtre invisible
+   *    l'écartait est exactement la plainte du 2026-11-11 : un prêtre ne voyait
+   *    aucun don de métamagie, et « Extension d'effet » restait introuvable.
+   *    Les dons hors des catégories de la classe sont marqués à l'écran.
+   */
+  const enRecherche = recherche.trim().length >= 2
+  const parNom = (a: FeatDef, b: FeatDef) => a.nom.localeCompare(b.nom, 'fr')
+  const displayedFeats = enRecherche
+    ? chercherFloue(recherche, FEATS_DND35, f => f.nom, 60, f => f.alias ?? [])
+    : FEATS_DND35
+        .filter(f => relevantCats.has(f.categorie) && (catFilter === 'Tous' || f.categorie === catFilter))
+        .slice()
+        .sort(parNom)
 
   // Armes disponibles : SRD + armes personnalisées du personnage
   const customWeaponNames = data.armes
@@ -565,8 +583,27 @@ function SectionDons({ data, update }: { data: CharacterFormData; update: Upd })
     <div className={CARD}>
       <div className={SEC_H}>Dons</div>
 
+      {/* Recherche par nom — traverse les catégories et les classes */}
+      <div className="relative mb-2">
+        <input
+          className={INP}
+          value={recherche}
+          onChange={e => setRecherche(e.target.value)}
+          placeholder="Chercher un don par son nom (français ou anglais)…"
+        />
+        {recherche && (
+          <button onClick={() => setRecherche('')} title="Effacer la recherche"
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-stone-500 hover:text-stone-200 text-sm">✕</button>
+        )}
+      </div>
+      {enRecherche && (
+        <p className="text-stone-500 text-xs mb-2 italic">
+          Recherche dans les {FEATS_DND35.length} dons — toutes catégories, toutes classes.
+        </p>
+      )}
+
       {/* Filtre par catégorie */}
-      <div className="flex flex-wrap gap-1 mb-3">
+      <div className={`flex flex-wrap gap-1 mb-3 ${enRecherche ? 'opacity-40 pointer-events-none' : ''}`}>
         <button onClick={() => setCatFilter('Tous')}
           className={`px-3 py-1 rounded text-xs font-medium transition-colors ${catFilter === 'Tous' ? 'bg-amber-700 text-white' : 'bg-stone-800 text-stone-400 hover:text-stone-200'}`}>
           Tous
@@ -599,15 +636,25 @@ function SectionDons({ data, update }: { data: CharacterFormData; update: Upd })
 
       {/* Liste des dons disponibles */}
       <div className="grid gap-1 max-h-72 overflow-y-auto pr-1 mb-4">
-        {displayedFeats.length === 0 && <p className="text-stone-600 text-sm italic">Aucun don dans cette catégorie.</p>}
+        {displayedFeats.length === 0 && (
+          <p className="text-stone-600 text-sm italic">
+            {enRecherche ? `Aucun don ne correspond à « ${recherche.trim()} ».` : 'Aucun don dans cette catégorie.'}
+          </p>
+        )}
         {displayedFeats.map(feat => {
           const alreadyAdded = !feat.needsWeapon && data.dons.includes(feat.nom)
+          const horsClasse = enRecherche && !relevantCats.has(feat.categorie)
           return (
             <button key={feat.nom} disabled={alreadyAdded} onClick={() => selectFeat(feat)}
               className={`text-left flex items-center justify-between gap-3 px-3 py-2 rounded border transition-colors ${alreadyAdded ? 'opacity-40 cursor-default bg-stone-800/20 border-transparent' : 'bg-stone-800/50 border-transparent hover:bg-amber-900/25 hover:border-amber-700/40'}`}>
               <div className="min-w-0">
                 <div className="text-stone-100 text-sm font-medium truncate">
                   {feat.nom}{feat.needsWeapon && <span className="text-stone-500 ml-1 text-xs">(arme…)</span>}
+                  {enRecherche && (
+                    <span className={`ml-2 text-xs font-normal ${horsClasse ? 'text-stone-500' : 'text-stone-600'}`}>
+                      {feat.categorie}{horsClasse && ' · hors classe'}
+                    </span>
+                  )}
                 </div>
                 <div className="text-amber-500 text-xs mt-0.5 truncate">{feat.description}</div>
               </div>

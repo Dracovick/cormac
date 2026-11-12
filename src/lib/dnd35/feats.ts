@@ -1,4 +1,4 @@
-export type FeatCategorie = 'Combat' | 'Tir' | 'Magie' | 'Métamagie' | 'Divin' | 'Général'
+export type FeatCategorie = 'Combat' | 'Tir' | 'Magie' | 'Métamagie' | 'Création d\'objets' | 'Divin' | 'Général'
 
 export interface FeatDef {
   nom: string
@@ -6,6 +6,13 @@ export interface FeatDef {
   needsWeapon?: boolean
   description: string
   prerequis?: string[]  // ex. ["Arme de prédilection", "BBA+4"]
+  /**
+   * Autres façons de chercher ce don : son nom anglais d'abord, puisque la
+   * moitié des tables de 3.5 le connaissent sous ce nom-là, et l'ancien nom
+   * maison quand il y en avait un. Le champ de recherche les interroge, mais
+   * seul `nom` est écrit sur la fiche.
+   */
+  alias?: string[]
 }
 
 import { FEATS_SUPPLEMENTS } from './feats-supplements'
@@ -24,6 +31,9 @@ const FEATS_BASE: FeatDef[] = [
   { nom: 'Course',                   categorie: 'Général', description: 'Déplacement ×5 en course, pas de malus de DEX à la CA' },
   { nom: 'Réflexes de combat',       categorie: 'Général', description: 'Attaques d\'opportunité supplémentaires (mod. DEX par round)' },
   { nom: 'Expertise de combat',      categorie: 'Général', description: 'Échange jusqu\'à −5 en attaque contre +5 à la CA', prerequis: ['INT13'] },
+  // Eschew Materials. Au Manuel c'est un don GÉNÉRAL, pas de métamagie : il ne
+  // coûte aucun niveau d'emplacement. L'ancien « Sort discret » le classait à tort.
+  { nom: 'Dispense de composantes matérielles', categorie: 'Général', alias: ['Eschew Materials', 'Sort discret'], description: 'Lancer sans les composantes matérielles coûtant 1 po ou moins' },
 
   // ── COMBAT ──────────────────────────────────────────────────────────────────
   { nom: 'Arme de prédilection',              categorie: 'Combat', needsWeapon: true, description: '+1 aux jets d\'attaque avec l\'arme choisie' },
@@ -78,15 +88,32 @@ const FEATS_BASE: FeatDef[] = [
   { nom: 'Incantation en armure intermédiaire', categorie: 'Magie', description: 'Lancer des sorts en armure intermédiaire sans risque d\'échec magique' },
 
   // ── MÉTAMAGIE ───────────────────────────────────────────────────────────────
-  { nom: 'Sort silencieux',  categorie: 'Métamagie', description: 'Lancer sans composante verbale (+1 niveau d\'emplacement)' },
-  { nom: 'Sort stationnaire',categorie: 'Métamagie', description: 'Lancer sans composante somatique (+1 niveau d\'emplacement)' },
-  { nom: 'Sort discret',     categorie: 'Métamagie', description: 'Lancer sans composante matérielle (+1 niveau d\'emplacement)' },
-  { nom: 'Sort étendu',      categorie: 'Métamagie', description: 'Doubler la durée du sort (+1 niveau d\'emplacement)' },
-  { nom: 'Sort puissant',    categorie: 'Métamagie', description: '+1 dé de dégâts ou +2 points d\'effet (+1 niveau d\'emplacement)' },
-  { nom: 'Sort intensifié',  categorie: 'Métamagie', description: 'Augmenter la limite de dés de dégâts (+2 niveaux d\'emplacement)' },
-  { nom: 'Sort maximisé',    categorie: 'Métamagie', description: 'Maximiser tous les effets variables (+3 niveaux d\'emplacement)' },
-  { nom: 'Sort rapide',      categorie: 'Métamagie', description: 'Lancer comme action rapide (+4 niveaux d\'emplacement)' },
-  { nom: 'Sort persistant',  categorie: 'Métamagie', description: 'Durée = 24 heures (+6 niveaux d\'emplacement)' },
+  // Noms de la traduction officielle (SRD 3.5 VF, chapitre des dons). Les noms
+  // maison d'avant — « Sort puissant », « Sort maximisé »… — ne correspondaient
+  // à aucun livre et rendaient les dons introuvables : voir drizzle/0008 et la
+  // table `feats` de la Bibliothèque, qui porte ces mêmes neuf noms.
+  { nom: 'Augmentation d\'intensité',   categorie: 'Métamagie', alias: ['Heighten Spell', 'Sort intensifié'],  description: 'Le sort compte comme étant d\'un niveau supérieur, 9e maximum : DD et pénétration recalculés (emplacement du nouveau niveau)' },
+  { nom: 'Extension d\'effet',          categorie: 'Métamagie', alias: ['Empower Spell', 'Sort puissant'],     description: 'Tous les effets numériques et aléatoires du sort augmentent de 50 % (+2 niveaux d\'emplacement)' },
+  { nom: 'Extension de durée',          categorie: 'Métamagie', alias: ['Extend Spell', 'Sort étendu'],        description: 'Durée doublée ; sans effet sur les sorts permanents, instantanés ou à concentration (+1 niveau d\'emplacement)' },
+  { nom: 'Extension de portée',         categorie: 'Métamagie', alias: ['Enlarge Spell'],                      description: 'Portée courte, moyenne ou longue doublée (+1 niveau d\'emplacement)' },
+  { nom: 'Extension de zone d\'effet',  categorie: 'Métamagie', alias: ['Widen Spell'],                        description: 'Zone d\'effet +100 % — émanation, étendue, ligne ou rayonnement (+3 niveaux d\'emplacement)' },
+  { nom: 'Incantation rapide',          categorie: 'Métamagie', alias: ['Quicken Spell', 'Sort rapide'],       description: 'Incantation en action libre, un seul sort par round, sans attaque d\'opportunité (+4 niveaux d\'emplacement)' },
+  { nom: 'Incantation silencieuse',     categorie: 'Métamagie', alias: ['Silent Spell', 'Sort silencieux'],    description: 'Lancer sans composante verbale (+1 niveau d\'emplacement)' },
+  { nom: 'Incantation statique',        categorie: 'Métamagie', alias: ['Still Spell', 'Sort stationnaire'],   description: 'Lancer sans composante gestuelle (+1 niveau d\'emplacement)' },
+  { nom: 'Quintessence des sorts',      categorie: 'Métamagie', alias: ['Maximize Spell', 'Sort maximisé'],    description: 'Tous les effets variables prennent leur valeur maximale (+3 niveaux d\'emplacement)' },
+
+  // ── CRÉATION D'OBJETS ───────────────────────────────────────────────────────
+  // Le niveau de lanceur est écrit dans la description, pas dans `prerequis` :
+  // verifierPrerequisDon() ne sait lire que des noms de dons, « BBA+N » et
+  // « STATxx », et l'afficherait donc comme un prérequis éternellement manquant.
+  { nom: 'Écriture de parchemins',               categorie: 'Création d\'objets', alias: ['Scribe Scroll'],              description: 'Rédiger un parchemin de tout sort connu — 25 po × NLS × niveau du sort (niveau 1 de lanceur)' },
+  { nom: 'Préparation de potions',               categorie: 'Création d\'objets', alias: ['Brew Potion'],                description: 'Concocter une potion reproduisant un sort du 3e niveau au plus — 50 po × NLS × niveau du sort (niveau 3 de lanceur)' },
+  { nom: 'Création d\'objets merveilleux',       categorie: 'Création d\'objets', alias: ['Craft Wondrous Item'],        description: 'Fabriquer n\'importe quel objet merveilleux (niveau 3 de lanceur)' },
+  { nom: 'Création d\'armes et armures magiques',categorie: 'Création d\'objets', alias: ['Craft Magic Arms and Armor'], description: 'Enchanter armes, armures et boucliers de maître (niveau 5 de lanceur)' },
+  { nom: 'Création de baguettes magiques',       categorie: 'Création d\'objets', alias: ['Craft Wand'],                 description: 'Fabriquer une baguette de 50 charges, sort du 4e niveau au plus — 750 po × NLS × niveau du sort (niveau 5 de lanceur)' },
+  { nom: 'Création de sceptres magiques',        categorie: 'Création d\'objets', alias: ['Craft Rod'],                  description: 'Fabriquer n\'importe quel sceptre (niveau 9 de lanceur)' },
+  { nom: 'Création de bâtons magiques',          categorie: 'Création d\'objets', alias: ['Craft Staff'],                description: 'Fabriquer un bâton de 50 charges (niveau 12 de lanceur)' },
+  { nom: 'Création d\'anneaux magiques',         categorie: 'Création d\'objets', alias: ['Forge Ring'],                 description: 'Fabriquer n\'importe quel anneau magique (niveau 12 de lanceur)' },
 
   // ── DIVIN ───────────────────────────────────────────────────────────────────
   { nom: 'Science du renvoi',     categorie: 'Divin', description: '+2 aux jets de renvoi/commandement des morts-vivants' },
@@ -135,11 +162,11 @@ export const CATEGORIES_PAR_CLASSE: Record<string, FeatCategorie[]> = {
   'Barbare':     ['Combat', 'Tir'],
   'Paladin':     ['Combat', 'Divin'],
   'Rôdeur':      ['Combat', 'Tir'],
-  'Magicien':    ['Magie', 'Métamagie'],
-  'Ensorceleur': ['Magie', 'Métamagie'],
-  'Prêtre':      ['Combat', 'Magie', 'Divin'],
-  'Druide':      ['Magie', 'Métamagie', 'Divin'],
-  'Barde':       ['Combat', 'Magie', 'Métamagie'],
+  'Magicien':    ['Magie', 'Métamagie', 'Création d\'objets'],
+  'Ensorceleur': ['Magie', 'Métamagie', 'Création d\'objets'],
+  'Prêtre':      ['Combat', 'Magie', 'Métamagie', 'Création d\'objets', 'Divin'],
+  'Druide':      ['Magie', 'Métamagie', 'Création d\'objets', 'Divin'],
+  'Barde':       ['Combat', 'Magie', 'Métamagie', 'Création d\'objets'],
   'Moine':       ['Combat'],
   'Roublard':    ['Combat', 'Tir'],
 }
