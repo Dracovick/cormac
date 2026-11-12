@@ -671,6 +671,21 @@ export function nomSousRaceSelon(appellation: string | null | undefined, sousRac
   return app + sousRace.nom.slice(base.nom.length)
 }
 
+/**
+ * Ce que devient la race d'une fiche quand on change le menu Race.
+ *
+ * ⭐ Changer l'APPELLATION ne change pas la race : passer de « Petite-gens » à
+ * « Halfelin » garde la sous-race choisie et la réécrit (« Halfelin
+ * sagespectre »). Changer de RACE, en revanche, l'abandonne — un sagespectre
+ * elfe n'existe pas.
+ */
+export function changerRace(nouvelleRace: string, sousRaceCourante: string | null | undefined): string {
+  const sr = getSousRaceInfo(sousRaceCourante)
+  if (!sr) return nouvelleRace
+  if (getRaceInfo(nouvelleRace)?.nom !== sr.race) return nouvelleRace
+  return nomSousRaceSelon(nouvelleRace, sr)
+}
+
 /** Les noms sous lesquels une sous-race peut être écrite, appellations comprises. */
 function variantesDe(sousRace: SousRaceInfo): string[] {
   const noms = [sousRace.nom, ...(sousRace.alias ?? [])]

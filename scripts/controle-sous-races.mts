@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url'
 import { RACES_DND35, getRaceInfo } from '../src/lib/dnd35/races'
 import {
   SOUS_RACES_DND35, sousRacesDe, getSousRaceInfo, getRaceOuSousRace,
-  decomposerRace, fusionner, picto, appellationsDe, nomSousRaceSelon,
+  decomposerRace, fusionner, picto, appellationsDe, nomSousRaceSelon, changerRace,
 } from '../src/lib/dnd35/sous-races'
 import { expandQuery } from '../src/lib/recherche-fiches'
 import { generateCharacter } from '../src/lib/dnd35/generator'
@@ -321,6 +321,16 @@ egal('chercher « halfelin » cherche aussi petite-gens', [...expandQuery('halfe
 egal('chercher « petite-gens » cherche aussi halfelin', [...expandQuery('petite-gens')].sort(), ['halfelin', 'petite-gens'])
 egal('⭐ témoin : les synonymes de classe ne sont pas écrasés', expandQuery('mage'), ['magicien', 'mage'])
 egal('⭐ témoin : un terme sans synonyme reste seul', expandQuery('elfe'), ['elfe'])
+
+// 14.9 Le menu Race : changer d'appellation garde la sous-race, changer de race l'abandonne
+egal('Petite-gens → Halfelin garde le sagespectre', changerRace('Halfelin', 'Petite-gens sagespectre'), 'Halfelin sagespectre')
+egal('Halfelin → Petite-gens garde le vaillant', changerRace('Petite-gens', 'Halfelin vaillant'), 'Petite-gens vaillant')
+egal('⭐ témoin : Halfelin → Elfe ABANDONNE la sous-race', changerRace('Elfe', 'Petite-gens vaillant'), 'Elfe')
+egal('⭐ témoin : Halfelin → Nain abandonne aussi', changerRace('Nain', 'Halfelin vaillant'), 'Nain')
+egal('⭐ témoin : — Autre — abandonne la sous-race', changerRace('', 'Halfelin vaillant'), '')
+egal('⭐ témoin : sans sous-race courante, la race passe telle quelle', changerRace('Halfelin', null), 'Halfelin')
+egal('⭐ témoin : Elfe → Halfelin avec un drow abandonne (le drow n\'est pas halfelin)', changerRace('Halfelin', 'Drow'), 'Halfelin')
+egal('Elfe → Elfe avec un drow le garde', changerRace('Elfe', 'Drow'), 'Drow')
 
 // 14.8 En base : les deux lignes de race portent les MÊMES ajustements et les
 // MÊMES traits. ⚠ C'est la condition pour qu'une fiche ne change pas de chiffre

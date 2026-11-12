@@ -12,7 +12,7 @@ import { TYPES_BONUS_CA } from '@/lib/dnd35/classe-armure'
 import { CLASSES_DND35, CLASSES_BASE_SUPPLEMENTS, getClasseInfo, getSortsSlotsParJour } from '@/lib/dnd35/classes'
 import { PRESTIGE_CLASSES, getPrestigeInfo, getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
 import { RACES_DND35 } from '@/lib/dnd35/races'
-import { sousRacesDe, getSousRaceInfo, getRaceOuSousRace, decomposerRace, nomSousRaceSelon, picto, libelleEffet } from '@/lib/dnd35/sous-races'
+import { sousRacesDe, getSousRaceInfo, getRaceOuSousRace, decomposerRace, nomSousRaceSelon, changerRace, picto, libelleEffet } from '@/lib/dnd35/sous-races'
 import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
 import { sortsByClasseEtNiveau, niveauxMaxForClasse, type ClasseSortKey, type SortDnD } from '@/lib/dnd35/spells'
 import { getBab } from '@/lib/dnd35/rules'
@@ -1580,7 +1580,10 @@ function ChampRace({ race, onChange }: { race: string; onChange: (v: string) => 
     <>
       <div>
         <label className={LBL}>Race</label>
-        <select className={SEL} value={parente} onChange={e => onChange(e.target.value)}>
+        {/* ⭐ Passer de « Petite-gens » à « Halfelin » garde la sous-race et la
+            réécrit : c'est la même race sous l'autre nom. Changer de race,
+            elle, l'abandonne. */}
+        <select className={SEL} value={parente} onChange={e => onChange(changerRace(e.target.value, sousRace))}>
           {RACES_DND35.map(r => <option key={r.nom} value={r.nom}>{r.nom}</option>)}
           {horsListe && <option value={parente}>{parente}</option>}
           <option value="">— Autre —</option>
