@@ -594,7 +594,7 @@ if (ESSAI) {
     }
   }
 
-  if (refuses > 0) process.exitCode = 1;
+  /* (le verdict des refus est rendu plus haut, hors branche — voir le commentaire là-bas) */
   if (echecs >= DESTINATIONS.length) {
     console.error("⛔ AUCUNE destination n'a reçu les médias.");
     process.exitCode = 1;
