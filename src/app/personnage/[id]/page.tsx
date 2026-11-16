@@ -46,6 +46,8 @@ import { MonterNiveau } from '@/components/fiche/MonterNiveau'
 import { JournalDrawer } from '@/components/fiche/JournalDrawer'
 import { ButinDrawer } from '@/components/fiche/ButinDrawer'
 import { getPotionsCatalogue } from '@/app/actions/character'
+import { getApercuHistoire } from '@/lib/queries/histoire'
+import { dateCourte } from '@/lib/histoire'
 import { sourcesCASorts, contributionsSortsDepuisCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
 import { aAttaqueEnFinesse, armeEligibleFinesse, armeMainDombre, calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
 import { getBonusClasse, effetsCapaciteClasse, NOM_BRETTEUR } from '@/lib/dnd35/bonus-classe'
@@ -86,7 +88,14 @@ function normNomSort(nom: string): string {
 
 export default async function FichePersonnage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  const [data, potionsCatalogue] = await Promise.all([getCharacter(Number(id)), getPotionsCatalogue()])
+  // ⚠ L'aperçu de l'histoire part dans le MÊME Promise.all : deux colonnes de
+  // `character_story_chapters`, pas la prose. La fiche est déjà la page la plus
+  // lourde du Grimoire, et l'ajouter en série aurait allongé son chargement.
+  const [data, potionsCatalogue, apercuHistoire] = await Promise.all([
+    getCharacter(Number(id)),
+    getPotionsCatalogue(),
+    getApercuHistoire(Number(id)),
+  ])
   if (!data) notFound()
 
   const { character, race, sousRace, appellationRace, clan, god, classes, abilityScores, combatStats, savingThrows, skills, feats, racialFeatures, spells, weapons, armor, magicItems, potions, scrolls, currency, gems, equipement, languages, creatures, companions, spellEffects } = data
@@ -366,6 +375,22 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                 <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>
               </svg>
               PDF
+            </Link>
+            {/* 📖 Histoire — demandé par André le 2026-11-15 : « un lien dans la
+                fiche du personnage qui amène à son histoire détaillée ». Placé
+                AVANT Modifier : c'est une lecture, pas une opération sur la fiche. */}
+            <Link
+              href={`/personnage/${id}/histoire`}
+              className="inline-flex items-center gap-2 bg-stone-700/50 hover:bg-stone-600/70 border border-stone-600/50 text-stone-300 hover:text-white text-sm px-3 py-2 rounded-lg transition-all"
+              title="L’histoire du personnage — écrite par son joueur"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
+              Histoire
+              {apercuHistoire.nb > 0 && (
+                <span className="text-stone-500 text-xs tabular-nums">{apercuHistoire.nb}</span>
+              )}
             </Link>
             <Link
               href={`/personnage/${id}/modifier`}
@@ -1612,10 +1637,31 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
           </Section>
         )}
 
-        {/* ── HISTORIQUE ── */}
-        {character.historique && (
+        {/* ── HISTORIQUE ──
+            Le champ `historique` reste le RÉSUMÉ court, saisi dans Modifier →
+            Notes. L'histoire détaillée, elle, vit sur sa propre page depuis le
+            2026-11-15 (drizzle/0018), et cette section y renvoie.
+            ⚠ La condition porte sur les DEUX : une histoire écrite sans résumé
+            de fiche serait restée invisible d'ici, et personne n'aurait trouvé
+            le lien. */}
+        {(character.historique || apercuHistoire.nb > 0) && (
           <Section titre="Historique">
-            <p className="text-stone-300 text-sm whitespace-pre-wrap">{character.historique}</p>
+            {character.historique && (
+              <p className="text-stone-300 text-sm whitespace-pre-wrap">{character.historique}</p>
+            )}
+            <Link
+              href={`/personnage/${id}/histoire`}
+              className={`inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 text-sm transition-colors ${character.historique ? 'mt-4' : ''}`}
+            >
+              <span>📖</span>
+              {apercuHistoire.nb > 0
+                ? <span>Lire l’histoire de {character.nom} — {apercuHistoire.nb} chapitre{apercuHistoire.nb > 1 ? 's' : ''}</span>
+                : <span>Écrire l’histoire de {character.nom}</span>}
+              <span aria-hidden>→</span>
+            </Link>
+            {apercuHistoire.dernier && (
+              <p className="text-stone-600 text-xs mt-1">Dernier chapitre revu le {dateCourte(apercuHistoire.dernier)}.</p>
+            )}
           </Section>
         )}
 

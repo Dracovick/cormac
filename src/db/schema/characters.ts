@@ -283,3 +283,39 @@ export const characterJournal = pgTable('character_journal', {
   mj: varchar('mj', { length: 60 }),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 })
+
+// ─── L'histoire du personnage, en chapitres ──────────────────────────────────
+// Demandée par André le 2026-11-15 : « une section pour l'histoire des
+// personnages, différente de leur fiche », atteinte par un lien depuis la fiche
+// et écrite par le joueur.
+//
+// ⛔ Distincte de `characters.historique`, qui reste le RÉSUMÉ court lu sur la
+// fiche : ce champ-là est un textarea de 6 lignes dans l'onglet « Notes » du
+// formulaire, et l'histoire d'Azadrielle fait 20 000 caractères.
+// ⛔ Distincte aussi de `characterJournal` : le journal est la chronique
+// horodatée de ce qui se JOUE, l'histoire est le récit du joueur, réécrit à
+// volonté.
+//
+// Des chapitres plutôt qu'un seul grand texte parce qu'une histoire s'allonge à
+// chaque séance : on ajoute « Ce qui s'est passé à Eauprofonde » sans relire ni
+// risquer le reste. Un chapitre unique reste parfaitement possible.
+// Voir drizzle/0018 pour le détail de chaque colonne.
+export const characterStoryChapters = pgTable('character_story_chapters', {
+  id: serial('id').primaryKey(),
+  personnageId: integer('personnage_id').notNull().references(() => characters.id),
+  /** Dresse le sommaire de la page — un chapitre sans titre ne se navigue pas. */
+  titre: varchar('titre', { length: 200 }).notNull(),
+  /** La prose, telle que tapée. La mise en forme légère est interprétée à l'AFFICHAGE. */
+  contenu: text('contenu').notNull().default(''),
+  /** Rang d'affichage, 0 d'abord. Réordonné par échange de deux rangs voisins. */
+  ordre: integer('ordre').notNull().default(0),
+  /**
+   * Qui a écrit, retenu sur l'appareil (clé `cormac.joueur`), comme l'identité du MJ.
+   * ⚠ NULL est permis et fréquent : le Grimoire n'a qu'un mot de passe partagé et ne
+   * SAIT pas qui écrit. Un nom inventé serait pire que pas de nom.
+   */
+  signature: varchar('signature', { length: 60 }),
+  createdAt: timestamp('created_at').defaultNow(),
+  /** Affiché sous le chapitre — seule trace de fraîcheur d'un texte qui vit des mois. */
+  updatedAt: timestamp('updated_at').defaultNow(),
+})
