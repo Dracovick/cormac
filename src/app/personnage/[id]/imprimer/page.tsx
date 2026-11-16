@@ -11,7 +11,8 @@ import { getFeatPassiveBonuses, sommeBonus } from '@/lib/dnd35/feat-bonuses'
 import { formatCritique } from '@/lib/dnd35/critique'
 import { PrintButton } from '@/components/fiche/PrintButton'
 import { totalGemmes, formatPo, uniteCourte } from '@/lib/dnd35/monnaie'
-import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies } from '@/lib/dnd35/classe-armure'
+import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies, sourceCATaille } from '@/lib/dnd35/classe-armure'
+import { libelleTaille, modificateurDiscretion, modificateurTaille } from '@/lib/dnd35/taille'
 import { calculeBonusEffetsCarac, sourcesCASorts, contributionsSortsDepuisCA } from '@/lib/dnd35/spell-effects'
 import { aAttaqueEnFinesse, armeEligibleFinesse, armeMainDombre, calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
 import { getBonusClasse } from '@/lib/dnd35/bonus-classe'
@@ -129,8 +130,11 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   // || et non ?? : un BBA stocké à 0 signifie « calcul auto », comme sur la fiche à l'écran
   const rawBabCorps = combatStats?.bbaCorpsACorps || bbaBase
   const rawBabProj  = combatStats?.bbaProjectiles  || rawBabCorps
-  const bbaCorps = rawBabCorps + forMod
-  const bbaProj  = rawBabProj  + dexMod
+  // Modificateur de TAILLE (SRD, chap. Combat) — demandé par André le 2026-11-16.
+  const modTailleAtk = modificateurTaille(race?.taille)
+  const nomTaille = libelleTaille(race?.taille)
+  const bbaCorps = rawBabCorps + forMod + modTailleAtk
+  const bbaProj  = rawBabProj  + dexMod + modTailleAtk
 
   // Jets de sauvegarde : valeurs stockées en DB (calculées multi-classe à la sauvegarde)
   const saveBonnes = classeInfo?.bonsSauvegardes ?? []
@@ -217,7 +221,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
     .filter(({ armor: a }) => !estBouclierImpr(a.type))
     .reduce((sum, { armor: a, charArmor }) => sum + (a.bonusArmure ?? 0) + (charArmor.bonusMagique ?? 0), 0)
   const { total: bonusCASources, contributions: contributionsCA } = calculeClasseArmure(
-    [...sourcesCAObjets(magicItems), ...sourcesCASaisies(combatStats)],
+    [...sourceCATaille(nomTaille, modTailleAtk), ...sourcesCAObjets(magicItems), ...sourcesCASaisies(combatStats)],
     { bonusArmurePortee, bonusBouclierPorte: caArmure - bonusArmurePortee },
   )
   // Les cases de la feuille officielle. « Divers » absorbe les types qui n'ont pas
@@ -260,7 +264,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   // éventuellement augmentée (plafonnée par l'armure comme la case imprimée).
   const dexModCASorts = Math.min(getModifier(dexT + bonusCaracSorts.DEX), maxDex)
   const { total: bonusCAAvecSorts, contributions: contribCAAvecSorts } = calculeClasseArmure(
-    [...sourcesCAObjets(magicItems), ...sourcesCASaisies(combatStats), ...sourcesCASorts(effetsCAActifs)],
+    [...sourceCATaille(nomTaille, modTailleAtk), ...sourcesCAObjets(magicItems), ...sourcesCASaisies(combatStats), ...sourcesCASorts(effetsCAActifs)],
     { bonusArmurePortee, bonusBouclierPorte: caArmure - bonusArmurePortee },
   )
   // Ce qu'un sort de CA apporte réellement : un bouclier de la foi +2 ne s'ajoute pas à
@@ -307,7 +311,10 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
     // Le +2 de Vigilance s'imprime dans la colonne « divers » : les colonnes du papier
     // doivent toujours s'additionner au total.
     const diversDons = sommeBonus(donsPassifs.competences.filter(d => d.skillNoms.includes(skill.nom)).map(d => d.item))
-    const divers = (charSkill.modifDivers ?? 0) + diversDons
+    // Discrétion : +4 pour une petite taille — et ce n'est PAS le +1 de la CA,
+    // le livre a une table à part pour cette compétence (SRD, chap. Compétences).
+    const diversTaille = /^discr/i.test(skill.nom) ? modificateurDiscretion(race?.taille) : 0
+    const divers = (charSkill.modifDivers ?? 0) + diversDons + diversTaille
     const caracteristique = caracteristiqueDe(skill.nom, skill.caracteristique)
     const abilMod = abilMods[caracteristique] ?? 0
     const total = abilMod + rangs + divers
@@ -769,6 +776,7 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
               // faisait diverger le papier (munitions, dons et modificateurs de
               // dégâts manquaient). Voir l'en-tête de dnd35/attaque.
               const calc = calculeArme({
+                modTaille: modTailleAtk,
                 nom: w.weapon.nom,
                 famille: w.weapon.famille,
                 nomCatalogue: w.catalogue?.nom ?? null,

@@ -35,7 +35,7 @@ export const TYPES_BONUS_CA = [
   'divers',
 ] as const
 
-export type OrigineCA = 'sort' | 'objet' | 'saisie'
+export type OrigineCA = 'sort' | 'objet' | 'saisie' | 'taille'
 
 export type SourceCA = {
   cle: string // identifiant unique dans l'arbitrage
@@ -142,4 +142,42 @@ export function sourcesCASaisies(stats: {
     sources.push({ cle: 'saisie:divers', origine: 'saisie', label: 'divers (fiche)', typeBonus: 'divers', valeur: stats.caDivers! })
   }
   return sources
+}
+
+// ── Le modificateur de TAILLE ──────────────────────────────────────────────
+//
+// André, le 2026-11-16 : « Est-ce que les caractéristiques de grandeurs sont
+// prises en compte dans la Classe d'armure ? Exemple, un Halfelin comme
+// Azadrielle Pétales de Lune est de petite taille… » Réponse mesurée : non,
+// nulle part. Le type 'taille' existait dans `TYPES_BONUS_CA` depuis
+// drizzle/0011 — pour le sélecteur du formulaire — mais RIEN ne l'alimentait.
+//
+// SRD 3.5 VF, chap. Combat : « La CA se calcule de la façon suivante : 10 +
+// bonus d'armure + bonus de bouclier + modificateur de Dextérité + modificateur
+// de taille. » Table des modificateurs de taille : Petit (P) +1, Moyen +0,
+// Grand (G) −1.
+//
+// ⛔ Il ne dépend PAS de la taille de l'adversaire : il s'applique toujours.
+// Seule la LUTTE a un « modificateur de taille spécial », relatif, qui remplace
+// celui-ci — et le Grimoire ne calcule pas la lutte.
+//
+// ⚠⚠ POURQUOI UNE SOURCE À PART, et pas une addition silencieuse au total :
+// Azadrielle [98] et Sabin [77] portent tous deux `ca_divers = +1`, qui est
+// peut-être ce modificateur saisi à la main. En faire une source nommée le rend
+// VISIBLE à côté du « divers (fiche) » sur la fiche, et André voit le doublon
+// au lieu de le subir. ⛔ Sa saisie n'est pas touchée : on n'écrase pas une
+// donnée du MJ sur une présomption. Même principe que les armures écartées.
+//
+// ⚠ Son type est 'taille' et il n'est pas cumulable : deux bonus de taille ne
+// s'additionnent pas, et si un objet du rayon en portait un (0 aujourd'hui,
+// mesuré), le meilleur gagnerait — ce qui est la règle du livre.
+export function sourceCATaille(taille: string | null | undefined, modificateur: number): SourceCA[] {
+  if (modificateur === 0) return []
+  return [{
+    cle: 'taille',
+    origine: 'taille',
+    label: taille ? `taille (${taille})` : 'modificateur de taille',
+    typeBonus: 'taille',
+    valeur: modificateur,
+  }]
 }

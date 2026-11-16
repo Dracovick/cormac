@@ -158,6 +158,19 @@ export type EntreeArme = {
    * lourde), son nom pour l'afficher. Null ou absent : rien n'est éteint.
    */
   armureBloquanteBretteur?: string | null
+  /**
+   * Modificateur de TAILLE du personnage (`lib/dnd35/taille.ts`) : +1 pour une
+   * créature de petite taille, −1 pour une grande. SRD 3.5 VF, chap. Combat :
+   * « Bonus de base à l'attaque + modificateur de Force + modificateur de
+   * taille ».
+   *
+   * ⛔ Il s'applique à TOUTE ligne d'arme, corps à corps comme distance, et ne
+   * dépend PAS de la taille de l'adversaire. 0 ou absent : taille moyenne, ou
+   * taille inconnue (3 fiches sans race).
+   * ⚠ Demandé par André le 2026-11-16 : aucun calcul du Grimoire ne lisait
+   * `races.taille`, pourtant renseignée sur les 32 races du catalogue.
+   */
+  modTaille?: number
 }
 
 export type CalculArme = {
@@ -376,7 +389,8 @@ export function calculeArme(e: EntreeArme): CalculArme {
 
   const bonusPerspicace = frappePerspicace ? (e.intMod ?? 0) : 0
 
-  const attaque = bbaBrut + caracAtk + alteration + donsAtk
+  const modTaille = e.modTaille ?? 0
+  const attaque = bbaBrut + caracAtk + alteration + donsAtk + modTaille
   const degatsMod = alteration + caracDmg + donsDmg + bonusPerspicace
   const deArme = e.degats ?? '—'
 
@@ -424,6 +438,13 @@ export function calculeArme(e: EntreeArme): CalculArme {
           ? 'BAB ≥ 6 : attaques multiples — la séquence vient du BAB seul (−5 chacune), tous les bonus s’appliquent à chaque attaque'
           : undefined,
       },
+      ...(modTaille !== 0
+        ? [{
+            label: 'modificateur de taille',
+            valeur: modTaille,
+            note: 's’applique contre n’importe quel adversaire, pas seulement les créatures de taille moyenne',
+          }]
+        : []),
       {
         label: estADistance ? 'DEX' : finesse ? 'DEX (Attaque en finesse)' : 'FOR',
         valeur: caracAtk,

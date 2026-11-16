@@ -55,7 +55,8 @@ import { estArmeADistance } from '@/lib/dnd35/weapons'
 import { effetsDuDon } from '@/lib/dnd35/dons-effets'
 import { EffetsDon } from '@/components/fiche/EffetsDon'
 import { apercuDescription } from '@/lib/apercu'
-import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies, libelleTypeBonus } from '@/lib/dnd35/classe-armure'
+import { calculeClasseArmure, sourcesCAObjets, sourcesCASaisies, sourceCATaille, libelleTypeBonus } from '@/lib/dnd35/classe-armure'
+import { libelleTaille, modificateurDiscretion, modificateurTaille, multiplicateurCharge } from '@/lib/dnd35/taille'
 import { getDb } from '@/db'
 import { spells as spellsTable } from '@/db/schema/spells'
 
@@ -179,7 +180,15 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   // ne cumule pas deux bonus du même type — un anneau de parade +2 et une cape de
   // parade +1 donnent +2 — et un objet ne compte que si son `bonus_type` dit qu'il
   // touche la CA (un bandeau d'Intelligence ou une cape de résistance, non).
+  // Le modificateur de TAILLE (demandé par André le 2026-11-16, il n'était nulle
+  // part). Source NOMMÉE et non addition silencieuse : Azadrielle [98] et Sabin
+  // [77] portent `ca_divers = +1`, peut-être ce même modificateur saisi à la
+  // main — la fiche montre donc les deux lignes côte à côte au lieu de choisir
+  // à la place du MJ. Voir `lib/dnd35/taille.ts`.
+  const modTaille = modificateurTaille(race?.taille)
+  const nomTaille = libelleTaille(race?.taille)
   const sourcesCA = [
+    ...sourceCATaille(nomTaille, modTaille),
     ...sourcesCAObjets(magicItems),
     ...sourcesCASaisies(combatStats),
     ...sourcesCASorts(effetsCA),
@@ -239,8 +248,9 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   // Priorité : valeur stockée si > 0, sinon calcul automatique D&D 3.5
   const rawBabCorps = combatStats?.bbaCorpsACorps || bbaBase
   const rawBabProj  = combatStats?.bbaProjectiles || rawBabCorps
-  const bbaCorpsTotal = rawBabCorps + forMod
-  const bbaProjTotal  = rawBabProj  + dexMod
+  const modTailleAtk = modificateurTaille(race?.taille)
+  const bbaCorpsTotal = rawBabCorps + forMod + modTailleAtk
+  const bbaProjTotal  = rawBabProj  + dexMod + modTailleAtk
   // Le bloc « Corps à corps » de l'en-tête est un chiffre SANS arme : il vaut
   // pour n'importe laquelle, donc il se calcule à la Force. Sur un personnage
   // qui a Attaque en finesse, il contredisait sa propre ligne d'arme juste en
@@ -254,7 +264,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
   // présenté comme un gain alors que c'est une perte. Le badge ⚔ FOR (auto)
   // de la ligne d'arme porte déjà cette information, à sa place.
   const montrerCorpsFinesse = aFinesseFiche && uneArmeEligibleFinesse && dexMod > forMod
-  const bbaCorpsFinesse = rawBabCorps + dexMod
+  const bbaCorpsFinesse = rawBabCorps + dexMod + modTailleAtk
 
   const classeLabel = classes.map(c => `${c.classe.nom} ${c.characterClass.niveau}`).join(' / ')
   const niveauTotal = classes.reduce((sum, c) => sum + c.characterClass.niveau, 0)
@@ -290,8 +300,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
     ...weapons.map(({ weapon }) => parseFloat(weapon.poids?.toString() ?? '0')),
     ...armor.map(({ armor: a }) => parseFloat(a.poids?.toString() ?? '0')),
   ].reduce((sum, w) => sum + w, 0) + poidsEquip
-  const chargeCategorie = getChargeCategorieKg(forT, poidsTotal)
-  const chargeLimites = getChargeLimitesKg(forT)
+  // ×3/4 pour une créature de petite taille (SRD, chap. Poids transportable).
+  // ⭐ Mesuré sur les 6 fiches concernées : aucune ne change de catégorie, elles
+  // portent de 0 à 5,5 kg. Ce sont les SEUILS affichés qui étaient faux.
+  const multCharge = multiplicateurCharge(race?.taille)
+  const chargeCategorie = getChargeCategorieKg(forT, poidsTotal, multCharge)
+  const chargeLimites = getChargeLimitesKg(forT, multCharge)
 
   // Domaines du prêtre/druide
   const d1Info = combatStats?.domaine1 ? getDomaineInfo(combatStats.domaine1) : undefined
@@ -662,6 +676,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
               total={sequenceAttaques(bbaCorpsTotal, rawBabCorps)}
               lignes={[
                 { label: 'bonus de base (BAB)', valeur: rawBabCorps, note: rawBabCorps >= 6 ? 'BAB ≥ 6 : attaques multiples, chacune à −5 de la précédente' : undefined },
+                ...(modTailleAtk !== 0 ? [{ label: nomTaille ? `taille (${nomTaille})` : 'taille', valeur: modTailleAtk, note: 's’applique contre n’importe quel adversaire' }] : []),
                 { label: 'FOR', valeur: forMod, note: montrerCorpsFinesse ? `chiffre d'une arme quelconque. Avec Attaque en finesse, une arme légère (rapière, fouet et chaîne cloutée comprises) peut prendre la DEX ${signedNum(dexMod)} à la place : ${sequenceAttaques(bbaCorpsFinesse, rawBabCorps)}. Les DÉGÂTS restent à la FOR.` : undefined },
               ]}
             >
@@ -684,6 +699,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
               total={sequenceAttaques(bbaProjTotal, rawBabProj)}
               lignes={[
                 { label: 'bonus de base (BAB)', valeur: rawBabProj, note: rawBabProj >= 6 ? 'BAB ≥ 6 : attaques multiples, chacune à −5 de la précédente' : undefined },
+                ...(modTailleAtk !== 0 ? [{ label: nomTaille ? `taille (${nomTaille})` : 'taille', valeur: modTailleAtk, note: 's’applique contre n’importe quel adversaire' }] : []),
                 { label: 'DEX', valeur: dexMod },
               ]}
             >
@@ -722,6 +738,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   niveauBretteur: bonusClasse.niveauBretteur,
                   intMod,
                   armureBloquanteBretteur: bonusClasse.armureBloquante,
+                  modTaille: modTailleAtk,
                 })
 
                 // Fiche de la Bibliothèque à ouvrir pour cette arme : son entrée
@@ -1102,7 +1119,12 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                   // (supprimée en 3.5) — ce n'est pas un trou, c'est un verdict.
                   const ficheRegles = skill.estCatalogue ? skill.id : skill.catalogueId
                   const donsComp = donsPassifs.competences.filter(d => d.skillNoms.includes(skill.nom)).map(d => d.item)
-                  const total = (charSkill.rangsInvestis ?? 0) + caracMod + (charSkill.modifDivers ?? 0) + sommeBonus(donsComp) - (hasArmorMalus ? malusArmure : 0)
+                  // Discrétion : +4 pour une créature de petite taille, et ce n'est
+                  // PAS le +1 de la CA — le livre a une table à part pour cette
+                  // compétence. Mesuré avant de brancher : aucune des 6 fiches de
+                  // petite taille ne l'avait saisi à la main, il manquait pour de vrai.
+                  const modTailleComp = /^discr/i.test(skill.nom) ? modificateurDiscretion(race?.taille) : 0
+                  const total = (charSkill.rangsInvestis ?? 0) + caracMod + (charSkill.modifDivers ?? 0) + sommeBonus(donsComp) + modTailleComp - (hasArmorMalus ? malusArmure : 0)
                   return (
                     <div key={skill.id} className="flex items-center justify-between py-1 border-b border-stone-800 last:border-0">
                       <div>
@@ -1130,6 +1152,7 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
                             { label: 'rangs investis', valeur: charSkill.rangsInvestis ?? 0 },
                             { label: caracSkill, valeur: caracMod },
                             ...donsComp.map(b => ({ label: b.label, valeur: b.value })),
+                            ...(modTailleComp !== 0 ? [{ label: nomTaille ? `taille (${nomTaille})` : 'taille', valeur: modTailleComp }] : []),
                             ...((charSkill.modifDivers ?? 0) !== 0 ? [{ label: 'divers', valeur: charSkill.modifDivers! }] : []),
                             ...(hasArmorMalus ? [{ label: 'malus d’armure', valeur: -malusArmure }] : []),
                           ]}

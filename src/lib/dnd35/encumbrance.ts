@@ -13,16 +13,16 @@ export function getLightLoadLbs(str: number): number {
 
 export type ChargeCategorie = 'légère' | 'moyenne' | 'lourde' | 'surchargé'
 
-export function getChargeCategorie(str: number, poidsLbs: number): ChargeCategorie {
-  const light = getLightLoadLbs(str)
+export function getChargeCategorie(str: number, poidsLbs: number, multTaille = 1): ChargeCategorie {
+  const light = getLightLoadLbs(str) * multTaille
   if (poidsLbs <= light)       return 'légère'
   if (poidsLbs <= light * 2)   return 'moyenne'
   if (poidsLbs <= light * 3)   return 'lourde'
   return 'surchargé'
 }
 
-export function getChargeLimites(str: number): { legere: number; moyenne: number; lourde: number } {
-  const light = getLightLoadLbs(str)
+export function getChargeLimites(str: number, multTaille = 1): { legere: number; moyenne: number; lourde: number } {
+  const light = getLightLoadLbs(str) * multTaille
   return { legere: light, moyenne: light * 2, lourde: light * 3 }
 }
 
@@ -45,13 +45,24 @@ export function getChargeLimites(str: number): { legere: number; moyenne: number
 // des seuils qui ne sont dans aucun livre de la table.
 const LB_PAR_KG = 2
 
-export function getChargeCategorieKg(str: number, poidsKg: number): ChargeCategorie {
-  return getChargeCategorie(str, poidsKg * LB_PAR_KG)
+/**
+ * ⚠ `multTaille` vient de `multiplicateurCharge()` (`lib/dnd35/taille.ts`) :
+ * ×3/4 pour une créature de petite taille, ×2 pour une grande. SRD 3.5 VF,
+ * chap. Poids transportable : « les chiffres indiqués […] concernent des
+ * créatures bipèdes de taille moyenne (M) […] les créatures bipèdes plus
+ * petites transportent un poids moins important […] petite (P) : 3/4 ».
+ *
+ * ⛔ Défaut à 1 : un appel qui l'ignore rend exactement ce qu'il rendait avant
+ * le 2026-11-16. Mesuré sur les 6 fiches de petite taille : aucune ne change de
+ * catégorie (elles portent de 0 à 5,5 kg), seuls les SEUILS affichés baissent.
+ */
+export function getChargeCategorieKg(str: number, poidsKg: number, multTaille = 1): ChargeCategorie {
+  return getChargeCategorie(str, poidsKg * LB_PAR_KG, multTaille)
 }
 
 /** Les trois seuils en kilogrammes — ceux de la table française du Manuel. */
-export function getChargeLimitesKg(str: number): { legere: number; moyenne: number; lourde: number } {
-  const l = getChargeLimites(str)
+export function getChargeLimitesKg(str: number, multTaille = 1): { legere: number; moyenne: number; lourde: number } {
+  const l = getChargeLimites(str, multTaille)
   return { legere: l.legere / LB_PAR_KG, moyenne: l.moyenne / LB_PAR_KG, lourde: l.lourde / LB_PAR_KG }
 }
 
