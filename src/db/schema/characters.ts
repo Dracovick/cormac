@@ -319,3 +319,29 @@ export const characterStoryChapters = pgTable('character_story_chapters', {
   /** Affiché sous le chapitre — seule trace de fraîcheur d'un texte qui vit des mois. */
   updatedAt: timestamp('updated_at').defaultNow(),
 })
+
+// ─── Le lien de partage d'une histoire ───────────────────────────────────────
+// André, le 2026-11-16 : « J'ai besoin d'être capable de partager l'histoire. »
+// Une adresse à jeton qui ouvre `/histoire/<jeton>` SANS mot de passe, en
+// lecture seule, et qui se révoque. Voir drizzle/0019 pour le raisonnement.
+//
+// ⛔ Une table à part, et pas deux colonnes sur `characters` :
+// `saveCharacter()` réécrit cette table par `.set({ ...charValues })` à chaque
+// enregistrement de fiche. Un jeton posé là dépendrait de la façon dont ce jeu
+// de valeurs se construit — c'est le défaut qui a vidé le carquois de Bram
+// (`quantite_munitions`) et fait compter une armure rangée au sac
+// (`est_portee`). Ici, enregistrer une fiche ne peut rien effacer.
+export const characterStoryShares = pgTable('character_story_shares', {
+  id: serial('id').primaryKey(),
+  /** UNIQUE en base : un seul lien actif par histoire. */
+  personnageId: integer('personnage_id').notNull().unique().references(() => characters.id),
+  /**
+   * 24 caractères, 120 bits (`lib/partage.ts`). UNIQUE : c'est la clé d'entrée
+   * de la page publique.
+   * ⚠ Colonne à 64 pour laisser la place d'allonger le jeton un jour sans
+   * migration — la longueur réelle est vérifiée par `estJetonBienForme()`.
+   */
+  jeton: varchar('jeton', { length: 64 }).notNull().unique(),
+  /** Depuis quand ce lien circule — la seule chose honnête à dire avant de le couper. */
+  creeLe: timestamp('cree_le').defaultNow(),
+})

@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getHistoire } from '@/lib/queries/histoire'
 import { HistoireClient } from '@/components/histoire/HistoireClient'
+import { PartageHistoire } from '@/components/histoire/PartageHistoire'
 
 export const dynamic = 'force-dynamic'
 
@@ -91,6 +92,11 @@ export default async function HistoirePage({ params }: { params: Promise<{ id: s
       </header>
 
       <main className="max-w-3xl mx-auto px-5 sm:px-6 py-8">
+        {/* Le partage AVANT le récit : c'est ce qu'on vient chercher quand on
+            arrive ici pour donner le lien à quelqu'un, et ça ne gêne pas la
+            lecture — le bloc est replié tant qu'on ne le déplie pas. */}
+        <PartageHistoire personnageId={histoire.id} jetonInitial={histoire.jetonPartage} />
+
         <HistoireClient
           personnageId={histoire.id}
           nomPersonnage={histoire.nom}

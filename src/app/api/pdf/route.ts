@@ -25,6 +25,8 @@
 import type { NextRequest } from 'next/server'
 import chromium from '@sparticuz/chromium'
 import puppeteer from 'puppeteer-core'
+import { jetonDeCiblePdf } from '@/lib/partage'
+import { partageExiste } from '@/lib/queries/histoire'
 
 export const runtime = 'nodejs'
 export const maxDuration = 60
@@ -103,6 +105,15 @@ const POLICES = `
 const CHEMINS_AUTORISES: RegExp[] = [
   /^\/personnage\/vierge$/,
   /^\/personnage\/\d+\/imprimer$/,
+  // ⛔ Manquait depuis la livraison de l'histoire, le 2026-11-15 : le bouton
+  // « Sauvegarder en PDF » de la page d'histoire rendait un 400 en production
+  // (mesuré le 2026-11-16, témoin positif à côté : la fiche rendait bien ses
+  // 201 Ko). Une liste blanche est le bon garde-fou, mais elle se périme à
+  // chaque page imprimable qu'on ajoute — et elle le fait en silence.
+  /^\/personnage\/\d+\/histoire\/imprimer$/,
+  // L'histoire partagée. Le jeton est vérifié dans sa forme ET son existence
+  // plus bas; cette entrée ne fait que reconnaître la page.
+  /^\/histoire\/[a-z2-9]{24}\/imprimer$/,
 ]
 
 /** Nom de fichier sûr pour l'en-tête `Content-Disposition` : la forme simple de
@@ -144,8 +155,23 @@ export async function GET(request: NextRequest) {
     return new Response(`Page non autorisée pour l'export PDF : ${cible.pathname}`, { status: 400 })
   }
 
+  // ─── Deux régimes, et un seul se passe de cookie ───────────────────────────
+  // Une page de partage public est lisible sans mot de passe : Chromium n'a donc
+  // aucun cookie à reporter pour la rendre, et en exiger un interdirait le PDF
+  // à celui à qui André a donné le lien.
+  //
+  // ⛔ Mais le middleware a laissé passer sur la seule FORME du jeton. On
+  // confirme ici qu'il EXISTE avant de lancer un navigateur serverless —
+  // autrement 24 caractères inventés suffiraient à faire tourner Chromium.
+  const jetonPartage = jetonDeCiblePdf(cible.pathname)
+  if (jetonPartage) {
+    if (!(await partageExiste(jetonPartage))) {
+      return new Response('Lien de partage inconnu ou révoqué.', { status: 404 })
+    }
+  }
+
   const jeton = request.cookies.get(COOKIE)?.value
-  if (!jeton) {
+  if (!jeton && !jetonPartage) {
     // Le middleware a déjà laissé passer, donc ce cas est anormal — mais sans
     // cookie à reporter, Chromium ne verrait que /login.
     return new Response('Session absente : reconnecte-toi avant de générer le PDF.', { status: 401 })
@@ -171,14 +197,19 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    await navigateur.setCookie({
-      name: COOKIE,
-      value: jeton,
-      domain: cible.hostname,
-      path: '/',
-      secure: cible.protocol === 'https:',
-      httpOnly: true,
-    })
+    // ⛔ Pas de cookie à poser quand la cible est une page de partage public :
+    // elle est lisible sans mot de passe, et `jeton` est alors `undefined`.
+    // Le poser quand même enverrait `value: undefined` à Chromium.
+    if (jeton) {
+      await navigateur.setCookie({
+        name: COOKIE,
+        value: jeton,
+        domain: cible.hostname,
+        path: '/',
+        secure: cible.protocol === 'https:',
+        httpOnly: true,
+      })
+    }
 
     const page = await navigateur.newPage()
     await page.setViewport({ width: 1100, height: 1400, deviceScaleFactor: 1 })

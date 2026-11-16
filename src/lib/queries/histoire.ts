@@ -29,6 +29,11 @@ export type HistoirePersonnage = {
   /** Le résumé court de la fiche, pour proposer de le reprendre en chapitre. */
   historique: string | null
   chapitres: ChapitreHistoire[]
+  /**
+   * Le jeton du lien de partage public, s'il en existe un (drizzle/0019).
+   * NULL = aucun lien ne circule pour cette histoire.
+   */
+  jetonPartage: string | null
 }
 
 export async function getHistoire(id: number): Promise<HistoirePersonnage | null> {
@@ -49,7 +54,7 @@ export async function getHistoire(id: number): Promise<HistoirePersonnage | null
 
   if (!personnage) return null
 
-  const [classes, chapitres] = await Promise.all([
+  const [classes, chapitres, partages] = await Promise.all([
     db.select({ nom: schema.classes.nom, niveau: schema.characterClasses.niveau })
       .from(schema.characterClasses)
       .innerJoin(schema.classes, eq(schema.characterClasses.classeId, schema.classes.id))
@@ -62,12 +67,17 @@ export async function getHistoire(id: number): Promise<HistoirePersonnage | null
       // à la même seconde depuis deux appareils), et sans ce départage leur ordre
       // d'affichage changerait d'un chargement à l'autre.
       .orderBy(asc(schema.characterStoryChapters.ordre), asc(schema.characterStoryChapters.id)),
+
+    db.select({ jeton: schema.characterStoryShares.jeton })
+      .from(schema.characterStoryShares)
+      .where(eq(schema.characterStoryShares.personnageId, id)),
   ])
 
   return {
     ...personnage,
     classes: classes.map(c => `${c.nom} ${c.niveau}`).join(' / '),
     chapitres,
+    jetonPartage: partages[0]?.jeton ?? null,
   }
 }
 
@@ -90,4 +100,42 @@ export async function getApercuHistoire(id: number): Promise<{ nb: number; derni
   }, null)
 
   return { nb: lignes.length, dernier }
+}
+
+/**
+ * L'HISTOIRE PAR SON JETON DE PARTAGE — la porte publique.
+ *
+ * André, le 2026-11-16 : « J'ai besoin d'être capable de partager l'histoire. »
+ * Cette fonction sert `/histoire/<jeton>`, la seule adresse du Grimoire qui
+ * s'ouvre sans mot de passe (drizzle/0019).
+ *
+ * ⚠ La forme du jeton est vérifiée par l'appelant AVANT d'arriver ici
+ * (`estJetonBienForme`) : un segment d'URL quelconque ne part pas en requête.
+ * ⛔ Rend `null` — donc un 404 — pour un jeton inconnu ou révoqué. Jamais un
+ * message qui distinguerait « jamais existé » de « révoqué » : les deux doivent
+ * se ressembler vu du dehors.
+ */
+export async function getHistoireParJeton(jeton: string): Promise<HistoirePersonnage | null> {
+  const [partage] = await getDb()
+    .select({ personnageId: schema.characterStoryShares.personnageId })
+    .from(schema.characterStoryShares)
+    .where(eq(schema.characterStoryShares.jeton, jeton))
+
+  if (!partage) return null
+  return getHistoire(partage.personnageId)
+}
+
+/**
+ * Ce jeton de partage existe-t-il ? Une ligne, pas l'histoire entière.
+ *
+ * Sert à `/api/pdf` avant de lancer Chromium : le middleware laisse passer sur
+ * la seule FORME du jeton, et lancer un navigateur serverless pour 24
+ * caractères inventés serait un robinet ouvert.
+ */
+export async function partageExiste(jeton: string): Promise<boolean> {
+  const lignes = await getDb()
+    .select({ id: schema.characterStoryShares.id })
+    .from(schema.characterStoryShares)
+    .where(eq(schema.characterStoryShares.jeton, jeton))
+  return lignes.length > 0
 }

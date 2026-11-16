@@ -1,21 +1,29 @@
-'use client'
+import { FormulaireConnexion } from '@/components/FormulaireConnexion'
+import { PARAM_SUITE, suiteValide } from '@/lib/partage'
 
-import { useState, useTransition } from 'react'
-import { login } from '@/app/actions/auth'
+export const dynamic = 'force-dynamic'
 
-export default function LoginPage() {
-  const [error, setError] = useState(false)
-  const [isPending, startTransition] = useTransition()
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const pw = (e.currentTarget.elements.namedItem('password') as HTMLInputElement).value
-    setError(false)
-    startTransition(async () => {
-      const ok = await login(pw)
-      if (!ok) setError(true)
-    })
-  }
+/**
+ * LA CONNEXION — et, depuis le 2026-11-16, la destination retenue.
+ *
+ * André : « Lorsque je copie le lien de la page ce lien amène à l'accueil du
+ * site. » Le middleware pose maintenant `?suite=<chemin>` en renvoyant ici, et
+ * la page l'annonce avant d'entrer le mot de passe : savoir où l'on va atterrir
+ * est ce qui distingue « le lien est cassé » de « il faut le mot de passe ».
+ *
+ * ⚠ `suiteValide()` est appliqué DEUX FOIS — ici pour l'affichage, et dans
+ * `actions/auth.login()` avant la redirection. Le texte affiché ne protège
+ * rien : seule la vérification du côté de l'action compte, et elle ne doit pas
+ * dépendre de celle-ci.
+ */
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>
+}) {
+  const params = await searchParams
+  const brut = params[PARAM_SUITE]
+  const suite = suiteValide(Array.isArray(brut) ? brut[0] : brut)
 
   return (
     <div
@@ -34,41 +42,19 @@ export default function LoginPage() {
         {/* Titre */}
         <div className="text-center mb-8">
           <div className="text-amber-600 text-5xl mb-4">⚔️</div>
-          <h1 className="text-3xl font-bold text-amber-300 tracking-wide">Grimoire D&D</h1>
+          <h1 className="text-3xl font-bold text-amber-300 tracking-wide">Grimoire D&amp;D</h1>
           <p className="text-stone-500 text-sm mt-2">3e édition · Accès restreint</p>
         </div>
 
-        {/* Formulaire */}
-        <form
-          onSubmit={handleSubmit}
-          className="bg-stone-900/80 backdrop-blur border border-amber-900/40 rounded-xl p-8 shadow-2xl"
-        >
-          <label className="block text-stone-400 text-xs uppercase tracking-widest mb-2">
-            Mot de passe
-          </label>
-          <input
-            name="password"
-            type="password"
-            autoFocus
-            required
-            className="w-full bg-stone-800 border border-stone-700 rounded-lg px-4 py-3 text-stone-100 text-base sm:text-sm focus:outline-none focus:border-amber-500 transition-colors"
-            placeholder="···········"
-          />
+        {suite && (
+          <p className="text-center text-stone-400 text-sm mb-4 px-2">
+            Le mot de passe, et vous y êtes.
+            <br />
+            <span className="text-stone-600 text-xs break-all">{suite}</span>
+          </p>
+        )}
 
-          {error && (
-            <p className="mt-3 text-red-400 text-sm text-center">
-              Mot de passe incorrect.
-            </p>
-          )}
-
-          <button
-            type="submit"
-            disabled={isPending}
-            className="mt-5 w-full bg-amber-800 hover:bg-amber-700 disabled:opacity-50 text-white font-semibold py-3 rounded-lg transition-colors"
-          >
-            {isPending ? 'Vérification...' : 'Entrer'}
-          </button>
-        </form>
+        <FormulaireConnexion suite={suite} />
 
         <p className="text-center text-stone-700 text-xs mt-6">
           Donjons &amp; Dragons 3e édition
