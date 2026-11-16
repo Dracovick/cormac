@@ -223,6 +223,19 @@ export function compteMots(contenu: string): number {
   return nu.split(/\s+/).length
 }
 
+/**
+ * « d'Azadrielle », pas « de Azadrielle ».
+ *
+ * ⚠ Élision devant les VOYELLES seulement, jamais devant un `h` : l'usage
+ * français est partagé sur les noms propres à h (« de Hugo » comme
+ * « d'Hortense »), et se tromper là est plus visible que de ne rien faire.
+ * Les voyelles accentuées comptent — « d'Élia ».
+ */
+export function deNom(nom: string): string {
+  const premiere = (nom ?? '').trim().charAt(0).toLowerCase()
+  return /[aeiouyàâäéèêëíîïóôöúùûü]/.test(premiere) ? `d’${nom}` : `de ${nom}`
+}
+
 /** « il y a 3 jours » n'a pas de sens pour un récit : on date. */
 export function dateCourte(d: Date | string | null | undefined): string {
   if (!d) return ''

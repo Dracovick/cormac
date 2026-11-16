@@ -47,7 +47,7 @@ import { JournalDrawer } from '@/components/fiche/JournalDrawer'
 import { ButinDrawer } from '@/components/fiche/ButinDrawer'
 import { getPotionsCatalogue } from '@/app/actions/character'
 import { getApercuHistoire } from '@/lib/queries/histoire'
-import { dateCourte } from '@/lib/histoire'
+import { dateCourte, deNom } from '@/lib/histoire'
 import { sourcesCASorts, contributionsSortsDepuisCA, calculeBonusEffetsCarac } from '@/lib/dnd35/spell-effects'
 import { aAttaqueEnFinesse, armeEligibleFinesse, armeMainDombre, calculeArme, sequenceAttaques } from '@/lib/dnd35/attaque'
 import { getBonusClasse, effetsCapaciteClasse, NOM_BRETTEUR } from '@/lib/dnd35/bonus-classe'
@@ -1655,8 +1655,8 @@ export default async function FichePersonnage({ params }: { params: Promise<{ id
             >
               <span>📖</span>
               {apercuHistoire.nb > 0
-                ? <span>Lire l’histoire de {character.nom} — {apercuHistoire.nb} chapitre{apercuHistoire.nb > 1 ? 's' : ''}</span>
-                : <span>Écrire l’histoire de {character.nom}</span>}
+                ? <span>Lire l’histoire {deNom(character.nom)} — {apercuHistoire.nb} chapitre{apercuHistoire.nb > 1 ? 's' : ''}</span>
+                : <span>Écrire l’histoire {deNom(character.nom)}</span>}
               <span aria-hidden>→</span>
             </Link>
             {apercuHistoire.dernier && (

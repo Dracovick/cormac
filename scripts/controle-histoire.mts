@@ -27,6 +27,7 @@ import {
   compteMots,
   contenuChapitre,
   dateCourte,
+  deNom,
   fragmentsDe,
   texteNu,
   valeursChapitre,
@@ -151,6 +152,14 @@ verifier('dateCourte : une date réelle rend du français',
 verifier('⭐ témoin inverse : une date invalide rend du vide, pas « Invalid Date »',
   dateCourte('pas une date') === '')
 verifier('dateCourte : null rend du vide', dateCourte(null) === '')
+
+egal('⭐ élision devant une voyelle : « d’Azadrielle », pas « de Azadrielle »',
+  deNom('Azadrielle Pétales de Lune'), 'd’Azadrielle Pétales de Lune')
+egal('pas d’élision devant une consonne', deNom('Bram Verrelune'), 'de Bram Verrelune')
+egal('élision devant une voyelle accentuée', deNom('Élia'), 'd’Élia')
+egal('⭐ témoin inverse : PAS d’élision devant un h — l’usage français est partagé',
+  deNom('Hortense'), 'de Hortense')
+egal('nom vide : « de », sans planter', deNom(''), 'de ')
 
 // ─── 3. La base réelle ────────────────────────────────────────────────────────
 const RACINE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')

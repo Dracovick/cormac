@@ -18,6 +18,7 @@ import {
   ancreChapitre,
   compteMots,
   dateCourte,
+  deNom,
 } from '@/lib/histoire'
 import type { ChapitreHistoire } from '@/lib/queries/histoire'
 
@@ -142,7 +143,7 @@ export function HistoireClient({ personnageId, nomPersonnage, chapitres, histori
       {chapitres.length === 0 && !ecrit && (
         <div className="bg-stone-900/50 border border-stone-700/60 rounded-xl p-6 text-center space-y-4">
           <p className="text-stone-400 text-sm">
-            L’histoire de {nomPersonnage} n’est pas encore écrite.
+            L’histoire {deNom(nomPersonnage)} n’est pas encore écrite.
           </p>
           {historiqueFiche?.trim() && (
             <div className="space-y-2">
