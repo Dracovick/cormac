@@ -52,7 +52,6 @@ export function suiteValide(suite: string | null | undefined): string | null {
   if (!suite.startsWith('/')) return null
   if (suite.startsWith('//')) return null
   if (suite.includes('\\')) return null
-  // eslint-disable-next-line no-control-regex -- c'est précisément ce qu'on refuse
   if (/[\u0000-\u001f\u007f]/.test(suite)) return null
 
   // `/login`, `/login?x=1`, mais PAS `/logins-du-donjon` : on compare le segment.

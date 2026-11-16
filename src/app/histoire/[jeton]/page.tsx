@@ -65,9 +65,12 @@ export default async function HistoirePartagee({ params }: { params: Promise<{ j
           </div>
 
           <div className="flex items-center gap-4">
-            {/* eslint-disable-next-line @next/next/no-img-element -- portraits du Blob,
-                hôte non déclaré dans next.config : même choix que PhotoPortrait. */}
+            {/* Portraits du Blob, hôte non déclaré dans next.config : même choix que
+                PhotoPortrait. ⚠ Le `eslint-disable-next-line` doit être collé à la
+                balise — posé avant le `&&`, il visait cette ligne-là et la règle
+                se déclenchait quand même, un étage plus bas. */}
             {histoire.photoUrl && (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={histoire.photoUrl}
                 alt={histoire.nom}

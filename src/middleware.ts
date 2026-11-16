@@ -11,6 +11,15 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/login') ||
     pathname.startsWith('/_next') ||
     pathname.startsWith('/favicon') ||
+    // ⛔⛔ Les quatre fichiers de police d'Arimo, servis depuis `public/polices/`.
+    // Mesuré le 2026-11-16 : sans cookie, `/polices/Arimo-Regular.ttf` rendait
+    // un 307 vers /login — et `/api/pdf` échouait sur
+    // « NetworkError: A network error occurred. », parce que
+    // `document.fonts.load()` REJETTE quand la police ne se charge pas. Le PDF
+    // d'une histoire partagée rendait donc un 500, alors que la page, elle,
+    // s'affichait très bien. Ces fichiers ne portent aucune donnée du Grimoire :
+    // les protéger ne protégeait rien et cassait le seul rendu qui s'en passe.
+    pathname.startsWith('/polices/') ||
     // Ressources PWA : le téléphone les récupère sans cookie à l'installation
     pathname === '/manifest.webmanifest' ||
     pathname === '/icon.png' ||

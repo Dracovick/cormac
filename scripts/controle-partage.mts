@@ -243,6 +243,13 @@ verifier('⭐⭐ code : le préfixe public n’est exempté qu’en GET ou HEAD'
   /estCheminPartage\(pathname\)\s*&&\s*\(request\.method === 'GET' \|\| request\.method === 'HEAD'\)/.test(middleware),
   'une Server Action est un POST, et le manifeste des actions de Next est global : exempter toutes méthodes ouvrirait l’écriture du Grimoire à qui détient un lien de lecture')
 
+// ⛔ Les polices. Leur protection ne protégeait rien et faisait rendre un 500 au
+// PDF d'une histoire partagée : `document.fonts.load()` rejette avec
+// « NetworkError » quand le fichier répond par une redirection vers /login.
+verifier('⭐ code : les polices d’impression sont servies sans mot de passe',
+  middleware.includes("pathname.startsWith('/polices/')"),
+  'sinon /api/pdf échoue sur NetworkError pour toute cible publique')
+
 const auth = sansCommentaires(lire('src/app/actions/auth.ts'))
 verifier('code : la connexion ne redirige plus vers l’accueil en dur',
   !/redirect\('\/'\)/.test(auth) && auth.includes('destinationApresConnexion'))

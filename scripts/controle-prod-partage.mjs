@@ -80,8 +80,18 @@ const [cible] = await sql`
 if (!cible) throw new Error('aucun personnage avec une histoire : contrôle impossible')
 console.log(`Témoin : [${cible.id}] ${cible.nom}\n`)
 
-const JETON_ESSAI = 'zzcontroleprod' + Math.random().toString(36).slice(2, 12).replace(/[^a-z2-9]/g, 'x').padEnd(10, 'x')
-const jeton = JETON_ESSAI.slice(0, 24)
+const ALPHABET_JETON = 'abcdefghijkmnpqrstuvwxyz23456789'
+const PREFIXE_ESSAI = 'zzcprd'
+let jeton = PREFIXE_ESSAI
+while (jeton.length < 24) {
+  jeton += ALPHABET_JETON[Math.floor(Math.random() * ALPHABET_JETON.length)]
+}
+// ⭐ Le jeton d'essai doit respecter l'alphabet, sinon la page rend 404 et huit
+// contrôles accusent un code sain (payé le 2026-11-16 : « zzcontroleprod »
+// contient l et o, exclus de l'alphabet).
+if (jeton.length !== 24 || [...jeton].some(c => !ALPHABET_JETON.includes(c))) {
+  throw new Error(`jeton d'essai hors alphabet : ${jeton}`)
+}
 
 // ⚠ Le partage d'essai écrase temporairement celui du personnage s'il en a un :
 // on relève l'ancien pour le remettre à l'identique à la fin.
@@ -171,6 +181,16 @@ try {
     pdfInvente.status === 404 || pdfInvente.status === 307,
     `statut ${pdfInvente.status}`)
 
+  // ─── 4 ter. Les polices du PDF ──────────────────────────────────────────────
+  // ⛔ Mesuré le 2026-11-16 : `/polices/Arimo-Regular.ttf` rendait 307 vers
+  // /login sans cookie, et c'est ce qui faisait échouer le PDF partagé —
+  // `document.fonts.load()` rejette, Chromium remonte « NetworkError ».
+  const police = await fetch(`${BASE}/polices/Arimo-Regular.ttf`, { redirect: 'manual' })
+  verifier('⭐ la police d’impression est servie SANS cookie', police.status === 200,
+    `statut ${police.status} — sinon /api/pdf rend 500 sur toute cible publique`)
+  verifier('et c’est bien une police', (police.headers.get('content-type') ?? '').includes('font'),
+    police.headers.get('content-type') ?? 'sans type')
+
   // ─── 5. Les jetons qui ne valent rien ───────────────────────────────────────
   const inconnu = await demande('/histoire/' + 'abcdefghijkmnpqrstuvwxyz'.slice(0, 24))
   verifier('un jeton bien formé mais inconnu rend 404', inconnu.statut === 404,
@@ -220,7 +240,7 @@ try {
       on conflict (personnage_id) do update set jeton = ${ancien.jeton}`
     console.log(`\nPartage d’origine de [${cible.id}] remis à l’identique.`)
   }
-  const reste = await sql`select count(*)::int n from character_story_shares where jeton like 'zzcontroleprod%'`
+  const reste = await sql`select count(*)::int n from character_story_shares where jeton like 'zzcprd%'`
   if (reste[0].n !== 0) {
     console.error('⛔ UN PARTAGE D’ESSAI SURVIT EN BASE — à supprimer à la main.')
     process.exitCode = 1

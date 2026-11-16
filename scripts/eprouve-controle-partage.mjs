@@ -92,6 +92,12 @@ const MUTATIONS = [
     vers: `  const m = /^\\/.*\\/([^/]+)(?:\\/imprimer)?$/.exec(cible)`,
   },
   {
+    nom: '10. les polices redeviennent protégées (PDF partagé en 500)',
+    cible: 'middleware',
+    de: `    pathname.startsWith('/polices/') ||`,
+    vers: `    false ||`,
+  },
+  {
     nom: '9. ⛔ /api/pdf ne vérifie plus que le jeton existe (Chromium pour rien)',
     cible: 'pdf',
     de: `    if (!(await partageExiste(jetonPartage))) {`,
