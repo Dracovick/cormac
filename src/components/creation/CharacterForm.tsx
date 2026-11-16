@@ -13,7 +13,7 @@ import { CLASSES_DND35, CLASSES_BASE_SUPPLEMENTS, getClasseInfo, getSortsSlotsPa
 import { PRESTIGE_CLASSES, getPrestigeInfo, getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
 import { OPTIONS_RACE } from '@/lib/dnd35/races'
 import { sousRacesDe, getSousRaceInfo, getRaceOuSousRace, decomposerRace, nomSousRaceSelon, changerRace, picto, libelleEffet } from '@/lib/dnd35/sous-races'
-import { COMPETENCES_DND35 } from '@/lib/dnd35/skills'
+import { COMPETENCES_DND35, estCompetenceDeClasse } from '@/lib/dnd35/skills'
 import { sortsByClasseEtNiveau, niveauxMaxForClasse, type ClasseSortKey, type SortDnD } from '@/lib/dnd35/spells'
 import { getBab } from '@/lib/dnd35/rules'
 import { WEAPONS_DND35, WEAPON_CATEGORIES, WEAPON_CATEGORIE_LIBELLE, estArmeADistance, type WeaponTemplate } from '@/lib/dnd35/weapons'
@@ -475,8 +475,11 @@ function SectionCompetences({ data, update, derived }: { data: CharacterFormData
           </thead>
           <tbody>
             {data.competences.map((comp, idx) => {
-              const ref = COMPETENCES_DND35.find(c => c.nom === comp.nom)
-              const isClasse = ref?.classesCompetence.some(cc => allClassNames.includes(cc)) ?? false
+              // Repli des spécialités : « Profession (joueur) » hérite du statut de
+              // « Profession ». Sans lui, le plafond de rangs d'une spécialité tombe à
+              // celui d'une compétence hors-classe, alors qu'elle a été payée au tarif
+              // de classe — et l'input refuse alors silencieusement la saisie.
+              const isClasse = estCompetenceDeClasse(comp.nom, allClassNames)
               const maxRangs = isClasse ? derived.niveauTotal + 3 : Math.floor((derived.niveauTotal + 3) / 2)
               const abilMod = getAbilMod(comp.caracteristique)
               const total = comp.rangs + abilMod + comp.divers

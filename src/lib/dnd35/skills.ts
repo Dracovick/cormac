@@ -75,3 +75,56 @@ export function getCompetenceRef(nom: string): CompetenceRef | undefined {
 export function caracteristiqueDe(nom: string, caracteristiqueEnBase?: string | null): string {
   return getCompetenceRef(nom)?.caracteristique ?? caracteristiqueEnBase ?? '—'
 }
+
+/**
+ * Les compétences qui font autorité pour le STATUT d'un nom de compétence —
+ * compétence de classe, formation requise. Jamais pour sa caractéristique :
+ * celle-ci reste décidée par `caracteristiqueDe`, qui garde la valeur saisie en
+ * base quand le nom exact lui est inconnu. Changer une caractéristique ferait
+ * bouger un total déjà imprimé; changer un statut ne fait que cocher une case.
+ *
+ * Une spécialité libre — « Profession (joueur) », « Artisanat (tissage) »,
+ * « Connaissances (dragons) » — n'est dans aucune table officielle sous ce
+ * nom-là : la table 4–2 ne nomme que la compétence générique, ou quelques
+ * spécialités données en exemple. Le nom exact n'y était donc pas trouvé et la
+ * ligne cessait d'être comptée comme compétence de classe : case □ au lieu de ■
+ * sur la feuille imprimée, et surtout plafond de rangs de hors-classe au
+ * formulaire — (N+3)/2 au lieu de N+3 — alors que le joueur a payé ses rangs au
+ * tarif de classe. 16 lignes des fiches étaient dans ce cas.
+ *
+ * Le repli se fait en deux temps :
+ *   1. la compétence générique de même base (« Profession (joueur) » → « Profession ») ;
+ *   2. à défaut, ses sœurs de la table (« Artisanat (tissage) » → les trois
+ *      « Artisanat (…) »), et seulement si elles sont TOUTES d'accord. Les
+ *      « Connaissances (…) » n'ont pas les mêmes classes de classe d'une
+ *      spécialité à l'autre : sans unanimité, on ne tranche pas et la ligne
+ *      reste hors-classe, exactement comme avant.
+ */
+function refsDeStatut(nom: string): CompetenceRef[] {
+  const exact = getCompetenceRef(nom)
+  if (exact) return [exact]
+  const base = nom.match(/^([^(]+?)\s*\(/)?.[1]
+  if (!base) return []
+  const generique = COMPETENCES_DND35.find(c => c.nom === base)
+  if (generique) return [generique]
+  return COMPETENCES_DND35.filter(c => c.nom.startsWith(`${base} (`))
+}
+
+/**
+ * La compétence est-elle une compétence de classe pour ce personnage ?
+ * ⛔ Le garde sur le tableau vide est indispensable : `[].every(...)` vaut
+ * `true`, et un nom maison inconnu de la table deviendrait compétence de classe
+ * pour tout le monde.
+ */
+export function estCompetenceDeClasse(nom: string, classesDuPersonnage: string[]): boolean {
+  const refs = refsDeStatut(nom)
+  if (refs.length === 0) return false
+  return refs.every(r => r.classesCompetence.some(cc => classesDuPersonnage.includes(cc)))
+}
+
+/** La compétence exige-t-elle une formation ? Même repli, même garde. */
+export function formationRequiseDe(nom: string): boolean {
+  const refs = refsDeStatut(nom)
+  if (refs.length === 0) return false
+  return refs.every(r => r.formationRequise)
+}

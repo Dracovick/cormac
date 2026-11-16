@@ -5,7 +5,7 @@ import { getClasseInfo, getEmplacementsAvecBonus, comptePreparations } from '@/l
 import { getNiveauLanceurEffectif } from '@/lib/dnd35/prestige-classes'
 import { getRaceOuSousRace, getSousRaceInfo } from '@/lib/dnd35/sous-races'
 import { getModifier, getBab, xpPourNiveau, modSauvegarde } from '@/lib/dnd35/rules'
-import { getCompetenceRef, caracteristiqueDe } from '@/lib/dnd35/skills'
+import { caracteristiqueDe, estCompetenceDeClasse, formationRequiseDe } from '@/lib/dnd35/skills'
 import { getDomaineInfo } from '@/lib/dnd35/domains'
 import { getFeatPassiveBonuses, sommeBonus } from '@/lib/dnd35/feat-bonuses'
 import { formatCritique } from '@/lib/dnd35/critique'
@@ -306,7 +306,6 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
   // une compétence maison comme « Magie divine », ou une spécialité libre comme
   // « Artisanat (tissage) », doit apparaître sur la fiche du joueur qui l'a payée.
   const skillsData = skills.map(({ skill, charSkill }) => {
-    const ref = getCompetenceRef(skill.nom)
     const rangs = charSkill.rangsInvestis ?? 0
     // Le +2 de Vigilance s'imprime dans la colonne « divers » : les colonnes du papier
     // doivent toujours s'additionner au total.
@@ -318,8 +317,10 @@ export default async function ImprimerPage({ params }: { params: Promise<{ id: s
     const caracteristique = caracteristiqueDe(skill.nom, skill.caracteristique)
     const abilMod = abilMods[caracteristique] ?? 0
     const total = abilMod + rangs + divers
-    const isClasse = ref?.classesCompetence.some(cc => allClassNoms.includes(cc)) ?? false
-    return { nom: skill.nom, caracteristique, formationRequise: ref?.formationRequise ?? false, rangs, divers, abilMod, total, isClasse }
+    // Le statut passe par le repli des spécialités : « Profession (joueur) » est
+    // une compétence de classe du roublard, comme « Profession » tout court.
+    const isClasse = estCompetenceDeClasse(skill.nom, allClassNoms)
+    return { nom: skill.nom, caracteristique, formationRequise: formationRequiseDe(skill.nom), rangs, divers, abilMod, total, isClasse }
   })
     .filter(s => s.rangs > 0 || s.divers !== 0)
     .sort((a, b) => a.nom.localeCompare(b.nom, 'fr'))
