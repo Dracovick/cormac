@@ -29,13 +29,22 @@ function verifier(titre, condition, detail = '') {
  * 2. React insère un `<!-- -->` entre deux text nodes adjacents en SSR :
  *    `{n} chapitre{s}` sort en `7<!-- --> chapitre<!-- -->s`. Une chaîne
  *    littérale comme « 7 chapitres » ne s'y retrouve jamais.
+ * 3. React échappe l'apostrophe DROITE en `&#x27;` dans le texte rendu :
+ *    « Tolliver l'Aller-simple » sort en « Tolliver l&#x27;Aller-simple ».
+ *    Deux titres sur sept ont échoué là-dessus, et eux seuls — les cinq autres
+ *    n'ont pas d'apostrophe. Mesuré en prod avant de toucher à quoi que ce soit.
  *
- * `page()` rend donc le HTML nettoyé des deux. C'est le rendu, et seulement lui.
+ * `page()` rend donc le HTML nettoyé des trois. C'est le rendu, et seulement lui.
+ * ⛔ Les chevrons `&lt;` `&gt;` ne sont PAS décodés, délibérément : c'est la
+ * seule différence qui reste entre du HTML rendu et du texte échappé, et un
+ * contrôle d'injection en aurait besoin.
  */
 function visible(html) {
   return html
     .replace(/<script>self\.__next_f\.push\(\[[\s\S]*?\]\)<\/script>/g, '')
     .replace(/<!-- -->/g, '')
+    .replace(/&#x27;|&#39;/g, "'")
+    .replace(/&amp;/g, '&')
 }
 
 async function page(chemin) {
@@ -43,6 +52,18 @@ async function page(chemin) {
   const brut = await r.text()
   return { statut: r.status, html: visible(brut), brut }
 }
+
+// ─── 0. Le nettoyeur lui-même ────────────────────────────────────────────────
+// ⛔ `visible()` RETIRE du HTML. S'il en retirait trop — ou tout —, chaque
+// contrôle de la forme « ne contient PAS » passerait au vert sur du vide. Les
+// deux contrôles qui suivent gardent cette porte-là fermée.
+const brutAza = await (await fetch(BASE + '/personnage/98/histoire', { headers: { Cookie: COOKIE } })).text()
+const netAza = visible(brutAza)
+verifier('témoin de présence : le HTML nettoyé garde l’essentiel du document',
+  netAza.length > brutAza.length * 0.3 && netAza.length > 20_000,
+  `${brutAza.length} octets bruts → ${netAza.length} nettoyés`)
+verifier('témoin de présence : le nettoyage conserve bien le rendu',
+  netAza.includes('<strong') && netAza.includes('Azadrielle'))
 
 // ─── 1. La page d'histoire d'Azadrielle ──────────────────────────────────────
 const aza = await page('/personnage/98/histoire')
@@ -61,9 +82,9 @@ const TITRES = [
   'Bram et Aza — six ans d’écart et la même fenêtre',
   'Duncan — comment ils se sont rencontrés',
 ]
-// ⚠ Les titres sont comparés avec l'apostrophe TYPOGRAPHIQUE que React produit
-// dans le HTML ; la base, elle, porte l'apostrophe droite. Comparer sans y
-// penser rendrait un échec qui accuse la page alors que seul le caractère diffère.
+// ⚠ La base porte l'apostrophe DROITE, et `visible()` a redonné sa forme droite
+// à l'entité `&#x27;` du HTML : on compare donc les deux formes, sans supposer
+// laquelle a survécu au trajet.
 for (const t of TITRES) {
   const droite = t.replace(/’/g, "'")
   verifier(`titre servi : « ${droite} »`, aza.html.includes(t) || aza.html.includes(droite))
